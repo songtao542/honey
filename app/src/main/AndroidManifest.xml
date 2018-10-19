@@ -12,17 +12,22 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".ui.activity.MainActivity">
-
-        </activity>
-        <activity android:name=".ui.activity.StartupActivity" />
-        <activity android:name=".ui.activity.SigninActivity">
+        <activity
+            android:name=".ui.main.MainActivity"
+            android:theme="@style/Main">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+        <activity android:name=".ui.startup.StartupActivity" />
+        <activity android:name=".ui.signin.SigninActivity"></activity>
+        <activity android:name=".ui.signup.SignupActivity" />
+        <activity
+            android:name=".ui.main.Main2Activity"
+            android:label="@string/title_activity_main2"
+            android:theme="@style/AppTheme.NoActionBar"></activity>
     </application>
 
 </manifest>

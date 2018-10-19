@@ -1,4 +1,4 @@
-package com.snt.phoney.ui.activity
+package com.snt.phoney.ui.startup
 
 import android.os.Bundle
 import com.snt.phoney.R

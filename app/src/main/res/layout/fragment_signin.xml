@@ -3,11 +3,11 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools">
 
-    <data>
+    <data class="SigninFragmentBinding">
 
         <variable
             name="loginViewModel"
-            type="cn.lolii.demo.ui.fragment.LoginViewModel" />
+            type="com.snt.phoney.ui.signin.SigninViewModel" />
     </data>
 
     <LinearLayout
@@ -34,6 +34,7 @@
             android:layout_width="match_parent"
             android:layout_height="50dp"
             android:text="Login" />
+
         <Button
             android:id="@+id/test"
             android:layout_width="match_parent"

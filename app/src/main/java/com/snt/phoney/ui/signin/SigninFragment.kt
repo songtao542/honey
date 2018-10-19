@@ -1,6 +1,5 @@
-package com.snt.phoney.ui.fragment
+package com.snt.phoney.ui.signin
 
-import android.arch.lifecycle.Observer
 import android.arch.lifecycle.ViewModelProviders
 import android.databinding.DataBindingUtil
 import android.os.Bundle
@@ -12,26 +11,26 @@ import android.view.ViewGroup
 
 import com.snt.phoney.R
 import com.snt.phoney.base.BaseFragment
-import com.snt.phoney.databinding.FragmentLoginBinding
+import com.snt.phoney.databinding.SigninFragmentBinding
+
 import com.snt.phoney.domain.model.Response
 import com.snt.phoney.domain.model.User
 import com.snt.phoney.extensions.autoCleared
 import com.snt.phoney.extensions.disposedBy
-import io.reactivex.Observable
 
 /**
  * A simple [Fragment] subclass.
  * Activities that contain this fragment must implement the
- * [LoginFragment.OnFragmentInteractionListener] interface
+ * [SigninFragment.OnFragmentInteractionListener] interface
  * to handle interaction events.
- * Use the [LoginFragment.newInstance] factory method to
+ * Use the [SigninFragment.newInstance] factory method to
  * create an instance of this fragment.
  *
  */
-class LoginFragment : BaseFragment() {
+class SigninFragment : BaseFragment() {
 
-    lateinit var viewModel: LoginViewModel
-    var binding by autoCleared<FragmentLoginBinding>()
+    lateinit var viewModel: SigninViewModel
+    var binding by autoCleared<SigninFragmentBinding>()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -39,13 +38,13 @@ class LoginFragment : BaseFragment() {
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,
                               savedInstanceState: Bundle?): View? {
-        binding = DataBindingUtil.inflate(inflater, R.layout.fragment_login, container, false)
+        binding = DataBindingUtil.inflate(inflater, R.layout.fragment_signin, container, false)
         return binding.root
     }
 
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
-        viewModel = ViewModelProviders.of(this, viewModelFactory).get(LoginViewModel::class.java)
+        viewModel = ViewModelProviders.of(this, viewModelFactory).get(SigninViewModel::class.java)
         binding.loginViewModel = viewModel
 
         binding.login.setOnClickListener { onLoginButtonPressed() }
@@ -74,6 +73,6 @@ class LoginFragment : BaseFragment() {
 
     companion object {
         @JvmStatic
-        fun newInstance() = LoginFragment()
+        fun newInstance() = SigninFragment()
     }
 }

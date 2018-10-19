@@ -3,4 +3,15 @@
 
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="title_activity_main2">Main2Activity</string>
+    <string name="title_home">首页</string>
+    <string name="title_square">广场</string>
+    <string name="title_message">信息</string>
+    <string name="title_mine">个人中心</string>
+
+    <string name="tab_home_friend">蜜友</string>
+    <string name="tab_home_following">关注的人</string>
+
+    <string name="tab_square_official">官方推荐</string>
+    <string name="tab_square_popular">人气推荐</string>
 </resources>

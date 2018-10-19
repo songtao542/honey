@@ -12,7 +12,7 @@
  * Non-disclosure agreements covering such access.
  */
 
-package com.snt.phoney.ui.fragment
+package com.snt.phoney.ui.signin
 
 import android.app.Application
 import android.arch.lifecycle.LiveData
@@ -23,7 +23,7 @@ import com.snt.phoney.domain.usecase.LoginUseCase
 import io.reactivex.Single
 import javax.inject.Inject
 
-class LoginViewModel @Inject constructor(private val usecase: LoginUseCase, private val application: Application) : ViewModel() {
+class SigninViewModel @Inject constructor(private val usecase: LoginUseCase, private val application: Application) : ViewModel() {
 
     fun signin(email: String, password: String): Single<Response<User>> {
         return usecase.signin(email, password)

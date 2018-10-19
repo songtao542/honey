@@ -1,9 +1,9 @@
 package com.snt.phoney.di.module
 
 import android.arch.lifecycle.ViewModelProvider
-import com.snt.phoney.ui.activity.MainActivity
-import com.snt.phoney.ui.activity.SigninActivity
-import com.snt.phoney.ui.activity.StartupActivity
+import com.snt.phoney.ui.main.MainActivity
+import com.snt.phoney.ui.signin.SigninActivity
+import com.snt.phoney.ui.startup.StartupActivity
 import com.snt.phoney.di.ViewModelFactory
 
 import dagger.Binds

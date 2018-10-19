@@ -16,7 +16,7 @@ package com.snt.phoney.base
 
 import android.arch.lifecycle.ViewModelProvider
 import android.support.v4.app.Fragment
-import com.snt.phoney.databinding.FragmentLoginBinding
+import com.snt.phoney.databinding.SigninFragmentBinding
 import com.snt.phoney.di.Injectable
 import com.snt.phoney.extensions.autoCleared
 import io.reactivex.disposables.CompositeDisposable
