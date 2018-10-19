@@ -19,3 +19,21 @@
 # If you keep the line number information, uncomment this to
 # hide the original source file name.
 #-renamesourcefileattribute SourceFile
+
+#-keep class javax.annotation.** { *; }
+
+#-ignorewarnings
+-dontwarn javax.annotation.**
+-dontwarn com.google.errorprone.**
+-dontwarn kotlin.reflect.jvm.**
+-dontwarn org.codehaus.mojo.**
+-dontwarn android.graphics.Bitmap
+
+-keep public class * implements com.bumptech.glide.module.GlideModule
+-keep public class * extends com.bumptech.glide.module.AppGlideModule
+-keep public enum com.bumptech.glide.load.ImageHeaderParser$** {
+  **[] $VALUES;
+  public *;
+}
+
+-dontwarn com.bumptech.glide.load.resource.bitmap.VideoDecoder

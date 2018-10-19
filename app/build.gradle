@@ -24,11 +24,14 @@ android {
         vectorDrawables.useSupportLibrary = true
     }
     buildTypes {
-//        debug {
-//            testCoverageEnabled !project.hasProperty('android.injected.invoked.from.ide')
-//        }
+        debug {
+            minifyEnabled true
+            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+            //testCoverageEnabled !project.hasProperty('android.injected.invoked.from.ide')
+        }
         release {
-            minifyEnabled false
+            shrinkResources true
+            minifyEnabled true
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
         }
     }

@@ -14,6 +14,7 @@ import com.snt.phoney.R
 
 import com.snt.phoney.ui.message.dummy.DummyContent
 import com.snt.phoney.ui.message.dummy.DummyContent.DummyItem
+import kotlinx.android.synthetic.main.fragment_message_list.*
 
 /**
  * A fragment representing a list of Items.
@@ -27,15 +28,16 @@ class MessageFragment : Fragment() {
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,
                               savedInstanceState: Bundle?): View? {
-        val view = inflater.inflate(R.layout.fragment_message_list, container, false)
+        return inflater.inflate(R.layout.fragment_message_list, container, false)
+    }
+
+    override fun onActivityCreated(savedInstanceState: Bundle?) {
+        super.onActivityCreated(savedInstanceState)
         // Set the adapter
-        if (view is RecyclerView) {
-            with(view) {
-                layoutManager = LinearLayoutManager(context)
-                adapter = MessageRecyclerViewAdapter(DummyContent.ITEMS)
-            }
+        with(messageRecyclerView) {
+            layoutManager = LinearLayoutManager(context)
+            adapter = MessageRecyclerViewAdapter(DummyContent.ITEMS)
         }
-        return view
     }
 
     override fun onAttach(context: Context) {

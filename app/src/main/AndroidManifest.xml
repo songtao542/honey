@@ -24,10 +24,7 @@
         <activity android:name=".ui.startup.StartupActivity" />
         <activity android:name=".ui.signin.SigninActivity"></activity>
         <activity android:name=".ui.signup.SignupActivity" />
-        <activity
-            android:name=".ui.main.Main2Activity"
-            android:label="@string/title_activity_main2"
-            android:theme="@style/AppTheme.NoActionBar"></activity>
+
     </application>
 
 </manifest>

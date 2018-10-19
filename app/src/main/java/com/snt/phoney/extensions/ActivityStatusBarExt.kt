@@ -7,7 +7,7 @@ import android.view.ViewGroup
 import android.view.WindowManager
 
 fun Activity.setStatusBarColor(color: Int) {
-    if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
+    if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT && Build.VERSION.SDK_INT < Build.VERSION_CODES.LOLLIPOP) {
         var windowParams = window.attributes
         // 设置透明状态栏
         windowParams?.let {
@@ -18,12 +18,12 @@ fun Activity.setStatusBarColor(color: Int) {
                 window?.attributes = it
             }
         }
-        window.decorView.fitsSystemWindows = true
+//        window.decorView.fitsSystemWindows = true
 
         // 设置状态栏颜色
         var contentView = this.findViewById<ViewGroup>(android.R.id.content)
-        var resourceId = this.getResources().getIdentifier("status_bar_height", "dimen", "android")
-        var statusBarHeight = this.getResources().getDimensionPixelSize(resourceId)
+        var resourceId = this.resources.getIdentifier("status_bar_height", "dimen", "android")
+        var statusBarHeight = this.resources.getDimensionPixelSize(resourceId)
         var statusBarView = contentView.findViewById<View>(com.snt.phoney.R.id.status_bar_holder)
         if (statusBarView == null) {
             statusBarView = View(this);
@@ -37,4 +37,13 @@ fun Activity.setStatusBarColor(color: Int) {
         contentChild.fitsSystemWindows = true
     }
 
+}
+
+
+fun Activity.colorOf(id: Int): Int {
+    return if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+        this.getColor(id)
+    } else {
+        this.resources.getColor(id)
+    }
 }

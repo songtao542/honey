@@ -4,7 +4,6 @@ import android.os.Bundle
 import android.support.design.widget.TabLayout
 import android.support.v4.app.Fragment
 import android.support.v4.app.FragmentStatePagerAdapter
-import android.support.v7.app.AppCompatActivity
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -32,7 +31,7 @@ class HomeFragment : Fragment() {
 //        if (activity is AppCompatActivity) {
 //            activity.setSupportActionBar(homeToolbar)
 //        }
-
+        homeAppBar.bringToFront()
         homeTab.setupWithViewPager(homePager)
         homeTab.tabMode = TabLayout.MODE_SCROLLABLE
         homePager.adapter = object : FragmentStatePagerAdapter(this.childFragmentManager) {
