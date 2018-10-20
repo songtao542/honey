@@ -3,17 +3,30 @@
     <!-- Base application theme. -->
     <style name="AppTheme" parent="Theme.AppCompat.Light.NoActionBar">
         <!-- Customize your theme here. -->
-        <item name="colorPrimary">@color/colorPrimary</item>
-        <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
-        <item name="colorAccent">@color/colorAccent</item>
+        <item name="colorPrimary">@color/colorPrimaryFemale</item>
+        <item name="colorPrimaryDark">@color/colorPrimaryDarkFemale</item>
+        <item name="colorAccent">@color/colorAccentFemale</item>
+        <item name="actionBarStyle">@style/AppTheme.Toolbar</item>
+        <item name="toolbarStyle">@style/AppTheme.Toolbar</item>
+
         <item name="android:windowTranslucentStatus">true</item>
     </style>
 
-    <style name="Main" parent="AppTheme">
-        <!-- Customize your theme here. -->
-        <item name="colorPrimary">@color/colorPrimary</item>
-        <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
-        <item name="colorAccent">@color/colorAccent</item>
+    <style name="AppTheme.Male" parent="AppTheme">
+        <item name="colorPrimary">@color/colorPrimaryMale</item>
+        <item name="colorPrimaryDark">@color/colorPrimaryDarkMale</item>
+        <item name="colorAccent">@color/colorAccentMale</item>
+    </style>
+
+    <style name="AppTheme.Female" parent="AppTheme">
+        <item name="colorPrimary">@color/colorPrimaryFemale</item>
+        <item name="colorPrimaryDark">@color/colorPrimaryDarkFemale</item>
+        <item name="colorAccent">@color/colorAccentFemale</item>
+    </style>
+
+    <style name="AppTheme.Sign" parent="Theme.AppCompat.Light.NoActionBar">
+        <item name="android:windowTranslucentStatus">true</item>
+        <item name="android:windowBackground">@android:color/white</item>
     </style>
 
 </resources>

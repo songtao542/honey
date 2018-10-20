@@ -52,6 +52,7 @@ versions.paging = "1.0.1"
 versions.navigation = "1.0.0-alpha06"
 versions.work = "1.0.0-alpha09"
 versions.layer_cache = "0.2.0"
+versions.multidex = "1.0.3"
 def deps = [:]
 
 def support = [:]
@@ -62,6 +63,7 @@ support.cardview = "com.android.support:cardview-v7:$versions.support"
 support.design = "com.android.support:design:$versions.support"
 support.v4 = "com.android.support:support-v4:$versions.support"
 support.core_utils = "com.android.support:support-core-utils:$versions.support"
+support.vector_drawable = "com.android.support:support-vector-drawable:$versions.support"
 deps.support = support
 
 def room = [:]
@@ -175,13 +177,14 @@ cache.layer_cache_android = "com.appmattus:layercache-android:$versions.layer_ca
 cache.layer_cache_serializer = "com.appmattus:layercache-serializer:$versions.layer_cache"
 deps.cache = cache
 
+deps.multidex = "com.android.support:multidex:$versions.multidex"
 
 deps.databinding_compiler = "com.android.databinding:compiler:$versions.android_gradle_plugin"
 
 ext.deps = deps
 
 def build_versions = [:]
-build_versions.min_sdk = 17
+build_versions.min_sdk = 19
 build_versions.target_sdk = 26
 build_versions.build_tools = "27.0.3"
 ext.build_versions = build_versions

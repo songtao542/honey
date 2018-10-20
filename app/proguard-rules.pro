@@ -37,3 +37,11 @@
 }
 
 -dontwarn com.bumptech.glide.load.resource.bitmap.VideoDecoder
+
+-keep public class com.snt.phoney.domain.**
+-keep public class com.snt.phoney.repository.**
+
+-keep public class * extends android.arch.lifecycle.ViewModel
+-keep public class kotlin.reflect.**
+-keep public class kotlinx.**
+-keep public class com.appmattus.**

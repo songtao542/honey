@@ -24,6 +24,7 @@ import com.snt.phoney.utils.cache.DatabaseCache
 import com.snt.phoney.utils.data.Constants
 import com.appmattus.layercache.Cache
 import com.appmattus.layercache.MapCache
+import com.appmattus.layercache.SharedPreferencesCache
 import com.appmattus.layercache.jsonSerializer
 import kotlinx.coroutines.experimental.runBlocking
 import kotlinx.serialization.json.JSON

@@ -11,6 +11,9 @@ import com.snt.phoney.R
 import com.snt.phoney.ui.home.following.FollowingFragment
 import com.snt.phoney.ui.home.friend.FriendFragment
 import kotlinx.android.synthetic.main.fragment_home.*
+import android.text.Spanned
+import android.text.style.RelativeSizeSpan
+import android.text.SpannableString
 
 
 class HomeFragment : Fragment() {
@@ -38,9 +41,6 @@ class HomeFragment : Fragment() {
             val friendFragment: FriendFragment = FriendFragment.newInstance()
             val followingFragment: FollowingFragment = FollowingFragment.newInstance()
 
-            val tabFriendTitle = getString(R.string.tab_home_friend)
-            val tabFollowingTitle = getString(R.string.tab_home_following)
-
             override fun getItem(position: Int): Fragment {
                 return when {
                     position <= 0 -> friendFragment
@@ -52,16 +52,16 @@ class HomeFragment : Fragment() {
                 return 2
             }
 
-            override fun getPageTitle(position: Int): CharSequence? {
-                return when {
-                    position <= 0 -> tabFriendTitle
-                    else -> tabFollowingTitle
-                }
-            }
         }
 
-//        homeTab.addTab(homeTab.newTab().setText("Tab 1"))
-//        homeTab.addTab(homeTab.newTab().setText("Tab 2"))
+        val tabFriendTitle = getString(R.string.tab_home_friend)
+        val tabFollowingTitle = SpannableString(getString(R.string.tab_home_following))
+        tabFollowingTitle.setSpan(RelativeSizeSpan(1f), 0, 2, Spanned.SPAN_INCLUSIVE_EXCLUSIVE)
+        tabFollowingTitle.setSpan(RelativeSizeSpan(0.64f), 2, 4, Spanned.SPAN_INCLUSIVE_EXCLUSIVE)
+
+        homeTab.getTabAt(0)?.text = tabFriendTitle
+        homeTab.getTabAt(1)?.text = tabFollowingTitle
+
     }
 
 }

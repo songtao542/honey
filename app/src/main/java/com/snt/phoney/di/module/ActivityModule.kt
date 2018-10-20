@@ -5,6 +5,7 @@ import com.snt.phoney.ui.main.MainActivity
 import com.snt.phoney.ui.signin.SigninActivity
 import com.snt.phoney.ui.startup.StartupActivity
 import com.snt.phoney.di.ViewModelFactory
+import com.snt.phoney.ui.signup.SignupActivity
 
 import dagger.Binds
 import dagger.Module
@@ -22,6 +23,9 @@ abstract class ActivityModule {
 
     @ContributesAndroidInjector(modules = [FragmentModule::class])
     internal abstract fun contributeSigninActivity(): SigninActivity
+
+    @ContributesAndroidInjector(modules = [FragmentModule::class])
+    internal abstract fun contributeSignupActivity(): SignupActivity
 
     @ContributesAndroidInjector(modules = [FragmentModule::class])
     internal abstract fun contributeMainActivity(): MainActivity

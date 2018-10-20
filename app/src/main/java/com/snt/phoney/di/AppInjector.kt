@@ -23,14 +23,14 @@ import android.os.Bundle
 import android.support.v4.app.Fragment
 import android.support.v4.app.FragmentActivity
 import android.support.v4.app.FragmentManager
-import com.snt.phoney.base.DemoApp
+import com.snt.phoney.base.App
 import com.snt.phoney.di.component.DaggerAppComponent
 import dagger.android.AndroidInjection
 import dagger.android.support.AndroidSupportInjection
 import dagger.android.support.HasSupportFragmentInjector
 
 object AppInjector {
-    fun init(app: DemoApp) {
+    fun init(app: App) {
         DaggerAppComponent.builder().application(app).build().inject(app)
         app.registerActivityLifecycleCallbacks(object : Application.ActivityLifecycleCallbacks {
             override fun onActivityCreated(activity: Activity, savedInstanceState: Bundle?) {

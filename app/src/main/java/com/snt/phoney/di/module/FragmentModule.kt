@@ -6,6 +6,7 @@ import com.snt.phoney.ui.mine.MineFragment
 import com.snt.phoney.ui.signin.SigninFragment
 import com.snt.phoney.ui.resetpassword.ResetPasswordFragment
 import com.snt.phoney.ui.settings.SettingsFragment
+import com.snt.phoney.ui.signup.SignupFragment
 import com.snt.phoney.ui.square.SquareFragment
 
 import dagger.Module
@@ -15,7 +16,10 @@ import dagger.android.ContributesAndroidInjector
 @Module
 abstract class FragmentModule {
     @ContributesAndroidInjector
-    abstract fun contributeLoginFragment(): SigninFragment
+    abstract fun contributeSigninFragment(): SigninFragment
+
+    @ContributesAndroidInjector
+    abstract fun contributeSignupFragment(): SignupFragment
 
     @ContributesAndroidInjector
     abstract fun contributeResetPasswordFragment(): ResetPasswordFragment

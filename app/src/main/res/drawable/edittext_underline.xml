@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8"?>
+<selector xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <item android:state_focused="true">
+        <layer-list>
+            <item android:left="-2dp" android:right="-2dp" android:top="-2dp">
+                <shape>
+                    <stroke android:width="@dimen/edittext_border_width" android:color="@color/edittextBorderFocusColor" />
+                </shape>
+            </item>
+        </layer-list>
+    </item>
+
+
+    <item>
+        <layer-list>
+            <item android:left="-2dp" android:right="-2dp" android:top="-2dp">
+                <shape>
+                    <stroke android:width="@dimen/edittext_border_width" android:color="@color/edittextBorderColor" />
+                </shape>
+            </item>
+        </layer-list>
+    </item>
+
+</selector>

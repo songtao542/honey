@@ -1,5 +1,7 @@
 package com.snt.phoney.ui.main
 
+import android.content.Context
+import android.content.Intent
 import android.os.Bundle
 import android.support.design.widget.BottomNavigationView
 import android.support.v4.app.Fragment
@@ -16,6 +18,10 @@ import com.snt.phoney.ui.square.SquareFragment
 import kotlinx.android.synthetic.main.activity_main.*
 
 class MainActivity : BaseActivity() {
+
+    companion object {
+        fun newIntent(context: Context): Intent = Intent(context, MainActivity::class.java)
+    }
 
     private val homeFragment = HomeFragment.newInstance()
     private val squareFragment = SquareFragment.newInstance()
@@ -51,7 +57,7 @@ class MainActivity : BaseActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 //        setStatusBarColor(resources.getColor(R.color.colorPrimary))
-        setStatusBarColor(colorOf(R.color.colorPrimary))
+        setStatusBarColor(colorOf(R.color.colorPrimaryFemale))
         navigation.disableShiftMode()
         showFragment("home")
         navigation.setOnNavigationItemSelectedListener(mOnNavigationItemSelectedListener)

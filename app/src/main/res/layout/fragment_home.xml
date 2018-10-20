@@ -11,21 +11,21 @@
         android:id="@+id/homeAppBar"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:translationZ="10dp"
         android:theme="@style/AppTheme.AppBarOverlay">
 
         <android.support.v7.widget.Toolbar
             android:id="@+id/homeToolbar"
+            style="@style/AppTheme.ToolbarWithTab"
             android:layout_width="match_parent"
             android:layout_height="?attr/actionBarSize"
             android:background="?attr/colorPrimary"
-            android:fitsSystemWindows="false"
-            app:popupTheme="@style/AppTheme.PopupOverlay">
+            android:fitsSystemWindows="false">
 
-            <android.support.design.widget.TabLayout
+            <com.snt.phoney.widget.TabLayout
                 android:id="@+id/homeTab"
+                style="@style/AppTheme.Tab"
                 android:layout_width="wrap_content"
-                android:layout_height="wrap_content"></android.support.design.widget.TabLayout>
+                android:layout_height="wrap_content"></com.snt.phoney.widget.TabLayout>
         </android.support.v7.widget.Toolbar>
 
     </android.support.design.widget.AppBarLayout>
@@ -34,7 +34,7 @@
         android:id="@+id/homePager"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:clipToPadding="false"
-        android:paddingTop="?attr/actionBarSize"></android.support.v4.view.ViewPager>
+        android:clipToPadding="true"
+        android:layout_marginTop="?attr/actionBarSize"></android.support.v4.view.ViewPager>
 
 </android.support.design.widget.CoordinatorLayout>

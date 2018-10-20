@@ -18,7 +18,7 @@
 package com.snt.phoney.di.component
 
 import android.app.Application
-import com.snt.phoney.base.DemoApp
+import com.snt.phoney.base.App
 import com.snt.phoney.di.module.AppModule
 import dagger.BindsInstance
 import dagger.Component
@@ -34,7 +34,7 @@ import javax.inject.Singleton
             AndroidSupportInjectionModule::class,
             AppModule::class]
 )
-interface AppComponent : AndroidInjector<DemoApp> {
+interface AppComponent : AndroidInjector<App> {
 
     @Component.Builder
     interface Builder {
@@ -45,5 +45,5 @@ interface AppComponent : AndroidInjector<DemoApp> {
         fun application(application: Application): Builder
     }
 
-    override fun inject(app: DemoApp)
+    override fun inject(app: App)
 }

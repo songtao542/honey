@@ -1,6 +1,21 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <color name="colorPrimary">#5945df</color>
-    <color name="colorPrimaryDark">#aa00aa</color>
-    <color name="colorAccent">#D81B60</color>
+    <color name="colorPrimaryFemale">#FF4878</color>
+    <color name="colorPrimaryDarkFemale">#FF4878</color>
+    <color name="colorAccentFemale">#FF4878</color>
+
+    <color name="colorPrimaryMale">#9100FF</color>
+    <color name="colorPrimaryDarkMale">#9100FF</color>
+    <color name="colorAccentMale">#9100FF</color>
+
+
+    <color name="edittextBorderColor">#dddddd</color>
+    <color name="edittextBorderFocusColor">#444444</color>
+
+    <color name="buttonBgColor">#555555</color>
+    <color name="buttonPressedBgColor">#333333</color>
+
+    <color name="buttonGetVerificationCodeBgColor">#8d8d8d</color>
+    <color name="buttonGetVerificationCodePressedBgColor">#6d6d6d</color>
+
 </resources>

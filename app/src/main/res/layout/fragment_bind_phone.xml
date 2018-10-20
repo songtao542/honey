@@ -1,0 +1,89 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    tools:context=".ui.signup.SignupFragment">
+
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="?attr/actionBarSize"
+        android:layout_gravity="center_horizontal"
+        android:background="#9d9d9d"
+        android:clickable="true"
+        android:gravity="center"
+        android:text="绑定手机号"
+        android:textColor="@android:color/white" />
+
+    <EditText
+        android:id="@+id/username"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/edittext_height"
+        android:layout_marginLeft="20dp"
+        android:layout_marginTop="30dp"
+        android:layout_marginRight="20dp"
+        android:background="@drawable/edittext_rounded_rectangle_border"
+        android:paddingStart="25dp"
+        android:paddingEnd="25dp"
+        android:text="@{loginViewModel.user != null? loginViewModel.user.username : null}" />
+
+    <FrameLayout
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/edittext_height"
+        android:layout_marginLeft="20dp"
+        android:layout_marginTop="30dp"
+        android:layout_marginRight="20dp">
+
+        <EditText
+            android:id="@+id/verificationCode"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/edittext_height"
+            android:background="@drawable/edittext_rounded_rectangle_border"
+            android:paddingStart="25dp"
+            android:paddingEnd="25dp"
+            android:text="@{loginViewModel.user != null? loginViewModel.user.password : null}" />
+
+
+        <TextView
+            android:id="@+id/getVerificationCode"
+            android:layout_width="wrap_content"
+            android:layout_height="@dimen/button_get_verification_code_height"
+            android:layout_gravity="center|right"
+            android:layout_marginRight="20dp"
+            android:background="@drawable/get_verification_code_selector"
+            android:clickable="true"
+            android:gravity="center"
+            android:paddingLeft="8dp"
+            android:paddingRight="8dp"
+            android:text="@string/get_verification_code"
+            android:textColor="@android:color/white" />
+    </FrameLayout>
+
+    <Button
+        android:id="@+id/login"
+        style="?android:attr/borderlessButtonStyle"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/button_height"
+        android:layout_marginLeft="20dp"
+        android:layout_marginTop="30dp"
+        android:layout_marginRight="20dp"
+        android:background="@drawable/button_rounded_rectangle_selector"
+        android:elevation="0dp"
+        android:text="确认绑定"
+        android:textColor="@android:color/white" />
+
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/button_height"
+        android:layout_gravity="center_horizontal"
+        android:layout_marginLeft="20dp"
+        android:layout_marginTop="20dp"
+        android:layout_marginRight="20dp"
+        android:gravity="center"
+        android:text="暂时不绑定" />
+
+</LinearLayout>

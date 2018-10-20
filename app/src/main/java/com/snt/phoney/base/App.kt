@@ -18,7 +18,8 @@
 package com.snt.phoney.base
 
 import android.app.Activity
-import android.app.Application
+import android.content.Context
+import android.support.multidex.MultiDexApplication
 import com.snt.phoney.BuildConfig
 import com.snt.phoney.di.AppInjector
 import com.snt.phoney.di.component.AppComponent
@@ -26,8 +27,10 @@ import dagger.android.DispatchingAndroidInjector
 import dagger.android.HasActivityInjector
 import timber.log.Timber
 import javax.inject.Inject
+import android.support.multidex.MultiDex
 
-class DemoApp : Application(), HasActivityInjector {
+
+class App : MultiDexApplication(), HasActivityInjector {
 
     private lateinit var appComponent: AppComponent
 
@@ -45,5 +48,10 @@ class DemoApp : Application(), HasActivityInjector {
 
     override fun activityInjector() = dispatchingAndroidInjector
 
+
+    override fun attachBaseContext(base: Context) {
+        super.attachBaseContext(base)
+        MultiDex.install(this)
+    }
 
 }

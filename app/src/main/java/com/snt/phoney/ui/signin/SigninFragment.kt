@@ -17,12 +17,10 @@ import com.snt.phoney.domain.model.Response
 import com.snt.phoney.domain.model.User
 import com.snt.phoney.extensions.autoCleared
 import com.snt.phoney.extensions.disposedBy
+import com.snt.phoney.ui.signup.SignupActivity
 
 /**
  * A simple [Fragment] subclass.
- * Activities that contain this fragment must implement the
- * [SigninFragment.OnFragmentInteractionListener] interface
- * to handle interaction events.
  * Use the [SigninFragment.newInstance] factory method to
  * create an instance of this fragment.
  *
@@ -47,17 +45,16 @@ class SigninFragment : BaseFragment() {
         viewModel = ViewModelProviders.of(this, viewModelFactory).get(SigninViewModel::class.java)
         binding.loginViewModel = viewModel
 
-        binding.login.setOnClickListener { onLoginButtonPressed() }
-
-        binding.test.setOnClickListener { v ->
-            var user: User? = viewModel.user
-            Log.d("TTTT", "onActivityCreated, user:$user")
-        }
-
+        binding.login.setOnClickListener { onLoginButtonClicked() }
+        binding.forgetPassword.setOnClickListener { onForgetPasswordClicked() }
+        binding.qq.setOnClickListener { onQQClicked() }
+        binding.weixin.setOnClickListener { onWeixinClicked() }
+        binding.weibo.setOnClickListener { onWeiboClicked() }
 
     }
 
-    fun onLoginButtonPressed() {
+
+    private fun onLoginButtonClicked() {
         Log.d("TTTT", "click login " + viewModel)
         viewModel.signin("songtao", "wangsongtao").subscribe { response: Response<User>? ->
             Log.d("TTTT", "response:" + response?.data)
@@ -67,9 +64,25 @@ class SigninFragment : BaseFragment() {
 //        viewModel.login("songtao", "wangsongtao").observe(this, Observer {
 //            Log.d("TTTT", "data:" + it?.data)
 //        })
+    }
 
+    private fun onForgetPasswordClicked() {
 
     }
+
+    private fun onWeiboClicked() {
+    }
+
+    private fun onWeixinClicked() {
+    }
+
+    private fun onQQClicked() {
+        Log.d("TTTT", "AAAAAAAAAAAAAAAAAAAAAAAA")
+        context?.let {
+            startActivity(SignupActivity.newIntent(it))
+        }
+    }
+
 
     companion object {
         @JvmStatic

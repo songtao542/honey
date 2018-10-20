@@ -2,6 +2,21 @@
     <!-- Default screen margins, per the Android Design guidelines. -->
     <dimen name="activity_horizontal_margin">16dp</dimen>
     <dimen name="activity_vertical_margin">16dp</dimen>
+    <dimen name="content_padding_start">16dp</dimen>
+    <dimen name="content_padding_end">16dp</dimen>
+
+    <dimen name="sign_content_padding_start">30dp</dimen>
+    <dimen name="sign_content_padding_end">30dp</dimen>
+
     <dimen name="text_margin">16dp</dimen>
     <dimen name="fab_margin">16dp</dimen>
+    <dimen name="actionbar_padding_start">20dp</dimen>
+
+    <dimen name="edittext_height">46dp</dimen>
+    <dimen name="edittext_border_width">1dp</dimen>
+    <dimen name="button_height">46dp</dimen>
+    <dimen name="button_get_verification_code_height">30dp</dimen>
+    <dimen name="button_get_verification_code_corner_radius">2dp</dimen>
+
+
 </resources>
