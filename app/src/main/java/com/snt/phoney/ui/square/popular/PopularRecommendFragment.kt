@@ -9,6 +9,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import com.snt.phoney.R
+import com.snt.phoney.base.BaseFragment
 import com.snt.phoney.ui.square.popular.dummy.DummyContent
 import com.snt.phoney.ui.square.popular.dummy.DummyContent.DummyItem
 
@@ -16,7 +17,7 @@ import com.snt.phoney.ui.square.popular.dummy.DummyContent.DummyItem
  * A fragment representing a list of Items.
  * Activities containing this fragment MUST implement the
  */
-class PopularRecommendFragment : Fragment() {
+class PopularRecommendFragment : BaseFragment() {
 
 
     override fun onCreate(savedInstanceState: Bundle?) {

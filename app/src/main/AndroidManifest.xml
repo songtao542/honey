@@ -14,9 +14,7 @@
         android:theme="@style/AppTheme">
         <activity
             android:name=".ui.main.MainActivity"
-            android:screenOrientation="portrait">
-
-        </activity>
+            android:screenOrientation="portrait" />
         <activity
             android:name=".ui.startup.StartupActivity"
             android:screenOrientation="portrait" />
@@ -34,7 +32,10 @@
             android:name=".ui.signup.SignupActivity"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme.Sign" />
-
+        <activity android:name=".ui.dating.create.CreateDatingActivity" />
+        <activity android:name=".ui.dating.list.DateListActivity" />
+        <activity android:name=".ui.wallet.WalletActivity" />
+        <activity android:name=".ui.nearby.NearbyActivity"></activity>
     </application>
 
 </manifest>

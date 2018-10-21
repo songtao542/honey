@@ -1,1 +1,2 @@
 android/arch/lifecycle/ProcessLifecycleOwnerInitializer.class
+com/snt/phoney/base/App.class

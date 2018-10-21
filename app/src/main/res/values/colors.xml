@@ -18,4 +18,8 @@
     <color name="buttonGetVerificationCodeBgColor">#8d8d8d</color>
     <color name="buttonGetVerificationCodePressedBgColor">#6d6d6d</color>
 
+    <color name="setting_item_divider_color">#bbbbbb</color>
+    <color name="setting_bg_color">#eeeeee</color>
+    <color name="setting_item_bg_color">#ffffff</color>
+
 </resources>

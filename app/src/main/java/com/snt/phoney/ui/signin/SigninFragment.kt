@@ -17,6 +17,8 @@ import com.snt.phoney.domain.model.Response
 import com.snt.phoney.domain.model.User
 import com.snt.phoney.extensions.autoCleared
 import com.snt.phoney.extensions.disposedBy
+import com.snt.phoney.ui.dating.create.CreateDatingActivity
+import com.snt.phoney.ui.nearby.NearbyActivity
 import com.snt.phoney.ui.signup.SignupActivity
 
 /**
@@ -71,9 +73,15 @@ class SigninFragment : BaseFragment() {
     }
 
     private fun onWeiboClicked() {
+        context?.let {
+            startActivity(NearbyActivity.newIntent(it))
+        }
     }
 
     private fun onWeixinClicked() {
+        context?.let {
+            startActivity(CreateDatingActivity.newIntent(it))
+        }
     }
 
     private fun onQQClicked() {

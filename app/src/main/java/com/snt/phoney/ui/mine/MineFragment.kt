@@ -9,6 +9,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import com.snt.phoney.R
+import com.snt.phoney.base.BaseFragment
 import com.snt.phoney.ui.mine.dummy.DummyContent
 import kotlinx.android.synthetic.main.fragment_mine_list.*
 
@@ -17,7 +18,7 @@ import kotlinx.android.synthetic.main.fragment_mine_list.*
  * Activities containing this fragment MUST implement the
  * [MineFragment.OnListFragmentInteractionListener] interface.
  */
-class MineFragment : Fragment() {
+class MineFragment : BaseFragment() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)

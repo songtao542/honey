@@ -18,5 +18,8 @@
     <dimen name="button_get_verification_code_height">30dp</dimen>
     <dimen name="button_get_verification_code_corner_radius">2dp</dimen>
 
+    <dimen name="setting_item_height">48dp</dimen>
+    <dimen name="setting_item_divider_height">1px</dimen>
+
 
 </resources>

@@ -39,7 +39,6 @@ fun Activity.setStatusBarColor(color: Int) {
 
 }
 
-
 fun Activity.colorOf(id: Int): Int {
     return if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
         this.getColor(id)

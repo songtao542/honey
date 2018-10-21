@@ -10,6 +10,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import com.snt.phoney.R
+import com.snt.phoney.base.BaseFragment
 
 import com.snt.phoney.ui.home.following.dummy.DummyContent
 import com.snt.phoney.ui.home.following.dummy.DummyContent.DummyItem
@@ -20,7 +21,7 @@ import com.snt.phoney.ui.home.friend.FriendFragment
  * Activities containing this fragment MUST implement the
  * [FollowingFragment.OnListFragmentInteractionListener] interface.
  */
-class FollowingFragment : Fragment() {
+class FollowingFragment : BaseFragment() {
 
 
     override fun onCreate(savedInstanceState: Bundle?) {

@@ -1,27 +1,21 @@
-package com.snt.phoney.ui.message
+package com.snt.phoney.ui.nearby
 
 import android.content.Context
 import android.os.Bundle
-import android.support.v4.app.Fragment
 import android.support.v7.widget.GridLayoutManager
-import android.support.v7.widget.LinearLayoutManager
-import android.support.v7.widget.RecyclerView
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import com.snt.phoney.R
 import com.snt.phoney.base.BaseFragment
-
-import com.snt.phoney.ui.message.dummy.DummyContent
-import com.snt.phoney.ui.message.dummy.DummyContent.DummyItem
-import kotlinx.android.synthetic.main.fragment_message_list.*
+import com.snt.phoney.ui.nearby.dummy.DummyContent
+import kotlinx.android.synthetic.main.fragment_nearby_list.*
 
 /**
  * A fragment representing a list of Items.
  * Activities containing this fragment MUST implement the
  */
-class MessageFragment : BaseFragment() {
+class NearbyFragment : BaseFragment() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -29,15 +23,15 @@ class MessageFragment : BaseFragment() {
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,
                               savedInstanceState: Bundle?): View? {
-        return inflater.inflate(R.layout.fragment_message_list, container, false)
+        val view = inflater.inflate(R.layout.fragment_nearby_list, container, false)
+        return view
     }
 
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
-        // Set the adapter
-        with(messageRecyclerView) {
-            layoutManager = LinearLayoutManager(context)
-            adapter = MessageRecyclerViewAdapter(DummyContent.ITEMS)
+        with(list) {
+            layoutManager = GridLayoutManager(context, 3)
+            adapter = NearbyRecyclerViewAdapter(DummyContent.ITEMS)
         }
     }
 
@@ -52,6 +46,6 @@ class MessageFragment : BaseFragment() {
 
     companion object {
         @JvmStatic
-        fun newInstance() = MessageFragment()
+        fun newInstance() = NearbyFragment()
     }
 }

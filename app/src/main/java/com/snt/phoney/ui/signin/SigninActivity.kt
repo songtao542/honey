@@ -5,7 +5,9 @@ import android.content.Intent
 import android.os.Bundle
 import com.snt.phoney.R
 import com.snt.phoney.base.BaseActivity
+import com.snt.phoney.extensions.colorOf
 import com.snt.phoney.extensions.setContentFragment
+import com.snt.phoney.extensions.setStatusBarColor
 
 class SigninActivity : BaseActivity() {
 
@@ -16,6 +18,7 @@ class SigninActivity : BaseActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_signin)
+        setStatusBarColor(colorOf(android.R.color.white))
         setContentFragment(R.id.containerLayout) { SigninFragment.newInstance() }
         handleIntent(intent)
     }

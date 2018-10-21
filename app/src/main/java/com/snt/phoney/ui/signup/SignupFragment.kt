@@ -48,6 +48,7 @@ class SignupFragment : BaseFragment() {
         binding.root.confirmStep2.setOnClickListener { step3.bringToFront() }
         binding.root.confirmStep3.setOnClickListener { context?.let { startActivity(MainActivity.newIntent(it)) } }
 
+
     }
 
 }
