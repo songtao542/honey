@@ -18,14 +18,14 @@
 package com.snt.phoney.repository
 
 import android.app.Application
+import com.appmattus.layercache.Cache
+import com.appmattus.layercache.MapCache
+import com.appmattus.layercache.jsonSerializer
 import com.snt.phoney.domain.model.User
 import com.snt.phoney.domain.repository.CacheRepository
 import com.snt.phoney.utils.cache.DatabaseCache
+import com.snt.phoney.utils.cache.KeyValueDatabaseCache
 import com.snt.phoney.utils.data.Constants
-import com.appmattus.layercache.Cache
-import com.appmattus.layercache.MapCache
-import com.appmattus.layercache.SharedPreferencesCache
-import com.appmattus.layercache.jsonSerializer
 import kotlinx.coroutines.experimental.runBlocking
 import kotlinx.serialization.json.JSON
 import javax.inject.Inject
@@ -37,18 +37,17 @@ class CacheRepositoryImpl @Inject constructor(application: Application) : CacheR
     private val userFirstCache: Cache<String, User> = MapCache().jsonSerializer()
 //    private val userSecondCache: Cache<String, User> = SharedPreferencesCache(application, Constants.Cache.USER_CACHE_NAME).withString().jsonSerializer()
 
-    //    private val userSecondCache: Cache<String, User> = UserDatabaseCache(application)
-    private val userSecondCache: Cache<String, User> = object : DatabaseCache<User>(application) {
-        override fun parse(value: String): User {
-            value?.let {
-                return JSON.parse(it)
-            }
-        }
-
-        override fun stringify(value: User): String {
-            return JSON.stringify(value)
-        }
-    }
+    private val userSecondCache: Cache<String, User> = KeyValueDatabaseCache(application).jsonSerializer()
+//    private val userSecondCache: Cache<String, User> = object : DatabaseCache<User>(application) {
+//        override fun parse(value: String): User {
+//            value?.let {
+//                return JSON.parse(it)
+//            }
+//        }
+//        override fun stringify(value: User): String {
+//            return JSON.stringify(value)
+//        }
+//    }
 
     private var userCache: Cache<String, User>
 

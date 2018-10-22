@@ -17,8 +17,6 @@ import com.snt.phoney.ui.home.friend.dummy.DummyContent.DummyItem
 
 /**
  * A fragment representing a list of Items.
- * Activities containing this fragment MUST implement the
- * [FriendFragment.OnListFragmentInteractionListener] interface.
  */
 class FriendFragment : BaseFragment() {
 

@@ -22,4 +22,8 @@
     <dimen name="setting_item_divider_height">1px</dimen>
 
 
+    <dimen name="textsize_large">16sp</dimen>
+    <dimen name="textsize_normal">15sp</dimen>
+    <dimen name="textsize_small">13sp</dimen>
+
 </resources>

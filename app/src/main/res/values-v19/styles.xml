@@ -24,7 +24,7 @@
         <item name="colorAccent">@color/colorAccentFemale</item>
     </style>
 
-    <style name="AppTheme.Sign" parent="Theme.AppCompat.Light.NoActionBar">
+    <style name="AppTheme.Common" parent="Theme.AppCompat.Light.NoActionBar">
         <item name="android:windowTranslucentStatus">true</item>
         <item name="android:windowBackground">@android:color/white</item>
     </style>

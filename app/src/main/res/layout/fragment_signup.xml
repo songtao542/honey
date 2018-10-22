@@ -5,7 +5,7 @@
 
     <data class="SignupFragmentBinding">
         <variable
-            name="signupViewModel"
+            name="viewModel"
             type="com.snt.phoney.ui.signup.SignupViewModel" />
     </data>
 

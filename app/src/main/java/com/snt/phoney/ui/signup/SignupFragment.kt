@@ -38,7 +38,7 @@ class SignupFragment : BaseFragment() {
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
         viewModel = ViewModelProviders.of(this, viewModelFactory).get(SignupViewModel::class.java)
-
+        binding.viewModel = viewModel
         binding.root.back.setNavigationOnClickListener { activity?.finish() }
         binding.root.back2.setNavigationOnClickListener { step1.bringToFront() }
         binding.root.back3.setNavigationOnClickListener { step2.bringToFront() }
@@ -46,7 +46,12 @@ class SignupFragment : BaseFragment() {
         binding.root.male.setOnClickListener { step2.bringToFront() }
         binding.root.female.setOnClickListener { step2.bringToFront() }
         binding.root.confirmStep2.setOnClickListener { step3.bringToFront() }
-        binding.root.confirmStep3.setOnClickListener { context?.let { startActivity(MainActivity.newIntent(it)) } }
+        binding.root.confirmStep3.setOnClickListener {
+            context?.let {
+                BindPhoneFragment.newInstance().show(childFragmentManager, "bindPhone")
+//                startActivity(MainActivity.newIntent(it))
+            }
+        }
 
 
     }

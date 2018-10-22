@@ -1,0 +1,154 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <data class="CreateDatingFragmentBinding">
+
+        <variable
+            name="viewModel"
+            type="com.snt.phoney.ui.dating.create.CreateDatingViewModel" />
+    </data>
+
+    <android.support.constraint.ConstraintLayout
+        android:id="@+id/newdating"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@color/setting_bg_color"
+        android:orientation="vertical"
+        tools:context=".ui.dating.create.CreateDatingFragment">
+
+        <android.support.v7.widget.Toolbar
+            android:id="@+id/toolbar"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@color/setting_item_bg_color"
+            app:navigationIcon="@drawable/ic_back"
+            app:title="发布约会信息"></android.support.v7.widget.Toolbar>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            app:layout_constraintTop_toBottomOf="@+id/back">
+
+            <FrameLayout
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/setting_item_height"
+                android:layout_marginTop="30dp"
+                android:background="@color/setting_item_bg_color"
+                android:paddingStart="@dimen/content_padding_start"
+                android:paddingEnd="@dimen/content_padding_end">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:gravity="center_vertical"
+                    android:text="约会城市"
+                    android:textColor="@android:color/black"
+                    android:textSize="@dimen/textsize_normal" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:layout_gravity="right"
+                    android:gravity="center_vertical"
+                    android:text="约会城市"
+                    android:textColor="@android:color/darker_gray"
+                    android:textSize="@dimen/textsize_normal" />
+            </FrameLayout>
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/setting_item_divider_height"
+                android:background="@color/setting_item_divider_color" />
+
+            <FrameLayout
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/setting_item_height"
+                android:background="@color/setting_item_bg_color"
+                android:paddingStart="@dimen/content_padding_start"
+                android:paddingEnd="@dimen/content_padding_end">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:gravity="center_vertical"
+                    android:text="约会城市"
+                    android:textColor="@android:color/black"
+                    android:textSize="@dimen/textsize_normal" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:layout_gravity="right"
+                    android:gravity="center_vertical"
+                    android:text="约会城市"
+                    android:textColor="@android:color/darker_gray"
+                    android:textSize="@dimen/textsize_normal" />
+            </FrameLayout>
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/setting_item_divider_height"
+                android:background="@color/setting_item_divider_color" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="30dp"
+                android:layout_marginTop="10dp"
+                android:gravity="center_vertical"
+                android:paddingStart="@dimen/content_padding_start"
+                android:paddingEnd="@dimen/content_padding_end"
+                android:text="约会内容"
+                android:textColor="@android:color/black"
+                android:textSize="@dimen/textsize_normal" />
+
+            <FrameLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@color/setting_item_bg_color"
+                android:minHeight="120dp"
+                android:paddingStart="@dimen/content_padding_start"
+                android:paddingEnd="@dimen/content_padding_end">
+
+                <EditText
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:background="@null"
+                    android:gravity="left"
+                    android:hint="约会"
+                    android:maxLines="5"
+                    android:textColor="@android:color/black"
+                    android:textSize="@dimen/textsize_normal" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="right|bottom"
+                    android:gravity="center_vertical"
+                    android:padding="8dp"
+                    android:text="最多60个字"
+                    android:textColor="@android:color/darker_gray"
+                    android:textSize="@dimen/textsize_normal" />
+            </FrameLayout>
+        </LinearLayout>
+
+        <Button
+            android:id="@+id/publish"
+            style="?android:attr/borderlessButtonStyle"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/button_height"
+            android:layout_marginLeft="20dp"
+            android:layout_marginTop="30dp"
+            android:layout_marginRight="20dp"
+            android:layout_marginBottom="20dp"
+            android:background="@drawable/button_rounded_rectangle_selector"
+            android:elevation="0dp"
+            android:text="发布信息"
+            android:textColor="@android:color/white"
+            android:textSize="@dimen/textsize_normal"
+            app:layout_constraintBottom_toBottomOf="parent" />
+
+    </android.support.constraint.ConstraintLayout>
+</layout>

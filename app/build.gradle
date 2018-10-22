@@ -27,7 +27,7 @@ android {
     buildTypes {
         debug {
 //            shrinkResources true
-//            minifyEnabled true
+            minifyEnabled true
             multiDexKeepFile file('multidex-config.txt')
             multiDexKeepProguard file('multidex-config.pro')
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'

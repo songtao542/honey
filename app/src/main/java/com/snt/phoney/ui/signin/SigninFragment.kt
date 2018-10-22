@@ -29,7 +29,7 @@ import com.snt.phoney.ui.signup.SignupActivity
  */
 class SigninFragment : BaseFragment() {
 
-    lateinit var viewModel: SigninViewModel
+    private lateinit var viewModel: SigninViewModel
     var binding by autoCleared<SigninFragmentBinding>()
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -45,7 +45,7 @@ class SigninFragment : BaseFragment() {
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
         viewModel = ViewModelProviders.of(this, viewModelFactory).get(SigninViewModel::class.java)
-        binding.loginViewModel = viewModel
+        binding.viewModel = viewModel
 
         binding.login.setOnClickListener { onLoginButtonClicked() }
         binding.forgetPassword.setOnClickListener { onForgetPasswordClicked() }

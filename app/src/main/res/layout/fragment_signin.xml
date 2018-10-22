@@ -6,7 +6,7 @@
     <data class="SigninFragmentBinding">
 
         <variable
-            name="loginViewModel"
+            name="viewModel"
             type="com.snt.phoney.ui.signin.SigninViewModel" />
     </data>
 
@@ -34,7 +34,7 @@
             android:background="@drawable/edittext_rounded_rectangle_border"
             android:paddingStart="25dp"
             android:paddingEnd="25dp"
-            android:text="@{loginViewModel.user != null? loginViewModel.user.username : null}" />
+            android:text="@{viewModel.user != null? viewModel.user.username : null}" />
 
         <FrameLayout
             android:layout_width="match_parent"
@@ -48,7 +48,7 @@
                 android:background="@drawable/edittext_rounded_rectangle_border"
                 android:paddingStart="25dp"
                 android:paddingEnd="25dp"
-                android:text="@{loginViewModel.user != null? loginViewModel.user.password : null}" />
+                android:text="@{viewModel.user != null? viewModel.user.password : null}" />
 
 
             <TextView

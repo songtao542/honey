@@ -53,3 +53,41 @@ abstract class DatabaseCache<V : Any> constructor(application: Application) : Ca
 
 
 }
+
+class KeyValueDatabaseCache constructor(application: Application) : Cache<String, String> {
+    private val keyValeDao: KeyValueDao = AppDatabase.getInstance(application).keyValueDao()
+
+    override fun evict(key: String): Deferred<Unit> {
+        return runBlocking {
+            async(Dispatchers.Default) {
+                keyValeDao.remove(key)
+            }
+        }
+    }
+
+    override fun evictAll(): Deferred<Unit> {
+        return runBlocking {
+            async(Dispatchers.Default) {
+                keyValeDao.removeAll()
+            }
+        }
+    }
+
+    override fun get(key: String): Deferred<String?> {
+        return runBlocking {
+            async(Dispatchers.Default) {
+                keyValeDao.get(key)?.value
+            }
+        }
+    }
+
+    override fun set(key: String, value: String): Deferred<Unit> {
+        return runBlocking {
+            async(Dispatchers.Default) {
+                keyValeDao.put(key, value)
+            }
+        }
+    }
+
+
+}

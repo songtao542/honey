@@ -1,18 +1,22 @@
 package com.snt.phoney.di.module
 
-import com.snt.phoney.ui.home.HomeFragment
-import com.snt.phoney.ui.message.MessageFragment
-import com.snt.phoney.ui.mine.MineFragment
 import com.snt.phoney.ui.dating.create.CreateDatingFragment
 import com.snt.phoney.ui.dating.list.DatingListFragment
+import com.snt.phoney.ui.home.HomeFragment
+import com.snt.phoney.ui.home.following.FollowingFragment
+import com.snt.phoney.ui.home.friend.FriendFragment
+import com.snt.phoney.ui.message.MessageFragment
+import com.snt.phoney.ui.mine.MineFragment
 import com.snt.phoney.ui.nearby.NearbyFragment
-import com.snt.phoney.ui.signin.SigninFragment
 import com.snt.phoney.ui.resetpassword.ResetPasswordFragment
 import com.snt.phoney.ui.settings.SettingsFragment
+import com.snt.phoney.ui.signin.SigninFragment
+import com.snt.phoney.ui.signup.BindPhoneFragment
 import com.snt.phoney.ui.signup.SignupFragment
 import com.snt.phoney.ui.square.SquareFragment
+import com.snt.phoney.ui.square.official.OfficialRecommendFragment
+import com.snt.phoney.ui.square.popular.PopularRecommendFragment
 import com.snt.phoney.ui.wallet.WalletFragment
-
 import dagger.Module
 import dagger.android.ContributesAndroidInjector
 
@@ -26,6 +30,9 @@ abstract class FragmentModule {
     abstract fun contributeSignupFragment(): SignupFragment
 
     @ContributesAndroidInjector
+    abstract fun contributeBindPhoneFragment(): BindPhoneFragment
+
+    @ContributesAndroidInjector
     abstract fun contributeResetPasswordFragment(): ResetPasswordFragment
 
     @ContributesAndroidInjector
@@ -35,7 +42,19 @@ abstract class FragmentModule {
     abstract fun contributeHomeFragment(): HomeFragment
 
     @ContributesAndroidInjector
+    abstract fun contributeFriendFragment(): FriendFragment
+
+    @ContributesAndroidInjector
+    abstract fun contributeFollowingFragment(): FollowingFragment
+
+    @ContributesAndroidInjector
     abstract fun contributeSquareFragment(): SquareFragment
+
+    @ContributesAndroidInjector
+    abstract fun contributeOfficialRecommendFragment(): OfficialRecommendFragment
+
+    @ContributesAndroidInjector
+    abstract fun contributePopularRecommendFragment(): PopularRecommendFragment
 
     @ContributesAndroidInjector
     abstract fun contributeMessageFragment(): MessageFragment

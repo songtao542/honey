@@ -60,5 +60,12 @@
         <item name="tabTextAppearance">@style/TextAppearance.Tab</item>
     </style>
 
+    <style name="AppTheme.FullScreen" parent="AppTheme">
+        <item name="windowNoTitle">true</item>
+    </style>
+
+    <style name="AppTheme.FullscreenDialog" parent="AppTheme.FullScreen">
+        <item name="android:windowIsFloating">true</item>
+    </style>
 
 </resources>

@@ -6,6 +6,7 @@ import com.snt.phoney.ui.dating.create.CreateDatingViewModel
 import com.snt.phoney.ui.dating.list.DatingListViewModel
 import com.snt.phoney.ui.nearby.NearbyViewModel
 import com.snt.phoney.ui.signin.SigninViewModel
+import com.snt.phoney.ui.signup.BindPhoneViewModel
 import com.snt.phoney.ui.signup.SignupViewModel
 import com.snt.phoney.ui.wallet.WalletViewModel
 import dagger.Binds
@@ -44,5 +45,10 @@ abstract class ViewModelModule {
     @IntoMap
     @ViewModelKey(NearbyViewModel::class)
     abstract fun bindNearbyViewModel(viewModel: NearbyViewModel): ViewModel
+
+    @Binds
+    @IntoMap
+    @ViewModelKey(BindPhoneViewModel::class)
+    abstract fun bindBindPhoneViewModel(viewModel: BindPhoneViewModel): ViewModel
 
 }

@@ -3,6 +3,7 @@
     package="com.snt.phoney">
 
     <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
 
     <application
         android:name=".base.App"
@@ -21,7 +22,7 @@
         <activity
             android:name=".ui.signin.SigninActivity"
             android:screenOrientation="portrait"
-            android:theme="@style/AppTheme.Sign">
+            android:theme="@style/AppTheme.Common">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
@@ -31,11 +32,19 @@
         <activity
             android:name=".ui.signup.SignupActivity"
             android:screenOrientation="portrait"
-            android:theme="@style/AppTheme.Sign" />
-        <activity android:name=".ui.dating.create.CreateDatingActivity" />
-        <activity android:name=".ui.dating.list.DateListActivity" />
-        <activity android:name=".ui.wallet.WalletActivity" />
-        <activity android:name=".ui.nearby.NearbyActivity"></activity>
+            android:theme="@style/AppTheme.Common" />
+        <activity
+            android:name=".ui.dating.create.CreateDatingActivity"
+            android:theme="@style/AppTheme.Common" />
+        <activity
+            android:name=".ui.dating.list.DatingListActivity"
+            android:theme="@style/AppTheme.Common" />
+        <activity
+            android:name=".ui.wallet.WalletActivity"
+            android:theme="@style/AppTheme.Common" />
+        <activity
+            android:name=".ui.nearby.NearbyActivity"
+            android:theme="@style/AppTheme.Common"></activity>
     </application>
 
 </manifest>
