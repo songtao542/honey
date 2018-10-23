@@ -16,6 +16,7 @@ import com.snt.phoney.ui.signup.SignupFragment
 import com.snt.phoney.ui.square.SquareFragment
 import com.snt.phoney.ui.square.official.OfficialRecommendFragment
 import com.snt.phoney.ui.square.popular.PopularRecommendFragment
+import com.snt.phoney.ui.vip.VipFragment
 import com.snt.phoney.ui.wallet.WalletFragment
 import dagger.Module
 import dagger.android.ContributesAndroidInjector
@@ -73,5 +74,8 @@ abstract class FragmentModule {
 
     @ContributesAndroidInjector
     abstract fun contributeNearbyFragment(): NearbyFragment
+
+    @ContributesAndroidInjector
+    abstract fun contributeVipFragment(): VipFragment
 
 }

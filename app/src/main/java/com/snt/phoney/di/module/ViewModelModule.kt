@@ -8,6 +8,7 @@ import com.snt.phoney.ui.nearby.NearbyViewModel
 import com.snt.phoney.ui.signin.SigninViewModel
 import com.snt.phoney.ui.signup.BindPhoneViewModel
 import com.snt.phoney.ui.signup.SignupViewModel
+import com.snt.phoney.ui.vip.VipViewModel
 import com.snt.phoney.ui.wallet.WalletViewModel
 import dagger.Binds
 import dagger.Module
@@ -50,5 +51,10 @@ abstract class ViewModelModule {
     @IntoMap
     @ViewModelKey(BindPhoneViewModel::class)
     abstract fun bindBindPhoneViewModel(viewModel: BindPhoneViewModel): ViewModel
+
+    @Binds
+    @IntoMap
+    @ViewModelKey(VipViewModel::class)
+    abstract fun bindVipViewModel(viewModel: VipViewModel): ViewModel
 
 }

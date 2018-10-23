@@ -75,7 +75,6 @@ inline fun <T : Fragment> FragmentActivity.addFragmentSafelfy(
         @AnimRes popEnterAnimation: Int = 0,
         @AnimRes popExitAnimation: Int = 0
 ): T {
-
     if (!existsFragmentByTag(tag)) {
         val ft = supportFragmentManager.beginTransaction()
         ft.setCustomAnimations(enterAnimation, exitAnimation, popEnterAnimation, popExitAnimation)
