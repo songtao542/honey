@@ -22,4 +22,7 @@
     <color name="setting_bg_color">#eeeeee</color>
     <color name="setting_item_bg_color">#ffffff</color>
 
+    <color name="card_label_bg">#6f6f6f</color>
+    <color name="card_kao_pu_bg">#ffffff</color>
+
 </resources>

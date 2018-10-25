@@ -1,19 +1,18 @@
 package com.snt.phoney.ui.home.friend
 
 import android.content.Context
+import android.graphics.Rect
 import android.os.Bundle
-import android.support.v4.app.Fragment
 import android.support.v7.widget.GridLayoutManager
-import android.support.v7.widget.LinearLayoutManager
 import android.support.v7.widget.RecyclerView
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import com.snt.phoney.R
 import com.snt.phoney.base.BaseFragment
-
+import com.snt.phoney.extensions.dip
 import com.snt.phoney.ui.home.friend.dummy.DummyContent
-import com.snt.phoney.ui.home.friend.dummy.DummyContent.DummyItem
 
 /**
  * A fragment representing a list of Items.
@@ -32,6 +31,7 @@ class FriendFragment : BaseFragment() {
         // Set the adapter
         if (view is RecyclerView) {
             with(view) {
+                addItemDecoration(ItemDecoration(dip(8)))
                 layoutManager = GridLayoutManager(context, 2)
                 adapter = FriendRecyclerViewAdapter(DummyContent.ITEMS)
             }
@@ -51,5 +51,28 @@ class FriendFragment : BaseFragment() {
     companion object {
         @JvmStatic
         fun newInstance() = FriendFragment()
+    }
+
+
+    inner class ItemDecoration(private val space: Int) : RecyclerView.ItemDecoration() {
+        override fun getItemOffsets(outRect: Rect, view: View, parent: RecyclerView, state: RecyclerView.State) {
+            var params = view.layoutParams
+            if (params is GridLayoutManager.LayoutParams) {
+                var spanSize = params.spanSize
+                var spanIndex = params.spanIndex
+                var position = params.viewLayoutPosition
+                if (spanSize == 1 && spanIndex == 0) {
+                    outRect.left = space
+                    outRect.right = space / 2
+                    outRect.top = space / 2
+                    outRect.bottom = space / 2
+                } else if (spanSize == 1 && spanIndex == 1) {
+                    outRect.left = space / 2
+                    outRect.right = space
+                    outRect.top = space / 2
+                    outRect.bottom = space / 2
+                }
+            }
+        }
     }
 }

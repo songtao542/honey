@@ -2,6 +2,7 @@ package com.snt.phoney.extensions
 
 import android.app.Activity
 import android.os.Build
+import android.util.TypedValue
 import android.view.View
 import android.view.ViewGroup
 import android.view.WindowManager
@@ -37,12 +38,4 @@ fun Activity.setStatusBarColor(color: Int) {
         contentChild.fitsSystemWindows = true
     }
 
-}
-
-fun Activity.colorOf(id: Int): Int {
-    return if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
-        this.getColor(id)
-    } else {
-        this.resources.getColor(id)
-    }
 }

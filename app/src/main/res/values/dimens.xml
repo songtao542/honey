@@ -25,4 +25,8 @@
     <dimen name="textsize_normal">15sp</dimen>
     <dimen name="textsize_small">12sp</dimen>
 
+    <dimen name="card_corner_radius">8dp</dimen>
+    <dimen name="card_kao_pu_corner_radius">4dp</dimen>
+
+
 </resources>
