@@ -24,7 +24,7 @@
             android:layout_width="wrap_content"
             android:layout_height="30dp"
             android:layout_gravity="left|top"
-            android:background="@drawable/card_label_bg"
+            android:background="@drawable/friend_card_label_bg"
             android:gravity="center"
             android:paddingLeft="15dp"
             android:paddingTop="6dp"
@@ -36,13 +36,13 @@
             android:textSize="@dimen/textsize_small" />
 
         <TextView
-            android:id="@+id/kaoPu"
+            android:id="@+id/reliableValue"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="left|bottom"
             android:layout_marginLeft="5dp"
             android:layout_marginBottom="5dp"
-            android:background="@drawable/card_kao_pu_bg"
+            android:background="@drawable/friend_card_kao_pu_bg"
             android:gravity="center"
             android:paddingLeft="5dp"
             android:paddingTop="5dp"

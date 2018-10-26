@@ -24,5 +24,8 @@
 
     <color name="card_label_bg">#6f6f6f</color>
     <color name="card_kao_pu_bg">#ffffff</color>
+    <color name="recommend_age_bg">#aaaaaa</color>
+    <color name="recommend_divider_bg">#aaaaaa</color>
+    <color name="recommend_list_bg">#dddddd</color>
 
 </resources>

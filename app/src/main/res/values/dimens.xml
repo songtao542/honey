@@ -21,9 +21,12 @@
     <dimen name="setting_item_height">48dp</dimen>
     <dimen name="setting_item_divider_height">1px</dimen>
 
-    <dimen name="textsize_large">18sp</dimen>
-    <dimen name="textsize_normal">15sp</dimen>
+    <dimen name="textsize_largest">20sp</dimen>
+    <dimen name="textsize_larger">18sp</dimen>
+    <dimen name="textsize_large">16sp</dimen>
+    <dimen name="textsize_normal">14sp</dimen>
     <dimen name="textsize_small">12sp</dimen>
+    <dimen name="textsize_smaller">11sp</dimen>
 
     <dimen name="card_corner_radius">8dp</dimen>
     <dimen name="card_kao_pu_corner_radius">4dp</dimen>

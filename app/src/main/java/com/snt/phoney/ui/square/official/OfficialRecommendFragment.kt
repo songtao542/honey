@@ -31,7 +31,8 @@ class OfficialRecommendFragment : BaseFragment() {
         // Set the adapter
         if (view is RecyclerView) {
             with(view) {
-                layoutManager = GridLayoutManager(context, 3)
+                //layoutManager = GridLayoutManager(context, 3)
+                layoutManager = LinearLayoutManager(context)
                 adapter = OfficialRecommendRecyclerViewAdapter(DummyContent.ITEMS)
             }
         }

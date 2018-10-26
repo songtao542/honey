@@ -26,10 +26,13 @@ android {
     }
     buildTypes {
         debug {
-//            shrinkResources true
-            minifyEnabled true
-            multiDexKeepFile file('multidex-config.txt')
-            multiDexKeepProguard file('multidex-config.pro')
+            defaultConfig {
+                minSdkVersion 21
+            }
+            //shrinkResources true
+            //minifyEnabled true
+            //multiDexKeepFile file('multidex-config.txt')
+            //multiDexKeepProguard file('multidex-config.pro')
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
             //testCoverageEnabled !project.hasProperty('android.injected.invoked.from.ide')
         }
