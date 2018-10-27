@@ -9,6 +9,7 @@ import com.snt.phoney.ui.nearby.NearbyActivity
 import com.snt.phoney.ui.signin.SigninActivity
 import com.snt.phoney.ui.signup.SignupActivity
 import com.snt.phoney.ui.startup.StartupActivity
+import com.snt.phoney.ui.user.UserInfoActivity
 import com.snt.phoney.ui.vip.VipActivity
 import com.snt.phoney.ui.wallet.WalletActivity
 import dagger.Binds
@@ -48,4 +49,7 @@ abstract class ActivityModule {
 
     @ContributesAndroidInjector(modules = [FragmentModule::class])
     internal abstract fun contributeVipActivity(): VipActivity
+
+    @ContributesAndroidInjector(modules = [FragmentModule::class])
+    internal abstract fun contributeUserInfoActivity(): UserInfoActivity
 }

@@ -10,6 +10,7 @@ import com.snt.phoney.R
 import com.snt.phoney.base.BaseFragment
 import com.snt.phoney.databinding.VipFragmentBinding
 import com.snt.phoney.extensions.autoCleared
+import kotlinx.android.synthetic.main.fragment_vip.*
 
 class VipFragment : BaseFragment() {
 
@@ -31,6 +32,9 @@ class VipFragment : BaseFragment() {
         super.onActivityCreated(savedInstanceState)
         viewModel = ViewModelProviders.of(this, viewModelFactory).get(VipViewModel::class.java)
         binding.viewModel = viewModel
+
+        toolbar.setNavigationOnClickListener { activity?.finish() }
     }
+
 
 }

@@ -8,17 +8,19 @@ import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-
 import com.snt.phoney.R
 import com.snt.phoney.base.BaseFragment
 import com.snt.phoney.databinding.SigninFragmentBinding
-
 import com.snt.phoney.domain.model.Response
 import com.snt.phoney.domain.model.User
+import com.snt.phoney.extensions.addFragmentSafely
 import com.snt.phoney.extensions.autoCleared
 import com.snt.phoney.extensions.disposedBy
+import com.snt.phoney.extensions.replaceFragmentSafely
 import com.snt.phoney.ui.dating.create.CreateDatingActivity
+import com.snt.phoney.ui.main.MainActivity
 import com.snt.phoney.ui.nearby.NearbyActivity
+import com.snt.phoney.ui.password.ForgetPasswordFragment
 import com.snt.phoney.ui.signup.SignupActivity
 
 /**
@@ -47,6 +49,7 @@ class SigninFragment : BaseFragment() {
         viewModel = ViewModelProviders.of(this, viewModelFactory).get(SigninViewModel::class.java)
         binding.viewModel = viewModel
 
+        binding.head.setOnClickListener { context?.let { startActivity(SignupActivity.newIntent(it)) } }
         binding.login.setOnClickListener { onLoginButtonClicked() }
         binding.forgetPassword.setOnClickListener { onForgetPasswordClicked() }
         binding.qq.setOnClickListener { onQQClicked() }
@@ -57,11 +60,12 @@ class SigninFragment : BaseFragment() {
 
 
     private fun onLoginButtonClicked() {
-        Log.d("TTTT", "click login " + viewModel)
         viewModel.signin("songtao", "wangsongtao").subscribe { response: Response<User>? ->
             Log.d("TTTT", "response:" + response?.data)
             viewModel.updateUser(response?.data)
         }.disposedBy(disposeBag)
+
+        context?.let { startActivity(MainActivity.newIntent(it)) }
 
 //        viewModel.login("songtao", "wangsongtao").observe(this, Observer {
 //            Log.d("TTTT", "data:" + it?.data)
@@ -69,7 +73,7 @@ class SigninFragment : BaseFragment() {
     }
 
     private fun onForgetPasswordClicked() {
-
+        activity?.addFragmentSafely(R.id.containerLayout, ForgetPasswordFragment.newInstance(), "forget_password", true)
     }
 
     private fun onWeiboClicked() {
@@ -85,7 +89,6 @@ class SigninFragment : BaseFragment() {
     }
 
     private fun onQQClicked() {
-        Log.d("TTTT", "AAAAAAAAAAAAAAAAAAAAAAAA")
         context?.let {
             startActivity(SignupActivity.newIntent(it))
         }

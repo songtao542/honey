@@ -8,8 +8,12 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:background="?attr/colorPrimary"
         android:orientation="horizontal"
-        android:padding="8dp">
+        android:paddingLeft="8dp"
+        android:paddingTop="16dp"
+        android:paddingRight="8dp"
+        android:paddingBottom="16dp">
 
         <ImageView
             android:id="@+id/head"
@@ -30,7 +34,8 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="风雨无情"
-                android:textSize="@dimen/textsize_normal" />
+                android:textColor="@android:color/white"
+                android:textSize="@dimen/textsize_large" />
 
             <TextView
                 android:id="@+id/vipType"
@@ -39,8 +44,9 @@
                 android:layout_alignBottom="@+id/username"
                 android:layout_marginLeft="8dp"
                 android:layout_toRightOf="@+id/username"
-                android:text="普通会员"
-                android:textSize="@dimen/textsize_normal" />
+                android:text="#普通会员"
+                android:textColor="@android:color/white"
+                android:textSize="@dimen/textsize_small" />
 
             <TextView
                 android:id="@+id/upgradeVip"
@@ -49,8 +55,14 @@
                 android:layout_below="@+id/username"
                 android:layout_alignLeft="@+id/username"
                 android:layout_marginTop="5dp"
+                android:background="@drawable/upgrade_vip_rectangle_selector"
+                android:paddingLeft="8dp"
+                android:paddingTop="5dp"
+                android:paddingRight="8dp"
+                android:paddingBottom="5dp"
                 android:text="成为纯蜜会员"
-                android:textSize="@dimen/textsize_normal" />
+                android:textColor="@color/darker"
+                android:textSize="@dimen/textsize_smaller" />
 
             <LinearLayout
                 android:layout_width="wrap_content"
@@ -71,6 +83,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="编辑信息"
+                    android:textColor="@android:color/white"
                     android:textSize="@dimen/textsize_small" />
             </LinearLayout>
         </RelativeLayout>

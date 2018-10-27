@@ -7,6 +7,7 @@ import android.view.View
 import android.view.ViewGroup
 import com.snt.phoney.R
 import com.snt.phoney.base.BaseFragment
+import kotlinx.android.synthetic.main.fragment_vip.*
 
 class WalletFragment : BaseFragment() {
 
@@ -24,7 +25,7 @@ class WalletFragment : BaseFragment() {
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
         viewModel = ViewModelProviders.of(this, viewModelFactory).get(WalletViewModel::class.java)
-        // TODO: Use the ViewModel
+        toolbar.setNavigationOnClickListener { activity?.finish() }
     }
 
 }

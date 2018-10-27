@@ -11,7 +11,9 @@ import android.widget.LinearLayout
 import android.widget.TextView
 import com.snt.phoney.R
 import com.snt.phoney.ui.dating.list.DatingListActivity
+import com.snt.phoney.ui.vip.VipActivity
 import com.snt.phoney.ui.wallet.WalletActivity
+import kotlinx.android.synthetic.main.fragment_mine_footer.view.*
 import kotlinx.android.synthetic.main.fragment_mine_header.view.*
 import kotlinx.android.synthetic.main.fragment_mine_settings.view.*
 
@@ -24,21 +26,22 @@ class MineRecyclerViewAdapter : RecyclerView.Adapter<RecyclerView.ViewHolder>() 
     private val settings = ArrayList<Setting>()
 
     init {
-        settings.add(Setting(R.mipmap.wallet, "相册权限", ""))
-        settings.add(Setting(R.mipmap.wallet, "我的约会", "新消息"))
-        settings.add(Setting(R.mipmap.wallet, "我的钱包", ""))
-        settings.add(Setting(R.mipmap.wallet, "隐私设置", ""))
-        settings.add(Setting(R.mipmap.wallet, "绑定手机", ""))
-        settings.add(Setting(R.mipmap.wallet, "分享给好友", ""))
-        settings.add(Setting(R.mipmap.wallet, "用户协议", ""))
-        settings.add(Setting(R.mipmap.wallet, "清理缓存", ""))
-        settings.add(Setting(R.mipmap.wallet, "关于", ""))
+        settings.add(Setting(R.drawable.ic_photo, "相册权限", ""))
+        settings.add(Setting(R.drawable.ic_dating, "我的约会", "新消息"))
+        settings.add(Setting(R.drawable.ic_wallet, "我的钱包", ""))
+        settings.add(Setting(R.drawable.ic_privacy, "隐私设置", ""))
+        settings.add(Setting(R.drawable.ic_bind_phone, "绑定手机", ""))
+        settings.add(Setting(R.drawable.ic_share, "分享给好友", ""))
+        settings.add(Setting(R.drawable.ic_user_protocol, "用户协议", ""))
+        settings.add(Setting(R.drawable.ic_clear_cache, "清理缓存", ""))
+        settings.add(Setting(R.drawable.ic_about, "关于", ""))
     }
 
 
     override fun getItemViewType(position: Int): Int {
         return when (position) {
             0 -> 0
+            itemCount - 1 -> 2
             else -> 1
         }
     }
@@ -46,7 +49,8 @@ class MineRecyclerViewAdapter : RecyclerView.Adapter<RecyclerView.ViewHolder>() 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder {
         return when (viewType) {
             0 -> HeadViewHolder(LayoutInflater.from(parent.context).inflate(R.layout.fragment_mine_header, parent, false))
-            else -> SettingViewHolder(LayoutInflater.from(parent.context).inflate(R.layout.fragment_mine_settings, parent, false))
+            1 -> SettingViewHolder(LayoutInflater.from(parent.context).inflate(R.layout.fragment_mine_settings, parent, false))
+            else -> FooterViewHolder(LayoutInflater.from(parent.context).inflate(R.layout.fragment_mine_footer, parent, false))
         }
     }
 
@@ -55,10 +59,12 @@ class MineRecyclerViewAdapter : RecyclerView.Adapter<RecyclerView.ViewHolder>() 
             holder.setData()
         } else if (holder is SettingViewHolder) {
             holder.setData(setting = settings[position - 1])
+        } else if (holder is FooterViewHolder) {
+
         }
     }
 
-    override fun getItemCount(): Int = settings.size + 1
+    override fun getItemCount(): Int = settings.size + 2
 
     inner class HeadViewHolder(val mView: View) : RecyclerView.ViewHolder(mView) {
         private val context: Context = mView.context
@@ -79,7 +85,7 @@ class MineRecyclerViewAdapter : RecyclerView.Adapter<RecyclerView.ViewHolder>() 
             mRecentVisitor.text = "1000"
             mFollowMe.text = "100"
             mMyDating.text = "10000"
-            mUpgradeVip.setOnClickListener { }
+            mUpgradeVip.setOnClickListener { context.startActivity(VipActivity.newIntent(context)) }
             mEditInfo.setOnClickListener { }
             mFollowMeButton.setOnClickListener { }
             mRecentVisitorButton.setOnClickListener { }
@@ -107,7 +113,36 @@ class MineRecyclerViewAdapter : RecyclerView.Adapter<RecyclerView.ViewHolder>() 
                 }
             }
             when (setting.icon) {
-                R.mipmap.wallet -> mView.setOnClickListener { context.startActivity(WalletActivity.newIntent(context)) }
+                R.drawable.ic_photo -> {
+                }
+                R.drawable.ic_dating -> {
+                    mView.setOnClickListener { context.startActivity(DatingListActivity.newIntent(context)) }
+                }
+                R.drawable.ic_wallet -> {
+                    mView.setOnClickListener { context.startActivity(WalletActivity.newIntent(context)) }
+                }
+                R.drawable.ic_privacy -> {
+                }
+                R.drawable.ic_bind_phone -> {
+
+                }
+                R.drawable.ic_share -> {
+                }
+                R.drawable.ic_user_protocol -> {
+                }
+                R.drawable.ic_clear_cache -> {
+                }
+                R.drawable.ic_about -> {
+
+                }
+            }
+        }
+    }
+
+    inner class FooterViewHolder(private val mView: View) : RecyclerView.ViewHolder(mView) {
+        init {
+            mView.signout.setOnClickListener {
+
             }
         }
     }

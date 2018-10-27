@@ -7,6 +7,8 @@ import android.view.View
 import android.view.ViewGroup
 import com.snt.phoney.R
 import com.snt.phoney.ui.home.friend.dummy.DummyContent.DummyItem
+import com.snt.phoney.ui.user.UserInfoActivity
+import com.snt.phoney.ui.user.UserInfoFragment
 
 /**
  */
@@ -34,6 +36,8 @@ class FriendRecyclerViewAdapter(private val mValues: List<DummyItem>) : Recycler
     override fun getItemCount(): Int = mValues.size
 
     inner class ViewHolder(val mView: View) : RecyclerView.ViewHolder(mView) {
-
+        init {
+            mView.setOnClickListener { mView.context.startActivity(UserInfoActivity.newIntent(mView.context)) }
+        }
     }
 }

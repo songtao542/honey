@@ -81,7 +81,7 @@
             android:layout_marginLeft="20dp"
             android:layout_marginTop="30dp"
             android:layout_marginRight="20dp"
-            android:background="@drawable/button_rounded_rectangle_selector"
+            android:background="@drawable/button_rounded_corner_selector"
             android:elevation="0dp"
             android:text="确认绑定"
             android:textColor="@android:color/white"

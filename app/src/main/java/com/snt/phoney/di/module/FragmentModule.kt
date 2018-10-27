@@ -8,7 +8,7 @@ import com.snt.phoney.ui.home.friend.FriendFragment
 import com.snt.phoney.ui.message.MessageFragment
 import com.snt.phoney.ui.mine.MineFragment
 import com.snt.phoney.ui.nearby.NearbyFragment
-import com.snt.phoney.ui.resetpassword.ResetPasswordFragment
+import com.snt.phoney.ui.password.ForgetPasswordFragment
 import com.snt.phoney.ui.settings.SettingsFragment
 import com.snt.phoney.ui.signin.SigninFragment
 import com.snt.phoney.ui.signup.BindPhoneFragment
@@ -16,6 +16,7 @@ import com.snt.phoney.ui.signup.SignupFragment
 import com.snt.phoney.ui.square.SquareFragment
 import com.snt.phoney.ui.square.official.OfficialRecommendFragment
 import com.snt.phoney.ui.square.popular.PopularRecommendFragment
+import com.snt.phoney.ui.user.UserInfoFragment
 import com.snt.phoney.ui.vip.VipFragment
 import com.snt.phoney.ui.wallet.WalletFragment
 import dagger.Module
@@ -32,9 +33,6 @@ abstract class FragmentModule {
 
     @ContributesAndroidInjector
     abstract fun contributeBindPhoneFragment(): BindPhoneFragment
-
-    @ContributesAndroidInjector
-    abstract fun contributeResetPasswordFragment(): ResetPasswordFragment
 
     @ContributesAndroidInjector
     abstract fun contributeSettingsFragment(): SettingsFragment
@@ -77,5 +75,11 @@ abstract class FragmentModule {
 
     @ContributesAndroidInjector
     abstract fun contributeVipFragment(): VipFragment
+
+    @ContributesAndroidInjector
+    abstract fun contributeUserInfoFragment(): UserInfoFragment
+
+    @ContributesAndroidInjector
+    abstract fun contributeForgetPasswordFragment(): ForgetPasswordFragment
 
 }

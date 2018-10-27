@@ -24,7 +24,23 @@
 
     <string name="btn_qq">QQ</string>
     <string name="btn_wx">微信</string>
-    <string name="btn_weibo">w微博</string>
+    <string name="btn_weibo">微博</string>
+    <string name="btn_add_follow">+关注</string>
+    <string name="label_height">身高</string>
+    <string name="label_age">年龄</string>
+    <string name="label_cup">罩杯</string>
+    <string name="btn_talk">私聊ta</string>
+    <string name="btn_cancel_follow">取消关注</string>
+    <string name="btn_chat">私聊</string>
+    <string name="forget_password_title">忘记密码？</string>
+    <string name="forget_password_label">上传视频确认是本人，以方便修改密码！</string>
+    <string name="upload_video">上传视频</string>
+    <string name="upload_confirm">确认上传</string>
+    <string name="upload_success">你已成功上传视频认证，请留意短信提醒！</string>
+    <string name="back_home">返回首页</string>
+    <string name="vip_privilege">会员特权</string>
+    <string name="open_vip">开通会员</string>
+    <string name="withdraw">提现</string>
 
 
 </resources>

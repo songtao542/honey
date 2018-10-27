@@ -40,11 +40,16 @@
             android:name=".ui.dating.list.DatingListActivity"
             android:theme="@style/AppTheme.Common" />
         <activity
+            android:name=".ui.vip.VipActivity"
+            android:theme="@style/AppTheme.Common" />
+        <activity
             android:name=".ui.wallet.WalletActivity"
             android:theme="@style/AppTheme.Common" />
         <activity
             android:name=".ui.nearby.NearbyActivity"
-            android:theme="@style/AppTheme.Common"></activity>
+            android:theme="@style/AppTheme.Common" />
+        <activity android:name=".ui.user.UserInfoActivity"
+            ></activity>
     </application>
 
 </manifest>

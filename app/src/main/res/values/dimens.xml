@@ -27,9 +27,14 @@
     <dimen name="textsize_normal">14sp</dimen>
     <dimen name="textsize_small">12sp</dimen>
     <dimen name="textsize_smaller">11sp</dimen>
+    <dimen name="textsize_smallest">10sp</dimen>
 
     <dimen name="card_corner_radius">8dp</dimen>
     <dimen name="card_kao_pu_corner_radius">4dp</dimen>
+    <dimen name="underline">1px</dimen>
+    <dimen name="vip_card_corner_radius">4dp</dimen>
+    <dimen name="wallet_withdraw_corner_radius">4dp</dimen>
+    <dimen name="recharge_corner_radius">4dp</dimen>
 
 
 </resources>

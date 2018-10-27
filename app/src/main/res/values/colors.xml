@@ -24,8 +24,22 @@
 
     <color name="card_label_bg">#6f6f6f</color>
     <color name="card_kao_pu_bg">#ffffff</color>
+    <color name="user_info_circle_bg">#ffffff</color>
     <color name="recommend_age_bg">#aaaaaa</color>
     <color name="recommend_divider_bg">#aaaaaa</color>
     <color name="recommend_list_bg">#dddddd</color>
+    <color name="gray">#aaaaaa</color>
+    <color name="black">#000000</color>
+    <color name="light_gray">#eeeeee</color>
+    <color name="underline">#999999</color>
+    <color name="darker">#444444</color>
+    <color name="white">#ffffff</color>
+    <color name="wallet_withdraw_color">#aaaaaa</color>
+    <color name="wallet_withdraw_pressed_color">#999999</color>
+    <color name="recharge_bg">#ffffff</color>
+    <color name="recharge_btn_bg">#ffffff</color>
+    <color name="recharge_btn_pressed_bg">#eeeeee</color>
+    <color name="recharge_btn_border">#4567ff</color>
+
 
 </resources>

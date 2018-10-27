@@ -5,9 +5,11 @@ import com.snt.phoney.di.ViewModelKey
 import com.snt.phoney.ui.dating.create.CreateDatingViewModel
 import com.snt.phoney.ui.dating.list.DatingListViewModel
 import com.snt.phoney.ui.nearby.NearbyViewModel
+import com.snt.phoney.ui.password.ForgetPasswordViewModel
 import com.snt.phoney.ui.signin.SigninViewModel
 import com.snt.phoney.ui.signup.BindPhoneViewModel
 import com.snt.phoney.ui.signup.SignupViewModel
+import com.snt.phoney.ui.user.UserInfoViewModel
 import com.snt.phoney.ui.vip.VipViewModel
 import com.snt.phoney.ui.wallet.WalletViewModel
 import dagger.Binds
@@ -56,5 +58,15 @@ abstract class ViewModelModule {
     @IntoMap
     @ViewModelKey(VipViewModel::class)
     abstract fun bindVipViewModel(viewModel: VipViewModel): ViewModel
+
+    @Binds
+    @IntoMap
+    @ViewModelKey(UserInfoViewModel::class)
+    abstract fun bindUserInfoViewModel(viewModel: UserInfoViewModel): ViewModel
+
+    @Binds
+    @IntoMap
+    @ViewModelKey(ForgetPasswordViewModel::class)
+    abstract fun bindForgetPasswordViewModel(viewModel: ForgetPasswordViewModel): ViewModel
 
 }
