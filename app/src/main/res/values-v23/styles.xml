@@ -4,25 +4,35 @@
     <style name="AppTheme" parent="Theme.AppCompat.Light.NoActionBar">
         <!-- Customize your theme here. -->
         <item name="colorPrimary">@color/colorPrimaryFemale</item>
+        <item name="colorPrimaryPressed">@color/colorPrimaryPressedFemale</item>
         <item name="colorPrimaryDark">@color/colorPrimaryDarkFemale</item>
         <item name="colorAccent">@color/colorAccentFemale</item>
+        <item name="colorTheme">@color/colorPrimaryFemale</item>
+        <item name="colorThemePressed">@color/colorPrimaryPressedFemale</item>
+
         <item name="actionBarStyle">@style/AppTheme.Toolbar</item>
         <item name="toolbarStyle">@style/AppTheme.Toolbar</item>
 
         <item name="android:windowTranslucentStatus">false</item>
     </style>
 
-    <style name="AppTheme.Male" parent="AppTheme">
-        <item name="colorPrimary">@color/colorPrimaryMale</item>
-        <item name="colorPrimaryDark">@color/colorPrimaryDarkMale</item>
-        <item name="colorAccent">@color/colorAccentMale</item>
-    </style>
+    <!--<style name="AppTheme.Male" parent="AppTheme">-->
+        <!--<item name="colorPrimary">@color/colorPrimaryMale</item>-->
+        <!--<item name="colorPrimaryPressed">@color/colorPrimaryPressedMale</item>-->
+        <!--<item name="colorPrimaryDark">@color/colorPrimaryDarkMale</item>-->
+        <!--<item name="colorAccent">@color/colorAccentMale</item>-->
+        <!--<item name="colorTheme">@color/colorPrimaryMale</item>-->
+        <!--<item name="colorThemePressed">@color/colorPrimaryPressedMale</item>-->
+    <!--</style>-->
 
-    <style name="AppTheme.Female" parent="AppTheme">
-        <item name="colorPrimary">@color/colorPrimaryFemale</item>
-        <item name="colorPrimaryDark">@color/colorPrimaryDarkFemale</item>
-        <item name="colorAccent">@color/colorAccentFemale</item>
-    </style>
+    <!--<style name="AppTheme.Female" parent="AppTheme">-->
+        <!--<item name="colorPrimary">@color/colorPrimaryFemale</item>-->
+        <!--<item name="colorPrimaryPressed">@color/colorPrimaryPressedFemale</item>-->
+        <!--<item name="colorPrimaryDark">@color/colorPrimaryDarkFemale</item>-->
+        <!--<item name="colorAccent">@color/colorAccentFemale</item>-->
+        <!--<item name="colorTheme">@color/colorPrimaryFemale</item>-->
+        <!--<item name="colorThemePressed">@color/colorPrimaryPressedFemale</item>-->
+    <!--</style>-->
 
     <style name="AppTheme.Common" parent="Theme.AppCompat.Light.NoActionBar">
         <item name="android:statusBarColor">@android:color/white</item>

@@ -1,19 +1,22 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <color name="colorPrimaryFemale">#FF4878</color>
-    <color name="colorPrimaryDarkFemale">#FF4878</color>
-    <color name="colorAccentFemale">#FF4878</color>
+    <color name="colorPrimaryFemale">#fe4b7a</color>
+    <color name="colorPrimaryDarkFemale">#fe4b7a</color>
+    <color name="colorAccentFemale">#fe4b7a</color>
+    <color name="colorPrimaryPressedFemale">#fe4b7a</color>
 
-    <color name="colorPrimaryMale">#9100FF</color>
-    <color name="colorPrimaryDarkMale">#9100FF</color>
-    <color name="colorAccentMale">#9100FF</color>
+    <color name="colorPrimaryMale">#9013fe</color>
+    <color name="colorPrimaryDarkMale">#9013fe</color>
+    <color name="colorAccentMale">#9013fe</color>
+    <color name="colorPrimaryPressedMale">#9013fe</color>
 
-
-    <color name="edittextBorderColor">#dddddd</color>
-    <color name="edittextBorderFocusColor">#444444</color>
+    <color name="edittextBorderColor">#94cbd4</color>
+    <color name="edittextBorderFocusColor">#7bcfdd</color>
 
     <color name="buttonBgColor">#555555</color>
     <color name="buttonPressedBgColor">#333333</color>
+    <color name="buttonBorderPressedColor">#ffffff</color>
+    <color name="buttonBorderColor">#ffffff</color>
 
     <color name="buttonGetVerificationCodeBgColor">#8d8d8d</color>
     <color name="buttonGetVerificationCodePressedBgColor">#6d6d6d</color>
@@ -24,6 +27,8 @@
 
     <color name="card_label_bg">#6f6f6f</color>
     <color name="card_kao_pu_bg">#ffffff</color>
+    <color name="friend_filter">#f2f3f7</color>
+
     <color name="user_info_circle_bg">#ffffff</color>
     <color name="recommend_age_bg">#aaaaaa</color>
     <color name="recommend_divider_bg">#aaaaaa</color>
@@ -32,6 +37,7 @@
     <color name="black">#000000</color>
     <color name="light_gray">#eeeeee</color>
     <color name="underline">#999999</color>
+    <color name="gray_underline">#e5e5e7</color>
     <color name="darker">#444444</color>
     <color name="white">#ffffff</color>
     <color name="wallet_withdraw_color">#aaaaaa</color>
@@ -40,6 +46,13 @@
     <color name="recharge_btn_bg">#ffffff</color>
     <color name="recharge_btn_pressed_bg">#eeeeee</color>
     <color name="recharge_btn_border">#4567ff</color>
+    <color name="bind_phone_edittext_border">#d7d7d7</color>
+    <color name="bind_phone_edittext_focus_border">#f8e71c</color>
+    <color name="bind_phone_edittext_bg">#f2f3f7</color>
+    <color name="bind_phone_get_vcode">#4a4a4a</color>
+    <color name="bind_phone_get_vcode_pressed">#393939</color>
+    <color name="bind_phone_confirm">#f8e71c</color>
+    <color name="bind_phone_confirm_pressed">#dccd16</color>
 
 
 </resources>

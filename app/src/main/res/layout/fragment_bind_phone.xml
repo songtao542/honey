@@ -21,11 +21,11 @@
             android:layout_width="match_parent"
             android:layout_height="?attr/actionBarSize"
             android:layout_gravity="center_horizontal"
-            android:background="#9d9d9d"
+            android:background="#f8e71c"
             android:clickable="true"
             android:gravity="center"
             android:text="绑定手机号"
-            android:textColor="@android:color/white"
+            android:textColor="@color/darker"
             android:textSize="@dimen/textsize_normal" />
 
         <EditText
@@ -35,7 +35,7 @@
             android:layout_marginLeft="20dp"
             android:layout_marginTop="30dp"
             android:layout_marginRight="20dp"
-            android:background="@drawable/edittext_rounded_rectangle_border"
+            android:background="@drawable/bind_phone_edittext_selector"
             android:paddingStart="25dp"
             android:paddingEnd="25dp"
             android:textSize="@dimen/textsize_normal" />
@@ -51,7 +51,7 @@
                 android:id="@+id/verificationCode"
                 android:layout_width="match_parent"
                 android:layout_height="@dimen/edittext_height"
-                android:background="@drawable/edittext_rounded_rectangle_border"
+                android:background="@drawable/bind_phone_edittext_selector"
                 android:paddingStart="25dp"
                 android:paddingEnd="25dp"
                 android:textSize="@dimen/textsize_normal" />
@@ -60,10 +60,9 @@
             <TextView
                 android:id="@+id/getVerificationCode"
                 android:layout_width="wrap_content"
-                android:layout_height="@dimen/button_get_verification_code_height"
+                android:layout_height="@dimen/edittext_height"
                 android:layout_gravity="center|right"
-                android:layout_marginRight="20dp"
-                android:background="@drawable/get_verification_code_selector"
+                android:background="@drawable/bind_phone_get_verification_code_selector"
                 android:clickable="true"
                 android:gravity="center"
                 android:paddingLeft="8dp"
@@ -81,10 +80,10 @@
             android:layout_marginLeft="20dp"
             android:layout_marginTop="30dp"
             android:layout_marginRight="20dp"
-            android:background="@drawable/button_rounded_corner_selector"
+            android:background="@drawable/bind_phone_confirm_selector"
             android:elevation="0dp"
             android:text="确认绑定"
-            android:textColor="@android:color/white"
+            android:textColor="@color/darker"
             android:textSize="@dimen/textsize_normal" />
 
 

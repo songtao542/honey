@@ -1,17 +1,3 @@
-/*
- * Copyright (c) 2018. Faraday&Future
- * All rights reserved.
- * PROPRIETARY AND CONFIDENTIAL.
- * NOTICE: All information contained herein is, and remains the property of Faraday&Future Inc.
- * The intellectual and technical concepts contained herein are proprietary to Faraday&Future Inc.
- * and may be covered by U.S. and Foreign Patents, patents in process, and are protected
- * by trade secret and copyright law. Dissemination of this code or reproduction of this material
- * is strictly forbidden unless prior written permission is obtained from Faraday&Future Inc.
- * Access to the source code contained herein is hereby forbidden to anyone except current
- * Faraday&Future Inc. employees or others who have executed Confidentiality and
- * Non-disclosure agreements covering such access.
- */
-
 package com.snt.phoney.domain.model
 
 import android.arch.persistence.room.Entity
@@ -25,7 +11,7 @@ import kotlinx.android.parcel.Parcelize
 @Parcelize
 @Serializable
 data class User(
-        @PrimaryKey var id: String,
+        @PrimaryKey var id: String = "",
         var username: String? = null,
         var email: String? = null,
         var mobile: String? = null,
@@ -33,5 +19,13 @@ data class User(
         @Optional var avatar: String? = null,
         @Optional var avatarUrl: String? = null,
         var activated: Boolean = false,
-        var emailVerified: Boolean = false) : Parcelable
+        var emailVerified: Boolean = false,
+        var sex: Int? = 0,
+        var height: Int? = 0,
+        var weight: Float? = 0f,
+        var age: Int? = 0,
+        var birthYear: Int? = 0,
+        var birthday: Long? = 0,
+        var city: String? = null,
+        var job: String? = null) : Parcelable
 

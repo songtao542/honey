@@ -8,7 +8,7 @@ import com.snt.phoney.ui.main.MainActivity
 import com.snt.phoney.ui.nearby.NearbyActivity
 import com.snt.phoney.ui.signin.SigninActivity
 import com.snt.phoney.ui.signup.SignupActivity
-import com.snt.phoney.ui.startup.StartupActivity
+import com.snt.phoney.ui.signin.StartupActivity
 import com.snt.phoney.ui.user.UserInfoActivity
 import com.snt.phoney.ui.vip.VipActivity
 import com.snt.phoney.ui.wallet.WalletActivity

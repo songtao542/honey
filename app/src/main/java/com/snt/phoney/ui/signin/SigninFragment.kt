@@ -49,7 +49,6 @@ class SigninFragment : BaseFragment() {
         viewModel = ViewModelProviders.of(this, viewModelFactory).get(SigninViewModel::class.java)
         binding.viewModel = viewModel
 
-        binding.head.setOnClickListener { context?.let { startActivity(SignupActivity.newIntent(it)) } }
         binding.login.setOnClickListener { onLoginButtonClicked() }
         binding.forgetPassword.setOnClickListener { onForgetPasswordClicked() }
         binding.qq.setOnClickListener { onQQClicked() }

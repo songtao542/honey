@@ -11,8 +11,8 @@ import com.snt.phoney.ui.nearby.NearbyFragment
 import com.snt.phoney.ui.password.ForgetPasswordFragment
 import com.snt.phoney.ui.settings.SettingsFragment
 import com.snt.phoney.ui.signin.SigninFragment
-import com.snt.phoney.ui.signup.BindPhoneFragment
-import com.snt.phoney.ui.signup.SignupFragment
+import com.snt.phoney.ui.signin.StartupFragment
+import com.snt.phoney.ui.signup.*
 import com.snt.phoney.ui.square.SquareFragment
 import com.snt.phoney.ui.square.official.OfficialRecommendFragment
 import com.snt.phoney.ui.square.popular.PopularRecommendFragment
@@ -30,6 +30,9 @@ abstract class FragmentModule {
 
     @ContributesAndroidInjector
     abstract fun contributeSignupFragment(): SignupFragment
+
+    @ContributesAndroidInjector
+    abstract fun contributeStartupFragment(): StartupFragment
 
     @ContributesAndroidInjector
     abstract fun contributeBindPhoneFragment(): BindPhoneFragment
@@ -81,5 +84,14 @@ abstract class FragmentModule {
 
     @ContributesAndroidInjector
     abstract fun contributeForgetPasswordFragment(): ForgetPasswordFragment
+
+    @ContributesAndroidInjector
+    abstract fun contributeStepOneFragment(): StepOneFragment
+
+    @ContributesAndroidInjector
+    abstract fun contributeStepTwoFragment(): StepTwoFragment
+
+    @ContributesAndroidInjector
+    abstract fun contributeStepThreeFragment(): StepThreeFragment
 
 }

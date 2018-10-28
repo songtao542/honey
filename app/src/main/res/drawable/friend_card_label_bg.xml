@@ -5,7 +5,7 @@
     <corners
         android:bottomRightRadius="@dimen/card_corner_radius"
         android:topLeftRadius="@dimen/card_corner_radius"></corners>
-    <solid android:color="@color/card_label_bg"></solid>
-
+    <!--<solid android:color="@color/card_label_bg"></solid>-->
+    <solid android:color="?attr/colorPrimary"></solid>
 
 </shape>

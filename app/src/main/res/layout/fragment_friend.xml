@@ -27,13 +27,13 @@
             android:background="@drawable/friend_card_label_bg"
             android:gravity="center"
             android:paddingLeft="15dp"
-            android:paddingTop="6dp"
+            android:paddingTop="2dp"
             android:paddingRight="15dp"
-            android:paddingBottom="6dp"
+            android:paddingBottom="2dp"
             android:singleLine="true"
             android:text="新人"
             android:textColor="@android:color/white"
-            android:textSize="@dimen/textsize_small" />
+            android:textSize="@dimen/textsize_smaller" />
 
         <TextView
             android:id="@+id/reliableValue"
@@ -97,10 +97,10 @@
             android:orientation="horizontal">
 
             <ImageView
-                android:layout_width="8dp"
-                android:layout_height="8dp"
+                android:layout_width="12dp"
+                android:layout_height="12dp"
                 android:layout_gravity="center_vertical"
-                android:src="@drawable/red_point" />
+                android:src="@mipmap/ic_renqi" />
 
             <TextView
                 android:id="@+id/renQi"

@@ -15,6 +15,7 @@
     <dimen name="edittext_height">46dp</dimen>
     <dimen name="edittext_border_width">1dp</dimen>
     <dimen name="button_height">46dp</dimen>
+    <dimen name="button_border_corner_radius">4dp</dimen>
     <dimen name="button_get_verification_code_height">30dp</dimen>
     <dimen name="button_get_verification_code_corner_radius">2dp</dimen>
 
@@ -31,10 +32,15 @@
 
     <dimen name="card_corner_radius">8dp</dimen>
     <dimen name="card_kao_pu_corner_radius">4dp</dimen>
+    <dimen name="friend_filter_height">30dp</dimen>
+
+
     <dimen name="underline">1px</dimen>
     <dimen name="vip_card_corner_radius">4dp</dimen>
     <dimen name="wallet_withdraw_corner_radius">4dp</dimen>
     <dimen name="recharge_corner_radius">4dp</dimen>
+    <dimen name="white_corner_radius">4dp</dimen>
+    <dimen name="bind_phone_edittext_corner_radius">4dp</dimen>
 
 
 </resources>

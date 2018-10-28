@@ -13,6 +13,7 @@
         android:id="@+id/back"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:visibility="gone"
         app:navigationIcon="@drawable/ic_back">
 
     </android.support.v7.widget.Toolbar>
@@ -22,8 +23,9 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_gravity="center_horizontal"
+        android:layout_marginTop="50dp"
         android:gravity="center"
-        android:text="步骤 1/3"
+        android:text="@string/select_sex"
         android:textSize="30sp" />
 
 
@@ -34,14 +36,15 @@
         android:layout_marginTop="8dp"
         android:gravity="center"
         android:text="选择男女"
-        android:textSize="15sp" />
+        android:textSize="15sp"
+        android:visibility="gone" />
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginLeft="50dp"
-        android:layout_marginTop="50dp"
-        android:layout_marginRight="50dp"
+        android:layout_marginLeft="40dp"
+        android:layout_marginTop="60dp"
+        android:layout_marginRight="40dp"
         android:orientation="horizontal">
 
         <Space
@@ -50,26 +53,32 @@
             android:layout_weight="1" />
 
         <LinearLayout
-            android:id="@+id/male"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:orientation="vertical">
 
             <ImageView
-                android:layout_width="50dp"
-                android:layout_height="50dp"
+                android:layout_width="80dp"
+                android:layout_height="80dp"
                 android:layout_gravity="center_horizontal"
                 android:scaleType="centerInside"
-                android:src="@mipmap/ic_launcher_round" />
+                android:src="@mipmap/ic_mail" />
 
             <TextView
+                android:id="@+id/male"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center_horizontal"
                 android:layout_marginTop="8dp"
+                android:background="@drawable/mail_circle_corner_selector"
                 android:gravity="center"
+                android:paddingLeft="30dp"
+                android:paddingTop="8dp"
+                android:paddingRight="30dp"
+                android:paddingBottom="8dp"
                 android:text="我是男士"
-                android:textSize="15sp" />
+                android:textColor="@color/white"
+                android:textSize="@dimen/textsize_normal" />
 
         </LinearLayout>
 
@@ -79,26 +88,32 @@
             android:layout_weight="1" />
 
         <LinearLayout
-            android:id="@+id/female"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:orientation="vertical">
 
             <ImageView
-                android:layout_width="50dp"
-                android:layout_height="50dp"
+                android:layout_width="80dp"
+                android:layout_height="80dp"
                 android:layout_gravity="center_horizontal"
                 android:scaleType="centerInside"
-                android:src="@mipmap/ic_launcher_round" />
+                android:src="@mipmap/ic_femail" />
 
             <TextView
+                android:id="@+id/female"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center_horizontal"
                 android:layout_marginTop="8dp"
+                android:background="@drawable/femail_circle_corner_selector"
                 android:gravity="center"
+                android:paddingLeft="30dp"
+                android:paddingTop="8dp"
+                android:paddingRight="30dp"
+                android:paddingBottom="8dp"
                 android:text="我是女士"
-                android:textSize="15sp" />
+                android:textColor="@color/white"
+                android:textSize="@dimen/textsize_normal" />
 
         </LinearLayout>
 

@@ -4,22 +4,32 @@
     <style name="AppTheme" parent="Theme.AppCompat.Light.NoActionBar">
         <!-- Customize your theme here. -->
         <item name="colorPrimary">@color/colorPrimaryFemale</item>
+        <item name="colorPrimaryPressed">@color/colorPrimaryPressedFemale</item>
         <item name="colorPrimaryDark">@color/colorPrimaryDarkFemale</item>
         <item name="colorAccent">@color/colorAccentFemale</item>
+        <item name="colorTheme">@color/colorPrimaryFemale</item>
+        <item name="colorThemePressed">@color/colorPrimaryPressedFemale</item>
+
         <item name="actionBarStyle">@style/AppTheme.Toolbar</item>
         <item name="toolbarStyle">@style/AppTheme.Toolbar</item>
     </style>
 
     <style name="AppTheme.Male" parent="AppTheme">
         <item name="colorPrimary">@color/colorPrimaryMale</item>
+        <item name="colorPrimaryPressed">@color/colorPrimaryPressedMale</item>
         <item name="colorPrimaryDark">@color/colorPrimaryDarkMale</item>
         <item name="colorAccent">@color/colorAccentMale</item>
+        <item name="colorTheme">@color/colorPrimaryMale</item>
+        <item name="colorThemePressed">@color/colorPrimaryPressedMale</item>
     </style>
 
     <style name="AppTheme.Female" parent="AppTheme">
         <item name="colorPrimary">@color/colorPrimaryFemale</item>
+        <item name="colorPrimaryPressed">@color/colorPrimaryPressedFemale</item>
         <item name="colorPrimaryDark">@color/colorPrimaryDarkFemale</item>
         <item name="colorAccent">@color/colorAccentFemale</item>
+        <item name="colorTheme">@color/colorPrimaryFemale</item>
+        <item name="colorThemePressed">@color/colorPrimaryPressedFemale</item>
     </style>
 
     <style name="AppTheme.NoActionBar">
@@ -62,10 +72,13 @@
 
     <style name="AppTheme.FullScreen" parent="AppTheme">
         <item name="windowNoTitle">true</item>
+        <item name="android:windowFullscreen">true</item>
+        <item name="android:windowContentOverlay">@null</item>
     </style>
 
     <style name="AppTheme.FullscreenDialog" parent="AppTheme.FullScreen">
         <item name="android:windowIsFloating">true</item>
     </style>
+
 
 </resources>

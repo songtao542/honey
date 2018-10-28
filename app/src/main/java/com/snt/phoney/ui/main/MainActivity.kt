@@ -10,6 +10,7 @@ import com.snt.phoney.R
 import com.snt.phoney.base.BaseActivity
 import com.snt.phoney.extensions.colorOf
 import com.snt.phoney.extensions.disableShiftMode
+import com.snt.phoney.extensions.hideIcon
 import com.snt.phoney.extensions.setStatusBarColor
 import com.snt.phoney.ui.home.HomeFragment
 import com.snt.phoney.ui.message.MessageFragment
@@ -59,13 +60,13 @@ class MainActivity : BaseActivity() {
 //        setStatusBarColor(resources.getColor(R.color.colorPrimary))
         setStatusBarColor(colorOf(R.color.colorPrimaryFemale))
         navigation.disableShiftMode()
+        navigation.hideIcon()
         showFragment("home")
         navigation.setOnNavigationItemSelectedListener(mOnNavigationItemSelectedListener)
     }
 
     private fun showFragment(tag: String) {
         var willShow = getFragmentByTag(tag)
-        Log.d("TTTT", "willShow=${willShow} currentFragment=${currentFragment}")
         if (willShow != currentFragment) {
             var hasAdded = supportFragmentManager.findFragmentByTag(tag) != null
             when {

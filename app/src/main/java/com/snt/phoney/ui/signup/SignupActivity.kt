@@ -5,6 +5,7 @@ import android.content.Intent
 import android.os.Bundle
 import com.snt.phoney.R
 import com.snt.phoney.base.BaseActivity
+import com.snt.phoney.extensions.addFragmentSafely
 import com.snt.phoney.extensions.colorOf
 import com.snt.phoney.extensions.setContentFragment
 import com.snt.phoney.extensions.setStatusBarColor
@@ -15,7 +16,8 @@ class SignupActivity : BaseActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_signup)
         setStatusBarColor(colorOf(android.R.color.white))
-        setContentFragment(R.id.containerLayout) { SignupFragment.newInstance() }
+        //setContentFragment(R.id.containerLayout) { SignupFragment.newInstance() }
+        addFragmentSafely(R.id.containerLayout, StepOneFragment.newInstance(), "step1", false)
     }
 
     companion object {

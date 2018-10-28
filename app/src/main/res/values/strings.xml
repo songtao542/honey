@@ -41,6 +41,27 @@
     <string name="vip_privilege">会员特权</string>
     <string name="open_vip">开通会员</string>
     <string name="withdraw">提现</string>
+    <string name="signin_by_phone">手机号码快速登录</string>
+    <string name="signin_label">动态登录</string>
+    <string name="phone_number">手机号</string>
+    <string name="verification_code">验证码</string>
+    <string name="phone_number_prefix">+86</string>
+    <string name="select_sex">选择您的性别</string>
+    <string name="select_look">选择您的样貌信息</string>
+    <string name="select_height">选择高度</string>
+    <string name="select_age">选择年龄</string>
+    <string name="select_weight">选择体重</string>
+    <string name="step_1_2">1/2</string>
+    <string name="step_2_2">2/2</string>
+    <string name="btn_confirmed">确定好了</string>
+    <string name="input_base_info">填写基本信息</string>
+    <string name="label_select_city">常在的城市</string>
+    <string name="select_city">选择城市</string>
+    <string name="label_select_purpose">交友的目的</string>
+    <string name="select_purpose">选择年轻度</string>
+    <string name="label_select_job">我的工作是</string>
+    <string name="select_job">选择职业</string>
+    <string name="start_life">开启交友</string>
 
 
 </resources>

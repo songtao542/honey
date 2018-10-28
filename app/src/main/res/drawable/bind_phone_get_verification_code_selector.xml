@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8"?>
+<selector xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <item android:state_focused="true">
+        <shape android:shape="rectangle">
+            <corners android:bottomRightRadius="@dimen/bind_phone_edittext_corner_radius" android:topRightRadius="@dimen/bind_phone_edittext_corner_radius"></corners>
+            <solid android:color="@color/bind_phone_get_vcode_pressed"></solid>
+        </shape>
+    </item>
+
+    <item android:state_pressed="true">
+        <shape android:shape="rectangle">
+            <corners android:bottomRightRadius="@dimen/bind_phone_edittext_corner_radius" android:topRightRadius="@dimen/bind_phone_edittext_corner_radius"></corners>
+            <solid android:color="@color/bind_phone_get_vcode_pressed"></solid>
+        </shape>
+    </item>
+
+    <item>
+        <shape android:shape="rectangle">
+            <corners android:bottomRightRadius="@dimen/bind_phone_edittext_corner_radius" android:topRightRadius="@dimen/bind_phone_edittext_corner_radius"></corners>
+            <solid android:color="@color/bind_phone_get_vcode"></solid>
+        </shape>
+    </item>
+
+</selector>

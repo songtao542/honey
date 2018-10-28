@@ -23,7 +23,7 @@
         android:layout_height="wrap_content"
         android:layout_gravity="center_horizontal"
         android:gravity="center"
-        android:text="步骤 2/3"
+        android:text="@string/select_look"
         android:textSize="30sp" />
 
 
@@ -33,24 +33,18 @@
         android:layout_gravity="center_horizontal"
         android:layout_marginTop="8dp"
         android:gravity="center"
-        android:text="选择样貌信息"
+        android:text="@string/step_1_2"
         android:textSize="15sp" />
 
     <FrameLayout
+        android:id="@+id/heightButton"
         android:layout_width="match_parent"
-        android:layout_height="@dimen/edittext_height"
+        android:layout_height="wrap_content"
         android:layout_marginTop="30dp"
+        android:background="@drawable/gray_underline"
+        android:minHeight="60dp"
         android:paddingLeft="20dp"
         android:paddingRight="20dp">
-
-        <EditText
-            android:id="@+id/height"
-            android:layout_width="match_parent"
-            android:layout_height="@dimen/edittext_height"
-            android:background="@drawable/edittext_underline"
-            android:paddingLeft="36sp"
-            android:paddingEnd="10dp" />
-
 
         <TextView
             android:layout_width="wrap_content"
@@ -61,25 +55,39 @@
             android:gravity="center"
             android:paddingLeft="8dp"
             android:paddingRight="8dp"
-            android:text="身高"
+            android:text="@string/label_height"
             android:textColor="@android:color/black"
-            android:textSize="15sp" />
+            android:textSize="@dimen/textsize_normal" />
+
+        <TextView
+            android:id="@+id/height"
+            android:layout_width="wrap_content"
+            android:layout_height="@dimen/edittext_height"
+            android:layout_gravity="center_vertical|right"
+            android:gravity="center"
+            android:paddingLeft="36sp"
+            android:paddingRight="20dp"
+            android:text="@string/select_height"
+            android:textSize="@dimen/textsize_normal" />
+
+
+        <ImageView
+            android:id="@+id/heightArrow"
+            android:layout_width="18dp"
+            android:layout_height="18dp"
+            android:layout_gravity="center_vertical|right"
+            android:src="@drawable/ic_right_arrow" />
+
     </FrameLayout>
 
     <FrameLayout
+        android:id="@+id/ageButton"
         android:layout_width="match_parent"
-        android:layout_height="@dimen/edittext_height"
-        android:layout_marginTop="20dp"
+        android:layout_height="wrap_content"
+        android:background="@drawable/gray_underline"
+        android:minHeight="60dp"
         android:paddingLeft="20dp"
         android:paddingRight="20dp">
-
-        <EditText
-            android:id="@+id/age"
-            android:layout_width="match_parent"
-            android:layout_height="@dimen/edittext_height"
-            android:background="@drawable/edittext_underline"
-            android:paddingLeft="36sp"
-            android:paddingEnd="10dp" />
 
 
         <TextView
@@ -93,23 +101,37 @@
             android:paddingRight="8dp"
             android:text="年龄"
             android:textColor="@android:color/black"
-            android:textSize="15sp" />
+            android:textSize="@dimen/textsize_normal" />
+
+        <TextView
+            android:id="@+id/age"
+            android:layout_width="wrap_content"
+            android:layout_height="@dimen/edittext_height"
+            android:layout_gravity="center_vertical|right"
+            android:gravity="center"
+            android:paddingLeft="36sp"
+            android:paddingRight="20dp"
+            android:text="@string/select_age"
+            android:textSize="@dimen/textsize_normal" />
+
+
+        <ImageView
+            android:id="@+id/ageArrow"
+            android:layout_width="18dp"
+            android:layout_height="18dp"
+            android:layout_gravity="center_vertical|right"
+            android:src="@drawable/ic_right_arrow" />
+
     </FrameLayout>
 
     <FrameLayout
+        android:id="@+id/weightButton"
         android:layout_width="match_parent"
-        android:layout_height="@dimen/edittext_height"
-        android:layout_marginTop="20dp"
+        android:layout_height="wrap_content"
+        android:background="@drawable/gray_underline"
+        android:minHeight="60dp"
         android:paddingLeft="20dp"
         android:paddingRight="20dp">
-
-        <EditText
-            android:id="@+id/weight"
-            android:layout_width="match_parent"
-            android:layout_height="@dimen/edittext_height"
-            android:background="@drawable/edittext_underline"
-            android:paddingLeft="36sp"
-            android:paddingEnd="10dp" />
 
 
         <TextView
@@ -123,7 +145,29 @@
             android:paddingRight="8dp"
             android:text="体重"
             android:textColor="@android:color/black"
-            android:textSize="15sp" />
+            android:textSize="@dimen/textsize_normal" />
+
+
+        <TextView
+            android:id="@+id/weight"
+            android:layout_width="wrap_content"
+            android:layout_height="@dimen/edittext_height"
+            android:layout_gravity="center_vertical|right"
+            android:gravity="center"
+            android:paddingLeft="36sp"
+            android:paddingRight="20dp"
+            android:text="@string/select_weight"
+            android:textSize="@dimen/textsize_normal" />
+
+
+        <ImageView
+            android:id="@+id/weightArrow"
+            android:layout_width="18dp"
+            android:layout_height="18dp"
+            android:layout_gravity="center_vertical|right"
+            android:src="@drawable/ic_right_arrow" />
+
+
     </FrameLayout>
 
     <Button
@@ -134,9 +178,9 @@
         android:layout_marginLeft="20dp"
         android:layout_marginTop="30dp"
         android:layout_marginRight="20dp"
-        android:background="@drawable/button_rounded_corner_selector"
+        android:background="@drawable/primary_circle_corner_selector"
         android:elevation="0dp"
-        android:text="确认无误，下一步"
+        android:text="@string/btn_confirmed"
         android:textColor="@android:color/white" />
 
 </LinearLayout>

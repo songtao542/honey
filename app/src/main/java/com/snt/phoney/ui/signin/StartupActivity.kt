@@ -1,10 +1,10 @@
-package com.snt.phoney.ui.startup
+package com.snt.phoney.ui.signin
 
 import android.os.Bundle
 import com.snt.phoney.R
 import com.snt.phoney.base.BaseActivity
-import com.snt.phoney.extensions.disposedBy
-import io.reactivex.Observable
+import kotlinx.android.synthetic.main.activity_startup.*
+
 
 class StartupActivity : BaseActivity() {
 
@@ -12,6 +12,8 @@ class StartupActivity : BaseActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_startup)
 
-        Observable.just(1).subscribe().disposedBy(disposeBag)
+        signin.setOnClickListener {
+            startActivity(SigninActivity.newIntent(this))
+        }
     }
 }

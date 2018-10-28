@@ -23,7 +23,7 @@
         android:layout_height="wrap_content"
         android:layout_gravity="center_horizontal"
         android:gravity="center"
-        android:text="步骤 3/3"
+        android:text="@string/input_base_info"
         android:textSize="30sp" />
 
 
@@ -33,24 +33,18 @@
         android:layout_gravity="center_horizontal"
         android:layout_marginTop="8dp"
         android:gravity="center"
-        android:text="最后一步啦，选择兴趣爱好！"
+        android:text="@string/step_2_2"
         android:textSize="15sp" />
 
     <FrameLayout
+        android:id="@+id/city"
         android:layout_width="match_parent"
-        android:layout_height="@dimen/edittext_height"
+        android:layout_height="wrap_content"
         android:layout_marginTop="30dp"
+        android:background="@drawable/gray_underline"
+        android:minHeight="60dp"
         android:paddingLeft="20dp"
         android:paddingRight="20dp">
-
-        <EditText
-            android:id="@+id/height"
-            android:layout_width="match_parent"
-            android:layout_height="@dimen/edittext_height"
-            android:background="@drawable/edittext_underline"
-            android:paddingLeft="36sp"
-            android:paddingEnd="10dp" />
-
 
         <TextView
             android:layout_width="wrap_content"
@@ -61,26 +55,37 @@
             android:gravity="center"
             android:paddingLeft="8dp"
             android:paddingRight="8dp"
-            android:text="常出没地方"
+            android:text="@string/label_select_city"
             android:textColor="@android:color/black"
-            android:textSize="15sp" />
+            android:textSize="@dimen/textsize_normal" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="@dimen/edittext_height"
+            android:layout_gravity="center_vertical|right"
+            android:gravity="center"
+            android:paddingLeft="36sp"
+            android:paddingRight="20dp"
+            android:text="@string/select_city"
+            android:textSize="@dimen/textsize_normal" />
+
+
+        <ImageView
+            android:layout_width="18dp"
+            android:layout_height="18dp"
+            android:layout_gravity="center_vertical|right"
+            android:src="@drawable/ic_right_arrow" />
+
     </FrameLayout>
 
     <FrameLayout
+        android:id="@+id/purpose"
         android:layout_width="match_parent"
-        android:layout_height="@dimen/edittext_height"
-        android:layout_marginTop="20dp"
+        android:layout_height="wrap_content"
+        android:background="@drawable/gray_underline"
+        android:minHeight="60dp"
         android:paddingLeft="20dp"
         android:paddingRight="20dp">
-
-        <EditText
-            android:id="@+id/age"
-            android:layout_width="match_parent"
-            android:layout_height="@dimen/edittext_height"
-            android:background="@drawable/edittext_underline"
-            android:paddingLeft="36sp"
-            android:paddingEnd="10dp" />
-
 
         <TextView
             android:layout_width="wrap_content"
@@ -91,24 +96,38 @@
             android:gravity="center"
             android:paddingLeft="8dp"
             android:paddingRight="8dp"
-            android:text="自我介绍"
+            android:text="@string/label_select_purpose"
             android:textColor="@android:color/black"
-            android:textSize="15sp" />
+            android:textSize="@dimen/textsize_normal" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="@dimen/edittext_height"
+            android:layout_gravity="center_vertical|right"
+            android:gravity="center"
+            android:paddingLeft="36sp"
+            android:paddingRight="20dp"
+            android:text="@string/select_purpose"
+            android:textSize="@dimen/textsize_normal" />
+
+
+        <ImageView
+            android:layout_width="18dp"
+            android:layout_height="18dp"
+            android:layout_gravity="center_vertical|right"
+            android:src="@drawable/ic_right_arrow" />
+
+
     </FrameLayout>
 
     <FrameLayout
+        android:id="@+id/job"
         android:layout_width="match_parent"
-        android:layout_height="@dimen/edittext_height"
-        android:layout_marginTop="20dp"
+        android:layout_height="wrap_content"
+        android:background="@drawable/gray_underline"
+        android:minHeight="60dp"
         android:paddingLeft="20dp"
         android:paddingRight="20dp">
-
-        <EditText
-            android:layout_width="match_parent"
-            android:layout_height="@dimen/edittext_height"
-            android:background="@drawable/edittext_underline"
-            android:paddingLeft="36sp"
-            android:paddingEnd="10dp" />
 
 
         <TextView
@@ -120,39 +139,30 @@
             android:gravity="center"
             android:paddingLeft="8dp"
             android:paddingRight="8dp"
-            android:text="约会节目"
+            android:text="@string/label_select_job"
             android:textColor="@android:color/black"
-            android:textSize="15sp" />
-    </FrameLayout>
-
-    <FrameLayout
-        android:layout_width="match_parent"
-        android:layout_height="@dimen/edittext_height"
-        android:layout_marginTop="20dp"
-        android:paddingLeft="20dp"
-        android:paddingRight="20dp">
-
-        <EditText
-            android:layout_width="match_parent"
-            android:layout_height="@dimen/edittext_height"
-            android:background="@drawable/edittext_underline"
-            android:paddingLeft="36sp"
-            android:paddingEnd="10dp" />
-
+            android:textSize="@dimen/textsize_normal" />
 
         <TextView
             android:layout_width="wrap_content"
-            android:layout_height="@dimen/button_get_verification_code_height"
-            android:layout_gravity="center|left"
-            android:layout_marginRight="20dp"
-            android:clickable="true"
+            android:layout_height="@dimen/edittext_height"
+            android:layout_gravity="center_vertical|right"
             android:gravity="center"
-            android:paddingLeft="8dp"
-            android:paddingRight="8dp"
-            android:text="职业信息"
-            android:textColor="@android:color/black"
-            android:textSize="15sp" />
+            android:paddingLeft="36sp"
+            android:paddingRight="20dp"
+            android:text="@string/select_job"
+            android:textSize="@dimen/textsize_normal" />
+
+
+        <ImageView
+            android:layout_width="18dp"
+            android:layout_height="18dp"
+            android:layout_gravity="center_vertical|right"
+            android:src="@drawable/ic_right_arrow" />
+
+
     </FrameLayout>
+
 
     <Button
         android:id="@+id/confirmStep3"
@@ -162,9 +172,9 @@
         android:layout_marginLeft="20dp"
         android:layout_marginTop="30dp"
         android:layout_marginRight="20dp"
-        android:background="@drawable/button_rounded_corner_selector"
+        android:background="@drawable/primary_circle_corner_selector"
         android:elevation="0dp"
-        android:text="开启交友生活"
+        android:text="@string/start_life"
         android:textColor="@android:color/white" />
 
 </LinearLayout>
