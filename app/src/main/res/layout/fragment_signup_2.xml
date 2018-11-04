@@ -41,7 +41,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="30dp"
-        android:background="@drawable/gray_underline"
+        android:background="@drawable/underline_gray"
         android:minHeight="60dp"
         android:paddingLeft="20dp"
         android:paddingRight="20dp">
@@ -84,7 +84,7 @@
         android:id="@+id/ageButton"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:background="@drawable/gray_underline"
+        android:background="@drawable/underline_gray"
         android:minHeight="60dp"
         android:paddingLeft="20dp"
         android:paddingRight="20dp">
@@ -128,7 +128,7 @@
         android:id="@+id/weightButton"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:background="@drawable/gray_underline"
+        android:background="@drawable/underline_gray"
         android:minHeight="60dp"
         android:paddingLeft="20dp"
         android:paddingRight="20dp">
@@ -178,7 +178,7 @@
         android:layout_marginLeft="20dp"
         android:layout_marginTop="30dp"
         android:layout_marginRight="20dp"
-        android:background="@drawable/primary_circle_corner_selector"
+        android:background="@drawable/button_primary_circle_corner_selector"
         android:elevation="0dp"
         android:text="@string/btn_confirmed"
         android:textColor="@android:color/white" />

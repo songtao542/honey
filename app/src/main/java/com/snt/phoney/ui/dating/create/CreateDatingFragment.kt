@@ -14,7 +14,9 @@ import com.snt.phoney.extensions.autoCleared
 class CreateDatingFragment : BaseFragment() {
 
     companion object {
-        fun newInstance() = CreateDatingFragment()
+        fun newInstance(arguments: Bundle? = null) = CreateDatingFragment().apply {
+            this.arguments = arguments
+        }
     }
 
     private lateinit var viewModel: CreateDatingViewModel

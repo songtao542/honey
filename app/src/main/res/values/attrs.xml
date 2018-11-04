@@ -5,6 +5,8 @@
     <attr name="colorPrimaryPressed" format="reference|color" />
     <attr name="colorTheme" format="reference|color" />
     <attr name="colorThemePressed" format="reference|color" />
+    <attr name="statusBarBackground" format="reference|color" />
+    <attr name="toolbarBackground" format="reference|color" />
 
 
     <attr name="advanced_options_style" format="reference" />

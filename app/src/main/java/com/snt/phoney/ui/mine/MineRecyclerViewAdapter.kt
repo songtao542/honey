@@ -2,6 +2,7 @@ package com.snt.phoney.ui.mine
 
 
 import android.content.Context
+import android.support.v4.app.Fragment
 import android.support.v7.widget.RecyclerView
 import android.view.LayoutInflater
 import android.view.View
@@ -10,17 +11,18 @@ import android.widget.ImageView
 import android.widget.LinearLayout
 import android.widget.TextView
 import com.snt.phoney.R
-import com.snt.phoney.ui.dating.list.DatingListActivity
-import com.snt.phoney.ui.vip.VipActivity
+import com.snt.phoney.base.Page
+import com.snt.phoney.ui.dating.DatingActivity
+import com.snt.phoney.ui.user.UserActivity
 import com.snt.phoney.ui.wallet.WalletActivity
 import kotlinx.android.synthetic.main.fragment_mine_footer.view.*
-import kotlinx.android.synthetic.main.fragment_mine_header.view.*
+import kotlinx.android.synthetic.main.fragment_mine_list_header.view.*
 import kotlinx.android.synthetic.main.fragment_mine_settings.view.*
 
 /**
  * [RecyclerView.Adapter] that can display a [DummyItem] and makes a call to the
  */
-class MineRecyclerViewAdapter : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
+class MineRecyclerViewAdapter(val fragment: Fragment) : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
 
 
     private val settings = ArrayList<Setting>()
@@ -35,6 +37,12 @@ class MineRecyclerViewAdapter : RecyclerView.Adapter<RecyclerView.ViewHolder>() 
         settings.add(Setting(R.drawable.ic_user_protocol, "用户协议", ""))
         settings.add(Setting(R.drawable.ic_clear_cache, "清理缓存", ""))
         settings.add(Setting(R.drawable.ic_about, "关于", ""))
+        settings.add(Setting(R.drawable.ic_about, "关于", ""))
+        settings.add(Setting(R.drawable.ic_about, "关于", ""))
+        settings.add(Setting(R.drawable.ic_about, "关于", ""))
+        settings.add(Setting(R.drawable.ic_about, "关于", ""))
+        settings.add(Setting(R.drawable.ic_about, "关于", ""))
+        settings.add(Setting(R.drawable.ic_about, "关于", ""))
     }
 
 
@@ -48,7 +56,7 @@ class MineRecyclerViewAdapter : RecyclerView.Adapter<RecyclerView.ViewHolder>() 
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder {
         return when (viewType) {
-            0 -> HeadViewHolder(LayoutInflater.from(parent.context).inflate(R.layout.fragment_mine_header, parent, false))
+            0 -> HeadViewHolder(LayoutInflater.from(parent.context).inflate(R.layout.fragment_mine_list_header, parent, false))
             1 -> SettingViewHolder(LayoutInflater.from(parent.context).inflate(R.layout.fragment_mine_settings, parent, false))
             else -> FooterViewHolder(LayoutInflater.from(parent.context).inflate(R.layout.fragment_mine_footer, parent, false))
         }
@@ -68,11 +76,6 @@ class MineRecyclerViewAdapter : RecyclerView.Adapter<RecyclerView.ViewHolder>() 
 
     inner class HeadViewHolder(val mView: View) : RecyclerView.ViewHolder(mView) {
         private val context: Context = mView.context
-        private val mHead: ImageView = mView.head
-        private val mUserName: TextView = mView.username
-        private val mVipType: TextView = mView.vipType
-        private val mUpgradeVip: TextView = mView.upgradeVip
-        private val mEditInfo: TextView = mView.editInfo
         private val mRecentVisitor: TextView = mView.recentVisitor
         private val mRecentVisitorButton: LinearLayout = mView.recentVisitorButton
         private val mFollowMe: TextView = mView.followMe
@@ -85,11 +88,9 @@ class MineRecyclerViewAdapter : RecyclerView.Adapter<RecyclerView.ViewHolder>() 
             mRecentVisitor.text = "1000"
             mFollowMe.text = "100"
             mMyDating.text = "10000"
-            mUpgradeVip.setOnClickListener { context.startActivity(VipActivity.newIntent(context)) }
-            mEditInfo.setOnClickListener { }
-            mFollowMeButton.setOnClickListener { }
-            mRecentVisitorButton.setOnClickListener { }
-            mMyDatingButton.setOnClickListener { context.startActivity(DatingListActivity.newIntent(context)) }
+            mFollowMeButton.setOnClickListener { context.startActivity(UserActivity.newIntent(context, Page.VIEW_FOLLOW_ME)) }
+            mRecentVisitorButton.setOnClickListener { context.startActivity(UserActivity.newIntent(context, Page.VIEW_RECENT_VISITOR)) }
+            mMyDatingButton.setOnClickListener { context.startActivity(DatingActivity.newIntent(context, Page.VIEW_DATING_LIST)) }
         }
     }
 
@@ -116,7 +117,7 @@ class MineRecyclerViewAdapter : RecyclerView.Adapter<RecyclerView.ViewHolder>() 
                 R.drawable.ic_photo -> {
                 }
                 R.drawable.ic_dating -> {
-                    mView.setOnClickListener { context.startActivity(DatingListActivity.newIntent(context)) }
+                    mView.setOnClickListener { context.startActivity(DatingActivity.newIntent(context, Page.VIEW_DATING_LIST)) }
                 }
                 R.drawable.ic_wallet -> {
                     mView.setOnClickListener { context.startActivity(WalletActivity.newIntent(context)) }

@@ -16,7 +16,10 @@ import com.snt.phoney.ui.signup.*
 import com.snt.phoney.ui.square.SquareFragment
 import com.snt.phoney.ui.square.official.OfficialRecommendFragment
 import com.snt.phoney.ui.square.popular.PopularRecommendFragment
+import com.snt.phoney.ui.user.EditUserFragment
+import com.snt.phoney.ui.user.FollowmeFragment
 import com.snt.phoney.ui.user.UserInfoFragment
+import com.snt.phoney.ui.user.VisitorFragment
 import com.snt.phoney.ui.vip.VipFragment
 import com.snt.phoney.ui.wallet.WalletFragment
 import dagger.Module
@@ -80,9 +83,6 @@ abstract class FragmentModule {
     abstract fun contributeVipFragment(): VipFragment
 
     @ContributesAndroidInjector
-    abstract fun contributeUserInfoFragment(): UserInfoFragment
-
-    @ContributesAndroidInjector
     abstract fun contributeForgetPasswordFragment(): ForgetPasswordFragment
 
     @ContributesAndroidInjector
@@ -93,5 +93,17 @@ abstract class FragmentModule {
 
     @ContributesAndroidInjector
     abstract fun contributeStepThreeFragment(): StepThreeFragment
+
+    @ContributesAndroidInjector
+    abstract fun contributeEditUserFragment(): EditUserFragment
+
+    @ContributesAndroidInjector
+    abstract fun contributeVisitorFragment(): VisitorFragment
+
+    @ContributesAndroidInjector
+    abstract fun contributeFollowmeFragment(): FollowmeFragment
+
+    @ContributesAndroidInjector
+    abstract fun contributeUserInfoFragment(): UserInfoFragment
 
 }

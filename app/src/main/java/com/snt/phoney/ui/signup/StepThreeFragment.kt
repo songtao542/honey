@@ -27,10 +27,10 @@ class StepThreeFragment : BaseFragment() {
         var view = inflater.inflate(R.layout.fragment_signup_3, container, false)
         when (user.sex) {
             0 -> {
-                view.confirmStep3.setBackgroundResource(R.drawable.femail_circle_corner_selector)
+                view.confirmStep3.setBackgroundResource(R.drawable.button_femail_circle_corner_selector)
             }
             else -> {
-                view.confirmStep3.setBackgroundResource(R.drawable.mail_circle_corner_selector)
+                view.confirmStep3.setBackgroundResource(R.drawable.button_mail_circle_corner_selector)
             }
         }
         return view

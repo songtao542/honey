@@ -12,6 +12,9 @@
 
         <item name="actionBarStyle">@style/AppTheme.Toolbar</item>
         <item name="toolbarStyle">@style/AppTheme.Toolbar</item>
+
+        <item name="statusBarBackground">@color/colorPrimaryFemale</item>
+        <item name="toolbarBackground">@color/colorPrimaryFemale</item>
     </style>
 
     <style name="AppTheme.Male" parent="AppTheme">
@@ -21,6 +24,9 @@
         <item name="colorAccent">@color/colorAccentMale</item>
         <item name="colorTheme">@color/colorPrimaryMale</item>
         <item name="colorThemePressed">@color/colorPrimaryPressedMale</item>
+
+        <item name="statusBarBackground">@drawable/gradient_bg</item>
+        <item name="toolbarBackground">@drawable/gradient_bg</item>
     </style>
 
     <style name="AppTheme.Female" parent="AppTheme">
@@ -30,6 +36,9 @@
         <item name="colorAccent">@color/colorAccentFemale</item>
         <item name="colorTheme">@color/colorPrimaryFemale</item>
         <item name="colorThemePressed">@color/colorPrimaryPressedFemale</item>
+
+        <item name="statusBarBackground">@color/colorPrimaryFemale</item>
+        <item name="toolbarBackground">@color/colorPrimaryFemale</item>
     </style>
 
     <style name="AppTheme.NoActionBar">
@@ -48,7 +57,7 @@
     <style name="TextAppearance.Toolbar" parent="TextAppearance.Widget.AppCompat.Toolbar.Title"></style>
 
     <style name="AppTheme.Toolbar" parent="Widget.AppCompat.Toolbar">
-        <item name="titleTextAppearance">@style/TextAppearance.Toolbar</item>
+        <item name="titleTextAppearance">@style/TextAppearance.Tab</item>
         <item name="contentInsetLeft">@dimen/actionbar_padding_start</item>
         <item name="contentInsetStart">@dimen/actionbar_padding_start</item>
         <item name="popupTheme">@style/AppTheme.PopupOverlay</item>
@@ -60,14 +69,28 @@
     </style>
 
 
-    <style name="TextAppearance.Tab" parent="TextAppearance.Toolbar"></style>
+    <style name="TextAppearance.Tab" parent="TextAppearance.Toolbar">
+        <item name="android:gravity">center</item>
+        <item name="android:textColor">@color/white</item>
+    </style>
 
     <style name="AppTheme.Tab">
         <item name="tabIndicatorColor">@android:color/white</item>
-        <item name="tabIndicatorBottomOffset">6dp</item>
+        <item name="tabIndicatorBottomOffset">0dp</item>
         <item name="tabIndicatorWidth">20dp</item>
         <item name="tabPaddingStart">@dimen/actionbar_padding_start</item>
+        <item name="tabPaddingTop">0dp</item>
         <item name="tabTextAppearance">@style/TextAppearance.Tab</item>
+        <item name="tabTextColor">@color/white</item>
+        <item name="tabSelectedTextColor">@color/white</item>
+    </style>
+
+    <style name="TextAppearance.ExpandedTitle" parent="TextAppearance.Tab">
+        <item name="android:textColor">@android:color/transparent</item>
+    </style>
+
+    <style name="TextAppearance.CollapsedTitle">
+        <item name="android:textColor">@android:color/white</item>
     </style>
 
     <style name="AppTheme.FullScreen" parent="AppTheme">

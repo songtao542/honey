@@ -12,10 +12,16 @@
         android:label="@string/app_name"
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
-        android:theme="@style/AppTheme">
+        android:theme="@style/AppTheme.Male">
         <activity
             android:name=".ui.main.MainActivity"
-            android:screenOrientation="portrait" />
+            android:screenOrientation="portrait">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
         <activity
             android:name=".ui.signin.StartupActivity"
             android:screenOrientation="portrait">
@@ -25,22 +31,13 @@
             android:name=".ui.signin.SigninActivity"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme.FullScreen">
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
 
-                <category android:name="android.intent.category.LAUNCHER" />
-            </intent-filter>
         </activity>
         <activity
             android:name=".ui.signup.SignupActivity"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme.Common" />
-        <activity
-            android:name=".ui.dating.create.CreateDatingActivity"
-            android:theme="@style/AppTheme.Common" />
-        <activity
-            android:name=".ui.dating.list.DatingListActivity"
-            android:theme="@style/AppTheme.Common" />
+        <activity android:name=".ui.dating.DatingActivity" />
         <activity
             android:name=".ui.vip.VipActivity"
             android:theme="@style/AppTheme.Common" />
@@ -50,7 +47,7 @@
         <activity
             android:name=".ui.nearby.NearbyActivity"
             android:theme="@style/AppTheme.Common" />
-        <activity android:name=".ui.user.UserInfoActivity"></activity>
+        <activity android:name=".ui.user.UserActivity"></activity>
     </application>
 
 </manifest>

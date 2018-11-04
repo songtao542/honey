@@ -6,12 +6,10 @@ import android.os.Bundle
 import android.support.design.widget.BottomNavigationView
 import android.support.v4.app.Fragment
 import android.util.Log
+import android.view.ViewGroup
 import com.snt.phoney.R
 import com.snt.phoney.base.BaseActivity
-import com.snt.phoney.extensions.colorOf
-import com.snt.phoney.extensions.disableShiftMode
-import com.snt.phoney.extensions.hideIcon
-import com.snt.phoney.extensions.setStatusBarColor
+import com.snt.phoney.extensions.*
 import com.snt.phoney.ui.home.HomeFragment
 import com.snt.phoney.ui.message.MessageFragment
 import com.snt.phoney.ui.mine.MineFragment
@@ -32,7 +30,6 @@ class MainActivity : BaseActivity() {
     private var currentFragment: Fragment? = null
 
     private val mOnNavigationItemSelectedListener = BottomNavigationView.OnNavigationItemSelectedListener { item ->
-
         when (item.itemId) {
             R.id.navigation_home -> {
                 showFragment("home")
@@ -51,18 +48,29 @@ class MainActivity : BaseActivity() {
                 return@OnNavigationItemSelectedListener true
             }
         }
-        false
+        return@OnNavigationItemSelectedListener false
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
-//        setStatusBarColor(resources.getColor(R.color.colorPrimary))
-        setStatusBarColor(colorOf(R.color.colorPrimaryFemale))
+        setLayoutFullscreen()
+        //setStatusBarColor(colorOf(R.color.colorPrimaryFemale))
         navigation.disableShiftMode()
         navigation.hideIcon()
         showFragment("home")
         navigation.setOnNavigationItemSelectedListener(mOnNavigationItemSelectedListener)
+        fragmentContainer.setOnApplyWindowInsetsListener { view, insets ->
+            var consumed = false
+            if (view is ViewGroup) {
+                view.forEach { child ->
+                    Log.d("TTTT", "=============xxx==================")
+                    val childResult = child.dispatchApplyWindowInsets(insets)
+                    consumed = childResult.isConsumed
+                }
+            }
+            if (consumed) insets.consumeSystemWindowInsets() else insets
+        }
     }
 
     private fun showFragment(tag: String) {

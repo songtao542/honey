@@ -14,7 +14,10 @@
 
 package com.snt.phoney.base
 
+import android.app.Activity
 import android.arch.lifecycle.ViewModelProvider
+import android.content.Context
+import android.content.Intent
 import android.support.v4.app.Fragment
 import android.support.v7.app.AppCompatActivity
 import android.view.MotionEvent
@@ -26,6 +29,13 @@ import io.reactivex.disposables.CompositeDisposable
 import javax.inject.Inject
 
 abstract class BaseActivity : AppCompatActivity(), HasSupportFragmentInjector {
+    companion object {
+        fun <T : Activity> newIntent(context: Context, clazz: Class<T>, page: Page): Intent {
+            val intent = Intent(context, clazz)
+            return intent.putExtra(EXTRA_PAGE, page.ordinal)
+        }
+    }
+
     @Inject
     lateinit var dispatchingAndroidInjector: DispatchingAndroidInjector<Fragment>
 

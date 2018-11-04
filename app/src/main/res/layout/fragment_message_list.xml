@@ -1,33 +1,71 @@
 <?xml version="1.0" encoding="utf-8"?>
-<android.support.design.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<!--<android.support.design.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"-->
+    <!--xmlns:app="http://schemas.android.com/apk/res-auto"-->
+    <!--xmlns:tools="http://schemas.android.com/tools"-->
+    <!--android:name="com.snt.phoney.ui.message.MessageFragment"-->
+    <!--android:layout_width="match_parent"-->
+    <!--android:layout_height="match_parent"-->
+    <!--tools:context=".ui.message.MessageFragment">-->
+
+    <!--<android.support.design.widget.AppBarLayout-->
+        <!--android:layout_width="match_parent"-->
+        <!--android:layout_height="wrap_content"-->
+        <!--android:theme="@style/AppTheme.AppBarOverlay">-->
+
+        <!--<com.snt.phoney.widget.Toolbar-->
+            <!--android:id="@+id/messageToolbar"-->
+            <!--style="@style/AppTheme.Toolbar"-->
+            <!--android:layout_width="match_parent"-->
+            <!--android:layout_height="?attr/actionBarSize"-->
+            <!--android:background="?attr/toolbarBackground"-->
+            <!--android:tag="message"-->
+            <!--app:title="@string/tab_message" />-->
+
+    <!--</android.support.design.widget.AppBarLayout>-->
+
+    <!--<android.support.v7.widget.RecyclerView-->
+        <!--android:id="@+id/messageRecyclerView"-->
+        <!--android:layout_width="match_parent"-->
+        <!--android:layout_height="match_parent"-->
+        <!--android:clipToPadding="true"-->
+        <!--android:paddingTop="?attr/actionBarSize"-->
+        <!--tools:listitem="@layout/fragment_message" />-->
+
+<!--</android.support.design.widget.CoordinatorLayout>-->
+
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:name="com.snt.phoney.ui.message.MessageFragment"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:orientation="vertical"
     tools:context=".ui.message.MessageFragment">
 
-    <android.support.design.widget.AppBarLayout
+
+    <com.snt.phoney.widget.Toolbar
+        android:id="@+id/messageToolbar"
+        style="@style/AppTheme.Toolbar"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:theme="@style/AppTheme.AppBarOverlay">
+        android:layout_height="?attr/actionBarSize"
+        android:background="?attr/toolbarBackground"
+        android:tag="message"
+        app:titleTextColor="@color/white">
 
-        <android.support.v7.widget.Toolbar
-            android:id="@+id/messageToolbar"
-            style="@style/AppTheme.Toolbar"
-            android:layout_width="match_parent"
-            android:layout_height="?attr/actionBarSize"
-            android:background="?attr/colorPrimary"
-            app:title="@string/tab_message"></android.support.v7.widget.Toolbar>
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/tab_home_friend"
+            android:textAppearance="@style/TextAppearance.Tab"
+            android:textColor="@color/white" />
+    </com.snt.phoney.widget.Toolbar>
 
-    </android.support.design.widget.AppBarLayout>
 
-    <android.support.v7.widget.RecyclerView xmlns:android="http://schemas.android.com/apk/res/android"
+    <android.support.v7.widget.RecyclerView
         android:id="@+id/messageRecyclerView"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:clipToPadding="true"
-        android:paddingTop="?attr/actionBarSize"
         tools:listitem="@layout/fragment_message" />
 
-</android.support.design.widget.CoordinatorLayout>
+</LinearLayout>

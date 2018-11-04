@@ -53,6 +53,9 @@
     <color name="bind_phone_get_vcode_pressed">#393939</color>
     <color name="bind_phone_confirm">#f8e71c</color>
     <color name="bind_phone_confirm_pressed">#dccd16</color>
+    <color name="edit_user_item_label" >#000000</color>
+    <color name="edit_user_item_divider_label" >#444444</color>
+    <color name="edit_user_item_value">#4a4a4a</color>
 
 
 </resources>

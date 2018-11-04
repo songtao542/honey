@@ -16,12 +16,8 @@ import com.snt.phoney.domain.model.User
 import com.snt.phoney.extensions.addFragmentSafely
 import com.snt.phoney.extensions.autoCleared
 import com.snt.phoney.extensions.disposedBy
-import com.snt.phoney.extensions.replaceFragmentSafely
-import com.snt.phoney.ui.dating.create.CreateDatingActivity
 import com.snt.phoney.ui.main.MainActivity
-import com.snt.phoney.ui.nearby.NearbyActivity
 import com.snt.phoney.ui.password.ForgetPasswordFragment
-import com.snt.phoney.ui.signup.SignupActivity
 
 /**
  * A simple [Fragment] subclass.
@@ -77,19 +73,16 @@ class SigninFragment : BaseFragment() {
 
     private fun onWeiboClicked() {
         context?.let {
-            startActivity(NearbyActivity.newIntent(it))
         }
     }
 
     private fun onWeixinClicked() {
         context?.let {
-            startActivity(CreateDatingActivity.newIntent(it))
         }
     }
 
     private fun onQQClicked() {
         context?.let {
-            startActivity(SignupActivity.newIntent(it))
         }
     }
 

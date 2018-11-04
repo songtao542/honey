@@ -1,0 +1,81 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <declare-styleable name="CollapsingToolbarLayout">
+        <attr name="expandedTitleMargin" format="dimension" />
+        <attr name="expandedTitleMarginStart" format="dimension" />
+        <attr name="expandedTitleMarginTop" format="dimension" />
+        <attr name="expandedTitleMarginEnd" format="dimension" />
+        <attr name="expandedTitleMarginBottom" format="dimension" />
+        <attr name="expandedTitleTextAppearance" format="reference" />
+        <attr name="collapsedTitleTextAppearance" format="reference" />
+        <attr name="contentScrim" format="color" />
+        <attr name="statusBarScrim" format="color" />
+        <attr name="toolbarId" format="reference" />
+        <attr name="toolbarAutoChangeAlpha" format="boolean" />
+        <attr name="scrimVisibleHeightTrigger" format="dimension" />
+        <attr name="scrimAnimationDuration" format="integer" />
+        <attr name="collapsedTitleGravity">
+
+            <flag name="top" value="0x30" />
+
+            <flag name="bottom" value="0x50" />
+
+            <flag name="left" value="0x03" />
+
+            <flag name="right" value="0x05" />
+
+            <flag name="center_vertical" value="0x10" />
+
+            <flag name="fill_vertical" value="0x70" />
+
+            <flag name="center_horizontal" value="0x01" />
+
+            <flag name="center" value="0x11" />
+
+            <flag name="start" value="0x00800003" />
+
+            <flag name="end" value="0x00800005" />
+        </attr>
+        <attr name="expandedTitleGravity">
+
+            <flag name="top" value="0x30" />
+
+            <flag name="bottom" value="0x50" />
+
+            <flag name="left" value="0x03" />
+
+            <flag name="right" value="0x05" />
+
+            <flag name="center_vertical" value="0x10" />
+
+            <flag name="fill_vertical" value="0x70" />
+
+            <flag name="center_horizontal" value="0x01" />
+
+            <flag name="center" value="0x11" />
+
+            <flag name="start" value="0x00800003" />
+
+            <flag name="end" value="0x00800005" />
+        </attr>
+        <attr name="titleEnabled" format="boolean" />
+        <attr name="titleScalable" format="boolean" />
+        <attr name="title" />
+    </declare-styleable>
+
+    <declare-styleable name="CollapsingToolbarLayout_Layout">
+        <attr name="layout_collapseMode">
+
+            <enum name="none" value="0" />
+
+            <enum name="pin" value="1" />
+
+            <enum name="parallax" value="2" />
+        </attr>
+        <attr name="layout_autoChangeAlpha" format="boolean" />
+        <attr name="layout_autoChangeChildrenAlpha" format="boolean" />
+
+        <attr name="layout_collapseParallaxMultiplier" format="float" />
+    </declare-styleable>
+</resources>

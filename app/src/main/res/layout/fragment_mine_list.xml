@@ -12,23 +12,87 @@
         android:layout_height="wrap_content"
         android:theme="@style/AppTheme.AppBarOverlay">
 
-        <android.support.v7.widget.Toolbar
-            android:id="@+id/mineToolbar"
-            style="@style/AppTheme.Toolbar"
+        <com.snt.phoney.widget.CollapsingToolbarLayout
             android:layout_width="match_parent"
-            android:layout_height="?attr/actionBarSize"
-            android:background="?attr/colorPrimary"
-            android:elevation="0dp"
-            app:title="@string/tab_mine"></android.support.v7.widget.Toolbar>
+            android:layout_height="wrap_content"
+            android:background="@android:color/transparent"
+            android:padding="0dp"
+            app:collapsedTitleGravity="top"
+            app:collapsedTitleTextAppearance="@style/TextAppearance.CollapsedTitle"
+            app:contentScrim="?attr/toolbarBackground"
+            app:expandedTitleGravity="top"
+            app:expandedTitleMarginBottom="0dp"
+            app:expandedTitleMarginEnd="0dp"
+            app:expandedTitleMarginStart="@dimen/actionbar_padding_start"
+            app:expandedTitleMarginTop="0dp"
+            app:expandedTitleTextAppearance="@style/TextAppearance.ExpandedTitle"
+            app:layout_scrollFlags="scroll|exitUntilCollapsed"
+            app:titleEnabled="true"
+            app:titleScalable="false"
+            app:toolbarAutoChangeAlpha="true"
+            app:toolbarId="@+id/mineToolbar">
 
+            <include layout="@layout/fragment_mine_header" />
+
+            <com.snt.phoney.widget.Toolbar
+                android:id="@+id/mineToolbar"
+                style="@style/AppTheme.Toolbar"
+                android:layout_width="match_parent"
+                android:layout_height="?attr/actionBarSize"
+                android:elevation="0dp"
+                android:padding="0dp"
+                android:tag="mine"
+                app:layout_collapseMode="pin"
+                app:titleMargin="0dp">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/tab_home_friend"
+                    android:textAppearance="@style/TextAppearance.Tab" />
+            </com.snt.phoney.widget.Toolbar>
+
+        </com.snt.phoney.widget.CollapsingToolbarLayout>
     </android.support.design.widget.AppBarLayout>
 
-    <android.support.v7.widget.RecyclerView xmlns:android="http://schemas.android.com/apk/res/android"
+    <android.support.v7.widget.RecyclerView
         android:id="@+id/mineRecyclerView"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:clipToPadding="true"
-        android:paddingTop="?attr/actionBarSize"
+        app:layout_behavior="@string/appbar_scrolling_view_behavior"
         tools:listitem="@layout/fragment_mine" />
 
 </android.support.design.widget.CoordinatorLayout>
+
+<!--<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"-->
+    <!--xmlns:app="http://schemas.android.com/apk/res-auto"-->
+    <!--xmlns:tools="http://schemas.android.com/tools"-->
+    <!--android:name="com.snt.phoney.ui.mine.MineFragment"-->
+    <!--android:layout_width="match_parent"-->
+    <!--android:layout_height="match_parent"-->
+    <!--android:orientation="vertical"-->
+    <!--tools:context=".ui.mine.MineFragment">-->
+
+
+    <!--<com.snt.phoney.widget.Toolbar-->
+        <!--android:id="@+id/mineToolbar"-->
+        <!--style="@style/AppTheme.Toolbar"-->
+        <!--android:layout_width="match_parent"-->
+        <!--android:layout_height="?attr/actionBarSize"-->
+        <!--android:background="?attr/toolbarBackground"-->
+        <!--android:elevation="0dp"-->
+        <!--android:tag="mine"-->
+        <!--android:visibility="gone"-->
+        <!--app:titleTextColor="@color/white"-->
+        <!--app:title="@string/tab_mine" />-->
+
+
+    <!--<android.support.v7.widget.RecyclerView-->
+        <!--android:id="@+id/mineRecyclerView"-->
+        <!--android:layout_width="match_parent"-->
+        <!--android:layout_height="match_parent"-->
+        <!--android:clipToPadding="true"-->
+        <!--tools:listitem="@layout/fragment_mine" />-->
+
+<!--</LinearLayout>-->

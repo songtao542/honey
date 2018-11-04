@@ -9,6 +9,7 @@ import com.snt.phoney.ui.password.ForgetPasswordViewModel
 import com.snt.phoney.ui.signin.SigninViewModel
 import com.snt.phoney.ui.signup.BindPhoneViewModel
 import com.snt.phoney.ui.signup.SignupViewModel
+import com.snt.phoney.ui.user.EditUserViewModel
 import com.snt.phoney.ui.user.UserInfoViewModel
 import com.snt.phoney.ui.vip.VipViewModel
 import com.snt.phoney.ui.wallet.WalletViewModel
@@ -68,5 +69,10 @@ abstract class ViewModelModule {
     @IntoMap
     @ViewModelKey(ForgetPasswordViewModel::class)
     abstract fun bindForgetPasswordViewModel(viewModel: ForgetPasswordViewModel): ViewModel
+
+    @Binds
+    @IntoMap
+    @ViewModelKey(EditUserViewModel::class)
+    abstract fun bindEditUserViewModel(viewModel: EditUserViewModel): ViewModel
 
 }

@@ -1516,7 +1516,7 @@ public class TabLayout extends HorizontalScrollView {
         private TextView mCustomTextView;
         private ImageView mCustomIconView;
 
-        private int mDefaultMaxLines = 2;
+        private int mDefaultMaxLines = 1;
 
         public TabView(Context context) {
             super(context);
@@ -1531,6 +1531,8 @@ public class TabLayout extends HorizontalScrollView {
             setClickable(true);
             ViewCompat.setPointerIcon(this,
                     PointerIconCompat.getSystemIcon(getContext(), PointerIconCompat.TYPE_HAND));
+
+            //canvas.drawColor(0xff00ff00);
         }
 
         @Override
@@ -1685,6 +1687,7 @@ public class TabLayout extends HorizontalScrollView {
                 }
 
                 mCustomTextView = (TextView) custom.findViewById(android.R.id.text1);
+                mCustomTextView.setGravity(Gravity.BOTTOM);
                 if (mCustomTextView != null) {
                     mDefaultMaxLines = TextViewCompat.getMaxLines(mCustomTextView);
                 }
@@ -1712,6 +1715,7 @@ public class TabLayout extends HorizontalScrollView {
                             .inflate(R.layout.design_layout_tab_text, this, false);
                     addView(textView);
                     mTextView = textView;
+                    mTextView.setGravity(Gravity.BOTTOM);
                     mDefaultMaxLines = TextViewCompat.getMaxLines(mTextView);
                 }
                 TextViewCompat.setTextAppearance(mTextView, mTabTextAppearance);
@@ -2055,11 +2059,10 @@ public class TabLayout extends HorizontalScrollView {
         @Override
         public void draw(Canvas canvas) {
             super.draw(canvas);
-//            canvas.drawColor(0xff00ff00);
             // Thick colored underline below the current selection
             if (mIndicatorLeft >= 0 && mIndicatorRight > mIndicatorLeft) {
                 if (mIndicatorWidth > 0) {
-                    float centerX = (mIndicatorLeft + mIndicatorRight) / 2;
+                    float centerX = (mIndicatorLeft + mIndicatorRight) / 2 + Math.abs(mTabPaddingStart - mTabPaddingEnd) / 2;
                     canvas.drawRect(centerX - mIndicatorWidth / 2, getHeight() - mSelectedIndicatorHeight - mIndicatorBottomOffset,
                             centerX + mIndicatorWidth / 2, getHeight() - mIndicatorBottomOffset, mSelectedIndicatorPaint);
                 } else {

@@ -15,10 +15,8 @@ import android.widget.TextView
 
 @SuppressLint("RestrictedApi")
 fun BottomNavigationView.disableShiftMode() = try {
-
     var shiftingModeOfMenuView = BottomNavigationMenuView::class.java.getDeclaredField("mShiftingMode")
     shiftingModeOfMenuView.isAccessible = true
-
     for (menu in this.asSequence()) {
         if (menu is BottomNavigationMenuView) {
             shiftingModeOfMenuView.setBoolean(menu, false)
@@ -31,24 +29,20 @@ fun BottomNavigationView.disableShiftMode() = try {
         }
     }
     shiftingModeOfMenuView.isAccessible = false
-    postInvalidate()
 } catch (exception: Exception) {
     Log.e("BottomNavigationView", exception.message)
 }
 
 @SuppressLint("RestrictedApi")
 fun BottomNavigationView.hideIcon() = try {
-
     var icon = BottomNavigationItemView::class.java.getDeclaredField("mIcon")
     icon.isAccessible = true
-
     for (menu in this.asSequence()) {
         if (menu is BottomNavigationMenuView) {
             for (item in menu.asSequence()) {
                 if (item is BottomNavigationItemView) {
                     item.findViewById<View>(R.id.icon).visibility = View.GONE
                     var label = item.getChildAt(1)
-                    Log.d("TTTT", "label:$label")
                     var lp = label.layoutParams as FrameLayout.LayoutParams
                     lp.gravity = Gravity.CENTER
                     label.layoutParams = lp
@@ -61,7 +55,6 @@ fun BottomNavigationView.hideIcon() = try {
         }
     }
     icon.isAccessible = false
-    postInvalidate()
 } catch (exception: Exception) {
     Log.e("BottomNavigationView", exception.message)
 }

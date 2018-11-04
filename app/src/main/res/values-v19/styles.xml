@@ -38,6 +38,9 @@
     <style name="AppTheme.Common" parent="Theme.AppCompat.Light.NoActionBar">
         <item name="android:windowTranslucentStatus">true</item>
         <item name="android:windowBackground">@android:color/white</item>
+
+        <item name="statusBarBackground">@color/white</item>
+        <item name="toolbarBackground">@color/white</item>
     </style>
 
 

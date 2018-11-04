@@ -8,6 +8,9 @@ import android.view.View
 import android.view.ViewGroup
 import com.snt.phoney.R
 import com.snt.phoney.base.BaseFragment
+import com.snt.phoney.base.Page
+import com.snt.phoney.ui.user.UserActivity
+import kotlinx.android.synthetic.main.fragment_mine_header.*
 import kotlinx.android.synthetic.main.fragment_mine_list.*
 
 /**
@@ -28,8 +31,10 @@ class MineFragment : BaseFragment() {
         super.onActivityCreated(savedInstanceState)
         with(mineRecyclerView) {
             layoutManager = LinearLayoutManager(context)
-            adapter = MineRecyclerViewAdapter()
+            adapter = MineRecyclerViewAdapter(this@MineFragment)
         }
+
+        editInfo.setOnClickListener { context?.let { context -> startActivity(UserActivity.newIntent(context, Page.EDIT_USER_INFO)) } }
     }
 
     override fun onAttach(context: Context) {

@@ -1,0 +1,107 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="@drawable/underline_5dp_gray"
+    android:orientation="horizontal" >
+
+    <LinearLayout
+        android:id="@+id/recentVisitorButton"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_weight="1"
+        android:background="?attr/selectableItemBackground"
+        android:gravity="center"
+        android:orientation="vertical"
+        android:paddingTop="12dp"
+        android:paddingBottom="12dp">
+
+
+        <TextView
+            android:id="@+id/recentVisitor"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="10000"
+            android:textSize="@dimen/textsize_normal" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="3dp"
+            android:text="最近访客"
+            android:textSize="@dimen/textsize_small" />
+
+    </LinearLayout>
+
+    <View
+        android:layout_width="1dp"
+        android:layout_height="match_parent"
+        android:layout_marginTop="8dp"
+        android:layout_marginBottom="8dp"
+        android:background="@color/setting_item_divider_color" />
+
+    <LinearLayout
+        android:id="@+id/followMeButton"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_weight="1"
+        android:background="?attr/selectableItemBackground"
+        android:gravity="center"
+        android:orientation="vertical"
+        android:paddingTop="12dp"
+        android:paddingBottom="12dp">
+
+
+        <TextView
+            android:id="@+id/followMe"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="10000"
+            android:textSize="@dimen/textsize_normal" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="3dp"
+            android:gravity="center"
+            android:text="关注我的"
+            android:textSize="@dimen/textsize_small" />
+
+    </LinearLayout>
+
+    <View
+        android:layout_width="1dp"
+        android:layout_height="match_parent"
+        android:layout_marginTop="8dp"
+        android:layout_marginBottom="8dp"
+        android:background="@color/setting_item_divider_color" />
+
+    <LinearLayout
+        android:id="@+id/myDatingButton"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_weight="1"
+        android:background="?attr/selectableItemBackground"
+        android:gravity="center"
+        android:orientation="vertical"
+        android:paddingTop="12dp"
+        android:paddingBottom="12dp">
+
+
+        <TextView
+            android:id="@+id/myDating"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="10000"
+            android:textSize="@dimen/textsize_normal" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="3dp"
+            android:text="我的约会"
+            android:textSize="@dimen/textsize_small" />
+
+    </LinearLayout>
+
+</LinearLayout>

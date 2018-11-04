@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:name="com.snt.phoney.ui.user.FollowmeFragment"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    tools:context=".ui.user.FollowmeFragment">
+
+    <com.snt.phoney.widget.Toolbar
+        android:id="@+id/toolbar"
+        style="@style/AppTheme.Toolbar"
+        android:layout_width="match_parent"
+        android:layout_height="?attr/actionBarSize"
+        android:background="?attr/toolbarBackground"
+        app:title="@string/followme_title"
+        app:navigationIcon="@drawable/ic_back"
+        app:titleTextColor="@color/white">
+
+    </com.snt.phoney.widget.Toolbar>
+
+    <android.support.v7.widget.RecyclerView
+        android:id="@+id/list"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        tools:listitem="@layout/fragment_followme" />
+</LinearLayout>

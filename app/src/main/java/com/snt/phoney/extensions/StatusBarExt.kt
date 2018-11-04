@@ -1,11 +1,13 @@
 package com.snt.phoney.extensions
 
 import android.app.Activity
+import android.content.Context
+import android.graphics.Color
 import android.os.Build
-import android.util.TypedValue
 import android.view.View
 import android.view.ViewGroup
 import android.view.WindowManager
+
 
 fun Activity.setStatusBarColor(color: Int) {
     if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT && Build.VERSION.SDK_INT < Build.VERSION_CODES.LOLLIPOP) {
@@ -19,7 +21,6 @@ fun Activity.setStatusBarColor(color: Int) {
                 window?.attributes = it
             }
         }
-//        window.decorView.fitsSystemWindows = true
 
         // 设置状态栏颜色
         var contentView = this.findViewById<ViewGroup>(android.R.id.content)
@@ -38,4 +39,27 @@ fun Activity.setStatusBarColor(color: Int) {
         contentChild.fitsSystemWindows = true
     }
 
+}
+
+
+fun Context.getStatusBarHeight(): Int {
+    val resourceId = resources.getIdentifier("status_bar_height", "dimen", "android")
+    return when {
+        resourceId > 0 -> resources.getDimensionPixelSize(resourceId)
+        else -> dip(24)
+    }
+}
+
+fun Activity.setLayoutFullscreen() {
+    if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+//        val background = resources.getDrawable(R.drawable.gradient_bg, theme)
+//        window.addFlags(WindowManager.LayoutParams.FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS)
+//        window.statusBarColor = resources.getColor(android.R.color.transparent)
+//        window.setBackgroundDrawable(background)
+
+        val decorView = window.decorView
+        val option = View.SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN or View.SYSTEM_UI_FLAG_LAYOUT_STABLE
+        decorView.systemUiVisibility = option
+        window.statusBarColor = Color.TRANSPARENT
+    }
 }

@@ -15,7 +15,10 @@
 package com.snt.phoney.base
 
 import android.arch.lifecycle.ViewModelProvider
+import android.os.Bundle
 import android.support.v4.app.Fragment
+import android.support.v4.view.ViewCompat
+import android.view.View
 import com.snt.phoney.databinding.SigninFragmentBinding
 import com.snt.phoney.di.Injectable
 import com.snt.phoney.extensions.autoCleared
@@ -29,4 +32,9 @@ abstract class BaseFragment : Fragment(), Injectable {
 
     protected var disposeBag by autoCleared(CompositeDisposable())
 
+
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+        //ViewCompat.requestApplyInsets(view)
+    }
 }
