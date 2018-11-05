@@ -82,6 +82,16 @@
     <string name="mine_not_authenticate_tip">你还未通过纯蜜官方认证！</string>
     <string name="mine_authenticate">立即认证</string>
     <string name="mine_max_photo_number_tip">最多可以上传19张图片</string>
+    <string name="upgrade_vip_title">开通纯蜜会员</string>
+    <string name="pay_amount">支付金额：43.5</string>
+    <string name="vip_privilege_text">【看的更多】   每天不限次数查看女士\n【看得看省】   每天10次免费机会查看付费相册或联系方式\n【看的更久】   查看阅后即焚照片的时间从2秒提升到6秒\n【约的更爽】   免费发布约会广播</string>
+    <string name="vip_period">会员有效期</string>
+    <string name="vip_recommend">推荐</string>
+    <string name="new_user">新人</string>
+    <string name="alipay">支付宝</string>
+    <string name="wechat">微信</string>
+    <string name="publish_dating">发布约会</string>
+    <string name="publish_dating_confirm">确认发布</string>
 
 
 </resources>

@@ -19,7 +19,8 @@
         app:alignContent="flex_start"
         app:alignItems="flex_start"
         app:flexWrap="wrap"
-        app:justifyContent="flex_start" />
+        app:justifyContent="flex_start"
+        app:square="true" />
 
     <LinearLayout
         android:layout_width="match_parent"

@@ -11,43 +11,49 @@ import com.snt.phoney.extensions.forEach
 
 class FlowLayout : FlexboxLayout {
     constructor(context: Context) : super(context) {
-        init(context)
+        init(context, null)
     }
 
     constructor(context: Context, attrs: AttributeSet?) : super(context, attrs) {
-        init(context)
+        init(context, attrs)
     }
 
     constructor(context: Context, attrs: AttributeSet, defStyleAttr: Int) : super(context, attrs, defStyleAttr) {
-        init(context)
+        init(context, attrs)
     }
 
     var column: Int = 0
-
-    @SuppressWarnings
     var space: Int = 0
-        set(value) {
-            field = dip(value)
-        }
+    var square: Boolean = false
 
-    private fun init(context: Context) {
+    private fun init(context: Context, attrs: AttributeSet?, defStyleAttr: Int = 0) {
         alignContent = AlignContent.FLEX_START
         alignItems = AlignItems.FLEX_START
         flexWrap = FlexWrap.WRAP
         justifyContent = JustifyContent.FLEX_START
 
         column = 4
-        space = 10
+        space = dip(10)
+
+        attrs?.let {
+            val a = context.obtainStyledAttributes(it, R.styleable.FlowLayout, defStyleAttr, R.style.Widget_FlowLayout)
+            column = a.getInt(R.styleable.FlowLayout_column, 4)
+            space = a.getDimensionPixelSize(R.styleable.FlowLayout_space, dip(10))
+            square = a.getBoolean(R.styleable.FlowLayout_square, false)
+            a.recycle()
+        }
+
     }
 
     override fun onMeasure(widthMeasureSpec: Int, heightMeasureSpec: Int) {
         forEach { index, child ->
             val width = MeasureSpec.getSize(widthMeasureSpec)
-            val imageWidth = (width - paddingLeft - paddingRight - (space * (column - 1))) / column
+            val childWidth = (width - paddingLeft - paddingRight - (space * (column - 1))) / column
+            val childHeight = if (square) childWidth else MarginLayoutParams.WRAP_CONTENT
             val lp = child?.layoutParams as? MarginLayoutParams
-                    ?: MarginLayoutParams(imageWidth, imageWidth)
-            lp.width = imageWidth
-            lp.height = imageWidth
+                    ?: MarginLayoutParams(childWidth, childHeight)
+            lp.width = childWidth
+            lp.height = childHeight
             if ((index % column) != column - 1) {
                 lp.rightMargin = space
             }

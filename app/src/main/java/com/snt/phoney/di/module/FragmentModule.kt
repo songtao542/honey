@@ -1,6 +1,7 @@
 package com.snt.phoney.di.module
 
 import com.snt.phoney.ui.dating.create.CreateDatingFragment
+import com.snt.phoney.ui.dating.detail.DatingDetailFragment
 import com.snt.phoney.ui.dating.list.DatingListFragment
 import com.snt.phoney.ui.home.HomeFragment
 import com.snt.phoney.ui.home.following.FollowingFragment
@@ -72,6 +73,9 @@ abstract class FragmentModule {
 
     @ContributesAndroidInjector
     abstract fun contributeDatingListFragment(): DatingListFragment
+
+    @ContributesAndroidInjector
+    abstract fun contributeDatingDetailFragment(): DatingDetailFragment
 
     @ContributesAndroidInjector
     abstract fun contributeWalletFragment(): WalletFragment

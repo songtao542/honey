@@ -38,9 +38,7 @@
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme.Common" />
         <activity android:name=".ui.dating.DatingActivity" />
-        <activity
-            android:name=".ui.vip.VipActivity"
-            android:theme="@style/AppTheme.Common" />
+        <activity android:name=".ui.vip.VipActivity" />
         <activity
             android:name=".ui.wallet.WalletActivity"
             android:theme="@style/AppTheme.Common" />

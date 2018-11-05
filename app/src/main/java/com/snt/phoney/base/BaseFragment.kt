@@ -18,12 +18,15 @@ import android.arch.lifecycle.ViewModelProvider
 import android.os.Bundle
 import android.support.v4.app.Fragment
 import android.support.v4.view.ViewCompat
+import android.support.v7.app.AppCompatActivity
+import android.support.v7.widget.Toolbar
 import android.view.View
 import com.snt.phoney.databinding.SigninFragmentBinding
 import com.snt.phoney.di.Injectable
 import com.snt.phoney.extensions.autoCleared
 import io.reactivex.disposables.CompositeDisposable
 import io.reactivex.disposables.Disposable
+import kotlinx.android.synthetic.main.fragment_square.*
 import javax.inject.Inject
 
 abstract class BaseFragment : Fragment(), Injectable {
@@ -36,5 +39,17 @@ abstract class BaseFragment : Fragment(), Injectable {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         //ViewCompat.requestApplyInsets(view)
+    }
+
+    fun enableOptionsMenu(toolbar: Toolbar, showTitle: Boolean = true) {
+        toolbar?.let { toolbar ->
+            activity?.let { activity ->
+                setHasOptionsMenu(true)
+                if (activity is AppCompatActivity) {
+                    activity.setSupportActionBar(toolbar)
+                    activity.supportActionBar?.setDisplayShowTitleEnabled(showTitle)
+                }
+            }
+        }
     }
 }

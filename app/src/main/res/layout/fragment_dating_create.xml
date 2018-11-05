@@ -10,7 +10,7 @@
             type="com.snt.phoney.ui.dating.create.CreateDatingViewModel" />
     </data>
 
-    <android.support.constraint.ConstraintLayout
+    <LinearLayout
         android:id="@+id/newdating"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
@@ -18,13 +18,16 @@
         android:orientation="vertical"
         tools:context=".ui.dating.create.CreateDatingFragment">
 
-        <android.support.v7.widget.Toolbar
+        <com.snt.phoney.widget.Toolbar
             android:id="@+id/toolbar"
+            style="@style/AppTheme.Toolbar"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:background="@color/setting_item_bg_color"
+            android:layout_height="?attr/actionBarSize"
+            android:background="?attr/toolbarBackground"
             app:navigationIcon="@drawable/ic_back"
-            app:title="发布约会信息"></android.support.v7.widget.Toolbar>
+            app:title="发布约会信息"
+            android:theme="@style/AppTheme.PopupOverlay"
+            app:titleTextColor="@color/white" />
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -150,5 +153,5 @@
             android:textSize="@dimen/textsize_normal"
             app:layout_constraintBottom_toBottomOf="parent" />
 
-    </android.support.constraint.ConstraintLayout>
+    </LinearLayout>
 </layout>

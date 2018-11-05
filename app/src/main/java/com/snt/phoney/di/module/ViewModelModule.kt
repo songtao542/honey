@@ -3,6 +3,7 @@ package com.snt.phoney.di.module
 import android.arch.lifecycle.ViewModel
 import com.snt.phoney.di.ViewModelKey
 import com.snt.phoney.ui.dating.create.CreateDatingViewModel
+import com.snt.phoney.ui.dating.detail.DatingDetailViewModel
 import com.snt.phoney.ui.dating.list.DatingListViewModel
 import com.snt.phoney.ui.nearby.NearbyViewModel
 import com.snt.phoney.ui.password.ForgetPasswordViewModel
@@ -40,6 +41,12 @@ abstract class ViewModelModule {
     @ViewModelKey(DatingListViewModel::class)
     abstract fun bindDatingListViewModel(viewModel: DatingListViewModel): ViewModel
 
+
+    @Binds
+    @IntoMap
+    @ViewModelKey(DatingDetailViewModel::class)
+    abstract fun bindDatingDetailViewModel(viewModel: DatingDetailViewModel): ViewModel
+
     @Binds
     @IntoMap
     @ViewModelKey(WalletViewModel::class)
@@ -74,5 +81,6 @@ abstract class ViewModelModule {
     @IntoMap
     @ViewModelKey(EditUserViewModel::class)
     abstract fun bindEditUserViewModel(viewModel: EditUserViewModel): ViewModel
+
 
 }

@@ -5,13 +5,16 @@ import android.os.Bundle
 import android.support.design.widget.TabLayout
 import android.support.v4.app.Fragment
 import android.support.v4.app.FragmentStatePagerAdapter
+import android.support.v7.app.AppCompatActivity
 import android.text.SpannableString
 import android.text.Spanned
 import android.text.style.RelativeSizeSpan
-import android.view.LayoutInflater
-import android.view.View
-import android.view.ViewGroup
+import android.util.Log
+import android.view.*
 import com.snt.phoney.R
+import com.snt.phoney.base.BaseFragment
+import com.snt.phoney.base.Page
+import com.snt.phoney.ui.dating.DatingActivity
 import com.snt.phoney.ui.square.official.OfficialRecommendFragment
 import com.snt.phoney.ui.square.popular.PopularRecommendFragment
 import kotlinx.android.synthetic.main.fragment_home.*
@@ -23,7 +26,7 @@ import kotlinx.android.synthetic.main.fragment_square.*
  * create an instance of this fragment.
  *
  */
-class SquareFragment : Fragment() {
+class SquareFragment : BaseFragment() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -38,6 +41,7 @@ class SquareFragment : Fragment() {
 
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
+        enableOptionsMenu(squareToolbar, false)
         squareTab.setupWithViewPager(squarePager)
         squareTab.tabMode = TabLayout.MODE_SCROLLABLE
         squarePager.adapter = object : FragmentStatePagerAdapter(this.childFragmentManager) {
@@ -67,6 +71,21 @@ class SquareFragment : Fragment() {
 
         squareTab.getTabAt(0)?.text = tabOfficialTitle
         squareTab.getTabAt(1)?.text = tabPopularTitle
+    }
+
+
+    override fun onCreateOptionsMenu(menu: Menu?, inflater: MenuInflater?) {
+        inflater?.inflate(R.menu.square, menu)
+    }
+
+    override fun onOptionsItemSelected(item: MenuItem?): Boolean {
+        return when (item?.itemId) {
+            R.id.publishDating -> {
+                context?.let { it.startActivity(DatingActivity.newIntent(it, Page.CREATE_DATING)) }
+                true
+            }
+            else -> super.onOptionsItemSelected(item)
+        }
     }
 
     companion object {

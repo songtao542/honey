@@ -22,18 +22,17 @@
         <TextView
             android:id="@+id/label"
             android:layout_width="wrap_content"
-            android:layout_height="30dp"
+            android:layout_height="wrap_content"
             android:layout_gravity="left|top"
-            android:background="@drawable/friend_card_label_bg"
+            android:background="@drawable/friend_card_top_left_label"
             android:gravity="center"
-            android:paddingLeft="15dp"
-            android:paddingTop="2dp"
-            android:paddingRight="15dp"
-            android:paddingBottom="2dp"
-            android:singleLine="true"
-            android:text="新人"
+            android:paddingLeft="10dp"
+            android:paddingTop="4dp"
+            android:paddingRight="10dp"
+            android:paddingBottom="4dp"
+            android:text="@string/new_user"
             android:textColor="@android:color/white"
-            android:textSize="@dimen/textsize_smaller" />
+            android:textSize="@dimen/textsize_smallest" />
 
         <TextView
             android:id="@+id/reliableValue"

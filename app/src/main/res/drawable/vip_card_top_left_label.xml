@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<shape xmlns:android="http://schemas.android.com/apk/res/android"
+    android:shape="rectangle">
+
+    <corners
+        android:bottomRightRadius="@dimen/vip_card_corner_radius"
+        android:topLeftRadius="@dimen/vip_card_corner_radius"></corners>
+    <solid android:color="?attr/colorPrimary"></solid>
+
+</shape>
