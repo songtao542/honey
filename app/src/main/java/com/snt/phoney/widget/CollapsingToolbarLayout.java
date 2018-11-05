@@ -2049,7 +2049,6 @@ final class CollapsingTextHelper {
      *              1.0 will return {@code color2}.
      */
     private static int blendColors(int color1, int color2, float ratio) {
-        Log.d("TTTT", "bbbbbbbbbbbbbb" + color1 + "  " + color2);
         final float inverseRatio = 1f - ratio;
         float a = (Color.alpha(color1) * inverseRatio) + (Color.alpha(color2) * ratio);
         float r = (Color.red(color1) * inverseRatio) + (Color.red(color2) * ratio);

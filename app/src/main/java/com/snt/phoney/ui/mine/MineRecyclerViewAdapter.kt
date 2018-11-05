@@ -4,6 +4,7 @@ package com.snt.phoney.ui.mine
 import android.content.Context
 import android.support.v4.app.Fragment
 import android.support.v7.widget.RecyclerView
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -15,8 +16,11 @@ import com.snt.phoney.base.Page
 import com.snt.phoney.ui.dating.DatingActivity
 import com.snt.phoney.ui.user.UserActivity
 import com.snt.phoney.ui.wallet.WalletActivity
+import com.snt.phoney.widget.FlowLayout
+import com.snt.phoney.widget.PhotoWallFactory
 import kotlinx.android.synthetic.main.fragment_mine_footer.view.*
 import kotlinx.android.synthetic.main.fragment_mine_list_header.view.*
+import kotlinx.android.synthetic.main.fragment_mine_list_photo.view.*
 import kotlinx.android.synthetic.main.fragment_mine_settings.view.*
 
 /**
@@ -26,6 +30,7 @@ class MineRecyclerViewAdapter(val fragment: Fragment) : RecyclerView.Adapter<Rec
 
 
     private val settings = ArrayList<Setting>()
+    private val photos = ArrayList<String>()
 
     init {
         settings.add(Setting(R.drawable.ic_photo, "相册权限", ""))
@@ -37,27 +42,44 @@ class MineRecyclerViewAdapter(val fragment: Fragment) : RecyclerView.Adapter<Rec
         settings.add(Setting(R.drawable.ic_user_protocol, "用户协议", ""))
         settings.add(Setting(R.drawable.ic_clear_cache, "清理缓存", ""))
         settings.add(Setting(R.drawable.ic_about, "关于", ""))
-        settings.add(Setting(R.drawable.ic_about, "关于", ""))
-        settings.add(Setting(R.drawable.ic_about, "关于", ""))
-        settings.add(Setting(R.drawable.ic_about, "关于", ""))
-        settings.add(Setting(R.drawable.ic_about, "关于", ""))
-        settings.add(Setting(R.drawable.ic_about, "关于", ""))
-        settings.add(Setting(R.drawable.ic_about, "关于", ""))
+
+        val addr = "http://pic.58pic.com/58pic/15/35/50/50X58PICZkd_1024.jpg"
+
+        photos.add(addr)
+        photos.add(addr)
+        photos.add(addr)
+        photos.add(addr)
+        photos.add(addr)
+        photos.add(addr)
+        photos.add(addr)
+        photos.add(addr)
+        photos.add(addr)
+        photos.add(addr)
+        photos.add(addr)
+        photos.add(addr)
+        photos.add(addr)
+        photos.add(addr)
+        photos.add(addr)
+        photos.add(addr)
+        photos.add(addr)
+        photos.add(addr)
     }
 
 
     override fun getItemViewType(position: Int): Int {
         return when (position) {
-            0 -> 0
-            itemCount - 1 -> 2
-            else -> 1
+            0 -> 0 //head
+            1 -> 1 //photos
+            itemCount - 1 -> 3 //logout
+            else -> 2 //setting
         }
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder {
         return when (viewType) {
             0 -> HeadViewHolder(LayoutInflater.from(parent.context).inflate(R.layout.fragment_mine_list_header, parent, false))
-            1 -> SettingViewHolder(LayoutInflater.from(parent.context).inflate(R.layout.fragment_mine_settings, parent, false))
+            1 -> PhotoViewHolder(LayoutInflater.from(parent.context).inflate(R.layout.fragment_mine_list_photo, parent, false))
+            2 -> SettingViewHolder(LayoutInflater.from(parent.context).inflate(R.layout.fragment_mine_settings, parent, false))
             else -> FooterViewHolder(LayoutInflater.from(parent.context).inflate(R.layout.fragment_mine_footer, parent, false))
         }
     }
@@ -67,6 +89,8 @@ class MineRecyclerViewAdapter(val fragment: Fragment) : RecyclerView.Adapter<Rec
             holder.setData()
         } else if (holder is SettingViewHolder) {
             holder.setData(setting = settings[position - 1])
+        } else if (holder is PhotoViewHolder) {
+            holder.setData(photos)
         } else if (holder is FooterViewHolder) {
 
         }
@@ -82,6 +106,7 @@ class MineRecyclerViewAdapter(val fragment: Fragment) : RecyclerView.Adapter<Rec
         private val mFollowMeButton: LinearLayout = mView.followMeButton
         private val mMyDating: TextView = mView.myDating
         private val mMyDatingButton: LinearLayout = mView.myDatingButton
+        private val mAuthenticate = mView.authenticate
 
         fun setData() {
             //TODO
@@ -91,6 +116,19 @@ class MineRecyclerViewAdapter(val fragment: Fragment) : RecyclerView.Adapter<Rec
             mFollowMeButton.setOnClickListener { context.startActivity(UserActivity.newIntent(context, Page.VIEW_FOLLOW_ME)) }
             mRecentVisitorButton.setOnClickListener { context.startActivity(UserActivity.newIntent(context, Page.VIEW_RECENT_VISITOR)) }
             mMyDatingButton.setOnClickListener { context.startActivity(DatingActivity.newIntent(context, Page.VIEW_DATING_LIST)) }
+            mAuthenticate.setOnClickListener { }
+        }
+    }
+
+    inner class PhotoViewHolder(private val mView: View) : RecyclerView.ViewHolder(mView) {
+        private val context = mView.context
+        private val flexbox = mView.flexbox
+
+        fun setData(photos: List<String>) {
+            flexbox.viewFactory = PhotoWallFactory(context).setUrls(photos).setMaxShow(12).setLastAsAdd(true)
+            flexbox.setOnItemClickListener { view, index ->
+                Log.d("TTTT", "index=$index")
+            }
         }
     }
 

@@ -78,6 +78,10 @@
     <string name="followme_title">关注我的</string>
     <string name="dating_list_title">我的约会</string>
     <string name="user_info_title">用户详情</string>
+    <string name="add_image">添加图片</string>
+    <string name="mine_not_authenticate_tip">你还未通过纯蜜官方认证！</string>
+    <string name="mine_authenticate">立即认证</string>
+    <string name="mine_max_photo_number_tip">最多可以上传19张图片</string>
 
 
 </resources>

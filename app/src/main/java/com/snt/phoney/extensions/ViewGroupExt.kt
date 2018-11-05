@@ -34,3 +34,9 @@ fun ViewGroup.asSequence(): Sequence<View> = object : Sequence<View> {
 fun ViewGroup.forEach(action: (View) -> Unit) {
     asSequence().forEach(action)
 }
+
+fun ViewGroup.forEach(action: (Int, View) -> Unit) {
+    for ((index, view) in asSequence().withIndex()) {
+        action(index, view)
+    }
+}

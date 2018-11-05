@@ -2,5 +2,7 @@
 <resources>
 
     <item name="status_bar_holder" type="id"></item>
+    <item name="tag" type="id"></item>
+    <item name="tag_index" type="id"></item>
 
 </resources>

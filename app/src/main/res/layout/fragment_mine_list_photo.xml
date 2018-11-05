@@ -1,107 +1,49 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:background="@drawable/underline_5dp_gray"
-    android:orientation="horizontal" >
+    android:orientation="vertical"
+    android:paddingBottom="16dp">
+
+    <com.snt.phoney.widget.FlowLayout
+        android:id="@+id/flexbox"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="10dp"
+        android:layout_marginBottom="10dp"
+        android:paddingLeft="10dp"
+        android:paddingRight="10dp"
+        app:alignContent="flex_start"
+        app:alignItems="flex_start"
+        app:flexWrap="wrap"
+        app:justifyContent="flex_start" />
 
     <LinearLayout
-        android:id="@+id/recentVisitorButton"
-        android:layout_width="0dp"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_weight="1"
-        android:background="?attr/selectableItemBackground"
-        android:gravity="center"
-        android:orientation="vertical"
-        android:paddingTop="12dp"
-        android:paddingBottom="12dp">
+        android:layout_marginTop="2dp"
+        android:orientation="horizontal">
 
-
-        <TextView
-            android:id="@+id/recentVisitor"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="10000"
-            android:textSize="@dimen/textsize_normal" />
+        <ImageView
+            android:layout_width="16dp"
+            android:layout_height="16dp"
+            android:layout_gravity="center_vertical"
+            android:layout_marginLeft="10dp"
+            android:layout_marginRight="5dp"
+            android:scaleType="centerInside"
+            android:src="@drawable/ic_warning" />
 
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="3dp"
-            android:text="最近访客"
+            android:layout_gravity="center_vertical"
+            android:gravity="center_vertical"
+            android:text="@string/mine_max_photo_number_tip"
+            android:textColor="@color/black"
             android:textSize="@dimen/textsize_small" />
 
     </LinearLayout>
-
-    <View
-        android:layout_width="1dp"
-        android:layout_height="match_parent"
-        android:layout_marginTop="8dp"
-        android:layout_marginBottom="8dp"
-        android:background="@color/setting_item_divider_color" />
-
-    <LinearLayout
-        android:id="@+id/followMeButton"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:layout_weight="1"
-        android:background="?attr/selectableItemBackground"
-        android:gravity="center"
-        android:orientation="vertical"
-        android:paddingTop="12dp"
-        android:paddingBottom="12dp">
-
-
-        <TextView
-            android:id="@+id/followMe"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="10000"
-            android:textSize="@dimen/textsize_normal" />
-
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="3dp"
-            android:gravity="center"
-            android:text="关注我的"
-            android:textSize="@dimen/textsize_small" />
-
-    </LinearLayout>
-
-    <View
-        android:layout_width="1dp"
-        android:layout_height="match_parent"
-        android:layout_marginTop="8dp"
-        android:layout_marginBottom="8dp"
-        android:background="@color/setting_item_divider_color" />
-
-    <LinearLayout
-        android:id="@+id/myDatingButton"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:layout_weight="1"
-        android:background="?attr/selectableItemBackground"
-        android:gravity="center"
-        android:orientation="vertical"
-        android:paddingTop="12dp"
-        android:paddingBottom="12dp">
-
-
-        <TextView
-            android:id="@+id/myDating"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="10000"
-            android:textSize="@dimen/textsize_normal" />
-
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="3dp"
-            android:text="我的约会"
-            android:textSize="@dimen/textsize_small" />
-
-    </LinearLayout>
-
 </LinearLayout>

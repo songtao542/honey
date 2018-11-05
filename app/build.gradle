@@ -73,6 +73,8 @@ android {
 dependencies {
     implementation fileTree(dir: 'libs', include: ['*.jar'])
 
+    implementation project(path: ":flexbox")
+
     implementation deps.support.v4
     implementation deps.support.app_compat
     implementation deps.support.recyclerview
