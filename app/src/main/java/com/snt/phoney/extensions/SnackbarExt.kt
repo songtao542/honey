@@ -1,10 +1,11 @@
 package com.snt.phoney.extensions
 
-import android.support.design.widget.Snackbar
+
 import android.app.Activity
-import android.support.annotation.StringRes
-import android.support.v4.app.Fragment
 import android.view.*
+import androidx.annotation.StringRes
+import androidx.fragment.app.Fragment
+import com.google.android.material.snackbar.Snackbar
 
 fun View.snackbar(text: CharSequence, duration: Int = Snackbar.LENGTH_SHORT, init: Snackbar.() -> Unit = {}): Snackbar {
     val snack = Snackbar.make(this, text, duration)
@@ -14,8 +15,8 @@ fun View.snackbar(text: CharSequence, duration: Int = Snackbar.LENGTH_SHORT, ini
 }
 
 fun View.snackbar(
-    @StringRes resId: Int, duration: Int = Snackbar.LENGTH_SHORT,
-    init: Snackbar.() -> Unit = {}
+        @StringRes resId: Int, duration: Int = Snackbar.LENGTH_SHORT,
+        init: Snackbar.() -> Unit = {}
 ): Snackbar {
     val snack = Snackbar.make(this, resId, duration)
     snack.init()
@@ -24,24 +25,24 @@ fun View.snackbar(
 }
 
 fun Fragment.snackbar(
-    text: CharSequence,
-    duration: Int = Snackbar.LENGTH_LONG,
-    init: Snackbar.() -> Unit = {}
+        text: CharSequence,
+        duration: Int = Snackbar.LENGTH_LONG,
+        init: Snackbar.() -> Unit = {}
 ): Snackbar {
     return view!!.snackbar(text, duration, init)
 }
 
 fun Fragment.snackbar(
-    @StringRes text: Int, duration: Int = Snackbar.LENGTH_LONG,
-    init: Snackbar.() -> Unit = {}
+        @StringRes text: Int, duration: Int = Snackbar.LENGTH_LONG,
+        init: Snackbar.() -> Unit = {}
 ): Snackbar {
     return view!!.snackbar(text, duration, init)
 }
 
 fun Activity.snackbar(
-    text: CharSequence,
-    duration: Int = Snackbar.LENGTH_LONG,
-    init: Snackbar.() -> Unit = {}
+        text: CharSequence,
+        duration: Int = Snackbar.LENGTH_LONG,
+        init: Snackbar.() -> Unit = {}
 ): Snackbar {
     val decorView = window.decorView
     if (decorView is ViewGroup) {
@@ -53,18 +54,18 @@ fun Activity.snackbar(
 }
 
 fun Activity.snackbar(
-    view: View,
-    text: CharSequence,
-    duration: Int = Snackbar.LENGTH_LONG,
-    init: Snackbar.() -> Unit = {}
+        view: View,
+        text: CharSequence,
+        duration: Int = Snackbar.LENGTH_LONG,
+        init: Snackbar.() -> Unit = {}
 ): Snackbar {
     return view.snackbar(text, duration, init)
 }
 
 fun Activity.snackbar(
-    view: View, @StringRes text: Int,
-    duration: Int = Snackbar.LENGTH_LONG,
-    init: Snackbar.() -> Unit = {}
+        view: View, @StringRes text: Int,
+        duration: Int = Snackbar.LENGTH_LONG,
+        init: Snackbar.() -> Unit = {}
 ): Snackbar {
     return view.snackbar(text, duration, init)
 }

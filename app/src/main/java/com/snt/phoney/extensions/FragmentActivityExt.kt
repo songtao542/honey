@@ -1,11 +1,12 @@
 package com.snt.phoney.extensions
 
 import android.content.Context
-import android.support.annotation.AnimRes
-import android.support.annotation.IdRes
-import android.support.v4.app.Fragment
-import android.support.v4.app.FragmentActivity
+
 import android.view.inputmethod.InputMethodManager
+import androidx.annotation.AnimRes
+import androidx.annotation.IdRes
+import androidx.fragment.app.Fragment
+import androidx.fragment.app.FragmentActivity
 
 inline fun FragmentActivity.setContentFragment(@IdRes containerViewId: Int, f: () -> Fragment): Fragment {
     return f().apply { supportFragmentManager?.beginTransaction()?.add(containerViewId, this)?.commit() }

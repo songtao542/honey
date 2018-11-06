@@ -1,9 +1,6 @@
 package com.snt.phoney.ui.home
 
 import android.os.Bundle
-import android.support.design.widget.TabLayout
-import android.support.v4.app.Fragment
-import android.support.v4.app.FragmentStatePagerAdapter
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -14,6 +11,9 @@ import kotlinx.android.synthetic.main.fragment_home.*
 import android.text.Spanned
 import android.text.style.RelativeSizeSpan
 import android.text.SpannableString
+import androidx.fragment.app.Fragment
+import androidx.fragment.app.FragmentStatePagerAdapter
+import com.snt.phoney.widget.TabLayout
 
 
 class HomeFragment : Fragment() {

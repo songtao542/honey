@@ -1,8 +1,7 @@
 package com.snt.phoney.domain.persistence
 
-import android.arch.persistence.room.*
+import androidx.room.*
 import com.snt.phoney.domain.model.User
-import io.reactivex.Flowable
 
 @Dao
 interface UserDao {

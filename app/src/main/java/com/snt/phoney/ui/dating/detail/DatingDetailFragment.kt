@@ -1,15 +1,15 @@
 package com.snt.phoney.ui.dating.detail
 
-import android.arch.lifecycle.ViewModelProviders
 import android.os.Bundle
-import android.support.v4.app.Fragment
 import android.view.*
+import androidx.lifecycle.ViewModelProviders
 
 import com.snt.phoney.R
+import com.snt.phoney.base.BaseFragment
 import com.snt.phoney.base.Page
 import com.snt.phoney.ui.dating.DatingActivity
 
-class DatingDetailFragment : Fragment() {
+class DatingDetailFragment : BaseFragment() {
 
     companion object {
         fun newInstance(arguments: Bundle? = null) = DatingDetailFragment().apply {
@@ -26,7 +26,7 @@ class DatingDetailFragment : Fragment() {
 
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
-        viewModel = ViewModelProviders.of(this).get(DatingDetailViewModel::class.java)
+        viewModel = ViewModelProviders.of(this,viewModelFactory).get(DatingDetailViewModel::class.java)
         // TODO: Use the ViewModel
     }
 

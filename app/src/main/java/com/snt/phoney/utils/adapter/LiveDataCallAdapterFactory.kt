@@ -16,7 +16,7 @@
 
 package com.snt.phoney.utils.adapter
 
-import android.arch.lifecycle.LiveData
+import androidx.lifecycle.LiveData
 import com.snt.phoney.domain.model.Response
 import retrofit2.CallAdapter
 import retrofit2.CallAdapter.Factory

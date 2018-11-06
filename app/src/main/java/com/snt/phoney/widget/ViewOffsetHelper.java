@@ -16,8 +16,9 @@
 
 package com.snt.phoney.widget;
 
-import android.support.v4.view.ViewCompat;
 import android.view.View;
+
+import androidx.core.view.ViewCompat;
 
 /**
  * Utility helper for moving a {@link View} around using

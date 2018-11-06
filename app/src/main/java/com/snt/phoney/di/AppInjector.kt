@@ -20,9 +20,9 @@ package com.snt.phoney.di
 import android.app.Activity
 import android.app.Application
 import android.os.Bundle
-import android.support.v4.app.Fragment
-import android.support.v4.app.FragmentActivity
-import android.support.v4.app.FragmentManager
+import androidx.fragment.app.Fragment
+import androidx.fragment.app.FragmentActivity
+import androidx.fragment.app.FragmentManager
 import com.snt.phoney.base.App
 import com.snt.phoney.di.component.DaggerAppComponent
 import dagger.android.AndroidInjection

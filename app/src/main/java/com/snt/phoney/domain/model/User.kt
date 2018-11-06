@@ -1,8 +1,8 @@
 package com.snt.phoney.domain.model
 
-import android.arch.persistence.room.Entity
-import android.arch.persistence.room.PrimaryKey
 import android.os.Parcelable
+import androidx.room.Entity
+import androidx.room.PrimaryKey
 import kotlinx.serialization.Optional
 import kotlinx.serialization.Serializable
 import kotlinx.android.parcel.Parcelize

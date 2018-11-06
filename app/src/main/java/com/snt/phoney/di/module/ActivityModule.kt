@@ -1,6 +1,6 @@
 package com.snt.phoney.di.module
 
-import android.arch.lifecycle.ViewModelProvider
+import androidx.lifecycle.ViewModelProvider
 import com.snt.phoney.di.ViewModelFactory
 import com.snt.phoney.ui.dating.DatingActivity
 import com.snt.phoney.ui.main.MainActivity

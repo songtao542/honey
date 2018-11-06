@@ -19,12 +19,14 @@ package com.snt.phoney.widget;
 import android.graphics.Matrix;
 import android.graphics.Rect;
 import android.graphics.RectF;
-import android.support.annotation.RestrictTo;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.ViewParent;
 
-import static android.support.annotation.RestrictTo.Scope.LIBRARY;
+import androidx.annotation.RestrictTo;
+
+import static androidx.annotation.RestrictTo.Scope.LIBRARY;
+
 
 /**
  * @hide

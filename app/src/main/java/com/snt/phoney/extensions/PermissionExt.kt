@@ -4,18 +4,18 @@ import android.Manifest
 import android.app.Activity
 import android.content.Context
 import android.content.pm.PackageManager
-import android.support.v4.app.ActivityCompat
-import android.support.v4.content.ContextCompat
+import androidx.core.app.ActivityCompat
+import androidx.core.content.ContextCompat
 
 val permissions = arrayOf(
-    Manifest.permission.INTERNET,
-    Manifest.permission.ACCESS_NETWORK_STATE,
-    Manifest.permission.MODIFY_AUDIO_SETTINGS,
-    Manifest.permission.WRITE_EXTERNAL_STORAGE,
-    Manifest.permission.WRITE_SETTINGS,
-    Manifest.permission.READ_PHONE_STATE,
-    Manifest.permission.ACCESS_WIFI_STATE,
-    Manifest.permission.CHANGE_WIFI_STATE
+        Manifest.permission.INTERNET,
+        Manifest.permission.ACCESS_NETWORK_STATE,
+        Manifest.permission.MODIFY_AUDIO_SETTINGS,
+        Manifest.permission.WRITE_EXTERNAL_STORAGE,
+        Manifest.permission.WRITE_SETTINGS,
+        Manifest.permission.READ_PHONE_STATE,
+        Manifest.permission.ACCESS_WIFI_STATE,
+        Manifest.permission.CHANGE_WIFI_STATE
 )
 
 fun Context.checkAppPermission(): Boolean {

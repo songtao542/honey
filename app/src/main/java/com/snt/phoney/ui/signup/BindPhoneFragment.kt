@@ -1,11 +1,11 @@
 package com.snt.phoney.ui.signup
 
-import android.arch.lifecycle.ViewModelProviders
-import android.databinding.DataBindingUtil
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.databinding.DataBindingUtil
+import androidx.lifecycle.ViewModelProviders
 import com.snt.phoney.R
 import com.snt.phoney.base.BaseDialogFragment
 import com.snt.phoney.databinding.BindPhoneFragmentBinding

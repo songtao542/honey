@@ -18,7 +18,7 @@
 package com.snt.phoney.repository
 
 
-import android.arch.lifecycle.LiveData
+import androidx.lifecycle.LiveData
 import com.snt.phoney.api.Api
 import com.snt.phoney.domain.model.Response
 import com.snt.phoney.domain.model.User

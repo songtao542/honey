@@ -1,11 +1,11 @@
 package com.snt.phoney.ui.user
 
 
-import android.support.v7.widget.RecyclerView
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.recyclerview.widget.RecyclerView
 import com.snt.phoney.R
 
 /**

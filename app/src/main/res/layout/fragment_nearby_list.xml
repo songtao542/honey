@@ -11,19 +11,21 @@
     </data>
 
 
-    <android.support.constraint.ConstraintLayout
+    <androidx.constraintlayout.widget.ConstraintLayout
         android:name="com.snt.phoney.ui.nearby.NearbyFragment"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         tools:context=".ui.nearby.NearbyFragment">
 
-        <android.support.v7.widget.Toolbar
+        <com.snt.phoney.widget.Toolbar
             android:id="@+id/toolbar"
+            style="@style/AppTheme.Toolbar"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            app:navigationIcon="@drawable/ic_back"></android.support.v7.widget.Toolbar>
+            android:background="?attr/toolbarBackground"
+            android:layout_height="?attr/actionBarSize"
+            app:navigationIcon="@drawable/ic_back"></com.snt.phoney.widget.Toolbar>
 
-        <android.support.v7.widget.RecyclerView
+        <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/list"
             android:layout_width="match_parent"
             android:layout_height="0dp"
@@ -31,5 +33,5 @@
             app:layout_constraintTop_toBottomOf="@+id/back"
             tools:listitem="@layout/fragment_nearby" />
 
-    </android.support.constraint.ConstraintLayout>
+    </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>

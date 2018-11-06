@@ -18,8 +18,8 @@
 package com.snt.phoney.base
 
 import android.os.Bundle
-import android.support.v4.app.DialogFragment
 import android.view.WindowManager
+import androidx.fragment.app.DialogFragment
 import com.snt.phoney.R
 
 abstract class FullscreenDialogFragment : BaseDialogFragment() {

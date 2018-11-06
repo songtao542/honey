@@ -14,19 +14,15 @@
 
 package com.snt.phoney.base
 
-import android.arch.lifecycle.ViewModelProvider
 import android.os.Bundle
-import android.support.v4.app.Fragment
-import android.support.v4.view.ViewCompat
-import android.support.v7.app.AppCompatActivity
-import android.support.v7.widget.Toolbar
 import android.view.View
-import com.snt.phoney.databinding.SigninFragmentBinding
+import androidx.appcompat.app.AppCompatActivity
+import androidx.appcompat.widget.Toolbar
+import androidx.fragment.app.Fragment
+import androidx.lifecycle.ViewModelProvider
 import com.snt.phoney.di.Injectable
 import com.snt.phoney.extensions.autoCleared
 import io.reactivex.disposables.CompositeDisposable
-import io.reactivex.disposables.Disposable
-import kotlinx.android.synthetic.main.fragment_square.*
 import javax.inject.Inject
 
 abstract class BaseFragment : Fragment(), Injectable {

@@ -9,14 +9,14 @@
     android:orientation="vertical"
     tools:context=".ui.signup.SignupFragment">
 
-    <android.support.v7.widget.Toolbar
+    <androidx.appcompat.widget.Toolbar
         android:id="@+id/back"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:visibility="gone"
         app:navigationIcon="@drawable/ic_back">
 
-    </android.support.v7.widget.Toolbar>
+    </androidx.appcompat.widget.Toolbar>
 
 
     <TextView

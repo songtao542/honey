@@ -1,11 +1,11 @@
 package com.snt.phoney.ui.password
 
 import android.content.Context
-import android.databinding.DataBindingUtil
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.databinding.DataBindingUtil
 import com.snt.phoney.R
 import com.snt.phoney.base.BaseFragment
 import com.snt.phoney.databinding.ForgetPasswordFragmentBinding

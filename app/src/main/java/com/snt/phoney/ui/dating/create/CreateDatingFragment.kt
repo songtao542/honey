@@ -1,16 +1,14 @@
 package com.snt.phoney.ui.dating.create
 
-import android.arch.lifecycle.ViewModelProviders
-import android.databinding.DataBindingUtil
 import android.os.Bundle
 import android.util.Log
 import android.view.*
+import androidx.databinding.DataBindingUtil
+import androidx.lifecycle.ViewModelProviders
 import com.snt.phoney.R
 import com.snt.phoney.base.BaseFragment
-import com.snt.phoney.base.Page
 import com.snt.phoney.databinding.CreateDatingFragmentBinding
 import com.snt.phoney.extensions.autoCleared
-import com.snt.phoney.ui.dating.DatingActivity
 import kotlinx.android.synthetic.main.fragment_dating_create.*
 
 class CreateDatingFragment : BaseFragment() {

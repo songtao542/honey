@@ -3,10 +3,10 @@ package com.snt.phoney.ui.main
 import android.content.Context
 import android.content.Intent
 import android.os.Bundle
-import android.support.design.widget.BottomNavigationView
-import android.support.v4.app.Fragment
 import android.util.Log
 import android.view.ViewGroup
+import androidx.fragment.app.Fragment
+import com.google.android.material.bottomnavigation.BottomNavigationView
 import com.snt.phoney.R
 import com.snt.phoney.base.BaseActivity
 import com.snt.phoney.extensions.*

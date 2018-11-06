@@ -1,10 +1,10 @@
 package com.snt.phoney.ui.home.friend
 
 
-import android.support.v7.widget.RecyclerView
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.recyclerview.widget.RecyclerView
 import com.snt.phoney.R
 import com.snt.phoney.base.Page
 import com.snt.phoney.ui.home.friend.dummy.DummyContent.DummyItem

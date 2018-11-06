@@ -26,8 +26,11 @@ import com.snt.phoney.domain.repository.CacheRepository
 import com.snt.phoney.utils.cache.DatabaseCache
 import com.snt.phoney.utils.cache.KeyValueDatabaseCache
 import com.snt.phoney.utils.data.Constants
-import kotlinx.coroutines.experimental.runBlocking
+import kotlinx.coroutines.runBlocking
+import kotlinx.serialization.ImplicitReflectionSerializer
+import kotlinx.serialization.internal.defaultSerializer
 import kotlinx.serialization.json.JSON
+import kotlinx.serialization.serializer
 import javax.inject.Inject
 import javax.inject.Singleton
 
@@ -71,12 +74,14 @@ class CacheRepositoryImpl @Inject constructor(application: Application) : CacheR
 
 
     class UserDatabaseCache constructor(application: Application) : DatabaseCache<User>(application) {
+        @ImplicitReflectionSerializer
         override fun parse(value: String): User {
-            return JSON.parse(value)
+            return JSON.parse<User>(User::class.serializer(), value)
         }
 
+        @ImplicitReflectionSerializer
         override fun stringify(value: User): String {
-            return JSON.stringify(value)
+            return JSON.stringify(User::class.serializer(), value)
         }
 //        override var parse: (String) -> User? = { value: String ->
 //            JSON.parse(value)

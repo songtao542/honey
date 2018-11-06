@@ -1,7 +1,7 @@
 package com.snt.phoney.base
 
 import android.os.Bundle
-import android.support.v4.app.Fragment
+import androidx.fragment.app.Fragment
 import com.snt.phoney.ui.dating.create.CreateDatingFragment
 import com.snt.phoney.ui.dating.detail.DatingDetailFragment
 import com.snt.phoney.ui.dating.list.DatingListFragment

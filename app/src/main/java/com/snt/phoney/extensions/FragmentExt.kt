@@ -1,11 +1,10 @@
 package com.snt.phoney.extensions
 
 import android.os.Build
-import android.support.annotation.AnimRes
-import android.support.annotation.IdRes
-import android.support.v4.app.Fragment
-import android.support.v4.app.FragmentActivity
 import android.util.TypedValue
+import androidx.annotation.AnimRes
+import androidx.annotation.IdRes
+import androidx.fragment.app.Fragment
 
 fun Fragment.colorOf(id: Int): Int {
     return if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {

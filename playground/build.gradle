@@ -37,8 +37,8 @@ dependencies {
 
 
     testImplementation deps.junit
-    androidTestImplementation deps.atsl.runner
-    androidTestImplementation deps.atsl.rules
+    androidTestImplementation deps.android_support_test.runner
+    androidTestImplementation deps.android_support_test.rules
     androidTestImplementation(deps.espresso.core, {
         exclude group: 'com.android.support', module: 'support-annotations'
         exclude group: 'com.google.code.findbugs', module: 'jsr305'

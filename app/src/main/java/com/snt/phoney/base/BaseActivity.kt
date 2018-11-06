@@ -15,14 +15,13 @@
 package com.snt.phoney.base
 
 import android.app.Activity
-import android.arch.lifecycle.ViewModelProvider
 import android.content.Context
 import android.content.Intent
-import android.support.v4.app.Fragment
-import android.support.v7.app.AppCompatActivity
 import android.view.MotionEvent
+import androidx.appcompat.app.AppCompatActivity
+import androidx.fragment.app.Fragment
+import androidx.lifecycle.ViewModelProvider
 import com.snt.phoney.extensions.autoCleared
-import com.snt.phoney.extensions.hideSoftKeyboard
 import dagger.android.DispatchingAndroidInjector
 import dagger.android.support.HasSupportFragmentInjector
 import io.reactivex.disposables.CompositeDisposable

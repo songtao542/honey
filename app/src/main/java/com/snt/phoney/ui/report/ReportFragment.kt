@@ -1,15 +1,15 @@
 package com.snt.phoney.ui.report
 
-import android.arch.lifecycle.ViewModelProviders
 import android.os.Bundle
-import android.support.v4.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.lifecycle.ViewModelProviders
 
 import com.snt.phoney.R
+import com.snt.phoney.base.BaseFragment
 
-class ReportFragment : Fragment() {
+class ReportFragment : BaseFragment() {
 
     companion object {
         fun newInstance(arguments: Bundle? = null) = ReportFragment().apply {
@@ -28,7 +28,7 @@ class ReportFragment : Fragment() {
 
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
-        viewModel = ViewModelProviders.of(this).get(ReportViewModel::class.java)
+        viewModel = ViewModelProviders.of(this, viewModelFactory).get(ReportViewModel::class.java)
         // TODO: Use the ViewModel
     }
 

@@ -20,8 +20,6 @@ package com.snt.phoney.widget;
 import android.annotation.SuppressLint;
 import android.content.Context;
 import android.graphics.Canvas;
-import android.support.annotation.IdRes;
-import android.support.annotation.LayoutRes;
 import android.util.AttributeSet;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -30,6 +28,9 @@ import android.view.ViewGroup;
 import android.view.ViewParent;
 
 import java.lang.ref.WeakReference;
+
+import androidx.annotation.IdRes;
+import androidx.annotation.LayoutRes;
 
 /**
  * A ViewStub is an invisible, zero-sized View that can be used to lazily inflate

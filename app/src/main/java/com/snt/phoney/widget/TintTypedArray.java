@@ -22,13 +22,15 @@ import android.content.res.Resources;
 import android.content.res.TypedArray;
 import android.graphics.drawable.Drawable;
 import android.os.Build;
-import android.support.annotation.RequiresApi;
-import android.support.annotation.RestrictTo;
-import android.support.v7.content.res.AppCompatResources;
 import android.util.AttributeSet;
 import android.util.TypedValue;
 
-import static android.support.annotation.RestrictTo.Scope.LIBRARY_GROUP;
+import androidx.annotation.RequiresApi;
+import androidx.annotation.RestrictTo;
+import androidx.appcompat.content.res.AppCompatResources;
+
+import static androidx.annotation.RestrictTo.Scope.LIBRARY_GROUP;
+
 
 /**
  * A class that wraps a {@link TypedArray} and provides the same public API

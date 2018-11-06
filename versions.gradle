@@ -20,11 +20,26 @@
  **/
 ext.deps = [:]
 def versions = [:]
+versions.androidx_futures = "1.0.0-alpha02"
+versions.androidx_lifecycle = "2.0.0"
+versions.androidx_room = "2.1.0-alpha02"
+versions.androidx_paging = "2.1.0-beta01"
+versions.androidx_nav = "1.0.0-alpha07"
+versions.androidx_work = "1.0.0-alpha10"
+versions.androidx_test = "1.1.0"
+versions.androidx_espresso = "3.1.0"
+
+versions.androidx_multidex = "2.0.0"
+
+versions.androidx_support = "1.0.0"
+versions.androidx_material = "1.0.0-rc01"
+versions.androidx_constraintlayout = "1.1.2"
+
 versions.arch_core = "1.1.1"
 versions.room = "1.1.1"
 versions.lifecycle = "1.1.1"
 versions.support = "27.1.1"
-versions.dagger = "2.15"
+versions.dagger = "2.18"
 versions.junit = "4.12"
 versions.espresso = "3.0.1"
 versions.retrofit = "2.3.0"
@@ -43,7 +58,7 @@ versions.android_gradle_plugin = '3.2.1'
 versions.rxjava2 = "2.1.3"
 versions.rx_android = "2.0.1"
 versions.rx_kotlin = "2.2.0"
-versions.atsl_runner = "1.0.1"
+versions.android_support_test = "1.0.1"
 versions.atsl_rules = "1.0.1"
 versions.hamcrest = "1.3"
 versions.kotlin = "1.3.0" //1.2.71
@@ -88,6 +103,72 @@ def arch_core = [:]
 arch_core.testing = "android.arch.core:core-testing:$versions.arch_core"
 deps.arch_core = arch_core
 
+def androidx = [:]
+androidx.concurrent_futures = "androidx.concurrent:concurrent-futures:$versions.androidx_futures"
+androidx.lifecycle_extensions = "androidx.lifecycle:lifecycle-extensions:$versions.androidx_lifecycle"
+androidx.lifecycle_viewmodel = "androidx.lifecycle:lifecycle-viewmodel:$versions.androidx_lifecycle" // use -ktx for Kotlin
+androidx.lifecycle_viewmodel_ktx = "androidx.lifecycle:lifecycle-viewmodel-ktx:$versions.androidx_lifecycle" // use -ktx for Kotlin
+androidx.lifecycle_livedata = "androidx.lifecycle:lifecycle-livedata:$versions.androidx_lifecycle"
+androidx.lifecycle_runtime = "androidx.lifecycle:lifecycle-runtime:$versions.androidx_lifecycle"
+androidx.lifecycle_compiler = "androidx.lifecycle:lifecycle-compiler:$versions.androidx_lifecycle" // use kapt for Kotlin
+androidx.lifecycle_common_java8 = "androidx.lifecycle:lifecycle-common-java8:$versions.androidx_lifecycle"
+androidx.lifecycle_reactivestreams = "androidx.lifecycle:lifecycle-reactivestreams:$versions.androidx_lifecycle" // use -ktx for Kotlin
+androidx.lifecycle_reactivestreams_ktx = "androidx.lifecycle:lifecycle-reactivestreams-ktx:$versions.androidx_lifecycle" // use -ktx for Kotlin
+androidx.core_testing = "androidx.arch.core:core-testing:$versions.androidx_lifecycle"
+
+androidx.room_runtime = "androidx.room:room-runtime:$versions.androidx_room"
+androidx.room_compiler = "androidx.room:room-compiler:$versions.androidx_room" // use kapt for Kotlin
+androidx.room_rxjava2 = "androidx.room:room-rxjava2:$versions.androidx_room"
+androidx.room_guava = "androidx.room:room-guava:$versions.androidx_room"
+androidx.room_testing = "androidx.room:room-testing:$versions.androidx_room"
+
+androidx.paging_runtime = "androidx.paging:paging-runtime:$versions.androidx_paging" // use -ktx for Kotlin
+androidx.paging_runtime_ktx = "androidx.paging:paging-runtime-ktx:$versions.androidx_paging" // use -ktx for Kotlin
+androidx.paging_common = "androidx.paging:paging-common:$versions.androidx_paging" // use -ktx for Kotlin
+androidx.paging_common_ktx = "androidx.paging:paging-common-ktx:$versions.androidx_paging" // use -ktx for Kotlin
+androidx.paging_rxjava2 = "androidx.paging:paging-rxjava2:$versions.androidx_paging" // use -ktx for Kotlin
+androidx.paging_rxjava2_ktx = "androidx.paging:paging-rxjava2-ktx:$versions.androidx_paging" // use -ktx for Kotlin
+
+androidx.navigation_fragment = "android.arch.navigation:navigation-fragment:$versions.androidx_nav" // use -ktx for Kotlin
+androidx.navigation_fragment_ktx = "android.arch.navigation:navigation-fragment-ktx:$versions.androidx_nav" // use -ktx for Kotlin
+androidx.navigation_ui = "android.arch.navigation:navigation-ui:$versions.androidx_nav" // use -ktx for Kotlin
+androidx.navigation_ui_ktx = "android.arch.navigation:navigation-ui-ktx:$versions.androidx_nav" // use -ktx for Kotlin
+androidx.navigation_testing = "android.arch.navigation:navigation-testing:$versions.androidx_nav"
+
+androidx.work_runtime = "android.arch.work:work-runtime:$versions.androidx_work" // use -ktx for Kotlin
+androidx.work_runtime_ktx = "android.arch.work:work-runtime-ktx:$versions.androidx_work" // use -ktx for Kotlin
+androidx.work_firebase = "android.arch.work:work-firebase:$versions.androidx_work"
+androidx.work_testing = "android.arch.work:work-testing:$versions.androidx_work"
+
+androidx.test_rules = "androidx.test:rules:$versions.androidx_test"
+androidx.test_runner = "androidx.test:runner:$versions.androidx_test"
+androidx.espresso_core = "androidx.test.espresso:espresso-core:$versions.androidx_espresso"
+androidx.espresso_contrib = "androidx.test.espresso:espresso-contrib:$versions.androidx_espresso"
+
+androidx.core = "androidx.core:core:$versions.androidx_support"
+androidx.fragment = "androidx.fragment:fragment:$versions.androidx_support"
+androidx.cardview = "androidx.cardview:cardview:$versions.androidx_support"
+androidx.support_v4 = "androidx.legacy:legacy-support-v4:$versions.androidx_support"
+androidx.coordinatorlayout = "androidx.coordinatorlayout:coordinatorlayout:$versions.androidx_support"
+androidx.recyclerview = "androidx.recyclerview:recyclerview:$versions.androidx_support"
+androidx.recyclerview_selection = "androidx.recyclerview:recyclerview-selection:$versions.androidx_support"
+androidx.annotation = "androidx.annotation:annotation:$versions.androidx_support"
+androidx.vectordrawable = "androidx.vectordrawable:vectordrawable:$versions.androidx_support"
+androidx.vectordrawable_animated = "androidx.vectordrawable:vectordrawable-animated:$versions.androidx_support"
+androidx.swiperefreshlayout = "androidx.swiperefreshlayout:swiperefreshlayout:$versions.androidx_support"
+androidx.transition = "androidx.transition:transition:$versions.androidx_support"
+androidx.viewpager = "androidx.viewpager:viewpager:$versions.androidx_support"
+androidx.appcompat = "androidx.appcompat:appcompat:$versions.androidx_support"
+
+androidx.constraintlayout = "androidx.constraintlayout:constraintlayout:$versions.androidx_constraintlayout"
+
+androidx.multidex = "androidx.multidex:multidex:$versions.androidx_multidex"
+androidx.material = "com.google.android.material:material:$versions.androidx_material"
+
+androidx.databinding_compiler = "androidx.databinding:databinding-compiler:$versions.android_gradle_plugin"
+
+deps.androidx = androidx
+
 def retrofit = [:]
 retrofit.runtime = "com.squareup.retrofit2:retrofit:$versions.retrofit"
 retrofit.gson = "com.squareup.retrofit2:converter-gson:$versions.retrofit"
@@ -112,10 +193,10 @@ espresso.contrib = "com.android.support.test.espresso:espresso-contrib:$versions
 espresso.intents = "com.android.support.test.espresso:espresso-intents:$versions.espresso"
 deps.espresso = espresso
 
-def atsl = [:]
-atsl.runner = "com.android.support.test:runner:$versions.atsl_runner"
-atsl.rules = "com.android.support.test:rules:$versions.atsl_runner"
-deps.atsl = atsl
+def android_support_test = [:]
+android_support_test.runner = "com.android.support.test:runner:$versions.android_support_test"
+android_support_test.rules = "com.android.support.test:rules:$versions.android_support_test"
+deps.android_support_test = android_support_test
 
 def mockito = [:]
 mockito.core = "org.mockito:mockito-core:$versions.mockito"

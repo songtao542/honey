@@ -30,26 +30,6 @@ import android.graphics.Typeface;
 import android.graphics.drawable.ColorDrawable;
 import android.graphics.drawable.Drawable;
 import android.os.Build;
-import android.support.annotation.ColorInt;
-import android.support.annotation.DrawableRes;
-import android.support.annotation.IntDef;
-import android.support.annotation.IntRange;
-import android.support.annotation.NonNull;
-import android.support.annotation.Nullable;
-import android.support.annotation.RequiresApi;
-import android.support.annotation.RestrictTo;
-import android.support.annotation.StyleRes;
-//import android.support.design.R;
-import android.support.design.widget.AppBarLayout;
-import android.support.v4.content.ContextCompat;
-import android.support.v4.graphics.drawable.DrawableCompat;
-import android.support.v4.math.MathUtils;
-import android.support.v4.text.TextDirectionHeuristicsCompat;
-import android.support.v4.util.ObjectsCompat;
-import android.support.v4.view.GravityCompat;
-import android.support.v4.view.ViewCompat;
-import android.support.v4.view.WindowInsetsCompat;
-import android.support.v7.widget.Toolbar;
 import android.text.TextPaint;
 import android.text.TextUtils;
 import android.util.AttributeSet;
@@ -62,12 +42,32 @@ import android.view.animation.Interpolator;
 import android.widget.FrameLayout;
 import android.widget.TextView;
 
+import com.google.android.material.appbar.AppBarLayout;
 import com.snt.phoney.R;
 
 import java.lang.annotation.Retention;
 import java.lang.annotation.RetentionPolicy;
 
-import static android.support.annotation.RestrictTo.Scope.LIBRARY_GROUP;
+import androidx.annotation.ColorInt;
+import androidx.annotation.DrawableRes;
+import androidx.annotation.IntDef;
+import androidx.annotation.IntRange;
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
+import androidx.annotation.RequiresApi;
+import androidx.annotation.RestrictTo;
+import androidx.annotation.StyleRes;
+import androidx.core.content.ContextCompat;
+import androidx.core.graphics.drawable.DrawableCompat;
+import androidx.core.math.MathUtils;
+import androidx.core.text.TextDirectionHeuristicsCompat;
+import androidx.core.util.ObjectsCompat;
+import androidx.core.view.GravityCompat;
+import androidx.core.view.ViewCompat;
+import androidx.core.view.WindowInsetsCompat;
+
+import static androidx.annotation.RestrictTo.Scope.LIBRARY_GROUP;
+
 
 /**
  * CollapsingToolbarLayout is a wrapper for {@link Toolbar} which implements a collapsing app bar.
@@ -210,7 +210,7 @@ public class CollapsingToolbarLayout extends FrameLayout {
         mCollapsingTextHelper.setExpandedTextAppearance(
                 R.style.TextAppearance_Design_CollapsingToolbar_Expanded);
         mCollapsingTextHelper.setCollapsedTextAppearance(
-                android.support.v7.appcompat.R.style.TextAppearance_AppCompat_Widget_ActionBar_Title);
+                androidx.appcompat.R.style.TextAppearance_AppCompat_Widget_ActionBar_Title);
 
         // Now overlay any custom text appearances
         if (a.hasValue(R.styleable.CollapsingToolbarLayout_expandedTitleTextAppearance)) {
@@ -241,7 +241,7 @@ public class CollapsingToolbarLayout extends FrameLayout {
         setWillNotDraw(false);
 
         ViewCompat.setOnApplyWindowInsetsListener(this,
-                new android.support.v4.view.OnApplyWindowInsetsListener() {
+                new androidx.core.view.OnApplyWindowInsetsListener() {
                     @Override
                     public WindowInsetsCompat onApplyWindowInsets(View v,
                                                                   WindowInsetsCompat insets) {
@@ -1529,24 +1529,24 @@ final class CollapsingTextHelper {
 
     void setCollapsedTextAppearance(int resId) {
         TintTypedArray a = TintTypedArray.obtainStyledAttributes(mView.getContext(), resId,
-                android.support.v7.appcompat.R.styleable.TextAppearance);
-        if (a.hasValue(android.support.v7.appcompat.R.styleable.TextAppearance_android_textColor)) {
+                androidx.appcompat.R.styleable.TextAppearance);
+        if (a.hasValue(androidx.appcompat.R.styleable.TextAppearance_android_textColor)) {
             mCollapsedTextColor = a.getColorStateList(
-                    android.support.v7.appcompat.R.styleable.TextAppearance_android_textColor);
+                    androidx.appcompat.R.styleable.TextAppearance_android_textColor);
         }
-        if (a.hasValue(android.support.v7.appcompat.R.styleable.TextAppearance_android_textSize)) {
+        if (a.hasValue(androidx.appcompat.R.styleable.TextAppearance_android_textSize)) {
             mCollapsedTextSize = a.getDimensionPixelSize(
-                    android.support.v7.appcompat.R.styleable.TextAppearance_android_textSize,
+                    androidx.appcompat.R.styleable.TextAppearance_android_textSize,
                     (int) mCollapsedTextSize);
         }
         mCollapsedShadowColor = a.getInt(
-                android.support.v7.appcompat.R.styleable.TextAppearance_android_shadowColor, 0);
+                androidx.appcompat.R.styleable.TextAppearance_android_shadowColor, 0);
         mCollapsedShadowDx = a.getFloat(
-                android.support.v7.appcompat.R.styleable.TextAppearance_android_shadowDx, 0);
+                androidx.appcompat.R.styleable.TextAppearance_android_shadowDx, 0);
         mCollapsedShadowDy = a.getFloat(
-                android.support.v7.appcompat.R.styleable.TextAppearance_android_shadowDy, 0);
+                androidx.appcompat.R.styleable.TextAppearance_android_shadowDy, 0);
         mCollapsedShadowRadius = a.getFloat(
-                android.support.v7.appcompat.R.styleable.TextAppearance_android_shadowRadius, 0);
+                androidx.appcompat.R.styleable.TextAppearance_android_shadowRadius, 0);
         a.recycle();
 
         if (Build.VERSION.SDK_INT >= 16) {
@@ -1558,24 +1558,24 @@ final class CollapsingTextHelper {
 
     void setExpandedTextAppearance(int resId) {
         TintTypedArray a = TintTypedArray.obtainStyledAttributes(mView.getContext(), resId,
-                android.support.v7.appcompat.R.styleable.TextAppearance);
-        if (a.hasValue(android.support.v7.appcompat.R.styleable.TextAppearance_android_textColor)) {
+                androidx.appcompat.R.styleable.TextAppearance);
+        if (a.hasValue(androidx.appcompat.R.styleable.TextAppearance_android_textColor)) {
             mExpandedTextColor = a.getColorStateList(
-                    android.support.v7.appcompat.R.styleable.TextAppearance_android_textColor);
+                    androidx.appcompat.R.styleable.TextAppearance_android_textColor);
         }
-        if (a.hasValue(android.support.v7.appcompat.R.styleable.TextAppearance_android_textSize)) {
+        if (a.hasValue(androidx.appcompat.R.styleable.TextAppearance_android_textSize)) {
             mExpandedTextSize = a.getDimensionPixelSize(
-                    android.support.v7.appcompat.R.styleable.TextAppearance_android_textSize,
+                    androidx.appcompat.R.styleable.TextAppearance_android_textSize,
                     (int) mExpandedTextSize);
         }
         mExpandedShadowColor = a.getInt(
-                android.support.v7.appcompat.R.styleable.TextAppearance_android_shadowColor, 0);
+                androidx.appcompat.R.styleable.TextAppearance_android_shadowColor, 0);
         mExpandedShadowDx = a.getFloat(
-                android.support.v7.appcompat.R.styleable.TextAppearance_android_shadowDx, 0);
+                androidx.appcompat.R.styleable.TextAppearance_android_shadowDx, 0);
         mExpandedShadowDy = a.getFloat(
-                android.support.v7.appcompat.R.styleable.TextAppearance_android_shadowDy, 0);
+                androidx.appcompat.R.styleable.TextAppearance_android_shadowDy, 0);
         mExpandedShadowRadius = a.getFloat(
-                android.support.v7.appcompat.R.styleable.TextAppearance_android_shadowRadius, 0);
+                androidx.appcompat.R.styleable.TextAppearance_android_shadowRadius, 0);
         a.recycle();
 
         if (Build.VERSION.SDK_INT >= 16) {
