@@ -94,6 +94,13 @@
     <string name="publish_dating_confirm">确认发布</string>
     <string name="upload_photo">添加图片</string>
     <string name="upload_photo_tip">你还未上传过图片，点击上传你的第一张图片</string>
+    <string name="dating_expired">已过期</string>
+    <string name="dating_address_template">约会地点：%1$s</string>
+    <string name="dating_time_template">约会时间：%1$s</string>
+    <string name="dating_join_template">参加的人：%1$s</string>
+    <string name="dating_ending_time_template">离结束发布有效时间还有%1$s时 %2$s分 %3$s秒</string>
+    <string name="cancel_dating">取消约会</string>
+    <string name="view_requester">查看申请</string>
 
 
 </resources>

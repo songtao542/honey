@@ -27,6 +27,8 @@ class DatingListRecyclerViewAdapter : RecyclerView.Adapter<DatingListRecyclerVie
     override fun getItemCount(): Int = 50
 
     inner class ViewHolder(val mView: View) : RecyclerView.ViewHolder(mView) {
+             fun setData(){
 
+             }
     }
 }

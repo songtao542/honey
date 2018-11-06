@@ -10,7 +10,108 @@
     <TextView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="AAAAAAAAA" />
+        android:layout_marginStart="10dp"
+        android:layout_marginEnd="10dp"
+        android:gravity="center_vertical"
+        android:minHeight="30dp"
+        android:text="@string/dating_expired"
+        android:textSize="@dimen/textsize_small" />
 
+
+    <android.support.v7.widget.CardView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="10dp"
+        android:layout_marginEnd="10dp">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="40dp"
+            android:background="@drawable/underline_gray"
+            android:orientation="vertical"
+            android:padding="10dp">
+
+            <TextView
+                android:id="@+id/datingAddress"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:minHeight="30dp"
+                android:text="@string/dating_address_template"
+                android:textColor="@color/black"
+                android:textSize="@dimen/textsize_normal" />
+
+            <TextView
+                android:id="@+id/datingTime"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:minHeight="30dp"
+                android:text="@string/dating_time_template"
+                android:textColor="@color/black"
+                android:textSize="@dimen/textsize_normal" />
+
+            <TextView
+                android:id="@+id/datingJoiner"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:minHeight="30dp"
+                android:text="@string/dating_join_template"
+                android:textColor="@color/black"
+                android:textSize="@dimen/textsize_normal" />
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="bottom"
+            android:orientation="horizontal"
+            android:paddingLeft="10dp"
+            android:paddingRight="10dp">
+
+            <TextView
+                android:id="@+id/endingTime"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:ellipsize="middle"
+                android:gravity="center"
+                android:minHeight="40dp"
+                android:singleLine="true"
+                android:text="@string/dating_ending_time_template"
+                android:textColor="@color/black"
+                android:textSize="@dimen/textsize_smallest" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_vertical"
+                android:layout_marginRight="8dp"
+                android:background="@drawable/dating_cancel_btn_selector"
+                android:gravity="center"
+                android:paddingLeft="10dp"
+                android:paddingTop="4dp"
+                android:paddingRight="10dp"
+                android:paddingBottom="4dp"
+                android:text="@string/cancel_dating"
+                android:textColor="@color/white"
+                android:textSize="@dimen/textsize_smallest" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_vertical"
+                android:background="@drawable/button_primary_round_corner_selector"
+                android:gravity="center"
+                android:paddingLeft="10dp"
+                android:paddingTop="4dp"
+                android:paddingRight="10dp"
+                android:paddingBottom="4dp"
+                android:text="@string/view_requester"
+                android:textColor="@color/white"
+                android:textSize="@dimen/textsize_smallest" />
+        </LinearLayout>
+
+    </android.support.v7.widget.CardView>
 
 </LinearLayout>

@@ -5,10 +5,11 @@ import com.snt.phoney.domain.persistence.AppDatabase
 import com.snt.phoney.domain.persistence.KeyValueDao
 import com.snt.phoney.domain.persistence.put
 import com.appmattus.layercache.Cache
-import kotlinx.coroutines.experimental.Deferred
-import kotlinx.coroutines.experimental.Dispatchers
-import kotlinx.coroutines.experimental.async
-import kotlinx.coroutines.experimental.runBlocking
+
+import kotlinx.coroutines.Deferred
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.async
+import kotlinx.coroutines.runBlocking
 
 abstract class DatabaseCache<V : Any> constructor(application: Application) : Cache<String, V> {
     private val keyValeDao: KeyValueDao = AppDatabase.getInstance(application).keyValueDao()

@@ -19,7 +19,6 @@ package com.snt.phoney.widget;
 
 import android.annotation.SuppressLint;
 import android.content.Context;
-import android.content.res.TypedArray;
 import android.graphics.Canvas;
 import android.support.annotation.IdRes;
 import android.support.annotation.LayoutRes;
@@ -29,10 +28,6 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.ViewParent;
-import android.widget.RemoteViews.RemoteView;
-
-
-import com.snt.phoney.R;
 
 import java.lang.ref.WeakReference;
 
@@ -77,7 +72,7 @@ import java.lang.ref.WeakReference;
  * @attr ref android.R.styleable#ViewStub_inflatedId
  * @attr ref android.R.styleable#ViewStub_layout
  */
-public final class ViewStub extends View {
+public final class ViewSlot extends View {
     private int mInflatedId;
     private int mLayoutResource;
 
@@ -88,7 +83,7 @@ public final class ViewStub extends View {
 
     private int mID;
 
-    public ViewStub(Context context) {
+    public ViewSlot(Context context) {
         this(context, 0);
     }
 
@@ -98,27 +93,28 @@ public final class ViewStub extends View {
      * @param context        The application's environment.
      * @param layoutResource The reference to a layout resource that will be inflated.
      */
-    public ViewStub(Context context, @LayoutRes int layoutResource) {
+    public ViewSlot(Context context, @LayoutRes int layoutResource) {
         this(context, null);
         mLayoutResource = layoutResource;
     }
 
-    public ViewStub(Context context, AttributeSet attrs) {
+    public ViewSlot(Context context, AttributeSet attrs) {
         this(context, attrs, 0);
     }
 
-    public ViewStub(Context context, AttributeSet attrs, int defStyleAttr) {
+    public ViewSlot(Context context, AttributeSet attrs, int defStyleAttr) {
         this(context, attrs, defStyleAttr, 0);
     }
 
-    public ViewStub(Context context, AttributeSet attrs, int defStyleAttr, int defStyleRes) {
+    public ViewSlot(Context context, AttributeSet attrs, int defStyleAttr, int defStyleRes) {
         super(context);
-        final TypedArray a = context.obtainStyledAttributes(attrs,
-                R.styleable.ViewStub, defStyleAttr, defStyleRes);
-        mInflatedId = a.getResourceId(R.styleable.ViewStub_inflatedId, NO_ID);
-        mLayoutResource = a.getResourceId(R.styleable.ViewStub_layout, 0);
-        mID = a.getResourceId(R.styleable.ViewStub_id, NO_ID);
-        a.recycle();
+        Log.d("TTTT","ccccccccccccccccccccccc");
+//        final TypedArray a = context.obtainStyledAttributes(attrs,
+//                R.styleable.ViewStub, defStyleAttr, defStyleRes);
+//        mInflatedId = a.getResourceId(R.styleable.ViewStub_inflatedId, NO_ID);
+//        mLayoutResource = a.getResourceId(R.styleable.ViewStub_layout, 0);
+//        mID = a.getResourceId(R.styleable.ViewStub_id, NO_ID);
+//        a.recycle();
 
         setVisibility(GONE);
         setWillNotDraw(true);
@@ -221,6 +217,7 @@ public final class ViewStub extends View {
     @SuppressLint("MissingSuperCall")
     @Override
     public void draw(Canvas canvas) {
+        super.draw(canvas);
     }
 
     @Override
@@ -327,7 +324,7 @@ public final class ViewStub extends View {
      * inflated its layout resource.
      *
      * @param inflateListener The OnInflateListener to notify of successful inflation.
-     * @see ViewStub.OnInflateListener
+     * @see OnInflateListener
      */
     public void setOnInflateListener(OnInflateListener inflateListener) {
         mInflateListener = inflateListener;
@@ -337,7 +334,7 @@ public final class ViewStub extends View {
      * Listener used to receive a notification after a ViewStub has successfully
      * inflated its layout resource.
      *
-     * @see ViewStub#setOnInflateListener(ViewStub.OnInflateListener)
+     * @see ViewSlot#setOnInflateListener(OnInflateListener)
      */
     public static interface OnInflateListener {
         /**
@@ -348,7 +345,7 @@ public final class ViewStub extends View {
          * @param stub     The ViewStub that initiated the inflation.
          * @param inflated The inflated View.
          */
-        void onInflate(ViewStub stub, View inflated);
+        void onInflate(ViewSlot stub, View inflated);
     }
 
     /**

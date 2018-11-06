@@ -64,9 +64,7 @@ android {
 
 //configurations.all {
 //    resolutionStrategy {
-//        forcedModules = [
-//                deps.kotlin.stdlib
-//        ]
+//        force deps.kotlin.stdlib, deps.lifecycle.runtime, deps.lifecycle.extensions, deps.lifecycle.viewmodel, deps.lifecycle.livedata
 //    }
 //}
 
@@ -95,6 +93,7 @@ dependencies {
     implementation deps.retrofit.runtime
     implementation deps.retrofit.gson
     implementation deps.retrofit.adapter_rxjava2
+    implementation deps.retrofit.coroutines_adapter
     implementation deps.okhttp_logging_interceptor
     implementation deps.glide.runtime
 
@@ -115,13 +114,21 @@ dependencies {
     implementation deps.cache.layer_cache_android
     implementation deps.cache.layer_cache_serializer
 
+    implementation deps.cache.layercache_ehcache
+//    implementation deps.cache.layercache_retrofit
+//    implementation deps.cache.layercache_android_encryption
+//    implementation(deps.cache.layercache_android_livedata, {
+//        exclude group: 'android.arch.lifecycle'
+//        exclude group: 'android.arch.core'
+//    })
+
     implementation deps.dagger.runtime
     implementation deps.dagger.android
     implementation deps.dagger.android_support
 
     implementation deps.kotlin.stdlib
     implementation deps.kotlinx.serialization_runtime
-    implementation deps.kotlinx.coroutines_android
+//    implementation deps.kotlinx.coroutines_android
 
     implementation deps.timber
     implementation deps.multidex

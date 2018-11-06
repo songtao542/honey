@@ -61,6 +61,8 @@
     <color name="mine_authenticate_gray_cicle_corner_bg">#888888</color>
     <color name="button_white_round_corner_pressed">#eeeeee</color>
     <color name="button_white_round_corner_normal">#ffffff</color>
+    <color name="dating_cancel_btn_pressed">#aaaaaa</color>
+    <color name="dating_cancel_btn_normal">#bbbbbb</color>
 
 
 </resources>
