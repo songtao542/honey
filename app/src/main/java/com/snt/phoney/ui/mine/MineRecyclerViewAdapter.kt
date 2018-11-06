@@ -18,9 +18,12 @@ import com.snt.phoney.ui.user.UserActivity
 import com.snt.phoney.ui.wallet.WalletActivity
 import com.snt.phoney.widget.FlowLayout
 import com.snt.phoney.widget.PhotoWallFactory
+import com.snt.phoney.widget.ViewStub
 import kotlinx.android.synthetic.main.fragment_mine_footer.view.*
 import kotlinx.android.synthetic.main.fragment_mine_list_header.view.*
+import kotlinx.android.synthetic.main.fragment_mine_list_no_photo.view.*
 import kotlinx.android.synthetic.main.fragment_mine_list_photo.view.*
+import kotlinx.android.synthetic.main.fragment_mine_list_photo_area.view.*
 import kotlinx.android.synthetic.main.fragment_mine_settings.view.*
 
 /**
@@ -45,24 +48,24 @@ class MineRecyclerViewAdapter(val fragment: Fragment) : RecyclerView.Adapter<Rec
 
         val addr = "http://pic.58pic.com/58pic/15/35/50/50X58PICZkd_1024.jpg"
 
-        photos.add(addr)
-        photos.add(addr)
-        photos.add(addr)
-        photos.add(addr)
-        photos.add(addr)
-        photos.add(addr)
-        photos.add(addr)
-        photos.add(addr)
-        photos.add(addr)
-        photos.add(addr)
-        photos.add(addr)
-        photos.add(addr)
-        photos.add(addr)
-        photos.add(addr)
-        photos.add(addr)
-        photos.add(addr)
-        photos.add(addr)
-        photos.add(addr)
+//        photos.add(addr)
+//        photos.add(addr)
+//        photos.add(addr)
+//        photos.add(addr)
+//        photos.add(addr)
+//        photos.add(addr)
+//        photos.add(addr)
+//        photos.add(addr)
+//        photos.add(addr)
+//        photos.add(addr)
+//        photos.add(addr)
+//        photos.add(addr)
+//        photos.add(addr)
+//        photos.add(addr)
+//        photos.add(addr)
+//        photos.add(addr)
+//        photos.add(addr)
+//        photos.add(addr)
     }
 
 
@@ -78,7 +81,7 @@ class MineRecyclerViewAdapter(val fragment: Fragment) : RecyclerView.Adapter<Rec
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder {
         return when (viewType) {
             0 -> HeadViewHolder(LayoutInflater.from(parent.context).inflate(R.layout.fragment_mine_list_header, parent, false))
-            1 -> PhotoViewHolder(LayoutInflater.from(parent.context).inflate(R.layout.fragment_mine_list_photo, parent, false))
+            1 -> PhotoViewHolder(LayoutInflater.from(parent.context).inflate(R.layout.fragment_mine_list_photo_area, parent, false))
             2 -> SettingViewHolder(LayoutInflater.from(parent.context).inflate(R.layout.fragment_mine_settings, parent, false))
             else -> FooterViewHolder(LayoutInflater.from(parent.context).inflate(R.layout.fragment_mine_footer, parent, false))
         }
@@ -122,12 +125,20 @@ class MineRecyclerViewAdapter(val fragment: Fragment) : RecyclerView.Adapter<Rec
 
     inner class PhotoViewHolder(private val mView: View) : RecyclerView.ViewHolder(mView) {
         private val context = mView.context
-        private val flexbox = mView.flexbox
 
         fun setData(photos: List<String>) {
-            flexbox.viewFactory = PhotoWallFactory(context).setUrls(photos).setMaxShow(12).setLastAsAdd(true)
-            flexbox.setOnItemClickListener { view, index ->
-                Log.d("TTTT", "index=$index")
+            if (photos.isNotEmpty()) {
+                mView.hasPhotoStub.inflate()
+                val flexbox = mView.flexbox
+                flexbox.viewFactory = PhotoWallFactory(context).setUrls(photos).setMaxShow(12).setLastAsAdd(true)
+                flexbox.setOnItemClickListener { view, index ->
+                    Log.d("TTTT", "index=$index")
+                }
+            } else {
+                mView.noPhotoStub.inflate()
+                mView.uploadPhoto.setOnClickListener {
+                    Log.d("TTTT", "vvvvvvvvvvvvvvvvvvvvv")
+                }
             }
         }
     }

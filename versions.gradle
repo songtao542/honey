@@ -45,8 +45,8 @@ versions.rx_kotlin = "2.2.0"
 versions.atsl_runner = "1.0.1"
 versions.atsl_rules = "1.0.1"
 versions.hamcrest = "1.3"
-versions.kotlin = "1.2.60"
-versions.kotlinx_serialization = "0.6.1"
+versions.kotlin = "1.3.0" //1.2.71
+versions.kotlinx_serialization = "0.9.0" //0.6.1
 versions.kotlinx_coroutines = "0.30.2"
 versions.paging = "1.0.1"
 versions.navigation = "1.0.0-alpha06"
@@ -132,7 +132,8 @@ deps.paging = "android.arch.paging:runtime:$versions.paging"
 
 def kotlinx = [:]
 kotlinx.serialization_runtime = "org.jetbrains.kotlinx:kotlinx-serialization-runtime:$versions.kotlinx_serialization"
-kotlinx.serialization_plugin = "org.jetbrains.kotlinx:kotlinx-gradle-serialization-plugin:$versions.kotlinx_serialization"
+//kotlinx.serialization_plugin = "org.jetbrains.kotlinx:kotlinx-gradle-serialization-plugin:$versions.kotlinx_serialization"
+kotlinx.serialization_plugin = "org.jetbrains.kotlin:kotlin-serialization:$versions.kotlin"
 kotlinx.coroutines_android = "org.jetbrains.kotlinx:kotlinx-coroutines-android:$versions.kotlinx_coroutines"
 deps.kotlinx = kotlinx
 

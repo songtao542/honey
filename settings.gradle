@@ -1,1 +1,1 @@
-include ':app', ':flexbox'
+include ':app', ':flexbox', ':playground'

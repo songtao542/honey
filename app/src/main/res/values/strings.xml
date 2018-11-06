@@ -92,6 +92,8 @@
     <string name="wechat">微信</string>
     <string name="publish_dating">发布约会</string>
     <string name="publish_dating_confirm">确认发布</string>
+    <string name="upload_photo">添加图片</string>
+    <string name="upload_photo_tip">你还未上传过图片，点击上传你的第一张图片</string>
 
 
 </resources>
