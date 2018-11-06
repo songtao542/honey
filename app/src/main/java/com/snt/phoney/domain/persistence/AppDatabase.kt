@@ -7,7 +7,7 @@ import androidx.room.RoomDatabase
 import com.snt.phoney.domain.model.KeyValue
 import com.snt.phoney.domain.model.User
 
-@Database(entities = [User::class, KeyValue::class], version = 1)
+@Database(entities = [User::class, KeyValue::class], exportSchema = false, version = 1)
 abstract class AppDatabase : RoomDatabase() {
 
     abstract fun userDao(): UserDao

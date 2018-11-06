@@ -42,9 +42,9 @@ dependencies {
     //compileOnly "androidx.core:core:${rootProject.androidxCoreVersion}"
     //compileOnly "androidx.recyclerview:recyclerview:${rootProject.androidxCoreVersion}"
 
-    compileOnly deps.support.v4
-    compileOnly deps.support.app_compat
-    compileOnly deps.support.recyclerview
+    compileOnly deps.androidx.core
+    compileOnly deps.androidx.appcompat
+    compileOnly deps.androidx.recyclerview
 
 
     testImplementation deps.junit

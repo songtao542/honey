@@ -51,7 +51,7 @@ android {
         experimental = true
     }
     kapt {
-        useBuildCache = true
+        useBuildCache = false
     }
     compileOptions {
         sourceCompatibility JavaVersion.VERSION_1_8
@@ -72,6 +72,7 @@ dependencies {
     implementation fileTree(dir: 'libs', include: ['*.jar'])
 
     implementation project(path: ":flexbox")
+    implementation project(path: ":dagger_androidx")
 
     implementation deps.androidx.concurrent_futures
     implementation deps.androidx.lifecycle_extensions
@@ -106,7 +107,7 @@ dependencies {
 
     implementation deps.androidx.work_runtime
     implementation deps.androidx.work_runtime_ktx
-    implementation deps.androidx.work_firebase
+    //implementation deps.androidx.work_firebase
     androidTestImplementation deps.androidx.work_testing
 
     androidTestImplementation deps.androidx.test_rules
@@ -134,7 +135,7 @@ dependencies {
     implementation deps.androidx.multidex
     implementation deps.androidx.material
 
-    kapt deps.androidx.databinding_compiler
+    //kapt deps.androidx.databinding_compiler
 
 //    implementation deps.support.v4
 //    implementation deps.support.app_compat
@@ -189,7 +190,7 @@ dependencies {
 
     implementation deps.dagger.runtime
     implementation deps.dagger.android
-    implementation deps.dagger.android_support
+//    implementation deps.dagger.android_support
     kapt deps.dagger.android_support_compiler
     kapt deps.dagger.compiler
 
@@ -199,6 +200,7 @@ dependencies {
     androidTestImplementation deps.kotlin.reflect
 
     implementation deps.timber
+    implementation "com.android.support:support-annotations:28.0.0"
 
 //    androidTestImplementation deps.android_support_test.runner
 //    androidTestImplementation deps.android_support_test.rules

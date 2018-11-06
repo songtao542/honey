@@ -27,24 +27,23 @@ dependencies {
     implementation fileTree(dir: 'libs', include: ['*.jar'])
     implementation deps.kotlin.stdlib
 
-    implementation deps.support.v4
-    implementation deps.support.app_compat
-    implementation deps.support.recyclerview
-    implementation deps.support.cardview
-    implementation deps.support.design
-    implementation deps.support.vector_drawable
-    implementation deps.constraint_layout
+    implementation deps.androidx.core
+    implementation deps.androidx.fragment
+    implementation deps.androidx.cardview
+    implementation deps.androidx.support_v4
+    implementation deps.androidx.coordinatorlayout
+    implementation deps.androidx.recyclerview
+    implementation deps.androidx.recyclerview_selection
+    implementation deps.androidx.annotation
+    implementation deps.androidx.vectordrawable
+    implementation deps.androidx.vectordrawable_animated
+    implementation deps.androidx.swiperefreshlayout
+    implementation deps.androidx.transition
+    implementation deps.androidx.viewpager
+    implementation deps.androidx.appcompat
 
-
-    testImplementation deps.junit
-    androidTestImplementation deps.android_support_test.runner
-    androidTestImplementation deps.android_support_test.rules
-    androidTestImplementation(deps.espresso.core, {
-        exclude group: 'com.android.support', module: 'support-annotations'
-        exclude group: 'com.google.code.findbugs', module: 'jsr305'
-    })
-    androidTestImplementation(deps.espresso.contrib, {
-        exclude group: 'com.android.support', module: 'support-annotations'
-        exclude group: 'com.google.code.findbugs', module: 'jsr305'
-    })
+    androidTestImplementation deps.androidx.test_rules
+    androidTestImplementation deps.androidx.test_runner
+    androidTestImplementation deps.androidx.espresso_core
+    androidTestImplementation deps.androidx.espresso_contrib
 }

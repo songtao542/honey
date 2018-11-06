@@ -25,6 +25,9 @@ buildscript {
         classpath deps.kotlinx.serialization_plugin
         classpath deps.navigation.safe_args_plugin
     }
+    repositories {
+        google()
+    }
 }
 
 allprojects {
@@ -34,4 +37,8 @@ allprojects {
 
 task clean(type: Delete) {
     delete rootProject.buildDir
+}
+
+repositories {
+    google()
 }
