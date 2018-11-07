@@ -14,34 +14,29 @@
  * limitations under the License.
  */
 
-package dagger.androidx;
-
-import android.content.Context;
+package dagger.android.support;
 
 import androidx.fragment.app.Fragment;
 import dagger.android.AndroidInjector;
 import dagger.android.DispatchingAndroidInjector;
-import dagger.internal.Beta;
 import javax.inject.Inject;
 
 /**
- * A {@link Fragment} that injects its members in {@link #onAttach(Context)} and can be used to
- * inject child {@link Fragment}s attached to it. Note that when this fragment gets reattached, its
- * members will be injected again.
+ * An {@link android.app.Application} that injects its members and can be used to inject {@link
+ * android.app.Activity}s, {@linkplain android.app.Fragment framework fragments}, {@linkplain
+ * Fragment support fragments}, {@link android.app.Service}s, {@link
+ * android.content.BroadcastReceiver}s, and {@link android.content.ContentProvider}s attached to it.
  */
-@Beta
-public abstract class DaggerFragment extends Fragment implements HasSupportFragmentInjector {
+public abstract class DaggerApplication extends dagger.android.DaggerApplication
+    implements HasSupportFragmentInjector {
 
-  @Inject DispatchingAndroidInjector<Fragment> childFragmentInjector;
-
-  @Override
-  public void onAttach(Context context) {
-    AndroidSupportInjection.inject(this);
-    super.onAttach(context);
-  }
+  @Inject DispatchingAndroidInjector<Fragment> supportFragmentInjector;
 
   @Override
-  public AndroidInjector<Fragment> supportFragmentInjector() {
-    return childFragmentInjector;
+  protected abstract AndroidInjector<? extends DaggerApplication> applicationInjector();
+
+  @Override
+  public DispatchingAndroidInjector<Fragment> supportFragmentInjector() {
+    return supportFragmentInjector;
   }
 }

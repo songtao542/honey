@@ -13,11 +13,8 @@ import com.google.android.material.bottomnavigation.BottomNavigationView
 
 @SuppressLint("RestrictedApi")
 fun BottomNavigationView.disableShiftMode() = try {
-    var shiftingModeOfMenuView = BottomNavigationMenuView::class.java.getDeclaredField("mShiftingMode")
-    shiftingModeOfMenuView.isAccessible = true
     for (menu in this.asSequence()) {
         if (menu is BottomNavigationMenuView) {
-            shiftingModeOfMenuView.setBoolean(menu, false)
             for (item in menu.asSequence()) {
                 if (item is BottomNavigationItemView) {
                     item.setShifting(false)
@@ -26,15 +23,12 @@ fun BottomNavigationView.disableShiftMode() = try {
             }
         }
     }
-    shiftingModeOfMenuView.isAccessible = false
 } catch (exception: Exception) {
     Log.e("BottomNavigationView", exception.message)
 }
 
 @SuppressLint("RestrictedApi")
 fun BottomNavigationView.hideIcon() = try {
-    var icon = BottomNavigationItemView::class.java.getDeclaredField("mIcon")
-    icon.isAccessible = true
     for (menu in this.asSequence()) {
         if (menu is BottomNavigationMenuView) {
             for (item in menu.asSequence()) {
@@ -48,11 +42,9 @@ fun BottomNavigationView.hideIcon() = try {
                     label.findViewById<TextView>(com.google.android.material.R.id.smallLabel).setTextSize(TypedValue.COMPLEX_UNIT_SP, 16f)
                     label.findViewById<TextView>(com.google.android.material.R.id.largeLabel).setTextSize(TypedValue.COMPLEX_UNIT_SP, 18f)
                 }
-
             }
         }
     }
-    icon.isAccessible = false
 } catch (exception: Exception) {
     Log.e("BottomNavigationView", exception.message)
 }

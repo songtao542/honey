@@ -14,16 +14,27 @@
  * limitations under the License.
  */
 
-package dagger.androidx;
+package dagger.android.support;
+
+import static java.lang.annotation.ElementType.METHOD;
 
 import androidx.fragment.app.Fragment;
-import dagger.android.AndroidInjector;
+import dagger.MapKey;
 import dagger.internal.Beta;
+import java.lang.annotation.Documented;
+import java.lang.annotation.Target;
 
-/** Provides an {@link AndroidInjector} of {@link Fragment}s. */
+/**
+ * {@link MapKey} annotation to key bindings by a type of a {@link Fragment}.
+ *
+ * @deprecated Use {@link dagger.multibindings.ClassKey} instead. See <a
+ *     href="https://google.github.io/dagger/android">https://google.github.io/dagger/android</a>.
+ */
 @Beta
-public interface HasSupportFragmentInjector {
-
-  /** Returns an {@link AndroidInjector} of {@link Fragment}s. */
-  AndroidInjector<Fragment> supportFragmentInjector();
+@MapKey
+@Documented
+@Target(METHOD)
+@Deprecated
+public @interface FragmentKey {
+  Class<? extends Fragment> value();
 }

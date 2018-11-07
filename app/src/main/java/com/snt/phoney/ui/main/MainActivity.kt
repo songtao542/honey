@@ -64,7 +64,6 @@ class MainActivity : BaseActivity() {
             var consumed = false
             if (view is ViewGroup) {
                 view.forEach { child ->
-                    Log.d("TTTT", "=============xxx==================")
                     val childResult = child.dispatchApplyWindowInsets(insets)
                     consumed = childResult.isConsumed
                 }
@@ -77,10 +76,20 @@ class MainActivity : BaseActivity() {
         var willShow = getFragmentByTag(tag)
         if (willShow != currentFragment) {
             var hasAdded = supportFragmentManager.findFragmentByTag(tag) != null
+            var fragmentManager = supportFragmentManager
+            var transaction = fragmentManager.beginTransaction()
+            currentFragment?.let {
+                transaction.hide(it)
+            }
             when {
-                hasAdded -> supportFragmentManager?.beginTransaction()?.hide(currentFragment)?.show(willShow)?.commit()
-                currentFragment != null -> supportFragmentManager?.beginTransaction()?.hide(currentFragment)?.add(R.id.fragmentContainer, willShow, tag)?.commit()
-                else -> supportFragmentManager?.beginTransaction()?.add(R.id.fragmentContainer, willShow, tag)?.commit()
+                hasAdded -> {
+                    transaction.show(willShow)
+                    transaction.commit()
+                }
+                else -> {
+                    transaction.add(R.id.fragmentContainer, willShow, tag)
+                    transaction.commit()
+                }
             }
             currentFragment = willShow
         }

@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package dagger.androidx;
+package dagger.android.support;
 
 import static android.util.Log.DEBUG;
 import static dagger.internal.Preconditions.checkNotNull;

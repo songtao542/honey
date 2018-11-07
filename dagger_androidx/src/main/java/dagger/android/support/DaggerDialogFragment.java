@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2017 The Dagger Authors.
+ * Copyright (C) 2018 The Dagger Authors.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -14,29 +14,36 @@
  * limitations under the License.
  */
 
-package dagger.androidx;
+package dagger.android.support;
 
+import android.content.Context;
+
+import androidx.fragment.app.DialogFragment;
 import androidx.fragment.app.Fragment;
 import dagger.android.AndroidInjector;
 import dagger.android.DispatchingAndroidInjector;
+import dagger.internal.Beta;
 import javax.inject.Inject;
 
 /**
- * An {@link android.app.Application} that injects its members and can be used to inject {@link
- * android.app.Activity}s, {@linkplain android.app.Fragment framework fragments}, {@linkplain
- * Fragment support fragments}, {@link android.app.Service}s, {@link
- * android.content.BroadcastReceiver}s, and {@link android.content.ContentProvider}s attached to it.
+ * A {@link DialogFragment} that injects its members in {@link #onAttach(Context)} and can be used
+ * to inject child {@link Fragment}s attached to it. Note that when this fragment gets reattached,
+ * its members will be injected again.
  */
-public abstract class DaggerApplication extends dagger.android.DaggerApplication
+@Beta
+public abstract class DaggerDialogFragment extends DialogFragment
     implements HasSupportFragmentInjector {
 
-  @Inject DispatchingAndroidInjector<Fragment> supportFragmentInjector;
+  @Inject DispatchingAndroidInjector<Fragment> childFragmentInjector;
 
   @Override
-  protected abstract AndroidInjector<? extends DaggerApplication> applicationInjector();
+  public void onAttach(Context context) {
+    AndroidSupportInjection.inject(this);
+    super.onAttach(context);
+  }
 
   @Override
-  public DispatchingAndroidInjector<Fragment> supportFragmentInjector() {
-    return supportFragmentInjector;
+  public AndroidInjector<Fragment> supportFragmentInjector() {
+    return childFragmentInjector;
   }
 }

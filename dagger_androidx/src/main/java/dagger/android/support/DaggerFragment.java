@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2018 The Dagger Authors.
+ * Copyright (C) 2017 The Dagger Authors.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -14,11 +14,10 @@
  * limitations under the License.
  */
 
-package dagger.androidx;
+package dagger.android.support;
 
 import android.content.Context;
 
-import androidx.fragment.app.DialogFragment;
 import androidx.fragment.app.Fragment;
 import dagger.android.AndroidInjector;
 import dagger.android.DispatchingAndroidInjector;
@@ -26,13 +25,12 @@ import dagger.internal.Beta;
 import javax.inject.Inject;
 
 /**
- * A {@link DialogFragment} that injects its members in {@link #onAttach(Context)} and can be used
- * to inject child {@link Fragment}s attached to it. Note that when this fragment gets reattached,
- * its members will be injected again.
+ * A {@link Fragment} that injects its members in {@link #onAttach(Context)} and can be used to
+ * inject child {@link Fragment}s attached to it. Note that when this fragment gets reattached, its
+ * members will be injected again.
  */
 @Beta
-public abstract class DaggerDialogFragment extends DialogFragment
-    implements HasSupportFragmentInjector {
+public abstract class DaggerFragment extends Fragment implements HasSupportFragmentInjector {
 
   @Inject DispatchingAndroidInjector<Fragment> childFragmentInjector;
 

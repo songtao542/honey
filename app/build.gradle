@@ -20,7 +20,7 @@ android {
         targetSdkVersion build_versions.target_sdk
         versionCode 1
         versionName "1.0"
-        testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
+        testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
         vectorDrawables.useSupportLibrary = true
         multiDexEnabled true
     }
@@ -72,7 +72,7 @@ dependencies {
     implementation fileTree(dir: 'libs', include: ['*.jar'])
 
     implementation project(path: ":flexbox")
-    implementation project(path: ":dagger_androidx")
+//    implementation project(path: ":dagger_androidx")
 
     implementation deps.androidx.concurrent_futures
     implementation deps.androidx.lifecycle_extensions
@@ -89,26 +89,26 @@ dependencies {
     implementation deps.androidx.room_runtime
     kapt deps.androidx.room_compiler
     implementation deps.androidx.room_rxjava2
-    implementation deps.androidx.room_guava
+    //implementation deps.androidx.room_guava
     testImplementation deps.androidx.room_testing
 
-    implementation deps.androidx.paging_runtime
-    implementation deps.androidx.paging_runtime_ktx
-    testImplementation deps.androidx.paging_common
-    testImplementation deps.androidx.paging_common_ktx
-    implementation deps.androidx.paging_rxjava2
-    implementation deps.androidx.paging_rxjava2_ktx
+    //implementation deps.androidx.paging_runtime
+    //implementation deps.androidx.paging_runtime_ktx
+    //testImplementation deps.androidx.paging_common
+    //testImplementation deps.androidx.paging_common_ktx
+    //implementation deps.androidx.paging_rxjava2
+    //implementation deps.androidx.paging_rxjava2_ktx
 
-    implementation deps.androidx.navigation_fragment
-    implementation deps.androidx.navigation_fragment_ktx
-    implementation deps.androidx.navigation_ui
-    implementation deps.androidx.navigation_ui_ktx
-    androidTestImplementation deps.androidx.navigation_testing
+    //implementation deps.androidx.navigation_fragment
+    //implementation deps.androidx.navigation_fragment_ktx
+    //implementation deps.androidx.navigation_ui
+    //implementation deps.androidx.navigation_ui_ktx
+    //androidTestImplementation deps.androidx.navigation_testing
 
-    implementation deps.androidx.work_runtime
-    implementation deps.androidx.work_runtime_ktx
+    //implementation deps.androidx.work_runtime
+    //implementation deps.androidx.work_runtime_ktx
     //implementation deps.androidx.work_firebase
-    androidTestImplementation deps.androidx.work_testing
+    //androidTestImplementation deps.androidx.work_testing
 
     androidTestImplementation deps.androidx.test_rules
     androidTestImplementation deps.androidx.test_runner
@@ -190,8 +190,8 @@ dependencies {
 
     implementation deps.dagger.runtime
     implementation deps.dagger.android
-//    implementation deps.dagger.android_support
-    kapt deps.dagger.android_support_compiler
+    implementation deps.dagger.android_support
+    kapt deps.dagger.android_processor
     kapt deps.dagger.compiler
 
     implementation deps.kotlin.stdlib

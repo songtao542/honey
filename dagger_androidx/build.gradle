@@ -1,18 +1,15 @@
 apply plugin: 'com.android.library'
 
 android {
-    compileSdkVersion 28
-
-
+    compileSdkVersion build_versions.target_sdk
 
     defaultConfig {
-        minSdkVersion 15
-        targetSdkVersion 28
+        minSdkVersion build_versions.min_sdk
+        targetSdkVersion build_versions.target_sdk
         versionCode 1
         versionName "1.0"
 
-        testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
-
+        testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
     }
 
     buildTypes {
@@ -27,14 +24,16 @@ android {
 dependencies {
     implementation fileTree(dir: 'libs', include: ['*.jar'])
 
-    implementation 'androidx.appcompat:appcompat:1.0.0-alpha1'
-    testImplementation 'junit:junit:4.12'
-    androidTestImplementation 'androidx.test:runner:1.1.0-alpha3'
-    androidTestImplementation 'androidx.test.espresso:espresso-core:3.1.0-alpha3'
-
-
     implementation deps.androidx.core
+    implementation deps.androidx.appcompat
     implementation deps.androidx.fragment
     implementation deps.dagger.runtime
     implementation deps.dagger.android
+
+    testImplementation deps.junit
+
+    androidTestImplementation deps.androidx.test_rules
+    androidTestImplementation deps.androidx.test_runner
+    androidTestImplementation deps.androidx.espresso_core
+    androidTestImplementation deps.androidx.espresso_contrib
 }

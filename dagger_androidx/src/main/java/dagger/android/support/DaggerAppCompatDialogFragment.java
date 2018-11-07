@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package dagger.androidx;
+package dagger.android.support;
 
 import android.content.Context;
 
