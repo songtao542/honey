@@ -14,6 +14,7 @@ import com.snt.phoney.ui.privacy.AlbumPermissionSettingFragment
 import com.snt.phoney.ui.privacy.CreateLockFragment
 import com.snt.phoney.ui.report.ReportFragment
 import com.snt.phoney.ui.settings.SettingsFragment
+import com.snt.phoney.ui.share.ShareFragment
 import com.snt.phoney.ui.signin.SigninFragment
 import com.snt.phoney.ui.signin.StartupFragment
 import com.snt.phoney.ui.signup.*
@@ -115,6 +116,9 @@ abstract class FragmentModule {
 
     @ContributesAndroidInjector
     abstract fun contributeReportFragment(): ReportFragment
+
+    @ContributesAndroidInjector
+    abstract fun contributeShareFragment(): ShareFragment
 
     @ContributesAndroidInjector
     abstract fun contributeAlbumPermissionSettingFragment(): AlbumPermissionSettingFragment

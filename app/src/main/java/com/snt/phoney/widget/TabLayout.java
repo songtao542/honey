@@ -31,6 +31,7 @@ import android.os.Build;
 import android.text.Layout;
 import android.text.TextUtils;
 import android.util.AttributeSet;
+import android.util.Log;
 import android.util.TypedValue;
 import android.view.Gravity;
 import android.view.LayoutInflater;
@@ -2267,42 +2268,42 @@ public class TabLayout extends HorizontalScrollView {
         }
     }
 
-    static class AnimationUtils {
+//    static class AnimationUtils {
+//
+//        static final Interpolator LINEAR_INTERPOLATOR = new LinearInterpolator();
+//        static final Interpolator FAST_OUT_SLOW_IN_INTERPOLATOR = new FastOutSlowInInterpolator();
+//        static final Interpolator FAST_OUT_LINEAR_IN_INTERPOLATOR = new FastOutLinearInInterpolator();
+//        static final Interpolator LINEAR_OUT_SLOW_IN_INTERPOLATOR = new LinearOutSlowInInterpolator();
+//        static final Interpolator DECELERATE_INTERPOLATOR = new DecelerateInterpolator();
+//
+//        /**
+//         * Linear interpolation between {@code startValue} and {@code endValue} by {@code fraction}.
+//         */
+//        static float lerp(float startValue, float endValue, float fraction) {
+//            return startValue + (fraction * (endValue - startValue));
+//        }
+//
+//        static int lerp(int startValue, int endValue, float fraction) {
+//            return startValue + Math.round(fraction * (endValue - startValue));
+//        }
+//
+//    }
 
-        static final Interpolator LINEAR_INTERPOLATOR = new LinearInterpolator();
-        static final Interpolator FAST_OUT_SLOW_IN_INTERPOLATOR = new FastOutSlowInInterpolator();
-        static final Interpolator FAST_OUT_LINEAR_IN_INTERPOLATOR = new FastOutLinearInInterpolator();
-        static final Interpolator LINEAR_OUT_SLOW_IN_INTERPOLATOR = new LinearOutSlowInInterpolator();
-        static final Interpolator DECELERATE_INTERPOLATOR = new DecelerateInterpolator();
-
-        /**
-         * Linear interpolation between {@code startValue} and {@code endValue} by {@code fraction}.
-         */
-        static float lerp(float startValue, float endValue, float fraction) {
-            return startValue + (fraction * (endValue - startValue));
-        }
-
-        static int lerp(int startValue, int endValue, float fraction) {
-            return startValue + Math.round(fraction * (endValue - startValue));
-        }
-
-    }
-
-    static class ThemeUtils {
-
-        private static final int[] APPCOMPAT_CHECK_ATTRS = {
-                androidx.appcompat.R.attr.colorPrimary
-        };
-
-        static void checkAppCompatTheme(Context context) {
-            TypedArray a = context.obtainStyledAttributes(APPCOMPAT_CHECK_ATTRS);
-            final boolean failed = !a.hasValue(0);
-            a.recycle();
-            if (failed) {
-                throw new IllegalArgumentException("You need to use a Theme.AppCompat theme "
-                        + "(or descendant) with the design library.");
-            }
-        }
-    }
+//    static class ThemeUtils {
+//
+//        private static final int[] APPCOMPAT_CHECK_ATTRS = {
+//                androidx.appcompat.R.attr.colorPrimary
+//        };
+//
+//        static void checkAppCompatTheme(Context context) {
+//            TypedArray a = context.obtainStyledAttributes(APPCOMPAT_CHECK_ATTRS);
+//            final boolean failed = !a.hasValue(0);
+//            a.recycle();
+//            if (failed) {
+//                throw new IllegalArgumentException("You need to use a Theme.AppCompat theme "
+//                        + "(or descendant) with the design library.");
+//            }
+//        }
+//    }
 
 }

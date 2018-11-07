@@ -120,6 +120,10 @@
     <string name="create_privacy_lock_tip">设置应用开启隐私密码</string>
     <string name="privacy_lock_des">每次输入密码时，为倒序密码，输入正序密码时会跳转到星座资讯</string>
     <string name="create_privacy">设置密码</string>
+    <string name="share_wechat">微信朋友圈</string>
+    <string name="share_qq">QQ空间</string>
+    <string name="share_weibo">微博</string>
+    <string name="cancel">取消</string>
 
 
 </resources>

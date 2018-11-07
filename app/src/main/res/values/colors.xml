@@ -64,5 +64,10 @@
     <color name="dating_cancel_btn_pressed">#aaaaaa</color>
     <color name="dating_cancel_btn_normal">#bbbbbb</color>
 
+    <color name="share_button_pressed">#e3d41c</color>
+    <color name="share_button_normal">#f8e71c</color>
+    <color name="share_cancel_button_pressed">#eeeeee</color>
+    <color name="share_cancel_button_normal">#ffffff</color>
+
 
 </resources>

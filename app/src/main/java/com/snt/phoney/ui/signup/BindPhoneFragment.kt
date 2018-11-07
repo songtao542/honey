@@ -11,6 +11,7 @@ import com.snt.phoney.base.BaseDialogFragment
 import com.snt.phoney.databinding.BindPhoneFragmentBinding
 import com.snt.phoney.extensions.autoCleared
 import com.snt.phoney.ui.main.MainActivity
+import kotlinx.android.synthetic.main.fragment_bind_phone.*
 import kotlinx.android.synthetic.main.fragment_bind_phone.view.*
 
 class BindPhoneFragment : BaseDialogFragment() {
@@ -34,7 +35,9 @@ class BindPhoneFragment : BaseDialogFragment() {
         viewModel = ViewModelProviders.of(this, viewModelFactory).get(BindPhoneViewModel::class.java)
         binding.viewModel = viewModel
 
-        binding.root.bindPhone.setOnClickListener { context?.let { startActivity(MainActivity.newIntent(it)) } }
+        bindPhone.setOnClickListener { }
+
+        cancel.setOnClickListener { dismiss() }
     }
 
 }

@@ -48,7 +48,7 @@
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="@string/tab_home_friend"
+                    android:text="@string/tab_mine"
                     android:textAppearance="@style/TextAppearance.Tab" />
             </com.snt.phoney.widget.Toolbar>
 

@@ -88,12 +88,14 @@
 
 
         <TextView
+            android:id="@+id/cancel"
             android:layout_width="match_parent"
             android:layout_height="@dimen/button_height"
             android:layout_gravity="center_horizontal"
             android:layout_marginLeft="20dp"
             android:layout_marginTop="20dp"
             android:layout_marginRight="20dp"
+            android:layout_marginBottom="5dp"
             android:gravity="center"
             android:text="暂时不绑定"
             android:textSize="@dimen/textsize_normal" />

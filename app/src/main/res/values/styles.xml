@@ -81,6 +81,7 @@
     <style name="AppTheme.Tab">
         <item name="tabIndicatorColor">@android:color/white</item>
         <item name="tabIndicatorBottomOffset">0dp</item>
+        <item name="tabIndicatorHeight">2dp</item>
         <item name="tabIndicatorWidth">20dp</item>
         <item name="tabPaddingStart">@dimen/actionbar_padding_start</item>
         <item name="tabPaddingTop">0dp</item>
@@ -113,5 +114,14 @@
         <item name="column">4</item>
         <item name="space">10dp</item>
     </style>
+
+    <style name="AppTheme.ShareBottomSheetDialog" parent="Theme.Design.Light.BottomSheetDialog">
+        <item name="bottomSheetStyle">@style/ShareBottomSheet</item>
+    </style>
+
+    <style name="ShareBottomSheet" parent="Widget.Design.BottomSheet.Modal">
+        <item name="android:background">@android:color/transparent</item>
+    </style>
+
 
 </resources>

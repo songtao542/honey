@@ -17,6 +17,8 @@ import com.snt.phoney.base.FragmentFactory
 import com.snt.phoney.base.Page
 import com.snt.phoney.ui.dating.DatingActivity
 import com.snt.phoney.ui.privacy.AlbumPermissionSettingFragment
+import com.snt.phoney.ui.share.ShareFragment
+import com.snt.phoney.ui.signup.BindPhoneFragment
 import com.snt.phoney.ui.user.UserActivity
 import com.snt.phoney.widget.FlowLayout
 import com.snt.phoney.widget.PhotoWallFactory
@@ -100,7 +102,7 @@ class MineRecyclerViewAdapter(val fragment: Fragment) : RecyclerView.Adapter<Rec
         }
     }
 
-    override fun getItemCount(): Int = settings.size + 2
+    override fun getItemCount(): Int = settings.size + 3
 
     inner class HeadViewHolder(val mView: View) : RecyclerView.ViewHolder(mView) {
         private val context: Context = mView.context
@@ -185,9 +187,10 @@ class MineRecyclerViewAdapter(val fragment: Fragment) : RecyclerView.Adapter<Rec
                         context.startActivity(CommonActivity.newIntent(context, Page.CREATE_PRIVACY_PASS))
                     }
                     R.drawable.ic_bind_phone -> {
-
+                        BindPhoneFragment.newInstance().show(fragment.childFragmentManager, "bindPhone")
                     }
                     R.drawable.ic_share -> {
+                        ShareFragment.newInstance().show(fragment.childFragmentManager, "share")
                     }
                     R.drawable.ic_user_protocol -> {
                     }
