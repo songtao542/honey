@@ -101,6 +101,25 @@
     <string name="dating_ending_time_template">离结束发布有效时间还有%1$s时 %2$s分 %3$s秒</string>
     <string name="cancel_dating">取消约会</string>
     <string name="view_requester">查看申请</string>
+    <string name="report_title">举报内容</string>
+    <string name="report_reason">请选择投诉理由</string>
+    <string name="report_ad">骚扰广告</string>
+    <string name="report_fake">虚假信息</string>
+    <string name="report_bilk">诈骗用户</string>
+    <string name="report_attachment_tip">请提供相关截图信息，以便我们跟进核实</string>
+    <string name="report_des_tip">补充描述（可不填）</string>
+    <string name="report_des_hint">请填写内容</string>
+    <string name="my_wallet">我的钱包</string>
+    <string name="album_permission">相册查看权限</string>
+    <string name="album_permission_public">全部公开</string>
+    <string name="album_permission_need_pay">查看收取费用</string>
+    <string name="album_permission_need_my_agree">查看需要通过我的验证</string>
+    <string name="album_permission_private">任何人都不能看</string>
+    <string name="confirm">确定</string>
+    <string name="privacy_lock_title">设置密码锁</string>
+    <string name="create_privacy_lock_tip">设置应用开启隐私密码</string>
+    <string name="privacy_lock_des">每次输入密码时，为倒序密码，输入正序密码时会跳转到星座资讯</string>
+    <string name="create_privacy">设置密码</string>
 
 
 </resources>

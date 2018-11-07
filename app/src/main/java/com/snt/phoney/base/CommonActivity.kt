@@ -15,9 +15,12 @@ const val EXTRA_PAGE = "page"
 class CommonActivity : BaseActivity() {
 
     companion object {
-        fun newIntent(context: Context, page: Page, argument: Bundle): Intent {
+        fun newIntent(context: Context, page: Page, argument: Bundle? = null): Intent {
             val intent = BaseActivity.newIntent(context, CommonActivity::class.java, page)
-            return intent.putExtra(EXTRA_ARGUMENT, argument)
+            argument?.let {
+                intent.putExtra(EXTRA_ARGUMENT, argument)
+            }
+            return intent
         }
     }
 

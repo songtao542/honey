@@ -1,13 +1,115 @@
 <?xml version="1.0" encoding="utf-8"?>
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:orientation="vertical"
     tools:context=".ui.report.ReportFragment">
+
+    <com.snt.phoney.widget.Toolbar
+        android:id="@+id/toolbar"
+        style="@style/AppTheme.Toolbar"
+        android:layout_width="match_parent"
+        android:layout_height="?attr/actionBarSize"
+        android:background="?attr/toolbarBackground"
+        android:theme="@style/AppTheme.PopupOverlay"
+        app:navigationIcon="@drawable/ic_back"
+        app:title="@string/report_title"
+        app:titleTextColor="@color/white" />
 
     <TextView
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:text="Hello" />
+        android:layout_height="wrap_content"
+        android:background="@color/light_gray"
+        android:gravity="bottom"
+        android:minHeight="40dp"
+        android:paddingLeft="10dp"
+        android:paddingBottom="5dp"
+        android:text="@string/report_reason"
+        android:textColor="@color/gray"
+        android:textSize="@dimen/textsize_small" />
 
-</FrameLayout>
+    <RadioGroup
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="10dp"
+        android:layout_marginRight="10dp"
+        android:paddingLeft="10dp"
+        android:paddingRight="10dp">
+
+        <com.snt.phoney.widget.RadioButton
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:drawablePadding="10dp"
+            android:layoutDirection="rtl"
+            android:paddingTop="15dp"
+            android:paddingBottom="15dp"
+            android:text="@string/report_ad"
+            android:textSize="@dimen/textsize_normal" />
+
+        <com.snt.phoney.widget.RadioButton
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:drawablePadding="10dp"
+            android:layoutDirection="rtl"
+            android:paddingTop="15dp"
+            android:paddingBottom="15dp"
+            android:text="@string/report_fake"
+            android:textSize="@dimen/textsize_normal" />
+
+        <com.snt.phoney.widget.RadioButton
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:drawablePadding="10dp"
+            android:layoutDirection="rtl"
+            android:paddingTop="15dp"
+            android:paddingBottom="15dp"
+            android:text="@string/report_bilk"
+            android:textSize="@dimen/textsize_normal" />
+    </RadioGroup>
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/light_gray"
+        android:gravity="bottom"
+        android:minHeight="40dp"
+        android:paddingLeft="10dp"
+        android:paddingBottom="5dp"
+        android:text="@string/report_attachment_tip"
+        android:textColor="@color/gray"
+        android:textSize="@dimen/textsize_small" />
+
+    <com.snt.phoney.widget.FlowLayout
+        android:id="@+id/attachments"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:column="4"
+        app:space="5dp"
+        app:square="true" />
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/light_gray"
+        android:gravity="bottom"
+        android:minHeight="40dp"
+        android:paddingLeft="10dp"
+        android:paddingBottom="5dp"
+        android:text="@string/report_des_tip"
+        android:textColor="@color/gray"
+        android:textSize="@dimen/textsize_small" />
+
+    <EditText
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/white"
+        android:gravity="left|top"
+        android:hint="@string/report_des_hint"
+        android:minHeight="120dp"
+        android:paddingLeft="10dp"
+        android:textColor="@color/black"
+        android:textSize="@dimen/textsize_normal" />
+
+</LinearLayout>

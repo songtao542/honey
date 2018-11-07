@@ -12,10 +12,12 @@ import android.widget.TextView
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.RecyclerView
 import com.snt.phoney.R
+import com.snt.phoney.base.CommonActivity
+import com.snt.phoney.base.FragmentFactory
 import com.snt.phoney.base.Page
 import com.snt.phoney.ui.dating.DatingActivity
+import com.snt.phoney.ui.privacy.AlbumPermissionSettingFragment
 import com.snt.phoney.ui.user.UserActivity
-import com.snt.phoney.ui.wallet.WalletActivity
 import com.snt.phoney.widget.FlowLayout
 import com.snt.phoney.widget.PhotoWallFactory
 import kotlinx.android.synthetic.main.fragment_mine_footer.view.*
@@ -90,7 +92,7 @@ class MineRecyclerViewAdapter(val fragment: Fragment) : RecyclerView.Adapter<Rec
         if (holder is HeadViewHolder) {
             holder.setData()
         } else if (holder is SettingViewHolder) {
-            holder.setData(setting = settings[position - 1])
+            holder.setData(setting = settings[position - 2])
         } else if (holder is PhotoViewHolder) {
             holder.setData(photos)
         } else if (holder is FooterViewHolder) {
@@ -142,14 +144,17 @@ class MineRecyclerViewAdapter(val fragment: Fragment) : RecyclerView.Adapter<Rec
         }
     }
 
-    inner class SettingViewHolder(private val mView: View) : RecyclerView.ViewHolder(mView) {
+    inner class SettingViewHolder(private val mView: View) : RecyclerView.ViewHolder(mView), View.OnClickListener {
         private val context: Context = mView.context
         private val mIcon: ImageView = mView.icon
         private val mTitle: TextView = mView.title
         private val mInfo: TextView = mView.info
         private val mNews: View = mView.news
+        private var setting: Setting? = null
 
         fun setData(setting: Setting) {
+            this.setting = setting
+            mView.setOnClickListener(this)
             mIcon.setImageResource(setting.icon)
             mTitle.text = setting.title
             when (setting.info) {
@@ -161,28 +166,37 @@ class MineRecyclerViewAdapter(val fragment: Fragment) : RecyclerView.Adapter<Rec
                     mNews.visibility = View.VISIBLE
                 }
             }
-            when (setting.icon) {
-                R.drawable.ic_photo -> {
-                }
-                R.drawable.ic_dating -> {
-                    mView.setOnClickListener { context.startActivity(DatingActivity.newIntent(context, Page.VIEW_DATING_LIST)) }
-                }
-                R.drawable.ic_wallet -> {
-                    mView.setOnClickListener { context.startActivity(WalletActivity.newIntent(context)) }
-                }
-                R.drawable.ic_privacy -> {
-                }
-                R.drawable.ic_bind_phone -> {
+        }
 
-                }
-                R.drawable.ic_share -> {
-                }
-                R.drawable.ic_user_protocol -> {
-                }
-                R.drawable.ic_clear_cache -> {
-                }
-                R.drawable.ic_about -> {
+        override fun onClick(v: View?) {
+            setting?.let { setting ->
+                when (setting.icon) {
+                    R.drawable.ic_photo -> {
+//                        context.startActivity(CommonActivity.newIntent(context, Page.SET_ALBUM_PERMISSION))
+                        AlbumPermissionSettingFragment.newInstance().show(fragment.childFragmentManager, "album_setting")
+                    }
+                    R.drawable.ic_dating -> {
+                        context.startActivity(DatingActivity.newIntent(context, Page.VIEW_DATING_LIST))
+                    }
+                    R.drawable.ic_wallet -> {
+                        context.startActivity(CommonActivity.newIntent(context, Page.VIEW_MY_WALLET))
+                    }
+                    R.drawable.ic_privacy -> {
+                        context.startActivity(CommonActivity.newIntent(context, Page.CREATE_PRIVACY_PASS))
+                    }
+                    R.drawable.ic_bind_phone -> {
 
+                    }
+                    R.drawable.ic_share -> {
+                    }
+                    R.drawable.ic_user_protocol -> {
+                    }
+                    R.drawable.ic_clear_cache -> {
+                        context.startActivity(CommonActivity.newIntent(context, Page.CREATE_REPORT))
+                    }
+                    R.drawable.ic_about -> {
+                        context.startActivity(CommonActivity.newIntent(context, Page.VIEW_ABOUT))
+                    }
                 }
             }
         }

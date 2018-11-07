@@ -86,7 +86,13 @@ class PhotoWallFactory(private val context: Context) : FlowLayout.ViewFactory {
     }
 
     override fun getItemCount(): Int {
-        return Math.min(mUrls?.size ?: 0, mMaxShow)
+        val size = mUrls?.size ?: 0
+        val add = if (mShowLastAsAdd) 1 else 0
+        return when {
+            size == 0 -> add
+            size < mMaxShow -> size + add
+            else -> mMaxShow
+        }
     }
 
 }

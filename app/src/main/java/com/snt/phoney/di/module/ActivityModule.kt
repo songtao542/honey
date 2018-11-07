@@ -1,6 +1,7 @@
 package com.snt.phoney.di.module
 
 import androidx.lifecycle.ViewModelProvider
+import com.snt.phoney.base.CommonActivity
 import com.snt.phoney.di.ViewModelFactory
 import com.snt.phoney.ui.dating.DatingActivity
 import com.snt.phoney.ui.main.MainActivity
@@ -10,7 +11,6 @@ import com.snt.phoney.ui.signin.StartupActivity
 import com.snt.phoney.ui.signup.SignupActivity
 import com.snt.phoney.ui.user.UserActivity
 import com.snt.phoney.ui.vip.VipActivity
-import com.snt.phoney.ui.wallet.WalletActivity
 import dagger.Binds
 import dagger.Module
 import dagger.android.ContributesAndroidInjector
@@ -35,7 +35,7 @@ abstract class ActivityModule {
     internal abstract fun contributeMainActivity(): MainActivity
 
     @ContributesAndroidInjector(modules = [FragmentModule::class])
-    internal abstract fun contributeWalletActivity(): WalletActivity
+    internal abstract fun contributeCommonActivity(): CommonActivity
 
     @ContributesAndroidInjector(modules = [FragmentModule::class])
     internal abstract fun contributeNearbyActivity(): NearbyActivity

@@ -37,11 +37,12 @@
             android:name=".ui.signup.SignupActivity"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme.Common" />
+        
+        <activity android:name=".base.CommonActivity" />
+
         <activity android:name=".ui.dating.DatingActivity" />
         <activity android:name=".ui.vip.VipActivity" />
-        <activity
-            android:name=".ui.wallet.WalletActivity"
-            android:theme="@style/AppTheme.Common" />
+
         <activity
             android:name=".ui.nearby.NearbyActivity"
             android:theme="@style/AppTheme.Common" />

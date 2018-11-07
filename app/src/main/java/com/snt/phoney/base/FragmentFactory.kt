@@ -2,15 +2,19 @@ package com.snt.phoney.base
 
 import android.os.Bundle
 import androidx.fragment.app.Fragment
+import com.snt.phoney.ui.about.AboutFragment
 import com.snt.phoney.ui.dating.create.CreateDatingFragment
 import com.snt.phoney.ui.dating.detail.DatingDetailFragment
 import com.snt.phoney.ui.dating.list.DatingListFragment
+import com.snt.phoney.ui.privacy.AlbumPermissionSettingFragment
+import com.snt.phoney.ui.privacy.CreateLockFragment
 import com.snt.phoney.ui.report.ReportFragment
 import com.snt.phoney.ui.user.EditUserFragment
 import com.snt.phoney.ui.user.FollowmeFragment
 import com.snt.phoney.ui.user.UserInfoFragment
 import com.snt.phoney.ui.user.VisitorFragment
 import com.snt.phoney.ui.vip.VipFragment
+import com.snt.phoney.ui.wallet.WalletFragment
 
 
 enum class Page {
@@ -25,7 +29,12 @@ enum class Page {
 
     CREATE_REPORT,
 
-    UPGRADE_VIP
+    UPGRADE_VIP,
+
+    VIEW_MY_WALLET,
+    VIEW_ABOUT,
+    SET_ALBUM_PERMISSION,
+    CREATE_PRIVACY_PASS,
 }
 
 class FragmentFactory {
@@ -44,6 +53,10 @@ class FragmentFactory {
                 Page.CREATE_REPORT.ordinal -> ReportFragment.newInstance(arguments)
 
                 Page.UPGRADE_VIP.ordinal -> VipFragment.newInstance(arguments)
+                Page.VIEW_MY_WALLET.ordinal -> WalletFragment.newInstance(arguments)
+                Page.VIEW_ABOUT.ordinal -> AboutFragment.newInstance(arguments)
+                Page.SET_ALBUM_PERMISSION.ordinal -> AlbumPermissionSettingFragment.newInstance(arguments)
+                Page.CREATE_PRIVACY_PASS.ordinal -> CreateLockFragment.newInstance(arguments)
 
 
                 else -> Fragment()

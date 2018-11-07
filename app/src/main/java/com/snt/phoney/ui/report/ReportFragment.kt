@@ -8,6 +8,8 @@ import androidx.lifecycle.ViewModelProviders
 
 import com.snt.phoney.R
 import com.snt.phoney.base.BaseFragment
+import com.snt.phoney.widget.PhotoWallFactory
+import kotlinx.android.synthetic.main.fragment_report.*
 
 class ReportFragment : BaseFragment() {
 
@@ -15,8 +17,6 @@ class ReportFragment : BaseFragment() {
         fun newInstance(arguments: Bundle? = null) = ReportFragment().apply {
             this.arguments = arguments
         }
-
-
     }
 
     private lateinit var viewModel: ReportViewModel
@@ -29,7 +29,10 @@ class ReportFragment : BaseFragment() {
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
         viewModel = ViewModelProviders.of(this, viewModelFactory).get(ReportViewModel::class.java)
-        // TODO: Use the ViewModel
+
+        context?.let { context ->
+            attachments.viewFactory = PhotoWallFactory(context).setMaxShow(4).setLastAsAdd(true).setUrls(ArrayList())
+        }
     }
 
 }

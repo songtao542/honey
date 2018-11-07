@@ -12,7 +12,9 @@ import kotlinx.android.synthetic.main.fragment_vip.*
 class WalletFragment : BaseFragment() {
 
     companion object {
-        fun newInstance() = WalletFragment()
+        fun newInstance(arguments: Bundle? = null) = WalletFragment().apply {
+            this.arguments = arguments
+        }
     }
 
     private lateinit var viewModel: WalletViewModel

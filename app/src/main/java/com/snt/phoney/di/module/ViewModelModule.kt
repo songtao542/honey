@@ -7,6 +7,8 @@ import com.snt.phoney.ui.dating.detail.DatingDetailViewModel
 import com.snt.phoney.ui.dating.list.DatingListViewModel
 import com.snt.phoney.ui.nearby.NearbyViewModel
 import com.snt.phoney.ui.password.ForgetPasswordViewModel
+import com.snt.phoney.ui.privacy.CreateLockViewModel
+import com.snt.phoney.ui.report.ReportViewModel
 import com.snt.phoney.ui.signin.SigninViewModel
 import com.snt.phoney.ui.signup.BindPhoneViewModel
 import com.snt.phoney.ui.signup.SignupViewModel
@@ -81,6 +83,16 @@ abstract class ViewModelModule {
     @IntoMap
     @ViewModelKey(EditUserViewModel::class)
     abstract fun bindEditUserViewModel(viewModel: EditUserViewModel): ViewModel
+
+    @Binds
+    @IntoMap
+    @ViewModelKey(ReportViewModel::class)
+    abstract fun bindReportViewModel(viewModel: ReportViewModel): ViewModel
+
+    @Binds
+    @IntoMap
+    @ViewModelKey(CreateLockViewModel::class)
+    abstract fun bindCreateLockViewModel(viewModel: CreateLockViewModel): ViewModel
 
 
 }
