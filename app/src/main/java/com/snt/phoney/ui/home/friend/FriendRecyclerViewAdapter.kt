@@ -7,12 +7,11 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.snt.phoney.R
 import com.snt.phoney.base.Page
-import com.snt.phoney.ui.home.friend.dummy.DummyContent.DummyItem
 import com.snt.phoney.ui.user.UserActivity
 
 /**
  */
-class FriendRecyclerViewAdapter(private val mValues: List<DummyItem>) : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
+class FriendRecyclerViewAdapter() : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
 
     init {
 
@@ -33,7 +32,7 @@ class FriendRecyclerViewAdapter(private val mValues: List<DummyItem>) : Recycler
 
     }
 
-    override fun getItemCount(): Int = mValues.size
+    override fun getItemCount(): Int = 50
 
     inner class ViewHolder(val mView: View) : RecyclerView.ViewHolder(mView) {
         init {

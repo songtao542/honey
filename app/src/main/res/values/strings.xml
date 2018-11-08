@@ -124,6 +124,15 @@
     <string name="share_qq">QQ空间</string>
     <string name="share_weibo">微博</string>
     <string name="cancel">取消</string>
+    <string name="add_attention">关注对方</string>
+    <string name="view_detail">查看详情</string>
+    <string name="publish_time_template">发布时间 %1$s</string>
+    <string name="distance_of_template">距离您200km</string>
+    <string name="view_dating_tip">看看他发布的约会消息</string>
+    <string name="view_dating">查看</string>
+    <string name="publish_time">发布时间</string>
+    <string name="sort_by_distance">距离排序</string>
+    <string name="dating_content">约会内容</string>
 
 
 </resources>

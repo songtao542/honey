@@ -8,9 +8,11 @@
 
     <ImageView
         android:id="@+id/head"
-        android:layout_width="64dp"
-        android:layout_height="64dp"
+        android:layout_width="40dp"
+        android:layout_height="40dp"
         android:layout_centerVertical="true"
+        android:layout_marginTop="15dp"
+        android:layout_marginBottom="15dp"
         android:src="@mipmap/head" />
 
     <LinearLayout

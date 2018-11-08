@@ -3,7 +3,6 @@ package com.snt.phoney.ui.home.friend
 import android.content.Context
 import android.graphics.Rect
 import android.os.Bundle
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -12,7 +11,6 @@ import androidx.recyclerview.widget.RecyclerView
 import com.snt.phoney.R
 import com.snt.phoney.base.BaseFragment
 import com.snt.phoney.extensions.dip
-import com.snt.phoney.ui.home.friend.dummy.DummyContent
 
 /**
  * A fragment representing a list of Items.
@@ -33,7 +31,7 @@ class FriendFragment : BaseFragment() {
             with(view) {
                 addItemDecoration(ItemDecoration(dip(8)))
                 layoutManager = GridLayoutManager(context, 2)
-                adapter = FriendRecyclerViewAdapter(DummyContent.ITEMS)
+                adapter = FriendRecyclerViewAdapter( )
             }
         }
         return view

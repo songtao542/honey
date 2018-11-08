@@ -2,16 +2,12 @@ package com.snt.phoney.ui.message
 
 import android.content.Context
 import android.os.Bundle
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.snt.phoney.R
 import com.snt.phoney.base.BaseFragment
-
-import com.snt.phoney.ui.message.dummy.DummyContent
-import com.snt.phoney.ui.message.dummy.DummyContent.DummyItem
 import kotlinx.android.synthetic.main.fragment_message_list.*
 
 /**
@@ -34,7 +30,7 @@ class MessageFragment : BaseFragment() {
         // Set the adapter
         with(messageRecyclerView) {
             layoutManager = LinearLayoutManager(context)
-            adapter = MessageRecyclerViewAdapter(DummyContent.ITEMS)
+            adapter = MessageRecyclerViewAdapter()
         }
     }
 

@@ -58,11 +58,11 @@ class HomeFragment : Fragment() {
         tabFollowingTitle.setSpan(RelativeSizeSpan(1f), 0, 2, Spanned.SPAN_INCLUSIVE_EXCLUSIVE)
         tabFollowingTitle.setSpan(RelativeSizeSpan(0.64f), 2, 4, Spanned.SPAN_INCLUSIVE_EXCLUSIVE)
 
-//        homeTab.getTabAt(0)?.text = tabFriendTitle
-//        homeTab.getTabAt(1)?.text = tabFollowingTitle
+        homeTab.getTabAt(0)?.text = tabFriendTitle
+        homeTab.getTabAt(1)?.text = tabFollowingTitle
 
-        homeTab.getTabAt(0)?.text = getString(R.string.tab_home_friend)
-        homeTab.getTabAt(1)?.text = getString(R.string.tab_home_following)
+//        homeTab.getTabAt(0)?.text = getString(R.string.tab_home_friend)
+//        homeTab.getTabAt(1)?.text = getString(R.string.tab_home_following)
     }
 
 }

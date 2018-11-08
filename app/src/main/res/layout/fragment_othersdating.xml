@@ -5,14 +5,28 @@
     android:layout_height="wrap_content"
     android:layout_marginBottom="4dp"
     android:background="@android:color/white"
-    android:orientation="vertical"
-    android:padding="8dp">
+    android:orientation="vertical">
+
+    <TextView
+        android:id="@+id/state"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/light_gray"
+        android:gravity="bottom"
+        android:paddingLeft="10dp"
+        android:paddingTop="10dp"
+        android:paddingBottom="5dp"
+        android:text="正在进行"
+        android:textSize="@dimen/textsize_normal" />
 
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:background="@drawable/underline_gray"
         android:paddingLeft="10dp"
-        android:paddingRight="10dp">
+        android:paddingTop="10dp"
+        android:paddingRight="10dp"
+        android:paddingBottom="15dp">
 
         <ImageView
             android:id="@+id/head"
@@ -71,43 +85,13 @@
             android:layout_alignBaseline="@+id/age"
             android:layout_alignParentRight="true"
             android:layout_marginLeft="10dp"
+            android:drawableLeft="@drawable/ic_heart_small"
+            android:gravity="center"
             android:paddingLeft="5dp"
             android:paddingTop="2dp"
             android:paddingRight="5dp"
             android:paddingBottom="2dp"
-            android:text="1小时前发布"
-            android:textSize="@dimen/textsize_smaller" />
-
-
-        <TextView
-            android:id="@+id/datingAddress"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_below="@+id/head"
-            android:layout_marginLeft="10dp"
-            android:layout_marginTop="10dp"
-            android:background="@drawable/recommend_dating_bg"
-            android:paddingLeft="5dp"
-            android:paddingTop="2dp"
-            android:paddingRight="5dp"
-            android:paddingBottom="2dp"
-            android:text="乐队地点"
-            android:textSize="@dimen/textsize_smaller" />
-
-
-        <TextView
-            android:id="@+id/datingTime"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignBaseline="@+id/datingAddress"
-            android:layout_marginLeft="10dp"
-            android:layout_toRightOf="@+id/datingAddress"
-            android:background="@drawable/recommend_dating_bg"
-            android:paddingLeft="5dp"
-            android:paddingTop="2dp"
-            android:paddingRight="5dp"
-            android:paddingBottom="2dp"
-            android:text="乐队时间"
+            android:text="@string/add_attention"
             android:textSize="@dimen/textsize_smaller" />
 
     </RelativeLayout>
@@ -116,7 +100,9 @@
         android:id="@+id/content"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:paddingLeft="10dp"
         android:paddingTop="12dp"
+        android:paddingRight="10dp"
         android:paddingBottom="10dp"
         android:text="AAAAAAAAAAAAAAAAAAAAAAAAAAa"
         android:textSize="@dimen/textsize_normal" />
@@ -125,6 +111,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
+        android:padding="10dp"
         app:column="3"
         app:space="5dp">
 
@@ -156,30 +143,35 @@
 
 
     <LinearLayout
-        android:layout_width="wrap_content"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_gravity="right"
         android:layout_marginTop="8dp">
 
-        <Button
-            android:id="@+id/follow"
-            android:layout_width="wrap_content"
-            android:layout_height="40dp"
-            android:text="+关注对方"
-            android:textSize="@dimen/textsize_normal" />
+        <TextView
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_vertical"
+            android:layout_weight="1"
+            android:gravity="center_vertical"
+            android:paddingLeft="10dp"
+            android:text="@string/publish_time_template" />
 
         <Button
-            android:id="@+id/attend"
+            android:id="@+id/viewDetail"
             android:layout_width="wrap_content"
-            android:layout_height="40dp"
-            android:text="我要参加"
-            android:textSize="@dimen/textsize_normal" />
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_vertical"
+            android:layout_marginRight="10dp"
+            android:background="@drawable/button_primary_circle_corner_selector"
+            android:minWidth="0dp"
+            android:minHeight="30dp"
+            android:paddingLeft="15dp"
+            android:paddingRight="15dp"
+            android:text="@string/view_detail"
+            android:textColor="@color/white"
+            android:textSize="@dimen/textsize_small" />
 
     </LinearLayout>
-
-    <!--<View-->
-    <!--android:layout_width="match_parent"-->
-    <!--android:layout_height="4dp"-->
-    <!--android:background="@color/recommend_divider_bg" />-->
 
 </LinearLayout>

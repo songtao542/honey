@@ -5,12 +5,12 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.appcompat.widget.MenuPopupWindow
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.snt.phoney.R
 import com.snt.phoney.base.BaseFragment
-import com.snt.phoney.ui.square.official.dummy.DummyContent
-import com.snt.phoney.ui.square.official.dummy.DummyContent.DummyItem
+import kotlinx.android.synthetic.main.fragment_official_recommend_list.*
 
 /**
  * A fragment representing a list of Items.
@@ -22,19 +22,25 @@ class OfficialRecommendFragment : BaseFragment() {
         super.onCreate(savedInstanceState)
     }
 
-    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,
-                              savedInstanceState: Bundle?): View? {
-        val view = inflater.inflate(R.layout.fragment_official_recommend_list, container, false)
+    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
+        return inflater.inflate(R.layout.fragment_official_recommend_list, container, false)
+    }
 
-        // Set the adapter
-        if (view is RecyclerView) {
-            with(view) {
-                //layoutManager = GridLayoutManager(context, 3)
-                layoutManager = LinearLayoutManager(context)
-                adapter = OfficialRecommendRecyclerViewAdapter(DummyContent.ITEMS)
-            }
+    override fun onActivityCreated(savedInstanceState: Bundle?) {
+        super.onActivityCreated(savedInstanceState)
+        with(list) {
+            layoutManager = LinearLayoutManager(context)
+            adapter = OfficialRecommendRecyclerViewAdapter()
         }
-        return view
+
+        publishTime.setOnClickListener {
+        }
+        distance.setOnClickListener {
+
+        }
+        datingContent.setOnClickListener {
+
+        }
     }
 
     override fun onAttach(context: Context) {

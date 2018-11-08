@@ -47,6 +47,7 @@
     <dimen name="mine_authenticate_height">44dp</dimen>
     <dimen name="share_button_size">80dp</dimen>
     <dimen name="share_cancel_button_corner_radius">4dp</dimen>
+    <dimen name="user_info_authenticate_corner_radius">4dp</dimen>
 
 
 </resources>

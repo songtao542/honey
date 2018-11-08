@@ -29,7 +29,8 @@
     <color name="card_kao_pu_bg">#ffffff</color>
     <color name="friend_filter">#f2f3f7</color>
 
-    <color name="user_info_circle_bg">#ffffff</color>
+    <color name="user_info_circle_border">#444444</color>
+    <color name="user_info_circle_solid">#ffffff</color>
     <color name="recommend_age_bg">#aaaaaa</color>
     <color name="recommend_divider_bg">#aaaaaa</color>
     <color name="recommend_list_bg">#dddddd</color>
@@ -68,6 +69,7 @@
     <color name="share_button_normal">#f8e71c</color>
     <color name="share_cancel_button_pressed">#eeeeee</color>
     <color name="share_cancel_button_normal">#ffffff</color>
+    <color name="user_info_authenticate">#ff4352</color>
 
 
 </resources>

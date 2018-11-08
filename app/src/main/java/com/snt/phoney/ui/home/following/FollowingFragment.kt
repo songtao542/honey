@@ -2,7 +2,6 @@ package com.snt.phoney.ui.home.following
 
 import android.content.Context
 import android.os.Bundle
-
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -11,14 +10,8 @@ import androidx.recyclerview.widget.RecyclerView
 import com.snt.phoney.R
 import com.snt.phoney.base.BaseFragment
 
-import com.snt.phoney.ui.home.following.dummy.DummyContent
-import com.snt.phoney.ui.home.following.dummy.DummyContent.DummyItem
-import com.snt.phoney.ui.home.friend.FriendFragment
-
 /**
  * A fragment representing a list of Items.
- * Activities containing this fragment MUST implement the
- * [FollowingFragment.OnListFragmentInteractionListener] interface.
  */
 class FollowingFragment : BaseFragment() {
 
@@ -35,7 +28,7 @@ class FollowingFragment : BaseFragment() {
         if (view is RecyclerView) {
             with(view) {
                 layoutManager = LinearLayoutManager(context)
-                adapter = FollowingRecyclerViewAdapter(DummyContent.ITEMS)
+                adapter = FollowingRecyclerViewAdapter()
             }
         }
         return view

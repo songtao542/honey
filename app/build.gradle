@@ -17,7 +17,7 @@ android {
         config {
             keyAlias 'chunmi'
             keyPassword 'sntchunmi20181107'
-            storeFile file('/Users/songtao/src/AndroidStudioProject/phoney-android/app/release.key')
+            storeFile file('release.key')
             storePassword 'sntchunmi20181107'
         }
     }
@@ -89,6 +89,7 @@ dependencies {
     implementation deps.androidx.lifecycle_runtime
     implementation 'androidx.legacy:legacy-support-v4:1.0.0-alpha1'
     implementation 'androidx.lifecycle:lifecycle-extensions:2.0.0-alpha1'
+    implementation 'androidx.recyclerview:recyclerview:1.0.0-alpha1'
     kapt deps.androidx.lifecycle_compiler
     implementation deps.androidx.lifecycle_common_java8
     implementation deps.androidx.lifecycle_reactivestreams
