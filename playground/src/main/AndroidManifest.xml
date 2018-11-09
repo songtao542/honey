@@ -10,12 +10,23 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
         <activity android:name=".MainActivity">
+
+        </activity>
+
+        <activity android:name="expandable.sample.ExpansionPanelMainActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+        <activity android:name="expandable.sample.ExpansionPanelSampleActivity"></activity>
+        <activity android:name="expandable.sample.ExpansionPanelSampleActivityProgrammatically"></activity>
+        <activity android:name="expandable.sample.ExpansionPanelSampleActivityRecycler"></activity>
+        <activity android:name="expandable.sample.ExpansionPanelSampleActivityViewGroup"></activity>
+
+
+
     </application>
 
 </manifest>

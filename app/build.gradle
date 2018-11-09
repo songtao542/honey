@@ -79,6 +79,7 @@ android {
 dependencies {
     implementation fileTree(include: ['*.jar'], dir: 'libs')
     implementation project(path: ':flexbox')
+    implementation project(path: ':expandable_layout')
 
     //    implementation project(path: ":dagger_androidx")
     implementation deps.androidx.concurrent_futures

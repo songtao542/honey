@@ -124,4 +124,9 @@
     </style>
 
 
+    <style name="PopupMenu" parent="Base.Widget.AppCompat.PopupMenu">
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:windowFullscreen">true</item>
+    </style>
+
 </resources>

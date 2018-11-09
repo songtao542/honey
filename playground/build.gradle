@@ -25,6 +25,7 @@ android {
 
 dependencies {
     implementation fileTree(dir: 'libs', include: ['*.jar'])
+    implementation project(path: ':expandable_layout')
     implementation deps.kotlin.stdlib
 
     implementation deps.androidx.core

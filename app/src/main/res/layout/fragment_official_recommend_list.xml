@@ -7,6 +7,7 @@
     android:orientation="vertical">
 
     <LinearLayout
+        android:id="@+id/anchor"
         android:layout_width="match_parent"
         android:layout_height="40dp"
         android:orientation="horizontal">
@@ -28,6 +29,11 @@
                 android:text="@string/publish_time"
                 android:textColor="@color/black"
                 android:textSize="@dimen/textsize_normal" />
+
+            <!--<Spinner-->
+            <!--android:id="@+id/spinner"-->
+            <!--android:layout_width="match_parent"-->
+            <!--android:layout_height="wrap_content" />-->
 
         </LinearLayout>
 
@@ -72,6 +78,12 @@
         </LinearLayout>
 
     </LinearLayout>
+
+    <com.snt.phoney.widget.ExpandableFilterView
+        android:id="@+id/expandable"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical" />
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/list"
