@@ -3,12 +3,27 @@
 
     <string-array name="filter_publish_time">
 
-        <item>AAAA</item>
-        <item>AAAA</item>
-        <item>AAAA</item>
-        <item>AAAA</item>
-        <item>AAAA</item>
-        <item>AAAA</item>
+        <item>所有</item>
+        <item>今天发布</item>
+        <item>近三天发布</item>
+        <item>近七天发布</item>
+
+    </string-array>
+    <string-array name="filter_distance">
+
+        <item>所有</item>
+        <item>五公里内</item>
+        <item>十公里内</item>
+        <item>其他</item>
+
+    </string-array>
+    <string-array name="filter_dating_content">
+
+        <item>不限制</item>
+        <item>吃饭逛街</item>
+        <item>看电影</item>
+        <item>喝酒</item>
+        <item>其他</item>
 
     </string-array>
 

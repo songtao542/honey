@@ -12,6 +12,8 @@ import com.snt.phoney.ui.nearby.NearbyFragment
 import com.snt.phoney.ui.password.ForgetPasswordFragment
 import com.snt.phoney.ui.privacy.AlbumPermissionSettingFragment
 import com.snt.phoney.ui.privacy.CreateLockFragment
+import com.snt.phoney.ui.privacy.CreateLockStep1Fragment
+import com.snt.phoney.ui.privacy.CreateLockStep2Fragment
 import com.snt.phoney.ui.report.ReportFragment
 import com.snt.phoney.ui.settings.SettingsFragment
 import com.snt.phoney.ui.share.ShareFragment
@@ -125,5 +127,11 @@ abstract class FragmentModule {
 
     @ContributesAndroidInjector
     abstract fun contributeCreateLockFragment(): CreateLockFragment
+
+    @ContributesAndroidInjector
+    abstract fun contributeCreateLockStep1Fragment(): CreateLockStep1Fragment
+
+    @ContributesAndroidInjector
+    abstract fun contributeCreateLockStep2Fragment(): CreateLockStep2Fragment
 
 }

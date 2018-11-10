@@ -1,9 +1,7 @@
 <resources>
-    <string name="app_name">Demo</string>
+    <string name="app_name">纯蜜</string>
 
-    <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
-    <string name="title_activity_main2">Main2Activity</string>
     <string name="title_home">首页</string>
     <string name="title_square">广场</string>
     <string name="title_message">信息</string>
@@ -133,6 +131,13 @@
     <string name="publish_time">发布时间</string>
     <string name="sort_by_distance">距离排序</string>
     <string name="dating_content">约会内容</string>
+    <string name="friend_recommend">好友推荐</string>
+    <string name="query_message">查找消息</string>
+    <string name="friend_tag_newer">最近新人</string>
+    <string name="find_city">查找城市</string>
+    <string name="confirm_again">再次确认</string>
+    <string name="input_password_again_title">再输入一次密码</string>
+    <string name="set_lock_title">设置密码锁</string>
 
 
 </resources>

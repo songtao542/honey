@@ -1,81 +1,48 @@
 <?xml version="1.0" encoding="utf-8"?>
 
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/root"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@color/white"
     android:orientation="vertical">
 
     <LinearLayout
         android:id="@+id/anchor"
         android:layout_width="match_parent"
-        android:layout_height="40dp"
+        android:layout_height="@dimen/filter_view_height"
+        android:background="@drawable/underline_gray"
         android:orientation="horizontal">
 
-        <LinearLayout
+        <com.snt.phoney.widget.DropdownLabelView
             android:id="@+id/publishTime"
             android:layout_width="0dp"
             android:layout_height="match_parent"
             android:layout_weight="1"
-            android:orientation="vertical">
+            android:background="?attr/selectableItemBackground"
+            android:orientation="vertical"
+            app:text="@string/publish_time" />
 
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="match_parent"
-                android:layout_gravity="center"
-                android:drawableRight="@drawable/ic_dropdown"
-                android:drawablePadding="10dp"
-                android:gravity="center"
-                android:text="@string/publish_time"
-                android:textColor="@color/black"
-                android:textSize="@dimen/textsize_normal" />
-
-            <!--<Spinner-->
-            <!--android:id="@+id/spinner"-->
-            <!--android:layout_width="match_parent"-->
-            <!--android:layout_height="wrap_content" />-->
-
-        </LinearLayout>
-
-        <LinearLayout
+        <com.snt.phoney.widget.DropdownLabelView
             android:id="@+id/distance"
             android:layout_width="0dp"
             android:layout_height="match_parent"
             android:layout_weight="1"
-            android:orientation="vertical">
+            android:background="?attr/selectableItemBackground"
+            android:orientation="vertical"
+            app:text="@string/sort_by_distance" />
 
-            <TextView
 
-                android:layout_width="wrap_content"
-                android:layout_height="match_parent"
-                android:layout_gravity="center"
-                android:drawableRight="@drawable/ic_dropdown"
-                android:drawablePadding="10dp"
-                android:gravity="center"
-                android:text="@string/sort_by_distance"
-                android:textColor="@color/black"
-                android:textSize="@dimen/textsize_normal" />
-        </LinearLayout>
-
-        <LinearLayout
+        <com.snt.phoney.widget.DropdownLabelView
             android:id="@+id/datingContent"
             android:layout_width="0dp"
             android:layout_height="match_parent"
             android:layout_weight="1"
-            android:orientation="vertical">
-
-            <TextView
-
-                android:layout_width="wrap_content"
-                android:layout_height="match_parent"
-                android:layout_gravity="center"
-                android:drawableRight="@drawable/ic_dropdown"
-                android:drawablePadding="10dp"
-                android:gravity="center"
-                android:text="@string/dating_content"
-                android:textColor="@color/black"
-                android:textSize="@dimen/textsize_normal" />
-        </LinearLayout>
+            android:background="?attr/selectableItemBackground"
+            android:orientation="vertical"
+            app:text="@string/dating_content" />
 
     </LinearLayout>
 
@@ -83,16 +50,20 @@
         android:id="@+id/expandable"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="vertical" />
+        android:layout_marginTop="@dimen/filter_view_height"
+        android:background="@color/white"
+        android:orientation="vertical"
+        android:translationZ="1dp" />
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/list"
         android:name="com.snt.phoney.ui.square.official.OfficialRecommendFragment"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_marginLeft="16dp"
-        android:layout_marginRight="16dp"
+        android:layout_marginTop="@dimen/filter_view_height"
         android:background="@color/recommend_list_bg"
         tools:context="com.snt.phoney.ui.square.official.OfficialRecommendFragment"
         tools:listitem="@layout/fragment_official_recommend" />
-</LinearLayout>
+
+
+</RelativeLayout>

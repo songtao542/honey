@@ -3,8 +3,13 @@
     <declare-styleable name="ExpandableLayout">
         <attr name="animateExpand" format="boolean" />
         <attr name="indicatorId" format="reference" />
+
     </declare-styleable>
 
+
+    <declare-styleable name="ExpandableLayout_Layout">
+        <attr name="layout_showAtTop" format="boolean" />
+    </declare-styleable>
 
     <declare-styleable name="ExpandableHeader">
         <attr name="expansion_layout" format="reference" />

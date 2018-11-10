@@ -49,6 +49,9 @@
     <dimen name="share_cancel_button_corner_radius">4dp</dimen>
     <dimen name="user_info_authenticate_corner_radius">4dp</dimen>
     <dimen name="expandable_filter_menu_height">50dp</dimen>
+    <dimen name="filter_view_height">50dp</dimen>
+    <dimen name="message_search_height">40dp</dimen>
+    <dimen name="friend_tag_height">40dp</dimen>
 
 
 </resources>

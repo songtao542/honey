@@ -13,9 +13,11 @@
         android:layout_width="match_parent"
         android:layout_height="?attr/actionBarSize"
         android:background="?attr/toolbarBackground"
-        app:titleTextColor="@color/white"
         android:fitsSystemWindows="false"
-        android:tag="home">
+        android:tag="home"
+        android:theme="@style/AppTheme.PopupOverlay"
+        app:popupTheme="@style/AppTheme.PopupOverlay"
+        app:titleTextColor="@color/white">
 
         <com.snt.phoney.widget.TabLayout
             android:id="@+id/homeTab"

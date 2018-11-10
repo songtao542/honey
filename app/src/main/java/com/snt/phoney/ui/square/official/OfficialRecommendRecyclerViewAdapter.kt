@@ -23,7 +23,7 @@ class OfficialRecommendRecyclerViewAdapter() : RecyclerView.Adapter<OfficialReco
 
     }
 
-    override fun getItemCount(): Int = 1
+    override fun getItemCount(): Int = 30
 
     inner class ViewHolder(val mView: View) : RecyclerView.ViewHolder(mView) {
 

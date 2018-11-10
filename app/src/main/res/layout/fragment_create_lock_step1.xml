@@ -4,6 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@color/white"
     android:orientation="vertical"
     tools:context=".ui.privacy.CreateLockFragment">
 
@@ -15,44 +16,39 @@
         android:background="?attr/toolbarBackground"
         android:theme="@style/AppTheme.PopupOverlay"
         app:navigationIcon="@drawable/ic_back"
-        app:title="@string/privacy_lock_title"
+        app:title="@string/set_lock_title"
         app:titleTextColor="@color/white" />
 
-    <ImageView
-        android:layout_width="280dp"
-        android:layout_height="280dp"
+
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
         android:layout_gravity="center_horizontal"
-        android:layout_marginTop="30dp"
-        android:scaleType="centerInside"
-        android:src="@drawable/ic_privacy_tip" />
+        android:layout_marginTop="100dp"
+        android:layout_marginBottom="40dp"
+        android:orientation="horizontal">
 
-    <TextView
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="20dp"
-        android:gravity="center"
-        android:text="@string/create_privacy_lock_tip"
-        android:textColor="@color/black"
-        android:textSize="@dimen/textsize_larger" />
 
-    <TextView
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="20dp"
-        android:gravity="center"
-        android:text="@string/privacy_lock_des"
-        android:textColor="@color/gray"
-        android:textSize="@dimen/textsize_small" />
+        <com.snt.phoney.widget.PasswordInputView
+            android:id="@+id/password"
+            android:layout_width="wrap_content"
+            android:layout_height="70dp"
+            android:layout_gravity="center"
+            android:inputType="number" />
+
+
+    </LinearLayout>
+
 
     <Button
-        android:id="@+id/setPassword"
+        android:id="@+id/confirmAgain"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginLeft="40dp"
         android:layout_marginTop="30dp"
         android:layout_marginRight="40dp"
         android:background="@drawable/button_primary_circle_corner_selector"
-        android:text="@string/create_privacy"
+        android:text="@string/confirm_again"
         android:textColor="@color/white"
         android:textSize="@dimen/textsize_normal" />
 

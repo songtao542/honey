@@ -11,6 +11,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.snt.phoney.R
 import com.snt.phoney.base.BaseFragment
 import com.snt.phoney.extensions.dip
+import kotlinx.android.synthetic.main.fragment_friend_list.*
 
 /**
  * A fragment representing a list of Items.
@@ -22,19 +23,27 @@ class FriendFragment : BaseFragment() {
         super.onCreate(savedInstanceState)
     }
 
-    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,
-                              savedInstanceState: Bundle?): View? {
-        val view = inflater.inflate(R.layout.fragment_friend_list, container, false)
+    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
+        return inflater.inflate(R.layout.fragment_friend_list, container, false)
+    }
 
-        // Set the adapter
-        if (view is RecyclerView) {
-            with(view) {
-                addItemDecoration(ItemDecoration(dip(8)))
-                layoutManager = GridLayoutManager(context, 2)
-                adapter = FriendRecyclerViewAdapter( )
+    override fun onActivityCreated(savedInstanceState: Bundle?) {
+        super.onActivityCreated(savedInstanceState)
+        with(list) {
+            addItemDecoration(ItemDecoration(dip(8)))
+            val gridLayoutManager = GridLayoutManager(context, 2)
+            gridLayoutManager.spanSizeLookup = object : GridLayoutManager.SpanSizeLookup() {
+                override fun getSpanSize(position: Int): Int {
+                    return when (position) {
+                        0 -> 1
+                        else -> 1
+                    }
+                }
             }
+            layoutManager = gridLayoutManager
+            adapter = FriendRecyclerViewAdapter()
         }
-        return view
+
     }
 
     override fun onAttach(context: Context) {

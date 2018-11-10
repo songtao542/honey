@@ -18,12 +18,15 @@ class FriendRecyclerViewAdapter() : RecyclerView.Adapter<RecyclerView.ViewHolder
     }
 
     override fun getItemViewType(position: Int): Int {
-        return super.getItemViewType(position)
+        return when (position) {
+            0 -> 1
+            else -> 1
+        }
     }
 
-    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
+    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder {
         return when (viewType) {
-            0 -> ViewHolder(LayoutInflater.from(parent.context).inflate(R.layout.fragment_friend, parent, false))
+            0 -> TagViewHolder(LayoutInflater.from(parent.context).inflate(R.layout.fragment_friend_tag, parent, false))
             else -> ViewHolder(LayoutInflater.from(parent.context).inflate(R.layout.fragment_friend, parent, false))
         }
     }
@@ -33,6 +36,11 @@ class FriendRecyclerViewAdapter() : RecyclerView.Adapter<RecyclerView.ViewHolder
     }
 
     override fun getItemCount(): Int = 50
+
+
+    inner class TagViewHolder(val mView: View) : RecyclerView.ViewHolder(mView) {
+
+    }
 
     inner class ViewHolder(val mView: View) : RecyclerView.ViewHolder(mView) {
         init {

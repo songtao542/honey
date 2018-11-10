@@ -7,13 +7,12 @@ import android.view.ViewGroup
 import androidx.lifecycle.ViewModelProviders
 import com.snt.phoney.R
 import com.snt.phoney.base.BaseFragment
-import com.snt.phoney.extensions.addFragmentSafely
-import kotlinx.android.synthetic.main.fragment_create_lock.*
+import kotlinx.android.synthetic.main.fragment_create_lock_step1.*
 
-class CreateLockFragment : BaseFragment() {
+class CreateLockStep2Fragment : BaseFragment() {
 
     companion object {
-        fun newInstance(arguments: Bundle? = null) = CreateLockFragment().apply {
+        fun newInstance(arguments: Bundle? = null) = CreateLockStep2Fragment().apply {
             this.arguments = arguments
         }
     }
@@ -22,18 +21,17 @@ class CreateLockFragment : BaseFragment() {
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,
                               savedInstanceState: Bundle?): View? {
-        return inflater.inflate(R.layout.fragment_create_lock, container, false)
+        return inflater.inflate(R.layout.fragment_create_lock_step1, container, false)
     }
 
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
         viewModel = ViewModelProviders.of(this).get(CreateLockViewModel::class.java)
         toolbar.setNavigationOnClickListener {
-            activity?.finish()
+            activity?.supportFragmentManager?.popBackStack()
         }
-        setPassword.setOnClickListener {
-            activity?.addFragmentSafely(R.id.container, CreateLockStep1Fragment.newInstance(), "step1", true)
-        }
+        toolbar.setTitle(R.string.input_password_again_title)
+        confirmAgain.setText(R.string.confirm)
     }
 
 }

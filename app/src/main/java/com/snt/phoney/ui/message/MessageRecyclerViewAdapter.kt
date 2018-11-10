@@ -11,23 +11,35 @@ import kotlinx.android.synthetic.main.fragment_message.view.*
 
 /**
  */
-class MessageRecyclerViewAdapter() : RecyclerView.Adapter<MessageRecyclerViewAdapter.ViewHolder>() {
+class MessageRecyclerViewAdapter() : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
 
     init {
 
     }
 
-    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
-        val view = LayoutInflater.from(parent.context)
-                .inflate(R.layout.fragment_message, parent, false)
-        return ViewHolder(view)
+    override fun getItemViewType(position: Int): Int {
+        return when (position) {
+            0 -> 0
+            else -> 1
+        }
     }
 
-    override fun onBindViewHolder(holder: ViewHolder, position: Int) {
+    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder {
+        return when (viewType) {
+            0 -> SearchViewHolder(LayoutInflater.from(parent.context).inflate(R.layout.fragment_message_search, parent, false))
+            else -> ViewHolder(LayoutInflater.from(parent.context).inflate(R.layout.fragment_message, parent, false))
+        }
+    }
+
+    override fun onBindViewHolder(holder: RecyclerView.ViewHolder, position: Int) {
 
     }
 
     override fun getItemCount(): Int = 50
+
+    inner class SearchViewHolder(val mView: View) : RecyclerView.ViewHolder(mView) {
+
+    }
 
     inner class ViewHolder(val mView: View) : RecyclerView.ViewHolder(mView) {
 

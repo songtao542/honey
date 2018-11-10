@@ -2,12 +2,12 @@ package com.snt.phoney.ui.message
 
 import android.content.Context
 import android.os.Bundle
-import android.view.LayoutInflater
-import android.view.View
-import android.view.ViewGroup
+import android.view.*
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.snt.phoney.R
 import com.snt.phoney.base.BaseFragment
+import com.snt.phoney.base.Page
+import com.snt.phoney.ui.dating.DatingActivity
 import kotlinx.android.synthetic.main.fragment_message_list.*
 
 /**
@@ -27,10 +27,24 @@ class MessageFragment : BaseFragment() {
 
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
-        // Set the adapter
+        enableOptionsMenu(messageToolbar, false)
         with(messageRecyclerView) {
             layoutManager = LinearLayoutManager(context)
             adapter = MessageRecyclerViewAdapter()
+        }
+    }
+
+    override fun onCreateOptionsMenu(menu: Menu?, inflater: MenuInflater?) {
+        inflater?.inflate(R.menu.message, menu)
+    }
+
+    override fun onOptionsItemSelected(item: MenuItem?): Boolean {
+        return when (item?.itemId) {
+            R.id.friendRecommend -> {
+
+                true
+            }
+            else -> super.onOptionsItemSelected(item)
         }
     }
 

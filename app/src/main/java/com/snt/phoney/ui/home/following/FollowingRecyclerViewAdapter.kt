@@ -13,8 +13,7 @@ import com.snt.phoney.R
 class FollowingRecyclerViewAdapter() : RecyclerView.Adapter<FollowingRecyclerViewAdapter.ViewHolder>() {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
-        val view = LayoutInflater.from(parent.context)
-                .inflate(R.layout.fragment_following, parent, false)
+        val view = LayoutInflater.from(parent.context).inflate(R.layout.fragment_following, parent, false)
         return ViewHolder(view)
     }
 

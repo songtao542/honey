@@ -16,6 +16,8 @@
         android:layout_height="?attr/actionBarSize"
         android:background="?attr/toolbarBackground"
         android:tag="message"
+        android:theme="@style/AppTheme.PopupOverlay"
+        app:popupTheme="@style/AppTheme.PopupOverlay"
         app:titleTextColor="@color/white">
 
         <TextView

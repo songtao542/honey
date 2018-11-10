@@ -1,12 +1,17 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.recyclerview.widget.RecyclerView xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
-    android:id="@+id/list"
-    android:name="com.snt.phoney.ui.home.friend.FriendFragment"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:layout_marginLeft="16dp"
-    android:layout_marginRight="16dp"
-    tools:context="com.snt.phoney.ui.home.friend.FriendFragment"
-    tools:listitem="@layout/fragment_friend" />
+    android:orientation="vertical">
+
+    <include layout="@layout/fragment_friend_tag" />
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/list"
+        android:name="com.snt.phoney.ui.home.friend.FriendFragment"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        tools:context="com.snt.phoney.ui.home.friend.FriendFragment"
+        tools:listitem="@layout/fragment_friend" />
+</LinearLayout>
