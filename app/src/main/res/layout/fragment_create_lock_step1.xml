@@ -15,7 +15,7 @@
         android:layout_height="?attr/actionBarSize"
         android:background="?attr/toolbarBackground"
         android:theme="@style/AppTheme.PopupOverlay"
-        app:navigationIcon="@drawable/ic_back"
+        app:navigationIcon="@drawable/cp_back"
         app:title="@string/set_lock_title"
         app:titleTextColor="@color/white" />
 

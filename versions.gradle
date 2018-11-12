@@ -283,6 +283,9 @@ def addRepos(RepositoryHandler handler) {
     handler.jcenter()
     handler.maven { url 'https://oss.sonatype.org/content/repositories/snapshots' }
     handler.maven { url 'https://kotlin.bintray.com/kotlinx' }
+    handler.maven { url "https://dl.bintray.com/thelasterstar/maven/" }
+    handler.maven { url "https://bintray.com/wechat-sdk-team/maven" }
+    handler.flatDir { dirs 'libs' }
 }
 
 ext.addRepos = this.&addRepos

@@ -23,7 +23,7 @@
             android:layout_width="match_parent"
             android:background="?attr/toolbarBackground"
             android:layout_height="?attr/actionBarSize"
-            app:navigationIcon="@drawable/ic_back"></com.snt.phoney.widget.Toolbar>
+            app:navigationIcon="@drawable/cp_back"></com.snt.phoney.widget.Toolbar>
 
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/list"

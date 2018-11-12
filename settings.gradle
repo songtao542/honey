@@ -1,1 +1,1 @@
-include ':app', ':flexbox', ':playground', ':dagger_androidx', ':expandable_layout'
+include ':app', ':flexbox', ':playground', ':dagger_androidx', ':expandable_layout', ':citypicker'
