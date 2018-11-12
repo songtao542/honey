@@ -20,7 +20,6 @@ class StepTwoFragment : BaseFragment() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        Log.d("TTTT", "sex========$arguments")
         arguments?.let {
             sex = it.getInt(ARG_SEX, 0)
         }
@@ -49,6 +48,16 @@ class StepTwoFragment : BaseFragment() {
             user.weight = 60f
             user.sex = sex
             activity?.addFragmentSafely(R.id.containerLayout, StepThreeFragment.newInstance(user), "step3", true)
+        }
+
+        heightButton.setOnClickListener {
+            PickerFragment.newInstance().show(childFragmentManager, "height_picker")
+        }
+        ageButton.setOnClickListener {
+            PickerFragment.newInstance().show(childFragmentManager, "age_picker")
+        }
+        weightButton.setOnClickListener {
+            PickerFragment.newInstance().show(childFragmentManager, "weight_picker")
         }
     }
 

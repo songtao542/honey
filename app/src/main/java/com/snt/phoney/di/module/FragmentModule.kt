@@ -105,6 +105,9 @@ abstract class FragmentModule {
     abstract fun contributeStepThreeFragment(): StepThreeFragment
 
     @ContributesAndroidInjector
+    abstract fun contributePickerFragment(): PickerFragment
+
+    @ContributesAndroidInjector
     abstract fun contributeEditUserFragment(): EditUserFragment
 
     @ContributesAndroidInjector
