@@ -7,9 +7,11 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
+import androidx.lifecycle.ViewModelProviders
 import com.snt.phoney.R
 import com.snt.phoney.base.BaseFragment
 import com.snt.phoney.domain.model.User
+import com.snt.phoney.extensions.disposedBy
 import com.zaaach.citypicker.CityPicker
 import com.zaaach.citypicker.adapter.OnResultListener
 import com.zaaach.citypicker.model.City
@@ -23,6 +25,8 @@ private const val ARG_USER = "user"
 class StepThreeFragment : BaseFragment() {
 
     private lateinit var user: User
+
+    lateinit var viewModel: SignupViewModel
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -46,6 +50,7 @@ class StepThreeFragment : BaseFragment() {
 
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
+        viewModel = ViewModelProviders.of(this, viewModelFactory).get(SignupViewModel::class.java)
         back3.setNavigationOnClickListener { activity?.supportFragmentManager?.popBackStack() }
         confirmStep3.setOnClickListener {
             context?.let {
@@ -53,8 +58,25 @@ class StepThreeFragment : BaseFragment() {
             }
         }
 
-        city.setOnClickListener {
+        cityButton.setOnClickListener {
             pickCity()
+        }
+        purposeButton.setOnClickListener {
+
+        }
+        jobButton.setOnClickListener {
+
+        }
+
+        viewModel.getCities().disposedBy(disposeBag)
+
+    }
+
+    private fun togglePicker(title: String, minValue: Int, maxValue: Int, tag: String, handler: ((value: Int, _: Int) -> Unit)) {
+        activity?.supportFragmentManager?.let {
+            val pickerFragment = PickerFragment.newInstance(title, minValue, maxValue)
+            pickerFragment.setOnResultListener(handler)
+            pickerFragment.show(it, tag)
         }
     }
 

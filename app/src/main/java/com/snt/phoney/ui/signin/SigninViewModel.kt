@@ -15,15 +15,20 @@
 package com.snt.phoney.ui.signin
 
 import android.app.Application
+import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.ViewModel
 import com.snt.phoney.domain.model.Response
 import com.snt.phoney.domain.model.User
-import com.snt.phoney.domain.usecase.LoginUseCase
+import com.snt.phoney.domain.usecase.SigninUseCase
 import io.reactivex.Single
+import io.reactivex.android.schedulers.AndroidSchedulers
+import io.reactivex.disposables.Disposable
+import io.reactivex.rxkotlin.subscribeBy
+import io.reactivex.schedulers.Schedulers
 import javax.inject.Inject
 
-class SigninViewModel @Inject constructor(private val usecase: LoginUseCase, private val application: Application) : ViewModel() {
+class SigninViewModel @Inject constructor(private val usecase: SigninUseCase, private val application: Application) : ViewModel() {
 
     fun signin(email: String, password: String): Single<Response<User>> {
         return usecase.signin(email, password)
@@ -37,5 +42,15 @@ class SigninViewModel @Inject constructor(private val usecase: LoginUseCase, pri
 
     val user: User?
         get() = usecase.user
+
+
+    fun getVerificationCode(phone: String): Disposable {
+        return usecase.requestVerificationCode(phone)
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribeBy {
+                    Log.d("TTTT", "getVerificationCode success->$it")
+                }
+    }
 
 }

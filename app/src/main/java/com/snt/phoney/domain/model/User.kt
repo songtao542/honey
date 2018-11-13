@@ -24,6 +24,7 @@ data class User(
         var height: Int? = 0,
         var weight: Float? = 0f,
         var age: Int? = 0,
+        var cup: String? = null,
         var birthYear: Int? = 0,
         var birthday: Long? = 0,
         var city: String? = null,

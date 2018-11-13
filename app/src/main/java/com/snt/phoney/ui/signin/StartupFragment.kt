@@ -27,14 +27,14 @@ class StartupFragment : BaseFragment() {
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
         signin.setOnClickListener {
-            activity?.let {
-                it.addFragmentSafely(R.id.containerLayout, SigninFragment.newInstance(), "signin")
-            }
+            activity?.addFragmentSafely(R.id.containerLayout, SigninFragment.newInstance(), "signin")
         }
 
         qq.setOnClickListener {
-            context?.let {
-                startActivity(SignupActivity.newIntent(it))
+            context?.let { context ->
+                startActivity(SignupActivity.newIntent(context))
+                activity?.finish()
+                return@let
             }
         }
     }

@@ -36,7 +36,7 @@ object Constants {
     }
 
     object Api {
-        const val API_BASE_URL: String = "https://www.baidu.com"
+        const val API_BASE_URL: String = "http://phoney.alance.pub"
 
         const val APP_ID = ""
         const val APP_ID_VALUE = ""

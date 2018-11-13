@@ -17,6 +17,7 @@ import com.snt.phoney.extensions.autoCleared
 import com.snt.phoney.extensions.disposedBy
 import com.snt.phoney.ui.main.MainActivity
 import com.snt.phoney.ui.password.ForgetPasswordFragment
+import kotlinx.android.synthetic.main.fragment_signin.*
 
 /**
  * A simple [Fragment] subclass.
@@ -33,8 +34,7 @@ class SigninFragment : BaseFragment() {
         super.onCreate(savedInstanceState)
     }
 
-    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,
-                              savedInstanceState: Bundle?): View? {
+    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         binding = DataBindingUtil.inflate(inflater, R.layout.fragment_signin, container, false)
         return binding.root
     }
@@ -44,11 +44,9 @@ class SigninFragment : BaseFragment() {
         viewModel = ViewModelProviders.of(this, viewModelFactory).get(SigninViewModel::class.java)
         binding.viewModel = viewModel
 
-        binding.login.setOnClickListener { onLoginButtonClicked() }
-        binding.forgetPassword.setOnClickListener { onForgetPasswordClicked() }
-        binding.qq.setOnClickListener { onQQClicked() }
-        binding.weixin.setOnClickListener { onWeixinClicked() }
-        binding.weibo.setOnClickListener { onWeiboClicked() }
+        login.setOnClickListener { onLoginButtonClicked() }
+        getVerificationCode.setOnClickListener {  }
+        forgetPassword.setOnClickListener { onForgetPasswordClicked() }
 
     }
 

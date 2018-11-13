@@ -64,8 +64,11 @@
     <string name="always_stay_city_label">常在的城市</string>
     <string name="wechat_number_label">微信号</string>
     <string name="height_label">身高</string>
+    <string name="height_value_template">%1$dcm</string>
     <string name="age_label">年龄</string>
+    <string name="age_value_template">%1$d岁</string>
     <string name="weight_label">体重</string>
+    <string name="weight_value_template">%1$dkg</string>
     <string name="weight_cup_label">体重/罩杯</string>
     <string name="self_introduction">自我介绍（可不填）</string>
     <string name="self_introduction_hint">用最简单的语句表达自己</string>
@@ -138,6 +141,12 @@
     <string name="confirm_again">再次确认</string>
     <string name="input_password_again_title">再输入一次密码</string>
     <string name="set_lock_title">设置密码锁</string>
+    <string name="please_select">请选择</string>
+    <string name="pick_height">请选择身高(cm)</string>
+    <string name="pick_age">请选择年龄</string>
+    <string name="pick_weight">请选择体重(kg)</string>
+    <string name="select_cup">选择罩杯</string>
+    <string name="pick_cup">请选择罩杯</string>
 
 
 </resources>

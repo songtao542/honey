@@ -10,13 +10,9 @@ import com.snt.phoney.R
 import com.snt.phoney.base.BaseFragment
 import com.snt.phoney.databinding.SignupFragmentBinding
 import com.snt.phoney.extensions.autoCleared
-import com.snt.phoney.ui.main.MainActivity
 import kotlinx.android.synthetic.main.fragment_signup_1.*
-import kotlinx.android.synthetic.main.fragment_signup_1.view.*
 import kotlinx.android.synthetic.main.fragment_signup_2.*
-import kotlinx.android.synthetic.main.fragment_signup_2.view.*
 import kotlinx.android.synthetic.main.fragment_signup_3.*
-import kotlinx.android.synthetic.main.fragment_signup_3.view.*
 
 class SignupFragment : BaseFragment() {
 
@@ -39,14 +35,14 @@ class SignupFragment : BaseFragment() {
         super.onActivityCreated(savedInstanceState)
         viewModel = ViewModelProviders.of(this, viewModelFactory).get(SignupViewModel::class.java)
         binding.viewModel = viewModel
-        binding.root.back.setNavigationOnClickListener { activity?.finish() }
-        binding.root.back2.setNavigationOnClickListener { step1.bringToFront() }
-        binding.root.back3.setNavigationOnClickListener { step2.bringToFront() }
+        back.setNavigationOnClickListener { activity?.finish() }
+        back2.setNavigationOnClickListener { step1.bringToFront() }
+        back3.setNavigationOnClickListener { step2.bringToFront() }
 
-        binding.root.male.setOnClickListener { step2.bringToFront() }
-        binding.root.female.setOnClickListener { step2.bringToFront() }
-        binding.root.confirmStep2.setOnClickListener { step3.bringToFront() }
-        binding.root.confirmStep3.setOnClickListener {
+        male.setOnClickListener { step2.bringToFront() }
+        female.setOnClickListener { step2.bringToFront() }
+        confirmStep2.setOnClickListener { step3.bringToFront() }
+        confirmStep3.setOnClickListener {
             context?.let {
                 BindPhoneFragment.newInstance().show(childFragmentManager, "bindPhone")
 //                startActivity(MainActivity.newIntent(it))

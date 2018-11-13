@@ -9,6 +9,7 @@ import com.snt.phoney.R
 import com.snt.phoney.base.BaseFragment
 import com.snt.phoney.domain.model.User
 import com.snt.phoney.extensions.addFragmentSafely
+import com.snt.phoney.extensions.toStringArray
 import kotlinx.android.synthetic.main.fragment_signup_2.*
 import kotlinx.android.synthetic.main.fragment_signup_2.view.*
 
@@ -17,11 +18,24 @@ private const val ARG_SEX = "sex"
 class StepTwoFragment : BaseFragment() {
 
     private var sex: Int = 0
+    private var user: User = User()
+    private lateinit var cupNumberArray: Array<Int>
+    private lateinit var cupSizeArray: Array<String>
+
+    private var cupNumber: Int = 0
+    private var cupSize: Int = 0
+
+    private fun initCupArray() {
+        cupNumberArray = Array(11) { 30 + it }
+        cupSizeArray = arrayOf("A", "B", "C", "D", "E", "F", "G", "H")
+    }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        initCupArray()
         arguments?.let {
             sex = it.getInt(ARG_SEX, 0)
+            user.sex = sex
         }
     }
 
@@ -29,9 +43,13 @@ class StepTwoFragment : BaseFragment() {
         var view = inflater.inflate(R.layout.fragment_signup_2, container, false)
         when (sex) {
             0 -> {
+                view.cupButton.visibility = View.VISIBLE
+                view.weightButton.visibility = View.GONE
                 view.confirmStep2.setBackgroundResource(R.drawable.button_femail_circle_corner_selector)
             }
             else -> {
+                view.cupButton.visibility = View.GONE
+                view.weightButton.visibility = View.VISIBLE
                 view.confirmStep2.setBackgroundResource(R.drawable.button_mail_circle_corner_selector)
             }
         }
@@ -42,22 +60,57 @@ class StepTwoFragment : BaseFragment() {
         super.onActivityCreated(savedInstanceState)
         back2.setNavigationOnClickListener { activity?.supportFragmentManager?.popBackStack() }
         confirmStep2.setOnClickListener {
-            var user = User()
-            user.age = 20
-            user.height = 175
-            user.weight = 60f
-            user.sex = sex
             activity?.addFragmentSafely(R.id.containerLayout, StepThreeFragment.newInstance(user), "step3", true)
         }
 
         heightButton.setOnClickListener {
-            PickerFragment.newInstance().show(childFragmentManager, "height_picker")
-        }
-        ageButton.setOnClickListener {
-            PickerFragment.newInstance().show(childFragmentManager, "age_picker")
+            togglePicker(getString(R.string.pick_height), 150, 230, user.height
+                    ?: 0, "height") { value, _ ->
+                height.text = getString(R.string.height_value_template, value)
+                user.height = value
+            }
         }
         weightButton.setOnClickListener {
-            PickerFragment.newInstance().show(childFragmentManager, "weight_picker")
+            togglePicker(getString(R.string.pick_weight), 40, 150, user.weight?.toInt()
+                    ?: 0, "weight") { value, _ ->
+                weight.text = getString(R.string.weight_value_template, value)
+                user.weight = value.toFloat()
+            }
+        }
+        cupButton.setOnClickListener {
+            togglePicker(getString(R.string.pick_cup), cupNumberArray, cupNumber, cupSizeArray, cupSize, "cup") { value1, value2 ->
+                val cupValue = "${cupNumberArray[value1]}${cupSizeArray[value2]}"
+                cupNumber = value1
+                cupSize = value2
+                cup.text = cupValue
+                user.cup = cupValue
+            }
+        }
+        ageButton.setOnClickListener {
+            togglePicker(getString(R.string.pick_age), 16, 70, user.age ?: 0, "age") { value, _ ->
+                age.text = getString(R.string.age_value_template, value)
+                user.age = value
+            }
+        }
+    }
+
+
+    private fun togglePicker(title: String, minValue: Int, maxValue: Int, value: Int = 0, tag: String, handler: ((value: Int, _: Int) -> Unit)) {
+        activity?.supportFragmentManager?.let {
+            val pickerFragment = PickerFragment.newInstance(title, minValue, maxValue)
+            pickerFragment.setOnResultListener(handler)
+            pickerFragment.value1 = value
+            pickerFragment.show(it, tag)
+        }
+    }
+
+    private fun <T1, T2> togglePicker(title: String, column1: Array<T1>, value1: Int, column2: Array<T2>, value2: Int, tag: String, handler: ((value1: Int, value2: Int) -> Unit)) {
+        activity?.supportFragmentManager?.let {
+            val pickerFragment = PickerFragment.newInstance(title, column1 = column1.toStringArray(), column2 = column2.toStringArray())
+            pickerFragment.setOnResultListener(handler)
+            pickerFragment.value1 = value1
+            pickerFragment.value2 = value2
+            pickerFragment.show(it, tag)
         }
     }
 

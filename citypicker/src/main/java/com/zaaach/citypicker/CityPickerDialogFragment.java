@@ -86,8 +86,6 @@ public class CityPickerDialogFragment extends AppCompatDialogFragment implements
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setStyle(STYLE_NO_TITLE, R.style.CityPickerStyle);
-
         Bundle args = getArguments();
         if (args != null) {
             enableAnim = args.getBoolean("cp_enable_anim");

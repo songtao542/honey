@@ -74,6 +74,8 @@
     <color name="friend_tag_normal">#f2f3f7</color>
     <color name="friend_tag_more_pressed">#444444</color>
     <color name="friend_tag_more_normal">#4a4a4a</color>
+    <color name="picker_title">#f8e71c</color>
+    <color name="bind_phone_title">#f8e71c</color>
 
 
 </resources>

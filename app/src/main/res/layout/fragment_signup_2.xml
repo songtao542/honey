@@ -42,6 +42,7 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="30dp"
         android:background="@drawable/underline_gray"
+        android:clickable="true"
         android:minHeight="60dp"
         android:paddingLeft="20dp"
         android:paddingRight="20dp">
@@ -51,7 +52,6 @@
             android:layout_height="@dimen/button_get_verification_code_height"
             android:layout_gravity="center|left"
             android:layout_marginRight="20dp"
-            android:clickable="true"
             android:gravity="center"
             android:paddingLeft="8dp"
             android:paddingRight="8dp"
@@ -85,6 +85,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:background="@drawable/underline_gray"
+        android:clickable="true"
         android:minHeight="60dp"
         android:paddingLeft="20dp"
         android:paddingRight="20dp">
@@ -95,7 +96,6 @@
             android:layout_height="@dimen/button_get_verification_code_height"
             android:layout_gravity="center|left"
             android:layout_marginRight="20dp"
-            android:clickable="true"
             android:gravity="center"
             android:paddingLeft="8dp"
             android:paddingRight="8dp"
@@ -129,6 +129,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:background="@drawable/underline_gray"
+        android:clickable="true"
         android:minHeight="60dp"
         android:paddingLeft="20dp"
         android:paddingRight="20dp">
@@ -139,7 +140,6 @@
             android:layout_height="@dimen/button_get_verification_code_height"
             android:layout_gravity="center|left"
             android:layout_marginRight="20dp"
-            android:clickable="true"
             android:gravity="center"
             android:paddingLeft="8dp"
             android:paddingRight="8dp"
@@ -162,6 +162,53 @@
 
         <ImageView
             android:id="@+id/weightArrow"
+            android:layout_width="18dp"
+            android:layout_height="18dp"
+            android:layout_gravity="center_vertical|right"
+            android:src="@drawable/ic_right_arrow" />
+
+
+    </FrameLayout>
+
+    <FrameLayout
+        android:id="@+id/cupButton"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@drawable/underline_gray"
+        android:clickable="true"
+        android:minHeight="60dp"
+        android:paddingLeft="20dp"
+        android:paddingRight="20dp"
+        android:visibility="gone">
+
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="@dimen/button_get_verification_code_height"
+            android:layout_gravity="center|left"
+            android:layout_marginRight="20dp"
+            android:gravity="center"
+            android:paddingLeft="8dp"
+            android:paddingRight="8dp"
+            android:text="@string/label_cup"
+            android:textColor="@android:color/black"
+            android:textSize="@dimen/textsize_normal" />
+
+
+        <TextView
+            android:id="@+id/cup"
+            android:layout_width="wrap_content"
+            android:layout_height="@dimen/edittext_height"
+            android:layout_gravity="center_vertical|right"
+            android:gravity="center"
+            android:paddingLeft="36sp"
+            android:paddingRight="20dp"
+            android:text="@string/select_cup"
+            android:textSize="@dimen/textsize_normal" />
+
+
+        <ImageView
+            android:id="@+id/cupArrow"
             android:layout_width="18dp"
             android:layout_height="18dp"
             android:layout_gravity="center_vertical|right"

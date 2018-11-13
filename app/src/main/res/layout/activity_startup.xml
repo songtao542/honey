@@ -77,7 +77,8 @@
                 android:layout_height="40dp"
                 android:layout_alignParentLeft="true"
                 android:layout_centerVertical="true"
-                android:src="@mipmap/ic_wechat" />
+                android:scaleType="fitCenter"
+                android:src="@drawable/ic_wechat_icon" />
 
             <ImageView
                 android:id="@+id/qq"
@@ -85,7 +86,8 @@
                 android:layout_height="50dp"
                 android:layout_centerInParent="true"
                 android:layout_centerVertical="true"
-                android:src="@mipmap/ic_qq" />
+                android:scaleType="fitCenter"
+                android:src="@drawable/ic_qq_icon" />
 
             <ImageView
                 android:id="@+id/weibo"
@@ -93,7 +95,8 @@
                 android:layout_height="40dp"
                 android:layout_alignParentRight="true"
                 android:layout_centerVertical="true"
-                android:src="@mipmap/ic_weibo" />
+                android:scaleType="fitCenter"
+                android:src="@drawable/ic_weibo_icon" />
         </RelativeLayout>
 
     </LinearLayout>

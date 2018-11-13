@@ -1,9 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
 <vector xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:aapt="http://schemas.android.com/aapt"
-    android:width="24dp"
-    android:height="24dp"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:width="96dp"
+    android:height="96dp"
     android:viewportWidth="827"
-    android:viewportHeight="827">
+    android:viewportHeight="827"
+    tools:targetApi="lollipop">
     <path
         android:fillColor="#ffffff"
         android:pathData="M129,0L698,0A129,129 0,0 1,827 129L827,698A129,129 0,0 1,698 827L129,827A129,129 0,0 1,0 698L0,129A129,129 0,0 1,129 0z" />

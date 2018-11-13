@@ -30,17 +30,15 @@ import javax.inject.Singleton
 @Singleton
 class UserCredentialRepositoryImpl @Inject constructor(private val api: Api) : UserCredentialRepository {
 
+    override fun requestVerificationCode(phone: String): Single<Response<String>> {
+        return api.sendMsg(phone)
+    }
+
     override fun signin(username: String, password: String): Single<Response<User>> {
         return Single.create<Response<User>> {
             it.onSuccess(Response(User(id = "1234567890", username = username, password = password)))
         }
     }
-
-//    override fun resetPassword(key: String, password: String): Single<Response<ResponseCode>> {
-//        return Single.create<Response<ResponseCode>> {
-//
-//        }
-//    }
 
     override fun login(username: String, password: String): LiveData<Response<User>> {
         return api.login(username, password)

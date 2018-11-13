@@ -20,6 +20,7 @@ import com.snt.phoney.domain.model.User
 import io.reactivex.Single
 import retrofit2.http.Field
 import retrofit2.http.FormUrlEncoded
+import retrofit2.http.GET
 import retrofit2.http.POST
 
 interface Api {
@@ -34,8 +35,38 @@ interface Api {
     @POST("user/login")
     fun resetPassword(@Field("username") username: String, @Field("password") password: String): LiveData<Response<String>>
 
+
     @FormUrlEncoded
     @POST("user/login")
     fun logout(@Field("username") username: String): LiveData<Response<String>>
+
+
+    @GET("city/listCities")
+    fun listCities(): Single<Response<String>>
+
+
+    @FormUrlEncoded
+    @POST("sms/bindMobile")
+    fun bindMobile(@Field("msg_id") msgId: String,
+                   @Field("code") code: String,
+                   @Field("phone") phone: String,
+                   @Field("uuid") uuid: String,
+                   @Field("token") token: String): LiveData<Response<String>>
+
+
+    @FormUrlEncoded
+    @POST("sms/sendMsg")
+    fun sendMsg(@Field("phone") phone: String): Single<Response<String>>
+
+    @FormUrlEncoded
+    @POST("sms/registerWithMsgCode")
+    fun registerWithMsgCode(@Field("phone") phone: String,
+                            @Field("msg_id") msgId: String,
+                            @Field("code") code: String,
+                            @Field("deviceToken") deviceToken: String,
+                            @Field("osVersion") osVersion: String,
+                            @Field("version") version: String,
+                            @Field("mobilePlate") mobilePlate: String): Single<Response<String>>
+
 
 }

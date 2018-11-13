@@ -23,6 +23,8 @@ dependencies {
 
     implementation deps.androidx.recyclerview
     implementation deps.androidx.appcompat
+    implementation deps.androidx.material
+
     testImplementation deps.junit
 
     androidTestImplementation deps.androidx.test_rules

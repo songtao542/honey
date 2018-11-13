@@ -30,4 +30,6 @@ interface UserCredentialRepository {
     fun resetPassword(key: String, password: String): LiveData<Response<String>>
 
     fun logout(username: String): LiveData<Response<String>>
+
+    fun requestVerificationCode(phone: String): Single<Response<String>>
 }

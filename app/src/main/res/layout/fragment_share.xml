@@ -89,7 +89,7 @@
                 android:background="@drawable/share_button_selector"
                 android:clickable="true"
                 android:padding="16dp"
-                android:src="@mipmap/ic_weibo" />
+                android:src="@drawable/ic_weibo_icon" />
 
             <TextView
                 android:layout_width="wrap_content"

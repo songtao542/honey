@@ -1,20 +1,13 @@
 <resources>
 
-    <!-- Base application theme. -->
-    <style name="AppTheme" parent="Theme.AppCompat.Light.NoActionBar">
-        <!-- Customize your theme here. -->
-        <item name="colorPrimary">@color/colorPrimaryFemale</item>
-        <item name="colorPrimaryPressed">@color/colorPrimaryPressedFemale</item>
-        <item name="colorPrimaryDark">@color/colorPrimaryDarkFemale</item>
-        <item name="colorAccent">@color/colorAccentFemale</item>
-        <item name="colorTheme">@color/colorPrimaryFemale</item>
-        <item name="colorThemePressed">@color/colorPrimaryPressedFemale</item>
-
+    <style name="BaseAppTheme" parent="Theme.AppCompat.Light.NoActionBar">
         <item name="actionBarStyle">@style/AppTheme.Toolbar</item>
         <item name="toolbarStyle">@style/AppTheme.Toolbar</item>
+    </style>
 
-        <item name="statusBarBackground">@color/colorPrimaryFemale</item>
-        <item name="toolbarBackground">@color/colorPrimaryFemale</item>
+    <!-- Base application theme. -->
+    <style name="AppTheme" parent="BaseAppTheme">
+        <!-- Customize your theme here. -->
     </style>
 
     <style name="AppTheme.Male" parent="AppTheme">
@@ -104,11 +97,57 @@
         <item name="android:windowContentOverlay">@null</item>
     </style>
 
-    <style name="AppTheme.Common.Signup" parent="DefaultCityPickerTheme">
+    <style name="AppTheme.CityPicker" parent="AppTheme">
+        <item name="cpConfirmTextSize">@dimen/cp_cancel_text_size</item>
+        <item name="cpConfirmTextColor">@color/cp_color_gray</item>
+
+        <item name="cpClearTextIcon">@drawable/cp_clear</item>
+        <item name="cpSearchTextSize">@dimen/cp_search_text_size</item>
+        <item name="cpSearchTextColor">@color/cp_color_gray_dark</item>
+        <item name="cpSearchHintText">@string/cp_search_hint_text</item>
+        <item name="cpSearchHintTextColor">@color/cp_color_gray_light</item>
+        <item name="cpSearchCursorDrawable">@color/cp_color_gray_dark</item>
+
+        <item name="cpListItemHeight">@dimen/cp_list_item_height</item>
+        <item name="cpListItemTextSize">@dimen/cp_list_item_text_size</item>
+        <item name="cpListItemTextColor">@color/cp_color_gray_deep</item>
+        <item name="cpGridItemTextColor">@color/selectable_textcolor</item>
+        <item name="cpListItemUnSelectColor">@color/cp_unselect_color</item>
+        <item name="cpListItemSelectColor">@color/cp_select_color</item>
+
+        <item name="cpEmptyIcon">@drawable/cp_empty</item>
+        <item name="cpEmptyIconWidth">@dimen/cp_empty_icon_width</item>
+        <item name="cpEmptyIconHeight">@dimen/cp_empty_icon_height</item>
+        <item name="cpEmptyText">@string/cp_no_result</item>
+        <item name="cpEmptyTextSize">@dimen/cp_empty_text_size</item>
+        <item name="cpEmptyTextColor">@color/cp_color_gray_deep</item>
+
+        <item name="cpGridItemBackground">@drawable/cp_grid_item_bg</item>
+        <item name="cpGridItemSpace">@dimen/cp_grid_item_space</item>
+
+        <item name="cpSectionHeight">@dimen/cp_section_height</item>
+        <item name="cpSectionTextSize">@dimen/cp_section_text_size</item>
+        <item name="cpSectionTextColor">@color/cp_color_gray</item>
+        <item name="cpSectionBackground">@color/cp_color_section_bg</item>
+
+        <item name="cpIndexBarTextSize">@dimen/cp_index_bar_text_size</item>
+        <item name="cpIndexBarNormalTextColor">@color/cp_color_gray</item>
+        <item name="cpIndexBarSelectedTextColor">@color/cp_color_gray_dark</item>
+
+        <item name="cpOverlayWidth">@dimen/cp_overlay_width</item>
+        <item name="cpOverlayHeight">@dimen/cp_overlay_height</item>
+        <item name="cpOverlayTextSize">@dimen/cp_overlay_text_size</item>
+        <item name="cpOverlayTextColor">@android:color/white</item>
+        <item name="cpOverlayBackground">@drawable/cp_overlay_bg</item>
+        <item name="cpBackIcon">@drawable/cp_back</item>
+        <item name="cpBackIconColor">@color/cp_back_color</item>
+
+    </style>
+
+    <style name="AppTheme.Signup" parent="AppTheme.CityPicker">
         <item name="windowNoTitle">true</item>
         <item name="android:windowFullscreen">true</item>
         <item name="android:windowContentOverlay">@null</item>
-
     </style>
 
     <style name="AppTheme.FullscreenDialog" parent="AppTheme.FullScreen">

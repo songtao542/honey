@@ -145,7 +145,7 @@
                 android:layout_width="60dp"
                 android:layout_height="60dp"
                 android:scaleType="centerInside"
-                android:src="@mipmap/ic_launcher_round" />
+                android:src="@drawable/ic_qq_icon" />
 
             <Space
                 android:layout_width="0dp"
@@ -157,7 +157,7 @@
                 android:layout_width="60dp"
                 android:layout_height="60dp"
                 android:scaleType="centerInside"
-                android:src="@mipmap/ic_launcher_round" />
+                android:src="@drawable/ic_wechat_icon" />
 
             <Space
                 android:layout_width="0dp"
@@ -169,7 +169,7 @@
                 android:layout_width="60dp"
                 android:layout_height="60dp"
                 android:scaleType="centerInside"
-                android:src="@mipmap/ic_launcher_round" />
+                android:src="@drawable/ic_weibo_icon" />
         </LinearLayout>
 
     </LinearLayout>

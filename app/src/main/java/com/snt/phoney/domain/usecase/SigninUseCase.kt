@@ -22,9 +22,11 @@ import com.snt.phoney.domain.repository.UserCredentialRepository
 import io.reactivex.Single
 import javax.inject.Inject
 
-class LoginUseCase @Inject constructor(private val repository: UserCredentialRepository, private val cache: CacheRepository) {
+class SigninUseCase @Inject constructor(private val repository: UserCredentialRepository, private val cache: CacheRepository) {
     fun signin(username: String, password: String): Single<Response<User>> = repository.signin(username, password)
     fun login(username: String, password: String): LiveData<Response<User>> = repository.login(username, password)
+
+    fun requestVerificationCode(phone: String): Single<Response<String>> = repository.requestVerificationCode(phone)
 
     fun updateUser(user: User?) {
         cache.user = user

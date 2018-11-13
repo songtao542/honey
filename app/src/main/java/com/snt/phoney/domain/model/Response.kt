@@ -15,3 +15,5 @@
 package com.snt.phoney.domain.model
 
 data class Response<T>(val data: T? = null, val code: Int = 0, val message: String? = null)
+
+

@@ -3,6 +3,7 @@ package com.snt.phoney.di.module
 import com.snt.phoney.BuildConfig
 import com.snt.phoney.api.Api
 import com.snt.phoney.utils.adapter.LiveDataCallAdapterFactory
+import com.snt.phoney.utils.adapter.ResponseConverterFactory
 import com.snt.phoney.utils.data.Constants
 import dagger.Module
 import dagger.Provides
@@ -24,7 +25,7 @@ object RestApiServiceModule {
     fun provideApiRetrofit(): Retrofit {
         return Retrofit.Builder()
                 .baseUrl(Constants.Api.API_BASE_URL)
-                .addConverterFactory(GsonConverterFactory.create())
+                .addConverterFactory(ResponseConverterFactory.create())
                 .addCallAdapterFactory(RxJava2CallAdapterFactory.create())
                 .addCallAdapterFactory(LiveDataCallAdapterFactory())
                 .client(getOkHttpClientBuilder().build())
