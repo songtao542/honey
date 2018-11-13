@@ -23,6 +23,8 @@
         android:layout_height="wrap_content"
         android:layout_gravity="center_horizontal"
         android:gravity="center"
+        android:layout_marginTop="20dp"
+        android:textColor="@color/black"
         android:text="@string/select_look"
         android:textSize="30sp" />
 

@@ -24,6 +24,7 @@ import com.snt.phoney.domain.model.Response
 import com.snt.phoney.domain.model.User
 import com.snt.phoney.domain.repository.UserCredentialRepository
 import io.reactivex.Single
+import retrofit2.http.Field
 import javax.inject.Inject
 import javax.inject.Singleton
 
@@ -34,10 +35,8 @@ class UserCredentialRepositoryImpl @Inject constructor(private val api: Api) : U
         return api.sendMsg(phone)
     }
 
-    override fun signin(username: String, password: String): Single<Response<User>> {
-        return Single.create<Response<User>> {
-            it.onSuccess(Response(User(id = "1234567890", username = username, password = password)))
-        }
+    override fun signup(phone: String, msgId: String, code: String, deviceToken: String, osVersion: String, version: String, mobilePlate: String): Single<Response<User>> {
+        return api.registerWithMsgCode(phone, msgId, code, deviceToken, osVersion, version, mobilePlate)
     }
 
     override fun login(username: String, password: String): LiveData<Response<User>> {

@@ -23,7 +23,10 @@ import io.reactivex.Single
 import javax.inject.Inject
 
 class SigninUseCase @Inject constructor(private val repository: UserCredentialRepository, private val cache: CacheRepository) {
-    fun signin(username: String, password: String): Single<Response<User>> = repository.signin(username, password)
+    fun signup(phone: String, msgId: String, code: String, deviceToken: String,
+               osVersion: String, version: String, mobilePlate: String): Single<Response<User>> =
+            repository.signup(phone, msgId, code, deviceToken, osVersion, version, mobilePlate)
+
     fun login(username: String, password: String): LiveData<Response<User>> = repository.login(username, password)
 
     fun requestVerificationCode(phone: String): Single<Response<String>> = repository.requestVerificationCode(phone)

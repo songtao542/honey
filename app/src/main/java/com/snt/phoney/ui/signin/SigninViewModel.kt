@@ -15,8 +15,10 @@
 package com.snt.phoney.ui.signin
 
 import android.app.Application
+import android.text.TextUtils
 import android.util.Log
 import androidx.lifecycle.LiveData
+import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import com.snt.phoney.domain.model.Response
 import com.snt.phoney.domain.model.User
@@ -30,18 +32,16 @@ import javax.inject.Inject
 
 class SigninViewModel @Inject constructor(private val usecase: SigninUseCase, private val application: Application) : ViewModel() {
 
-    fun signin(email: String, password: String): Single<Response<User>> {
-        return usecase.signin(email, password)
-    }
+    val verificationCode = MutableLiveData<String>()
 
-    fun login(email: String, password: String): LiveData<Response<User>> {
-        return usecase.login(email, password)
-    }
+    val user = MutableLiveData<User>()
 
-    fun updateUser(user: User?) = usecase.updateUser(user)
+    val error = MutableLiveData<String>()
 
-    val user: User?
-        get() = usecase.user
+//    fun updateUser(user: User?) = usecase.updateUser(user)
+//
+//    val user: User?
+//        get() = usecase.user
 
 
     fun getVerificationCode(phone: String): Disposable {
@@ -50,6 +50,26 @@ class SigninViewModel @Inject constructor(private val usecase: SigninUseCase, pr
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribeBy {
                     Log.d("TTTT", "getVerificationCode success->$it")
+                    verificationCode.value = it.data
+                }
+    }
+
+    fun signup(phone: String, code: String): Disposable {
+        val msgId = verificationCode.value ?: ""
+        val deviceToken = ""
+        val osVersion = ""
+        val version = ""
+        val mobilePlate = "android"
+        return usecase.signup(phone, msgId, code, deviceToken, osVersion, version, mobilePlate)
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribeBy {
+                    Log.d("TTTT", "signup success->$it")
+                    if (it.code == 200) {
+                        user.value = it.data
+                    } else if (!TextUtils.isEmpty(it.message)) {
+                        error.value = it.message
+                    }
                 }
     }
 

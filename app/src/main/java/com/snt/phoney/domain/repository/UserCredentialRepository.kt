@@ -21,7 +21,13 @@ import com.snt.phoney.domain.model.User
 import io.reactivex.Single
 
 interface UserCredentialRepository {
-    fun signin(username: String, password: String): Single<Response<User>>
+    fun signup(phone: String,
+               msgId: String,
+               code: String,
+               deviceToken: String,
+               osVersion: String,
+               version: String,
+               mobilePlate: String): Single<Response<User>>
 
     fun login(username: String, password: String): LiveData<Response<User>>
 

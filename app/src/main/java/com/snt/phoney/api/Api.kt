@@ -15,6 +15,7 @@
 package com.snt.phoney.api
 
 import androidx.lifecycle.LiveData
+import com.snt.phoney.domain.model.Province
 import com.snt.phoney.domain.model.Response
 import com.snt.phoney.domain.model.User
 import io.reactivex.Single
@@ -42,7 +43,7 @@ interface Api {
 
 
     @GET("city/listCities")
-    fun listCities(): Single<Response<String>>
+    fun listCities(): Single<Response<List<Province>>>
 
 
     @FormUrlEncoded
@@ -66,7 +67,7 @@ interface Api {
                             @Field("deviceToken") deviceToken: String,
                             @Field("osVersion") osVersion: String,
                             @Field("version") version: String,
-                            @Field("mobilePlate") mobilePlate: String): Single<Response<String>>
+                            @Field("mobilePlate") mobilePlate: String): Single<Response<User>>
 
 
 }

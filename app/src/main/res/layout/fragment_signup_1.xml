@@ -23,9 +23,10 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_gravity="center_horizontal"
-        android:layout_marginTop="50dp"
+        android:layout_marginTop="80dp"
         android:gravity="center"
         android:text="@string/select_sex"
+        android:textColor="@color/black"
         android:textSize="30sp" />
 
 
@@ -42,9 +43,7 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginLeft="40dp"
-        android:layout_marginTop="60dp"
-        android:layout_marginRight="40dp"
+        android:layout_marginTop="80dp"
         android:orientation="horizontal">
 
         <Space
@@ -72,20 +71,20 @@
                 android:layout_marginTop="8dp"
                 android:background="@drawable/button_mail_circle_corner_selector"
                 android:gravity="center"
-                android:paddingLeft="30dp"
+                android:paddingLeft="40dp"
                 android:paddingTop="8dp"
-                android:paddingRight="30dp"
+                android:paddingRight="40dp"
                 android:paddingBottom="8dp"
                 android:text="我是男士"
                 android:textColor="@color/white"
-                android:textSize="@dimen/textsize_normal" />
+                android:textSize="@dimen/textsize_small" />
 
         </LinearLayout>
 
         <Space
             android:layout_width="0dp"
             android:layout_height="match_parent"
-            android:layout_weight="1" />
+            android:layout_weight="1.5" />
 
         <LinearLayout
             android:layout_width="wrap_content"
@@ -107,13 +106,13 @@
                 android:layout_marginTop="8dp"
                 android:background="@drawable/button_femail_circle_corner_selector"
                 android:gravity="center"
-                android:paddingLeft="30dp"
+                android:paddingLeft="40dp"
                 android:paddingTop="8dp"
-                android:paddingRight="30dp"
+                android:paddingRight="40dp"
                 android:paddingBottom="8dp"
                 android:text="我是女士"
                 android:textColor="@color/white"
-                android:textSize="@dimen/textsize_normal" />
+                android:textSize="@dimen/textsize_small" />
 
         </LinearLayout>
 

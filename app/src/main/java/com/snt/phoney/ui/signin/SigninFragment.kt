@@ -1,20 +1,19 @@
 package com.snt.phoney.ui.signin
 
 import android.os.Bundle
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.databinding.DataBindingUtil
+import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
 import com.snt.phoney.R
 import com.snt.phoney.base.BaseFragment
 import com.snt.phoney.databinding.SigninFragmentBinding
-import com.snt.phoney.domain.model.Response
-import com.snt.phoney.domain.model.User
 import com.snt.phoney.extensions.addFragmentSafely
 import com.snt.phoney.extensions.autoCleared
 import com.snt.phoney.extensions.disposedBy
+import com.snt.phoney.extensions.snackbar
 import com.snt.phoney.ui.main.MainActivity
 import com.snt.phoney.ui.password.ForgetPasswordFragment
 import kotlinx.android.synthetic.main.fragment_signin.*
@@ -44,45 +43,32 @@ class SigninFragment : BaseFragment() {
         viewModel = ViewModelProviders.of(this, viewModelFactory).get(SigninViewModel::class.java)
         binding.viewModel = viewModel
 
-        login.setOnClickListener { onLoginButtonClicked() }
-        getVerificationCode.setOnClickListener {  }
+        login.setOnClickListener {
+            viewModel.signup(phone.text.toString(), verificationCode.text.toString()).disposedBy(disposeBag)
+        }
+        getVerificationCode.setOnClickListener {
+            viewModel.getVerificationCode(phone.text.toString()).disposedBy(disposeBag)
+        }
         forgetPassword.setOnClickListener { onForgetPasswordClicked() }
 
-    }
+        viewModel.verificationCode.observe(this, Observer {
+            snackbar(getString(R.string.verification_code_has_send))
+        })
 
+        viewModel.user.observe(this, Observer {
+            snackbar("注册成功")
+            context?.let { startActivity(MainActivity.newIntent(it)) }
+        })
 
-    private fun onLoginButtonClicked() {
-        viewModel.signin("songtao", "wangsongtao").subscribe { response: Response<User>? ->
-            Log.d("TTTT", "response:" + response?.data)
-            viewModel.updateUser(response?.data)
-        }.disposedBy(disposeBag)
+        viewModel.error.observe(this, Observer {
+            snackbar(it)
+        })
 
-        context?.let { startActivity(MainActivity.newIntent(it)) }
-
-//        viewModel.login("songtao", "wangsongtao").observe(this, Observer {
-//            Log.d("TTTT", "data:" + it?.data)
-//        })
     }
 
     private fun onForgetPasswordClicked() {
         activity?.addFragmentSafely(R.id.containerLayout, ForgetPasswordFragment.newInstance(), "forget_password", true)
     }
-
-    private fun onWeiboClicked() {
-        context?.let {
-        }
-    }
-
-    private fun onWeixinClicked() {
-        context?.let {
-        }
-    }
-
-    private fun onQQClicked() {
-        context?.let {
-        }
-    }
-
 
     companion object {
         @JvmStatic

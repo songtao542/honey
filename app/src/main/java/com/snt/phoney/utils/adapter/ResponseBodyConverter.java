@@ -49,13 +49,11 @@ final class ResponseBodyConverter<T> implements Converter<ResponseBody, T> {
         try {
             Reader reader = value.charStream();
             StringBuffer stringBuffer = new StringBuffer();
-            int numCharsRead;
-            while ((numCharsRead = reader.read(buffer, 0, buffer.length)) != -1) {
-                stringBuffer.append(buffer, 0, numCharsRead);
+            int size;
+            while ((size = reader.read(buffer, 0, buffer.length)) != -1) {
+                stringBuffer.append(buffer, 0, size);
             }
             String resultString = stringBuffer.toString();
-            Log.d("TTTT", "resultString===>" + resultString);
-
             //JsonReader jsonReader = gson.newJsonReader(value.charStream());
             //return adapter.read(jsonReader);
             return adapter.fromJson(convertToResponseFormat(resultString));

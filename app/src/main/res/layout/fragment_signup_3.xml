@@ -24,6 +24,8 @@
         android:layout_gravity="center_horizontal"
         android:gravity="center"
         android:text="@string/input_base_info"
+        android:layout_marginTop="20dp"
+        android:textColor="@color/black"
         android:textSize="30sp" />
 
 
