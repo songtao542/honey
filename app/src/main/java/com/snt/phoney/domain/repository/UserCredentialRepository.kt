@@ -19,6 +19,7 @@ import androidx.lifecycle.LiveData
 import com.snt.phoney.domain.model.Response
 import com.snt.phoney.domain.model.User
 import io.reactivex.Single
+import retrofit2.http.Field
 
 interface UserCredentialRepository {
     fun signup(phone: String,
@@ -29,9 +30,23 @@ interface UserCredentialRepository {
                version: String,
                mobilePlate: String): Single<Response<User>>
 
-    fun login(username: String, password: String): LiveData<Response<User>>
+    fun bindPhone(msgId: String,
+                  code: String,
+                  phone: String,
+                  uuid: String,
+                  token: String): Single<Response<String>>
 
-    //    fun resetPassword(key: String, password: String): Single<Response<ResponseCode>>
+    fun signupByThirdPlatform(openId: String, //第三方openid（qq是uid）
+                              thirdToken: String,
+                              plate: String,
+                              nickName: String,
+                              headPic: String,
+                              deviceToken: String,
+                              osVersion: String,
+                              version: String,
+                              mobilePlate: String): Single<Response<User>>
+
+    fun login(username: String, password: String): LiveData<Response<User>>
 
     fun resetPassword(key: String, password: String): LiveData<Response<String>>
 

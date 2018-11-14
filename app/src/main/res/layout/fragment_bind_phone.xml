@@ -1,104 +1,93 @@
 <?xml version="1.0" encoding="utf-8"?>
-<layout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools">
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:minWidth="320dp"
+    android:orientation="vertical"
+    tools:context=".ui.signup.BindPhoneFragment">
 
-    <data class="BindPhoneFragmentBinding">
-
-        <variable
-            name="viewModel"
-            type="com.snt.phoney.ui.signup.BindPhoneViewModel" />
-    </data>
-
-    <LinearLayout
+    <TextView
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:minWidth="320dp"
-        android:orientation="vertical"
-        tools:context=".ui.signup.BindPhoneFragment">
+        android:layout_height="?attr/actionBarSize"
+        android:layout_gravity="center_horizontal"
+        android:background="@color/bind_phone_title"
+        android:clickable="true"
+        android:gravity="center"
+        android:text="绑定手机号"
+        android:textColor="@color/darker"
+        android:textSize="@dimen/textsize_normal" />
 
-        <TextView
-            android:layout_width="match_parent"
-            android:layout_height="?attr/actionBarSize"
-            android:layout_gravity="center_horizontal"
-            android:background="@color/bind_phone_title"
-            android:clickable="true"
-            android:gravity="center"
-            android:text="绑定手机号"
-            android:textColor="@color/darker"
-            android:textSize="@dimen/textsize_normal" />
+    <EditText
+        android:id="@+id/phone"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/edittext_height"
+        android:layout_marginLeft="20dp"
+        android:layout_marginTop="30dp"
+        android:layout_marginRight="20dp"
+        android:background="@drawable/bind_phone_edittext_selector"
+        android:paddingStart="25dp"
+        android:paddingEnd="25dp"
+        android:textSize="@dimen/textsize_normal" />
+
+    <FrameLayout
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/edittext_height"
+        android:layout_marginLeft="20dp"
+        android:layout_marginTop="30dp"
+        android:layout_marginRight="20dp">
 
         <EditText
-            android:id="@+id/phone"
+            android:id="@+id/verificationCode"
             android:layout_width="match_parent"
             android:layout_height="@dimen/edittext_height"
-            android:layout_marginLeft="20dp"
-            android:layout_marginTop="30dp"
-            android:layout_marginRight="20dp"
             android:background="@drawable/bind_phone_edittext_selector"
             android:paddingStart="25dp"
             android:paddingEnd="25dp"
             android:textSize="@dimen/textsize_normal" />
 
-        <FrameLayout
-            android:layout_width="match_parent"
-            android:layout_height="@dimen/edittext_height"
-            android:layout_marginLeft="20dp"
-            android:layout_marginTop="30dp"
-            android:layout_marginRight="20dp">
-
-            <EditText
-                android:id="@+id/verificationCode"
-                android:layout_width="match_parent"
-                android:layout_height="@dimen/edittext_height"
-                android:background="@drawable/bind_phone_edittext_selector"
-                android:paddingStart="25dp"
-                android:paddingEnd="25dp"
-                android:textSize="@dimen/textsize_normal" />
-
-
-            <TextView
-                android:id="@+id/getVerificationCode"
-                android:layout_width="wrap_content"
-                android:layout_height="@dimen/edittext_height"
-                android:layout_gravity="center|right"
-                android:background="@drawable/bind_phone_get_verification_code_selector"
-                android:clickable="true"
-                android:gravity="center"
-                android:paddingLeft="8dp"
-                android:paddingRight="8dp"
-                android:text="@string/get_verification_code"
-                android:textColor="@android:color/white"
-                android:textSize="@dimen/textsize_normal" />
-        </FrameLayout>
-
-        <Button
-            android:id="@+id/bindPhone"
-            style="?android:attr/borderlessButtonStyle"
-            android:layout_width="match_parent"
-            android:layout_height="@dimen/button_height"
-            android:layout_marginLeft="20dp"
-            android:layout_marginTop="30dp"
-            android:layout_marginRight="20dp"
-            android:background="@drawable/bind_phone_confirm_selector"
-            android:elevation="0dp"
-            android:text="确认绑定"
-            android:textColor="@color/darker"
-            android:textSize="@dimen/textsize_normal" />
-
 
         <TextView
-            android:id="@+id/cancel"
-            android:layout_width="match_parent"
-            android:layout_height="@dimen/button_height"
-            android:layout_gravity="center_horizontal"
-            android:layout_marginLeft="20dp"
-            android:layout_marginTop="20dp"
-            android:layout_marginRight="20dp"
-            android:layout_marginBottom="5dp"
+            android:id="@+id/getVerificationCode"
+            android:layout_width="wrap_content"
+            android:layout_height="@dimen/edittext_height"
+            android:layout_gravity="center|right"
+            android:background="@drawable/bind_phone_get_verification_code_selector"
+            android:clickable="true"
             android:gravity="center"
-            android:text="暂时不绑定"
+            android:paddingLeft="8dp"
+            android:paddingRight="8dp"
+            android:text="@string/get_verification_code"
+            android:textColor="@android:color/white"
             android:textSize="@dimen/textsize_normal" />
+    </FrameLayout>
 
-    </LinearLayout>
-</layout>
+    <Button
+        android:id="@+id/bindPhone"
+        style="?android:attr/borderlessButtonStyle"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/button_height"
+        android:layout_marginLeft="20dp"
+        android:layout_marginTop="30dp"
+        android:layout_marginRight="20dp"
+        android:background="@drawable/bind_phone_confirm_selector"
+        android:elevation="0dp"
+        android:text="确认绑定"
+        android:textColor="@color/darker"
+        android:textSize="@dimen/textsize_normal" />
+
+
+    <TextView
+        android:id="@+id/cancel"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/button_height"
+        android:layout_gravity="center_horizontal"
+        android:layout_marginLeft="20dp"
+        android:layout_marginTop="20dp"
+        android:layout_marginRight="20dp"
+        android:layout_marginBottom="5dp"
+        android:gravity="center"
+        android:text="暂时不绑定"
+        android:textSize="@dimen/textsize_normal" />
+
+</LinearLayout>

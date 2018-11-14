@@ -4,15 +4,12 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.databinding.DataBindingUtil
+import android.widget.Toast
+import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
 import com.snt.phoney.R
 import com.snt.phoney.base.BaseDialogFragment
-import com.snt.phoney.databinding.BindPhoneFragmentBinding
-import com.snt.phoney.extensions.autoCleared
-import com.snt.phoney.ui.main.MainActivity
 import kotlinx.android.synthetic.main.fragment_bind_phone.*
-import kotlinx.android.synthetic.main.fragment_bind_phone.view.*
 
 class BindPhoneFragment : BaseDialogFragment() {
 
@@ -22,22 +19,40 @@ class BindPhoneFragment : BaseDialogFragment() {
 
     private lateinit var viewModel: BindPhoneViewModel
 
-    var binding by autoCleared<BindPhoneFragmentBinding>()
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,
                               savedInstanceState: Bundle?): View? {
-        binding = DataBindingUtil.inflate(inflater, R.layout.fragment_bind_phone, container, false)
-        return binding.root
+        return inflater.inflate(R.layout.fragment_bind_phone, container, false)
     }
 
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
         viewModel = ViewModelProviders.of(this, viewModelFactory).get(BindPhoneViewModel::class.java)
-        binding.viewModel = viewModel
 
-        bindPhone.setOnClickListener { }
-
+        getVerificationCode.setOnClickListener {
+            viewModel.requestVerificationCode(phone.text.toString())
+        }
+        bindPhone.setOnClickListener {
+            viewModel.bindPhone(phone.text.toString(), verificationCode.text.toString())
+        }
         cancel.setOnClickListener { dismiss() }
+
+        viewModel.error.observe(this, Observer { message ->
+            context?.let { context ->
+                Toast.makeText(context, message, Toast.LENGTH_LONG).show()
+            }
+        })
+        viewModel.verificationCodeId.observe(this, Observer { message ->
+            context?.let { context ->
+                Toast.makeText(context, getString(R.string.verification_code_has_send), Toast.LENGTH_LONG).show()
+            }
+        })
+        viewModel.success.observe(this, Observer { message ->
+            context?.let { context ->
+                Toast.makeText(context, getString(R.string.bind_phone_success), Toast.LENGTH_LONG).show()
+                dismiss()
+            }
+        })
     }
 
 }

@@ -48,11 +48,11 @@ interface Api {
 
     @FormUrlEncoded
     @POST("sms/bindMobile")
-    fun bindMobile(@Field("msg_id") msgId: String,
-                   @Field("code") code: String,
-                   @Field("phone") phone: String,
-                   @Field("uuid") uuid: String,
-                   @Field("token") token: String): LiveData<Response<String>>
+    fun bindPhone(@Field("msg_id") msgId: String,
+                  @Field("code") code: String,
+                  @Field("phone") phone: String,
+                  @Field("uuid") uuid: String,
+                  @Field("token") token: String): Single<Response<String>>
 
 
     @FormUrlEncoded
@@ -60,14 +60,26 @@ interface Api {
     fun sendMsg(@Field("phone") phone: String): Single<Response<String>>
 
     @FormUrlEncoded
-    @POST("sms/registerWithMsgCode")
-    fun registerWithMsgCode(@Field("phone") phone: String,
-                            @Field("msg_id") msgId: String,
-                            @Field("code") code: String,
-                            @Field("deviceToken") deviceToken: String,
-                            @Field("osVersion") osVersion: String,
-                            @Field("version") version: String,
-                            @Field("mobilePlate") mobilePlate: String): Single<Response<User>>
+    @POST("sms/signupByMsgCode")
+    fun signupByThirdPlatform(@Field("openId") openId: String, //第三方openid（qq是uid）
+                              @Field("third_token") thirdToken: String,
+                              @Field("plate") plate: String,
+                              @Field("nickName") nickName: String,
+                              @Field("headPic") headPic: String,
+                              @Field("deviceToken") deviceToken: String,
+                              @Field("osVersion") osVersion: String,
+                              @Field("version") version: String,
+                              @Field("mobilePlate") mobilePlate: String): Single<Response<User>>
+
+    @FormUrlEncoded
+    @POST("sms/signupByMsgCode")
+    fun signupByMsgCode(@Field("phone") phone: String,
+                        @Field("msg_id") msgId: String,
+                        @Field("code") code: String,
+                        @Field("deviceToken") deviceToken: String,
+                        @Field("osVersion") osVersion: String,
+                        @Field("version") version: String,
+                        @Field("mobilePlate") mobilePlate: String): Single<Response<User>>
 
 
 }

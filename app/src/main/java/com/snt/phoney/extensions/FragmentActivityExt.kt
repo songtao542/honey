@@ -1,6 +1,8 @@
 package com.snt.phoney.extensions
 
+import android.app.Activity
 import android.content.Context
+import android.content.Intent
 
 import android.view.inputmethod.InputMethodManager
 import androidx.annotation.AnimRes
@@ -103,4 +105,13 @@ fun FragmentActivity.hideSoftKeyboard(): Boolean {
                 InputMethodManager.HIDE_NOT_ALWAYS)
     }
     return false
+}
+
+fun FragmentActivity.forwardOnActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+    val fragments = supportFragmentManager.fragments
+    for (fragment in fragments) {
+        if (!fragment.isDetached) {
+            fragment.onActivityResult(requestCode, resultCode, data)
+        }
+    }
 }

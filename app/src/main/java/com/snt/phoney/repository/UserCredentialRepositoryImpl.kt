@@ -24,19 +24,27 @@ import com.snt.phoney.domain.model.Response
 import com.snt.phoney.domain.model.User
 import com.snt.phoney.domain.repository.UserCredentialRepository
 import io.reactivex.Single
-import retrofit2.http.Field
 import javax.inject.Inject
 import javax.inject.Singleton
 
 @Singleton
 class UserCredentialRepositoryImpl @Inject constructor(private val api: Api) : UserCredentialRepository {
 
+
+    override fun bindPhone(msgId: String, code: String, phone: String, uuid: String, token: String): Single<Response<String>> {
+        return api.bindPhone(msgId, code, phone, uuid, token)
+    }
+
     override fun requestVerificationCode(phone: String): Single<Response<String>> {
         return api.sendMsg(phone)
     }
 
     override fun signup(phone: String, msgId: String, code: String, deviceToken: String, osVersion: String, version: String, mobilePlate: String): Single<Response<User>> {
-        return api.registerWithMsgCode(phone, msgId, code, deviceToken, osVersion, version, mobilePlate)
+        return api.signupByMsgCode(phone, msgId, code, deviceToken, osVersion, version, mobilePlate)
+    }
+
+    override fun signupByThirdPlatform(openId: String, thirdToken: String, plate: String, nickName: String, headPic: String, deviceToken: String, osVersion: String, version: String, mobilePlate: String): Single<Response<User>> {
+        return api.signupByThirdPlatform(openId, thirdToken, plate, nickName, headPic, deviceToken, osVersion, version, mobilePlate)
     }
 
     override fun login(username: String, password: String): LiveData<Response<User>> {

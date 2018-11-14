@@ -4,6 +4,7 @@ import android.content.Context
 import android.os.Build
 import android.util.Log
 import android.util.TypedValue
+import com.snt.phoney.utils.data.InstanceID
 
 
 fun Context.colorOf(id: Int): Int {
@@ -49,3 +50,13 @@ fun Context.getVersionName(): String {
     }
     return versionName ?: ""
 }
+
+fun Context.getAndroidVersion(): String {
+    return Build.VERSION.RELEASE
+}
+
+fun Context.getInstanceId(): String {
+    return InstanceID.getId(this)
+}
+
+

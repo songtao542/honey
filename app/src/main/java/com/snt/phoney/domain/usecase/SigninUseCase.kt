@@ -14,7 +14,6 @@
 
 package com.snt.phoney.domain.usecase
 
-import androidx.lifecycle.LiveData
 import com.snt.phoney.domain.model.Response
 import com.snt.phoney.domain.model.User
 import com.snt.phoney.domain.repository.CacheRepository
@@ -27,14 +26,13 @@ class SigninUseCase @Inject constructor(private val repository: UserCredentialRe
                osVersion: String, version: String, mobilePlate: String): Single<Response<User>> =
             repository.signup(phone, msgId, code, deviceToken, osVersion, version, mobilePlate)
 
-    fun login(username: String, password: String): LiveData<Response<User>> = repository.login(username, password)
-
     fun requestVerificationCode(phone: String): Single<Response<String>> = repository.requestVerificationCode(phone)
 
-    fun updateUser(user: User?) {
-        cache.user = user
-    }
-
-    val user: User?
-        get() = cache.user
+    var user: User?
+        set(value) {
+            cache.user = value
+        }
+        get() {
+            return cache.user
+        }
 }

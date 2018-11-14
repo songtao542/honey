@@ -38,19 +38,8 @@ import javax.inject.Singleton
 class CacheRepositoryImpl @Inject constructor(application: Application) : CacheRepository {
 
     private val userFirstCache: Cache<String, User> = MapCache().jsonSerializer()
-//    private val userSecondCache: Cache<String, User> = SharedPreferencesCache(application, Constants.Cache.USER_CACHE_NAME).withString().jsonSerializer()
-
+    //private val userSecondCache: Cache<String, User> = SharedPreferencesCache(application, Constants.Cache.USER_CACHE_NAME).withString().jsonSerializer()
     private val userSecondCache: Cache<String, User> = KeyValueDatabaseCache(application).jsonSerializer()
-//    private val userSecondCache: Cache<String, User> = object : DatabaseCache<User>(application) {
-//        override fun parse(value: String): User {
-//            value?.let {
-//                return JSON.parse(it)
-//            }
-//        }
-//        override fun stringify(value: User): String {
-//            return JSON.stringify(value)
-//        }
-//    }
 
     private var userCache: Cache<String, User>
 
@@ -71,24 +60,4 @@ class CacheRepositoryImpl @Inject constructor(application: Application) : CacheR
                 userCache.set(Constants.Cache.USER, value)
             }
         }
-
-
-    class UserDatabaseCache constructor(application: Application) : DatabaseCache<User>(application) {
-        @ImplicitReflectionSerializer
-        override fun parse(value: String): User {
-            return JSON.parse<User>(User::class.serializer(), value)
-        }
-
-        @ImplicitReflectionSerializer
-        override fun stringify(value: User): String {
-            return JSON.stringify(User::class.serializer(), value)
-        }
-//        override var parse: (String) -> User? = { value: String ->
-//            JSON.parse(value)
-//        }
-//
-//        override var stringify: (User) -> String = { value: User ->
-//            JSON.stringify(value)
-//        }
-    }
 }

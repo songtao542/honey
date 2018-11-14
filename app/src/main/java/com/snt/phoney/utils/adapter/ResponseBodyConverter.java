@@ -15,20 +15,15 @@
  */
 package com.snt.phoney.utils.adapter;
 
-import android.util.Log;
-
 import com.google.gson.Gson;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 import com.google.gson.TypeAdapter;
-import com.google.gson.stream.JsonReader;
 
 import java.io.IOException;
 import java.io.Reader;
-import java.io.StringReader;
 import java.util.Map;
 import java.util.Set;
-import java.util.function.Consumer;
 
 import okhttp3.ResponseBody;
 import retrofit2.Converter;
@@ -36,8 +31,6 @@ import retrofit2.Converter;
 final class ResponseBodyConverter<T> implements Converter<ResponseBody, T> {
     private final Gson gson;
     private final TypeAdapter<T> adapter;
-
-    char[] buffer = new char[2 * 1024];
 
     ResponseBodyConverter(Gson gson, TypeAdapter<T> adapter) {
         this.gson = gson;
@@ -50,6 +43,7 @@ final class ResponseBodyConverter<T> implements Converter<ResponseBody, T> {
             Reader reader = value.charStream();
             StringBuffer stringBuffer = new StringBuffer();
             int size;
+            char[] buffer = new char[2 * 1024];
             while ((size = reader.read(buffer, 0, buffer.length)) != -1) {
                 stringBuffer.append(buffer, 0, size);
             }
@@ -61,7 +55,13 @@ final class ResponseBodyConverter<T> implements Converter<ResponseBody, T> {
             e.printStackTrace();
             return null;
         } finally {
-            value.close();
+            try {
+                if (value != null) {
+                    value.close();
+                }
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
         }
     }
 

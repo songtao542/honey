@@ -23,6 +23,9 @@ import androidx.lifecycle.ViewModel
 import com.snt.phoney.domain.model.Response
 import com.snt.phoney.domain.model.User
 import com.snt.phoney.domain.usecase.SigninUseCase
+import com.snt.phoney.extensions.getAndroidVersion
+import com.snt.phoney.extensions.getInstanceId
+import com.snt.phoney.extensions.getVersionName
 import io.reactivex.Single
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.disposables.Disposable
@@ -30,7 +33,7 @@ import io.reactivex.rxkotlin.subscribeBy
 import io.reactivex.schedulers.Schedulers
 import javax.inject.Inject
 
-class SigninViewModel @Inject constructor(private val usecase: SigninUseCase, private val application: Application) : ViewModel() {
+class SigninViewModel @Inject constructor(private val application: Application, private val usecase: SigninUseCase) : ViewModel() {
 
     val verificationCode = MutableLiveData<String>()
 
@@ -38,35 +41,34 @@ class SigninViewModel @Inject constructor(private val usecase: SigninUseCase, pr
 
     val error = MutableLiveData<String>()
 
-//    fun updateUser(user: User?) = usecase.updateUser(user)
-//
-//    val user: User?
-//        get() = usecase.user
-
-
-    fun getVerificationCode(phone: String): Disposable {
+    fun requestVerificationCode(phone: String): Disposable {
         return usecase.requestVerificationCode(phone)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribeBy {
-                    Log.d("TTTT", "getVerificationCode success->$it")
-                    verificationCode.value = it.data
+                    Log.d("TTTT", "requestVerificationCode success->$it")
+                    if (it.code == 200) {
+                        verificationCode.value = it.data
+                    } else if (!TextUtils.isEmpty(it.message)) {
+                        error.value = it.message
+                    }
                 }
     }
 
     fun signup(phone: String, code: String): Disposable {
         val msgId = verificationCode.value ?: ""
-        val deviceToken = ""
-        val osVersion = ""
-        val version = ""
         val mobilePlate = "android"
-        return usecase.signup(phone, msgId, code, deviceToken, osVersion, version, mobilePlate)
+        val osVersion = application.getAndroidVersion()
+        val deviceToken = application.getInstanceId()
+        val appVersion = application.getVersionName()
+        return usecase.signup(phone, msgId, code, deviceToken, osVersion, appVersion, mobilePlate)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribeBy {
                     Log.d("TTTT", "signup success->$it")
                     if (it.code == 200) {
                         user.value = it.data
+                        usecase.user = it.data
                     } else if (!TextUtils.isEmpty(it.message)) {
                         error.value = it.message
                     }

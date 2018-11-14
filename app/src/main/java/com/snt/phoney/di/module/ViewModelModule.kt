@@ -10,6 +10,7 @@ import com.snt.phoney.ui.password.ForgetPasswordViewModel
 import com.snt.phoney.ui.privacy.CreateLockViewModel
 import com.snt.phoney.ui.report.ReportViewModel
 import com.snt.phoney.ui.signin.SigninViewModel
+import com.snt.phoney.ui.signin.StartupViewModel
 import com.snt.phoney.ui.signup.BindPhoneViewModel
 import com.snt.phoney.ui.signup.SignupViewModel
 import com.snt.phoney.ui.user.EditUserViewModel
@@ -93,6 +94,11 @@ abstract class ViewModelModule {
     @IntoMap
     @ViewModelKey(CreateLockViewModel::class)
     abstract fun bindCreateLockViewModel(viewModel: CreateLockViewModel): ViewModel
+
+    @Binds
+    @IntoMap
+    @ViewModelKey(StartupViewModel::class)
+    abstract fun bindStartupViewModel(viewModel: StartupViewModel): ViewModel
 
 
 }

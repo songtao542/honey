@@ -37,9 +37,11 @@ object Constants {
 
     object Api {
         const val API_BASE_URL: String = "http://phoney.alance.pub"
+    }
 
-        const val APP_ID = ""
-        const val APP_ID_VALUE = ""
+    object Tencent {
+        const val APP_ID = "1107903594"
+        const val APP_KEY = "Jzgzv5j0ro5RWVUP"
     }
 
 }

@@ -1,6 +1,7 @@
 package com.snt.phoney.ui.signin
 
 import android.os.Bundle
+import android.text.TextUtils
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -10,10 +11,7 @@ import androidx.lifecycle.ViewModelProviders
 import com.snt.phoney.R
 import com.snt.phoney.base.BaseFragment
 import com.snt.phoney.databinding.SigninFragmentBinding
-import com.snt.phoney.extensions.addFragmentSafely
-import com.snt.phoney.extensions.autoCleared
-import com.snt.phoney.extensions.disposedBy
-import com.snt.phoney.extensions.snackbar
+import com.snt.phoney.extensions.*
 import com.snt.phoney.ui.main.MainActivity
 import com.snt.phoney.ui.password.ForgetPasswordFragment
 import kotlinx.android.synthetic.main.fragment_signin.*
@@ -47,7 +45,7 @@ class SigninFragment : BaseFragment() {
             viewModel.signup(phone.text.toString(), verificationCode.text.toString()).disposedBy(disposeBag)
         }
         getVerificationCode.setOnClickListener {
-            viewModel.getVerificationCode(phone.text.toString()).disposedBy(disposeBag)
+            viewModel.requestVerificationCode(phone.text.toString()).disposedBy(disposeBag)
         }
         forgetPassword.setOnClickListener { onForgetPasswordClicked() }
 
@@ -63,7 +61,10 @@ class SigninFragment : BaseFragment() {
         viewModel.error.observe(this, Observer {
             snackbar(it)
         })
+    }
 
+    private fun isPhoneValid(): Boolean {
+        return !TextUtils.isEmpty(phone.text)
     }
 
     private fun onForgetPasswordClicked() {
