@@ -21,6 +21,11 @@
     <attr name="cpEmptyText" format="string|reference" />
     <attr name="cpEmptyTextSize" format="dimension|reference" />
     <attr name="cpEmptyTextColor" format="color|reference" />
+    <attr name="cpLoadingText" format="string|reference" />
+    <attr name="cpLoadingTextSize" format="dimension|reference" />
+    <attr name="cpLoadingTextColor" format="color|reference" />
+
+    <attr name="cpLoadingProgressSize" format="dimension|reference" />
 
     <attr name="cpGridItemBackground" format="color|reference" />
     <attr name="cpGridItemSpace" format="reference" />

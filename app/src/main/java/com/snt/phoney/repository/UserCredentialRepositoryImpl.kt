@@ -47,6 +47,18 @@ class UserCredentialRepositoryImpl @Inject constructor(private val api: Api) : U
         return api.signupByThirdPlatform(openId, thirdToken, plate, nickName, headPic, deviceToken, osVersion, version, mobilePlate)
     }
 
+    override fun setUserSex(token: String, sex: Int): Single<Response<String>> {
+        return api.setUserSex(token, sex)
+    }
+
+    override fun setUserFeatures(token: String,
+                                 height: Int,
+                                 weight: Float,
+                                 age: Int,
+                                 cup: String): Single<Response<String>> {
+        return api.setUserFeatures(token, height, weight, age, cup)
+    }
+
     override fun login(username: String, password: String): LiveData<Response<User>> {
         return api.login(username, password)
     }

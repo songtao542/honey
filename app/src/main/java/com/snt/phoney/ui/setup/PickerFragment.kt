@@ -1,8 +1,7 @@
-package com.snt.phoney.ui.signup
+package com.snt.phoney.ui.setup
 
 import android.app.Dialog
 import android.os.Bundle
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -14,7 +13,6 @@ import com.snt.phoney.extensions.colorOf
 import com.snt.phoney.extensions.setDividerColor
 import com.snt.phoney.extensions.setDividerHeight
 import kotlinx.android.synthetic.main.fragment_picker.*
-import kotlin.math.max
 
 const val EXTRA_TITLE = "title"
 const val EXTRA_MIN = "min_value"

@@ -20,10 +20,10 @@ data class User(
         var phone: String? = null,
         var password: String? = null,
         @Optional var avatar: String? = null,
-        var sex: Int? = -1,
-        var height: Int? = 0,
-        var weight: Float? = 0f,
-        var age: Int? = 0,
+        var sex: Int = -1,
+        var height: Int = 0,
+        var weight: Float = 0f,
+        var age: Int = 0,
         var cup: String? = null,
         var city: String? = null,
         var career: String? = null,
@@ -37,6 +37,8 @@ data class User(
         var open: Int = 0,
         var price: Float = 0f,
         var state: Int = 0) : Parcelable
+
+
 
 
 //"career": null,

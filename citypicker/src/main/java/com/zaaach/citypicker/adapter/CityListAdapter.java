@@ -4,7 +4,6 @@ import android.content.Context;
 import android.os.Handler;
 import android.text.TextUtils;
 import android.util.DisplayMetrics;
-import android.util.Log;
 import android.util.TypedValue;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -55,6 +54,11 @@ public class CityListAdapter extends RecyclerView.Adapter<CityListAdapter.BaseVi
         if (multiple) {
             mSelected = new ArrayList<>();
         }
+    }
+
+    public void setCities(List<City> cities) {
+        mData = cities;
+        notifyDataSetChanged();
     }
 
     public List<City> getSelected() {
@@ -212,7 +216,7 @@ public class CityListAdapter extends RecyclerView.Adapter<CityListAdapter.BaseVi
                         locateState = LocateState.LOCATING;
                         notifyItemChanged(0);
                         if (mInnerListener != null) {
-                            mInnerListener.locate();
+                            mInnerListener.requestLocation();
                         }
                     }
                 }
@@ -244,8 +248,8 @@ public class CityListAdapter extends RecyclerView.Adapter<CityListAdapter.BaseVi
                 }
 
                 @Override
-                public void locate() {
-                    mInnerListener.locate();
+                public void requestLocation() {
+                    mInnerListener.requestLocation();
                 }
             });
             ((HotViewHolder) holder).mRecyclerView.setAdapter(mAdapter);

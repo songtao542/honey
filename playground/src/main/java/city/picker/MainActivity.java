@@ -10,7 +10,8 @@ import android.widget.CompoundButton;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.zaaach.citypicker.CityPicker;
+import com.zaaach.citypicker.CityPickerFragment;
+import com.zaaach.citypicker.adapter.OnRequestLocationListener;
 import com.zaaach.citypicker.adapter.OnResultListener;
 import com.zaaach.citypicker.model.City;
 import com.zaaach.citypicker.model.HotCity;
@@ -81,16 +82,16 @@ public class MainActivity extends AppCompatActivity implements CompoundButton.On
         findViewById(R.id.btn_pick).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                new CityPicker.Builder()
+                new CityPickerFragment.Builder()
                         .fragmentManager(getSupportFragmentManager())
-                        .enableAnimation(enable)
                         .animationStyle(anim)
                         .locatedCity(null)
                         .multipleMode(true)
                         .hotCities(hotCities)
                         .enableHotCities(false)
                         .enableLocation(true)
-                        .listener(new OnResultListener() {
+                        .useDefaultCities(false)
+                        .resultListener(new OnResultListener() {
                             @Override
                             public void onResult(List<City> data) {
                                 City city = data.size() > 0 ? data.get(0) : null;
@@ -108,14 +109,15 @@ public class MainActivity extends AppCompatActivity implements CompoundButton.On
                                             .show();
                                 }
                             }
-
+                        })
+                        .requestLocationListener(new OnRequestLocationListener() {
                             @Override
-                            public void onRequestLocation(final CityPicker picker) {
+                            public void onRequestLocation(final CityPickerFragment picker) {
                                 //开始定位，这里模拟一下定位
                                 new Handler().postDelayed(new Runnable() {
                                     @Override
                                     public void run() {
-                                        picker.locationChanged(new LocatedCity("深圳", "广东", "101280601"), LocateState.SUCCESS);
+                                        picker.updateLocation(new LocatedCity("深圳", "广东", "101280601"), LocateState.SUCCESS);
                                     }
                                 }, 3000);
                             }

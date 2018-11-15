@@ -1,10 +1,9 @@
-package com.snt.phoney.ui.signup
+package com.snt.phoney.ui.setup
 
 import android.text.TextUtils
 import android.util.Log
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
-import com.snt.phoney.domain.model.User
 import com.snt.phoney.domain.usecase.BindPhoneUseCase
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.disposables.Disposable

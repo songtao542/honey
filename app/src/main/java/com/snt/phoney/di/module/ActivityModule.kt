@@ -7,8 +7,7 @@ import com.snt.phoney.ui.dating.DatingActivity
 import com.snt.phoney.ui.main.MainActivity
 import com.snt.phoney.ui.nearby.NearbyActivity
 import com.snt.phoney.ui.signin.SigninActivity
-import com.snt.phoney.ui.signin.StartupActivity
-import com.snt.phoney.ui.signup.SignupActivity
+import com.snt.phoney.ui.setup.SetupWizardActivity
 import com.snt.phoney.ui.user.UserActivity
 import com.snt.phoney.ui.vip.VipActivity
 import dagger.Binds
@@ -22,14 +21,11 @@ abstract class ActivityModule {
     @Binds
     abstract fun bindViewModelFactory(factory: ViewModelFactory): ViewModelProvider.Factory
 
-    @ContributesAndroidInjector()
-    internal abstract fun contributeStartupActivity(): StartupActivity
-
     @ContributesAndroidInjector(modules = [FragmentModule::class])
     internal abstract fun contributeSigninActivity(): SigninActivity
 
     @ContributesAndroidInjector(modules = [FragmentModule::class])
-    internal abstract fun contributeSignupActivity(): SignupActivity
+    internal abstract fun contributeSignupActivity(): SetupWizardActivity
 
     @ContributesAndroidInjector(modules = [FragmentModule::class])
     internal abstract fun contributeMainActivity(): MainActivity

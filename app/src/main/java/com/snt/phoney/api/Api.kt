@@ -54,13 +54,29 @@ interface Api {
                   @Field("uuid") uuid: String,
                   @Field("token") token: String): Single<Response<String>>
 
+    /**
+     *@param sex -1，未设置；0，男性；1，女性
+     */
+    @FormUrlEncoded
+    @POST("users/setSex")
+    fun setUserSex(token: String,
+                   sex: Int): Single<Response<String>>
+
+    @FormUrlEncoded
+    @POST("users/setFeatures")
+    fun setUserFeatures(token: String,
+                        height: Int,
+                        weight: Float,
+                        age: Int,
+                        cup: String): Single<Response<String>>
+
 
     @FormUrlEncoded
     @POST("sms/sendMsg")
     fun sendMsg(@Field("phone") phone: String): Single<Response<String>>
 
     @FormUrlEncoded
-    @POST("sms/signupByMsgCode")
+    @POST("users/third/register")
     fun signupByThirdPlatform(@Field("openId") openId: String, //第三方openid（qq是uid）
                               @Field("third_token") thirdToken: String,
                               @Field("plate") plate: String,
@@ -72,7 +88,7 @@ interface Api {
                               @Field("mobilePlate") mobilePlate: String): Single<Response<User>>
 
     @FormUrlEncoded
-    @POST("sms/signupByMsgCode")
+    @POST("sms/registerWithMsgCode")
     fun signupByMsgCode(@Field("phone") phone: String,
                         @Field("msg_id") msgId: String,
                         @Field("code") code: String,

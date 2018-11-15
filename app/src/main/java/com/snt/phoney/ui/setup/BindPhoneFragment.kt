@@ -1,4 +1,4 @@
-package com.snt.phoney.ui.signup
+package com.snt.phoney.ui.setup
 
 import android.os.Bundle
 import android.view.LayoutInflater

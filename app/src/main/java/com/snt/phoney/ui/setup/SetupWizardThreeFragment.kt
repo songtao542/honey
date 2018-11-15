@@ -1,32 +1,29 @@
-package com.snt.phoney.ui.signup
+package com.snt.phoney.ui.setup
 
 import android.os.Bundle
-import android.os.Handler
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.Toast
+import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
 import com.snt.phoney.R
 import com.snt.phoney.base.BaseFragment
+import com.snt.phoney.domain.model.CityPickerConvertor
 import com.snt.phoney.domain.model.User
-import com.snt.phoney.extensions.disposedBy
-import com.zaaach.citypicker.CityPicker
-import com.zaaach.citypicker.adapter.OnResultListener
+import com.zaaach.citypicker.CityPickerFragment
 import com.zaaach.citypicker.model.City
-import com.zaaach.citypicker.model.LocateState
-import com.zaaach.citypicker.model.LocatedCity
 import kotlinx.android.synthetic.main.fragment_signup_3.*
 import kotlinx.android.synthetic.main.fragment_signup_3.view.*
 
 private const val ARG_USER = "user"
 
-class StepThreeFragment : BaseFragment() {
+class SetupWizardThreeFragment : BaseFragment() {
 
     private lateinit var user: User
 
-    lateinit var viewModel: SignupViewModel
+    private var selectCities: List<City>? = null
+
+    lateinit var viewModel: SetupWizardViewModel
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -50,11 +47,12 @@ class StepThreeFragment : BaseFragment() {
 
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
-        viewModel = ViewModelProviders.of(this, viewModelFactory).get(SignupViewModel::class.java)
+        viewModel = ViewModelProviders.of(this, viewModelFactory).get(SetupWizardViewModel::class.java)
         back3.setNavigationOnClickListener { activity?.supportFragmentManager?.popBackStack() }
         confirmStep3.setOnClickListener {
             context?.let {
-                BindPhoneFragment.newInstance().show(childFragmentManager, "bindPhone")
+                //BindPhoneFragment.newInstance().show(childFragmentManager, "bindPhone")
+
             }
         }
 
@@ -68,7 +66,6 @@ class StepThreeFragment : BaseFragment() {
 
         }
 
-        viewModel.getCities().disposedBy(disposeBag)
 
     }
 
@@ -81,30 +78,26 @@ class StepThreeFragment : BaseFragment() {
     }
 
     private fun pickCity() {
-        CityPicker.Builder()
+        CityPickerFragment.Builder()
                 .fragmentManager(childFragmentManager)
-                .enableAnimation(true)
                 .animationStyle(R.style.DefaultCityPickerAnimation)
-                .locatedCity(null)
                 .multipleMode(true)
                 .enableHotCities(false)
-                .enableLocation(true)
-                .listener(object : OnResultListener {
-                    override fun onResult(data: List<City>?) {
-
-                    }
-
-                    override fun onRequestLocation(picker: CityPicker) {
-                        //开始定位，这里模拟一下定位
-                        Handler().postDelayed({ picker.locationChanged(LocatedCity("深圳", "广东", "101280601"), LocateState.SUCCESS) }, 3000)
-                    }
-                })
+                .enableLocation(false)
+                .requestCitiesListener { cityPicker ->
+                    viewModel.cities.observe(this@SetupWizardThreeFragment, Observer {
+                        cityPicker.setCities(CityPickerConvertor.convert(it))
+                    })
+                }
+                .resultListener {
+                    selectCities = it
+                }
                 .show()
     }
 
     companion object {
         @JvmStatic
-        fun newInstance(user: User) = StepThreeFragment().apply {
+        fun newInstance(user: User) = SetupWizardThreeFragment().apply {
             arguments = Bundle().apply {
                 putParcelable(ARG_USER, user)
             }

@@ -79,7 +79,7 @@
             </intent-filter>
         </activity>
         <activity
-            android:name=".ui.signup.SignupActivity"
+            android:name=".ui.setup.SetupWizardActivity"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme.Signup" />
 

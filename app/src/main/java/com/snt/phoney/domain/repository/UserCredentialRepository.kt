@@ -46,6 +46,14 @@ interface UserCredentialRepository {
                               version: String,
                               mobilePlate: String): Single<Response<User>>
 
+    fun setUserSex(token: String, sex: Int): Single<Response<String>>
+
+    fun setUserFeatures(token: String,
+                        height: Int,
+                        weight: Float,
+                        age: Int,
+                        cup: String): Single<Response<String>>
+
     fun login(username: String, password: String): LiveData<Response<User>>
 
     fun resetPassword(key: String, password: String): LiveData<Response<String>>
@@ -53,4 +61,5 @@ interface UserCredentialRepository {
     fun logout(username: String): LiveData<Response<String>>
 
     fun requestVerificationCode(phone: String): Single<Response<String>>
+
 }

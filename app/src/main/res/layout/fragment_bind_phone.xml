@@ -5,7 +5,7 @@
     android:layout_height="match_parent"
     android:minWidth="320dp"
     android:orientation="vertical"
-    tools:context=".ui.signup.BindPhoneFragment">
+    tools:context=".ui.setup.BindPhoneFragment">
 
     <TextView
         android:layout_width="match_parent"

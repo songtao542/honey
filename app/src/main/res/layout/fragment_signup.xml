@@ -6,13 +6,13 @@
     <data class="SignupFragmentBinding">
         <variable
             name="viewModel"
-            type="com.snt.phoney.ui.signup.SignupViewModel" />
+            type="com.snt.phoney.ui.setup.SetupWizardViewModel" />
     </data>
 
     <FrameLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        tools:context=".ui.signup.SignupFragment">
+        tools:context=".ui.setup.SetupWizardFragment">
 
         <include layout="@layout/fragment_signup_3"></include>
 

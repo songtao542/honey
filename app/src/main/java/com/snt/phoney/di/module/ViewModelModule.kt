@@ -11,8 +11,8 @@ import com.snt.phoney.ui.privacy.CreateLockViewModel
 import com.snt.phoney.ui.report.ReportViewModel
 import com.snt.phoney.ui.signin.SigninViewModel
 import com.snt.phoney.ui.signin.StartupViewModel
-import com.snt.phoney.ui.signup.BindPhoneViewModel
-import com.snt.phoney.ui.signup.SignupViewModel
+import com.snt.phoney.ui.setup.BindPhoneViewModel
+import com.snt.phoney.ui.setup.SetupWizardViewModel
 import com.snt.phoney.ui.user.EditUserViewModel
 import com.snt.phoney.ui.user.UserInfoViewModel
 import com.snt.phoney.ui.vip.VipViewModel
@@ -31,8 +31,8 @@ abstract class ViewModelModule {
 
     @Binds
     @IntoMap
-    @ViewModelKey(SignupViewModel::class)
-    abstract fun bindSignupViewModel(viewModel: SignupViewModel): ViewModel
+    @ViewModelKey(SetupWizardViewModel::class)
+    abstract fun bindSignupViewModel(viewModel: SetupWizardViewModel): ViewModel
 
     @Binds
     @IntoMap

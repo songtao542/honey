@@ -13,14 +13,12 @@ import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.RecyclerView
 import com.snt.phoney.R
 import com.snt.phoney.base.CommonActivity
-import com.snt.phoney.base.FragmentFactory
 import com.snt.phoney.base.Page
 import com.snt.phoney.ui.dating.DatingActivity
 import com.snt.phoney.ui.privacy.AlbumPermissionSettingFragment
 import com.snt.phoney.ui.share.ShareFragment
-import com.snt.phoney.ui.signup.BindPhoneFragment
+import com.snt.phoney.ui.setup.BindPhoneFragment
 import com.snt.phoney.ui.user.UserActivity
-import com.snt.phoney.widget.FlowLayout
 import com.snt.phoney.widget.PhotoWallFactory
 import kotlinx.android.synthetic.main.fragment_mine_footer.view.*
 import kotlinx.android.synthetic.main.fragment_mine_list_header.view.*

@@ -19,7 +19,7 @@ import com.snt.phoney.ui.settings.SettingsFragment
 import com.snt.phoney.ui.share.ShareFragment
 import com.snt.phoney.ui.signin.SigninFragment
 import com.snt.phoney.ui.signin.StartupFragment
-import com.snt.phoney.ui.signup.*
+import com.snt.phoney.ui.setup.*
 import com.snt.phoney.ui.square.SquareFragment
 import com.snt.phoney.ui.square.official.OfficialRecommendFragment
 import com.snt.phoney.ui.square.popular.PopularRecommendFragment
@@ -39,7 +39,17 @@ abstract class FragmentModule {
     abstract fun contributeSigninFragment(): SigninFragment
 
     @ContributesAndroidInjector
-    abstract fun contributeSignupFragment(): SignupFragment
+    abstract fun contributeSignupFragment(): SetupWizardFragment
+
+
+    @ContributesAndroidInjector
+    abstract fun contributeStepOneFragment(): SetupWizardOneFragment
+
+    @ContributesAndroidInjector
+    abstract fun contributeStepTwoFragment(): SetupWizardTwoFragment
+
+    @ContributesAndroidInjector
+    abstract fun contributeStepThreeFragment(): SetupWizardThreeFragment
 
     @ContributesAndroidInjector
     abstract fun contributeStartupFragment(): StartupFragment
@@ -94,15 +104,6 @@ abstract class FragmentModule {
 
     @ContributesAndroidInjector
     abstract fun contributeForgetPasswordFragment(): ForgetPasswordFragment
-
-    @ContributesAndroidInjector
-    abstract fun contributeStepOneFragment(): StepOneFragment
-
-    @ContributesAndroidInjector
-    abstract fun contributeStepTwoFragment(): StepTwoFragment
-
-    @ContributesAndroidInjector
-    abstract fun contributeStepThreeFragment(): StepThreeFragment
 
     @ContributesAndroidInjector
     abstract fun contributePickerFragment(): PickerFragment

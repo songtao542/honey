@@ -1,4 +1,4 @@
-package com.snt.phoney.ui.signup
+package com.snt.phoney.ui.setup
 
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -14,13 +14,13 @@ import kotlinx.android.synthetic.main.fragment_signup_1.*
 import kotlinx.android.synthetic.main.fragment_signup_2.*
 import kotlinx.android.synthetic.main.fragment_signup_3.*
 
-class SignupFragment : BaseFragment() {
+class SetupWizardFragment : BaseFragment() {
 
     companion object {
-        fun newInstance() = SignupFragment()
+        fun newInstance() = SetupWizardFragment()
     }
 
-    private lateinit var viewModel: SignupViewModel
+    private lateinit var viewModel: SetupWizardViewModel
 
     var binding by autoCleared<SignupFragmentBinding>()
 
@@ -33,7 +33,7 @@ class SignupFragment : BaseFragment() {
 
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
-        viewModel = ViewModelProviders.of(this, viewModelFactory).get(SignupViewModel::class.java)
+        viewModel = ViewModelProviders.of(this, viewModelFactory).get(SetupWizardViewModel::class.java)
         binding.viewModel = viewModel
         back.setNavigationOnClickListener { activity?.finish() }
         back2.setNavigationOnClickListener { step1.bringToFront() }

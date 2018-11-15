@@ -23,8 +23,20 @@ import javax.inject.Inject
 
 class SigninUseCase @Inject constructor(private val repository: UserCredentialRepository, private val cache: CacheRepository) {
     fun signup(phone: String, msgId: String, code: String, deviceToken: String,
-               osVersion: String, version: String, mobilePlate: String): Single<Response<User>> =
+               osVersion: String, version: String, mobilePlate: String) =
             repository.signup(phone, msgId, code, deviceToken, osVersion, version, mobilePlate)
+
+
+    fun signupByThirdPlatform(openId: String, //第三方openid（qq是uid）
+                              thirdToken: String,
+                              plate: String,
+                              nickName: String,
+                              headPic: String,
+                              deviceToken: String,
+                              osVersion: String,
+                              version: String,
+                              mobilePlate: String) = repository.signupByThirdPlatform(openId, thirdToken, plate, nickName, headPic, deviceToken, osVersion, version, mobilePlate)
+
 
     fun requestVerificationCode(phone: String): Single<Response<String>> = repository.requestVerificationCode(phone)
 

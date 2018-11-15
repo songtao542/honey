@@ -1,9 +1,12 @@
 package com.snt.phoney.domain.repository
 
+import com.snt.phoney.domain.model.City
 import com.snt.phoney.domain.model.Province
 import com.snt.phoney.domain.model.Response
 import io.reactivex.Single
 
 interface LocationRepository {
-    fun getCities():Single<Response<List<Province>>>
+    fun getCities(): Single<Response<List<Province>>>
+
+    val cities: List<City>
 }

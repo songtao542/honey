@@ -16,7 +16,10 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.zaaach.citypicker.adapter.CityListAdapter;
+import com.zaaach.citypicker.adapter.CityPicker;
 import com.zaaach.citypicker.adapter.InnerListener;
+import com.zaaach.citypicker.adapter.OnRequestCitiesListener;
+import com.zaaach.citypicker.adapter.OnRequestLocationListener;
 import com.zaaach.citypicker.adapter.OnResultListener;
 import com.zaaach.citypicker.adapter.decoration.DividerItemDecoration;
 import com.zaaach.citypicker.adapter.decoration.SectionItemDecoration;
@@ -27,6 +30,7 @@ import com.zaaach.citypicker.model.LocateState;
 import com.zaaach.citypicker.model.LocatedCity;
 import com.zaaach.citypicker.view.SideIndexBar;
 
+import java.lang.ref.WeakReference;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -42,10 +46,11 @@ import androidx.recyclerview.widget.RecyclerView;
  * @Date: 2018/2/6 20:50
  */
 public class CityPickerDialogFragment extends AppCompatDialogFragment implements TextWatcher,
-        View.OnClickListener, SideIndexBar.OnIndexTouchedChangedListener, InnerListener {
+        View.OnClickListener, SideIndexBar.OnIndexTouchedChangedListener, InnerListener, CityPicker {
     private View mContentView;
     private RecyclerView mRecyclerView;
     private View mEmptyView;
+    private View mLoadingView;
     private TextView mOverlayTextView;
     private SideIndexBar mIndexBar;
     private EditText mSearchBox;
@@ -58,6 +63,7 @@ public class CityPickerDialogFragment extends AppCompatDialogFragment implements
     private List<HotCity> mHotCities;
     private boolean mEnableHotCities;
     private boolean mEnableLocation;
+    private boolean mUserDefaultCities = true;
     private List<City> mResults;
 
     private DBManager dbManager;
@@ -68,6 +74,8 @@ public class CityPickerDialogFragment extends AppCompatDialogFragment implements
     private LocatedCity mLocatedCity;
     private int locateState;
     private OnResultListener mOnResultListener;
+    protected OnRequestLocationListener mOnRequestLocationListener;
+    protected OnRequestCitiesListener mOnRequestCitiesListener;
 
     /**
      * 获取实例
@@ -94,16 +102,19 @@ public class CityPickerDialogFragment extends AppCompatDialogFragment implements
         initDefaultHotCities();
         initLocatedCity();
 
-        dbManager = new DBManager(getContext());
-        mAllCities = dbManager.getAllCities();
-        if (mEnableLocation) {
-            mAllCities.add(0, mLocatedCity);
-        }
-        if (mEnableHotCities) {
+        if (mUserDefaultCities) {
+            dbManager = new DBManager(getContext());
+            mAllCities = dbManager.getAllCities();
+
             if (mEnableLocation) {
-                mAllCities.add(1, new HotCity("热门城市", "未知", "0"));
-            } else {
-                mAllCities.add(0, new HotCity("热门城市", "未知", "0"));
+                mAllCities.add(0, mLocatedCity);
+            }
+            if (mEnableHotCities) {
+                if (mEnableLocation) {
+                    mAllCities.add(1, new HotCity("热门城市", "未知", "0"));
+                } else {
+                    mAllCities.add(0, new HotCity("热门城市", "未知", "0"));
+                }
             }
         }
         mResults = mAllCities;
@@ -153,6 +164,7 @@ public class CityPickerDialogFragment extends AppCompatDialogFragment implements
 
     @SuppressLint("ResourceType")
     public void setAnimationStyle(@StyleRes int style) {
+        this.enableAnim = true;
         this.mAnimStyle = style <= 0 ? R.style.DefaultCityPickerAnimation : style;
     }
 
@@ -188,6 +200,8 @@ public class CityPickerDialogFragment extends AppCompatDialogFragment implements
         mEmptyView = mContentView.findViewById(R.id.cp_empty_view);
         mOverlayTextView = mContentView.findViewById(R.id.cp_overlay);
 
+        mLoadingView = mContentView.findViewById(R.id.cp_loading_view);
+
         mIndexBar = mContentView.findViewById(R.id.cp_side_index_bar);
         mIndexBar.setOverlayTextView(mOverlayTextView)
                 .setOnIndexChangedListener(this);
@@ -212,9 +226,22 @@ public class CityPickerDialogFragment extends AppCompatDialogFragment implements
             mContentView.findViewById(R.id.cp_confirm).setVisibility(View.GONE);
             mContentView.findViewById(R.id.cp_divider).setVisibility(View.GONE);
         }
+
+        if (mAllCities == null || mAllCities.size() == 0) {
+            mLoadingView.setVisibility(View.VISIBLE);
+        }
         return mContentView;
     }
 
+    @Override
+    public void onActivityCreated(@Nullable Bundle savedInstanceState) {
+        super.onActivityCreated(savedInstanceState);
+        if (mAllCities == null || mAllCities.size() == 0 && mOnRequestCitiesListener != null) {
+            mOnRequestCitiesListener.onRequestCities(new MyCityPicker(this));
+        }
+    }
+
+    @SuppressLint("NewApi")
     @NonNull
     @Override
     public Dialog onCreateDialog(Bundle savedInstanceState) {
@@ -244,7 +271,7 @@ public class CityPickerDialogFragment extends AppCompatDialogFragment implements
 
     @Override
     public void afterTextChanged(Editable s) {
-        String keyword = s.toString();
+        final String keyword = s.toString();
         if (TextUtils.isEmpty(keyword)) {
             mClearAllBtn.setVisibility(View.GONE);
             mEmptyView.setVisibility(View.GONE);
@@ -254,7 +281,8 @@ public class CityPickerDialogFragment extends AppCompatDialogFragment implements
         } else {
             mClearAllBtn.setVisibility(View.VISIBLE);
             //开始数据库查找
-            mResults = dbManager.searchCity(keyword);
+            //mResults = dbManager.searchCity(keyword);
+            mResults = filter(keyword);
             ((SectionItemDecoration) (mRecyclerView.getItemDecorationAt(0))).setData(mResults);
             if (mResults == null || mResults.isEmpty()) {
                 mEmptyView.setVisibility(View.VISIBLE);
@@ -264,6 +292,20 @@ public class CityPickerDialogFragment extends AppCompatDialogFragment implements
             }
         }
         mRecyclerView.scrollToPosition(0);
+    }
+
+    private List<City> filter(String keyword) {
+        if (mAllCities != null) {
+            ArrayList<City> results = new ArrayList<>();
+            for (City city : mAllCities) {
+                if (city.getName().contains(keyword)) {
+                    results.add(city);
+                }
+            }
+            results.trimToSize();
+            return results;
+        }
+        return null;
     }
 
     @Override
@@ -287,9 +329,6 @@ public class CityPickerDialogFragment extends AppCompatDialogFragment implements
         mAdapter.scrollToSection(index);
     }
 
-    public void locationChanged(LocatedCity location, int state) {
-        mAdapter.updateLocateState(location, state);
-    }
 
     @Override
     public void dismiss(City data) {
@@ -301,14 +340,80 @@ public class CityPickerDialogFragment extends AppCompatDialogFragment implements
     }
 
     @Override
-    public void locate() {
-        if (mOnResultListener != null) {
-            mOnResultListener.onRequestLocation(null);
+    public void requestLocation() {
+        if (mOnRequestLocationListener != null) {
+            mOnRequestLocationListener.onRequestLocation(new MyCityPicker(this));
         }
     }
 
     public void setOnResultListener(OnResultListener listener) {
         this.mOnResultListener = listener;
+    }
+
+    public void setOnRequestLocationListener(OnRequestLocationListener listener) {
+        this.mOnRequestLocationListener = listener;
+    }
+
+    public void setOnRequestCitiesListener(OnRequestCitiesListener listener) {
+        this.mOnRequestCitiesListener = listener;
+    }
+
+
+    /**
+     * 从自带的城市数据库中加载城市列表
+     */
+    public void useDefaultCities(boolean use) {
+        mUserDefaultCities = use;
+    }
+
+    @Override
+    public void setCities(List<City> cities) {
+        if (cities != null && cities.size() > 0) {
+            mLoadingView.setVisibility(View.GONE);
+            this.mAllCities = cities;
+            mAdapter.setCities(this.mAllCities);
+            if (mEnableLocation) {
+                mAllCities.add(0, mLocatedCity);
+            }
+            if (mEnableHotCities) {
+                if (mEnableLocation) {
+                    mAllCities.add(1, new HotCity("热门城市", "未知", "0"));
+                } else {
+                    mAllCities.add(0, new HotCity("热门城市", "未知", "0"));
+                }
+            }
+        }
+    }
+
+    @Override
+    public void updateLocation(LocatedCity location, @LocateState.State int state) {
+        if (mAdapter != null) {
+            mAdapter.updateLocateState(location, state);
+        }
+    }
+
+    public static class MyCityPicker implements CityPicker {
+        private WeakReference<CityPickerDialogFragment> weakFragment;
+
+        public MyCityPicker(CityPickerDialogFragment fragment) {
+            this.weakFragment = new WeakReference<>(fragment);
+        }
+
+        @Override
+        public void updateLocation(LocatedCity location, int state) {
+            CityPickerDialogFragment fragment = weakFragment.get();
+            if (fragment != null) {
+                fragment.updateLocation(location, state);
+            }
+        }
+
+        @Override
+        public void setCities(List<City> cities) {
+            CityPickerDialogFragment fragment = weakFragment.get();
+            if (fragment != null) {
+                fragment.setCities(cities);
+            }
+        }
     }
 
 }

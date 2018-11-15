@@ -5,10 +5,7 @@ import android.content.Intent
 import android.os.Bundle
 import com.snt.phoney.R
 import com.snt.phoney.base.BaseActivity
-import com.snt.phoney.extensions.addFragmentSafely
-import com.snt.phoney.extensions.colorOf
-import com.snt.phoney.extensions.setContentFragment
-import com.snt.phoney.extensions.setStatusBarColor
+import com.snt.phoney.extensions.*
 
 class SigninActivity : BaseActivity() {
 
@@ -40,6 +37,6 @@ class SigninActivity : BaseActivity() {
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
-
+        forwardOnActivityResult(requestCode, resultCode, data)
     }
 }

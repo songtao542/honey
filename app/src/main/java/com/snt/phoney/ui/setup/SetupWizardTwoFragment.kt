@@ -1,21 +1,26 @@
-package com.snt.phoney.ui.signup
+package com.snt.phoney.ui.setup
 
 import android.os.Bundle
-import android.util.Log
+import android.text.TextUtils
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.lifecycle.Observer
+import androidx.lifecycle.ViewModelProviders
 import com.snt.phoney.R
 import com.snt.phoney.base.BaseFragment
 import com.snt.phoney.domain.model.User
 import com.snt.phoney.extensions.addFragmentSafely
+import com.snt.phoney.extensions.snackbar
 import com.snt.phoney.extensions.toStringArray
 import kotlinx.android.synthetic.main.fragment_signup_2.*
 import kotlinx.android.synthetic.main.fragment_signup_2.view.*
 
 private const val ARG_SEX = "sex"
 
-class StepTwoFragment : BaseFragment() {
+class SetupWizardTwoFragment : BaseFragment() {
+
+    lateinit var viewModel: SetupWizardViewModel
 
     private var sex: Int = 0
     private var user: User = User()
@@ -58,9 +63,12 @@ class StepTwoFragment : BaseFragment() {
 
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
+        viewModel = ViewModelProviders.of(this, viewModelFactory).get(SetupWizardViewModel::class.java)
         back2.setNavigationOnClickListener { activity?.supportFragmentManager?.popBackStack() }
         confirmStep2.setOnClickListener {
-            activity?.addFragmentSafely(R.id.containerLayout, StepThreeFragment.newInstance(user), "step3", true)
+            if (isValid()) {
+                viewModel.setUserFeatures(user.height, user.weight, user.age, user.cup ?: "")
+            }
         }
 
         heightButton.setOnClickListener {
@@ -92,6 +100,14 @@ class StepTwoFragment : BaseFragment() {
                 user.age = value
             }
         }
+
+        viewModel.error.observe(this, Observer {
+            snackbar(it)
+        })
+
+        viewModel.setupFeatures.observe(this, Observer {
+            activity?.addFragmentSafely(R.id.containerLayout, SetupWizardThreeFragment.newInstance(user), "step3", true)
+        })
     }
 
 
@@ -114,12 +130,24 @@ class StepTwoFragment : BaseFragment() {
         }
     }
 
+    private fun isValid(): Boolean {
+        if (user.age > 0 && user.height > 0) {
+            if (user.sex == 0 && !TextUtils.isEmpty(user.cup)) {
+                return true
+            }
+            if (user.sex == 1 && user.weight > 0) {
+                return true
+            }
+        }
+        return false
+    }
+
     companion object {
         /**
          * argument 0,female; 1,male
          */
         @JvmStatic
-        fun newInstance(sex: Int) = StepTwoFragment().apply {
+        fun newInstance(sex: Int) = SetupWizardTwoFragment().apply {
             arguments = Bundle().apply {
                 putInt(ARG_SEX, sex)
             }

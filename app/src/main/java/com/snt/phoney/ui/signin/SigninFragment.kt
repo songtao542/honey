@@ -12,8 +12,8 @@ import com.snt.phoney.R
 import com.snt.phoney.base.BaseFragment
 import com.snt.phoney.databinding.SigninFragmentBinding
 import com.snt.phoney.extensions.*
-import com.snt.phoney.ui.main.MainActivity
 import com.snt.phoney.ui.password.ForgetPasswordFragment
+import com.snt.phoney.ui.setup.SetupWizardActivity
 import kotlinx.android.synthetic.main.fragment_signin.*
 
 /**
@@ -55,7 +55,8 @@ class SigninFragment : BaseFragment() {
 
         viewModel.user.observe(this, Observer {
             snackbar("注册成功")
-            context?.let { startActivity(MainActivity.newIntent(it)) }
+            //context?.let { context -> startActivity(MainActivity.newIntent(context)) }
+            context?.let { context -> startActivity(SetupWizardActivity.newIntent(context)) }
         })
 
         viewModel.error.observe(this, Observer {
