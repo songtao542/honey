@@ -50,7 +50,7 @@ interface UserCredentialRepository {
 
     fun setUserFeatures(token: String,
                         height: Int,
-                        weight: Float,
+                        weight: Int,
                         age: Int,
                         cup: String): Single<Response<String>>
 

@@ -16,14 +16,13 @@ import com.snt.phoney.extensions.toStringArray
 import kotlinx.android.synthetic.main.fragment_signup_2.*
 import kotlinx.android.synthetic.main.fragment_signup_2.view.*
 
-private const val ARG_SEX = "sex"
+private const val ARG_USER = "user"
 
 class SetupWizardTwoFragment : BaseFragment() {
 
     lateinit var viewModel: SetupWizardViewModel
 
-    private var sex: Int = 0
-    private var user: User = User()
+    private lateinit var user: User
     private lateinit var cupNumberArray: Array<Int>
     private lateinit var cupSizeArray: Array<String>
 
@@ -39,14 +38,13 @@ class SetupWizardTwoFragment : BaseFragment() {
         super.onCreate(savedInstanceState)
         initCupArray()
         arguments?.let {
-            sex = it.getInt(ARG_SEX, 0)
-            user.sex = sex
+            user = it.getParcelable(ARG_USER) ?: User()
         }
     }
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         var view = inflater.inflate(R.layout.fragment_signup_2, container, false)
-        when (sex) {
+        when (user.sex) {
             0 -> {
                 view.cupButton.visibility = View.VISIBLE
                 view.weightButton.visibility = View.GONE
@@ -65,10 +63,17 @@ class SetupWizardTwoFragment : BaseFragment() {
         super.onActivityCreated(savedInstanceState)
         viewModel = ViewModelProviders.of(this, viewModelFactory).get(SetupWizardViewModel::class.java)
 
-        back2.setNavigationOnClickListener { activity?.supportFragmentManager?.popBackStack() }
+        back2.setNavigationOnClickListener {
+            if (activity?.supportFragmentManager?.backStackEntryCount ?: 0 > 0) {
+                activity?.supportFragmentManager?.popBackStack()
+            } else {
+                activity?.finish()
+            }
+        }
         confirmStep2.setOnClickListener {
             if (isValid()) {
-                viewModel.setUserFeatures(user.height, user.weight, user.age, user.cup ?: "")
+                viewModel.setUserFeatures(user.height, user.weight.toInt(), user.age, user.cup
+                        ?: "")
             }
         }
 
@@ -146,9 +151,9 @@ class SetupWizardTwoFragment : BaseFragment() {
          * argument 0,female; 1,male
          */
         @JvmStatic
-        fun newInstance(sex: Int) = SetupWizardTwoFragment().apply {
+        fun newInstance(user: User) = SetupWizardTwoFragment().apply {
             arguments = Bundle().apply {
-                putInt(ARG_SEX, sex)
+                putParcelable(ARG_USER, user)
             }
         }
     }

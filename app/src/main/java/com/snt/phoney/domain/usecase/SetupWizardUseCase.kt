@@ -14,7 +14,7 @@ class SetupWizardUseCase @Inject constructor(private val locationRepository: Loc
 
     fun setUserFeatures(token: String,
                         height: Int,
-                        weight: Float,
+                        weight: Int,
                         age: Int,
                         cup: String) = userRepository.setUserFeatures(token, height, weight, age, cup)
 

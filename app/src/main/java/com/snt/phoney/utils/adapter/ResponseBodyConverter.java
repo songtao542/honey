@@ -53,7 +53,8 @@ final class ResponseBodyConverter<T> implements Converter<ResponseBody, T> {
             return adapter.fromJson(convertToResponseFormat(resultString));
         } catch (Exception e) {
             e.printStackTrace();
-            return null;
+            String unknown = "{\"data\":null,\"code\":909,\"message\":\"unknown error\"}";
+            return adapter.fromJson(unknown);
         } finally {
             try {
                 if (value != null) {

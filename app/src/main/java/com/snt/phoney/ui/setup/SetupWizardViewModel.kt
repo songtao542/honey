@@ -47,13 +47,13 @@ class SetupWizardViewModel @Inject constructor(private val application: Applicat
     }
 
 
-    fun setUserFeatures(height: Int, weight: Float, age: Int, cup: String): Disposable? {
+    fun setUserFeatures(height: Int, weight: Int, age: Int, cup: String): Disposable? {
         val token = setupWizardUseCase.user?.token ?: return null
         return setupWizardUseCase.setUserFeatures(token, height, weight, age, cup)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribeBy {
-                    Log.d("TTTT", "getCities==>$it")
+                    Log.d("TTTT", "setUserFeatures==>$it")
                     if (it.code == 200) {
                         setupFeatures.value = it.data
                     } else if (!TextUtils.isEmpty(it.message)) {

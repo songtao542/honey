@@ -53,7 +53,7 @@ class UserCredentialRepositoryImpl @Inject constructor(private val api: Api) : U
 
     override fun setUserFeatures(token: String,
                                  height: Int,
-                                 weight: Float,
+                                 weight: Int,
                                  age: Int,
                                  cup: String): Single<Response<String>> {
         return api.setUserFeatures(token, height, weight, age, cup)

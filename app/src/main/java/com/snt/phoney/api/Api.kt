@@ -64,7 +64,7 @@ interface Api {
     @POST("users/setFeatures")
     fun setUserFeatures(@Field("token") token: String,
                         @Field("height") height: Int,
-                        @Field("weight") weight: Float,
+                        @Field("weight") weight: Int,
                         @Field("age") age: Int,
                         @Field("cup") cup: String): Single<Response<String>>
 

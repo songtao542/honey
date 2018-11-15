@@ -8,17 +8,26 @@ import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
 import com.snt.phoney.R
 import com.snt.phoney.base.BaseFragment
+import com.snt.phoney.domain.model.User
 import com.snt.phoney.extensions.addFragmentSafely
 import com.snt.phoney.extensions.disposedBy
 import com.snt.phoney.extensions.snackbar
 import kotlinx.android.synthetic.main.fragment_signup_1.*
 
+private const val ARG_USER = "user"
 
 class SetupWizardOneFragment : BaseFragment() {
 
     lateinit var viewModel: SetupWizardViewModel
 
-    var userSex: Int = -1
+    private lateinit var user: User
+
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        arguments?.let {
+            user = it.getParcelable(ARG_USER) ?: User()
+        }
+    }
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         return inflater.inflate(R.layout.fragment_signup_1, container, false)
@@ -32,7 +41,7 @@ class SetupWizardOneFragment : BaseFragment() {
         male.setOnClickListener { setSex(0) }
 
         viewModel.setupSex.observe(this, Observer {
-            activity?.addFragmentSafely(R.id.containerLayout, SetupWizardTwoFragment.newInstance(userSex), "step2", true)
+            activity?.addFragmentSafely(R.id.containerLayout, SetupWizardTwoFragment.newInstance(user), "step2", true)
         })
 
         viewModel.error.observe(this, Observer {
@@ -41,12 +50,16 @@ class SetupWizardOneFragment : BaseFragment() {
     }
 
     private fun setSex(sex: Int) {
-        userSex = sex
+        user.sex = sex
         viewModel.setSex(sex)?.disposedBy(disposeBag)
     }
 
     companion object {
         @JvmStatic
-        fun newInstance() = SetupWizardOneFragment()
+        fun newInstance(user: User) = SetupWizardOneFragment().apply {
+            arguments = Bundle().apply {
+                putParcelable(ARG_USER, user)
+            }
+        }
     }
 }
