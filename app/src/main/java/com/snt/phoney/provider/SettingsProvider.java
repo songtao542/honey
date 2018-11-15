@@ -567,9 +567,8 @@ public class SettingsProvider extends ContentProvider {
              * }
              */
             private int onUpgradeLocked(int oldVersion, int newVersion) {
-                int currentVersion = oldVersion;
                 // Return the current version.
-                return currentVersion;
+                return oldVersion;
             }
         }
     }

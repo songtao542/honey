@@ -33,7 +33,6 @@ import android.os.Build;
 import android.text.TextPaint;
 import android.text.TextUtils;
 import android.util.AttributeSet;
-import android.util.Log;
 import android.view.Gravity;
 import android.view.View;
 import android.view.ViewGroup;
@@ -240,14 +239,7 @@ public class CollapsingToolbarLayout extends FrameLayout {
 
         setWillNotDraw(false);
 
-        ViewCompat.setOnApplyWindowInsetsListener(this,
-                new androidx.core.view.OnApplyWindowInsetsListener() {
-                    @Override
-                    public WindowInsetsCompat onApplyWindowInsets(View v,
-                                                                  WindowInsetsCompat insets) {
-                        return onWindowInsetChanged(insets);
-                    }
-                });
+        ViewCompat.setOnApplyWindowInsetsListener(this, (v, insets) -> onWindowInsetChanged(insets));
     }
 
     @Override
@@ -258,7 +250,7 @@ public class CollapsingToolbarLayout extends FrameLayout {
         final ViewParent parent = getParent();
         if (parent instanceof AppBarLayout) {
             // Copy over from the ABL whether we should fit system windows
-            ViewCompat.setFitsSystemWindows(this, ViewCompat.getFitsSystemWindows((View) parent));
+            this.setFitsSystemWindows(ViewCompat.getFitsSystemWindows((View) parent));
 
             if (mOnOffsetChangedListener == null) {
                 mOnOffsetChangedListener = new OffsetUpdateListener();
@@ -627,12 +619,7 @@ public class CollapsingToolbarLayout extends FrameLayout {
                     targetAlpha > mScrimAlpha
                             ? AnimationUtils.FAST_OUT_LINEAR_IN_INTERPOLATOR
                             : AnimationUtils.LINEAR_OUT_SLOW_IN_INTERPOLATOR);
-            mScrimAnimator.addUpdateListener(new ValueAnimator.AnimatorUpdateListener() {
-                @Override
-                public void onAnimationUpdate(ValueAnimator animator) {
-                    setScrimAlpha((int) animator.getAnimatedValue());
-                }
-            });
+            mScrimAnimator.addUpdateListener(animator -> setScrimAlpha((int) animator.getAnimatedValue()));
         } else if (mScrimAnimator.isRunning()) {
             mScrimAnimator.cancel();
         }

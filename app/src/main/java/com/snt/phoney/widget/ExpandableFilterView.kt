@@ -68,11 +68,11 @@ class ExpandableFilterView : ExpandableLayout, View.OnClickListener {
                     var textView: TextView? = getCachedTextView(index) as? TextView
                     if (textView == null) {
                         textView = TextView(context)
-                        textView!!.gravity = Gravity.CENTER
-                        textView!!.layoutParams = LayoutParams(LayoutParams.MATCH_PARENT, dip(40))
-                        textView!!.setBackgroundResource(R.drawable.underline_selectable_item_background)
-                        textView!!.setOnClickListener(this)
-                        cache.add(textView!!)
+                        textView.gravity = Gravity.CENTER
+                        textView.layoutParams = LayoutParams(LayoutParams.MATCH_PARENT, dip(40))
+                        textView.setBackgroundResource(R.drawable.underline_selectable_item_background)
+                        textView.setOnClickListener(this)
+                        cache.add(textView)
                     }
                     textView.text = filter
                     addView(textView)

@@ -28,7 +28,6 @@ import kotlinx.android.synthetic.main.fragment_mine_list_photo_area.view.*
 import kotlinx.android.synthetic.main.fragment_mine_settings.view.*
 
 /**
- * [RecyclerView.Adapter] that can display a [DummyItem] and makes a call to the
  */
 class MineRecyclerViewAdapter(val fragment: Fragment) : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
 

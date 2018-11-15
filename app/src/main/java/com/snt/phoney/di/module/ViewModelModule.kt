@@ -32,7 +32,7 @@ abstract class ViewModelModule {
     @Binds
     @IntoMap
     @ViewModelKey(SetupWizardViewModel::class)
-    abstract fun bindSignupViewModel(viewModel: SetupWizardViewModel): ViewModel
+    abstract fun bindSetupWizardViewModel(viewModel: SetupWizardViewModel): ViewModel
 
     @Binds
     @IntoMap

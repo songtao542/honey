@@ -64,6 +64,7 @@ class SetupWizardTwoFragment : BaseFragment() {
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
         viewModel = ViewModelProviders.of(this, viewModelFactory).get(SetupWizardViewModel::class.java)
+
         back2.setNavigationOnClickListener { activity?.supportFragmentManager?.popBackStack() }
         confirmStep2.setOnClickListener {
             if (isValid()) {
@@ -72,15 +73,13 @@ class SetupWizardTwoFragment : BaseFragment() {
         }
 
         heightButton.setOnClickListener {
-            togglePicker(getString(R.string.pick_height), 150, 230, user.height
-                    ?: 0, "height") { value, _ ->
+            togglePicker(getString(R.string.pick_height), 150, 230, user.height, "height") { value, _ ->
                 height.text = getString(R.string.height_value_template, value)
                 user.height = value
             }
         }
         weightButton.setOnClickListener {
-            togglePicker(getString(R.string.pick_weight), 40, 150, user.weight?.toInt()
-                    ?: 0, "weight") { value, _ ->
+            togglePicker(getString(R.string.pick_weight), 40, 150, user.weight.toInt(), "weight") { value, _ ->
                 weight.text = getString(R.string.weight_value_template, value)
                 user.weight = value.toFloat()
             }
@@ -95,7 +94,7 @@ class SetupWizardTwoFragment : BaseFragment() {
             }
         }
         ageButton.setOnClickListener {
-            togglePicker(getString(R.string.pick_age), 16, 70, user.age ?: 0, "age") { value, _ ->
+            togglePicker(getString(R.string.pick_age), 16, 70, user.age, "age") { value, _ ->
                 age.text = getString(R.string.age_value_template, value)
                 user.age = value
             }

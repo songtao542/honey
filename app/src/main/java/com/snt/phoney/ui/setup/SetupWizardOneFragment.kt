@@ -5,6 +5,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.lifecycle.Observer
+import androidx.lifecycle.ViewModelProviders
 import com.snt.phoney.R
 import com.snt.phoney.base.BaseFragment
 import com.snt.phoney.extensions.addFragmentSafely
@@ -25,6 +26,8 @@ class SetupWizardOneFragment : BaseFragment() {
 
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
+        viewModel = ViewModelProviders.of(this, viewModelFactory).get(SetupWizardViewModel::class.java)
+
         female.setOnClickListener { setSex(1) }
         male.setOnClickListener { setSex(0) }
 

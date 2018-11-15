@@ -3,6 +3,6 @@
 
     <corners android:radius="@dimen/mine_authenticate_height"></corners>
 
-    <solid android:color="@color/mine_authenticate_gray_cicle_corner_bg"></solid>
+    <solid android:color="@color/mine_authenticate_gray_circle_corner_bg"></solid>
 
 </shape>

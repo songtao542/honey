@@ -1,15 +1,12 @@
 package com.snt.phoney.domain.model
 
-import androidx.room.Entity
-import androidx.room.ForeignKey
-import androidx.room.PrimaryKey
-import androidx.room.Relation
+import androidx.room.*
 import com.google.gson.annotations.SerializedName
 import kotlinx.serialization.Serializable
 
 @Serializable
-@Entity(tableName = "Province")
+@Entity(tableName = "Province", indices = [Index(value = ["id"], unique = true)])
 data class Province(@PrimaryKey var id: Int = 0,
                     var name: String? = null,
-                    @SerializedName(value = "items") var cities: List<City>? = null)
+                    @SerializedName(value = "items") @Ignore var cities: List<City>? = null)
 

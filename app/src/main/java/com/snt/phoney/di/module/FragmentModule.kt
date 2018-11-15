@@ -39,17 +39,16 @@ abstract class FragmentModule {
     abstract fun contributeSigninFragment(): SigninFragment
 
     @ContributesAndroidInjector
-    abstract fun contributeSignupFragment(): SetupWizardFragment
-
-
-    @ContributesAndroidInjector
-    abstract fun contributeStepOneFragment(): SetupWizardOneFragment
+    abstract fun contributeSetupWizardFragment(): SetupWizardFragment
 
     @ContributesAndroidInjector
-    abstract fun contributeStepTwoFragment(): SetupWizardTwoFragment
+    abstract fun contributeSetupWizardOneFragment(): SetupWizardOneFragment
 
     @ContributesAndroidInjector
-    abstract fun contributeStepThreeFragment(): SetupWizardThreeFragment
+    abstract fun contributeSetupWizardTwoFragment(): SetupWizardTwoFragment
+
+    @ContributesAndroidInjector
+    abstract fun contributeSetupWizardThreeFragment(): SetupWizardThreeFragment
 
     @ContributesAndroidInjector
     abstract fun contributeStartupFragment(): StartupFragment

@@ -17,10 +17,6 @@ import com.snt.phoney.ui.setup.SetupWizardActivity
 import kotlinx.android.synthetic.main.fragment_signin.*
 
 /**
- * A simple [Fragment] subclass.
- * Use the [SigninFragment.newInstance] factory method to
- * create an instance of this fragment.
- *
  */
 class SigninFragment : BaseFragment() {
 

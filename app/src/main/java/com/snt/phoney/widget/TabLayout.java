@@ -31,7 +31,6 @@ import android.os.Build;
 import android.text.Layout;
 import android.text.TextUtils;
 import android.util.AttributeSet;
-import android.util.Log;
 import android.util.TypedValue;
 import android.view.Gravity;
 import android.view.LayoutInflater;
@@ -41,9 +40,6 @@ import android.view.ViewGroup;
 import android.view.ViewParent;
 import android.view.accessibility.AccessibilityEvent;
 import android.view.accessibility.AccessibilityNodeInfo;
-import android.view.animation.DecelerateInterpolator;
-import android.view.animation.Interpolator;
-import android.view.animation.LinearInterpolator;
 import android.widget.HorizontalScrollView;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
@@ -73,9 +69,6 @@ import androidx.core.view.GravityCompat;
 import androidx.core.view.PointerIconCompat;
 import androidx.core.view.ViewCompat;
 import androidx.core.widget.TextViewCompat;
-import androidx.interpolator.view.animation.FastOutLinearInInterpolator;
-import androidx.interpolator.view.animation.FastOutSlowInInterpolator;
-import androidx.interpolator.view.animation.LinearOutSlowInInterpolator;
 import androidx.viewpager.widget.PagerAdapter;
 import androidx.viewpager.widget.ViewPager;
 
@@ -233,14 +226,14 @@ public class TabLayout extends HorizontalScrollView {
          *
          * @param tab The tab that was selected
          */
-        public void onTabSelected(Tab tab);
+        void onTabSelected(Tab tab);
 
         /**
          * Called when a tab exits the selected state.
          *
          * @param tab The tab that was unselected
          */
-        public void onTabUnselected(Tab tab);
+        void onTabUnselected(Tab tab);
 
         /**
          * Called when a tab that is already selected is chosen again by the user. Some applications
@@ -248,7 +241,7 @@ public class TabLayout extends HorizontalScrollView {
          *
          * @param tab The tab that was reselected.
          */
-        public void onTabReselected(Tab tab);
+        void onTabReselected(Tab tab);
     }
 
     private final ArrayList<Tab> mTabs = new ArrayList<>();
@@ -1109,12 +1102,7 @@ public class TabLayout extends HorizontalScrollView {
             mScrollAnimator = new ValueAnimator();
             mScrollAnimator.setInterpolator(AnimationUtils.FAST_OUT_SLOW_IN_INTERPOLATOR);
             mScrollAnimator.setDuration(ANIMATION_DURATION);
-            mScrollAnimator.addUpdateListener(new ValueAnimator.AnimatorUpdateListener() {
-                @Override
-                public void onAnimationUpdate(ValueAnimator animator) {
-                    scrollTo((int) animator.getAnimatedValue(), 0);
-                }
-            });
+            mScrollAnimator.addUpdateListener(animator -> scrollTo((int) animator.getAnimatedValue(), 0));
         }
     }
 
@@ -1898,7 +1886,7 @@ public class TabLayout extends HorizontalScrollView {
 
                 // First we'll find the widest tab
                 int largestTabWidth = 0;
-                for (int i = 0, z = count; i < z; i++) {
+                for (int i = 0; i < count; i++) {
                     View child = getChildAt(i);
                     if (child.getVisibility() == VISIBLE) {
                         largestTabWidth = Math.max(largestTabWidth, child.getMeasuredWidth());
@@ -2038,14 +2026,11 @@ public class TabLayout extends HorizontalScrollView {
                 animator.setInterpolator(AnimationUtils.FAST_OUT_SLOW_IN_INTERPOLATOR);
                 animator.setDuration(duration);
                 animator.setFloatValues(0, 1);
-                animator.addUpdateListener(new ValueAnimator.AnimatorUpdateListener() {
-                    @Override
-                    public void onAnimationUpdate(ValueAnimator animator) {
-                        final float fraction = animator.getAnimatedFraction();
-                        setIndicatorPosition(
-                                AnimationUtils.lerp(startLeft, targetLeft, fraction),
-                                AnimationUtils.lerp(startRight, targetRight, fraction));
-                    }
+                animator.addUpdateListener(animator1 -> {
+                    final float fraction = animator1.getAnimatedFraction();
+                    setIndicatorPosition(
+                            AnimationUtils.lerp(startLeft, targetLeft, fraction),
+                            AnimationUtils.lerp(startRight, targetRight, fraction));
                 });
                 animator.addListener(new AnimatorListenerAdapter() {
                     @Override

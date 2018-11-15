@@ -10,6 +10,10 @@ interface ProvinceCityDao {
     @Query("SELECT * FROM CITY")
     fun getCities(): List<City>?
 
+    @Query("SELECT * FROM CITY WHERE provinceId=:provinceId")
+    fun getCities(provinceId: Int): List<City>?
+
+    @Transaction
     @Query("SELECT * FROM PROVINCE")
     fun getProvinces(): List<Province>?
 

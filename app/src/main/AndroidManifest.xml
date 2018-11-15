@@ -62,11 +62,7 @@
             <!--<category android:name="android.intent.category.LAUNCHER" />-->
             <!--</intent-filter>-->
         </activity>
-        <activity
-            android:name=".ui.signin.StartupActivity"
-            android:screenOrientation="portrait">
 
-        </activity>
         <activity
             android:name=".ui.signin.SigninActivity"
             android:label="@string/btn_login"

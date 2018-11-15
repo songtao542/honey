@@ -29,7 +29,6 @@ import static androidx.annotation.RestrictTo.Scope.LIBRARY;
 
 
 /**
- * @hide
  */
 @RestrictTo(LIBRARY)
 public class ViewGroupUtils {

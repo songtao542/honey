@@ -1,7 +1,5 @@
 package com.snt.phoney.widget;
 
-import java.util.ArrayList;
-
 import android.app.Dialog;
 import android.content.Context;
 import android.graphics.drawable.ColorDrawable;
@@ -12,13 +10,14 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.view.ViewGroup.LayoutParams;
 import android.view.Window;
-import android.widget.AdapterView;
 import android.widget.BaseAdapter;
 import android.widget.ImageView;
 import android.widget.ImageView.ScaleType;
 import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.TextView;
+
+import java.util.ArrayList;
 
 public class PopupMenu extends Dialog {
 
@@ -44,7 +43,7 @@ public class PopupMenu extends Dialog {
     private ListView list;
     private int itemHeight = LinearLayout.LayoutParams.WRAP_CONTENT;
     private int textColor = 0xff000000;
-    private ArrayList<MenuItem> items = new ArrayList<MenuItem>();
+    private ArrayList<MenuItem> items = new ArrayList<>();
     private OnMenuItemClickListener onMenuItemClickListener;
 
     private int position = 0;
@@ -65,15 +64,11 @@ public class PopupMenu extends Dialog {
 
         list.setAdapter(adapter);
 
-        list.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-
-            @Override
-            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                dismiss();
-                PopupMenu.this.position = position;
-                if (onMenuItemClickListener != null) {
-                    onMenuItemClickListener.onOptionsItemSelected(((MenuItemView) view).getMenuItem());
-                }
+        list.setOnItemClickListener((parent, view, position, id) -> {
+            dismiss();
+            PopupMenu.this.position = position;
+            if (onMenuItemClickListener != null) {
+                onMenuItemClickListener.onOptionsItemSelected(((MenuItemView) view).getMenuItem());
             }
         });
 
@@ -447,8 +442,8 @@ public class PopupMenu extends Dialog {
         this.onMenuItemClickListener = onMenuItemClickListener;
     }
 
-    public static interface OnMenuItemClickListener {
-        public void onOptionsItemSelected(MenuItem item);
+    public interface OnMenuItemClickListener {
+        void onOptionsItemSelected(MenuItem item);
     }
 
     private class DropMenuAdapter extends BaseAdapter {

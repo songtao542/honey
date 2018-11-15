@@ -147,8 +147,7 @@ public class AppSettings {
         try {
             Bundle b = cr.call(CONTENT_URI, CALL_METHOD_GET, name, null);
             if (b != null) {
-                String value = b.getString(VALUE);
-                return value;
+                return b.getString(VALUE);
             }
         } catch (Exception e) {
             Log.w(TAG, "Can't get key " + name + " from " + CONTENT_URI, e);
@@ -161,8 +160,7 @@ public class AppSettings {
                 Log.w(TAG, "Can't get key " + name + " from " + CONTENT_URI);
                 return null;
             }
-            String value = c.moveToNext() ? c.getString(0) : null;
-            return value;
+            return c.moveToNext() ? c.getString(0) : null;
         } catch (Exception e) {
             Log.w(TAG, "Can't get key " + name + " from " + CONTENT_URI, e);
             return null;

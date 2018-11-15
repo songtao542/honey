@@ -8,7 +8,6 @@ import androidx.recyclerview.widget.RecyclerView
 import com.snt.phoney.R
 
 /**
- * [RecyclerView.Adapter] that can display a [DummyItem] and makes a call to the
  */
 class OfficialRecommendRecyclerViewAdapter() : RecyclerView.Adapter<OfficialRecommendRecyclerViewAdapter.ViewHolder>() {
 

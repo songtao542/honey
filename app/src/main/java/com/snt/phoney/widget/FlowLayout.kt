@@ -50,7 +50,7 @@ class FlowLayout : FlexboxLayout {
             val width = MeasureSpec.getSize(widthMeasureSpec)
             val childWidth = (width - paddingLeft - paddingRight - (space * (column - 1))) / column
             val childHeight = if (square) childWidth else MarginLayoutParams.WRAP_CONTENT
-            val lp = child?.layoutParams as? MarginLayoutParams
+            val lp = child.layoutParams as? MarginLayoutParams
                     ?: MarginLayoutParams(childWidth, childHeight)
             lp.width = childWidth
             lp.height = childHeight
@@ -60,7 +60,7 @@ class FlowLayout : FlexboxLayout {
             if (index > column - 1) {//第一行不要设置topMargin
                 lp.topMargin = space
             }
-            child?.layoutParams = lp
+            child.layoutParams = lp
         }
         super.onMeasure(widthMeasureSpec, heightMeasureSpec)
     }

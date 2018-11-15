@@ -25,8 +25,6 @@ import retrofit2.http.GET
 import retrofit2.http.POST
 
 interface Api {
-//    @POST("user/login")
-//    fun login(@Field("username") username: String, @Field("password") password: String): Single<Response<User>>
 
     @FormUrlEncoded
     @POST("user/login")
@@ -59,16 +57,16 @@ interface Api {
      */
     @FormUrlEncoded
     @POST("users/setSex")
-    fun setUserSex(token: String,
-                   sex: Int): Single<Response<String>>
+    fun setUserSex(@Field("token") token: String,
+                   @Field("sex") sex: Int): Single<Response<String>>
 
     @FormUrlEncoded
     @POST("users/setFeatures")
-    fun setUserFeatures(token: String,
-                        height: Int,
-                        weight: Float,
-                        age: Int,
-                        cup: String): Single<Response<String>>
+    fun setUserFeatures(@Field("token") token: String,
+                        @Field("height") height: Int,
+                        @Field("weight") weight: Float,
+                        @Field("age") age: Int,
+                        @Field("cup") cup: String): Single<Response<String>>
 
 
     @FormUrlEncoded

@@ -32,4 +32,13 @@ object DaoModule {
         return AppDatabase.getInstance(application).provinceCityDao()
     }
 
+
+    @JvmStatic
+    @Singleton
+    @Provides
+    fun provideAppDatabase(application: Application): AppDatabase {
+        return AppDatabase.getInstance(application)
+    }
+
+
 }

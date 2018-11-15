@@ -2,6 +2,7 @@ package com.snt.phoney.domain.model
 
 import androidx.room.Entity
 import androidx.room.ForeignKey
+import androidx.room.Ignore
 import androidx.room.PrimaryKey
 import com.github.promeg.pinyinhelper.Pinyin
 import kotlinx.coroutines.async
@@ -15,17 +16,11 @@ import kotlinx.serialization.Serializable
             childColumns = ["provinceId"],
             onUpdate = ForeignKey.CASCADE,
             onDelete = ForeignKey.CASCADE
-    ),
-    ForeignKey(entity = Province::class,
-            parentColumns = ["name"],
-            childColumns = ["provinceName"],
-            onUpdate = ForeignKey.CASCADE,
-            onDelete = ForeignKey.CASCADE
     )
 ], tableName = "City")
 data class City(@PrimaryKey var id: Int = 0,
                 var provinceId: Int = 0,
-                var provinceName: String = "",
+                @Ignore var provinceName: String? = null,
                 var name: String? = null)
 
 

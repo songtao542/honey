@@ -61,21 +61,15 @@ public class PasswordInputView extends AppCompatEditText {
 
     /**
      * 字体颜色
-     *
-     * @param context
      */
     private int textColor;
 
     /**
      * 默认框框颜色
-     *
-     * @param context
      */
     private int boxNormalColor;
     /**
      * 选中框框颜色
-     *
-     * @param context
      */
     private int boxSelectColor;
 

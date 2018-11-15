@@ -1,28 +1,23 @@
 package com.snt.phoney.repository
 
 import android.app.Application
-import com.appmattus.layercache.Cache
-import com.appmattus.layercache.MapCache
-import com.appmattus.layercache.jsonSerializer
 import com.snt.phoney.api.Api
 import com.snt.phoney.domain.model.City
 import com.snt.phoney.domain.model.Province
 import com.snt.phoney.domain.model.Response
-import com.snt.phoney.domain.model.User
 import com.snt.phoney.domain.persistence.ProvinceCityDao
 import com.snt.phoney.domain.repository.LocationRepository
-import com.snt.phoney.utils.cache.KeyValueDatabaseCache
 import io.reactivex.Single
-import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.rxkotlin.subscribeBy
-import io.reactivex.schedulers.Schedulers
 import kotlinx.coroutines.async
 import kotlinx.coroutines.runBlocking
 import javax.inject.Inject
 
+@SuppressWarnings("WeakerAccess")
 class LocationRepositoryImpl @Inject constructor(private val application: Application, private val api: Api, private val provinceCityDao: ProvinceCityDao) : LocationRepository {
 
     private var _provinces = ArrayList<Province>()
+
     var provinces: List<Province>
         set(value) {
             value?.let {
@@ -61,13 +56,17 @@ class LocationRepositoryImpl @Inject constructor(private val application: Applic
 
     override val cities: List<City>
         get() {
-            val cities = ArrayList<City>()
-            provinces.forEach {
-                it.cities?.forEach { city ->
-                    cities.add(city)
+            val results = ArrayList<City>()
+            provinces.forEach { province ->
+                val cities = provinceCityDao.getCities(province.id)
+                cities?.forEach { city ->
+                    city.provinceId = province.id
+                    city.provinceName = province.name
+                    results.add(city)
                 }
+                province.cities = cities
             }
-            return cities
+            return results
         }
 
 
