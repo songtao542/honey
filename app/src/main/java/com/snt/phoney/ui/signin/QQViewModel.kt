@@ -2,6 +2,7 @@ package com.snt.phoney.ui.signin
 
 import android.app.Activity
 import android.app.Application
+import android.content.Intent
 import android.util.Log
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.AndroidViewModel
@@ -78,6 +79,10 @@ class QQViewModel(application: Application) : AndroidViewModel(application), IUi
             override fun onError(error: UiError?) {
             }
         })
+    }
+
+    fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+        Tencent.onActivityResultData(requestCode, resultCode, data, this)
     }
 }
 

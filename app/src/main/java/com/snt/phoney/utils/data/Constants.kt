@@ -30,13 +30,10 @@ object Constants {
     object Cache {
         const val USER_CACHE_NAME: String = "user_cache"
         const val USER: String = "user"
-
-        const val USER_VEHICLES_CACHE_NAME: String = "user_vehicles_cache"
-        const val USER_VEHICLES: String = "user_vehicles"
     }
 
     object Api {
-        const val API_BASE_URL: String = "http://phoney.alance.pub"
+        const val BASE_URL: String = "http://phoney.alance.pub"
     }
 
     object Tencent {
@@ -44,5 +41,28 @@ object Constants {
         const val APP_KEY = "Jzgzv5j0ro5RWVUP"
     }
 
+    object Wechat {
+        const val APP_ID = "wxa876e58bf61e9dac"
+        const val APP_SECRET = "11b4b2933148e7b9e07562b5a6b5b16b"
+    }
+
+    object Weibo {
+        const val APP_KEY = "2202388875"
+        const val APP_SECRET = "055a2833b9cc9d6f0c5de0550d861018"
+        const val BASE_URL: String = "https://api.weibo.com"
+    }
+
+    object UMeng {
+        const val APP_KEY = "5be8e7eaf1f556b885000206"
+    }
+
+    object AMap {
+        const val APP_KEY = "23a40ad949d9ab5a652d4920642ddb19"
+    }
+
+    object JPush {
+        const val APP_KEY = "eacade5d281c93bfb55b59d3"
+        const val APP_SECRET = "beff4196dff2f2492ab7e429"
+    }
 }
 

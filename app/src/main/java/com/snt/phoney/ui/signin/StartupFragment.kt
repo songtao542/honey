@@ -12,14 +12,14 @@ import com.snt.phoney.base.BaseFragment
 import com.snt.phoney.extensions.addFragmentSafely
 import com.snt.phoney.extensions.snackbar
 import com.snt.phoney.ui.setup.SetupWizardActivity
-import com.tencent.tauth.Tencent
 import kotlinx.android.synthetic.main.activity_startup.*
 
 
 class StartupFragment : BaseFragment() {
 
     lateinit var viewModel: StartupViewModel
-    lateinit var qqViewModel: QQViewModel
+    private lateinit var qqViewModel: QQViewModel
+    private lateinit var weiboViewModel: WeiboViewModel
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         return inflater.inflate(R.layout.activity_startup, container, false)
@@ -29,6 +29,7 @@ class StartupFragment : BaseFragment() {
         super.onActivityCreated(savedInstanceState)
         viewModel = ViewModelProviders.of(this, viewModelFactory).get(StartupViewModel::class.java)
         qqViewModel = ViewModelProviders.of(this).get(QQViewModel::class.java)
+        weiboViewModel = ViewModelProviders.of(this).get(WeiboViewModel::class.java)
 
         signin.setOnClickListener {
             activity?.addFragmentSafely(R.id.containerLayout, SigninFragment.newInstance(), "signin")
@@ -40,8 +41,23 @@ class StartupFragment : BaseFragment() {
             }
         }
 
+        weibo.setOnClickListener {
+            activity?.let { activity ->
+                weiboViewModel.login(activity)
+            }
+        }
+
         qqViewModel.user.observe(this, Observer {
             viewModel.signupByThirdPlatform(it.openId, it.thirdToken, it.plate, it.nickName, it.headPic)
+        })
+
+        weiboViewModel.weiboUser.observe(this, Observer {
+            viewModel.signupByThirdPlatform(it.uid ?: "", it.token ?: "", "3", it.name
+                    ?: "", it.avatarLarge ?: "")
+        })
+
+        weiboViewModel.error.observe(this, Observer {
+            snackbar(it)
         })
 
         viewModel.error.observe(this, Observer {
@@ -58,7 +74,8 @@ class StartupFragment : BaseFragment() {
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
-        Tencent.onActivityResultData(requestCode, resultCode, data, qqViewModel)
+        qqViewModel.onActivityResult(requestCode, resultCode, data)
+        weiboViewModel.onActivityResult(requestCode, resultCode, data)
     }
 
     companion object {

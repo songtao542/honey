@@ -1,7 +1,7 @@
 package com.snt.phoney.di.module
 
 import com.snt.phoney.BuildConfig
-import com.snt.phoney.api.Api
+import com.snt.phoney.api.WeiboApi
 import com.snt.phoney.utils.adapter.LiveDataCallAdapterFactory
 import com.snt.phoney.utils.adapter.ResponseConverterFactory
 import com.snt.phoney.utils.data.Constants
@@ -15,15 +15,15 @@ import javax.inject.Named
 import javax.inject.Singleton
 
 @Module
-object RestApiServiceModule {
+object WeiboApiServiceModule {
 
     @JvmStatic
     @Singleton
     @Provides
-    @Named("api")
-    fun provideApiRetrofit(): Retrofit {
+    @Named("weibo_api")
+    fun provideWeiboApiRetrofit(): Retrofit {
         return Retrofit.Builder()
-                .baseUrl(Constants.Api.BASE_URL)
+                .baseUrl(Constants.Weibo.BASE_URL)
                 .addConverterFactory(ResponseConverterFactory.create())
                 .addCallAdapterFactory(RxJava2CallAdapterFactory.create())
                 .addCallAdapterFactory(LiveDataCallAdapterFactory())
@@ -54,5 +54,5 @@ object RestApiServiceModule {
     @JvmStatic
     @Singleton
     @Provides
-    fun provideApi(@Named("api") retrofit: Retrofit): Api = retrofit.create(Api::class.java)
+    fun provideWeiboApi(@Named("weibo_api") retrofit: Retrofit): WeiboApi = retrofit.create(WeiboApi::class.java)
 }
