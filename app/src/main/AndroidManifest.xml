@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
     package="com.snt.phoney">
 
     <uses-permission android:name="android.permission.INTERNET" />
@@ -46,6 +47,22 @@
             android:screenOrientation="behind"
             android:theme="@android:style/Theme.Translucent.NoTitleBar" />
 
+        <activity
+            android:name="com.sina.weibo.sdk.web.WeiboSdkWebActivity"
+            android:configChanges="keyboardHidden|orientation"
+            android:exported="false"
+            android:screenOrientation="portrait"
+            android:theme="@style/AppTheme.Common"
+            android:windowSoftInputMode="adjustResize"
+            tools:node="replace"></activity>
+
+        <activity
+            android:name=".wxapi.WXEntryActivity"
+            android:exported="true"
+            android:screenOrientation="portrait"
+            android:theme="@style/AppTheme.NoDisplay"
+            tools:node="replace"></activity>
+
         <provider
             android:name=".provider.SettingsProvider"
             android:authorities="com.snt.phoney.settings"
@@ -64,7 +81,7 @@
         </activity>
 
         <activity
-            android:name=".ui.signin.SigninActivity"
+            android:name=".ui.signin.SignupActivity"
             android:label="@string/btn_login"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme.FullScreen">
@@ -74,6 +91,7 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+
         <activity
             android:name=".ui.setup.SetupWizardActivity"
             android:screenOrientation="portrait"
@@ -82,11 +100,13 @@
         <activity android:name=".base.CommonActivity" />
 
         <activity android:name=".ui.dating.DatingActivity" />
+
         <activity android:name=".ui.vip.VipActivity" />
 
         <activity
             android:name=".ui.nearby.NearbyActivity"
             android:theme="@style/AppTheme.Common" />
+
         <activity android:name=".ui.user.UserActivity"></activity>
     </application>
 

@@ -1,9 +1,6 @@
 package com.snt.phoney.domain.model
 
-import androidx.room.Entity
-import androidx.room.ForeignKey
-import androidx.room.Ignore
-import androidx.room.PrimaryKey
+import androidx.room.*
 import com.github.promeg.pinyinhelper.Pinyin
 import kotlinx.coroutines.async
 import kotlinx.coroutines.runBlocking
@@ -17,7 +14,7 @@ import kotlinx.serialization.Serializable
             onUpdate = ForeignKey.CASCADE,
             onDelete = ForeignKey.CASCADE
     )
-], tableName = "City")
+], tableName = "City", indices = [Index(value = ["provinceId"], unique = true)])
 data class City(@PrimaryKey var id: Int = 0,
                 var provinceId: Int = 0,
                 @Ignore var provinceName: String? = null,

@@ -21,6 +21,10 @@ import com.snt.phoney.domain.repository.UserCredentialRepository
 import io.reactivex.Single
 import javax.inject.Inject
 
+const val PLATFORM_QQ = "0"
+const val PLATFORM_WECHAT = "1"
+const val PLATFORM_WEIBO = "3"
+
 class SigninUseCase @Inject constructor(private val repository: UserCredentialRepository, private val cache: CacheRepository) {
     fun signup(phone: String, msgId: String, code: String, deviceToken: String,
                osVersion: String, version: String, mobilePlate: String) =

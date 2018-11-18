@@ -46,7 +46,7 @@ object RestApiServiceModule {
             val url = request.url().newBuilder()
                     //.addQueryParameter(Constants.Api.APP_ID, Constants.Api.APP_ID_VALUE)
                     .build()
-            it.proceed(request.newBuilder().url(url).build())
+            return@addInterceptor it.proceed(request.newBuilder().url(url).build())
         }
         return okHttpBuilder
     }

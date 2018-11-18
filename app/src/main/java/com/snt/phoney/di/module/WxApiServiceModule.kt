@@ -2,6 +2,7 @@ package com.snt.phoney.di.module
 
 import com.snt.phoney.BuildConfig
 import com.snt.phoney.api.WeiboApi
+import com.snt.phoney.api.WxApi
 import com.snt.phoney.utils.adapter.LiveDataCallAdapterFactory
 import com.snt.phoney.utils.adapter.ResponseConverterFactory
 import com.snt.phoney.utils.data.Constants
@@ -16,15 +17,15 @@ import javax.inject.Named
 import javax.inject.Singleton
 
 @Module
-object WeiboApiServiceModule {
+object WxApiServiceModule {
 
     @JvmStatic
     @Singleton
     @Provides
-    @Named("weibo_api")
+    @Named("wx_api")
     fun provideWeiboApiRetrofit(): Retrofit {
         return Retrofit.Builder()
-                .baseUrl(Constants.Weibo.BASE_URL)
+                .baseUrl(Constants.Wechat.BASE_URL)
                 .addConverterFactory(GsonConverterFactory.create())
                 .addCallAdapterFactory(RxJava2CallAdapterFactory.create())
                 .addCallAdapterFactory(LiveDataCallAdapterFactory())
@@ -42,12 +43,13 @@ object WeiboApiServiceModule {
             okHttpBuilder.addInterceptor(httpLoggingInterceptor)
         }
 
-        okHttpBuilder.addInterceptor {
-            val request = it.request()
+        okHttpBuilder.addInterceptor { chain ->
+            val request = chain.request()
             val url = request.url().newBuilder()
-                    //.addQueryParameter(Constants.Api.APP_ID, Constants.Api.APP_ID_VALUE)
+                    .addQueryParameter("appid", Constants.Wechat.APP_ID)
+                    .addQueryParameter("secret", Constants.Wechat.APP_SECRET)
                     .build()
-            return@addInterceptor it.proceed(request.newBuilder().url(url).build())
+            return@addInterceptor chain.proceed(request.newBuilder().url(url).build())
         }
         return okHttpBuilder
     }
@@ -55,5 +57,5 @@ object WeiboApiServiceModule {
     @JvmStatic
     @Singleton
     @Provides
-    fun provideWeiboApi(@Named("weibo_api") retrofit: Retrofit): WeiboApi = retrofit.create(WeiboApi::class.java)
+    fun provideWeiboApi(@Named("wx_api") retrofit: Retrofit): WxApi = retrofit.create(WxApi::class.java)
 }

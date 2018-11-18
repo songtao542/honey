@@ -32,6 +32,7 @@ import dagger.android.support.HasSupportFragmentInjector
 object AppInjector {
     fun init(app: App) {
         DaggerAppComponent.builder().application(app).build().inject(app)
+        //DaggerSignupComponent.builder().application(app).build().inject(app)
         app.registerActivityLifecycleCallbacks(object : Application.ActivityLifecycleCallbacks {
             override fun onActivityCreated(activity: Activity, savedInstanceState: Bundle?) {
                 handleActivity(activity)
@@ -58,11 +59,7 @@ object AppInjector {
         if (activity is FragmentActivity) {
             activity.supportFragmentManager.registerFragmentLifecycleCallbacks(
                     object : FragmentManager.FragmentLifecycleCallbacks() {
-                        override fun onFragmentCreated(
-                                fm: FragmentManager,
-                                f: Fragment,
-                                savedInstanceState: Bundle?
-                        ) {
+                        override fun onFragmentCreated(fm: FragmentManager, f: Fragment, savedInstanceState: Bundle?) {
                             if (f is Injectable) {
                                 AndroidSupportInjection.inject(f)
                             }

@@ -2,14 +2,16 @@ package com.snt.phoney.di.module
 
 import androidx.lifecycle.ViewModelProvider
 import com.snt.phoney.base.CommonActivity
+import com.snt.phoney.di.SignupScope
 import com.snt.phoney.di.ViewModelFactory
 import com.snt.phoney.ui.dating.DatingActivity
 import com.snt.phoney.ui.main.MainActivity
 import com.snt.phoney.ui.nearby.NearbyActivity
-import com.snt.phoney.ui.signin.SigninActivity
+import com.snt.phoney.ui.signin.SignupActivity
 import com.snt.phoney.ui.setup.SetupWizardActivity
 import com.snt.phoney.ui.user.UserActivity
 import com.snt.phoney.ui.vip.VipActivity
+import com.snt.phoney.wxapi.WXEntryActivity
 import dagger.Binds
 import dagger.Module
 import dagger.android.ContributesAndroidInjector
@@ -21,11 +23,16 @@ abstract class ActivityModule {
     @Binds
     abstract fun bindViewModelFactory(factory: ViewModelFactory): ViewModelProvider.Factory
 
+    //@SignupScope
     @ContributesAndroidInjector(modules = [FragmentModule::class])
-    internal abstract fun contributeSigninActivity(): SigninActivity
+    internal abstract fun contributeSignupActivity(): SignupActivity
+
+    //@SignupScope
+    @ContributesAndroidInjector(modules = [FragmentModule::class])
+    internal abstract fun contributeWXEntryActivity(): WXEntryActivity
 
     @ContributesAndroidInjector(modules = [FragmentModule::class])
-    internal abstract fun contributeSignupActivity(): SetupWizardActivity
+    internal abstract fun contributeSetupWizardActivity(): SetupWizardActivity
 
     @ContributesAndroidInjector(modules = [FragmentModule::class])
     internal abstract fun contributeMainActivity(): MainActivity

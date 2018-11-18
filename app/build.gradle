@@ -14,7 +14,13 @@ allOpen {
 
 android {
     signingConfigs {
-        config {
+        release {
+            keyAlias 'chunmi'
+            keyPassword 'sntchunmi20181107'
+            storeFile file('release.key')
+            storePassword 'sntchunmi20181107'
+        }
+        debug {
             keyAlias 'chunmi'
             keyPassword 'sntchunmi20181107'
             storeFile file('release.key')
@@ -36,6 +42,7 @@ android {
                 JPUSH_APPKEY : "eacade5d281c93bfb55b59d3",
                 JPUSH_CHANNEL: "developer-default"
         ]
+        javaCompileOptions { annotationProcessorOptions { includeCompileClasspath = true } }
     }
     packagingOptions {
         doNotStrip '*/mips/*.so'
@@ -52,6 +59,7 @@ android {
             //multiDexKeepProguard file('multidex-config.pro')
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
             //testCoverageEnabled !project.hasProperty('android.injected.invoked.from.ide')
+            signingConfig signingConfigs.debug
         }
         release {
             shrinkResources true
@@ -59,6 +67,7 @@ android {
             multiDexKeepFile file('multidex-config.txt')
             multiDexKeepProguard file('multidex-config.pro')
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+            signingConfig signingConfigs.release
         }
     }
     dataBinding {
@@ -101,9 +110,6 @@ dependencies {
     implementation deps.androidx.lifecycle_viewmodel_ktx
     implementation deps.androidx.lifecycle_livedata
     implementation deps.androidx.lifecycle_runtime
-    implementation 'androidx.legacy:legacy-support-v4:1.0.0-alpha1'
-    implementation 'androidx.lifecycle:lifecycle-extensions:2.0.0-alpha1'
-    implementation 'androidx.recyclerview:recyclerview:1.0.0-alpha1'
     kapt deps.androidx.lifecycle_compiler
     implementation deps.androidx.lifecycle_common_java8
     implementation deps.androidx.lifecycle_reactivestreams
@@ -203,14 +209,14 @@ dependencies {
     implementation deps.dagger.runtime
     implementation deps.dagger.android
     implementation deps.dagger.android_support
-    kapt deps.dagger.android_processor
+    kapt  files('libs/dagger-android-processor-2.19.jar')
+    //kapt deps.dagger.android_processor
     kapt deps.dagger.compiler
     implementation deps.kotlin.stdlib
     implementation deps.kotlinx.serialization_runtime
     implementation deps.kotlinx.coroutines_android
     androidTestImplementation deps.kotlin.reflect
     implementation deps.timber
-    implementation 'com.android.support:support-annotations:28.0.0'
 
     implementation "cn.jiguang.sdk:jpush:3.1.6"
     implementation "cn.jiguang.sdk:jcore:1.2.5"

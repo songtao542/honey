@@ -1,5 +1,6 @@
 package com.snt.phoney.di.module
 
+import com.snt.phoney.di.SignupScope
 import com.snt.phoney.ui.dating.create.CreateDatingFragment
 import com.snt.phoney.ui.dating.detail.DatingDetailFragment
 import com.snt.phoney.ui.dating.list.DatingListFragment
@@ -17,7 +18,7 @@ import com.snt.phoney.ui.privacy.CreateLockStep2Fragment
 import com.snt.phoney.ui.report.ReportFragment
 import com.snt.phoney.ui.settings.SettingsFragment
 import com.snt.phoney.ui.share.ShareFragment
-import com.snt.phoney.ui.signin.SigninFragment
+import com.snt.phoney.ui.signin.SignupFragment
 import com.snt.phoney.ui.signin.StartupFragment
 import com.snt.phoney.ui.setup.*
 import com.snt.phoney.ui.square.SquareFragment
@@ -35,8 +36,14 @@ import dagger.android.ContributesAndroidInjector
 @Suppress("unused")
 @Module
 abstract class FragmentModule {
+
+    //@SignupScope
     @ContributesAndroidInjector
-    abstract fun contributeSigninFragment(): SigninFragment
+    abstract fun contributeStartupFragment(): StartupFragment
+
+    //@SignupScope
+    @ContributesAndroidInjector
+    abstract fun contributeSigninFragment(): SignupFragment
 
     @ContributesAndroidInjector
     abstract fun contributeSetupWizardFragment(): SetupWizardFragment
@@ -49,9 +56,6 @@ abstract class FragmentModule {
 
     @ContributesAndroidInjector
     abstract fun contributeSetupWizardThreeFragment(): SetupWizardThreeFragment
-
-    @ContributesAndroidInjector
-    abstract fun contributeStartupFragment(): StartupFragment
 
     @ContributesAndroidInjector
     abstract fun contributeBindPhoneFragment(): BindPhoneFragment

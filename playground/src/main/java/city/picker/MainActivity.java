@@ -11,6 +11,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.zaaach.citypicker.CityPickerFragment;
+import com.zaaach.citypicker.adapter.CityPicker;
 import com.zaaach.citypicker.adapter.OnRequestLocationListener;
 import com.zaaach.citypicker.adapter.OnResultListener;
 import com.zaaach.citypicker.model.City;
@@ -112,7 +113,7 @@ public class MainActivity extends AppCompatActivity implements CompoundButton.On
                         })
                         .requestLocationListener(new OnRequestLocationListener() {
                             @Override
-                            public void onRequestLocation(final CityPickerFragment picker) {
+                            public void onRequestLocation(final CityPicker picker) {
                                 //开始定位，这里模拟一下定位
                                 new Handler().postDelayed(new Runnable() {
                                     @Override

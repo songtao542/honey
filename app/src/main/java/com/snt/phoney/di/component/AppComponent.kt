@@ -32,8 +32,8 @@ import javax.inject.Singleton
         modules = [
             AndroidInjectionModule::class,
             AndroidSupportInjectionModule::class,
-            AppModule::class]
-)
+            AppModule::class
+        ])
 interface AppComponent : AndroidInjector<App> {
 
     @Component.Builder

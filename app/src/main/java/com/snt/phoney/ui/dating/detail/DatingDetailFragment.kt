@@ -6,8 +6,6 @@ import androidx.lifecycle.ViewModelProviders
 
 import com.snt.phoney.R
 import com.snt.phoney.base.BaseFragment
-import com.snt.phoney.base.Page
-import com.snt.phoney.ui.dating.DatingActivity
 
 class DatingDetailFragment : BaseFragment() {
 

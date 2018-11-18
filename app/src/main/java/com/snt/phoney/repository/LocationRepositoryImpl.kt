@@ -12,8 +12,9 @@ import io.reactivex.rxkotlin.subscribeBy
 import kotlinx.coroutines.async
 import kotlinx.coroutines.runBlocking
 import javax.inject.Inject
+import javax.inject.Singleton
 
-@SuppressWarnings("WeakerAccess")
+@Singleton
 class LocationRepositoryImpl @Inject constructor(private val application: Application, private val api: Api, private val provinceCityDao: ProvinceCityDao) : LocationRepository {
 
     private var _provinces = ArrayList<Province>()

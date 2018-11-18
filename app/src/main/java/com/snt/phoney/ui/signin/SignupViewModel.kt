@@ -17,23 +17,21 @@ package com.snt.phoney.ui.signin
 import android.app.Application
 import android.text.TextUtils
 import android.util.Log
-import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
-import com.snt.phoney.domain.model.Response
+import com.snt.phoney.di.SignupScope
 import com.snt.phoney.domain.model.User
 import com.snt.phoney.domain.usecase.SigninUseCase
 import com.snt.phoney.extensions.getAndroidVersion
 import com.snt.phoney.extensions.getInstanceId
 import com.snt.phoney.extensions.getVersionName
-import io.reactivex.Single
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.disposables.Disposable
 import io.reactivex.rxkotlin.subscribeBy
 import io.reactivex.schedulers.Schedulers
 import javax.inject.Inject
 
-class SigninViewModel @Inject constructor(private val application: Application, private val usecase: SigninUseCase) : ViewModel() {
+class SignupViewModel @Inject constructor(private val application: Application, private val usecase: SigninUseCase) : ViewModel() {
 
     val verificationCode = MutableLiveData<String>()
 

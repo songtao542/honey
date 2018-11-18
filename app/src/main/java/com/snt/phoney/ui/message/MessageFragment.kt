@@ -6,8 +6,6 @@ import android.view.*
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.snt.phoney.R
 import com.snt.phoney.base.BaseFragment
-import com.snt.phoney.base.Page
-import com.snt.phoney.ui.dating.DatingActivity
 import kotlinx.android.synthetic.main.fragment_message_list.*
 
 /**

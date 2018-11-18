@@ -4,18 +4,20 @@ import android.app.Activity
 import android.app.Application
 import android.content.Intent
 import android.util.Log
-import androidx.fragment.app.Fragment
 import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.MutableLiveData
+import com.snt.phoney.domain.model.QQUser
 import com.snt.phoney.utils.data.Constants
 import com.tencent.connect.UserInfo
 import com.tencent.tauth.IUiListener
 import com.tencent.tauth.Tencent
 import com.tencent.tauth.UiError
 import org.json.JSONObject
-import java.lang.Exception
+import javax.inject.Inject
+import com.snt.phoney.di.SignupScope
 
-class QQViewModel(application: Application) : AndroidViewModel(application), IUiListener {
+//@SignupScope
+class QQViewModel @Inject constructor(application: Application) : AndroidViewModel(application), IUiListener {
 
     private var mTencent: Tencent = Tencent.createInstance(Constants.Tencent.APP_ID, getApplication())
 
@@ -34,8 +36,8 @@ class QQViewModel(application: Application) : AndroidViewModel(application), IUi
                 openId = it.getString("openid")
                 val accessToken = it.getString("access_token")
                 val expiresIn = it.getString("expires_in")
-                mTencent?.setAccessToken(accessToken, expiresIn)
-                mTencent?.openId = openId
+                mTencent.setAccessToken(accessToken, expiresIn)
+                mTencent.openId = openId
                 token.value = accessToken
                 getUserInfo()
             }
@@ -86,12 +88,3 @@ class QQViewModel(application: Application) : AndroidViewModel(application), IUi
     }
 }
 
-data class QQUser(val openId: String,
-                  val thirdToken: String,
-                  val plate: String,
-                  val nickName: String,
-                  val headPic: String,
-                  val sex: Int,
-                  val province: String,
-                  val city: String,
-                  val year: Int)

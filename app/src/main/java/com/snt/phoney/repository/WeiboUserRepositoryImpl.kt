@@ -12,8 +12,11 @@ import com.snt.phoney.utils.data.Constants
 import io.reactivex.Single
 import kotlinx.coroutines.async
 import kotlinx.coroutines.runBlocking
+import javax.inject.Inject
+import javax.inject.Singleton
 
-class WeiboUserRepositoryImpl(private val application: Application, private val weiboApi: WeiboApi) : WeiboUserRepository {
+@Singleton
+class WeiboUserRepositoryImpl @Inject constructor(private val application: Application, private val weiboApi: WeiboApi) : WeiboUserRepository {
 
     override fun getUserInfo(accessToken: String, uid: String): Single<WeiboUser> {
         return weiboApi.getUserInfo(accessToken, uid)

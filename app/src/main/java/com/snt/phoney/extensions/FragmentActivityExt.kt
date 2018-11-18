@@ -97,7 +97,7 @@ inline fun FragmentActivity.findFragmentByTag(tag: String): Fragment? {
 /**
  * Method to try to hide soft keyboard
  */
-fun FragmentActivity.hideSoftKeyboard(): Boolean {
+fun Activity.hideSoftKeyboard(): Boolean {
     val view = currentFocus
     view?.let {
         val inputMethodManager = getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager

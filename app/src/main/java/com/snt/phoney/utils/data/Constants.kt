@@ -18,6 +18,10 @@
 package com.snt.phoney.utils.data
 
 object Constants {
+    object Extra {
+        const val USER = "user"
+    }
+
     object Preference {
         const val USER_EMAIL: String = "email"
         const val DISTANCE_IN_METRIC: String = "distance_in_metric"
@@ -30,6 +34,8 @@ object Constants {
     object Cache {
         const val USER_CACHE_NAME: String = "user_cache"
         const val USER: String = "user"
+
+        const val WX_ACCESS_TOKEN = "wx_access_token"
     }
 
     object Api {
@@ -44,12 +50,15 @@ object Constants {
     object Wechat {
         const val APP_ID = "wxa876e58bf61e9dac"
         const val APP_SECRET = "11b4b2933148e7b9e07562b5a6b5b16b"
+        const val BASE_URL = "https://api.weixin.qq.com"
     }
 
     object Weibo {
         const val APP_KEY = "2202388875"
         const val APP_SECRET = "055a2833b9cc9d6f0c5de0550d861018"
-        const val BASE_URL: String = "https://api.weibo.com"
+        const val BASE_URL = "https://api.weibo.com"
+        const val REDIRECT_URL = "https://api.weibo.com/oauth2/default.html"
+        const val SCOPE = "email,direct_messages_read,direct_messages_write,friendships_groups_read,friendships_groups_write,statuses_to_me_read,follow_app_official_microblog,invitation_write"
     }
 
     object UMeng {

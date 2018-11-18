@@ -16,7 +16,9 @@ import io.reactivex.disposables.Disposable
 import io.reactivex.rxkotlin.subscribeBy
 import io.reactivex.schedulers.Schedulers
 import javax.inject.Inject
+import com.snt.phoney.di.SignupScope
 
+//@SignupScope
 class StartupViewModel @Inject constructor(private val application: Application, private val signinUseCase: SigninUseCase) : ViewModel() {
 
     val error = MutableLiveData<String>()

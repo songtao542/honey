@@ -1,6 +1,7 @@
 package com.snt.phoney.di.module
 
 import androidx.lifecycle.ViewModel
+import com.snt.phoney.di.SignupScope
 import com.snt.phoney.di.ViewModelKey
 import com.snt.phoney.ui.dating.create.CreateDatingViewModel
 import com.snt.phoney.ui.dating.detail.DatingDetailViewModel
@@ -9,10 +10,9 @@ import com.snt.phoney.ui.nearby.NearbyViewModel
 import com.snt.phoney.ui.password.ForgetPasswordViewModel
 import com.snt.phoney.ui.privacy.CreateLockViewModel
 import com.snt.phoney.ui.report.ReportViewModel
-import com.snt.phoney.ui.signin.SigninViewModel
-import com.snt.phoney.ui.signin.StartupViewModel
 import com.snt.phoney.ui.setup.BindPhoneViewModel
 import com.snt.phoney.ui.setup.SetupWizardViewModel
+import com.snt.phoney.ui.signin.*
 import com.snt.phoney.ui.user.EditUserViewModel
 import com.snt.phoney.ui.user.UserInfoViewModel
 import com.snt.phoney.ui.vip.VipViewModel
@@ -26,13 +26,37 @@ import dagger.multibindings.IntoMap
 abstract class ViewModelModule {
     @Binds
     @IntoMap
-    @ViewModelKey(SigninViewModel::class)
-    abstract fun bindSigninViewModel(viewModel: SigninViewModel): ViewModel
+    @ViewModelKey(SignupViewModel::class)
+    abstract fun bindSigninViewModel(viewModel: SignupViewModel): ViewModel
 
     @Binds
     @IntoMap
     @ViewModelKey(SetupWizardViewModel::class)
     abstract fun bindSetupWizardViewModel(viewModel: SetupWizardViewModel): ViewModel
+
+    @Binds
+    @IntoMap
+//    @SignupScope
+    @ViewModelKey(StartupViewModel::class)
+    abstract fun bindStartupViewModel(viewModel: StartupViewModel): ViewModel
+
+    @Binds
+    @IntoMap
+//    @SignupScope
+    @ViewModelKey(WxViewModel::class)
+    abstract fun bindWxViewModel(viewModel: WxViewModel): ViewModel
+
+    @Binds
+    @IntoMap
+//    @SignupScope
+    @ViewModelKey(WeiboViewModel::class)
+    abstract fun bindWeiboViewModel(viewModel: WeiboViewModel): ViewModel
+
+    @Binds
+    @IntoMap
+//    @SignupScope
+    @ViewModelKey(QQViewModel::class)
+    abstract fun bindQQViewModel(viewModel: QQViewModel): ViewModel
 
     @Binds
     @IntoMap
@@ -94,11 +118,6 @@ abstract class ViewModelModule {
     @IntoMap
     @ViewModelKey(CreateLockViewModel::class)
     abstract fun bindCreateLockViewModel(viewModel: CreateLockViewModel): ViewModel
-
-    @Binds
-    @IntoMap
-    @ViewModelKey(StartupViewModel::class)
-    abstract fun bindStartupViewModel(viewModel: StartupViewModel): ViewModel
 
 
 }

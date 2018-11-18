@@ -5,30 +5,39 @@ import android.app.Application
 import android.content.Intent
 import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.MutableLiveData
+import com.sina.weibo.sdk.WbSdk
+import com.sina.weibo.sdk.auth.AuthInfo
 import com.sina.weibo.sdk.auth.Oauth2AccessToken
 import com.sina.weibo.sdk.auth.WbAuthListener
 import com.sina.weibo.sdk.auth.WbConnectErrorMessage
 import com.sina.weibo.sdk.auth.sso.SsoHandler
 import com.snt.phoney.domain.model.WeiboUser
 import com.snt.phoney.domain.usecase.WeiboSigninUseCase
+import com.snt.phoney.utils.data.Constants.Weibo
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.disposables.Disposable
 import io.reactivex.rxkotlin.subscribeBy
 import io.reactivex.schedulers.Schedulers
+import javax.inject.Inject
+import com.snt.phoney.di.SignupScope
 
-class WeiboViewModel(application: Application, private val weiboUseCase: WeiboSigninUseCase) : AndroidViewModel(application) {
+//@SignupScope
+class WeiboViewModel @Inject constructor(application: Application, private val weiboUseCase: WeiboSigninUseCase) : AndroidViewModel(application) {
 
     private var ssoHandler: SsoHandler? = null
     private var accessToken: Oauth2AccessToken? = null
 
-    val weiboUser = MutableLiveData<WeiboUser>()
+    val user = MutableLiveData<WeiboUser>()
     val error = MutableLiveData<String>()
+
+    init {
+        WbSdk.install(application, AuthInfo(application, Weibo.APP_KEY, Weibo.REDIRECT_URL, Weibo.SCOPE))
+    }
 
     fun login(activity: Activity) {
         if (accessToken == null) {
             accessToken = weiboUseCase.accessToken
         }
-
         if (accessToken == null) { //accessToken == null 说明没有授权过
             authorize(activity)
         } else if (!accessToken!!.isSessionValid) { //授权过但是过期了，刷新token
@@ -88,7 +97,7 @@ class WeiboViewModel(application: Application, private val weiboUseCase: WeiboSi
                         onSuccess = {
                             it.token = accessToken!!.token
                             it.uid = accessToken!!.uid
-                            weiboUser.value = it
+                            user.value = it
                         },
                         onError = {
                             error.postValue("授权失败")

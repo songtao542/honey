@@ -18,9 +18,9 @@ import kotlinx.android.synthetic.main.fragment_signin.*
 
 /**
  */
-class SigninFragment : BaseFragment() {
+class SignupFragment : BaseFragment() {
 
-    private lateinit var viewModel: SigninViewModel
+    private lateinit var viewModel: SignupViewModel
     var binding by autoCleared<SigninFragmentBinding>()
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -34,7 +34,7 @@ class SigninFragment : BaseFragment() {
 
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
-        viewModel = ViewModelProviders.of(this, viewModelFactory).get(SigninViewModel::class.java)
+        viewModel = ViewModelProviders.of(this, viewModelFactory).get(SignupViewModel::class.java)
         binding.viewModel = viewModel
 
         login.setOnClickListener {
@@ -70,6 +70,6 @@ class SigninFragment : BaseFragment() {
 
     companion object {
         @JvmStatic
-        fun newInstance() = SigninFragment()
+        fun newInstance() = SignupFragment()
     }
 }
