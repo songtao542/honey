@@ -5,10 +5,7 @@ import android.os.Bundle
 import android.util.Log
 import androidx.lifecycle.Observer
 import com.snt.phoney.base.BaseOriginalActivity
-import com.snt.phoney.ui.signin.SignupActivity
-import com.snt.phoney.ui.signin.StartupViewModel
-import com.snt.phoney.ui.signin.WxViewModel
-import com.snt.phoney.utils.data.Constants
+import com.snt.phoney.ui.signup.WxViewModel
 import com.snt.phoney.utils.life.ViewModelProviders
 import com.tencent.mm.opensdk.modelbase.BaseReq
 import com.tencent.mm.opensdk.modelbase.BaseResp
@@ -36,7 +33,7 @@ class WXEntryActivity : BaseOriginalActivity(), IWXAPIEventHandler {
             finish()
         })
 
-        wxViewModel.user.observe(this, Observer { user ->
+        wxViewModel.success.observe(this, Observer { user ->
 //            startActivity(SignupActivity.newIntent(this).apply {
 //                putExtra(Constants.Extra.USER, user)
 //            })

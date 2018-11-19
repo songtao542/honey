@@ -1,4 +1,4 @@
-package com.snt.phoney.ui.signin
+package com.snt.phoney.ui.signup
 
 import android.app.Activity
 import android.app.Application
@@ -14,7 +14,6 @@ import com.tencent.tauth.Tencent
 import com.tencent.tauth.UiError
 import org.json.JSONObject
 import javax.inject.Inject
-import com.snt.phoney.di.SignupScope
 
 //@SignupScope
 class QQViewModel @Inject constructor(application: Application) : AndroidViewModel(application), IUiListener {

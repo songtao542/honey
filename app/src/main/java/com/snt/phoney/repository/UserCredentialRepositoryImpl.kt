@@ -22,13 +22,15 @@ import androidx.lifecycle.LiveData
 import com.snt.phoney.api.Api
 import com.snt.phoney.domain.model.Response
 import com.snt.phoney.domain.model.User
+import com.snt.phoney.domain.repository.CacheRepository
 import com.snt.phoney.domain.repository.UserCredentialRepository
+import com.snt.phoney.utils.data.Constants
 import io.reactivex.Single
 import javax.inject.Inject
 import javax.inject.Singleton
 
 @Singleton
-class UserCredentialRepositoryImpl @Inject constructor(private val api: Api) : UserCredentialRepository {
+class UserCredentialRepositoryImpl @Inject constructor(private val cache: CacheRepository, private val api: Api) : UserCredentialRepository {
 
 
     override fun bindPhone(msgId: String, code: String, phone: String, uuid: String, token: String): Single<Response<String>> {
@@ -71,4 +73,15 @@ class UserCredentialRepositoryImpl @Inject constructor(private val api: Api) : U
     override fun logout(username: String): LiveData<Response<String>> {
         return api.logout(username)
     }
+
+
+    override var user: User?
+        set(value) {
+            value?.let {
+                cache.set(Constants.Cache.USER, value)
+            }
+        }
+        get() {
+            return cache.get(Constants.Cache.USER)
+        }
 }

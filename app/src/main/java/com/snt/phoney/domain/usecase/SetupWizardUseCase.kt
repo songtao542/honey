@@ -18,11 +18,5 @@ class SetupWizardUseCase @Inject constructor(private val locationRepository: Loc
                         age: Int,
                         cup: String) = userRepository.setUserFeatures(token, height, weight, age, cup)
 
-    var user: User?
-        set(value) {
-            cache.user = value
-        }
-        get() {
-            return cache.user
-        }
+    var user: User? = userRepository.user
 }

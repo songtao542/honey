@@ -19,7 +19,6 @@ import androidx.lifecycle.LiveData
 import com.snt.phoney.domain.model.Response
 import com.snt.phoney.domain.model.User
 import io.reactivex.Single
-import retrofit2.http.Field
 
 interface UserCredentialRepository {
     fun signup(phone: String,
@@ -61,5 +60,8 @@ interface UserCredentialRepository {
     fun logout(username: String): LiveData<Response<String>>
 
     fun requestVerificationCode(phone: String): Single<Response<String>>
+
+
+    var user: User?
 
 }

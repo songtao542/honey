@@ -1,4 +1,4 @@
-package com.snt.phoney.ui.signin
+package com.snt.phoney.ui.signup
 
 import android.app.Application
 import android.text.TextUtils
@@ -6,7 +6,6 @@ import android.util.Log
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import com.snt.phoney.domain.model.User
-import com.snt.phoney.domain.usecase.SetupWizardUseCase
 import com.snt.phoney.domain.usecase.SigninUseCase
 import com.snt.phoney.extensions.getAndroidVersion
 import com.snt.phoney.extensions.getInstanceId
@@ -16,7 +15,6 @@ import io.reactivex.disposables.Disposable
 import io.reactivex.rxkotlin.subscribeBy
 import io.reactivex.schedulers.Schedulers
 import javax.inject.Inject
-import com.snt.phoney.di.SignupScope
 
 //@SignupScope
 class StartupViewModel @Inject constructor(private val application: Application, private val signinUseCase: SigninUseCase) : ViewModel() {

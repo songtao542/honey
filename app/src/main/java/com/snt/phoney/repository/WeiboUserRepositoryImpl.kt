@@ -7,6 +7,7 @@ import com.sina.weibo.sdk.exception.WeiboException
 import com.sina.weibo.sdk.net.RequestListener
 import com.snt.phoney.api.WeiboApi
 import com.snt.phoney.domain.model.WeiboUser
+import com.snt.phoney.domain.repository.CacheRepository
 import com.snt.phoney.domain.repository.WeiboUserRepository
 import com.snt.phoney.utils.data.Constants
 import io.reactivex.Single
@@ -16,7 +17,7 @@ import javax.inject.Inject
 import javax.inject.Singleton
 
 @Singleton
-class WeiboUserRepositoryImpl @Inject constructor(private val application: Application, private val weiboApi: WeiboApi) : WeiboUserRepository {
+class WeiboUserRepositoryImpl @Inject constructor(private val application: Application, private val cache: CacheRepository, private val weiboApi: WeiboApi) : WeiboUserRepository {
 
     override fun getUserInfo(accessToken: String, uid: String): Single<WeiboUser> {
         return weiboApi.getUserInfo(accessToken, uid)
@@ -63,6 +64,14 @@ class WeiboUserRepositoryImpl @Inject constructor(private val application: Appli
                 }
             }
             return _accessToken
+        }
+
+    override var user: WeiboUser?
+        get() = cache.get(Constants.Cache.WEIBO_USER)
+        set(value) {
+            value?.let {
+                cache.set(Constants.Cache.WEIBO_USER, value)
+            }
         }
 }
 

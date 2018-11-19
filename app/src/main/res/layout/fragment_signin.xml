@@ -7,7 +7,7 @@
 
         <variable
             name="viewModel"
-            type="com.snt.phoney.ui.signin.SignupViewModel" />
+            type="com.snt.phoney.ui.signup.SignupViewModel" />
     </data>
 
     <LinearLayout

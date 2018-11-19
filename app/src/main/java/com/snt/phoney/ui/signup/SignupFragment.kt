@@ -1,4 +1,4 @@
-package com.snt.phoney.ui.signin
+package com.snt.phoney.ui.signup
 
 import android.os.Bundle
 import android.text.TextUtils
@@ -11,7 +11,10 @@ import androidx.lifecycle.ViewModelProviders
 import com.snt.phoney.R
 import com.snt.phoney.base.BaseFragment
 import com.snt.phoney.databinding.SigninFragmentBinding
-import com.snt.phoney.extensions.*
+import com.snt.phoney.extensions.addFragmentSafely
+import com.snt.phoney.extensions.autoCleared
+import com.snt.phoney.extensions.disposedBy
+import com.snt.phoney.extensions.snackbar
 import com.snt.phoney.ui.password.ForgetPasswordFragment
 import com.snt.phoney.ui.setup.SetupWizardActivity
 import kotlinx.android.synthetic.main.fragment_signin.*

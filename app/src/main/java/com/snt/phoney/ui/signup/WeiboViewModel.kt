@@ -1,4 +1,4 @@
-package com.snt.phoney.ui.signin
+package com.snt.phoney.ui.signup
 
 import android.app.Activity
 import android.app.Application
@@ -19,7 +19,6 @@ import io.reactivex.disposables.Disposable
 import io.reactivex.rxkotlin.subscribeBy
 import io.reactivex.schedulers.Schedulers
 import javax.inject.Inject
-import com.snt.phoney.di.SignupScope
 
 //@SignupScope
 class WeiboViewModel @Inject constructor(application: Application, private val weiboUseCase: WeiboSigninUseCase) : AndroidViewModel(application) {

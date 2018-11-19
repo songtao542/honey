@@ -32,14 +32,18 @@ object Constants {
     }
 
     object Cache {
-        const val USER_CACHE_NAME: String = "user_cache"
-        const val USER: String = "user"
+        const val USER_CACHE_NAME = "user_cache"
+        const val USER = "user"
 
         const val WX_ACCESS_TOKEN = "wx_access_token"
+
+        const val WX_USER = "wx_user"
+        const val WEIBO_USER = "wx_user"
+        const val QQ_USER = "wx_user"
     }
 
     object Api {
-        const val BASE_URL: String = "http://phoney.alance.pub"
+        const val BASE_URL = "http://phoney.alance.pub"
     }
 
     object Tencent {

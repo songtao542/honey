@@ -13,4 +13,6 @@ class WxSigninUseCase @Inject constructor(private val repository: WxUserReposito
 
     var accessToken = repository.accessToken
 
+    var user = repository.user
+
 }

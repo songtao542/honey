@@ -10,4 +10,6 @@ interface WeiboUserRepository {
     fun refreshToken(): Single<Oauth2AccessToken>
 
     var accessToken: Oauth2AccessToken?
+
+    var user: WeiboUser?
 }

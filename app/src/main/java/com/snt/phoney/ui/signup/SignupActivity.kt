@@ -1,4 +1,4 @@
-package com.snt.phoney.ui.signin
+package com.snt.phoney.ui.signup
 
 import android.content.Context
 import android.content.Intent

@@ -12,4 +12,6 @@ interface WxUserRepository {
     fun getUserInfo(accessToken: String, openid: String): Single<WxUser>
 
     var accessToken: WxAccessToken?
+
+    var user: WxUser?
 }

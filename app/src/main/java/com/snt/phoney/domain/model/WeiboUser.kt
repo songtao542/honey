@@ -1,8 +1,9 @@
 package com.snt.phoney.domain.model
 
 import com.google.gson.annotations.SerializedName
+import kotlinx.serialization.Serializable
 
-
+@Serializable
 data class WeiboUser(
         var token: String? = null,
         var uid: String? = null,

@@ -12,14 +12,13 @@
  * Non-disclosure agreements covering such access.
  */
 
-package com.snt.phoney.ui.signin
+package com.snt.phoney.ui.signup
 
 import android.app.Application
 import android.text.TextUtils
 import android.util.Log
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
-import com.snt.phoney.di.SignupScope
 import com.snt.phoney.domain.model.User
 import com.snt.phoney.domain.usecase.SigninUseCase
 import com.snt.phoney.extensions.getAndroidVersion

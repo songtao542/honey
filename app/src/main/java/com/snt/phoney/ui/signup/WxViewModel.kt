@@ -1,4 +1,4 @@
-package com.snt.phoney.ui.signin
+package com.snt.phoney.ui.signup
 
 import android.app.Application
 import android.content.Intent
@@ -20,13 +20,13 @@ import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.rxkotlin.subscribeBy
 import io.reactivex.schedulers.Schedulers
 import javax.inject.Inject
-import com.snt.phoney.di.SignupScope
 
 //@SignupScope
 class WxViewModel @Inject constructor(application: Application, private val usecase: WxSigninUseCase) : AndroidViewModel(application), IWXAPIEventHandler {
 
     private val wxApi: IWXAPI = WXAPIFactory.createWXAPI(application, Wechat.APP_ID, false)
     val error = MutableLiveData<String>()
+    val success = MutableLiveData<String>()
     val user = MutableLiveData<WxUser>()
 
     private var wxState: Long = 0
@@ -35,6 +35,7 @@ class WxViewModel @Inject constructor(application: Application, private val usec
 
     init {
         accessToken = usecase.accessToken
+        user.value = usecase.user
     }
 
     fun login() {
@@ -99,7 +100,9 @@ class WxViewModel @Inject constructor(application: Application, private val usec
                             Log.d("TTTT", "getUserInfo=======>$it")
                             it.accessToken = accessToken?.accessToken
                             it.refreshToken = accessToken?.refreshToken
+                            usecase.user = it
                             user.value = it
+                            success.value = "success"
                         },
                         onError = {
                             Log.d("TTTT", "getUserInfo==onError=====>$it")

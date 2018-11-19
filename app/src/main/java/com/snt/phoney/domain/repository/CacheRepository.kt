@@ -18,8 +18,7 @@
 package com.snt.phoney.domain.repository
 
 
-import com.snt.phoney.domain.model.User
-
 interface CacheRepository {
-    var user: User?
+    fun <T > get(key: String): T?
+    fun <T > set(key: String, value: T)
 }

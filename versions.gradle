@@ -31,7 +31,7 @@ versions.androidx_espresso = "3.1.0"
 
 versions.androidx_multidex = "2.0.0"
 
-versions.androidx_support = "1.0.0-alpha1"
+versions.androidx_support = "1.0.0-rc01"
 versions.androidx_material = "1.0.0-rc01"
 versions.androidx_constraintlayout = "1.1.2"
 

@@ -16,7 +16,6 @@ package com.snt.phoney.domain.usecase
 
 import com.snt.phoney.domain.model.Response
 import com.snt.phoney.domain.model.User
-import com.snt.phoney.domain.repository.CacheRepository
 import com.snt.phoney.domain.repository.UserCredentialRepository
 import io.reactivex.Single
 import javax.inject.Inject
@@ -25,7 +24,7 @@ const val PLATFORM_QQ = "0"
 const val PLATFORM_WECHAT = "1"
 const val PLATFORM_WEIBO = "3"
 
-class SigninUseCase @Inject constructor(private val repository: UserCredentialRepository, private val cache: CacheRepository) {
+class SigninUseCase @Inject constructor(private val repository: UserCredentialRepository) {
     fun signup(phone: String, msgId: String, code: String, deviceToken: String,
                osVersion: String, version: String, mobilePlate: String) =
             repository.signup(phone, msgId, code, deviceToken, osVersion, version, mobilePlate)
@@ -44,11 +43,5 @@ class SigninUseCase @Inject constructor(private val repository: UserCredentialRe
 
     fun requestVerificationCode(phone: String): Single<Response<String>> = repository.requestVerificationCode(phone)
 
-    var user: User?
-        set(value) {
-            cache.user = value
-        }
-        get() {
-            return cache.user
-        }
+    var user: User? = repository.user
 }

@@ -1,5 +1,8 @@
 package com.snt.phoney.domain.model
 
+import kotlinx.serialization.Serializable
+
+@Serializable
 data class QQUser(val openId: String,
                   val thirdToken: String,
                   val plate: String,

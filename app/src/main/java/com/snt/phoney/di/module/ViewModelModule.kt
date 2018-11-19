@@ -1,7 +1,6 @@
 package com.snt.phoney.di.module
 
 import androidx.lifecycle.ViewModel
-import com.snt.phoney.di.SignupScope
 import com.snt.phoney.di.ViewModelKey
 import com.snt.phoney.ui.dating.create.CreateDatingViewModel
 import com.snt.phoney.ui.dating.detail.DatingDetailViewModel
@@ -12,7 +11,7 @@ import com.snt.phoney.ui.privacy.CreateLockViewModel
 import com.snt.phoney.ui.report.ReportViewModel
 import com.snt.phoney.ui.setup.BindPhoneViewModel
 import com.snt.phoney.ui.setup.SetupWizardViewModel
-import com.snt.phoney.ui.signin.*
+import com.snt.phoney.ui.signup.*
 import com.snt.phoney.ui.user.EditUserViewModel
 import com.snt.phoney.ui.user.UserInfoViewModel
 import com.snt.phoney.ui.vip.VipViewModel
