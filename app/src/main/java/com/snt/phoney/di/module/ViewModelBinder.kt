@@ -2,6 +2,7 @@ package com.snt.phoney.di.module
 
 import androidx.lifecycle.ViewModel
 import com.snt.phoney.di.ActivityScope
+import com.snt.phoney.di.ViewModelFactory
 import com.snt.phoney.di.ViewModelKey
 import com.snt.phoney.ui.dating.create.CreateDatingViewModel
 import com.snt.phoney.ui.dating.detail.DatingDetailViewModel
@@ -23,6 +24,12 @@ import com.snt.phoney.ui.wallet.WalletViewModel
 import dagger.Binds
 import dagger.Module
 import dagger.multibindings.IntoMap
+
+@Module
+abstract class ViewModelFactoryModule {
+    @Binds
+    abstract fun bindViewModelFactory(factory: ViewModelFactory): ViewModelProvider.Factory
+}
 
 @Module
 abstract class SetupWizardActivityViewModelModule {
