@@ -1,5 +1,7 @@
 package com.snt.phoney.di.module
 
+import androidx.lifecycle.ViewModelProvider
+import com.snt.phoney.di.ViewModelFactory
 import com.snt.phoney.ui.dating.create.CreateDatingFragment
 import com.snt.phoney.ui.dating.detail.DatingDetailFragment
 import com.snt.phoney.ui.dating.list.DatingListFragment
@@ -29,20 +31,38 @@ import com.snt.phoney.ui.user.UserInfoFragment
 import com.snt.phoney.ui.user.VisitorFragment
 import com.snt.phoney.ui.vip.VipFragment
 import com.snt.phoney.ui.wallet.WalletFragment
+import dagger.Binds
 import dagger.Module
 import dagger.android.ContributesAndroidInjector
 
-@Suppress("unused")
-@Module
-abstract class FragmentModule {
+//@Module
+//abstract class ViewModelFactoryModule {
+//    @Binds
+//    abstract fun bindViewModelFactory(factory: ViewModelFactory): ViewModelProvider.Factory
+//}
 
-    //@SignupScope
+@Module
+abstract class WXEntryActivityModule {
+    @Binds
+    abstract fun bindViewModelFactory(factory: ViewModelFactory): ViewModelProvider.Factory
+}
+
+@Module
+abstract class SignupActivityModule {
+    @Binds
+    abstract fun bindViewModelFactory(factory: ViewModelFactory): ViewModelProvider.Factory
+
     @ContributesAndroidInjector
     abstract fun contributeStartupFragment(): StartupFragment
 
-    //@SignupScope
     @ContributesAndroidInjector
-    abstract fun contributeSigninFragment(): SignupFragment
+    abstract fun contributeSignupFragment(): SignupFragment
+}
+
+@Module
+abstract class SetupWizardActivityModule {
+    @Binds
+    abstract fun bindViewModelFactory(factory: ViewModelFactory): ViewModelProvider.Factory
 
     @ContributesAndroidInjector
     abstract fun contributeSetupWizardFragment(): SetupWizardFragment
@@ -50,41 +70,61 @@ abstract class FragmentModule {
     @ContributesAndroidInjector
     abstract fun contributeSetupWizardOneFragment(): SetupWizardOneFragment
 
+
     @ContributesAndroidInjector
     abstract fun contributeSetupWizardTwoFragment(): SetupWizardTwoFragment
 
     @ContributesAndroidInjector
     abstract fun contributeSetupWizardThreeFragment(): SetupWizardThreeFragment
+}
+
+@Module
+abstract class MainActivityModule {
+    @Binds
+    abstract fun bindViewModelFactory(factory: ViewModelFactory): ViewModelProvider.Factory
+
+    @ContributesAndroidInjector
+    abstract fun contributeHomeFragment(): HomeFragment
+
+
+    @ContributesAndroidInjector
+    abstract fun contributeFriendFragment(): FriendFragment
+
+
+    @ContributesAndroidInjector
+    abstract fun contributeFollowingFragment(): FollowingFragment
+
+
+    @ContributesAndroidInjector
+    abstract fun contributeSquareFragment(): SquareFragment
+
+
+    @ContributesAndroidInjector
+    abstract fun contributeOfficialRecommendFragment(): OfficialRecommendFragment
+
+
+    @ContributesAndroidInjector
+    abstract fun contributePopularRecommendFragment(): PopularRecommendFragment
+
+
+    @ContributesAndroidInjector
+    abstract fun contributeMessageFragment(): MessageFragment
+
+
+    @ContributesAndroidInjector
+    abstract fun contributeMineFragment(): MineFragment
+}
+
+@Module
+abstract class CommonActivityModule {
+    @Binds
+    abstract fun bindViewModelFactory(factory: ViewModelFactory): ViewModelProvider.Factory
 
     @ContributesAndroidInjector
     abstract fun contributeBindPhoneFragment(): BindPhoneFragment
 
     @ContributesAndroidInjector
     abstract fun contributeSettingsFragment(): SettingsFragment
-
-    @ContributesAndroidInjector
-    abstract fun contributeHomeFragment(): HomeFragment
-
-    @ContributesAndroidInjector
-    abstract fun contributeFriendFragment(): FriendFragment
-
-    @ContributesAndroidInjector
-    abstract fun contributeFollowingFragment(): FollowingFragment
-
-    @ContributesAndroidInjector
-    abstract fun contributeSquareFragment(): SquareFragment
-
-    @ContributesAndroidInjector
-    abstract fun contributeOfficialRecommendFragment(): OfficialRecommendFragment
-
-    @ContributesAndroidInjector
-    abstract fun contributePopularRecommendFragment(): PopularRecommendFragment
-
-    @ContributesAndroidInjector
-    abstract fun contributeMessageFragment(): MessageFragment
-
-    @ContributesAndroidInjector
-    abstract fun contributeMineFragment(): MineFragment
 
     @ContributesAndroidInjector
     abstract fun contributeCreateDatingFragment(): CreateDatingFragment
@@ -139,5 +179,4 @@ abstract class FragmentModule {
 
     @ContributesAndroidInjector
     abstract fun contributeCreateLockStep2Fragment(): CreateLockStep2Fragment
-
 }

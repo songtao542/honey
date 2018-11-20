@@ -24,35 +24,48 @@ import com.appmattus.layercache.jsonSerializer
 import com.snt.phoney.domain.repository.CacheRepository
 import com.snt.phoney.utils.cache.KeyValueDatabaseCache
 import kotlinx.coroutines.runBlocking
+import kotlinx.serialization.Serializable
 import javax.inject.Inject
 import javax.inject.Singleton
 
 @Singleton
 class CacheRepositoryImpl @Inject constructor(application: Application) : CacheRepository {
 
-    private val firstCache: Cache<String, Any> = MapCache().jsonSerializer()
-    private val secondCache: Cache<String, Any> = KeyValueDatabaseCache(application).jsonSerializer()
+    private val firstCache: Cache<String, Value> = MapCache().jsonSerializer()
+    private val secondCache: Cache<String, Value> = KeyValueDatabaseCache(application).jsonSerializer()
 
-    private var cache: Cache<String, Any>
+    private var cache: Cache<String, Value>
 
     init {
         cache = firstCache.compose(secondCache)
     }
 
-
-    override fun <T > get(key: String): T? {
-        var returned: T? = null
+    override fun <T : Any> get(key: String): T? {
+        var result: T? = null
         runBlocking {
-            returned = cache.get(key) as? T
+            result = cache.get(key).await()?.value as? T
         }
-        return returned
+        return result
     }
 
-    override fun <T > set(key: String, value: T) {
-        value?.let {
+    override fun <T : Any> set(key: String, value: T?) {
+        if (value != null) {
             runBlocking {
-                cache.set(key, value).await()
+                cache.set(key, Value(value)).await()
+            }
+        } else {
+            runBlocking {
+                cache.evict(key).await()
             }
         }
     }
+
+    override fun clear(key: String) {
+        runBlocking {
+            cache.evict(key).await()
+        }
+    }
+
+    @Serializable
+    data class Value(@Serializable val value: Any)
 }

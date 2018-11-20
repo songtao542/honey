@@ -1,6 +1,7 @@
 package com.snt.phoney.ui.setup
 
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -48,6 +49,7 @@ class SetupWizardThreeFragment : BaseFragment() {
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
         viewModel = ViewModelProviders.of(this, viewModelFactory).get(SetupWizardViewModel::class.java)
+        Log.d("TTTT", "vm=======3==========================$viewModel")
         back3.setNavigationOnClickListener { activity?.supportFragmentManager?.popBackStack() }
         confirmStep3.setOnClickListener {
             context?.let {

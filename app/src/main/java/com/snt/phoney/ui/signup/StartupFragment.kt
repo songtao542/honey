@@ -62,28 +62,35 @@ class StartupFragment : BaseFragment() {
             }
         }
 
-        qqViewModel.user.observe(this, Observer {
-            viewModel.signupByThirdPlatform(it.openId, it.thirdToken, PLATFORM_QQ, it.nickName, it.headPic)?.disposedBy(disposeBag)
+        qqViewModel.user.observe(this, Observer { user ->
+            user?.let {
+                viewModel.signupByThirdPlatform(it.openId, it.thirdToken, PLATFORM_QQ, it.nickName, it.headPic)?.disposedBy(disposeBag)
+            }
         })
 
-        weiboViewModel.user.observe(this, Observer {
-            viewModel.signupByThirdPlatform(it.uid ?: "",
-                    it.token ?: "",
-                    PLATFORM_WEIBO,
-                    it.name ?: "",
-                    it.avatarLarge ?: "")?.disposedBy(disposeBag)
+        weiboViewModel.user.observe(this, Observer { user ->
+            user?.let {
+                viewModel.signupByThirdPlatform(it.uid ?: "",
+                        it.token ?: "",
+                        PLATFORM_WEIBO,
+                        it.name ?: "",
+                        it.avatarLarge ?: "")?.disposedBy(disposeBag)
+
+            }
         })
 
         weiboViewModel.error.observe(this, Observer {
             snackbar(it)
         })
 
-        wxViewModel.user.observe(this, Observer {
-            viewModel.signupByThirdPlatform(it.openid ?: "",
-                    it.accessToken ?: "",
-                    PLATFORM_WECHAT,
-                    it.nickname ?: "",
-                    it.headimgurl ?: "")?.disposedBy(disposeBag)
+        wxViewModel.user.observe(this, Observer { user ->
+            user?.let {
+                viewModel.signupByThirdPlatform(it.openid ?: "",
+                        it.accessToken ?: "",
+                        PLATFORM_WECHAT,
+                        it.nickname ?: "",
+                        it.headimgurl ?: "")?.disposedBy(disposeBag)
+            }
         })
 
         viewModel.error.observe(this, Observer {
@@ -102,6 +109,16 @@ class StartupFragment : BaseFragment() {
         super.onActivityResult(requestCode, resultCode, data)
         qqViewModel.onActivityResult(requestCode, resultCode, data)
         weiboViewModel.onActivityResult(requestCode, resultCode, data)
+    }
+
+    override fun onResume() {
+        super.onResume()
+        wxViewModel.resume()
+    }
+
+    override fun onDestroyView() {
+        wxViewModel.clear()
+        super.onDestroyView()
     }
 
     companion object {

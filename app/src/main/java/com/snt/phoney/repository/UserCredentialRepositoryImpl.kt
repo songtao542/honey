@@ -76,12 +76,7 @@ class UserCredentialRepositoryImpl @Inject constructor(private val cache: CacheR
 
 
     override var user: User?
-        set(value) {
-            value?.let {
-                cache.set(Constants.Cache.USER, value)
-            }
-        }
-        get() {
-            return cache.get(Constants.Cache.USER)
-        }
+        set(value) = cache.set(Constants.Cache.USER, value)
+        get() = cache.get(Constants.Cache.USER)
+
 }

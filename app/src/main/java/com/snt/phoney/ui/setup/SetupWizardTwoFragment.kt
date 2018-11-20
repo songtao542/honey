@@ -2,6 +2,7 @@ package com.snt.phoney.ui.setup
 
 import android.os.Bundle
 import android.text.TextUtils
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -62,7 +63,7 @@ class SetupWizardTwoFragment : BaseFragment() {
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
         viewModel = ViewModelProviders.of(this, viewModelFactory).get(SetupWizardViewModel::class.java)
-
+        Log.d("TTTT", "vm=======2==========================$viewModel")
         back2.setNavigationOnClickListener {
             if (activity?.supportFragmentManager?.backStackEntryCount ?: 0 > 0) {
                 activity?.supportFragmentManager?.popBackStack()
@@ -74,6 +75,9 @@ class SetupWizardTwoFragment : BaseFragment() {
             if (isValid()) {
                 viewModel.setUserFeatures(user.height, user.weight.toInt(), user.age, user.cup
                         ?: "")
+
+                //for test
+                activity?.addFragmentSafely(R.id.containerLayout, SetupWizardThreeFragment.newInstance(user), "step3", true)
             }
         }
 

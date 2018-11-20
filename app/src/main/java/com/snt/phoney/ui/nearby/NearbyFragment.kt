@@ -12,7 +12,6 @@ import com.snt.phoney.R
 import com.snt.phoney.base.BaseFragment
 import com.snt.phoney.databinding.NearbyFragmentBinding
 import com.snt.phoney.extensions.autoCleared
-import com.snt.phoney.ui.nearby.dummy.DummyContent
 import kotlinx.android.synthetic.main.fragment_nearby_list.*
 
 /**
@@ -40,7 +39,7 @@ class NearbyFragment : BaseFragment() {
         super.onActivityCreated(savedInstanceState)
         with(list) {
             layoutManager = GridLayoutManager(context, 3)
-            adapter = NearbyRecyclerViewAdapter(DummyContent.ITEMS)
+            adapter = NearbyRecyclerViewAdapter()
         }
         viewModel = ViewModelProviders.of(this, viewModelFactory).get(NearbyViewModel::class.java)
 

@@ -25,27 +25,13 @@ class WxUserRepositoryImpl @Inject constructor(private val cache: CacheRepositor
         return wxapi.getUserInfo(accessToken, openid)
     }
 
-    @Suppress("DeferredResultUnused")
     override var accessToken: WxAccessToken?
-        set(value) {
-            value?.let {
-                cache.set(Constants.Cache.WX_ACCESS_TOKEN, value)
-            }
-        }
-        get() {
-            return cache.get(Constants.Cache.WX_ACCESS_TOKEN)
-        }
-
+        set(value) = cache.set(Constants.Cache.WX_ACCESS_TOKEN, value)
+        get() = cache.get(Constants.Cache.WX_ACCESS_TOKEN)
 
     override var user: WxUser?
-        set(value) {
-            value?.let {
-                cache.set(Constants.Cache.WX_USER, value)
-            }
-        }
-        get() {
-            return cache.get(Constants.Cache.WX_USER)
-        }
+        set(value) = cache.set(Constants.Cache.WX_USER, value)
+        get() = cache.get(Constants.Cache.WX_USER)
 
 }
 

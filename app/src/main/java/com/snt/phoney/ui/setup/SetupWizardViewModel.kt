@@ -8,15 +8,13 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import com.snt.phoney.domain.model.City
 import com.snt.phoney.domain.usecase.SetupWizardUseCase
-import com.snt.phoney.extensions.getAndroidVersion
-import com.snt.phoney.extensions.getInstanceId
-import com.snt.phoney.extensions.getVersionName
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.disposables.Disposable
 import io.reactivex.rxkotlin.subscribeBy
 import io.reactivex.schedulers.Schedulers
 import javax.inject.Inject
 
+//@ActivityScope
 class SetupWizardViewModel @Inject constructor(private val application: Application, private val setupWizardUseCase: SetupWizardUseCase) : ViewModel() {
 
     val error = MutableLiveData<String>()

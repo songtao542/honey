@@ -14,11 +14,9 @@ import androidx.recyclerview.widget.RecyclerView
 import com.snt.phoney.R
 import com.snt.phoney.base.CommonActivity
 import com.snt.phoney.base.Page
-import com.snt.phoney.ui.dating.DatingActivity
 import com.snt.phoney.ui.privacy.AlbumPermissionSettingFragment
-import com.snt.phoney.ui.share.ShareFragment
 import com.snt.phoney.ui.setup.BindPhoneFragment
-import com.snt.phoney.ui.user.UserActivity
+import com.snt.phoney.ui.share.ShareFragment
 import com.snt.phoney.widget.PhotoWallFactory
 import kotlinx.android.synthetic.main.fragment_mine_footer.view.*
 import kotlinx.android.synthetic.main.fragment_mine_list_header.view.*
@@ -116,9 +114,9 @@ class MineRecyclerViewAdapter(val fragment: Fragment) : RecyclerView.Adapter<Rec
             mRecentVisitor.text = "1000"
             mFollowMe.text = "100"
             mMyDating.text = "10000"
-            mFollowMeButton.setOnClickListener { context.startActivity(UserActivity.newIntent(context, Page.VIEW_FOLLOW_ME)) }
-            mRecentVisitorButton.setOnClickListener { context.startActivity(UserActivity.newIntent(context, Page.VIEW_RECENT_VISITOR)) }
-            mMyDatingButton.setOnClickListener { context.startActivity(DatingActivity.newIntent(context, Page.VIEW_DATING_LIST)) }
+            mFollowMeButton.setOnClickListener { context.startActivity(CommonActivity.newIntent(context, Page.VIEW_FOLLOW_ME)) }
+            mRecentVisitorButton.setOnClickListener { context.startActivity(CommonActivity.newIntent(context, Page.VIEW_RECENT_VISITOR)) }
+            mMyDatingButton.setOnClickListener { context.startActivity(CommonActivity.newIntent(context, Page.VIEW_DATING_LIST)) }
             mAuthenticate.setOnClickListener { }
         }
     }
@@ -175,7 +173,7 @@ class MineRecyclerViewAdapter(val fragment: Fragment) : RecyclerView.Adapter<Rec
                         AlbumPermissionSettingFragment.newInstance().show(fragment.childFragmentManager, "album_setting")
                     }
                     R.drawable.ic_dating -> {
-                        context.startActivity(DatingActivity.newIntent(context, Page.VIEW_DATING_LIST))
+                        context.startActivity(CommonActivity.newIntent(context, Page.VIEW_DATING_LIST))
                     }
                     R.drawable.ic_wallet -> {
                         context.startActivity(CommonActivity.newIntent(context, Page.VIEW_MY_WALLET))

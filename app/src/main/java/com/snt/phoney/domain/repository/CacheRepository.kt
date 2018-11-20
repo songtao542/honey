@@ -19,6 +19,7 @@ package com.snt.phoney.domain.repository
 
 
 interface CacheRepository {
-    fun <T > get(key: String): T?
-    fun <T > set(key: String, value: T)
+    fun <T : Any> get(key: String): T?
+    fun <T : Any> set(key: String, value: T?)
+    fun clear(key: String)
 }

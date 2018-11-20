@@ -1,6 +1,7 @@
 package com.snt.phoney.ui.setup
 
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -37,11 +38,13 @@ class SetupWizardOneFragment : BaseFragment() {
         super.onActivityCreated(savedInstanceState)
         viewModel = ViewModelProviders.of(this, viewModelFactory).get(SetupWizardViewModel::class.java)
 
+        Log.d("TTTT", "vm=======1==========================$viewModel")
+
         female.setOnClickListener { setSex(1) }
         male.setOnClickListener { setSex(0) }
 
         viewModel.setupSex.observe(this, Observer {
-            activity?.addFragmentSafely(R.id.containerLayout, SetupWizardTwoFragment.newInstance(user), "step2", true)
+            activity?.addFragmentSafely(R.id.containerLayout, SetupWizardTwoFragment.newInstance(user), "step2", false)
         })
 
         viewModel.error.observe(this, Observer {

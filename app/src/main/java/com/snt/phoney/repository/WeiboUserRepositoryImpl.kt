@@ -68,10 +68,7 @@ class WeiboUserRepositoryImpl @Inject constructor(private val application: Appli
 
     override var user: WeiboUser?
         get() = cache.get(Constants.Cache.WEIBO_USER)
-        set(value) {
-            value?.let {
-                cache.set(Constants.Cache.WEIBO_USER, value)
-            }
-        }
+        set(value) = cache.set(Constants.Cache.WEIBO_USER, value)
+
 }
 

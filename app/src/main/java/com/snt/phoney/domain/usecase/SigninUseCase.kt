@@ -43,5 +43,11 @@ class SigninUseCase @Inject constructor(private val repository: UserCredentialRe
 
     fun requestVerificationCode(phone: String): Single<Response<String>> = repository.requestVerificationCode(phone)
 
-    var user: User? = repository.user
+    var user: User?
+        set(value) {
+            repository.user = value
+        }
+        get() {
+            return repository.user
+        }
 }

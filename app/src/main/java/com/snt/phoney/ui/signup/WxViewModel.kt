@@ -2,7 +2,6 @@ package com.snt.phoney.ui.signup
 
 import android.app.Application
 import android.content.Intent
-import android.util.Log
 import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.MutableLiveData
 import com.google.gson.Gson
@@ -46,6 +45,14 @@ class WxViewModel @Inject constructor(application: Application, private val usec
         }
     }
 
+    fun resume() {
+        user.value = usecase.user
+    }
+
+    fun clear() {
+        usecase.user = null
+    }
+
     private fun authorize() {
         wxApi.registerApp(Wechat.APP_ID)
         val req = SendAuth.Req()
@@ -57,15 +64,11 @@ class WxViewModel @Inject constructor(application: Application, private val usec
 
     override fun onResp(resp: BaseResp?) {
         val openId = resp?.openId
-        Log.d("TTTT", "resp=======>$resp")
-        Log.d("TTTT", "resp=openId======>$openId")
 
         resp?.let {
             val gson = Gson()
-            Log.d("TTTT", "aaaaaaaaaaaaaaaa" + gson.toJson(resp))
             if (it.errCode == BaseResp.ErrCode.ERR_OK) {
                 val code = (it as SendAuth.Resp).code
-                Log.d("TTTT", "ccccccccccccc$code")
                 getAccessToken(code)
             } else {
                 error.value = "出错了"
@@ -95,24 +98,21 @@ class WxViewModel @Inject constructor(application: Application, private val usec
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribeBy(
-                        onSuccess = {
+                        onSuccess = { wxuser ->
                             //{"openid":"o4PN51DasTTHB1Ieds6NIC5AM5OA","nickname":"songtao","sex":1,"language":"en","city":"","province":"","country":"","headimgurl":"http://thirdwx.qlogo.cn/mmopen/vi_32/7KaRIUuOoUrZDcmvibZNia8kDCsfPiaO2bt5NwgCZaic17hiafVDOneG5SVSE1cniaf5a1Om5ia0x4oD21LNFBMbdd28Q/132","privilege":[],"unionid":"ocGSv5_JyViQROMku0z65_AAg1x8"}
-                            Log.d("TTTT", "getUserInfo=======>$it")
-                            it.accessToken = accessToken?.accessToken
-                            it.refreshToken = accessToken?.refreshToken
-                            usecase.user = it
-                            user.value = it
+                            wxuser.accessToken = accessToken?.accessToken
+                            wxuser.refreshToken = accessToken?.refreshToken
+                            usecase.user = wxuser
+                            user.value = wxuser
                             success.value = "success"
                         },
                         onError = {
-                            Log.d("TTTT", "getUserInfo==onError=====>$it")
                             error.value = "出错了"
                         }
                 )
     }
 
     override fun onReq(req: BaseReq?) {
-        Log.d("TTTT", "req=======>$req")
     }
 
     fun handleIntent(intent: Intent): Boolean {

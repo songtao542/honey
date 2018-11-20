@@ -1,12 +1,11 @@
 package com.snt.phoney.domain.usecase
 
 import com.snt.phoney.domain.model.User
-import com.snt.phoney.domain.repository.CacheRepository
 import com.snt.phoney.domain.repository.LocationRepository
 import com.snt.phoney.domain.repository.UserCredentialRepository
 import javax.inject.Inject
 
-class SetupWizardUseCase @Inject constructor(private val locationRepository: LocationRepository, private val userRepository: UserCredentialRepository, private val cache: CacheRepository) {
+class SetupWizardUseCase @Inject constructor(private val locationRepository: LocationRepository, private val userRepository: UserCredentialRepository) {
 
     fun getCities() = locationRepository.cities
 
@@ -18,5 +17,11 @@ class SetupWizardUseCase @Inject constructor(private val locationRepository: Loc
                         age: Int,
                         cup: String) = userRepository.setUserFeatures(token, height, weight, age, cup)
 
-    var user: User? = userRepository.user
+    var user: User?
+        set(value) {
+            userRepository.user = value
+        }
+        get() {
+            return userRepository.user
+        }
 }

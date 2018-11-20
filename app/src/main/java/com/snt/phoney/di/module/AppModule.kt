@@ -4,9 +4,9 @@ import dagger.Module
 
 @Module(includes = [
     ActivityModule::class,
-    FragmentModule::class,
+//    FragmentModule::class,
+//    ViewModelModule::class,
     RestApiServiceModule::class,
-    ViewModelModule::class,
     RepositoryModule::class,
     DaoModule::class,
     WeiboApiServiceModule::class,
