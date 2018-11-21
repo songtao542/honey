@@ -1,6 +1,7 @@
 package com.snt.phoney.di.module
 
 import androidx.lifecycle.ViewModel
+import androidx.lifecycle.ViewModelProvider
 import com.snt.phoney.di.ActivityScope
 import com.snt.phoney.di.ViewModelFactory
 import com.snt.phoney.di.ViewModelKey
@@ -28,6 +29,7 @@ import dagger.multibindings.IntoMap
 @Module
 abstract class ViewModelFactoryModule {
     @Binds
+    @ActivityScope
     abstract fun bindViewModelFactory(factory: ViewModelFactory): ViewModelProvider.Factory
 }
 
@@ -72,8 +74,6 @@ abstract class SignupActivityViewModelModule {
 
 @Module
 abstract class WXEntryActivityViewModelModule {
-
-
     @Binds
     @IntoMap
     @ActivityScope

@@ -1,5 +1,6 @@
 package com.snt.phoney.base
 
+import android.app.Activity
 import android.content.Context
 import android.content.Intent
 import android.os.Bundle
@@ -12,11 +13,11 @@ import com.snt.phoney.extensions.setStatusBarColor
 const val EXTRA_ARGUMENT = "argument"
 const val EXTRA_PAGE = "page"
 
-class CommonActivity : BaseActivity() {
+open class CommonActivity : BaseActivity() {
 
     companion object {
-        fun newIntent(context: Context, page: Page, argument: Bundle? = null): Intent {
-            val intent = BaseActivity.newIntent(context, CommonActivity::class.java, page)
+        inline fun <reified T : Activity> newIntent(context: Context, page: Page, argument: Bundle? = null): Intent {
+            val intent = BaseActivity.newIntent(context, T::class.java, page)
             argument?.let {
                 intent.putExtra(EXTRA_ARGUMENT, argument)
             }

@@ -1,7 +1,5 @@
 package com.snt.phoney.di.module
 
-import androidx.lifecycle.ViewModelProvider
-import com.snt.phoney.di.ViewModelFactory
 import com.snt.phoney.ui.dating.create.CreateDatingFragment
 import com.snt.phoney.ui.dating.detail.DatingDetailFragment
 import com.snt.phoney.ui.dating.list.DatingListFragment
@@ -31,27 +29,21 @@ import com.snt.phoney.ui.user.UserInfoFragment
 import com.snt.phoney.ui.user.VisitorFragment
 import com.snt.phoney.ui.vip.VipFragment
 import com.snt.phoney.ui.wallet.WalletFragment
-import dagger.Binds
 import dagger.Module
 import dagger.android.ContributesAndroidInjector
 
-//@Module
-//abstract class ViewModelFactoryModule {
-//    @Binds
-//    abstract fun bindViewModelFactory(factory: ViewModelFactory): ViewModelProvider.Factory
-//}
-
-@Module
+@Module(includes = [
+    ViewModelFactoryModule::class,
+    WXEntryActivityViewModelModule::class
+])
 abstract class WXEntryActivityModule {
-    @Binds
-    abstract fun bindViewModelFactory(factory: ViewModelFactory): ViewModelProvider.Factory
 }
 
-@Module
+@Module(includes = [
+    ViewModelFactoryModule::class,
+    SignupActivityViewModelModule::class
+])
 abstract class SignupActivityModule {
-//    @Binds
-//    abstract fun bindViewModelFactory(factory: ViewModelFactory): ViewModelProvider.Factory
-
     @ContributesAndroidInjector
     abstract fun contributeStartupFragment(): StartupFragment
 
@@ -59,11 +51,11 @@ abstract class SignupActivityModule {
     abstract fun contributeSignupFragment(): SignupFragment
 }
 
-@Module
+@Module(includes = [
+    ViewModelFactoryModule::class,
+    SetupWizardActivityViewModelModule::class
+])
 abstract class SetupWizardActivityModule {
-//    @Binds
-//    abstract fun bindViewModelFactory(factory: ViewModelFactory): ViewModelProvider.Factory
-
     @ContributesAndroidInjector
     abstract fun contributeSetupWizardFragment(): SetupWizardFragment
 
@@ -78,11 +70,11 @@ abstract class SetupWizardActivityModule {
     abstract fun contributeSetupWizardThreeFragment(): SetupWizardThreeFragment
 }
 
-@Module
+@Module(includes = [
+    ViewModelFactoryModule::class,
+    MainActivityViewModelModule::class
+])
 abstract class MainActivityModule {
-//    @Binds
-//    abstract fun bindViewModelFactory(factory: ViewModelFactory): ViewModelProvider.Factory
-
     @ContributesAndroidInjector
     abstract fun contributeHomeFragment(): HomeFragment
 
@@ -115,11 +107,11 @@ abstract class MainActivityModule {
     abstract fun contributeMineFragment(): MineFragment
 }
 
-@Module
+@Module(includes = [
+    ViewModelFactoryModule::class,
+    CommonActivityViewModelModule::class
+])
 abstract class CommonActivityModule {
-//    @Binds
-//    abstract fun bindViewModelFactory(factory: ViewModelFactory): ViewModelProvider.Factory
-
     @ContributesAndroidInjector
     abstract fun contributeBindPhoneFragment(): BindPhoneFragment
 

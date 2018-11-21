@@ -2,6 +2,6 @@
 <resources>
 
     <declare-styleable name="DropdownLabelView">
-        <attr name="text" format="reference" />
+        <attr name="labelText" format="reference" />
     </declare-styleable>
 </resources>

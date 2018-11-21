@@ -1,15 +1,13 @@
 package com.snt.phoney.widget
 
-import android.animation.*
+import android.animation.ObjectAnimator
 import android.content.Context
 import android.util.AttributeSet
 import android.view.LayoutInflater
-import android.view.animation.DecelerateInterpolator
 import android.widget.ImageView
 import android.widget.LinearLayout
 import com.snt.phoney.R
 import kotlinx.android.synthetic.main.widget_dropdown_label_view.view.*
-import java.lang.Exception
 
 class DropdownLabelView : LinearLayout {
 
@@ -36,7 +34,7 @@ class DropdownLabelView : LinearLayout {
         attrs?.let {
             val a = context.obtainStyledAttributes(attrs, R.styleable.DropdownLabelView)
             try {
-                mTextId = a.getResourceId(R.styleable.DropdownLabelView_text, 0)
+                mTextId = a.getResourceId(R.styleable.DropdownLabelView_labelText, 0)
                 mText = context.getString(mTextId!!)
             } catch (e: Exception) {
                 e.printStackTrace()

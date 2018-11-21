@@ -23,7 +23,7 @@
             android:layout_weight="1"
             android:background="?attr/selectableItemBackground"
             android:orientation="vertical"
-            app:text="@string/publish_time" />
+            app:labelText="@string/publish_time" />
 
         <com.snt.phoney.widget.DropdownLabelView
             android:id="@+id/distance"
@@ -32,7 +32,7 @@
             android:layout_weight="1"
             android:background="?attr/selectableItemBackground"
             android:orientation="vertical"
-            app:text="@string/sort_by_distance" />
+            app:labelText="@string/sort_by_distance" />
 
 
         <com.snt.phoney.widget.DropdownLabelView
@@ -42,7 +42,7 @@
             android:layout_weight="1"
             android:background="?attr/selectableItemBackground"
             android:orientation="vertical"
-            app:text="@string/dating_content" />
+            app:labelText="@string/dating_content" />
 
     </LinearLayout>
 

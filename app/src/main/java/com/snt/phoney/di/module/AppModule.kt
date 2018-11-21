@@ -6,6 +6,7 @@ import dagger.Module
     ActivityModule::class,
 //    FragmentModule::class,
 //    ViewModelModule::class,
+    //ViewModelFactoryModule::class,
     RestApiServiceModule::class,
     RepositoryModule::class,
     DaoModule::class,

@@ -14,36 +14,31 @@ abstract class ActivityModule {
 
     @ActivityScope
     @ContributesAndroidInjector(modules = [
-        SignupActivityModule::class,
-        SignupActivityViewModelModule::class
+        SignupActivityModule::class
     ])
     internal abstract fun contributeSignupActivity(): SignupActivity
 
     @ActivityScope
     @ContributesAndroidInjector(modules = [
-        WXEntryActivityModule::class,
-        WXEntryActivityViewModelModule::class
+        WXEntryActivityModule::class
     ])
     internal abstract fun contributeWXEntryActivity(): WXEntryActivity
 
     @ActivityScope
     @ContributesAndroidInjector(modules = [
-        SetupWizardActivityModule::class,
-        SetupWizardActivityViewModelModule::class
+        SetupWizardActivityModule::class
     ])
     internal abstract fun contributeSetupWizardActivity(): SetupWizardActivity
 
     @ActivityScope
     @ContributesAndroidInjector(modules = [
-        MainActivityModule::class,
-        MainActivityViewModelModule::class
+        MainActivityModule::class
     ])
     internal abstract fun contributeMainActivity(): MainActivity
 
     @ActivityScope
     @ContributesAndroidInjector(modules = [
-        CommonActivityModule::class,
-        CommonActivityViewModelModule::class
+        CommonActivityModule::class
     ])
     internal abstract fun contributeCommonActivity(): CommonActivity
 
