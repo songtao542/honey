@@ -49,8 +49,8 @@ abstract class WXEntryActivityModule {
 
 @Module
 abstract class SignupActivityModule {
-    @Binds
-    abstract fun bindViewModelFactory(factory: ViewModelFactory): ViewModelProvider.Factory
+//    @Binds
+//    abstract fun bindViewModelFactory(factory: ViewModelFactory): ViewModelProvider.Factory
 
     @ContributesAndroidInjector
     abstract fun contributeStartupFragment(): StartupFragment
@@ -61,8 +61,8 @@ abstract class SignupActivityModule {
 
 @Module
 abstract class SetupWizardActivityModule {
-    @Binds
-    abstract fun bindViewModelFactory(factory: ViewModelFactory): ViewModelProvider.Factory
+//    @Binds
+//    abstract fun bindViewModelFactory(factory: ViewModelFactory): ViewModelProvider.Factory
 
     @ContributesAndroidInjector
     abstract fun contributeSetupWizardFragment(): SetupWizardFragment
@@ -80,8 +80,8 @@ abstract class SetupWizardActivityModule {
 
 @Module
 abstract class MainActivityModule {
-    @Binds
-    abstract fun bindViewModelFactory(factory: ViewModelFactory): ViewModelProvider.Factory
+//    @Binds
+//    abstract fun bindViewModelFactory(factory: ViewModelFactory): ViewModelProvider.Factory
 
     @ContributesAndroidInjector
     abstract fun contributeHomeFragment(): HomeFragment
@@ -117,8 +117,8 @@ abstract class MainActivityModule {
 
 @Module
 abstract class CommonActivityModule {
-    @Binds
-    abstract fun bindViewModelFactory(factory: ViewModelFactory): ViewModelProvider.Factory
+//    @Binds
+//    abstract fun bindViewModelFactory(factory: ViewModelFactory): ViewModelProvider.Factory
 
     @ContributesAndroidInjector
     abstract fun contributeBindPhoneFragment(): BindPhoneFragment

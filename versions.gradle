@@ -21,7 +21,7 @@
 ext.deps = [:]
 def versions = [:]
 versions.androidx_futures = "1.0.0-alpha02"
-versions.androidx_lifecycle = "2.0.0-alpha1"
+versions.androidx_lifecycle = "2.0.0-rc01"
 versions.androidx_room = "2.1.0-alpha02"
 versions.androidx_paging = "2.1.0-beta01"
 versions.androidx_nav = "1.0.0-alpha07"
