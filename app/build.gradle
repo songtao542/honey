@@ -209,12 +209,12 @@ dependencies {
     implementation deps.dagger.runtime
     implementation deps.dagger.android
     implementation deps.dagger.android_support
-    //kapt  files('libs/dagger-android-processor-2.19.jar')
-    //kapt  files('libs/dagger-compiler-2.19.jar')
-    kapt files('libs/dagger-android-processor-2.17.jar')
-    kapt files('libs/dagger-compiler-2.17.jar')
-//    kapt deps.dagger.android_processor
-//    kapt deps.dagger.compiler
+//    kapt  files('libs/dagger-android-processor-2.19.jar')
+//    kapt  files('libs/dagger-compiler-2.19.jar')
+//    kapt files('libs/dagger-android-processor-2.17.jar')
+//    kapt files('libs/dagger-compiler-2.17.jar')
+    kapt deps.dagger.android_processor
+    kapt deps.dagger.compiler
     implementation deps.kotlin.stdlib
     implementation deps.kotlinx.serialization_runtime
     implementation deps.kotlinx.coroutines_android
