@@ -1,5 +1,6 @@
 package com.snt.phoney.di.module
 
+import com.snt.phoney.di.FragmentScope
 import com.snt.phoney.ui.dating.create.CreateDatingFragment
 import com.snt.phoney.ui.dating.detail.DatingDetailFragment
 import com.snt.phoney.ui.dating.list.DatingListFragment
@@ -36,8 +37,7 @@ import dagger.android.ContributesAndroidInjector
     ViewModelFactoryModule::class,
     WXEntryActivityViewModelModule::class
 ])
-abstract class WXEntryActivityModule {
-}
+abstract class WXEntryActivityModule
 
 @Module(includes = [
     ViewModelFactoryModule::class,
