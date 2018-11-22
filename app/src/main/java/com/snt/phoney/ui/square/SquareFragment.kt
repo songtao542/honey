@@ -12,6 +12,7 @@ import com.snt.phoney.R
 import com.snt.phoney.base.BaseFragment
 import com.snt.phoney.base.CommonActivity
 import com.snt.phoney.base.Page
+import com.snt.phoney.ui.dating.DatingActivity
 import com.snt.phoney.ui.square.official.OfficialRecommendFragment
 import com.snt.phoney.ui.square.popular.PopularRecommendFragment
 import com.snt.phoney.widget.TabLayout
@@ -71,14 +72,14 @@ class SquareFragment : BaseFragment() {
     }
 
 
-    override fun onCreateOptionsMenu(menu: Menu?, inflater: MenuInflater?) {
+    override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
         inflater?.inflate(R.menu.square, menu)
     }
 
-    override fun onOptionsItemSelected(item: MenuItem?): Boolean {
+    override fun onOptionsItemSelected(item: MenuItem): Boolean {
         return when (item?.itemId) {
             R.id.publishDating -> {
-                context?.let { it.startActivity(CommonActivity.newIntent(it, Page.CREATE_DATING)) }
+                context?.let { it.startActivity(CommonActivity.newIntent<DatingActivity>(it, Page.CREATE_DATING)) }
                 true
             }
             else -> super.onOptionsItemSelected(item)

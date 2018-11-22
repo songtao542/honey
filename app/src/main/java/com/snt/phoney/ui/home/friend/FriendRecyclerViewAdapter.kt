@@ -8,6 +8,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.snt.phoney.R
 import com.snt.phoney.base.CommonActivity
 import com.snt.phoney.base.Page
+import com.snt.phoney.ui.user.UserActivity
 
 /**
  */
@@ -44,7 +45,7 @@ class FriendRecyclerViewAdapter() : RecyclerView.Adapter<RecyclerView.ViewHolder
 
     inner class ViewHolder(val mView: View) : RecyclerView.ViewHolder(mView) {
         init {
-            mView.setOnClickListener { mView.context.startActivity(CommonActivity.newIntent(mView.context, Page.VIEW_USER_INFO)) }
+            mView.setOnClickListener { mView.context.startActivity(CommonActivity.newIntent<UserActivity>(mView.context, Page.VIEW_USER_INFO)) }
         }
     }
 }

@@ -10,6 +10,8 @@ import com.snt.phoney.R
 import com.snt.phoney.base.BaseFragment
 import com.snt.phoney.base.CommonActivity
 import com.snt.phoney.base.Page
+import com.snt.phoney.ui.user.UserActivity
+import com.snt.phoney.ui.vip.VipActivity
 import kotlinx.android.synthetic.main.fragment_mine_header.*
 import kotlinx.android.synthetic.main.fragment_mine_list.*
 
@@ -34,8 +36,8 @@ class MineFragment : BaseFragment() {
             adapter = MineRecyclerViewAdapter(this@MineFragment)
         }
 
-        editInfo.setOnClickListener { context?.let { context -> startActivity(CommonActivity.newIntent(context, Page.EDIT_USER_INFO)) } }
-        upgradeVip.setOnClickListener { context?.let { context -> startActivity(CommonActivity.newIntent(context, Page.UPGRADE_VIP)) } }
+        editInfo.setOnClickListener { context?.let { context -> startActivity(CommonActivity.newIntent<UserActivity>(context, Page.EDIT_USER_INFO)) } }
+        upgradeVip.setOnClickListener { context?.let { context -> startActivity(CommonActivity.newIntent<VipActivity>(context, Page.UPGRADE_VIP)) } }
     }
 
     override fun onAttach(context: Context) {

@@ -60,11 +60,11 @@ class HomeFragment : BaseFragment() {
 //        homeTab.getTabAt(1)?.text = getString(R.string.tab_home_following)
     }
 
-    override fun onCreateOptionsMenu(menu: Menu?, inflater: MenuInflater?) {
+    override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
         inflater?.inflate(R.menu.home, menu)
     }
 
-    override fun onOptionsItemSelected(item: MenuItem?): Boolean {
+    override fun onOptionsItemSelected(item: MenuItem): Boolean {
         return when (item?.itemId) {
             R.id.findCity -> {
 

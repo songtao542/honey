@@ -35,12 +35,11 @@ class CreateDatingFragment : BaseFragment() {
         binding.toolbar.setNavigationOnClickListener { activity?.finish() }
     }
 
-
-    override fun onCreateOptionsMenu(menu: Menu?, inflater: MenuInflater?) {
+    override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
         inflater?.inflate(R.menu.create_dating, menu)
     }
 
-    override fun onOptionsItemSelected(item: MenuItem?): Boolean {
+    override fun onOptionsItemSelected(item: MenuItem): Boolean {
         return when (item?.itemId) {
             R.id.publishDatingConfirm -> {
                 Log.d("TTTT", "Confirm publish")
