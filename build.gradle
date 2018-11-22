@@ -7,6 +7,8 @@ buildscript {
         classpath deps.kotlin.allopen
         classpath deps.kotlinx.serialization_plugin
         classpath deps.navigation.safe_args_plugin
+
+        classpath "com.android.tools.build.jetifier:jetifier-processor:1.0.0-beta02"
     }
     repositories {
         google()
@@ -20,8 +22,4 @@ allprojects {
 
 task clean(type: Delete) {
     delete rootProject.buildDir
-}
-
-repositories {
-    google()
 }
