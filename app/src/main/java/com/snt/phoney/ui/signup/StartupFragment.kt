@@ -84,6 +84,7 @@ class StartupFragment : BaseFragment() {
         })
 
         wxViewModel.user.observe(this, Observer { user ->
+            Log.d("TTTT","user---------===================>$user")
             user?.let {
                 viewModel.signupByThirdPlatform(it.openid ?: "",
                         it.accessToken ?: "",

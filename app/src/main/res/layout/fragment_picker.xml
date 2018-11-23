@@ -31,32 +31,46 @@
                 android:layout_width="?attr/actionBarSize"
                 android:layout_height="?attr/actionBarSize"
                 android:layout_gravity="right"
+                android:background="?attr/selectableItemBackground"
                 android:gravity="center"
                 android:text="@string/confirm"
                 android:textColor="@color/black"
                 android:textSize="@dimen/textsize_normal" />
         </FrameLayout>
 
-        <LinearLayout
+        <FrameLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="horizontal">
+            android:layout_height="wrap_content">
 
-            <NumberPicker
-                android:id="@+id/column1"
-                android:layout_width="0dp"
+            <ProgressBar
+                android:id="@+id/progress"
+                style="@style/Widget.AppCompat.ProgressBar"
+                android:layout_width="@dimen/pickerLoadingProgressSize"
+                android:layout_height="@dimen/pickerLoadingProgressSize"
+                android:visibility="gone" />
+
+            <LinearLayout
+                android:id="@+id/pickers"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_weight="1"
-                tools:targetApi="honeycomb" />
+                android:orientation="horizontal">
 
-            <NumberPicker
-                android:id="@+id/column2"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:visibility="gone"
-                tools:targetApi="honeycomb" />
+                <NumberPicker
+                    android:id="@+id/column1"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    tools:targetApi="honeycomb" />
 
-        </LinearLayout>
+                <NumberPicker
+                    android:id="@+id/column2"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:visibility="gone"
+                    tools:targetApi="honeycomb" />
+
+            </LinearLayout>
+        </FrameLayout>
     </LinearLayout>
 </FrameLayout>

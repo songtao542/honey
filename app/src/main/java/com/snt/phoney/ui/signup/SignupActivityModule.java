@@ -45,4 +45,10 @@ public abstract class SignupActivityModule {
     @ViewModelKey(QQViewModel.class)
     public abstract ViewModel bindQQViewModel(QQViewModel viewModel);
 
+    @Binds
+    @IntoMap
+    @ActivityScope
+    @ViewModelKey(SignupViewModel.class)
+    public abstract ViewModel bindSignupViewModel(SignupViewModel viewModel);
+
 }

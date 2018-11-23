@@ -20,7 +20,7 @@ import com.snt.phoney.domain.model.Response
 import com.snt.phoney.domain.model.User
 import io.reactivex.Single
 
-interface UserCredentialRepository {
+interface UserRepository {
     fun signup(phone: String,
                msgId: String,
                code: String,
@@ -52,6 +52,27 @@ interface UserCredentialRepository {
                         weight: Int,
                         age: Int,
                         cup: String): Single<Response<String>>
+
+    fun setUserInfo(token: String,
+                    cities: String,
+                    career: String,
+                    program: String): Single<Response<String>>
+
+    fun listUser(
+            token: String,
+            latitude: String,
+            longitude: String,
+            type: String,
+            page: String,
+            city: String,
+            heightStart: String,
+            heightEnd: String,
+            ageStart: String,
+            ageEnd: String,
+            cupStart: String,
+            cupEnd: String
+    ): Single<Response<List<User>>>
+
 
     fun login(username: String, password: String): LiveData<Response<User>>
 

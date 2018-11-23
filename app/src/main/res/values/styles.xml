@@ -140,6 +140,10 @@
         <item name="cpEmptyText">@string/cp_no_result</item>
         <item name="cpEmptyTextSize">@dimen/cp_empty_text_size</item>
         <item name="cpEmptyTextColor">@color/cp_color_gray_deep</item>
+        <item name="cpLoadingText">@string/cp_loading</item>
+        <item name="cpLoadingTextSize">@dimen/cp_loading_text_size</item>
+        <item name="cpLoadingTextColor">@color/cp_color_gray_deep</item>
+        <item name="cpLoadingProgressSize">@dimen/cp_loading_progress_size</item>
 
         <item name="cpGridItemBackground">@drawable/cp_grid_item_bg</item>
         <item name="cpGridItemSpace">@dimen/cp_grid_item_space</item>

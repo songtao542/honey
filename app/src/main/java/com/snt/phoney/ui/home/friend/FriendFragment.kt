@@ -1,23 +1,38 @@
 package com.snt.phoney.ui.home.friend
 
-import android.content.Context
 import android.graphics.Rect
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.lifecycle.Observer
+import androidx.lifecycle.ViewModelProviders
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.snt.phoney.R
 import com.snt.phoney.base.BaseFragment
 import com.snt.phoney.extensions.dip
 import kotlinx.android.synthetic.main.fragment_friend_list.*
+import kotlinx.android.synthetic.main.fragment_friend_tag.*
+import retrofit2.http.Field
 
 /**
  * A fragment representing a list of Items.
  */
 class FriendFragment : BaseFragment() {
 
+    lateinit var viewModel: FriendViewModel
+
+    /**
+     *  0 默认全部（按时间倒叙）
+     *  1 今日新人
+     *  2 人气最高
+     *  3 距离最近
+     *  4 身材最好
+     *  5 更多筛选
+     *  6 查找城市
+     */
+    var filterType: FilterType = FilterType.DEFAULT
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -29,6 +44,9 @@ class FriendFragment : BaseFragment() {
 
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
+
+        viewModel = ViewModelProviders.of(this, viewModelFactory).get(FriendViewModel::class.java)
+
         with(list) {
             addItemDecoration(ItemDecoration(dip(8)))
             val gridLayoutManager = GridLayoutManager(context, 2)
@@ -44,16 +62,56 @@ class FriendFragment : BaseFragment() {
             adapter = FriendRecyclerViewAdapter()
         }
 
+
+        newest.setOnClickListener {
+            clearFilterSelector()
+            newest.isSelected = true
+            filterType = FilterType.NEWEST
+        }
+        popular.setOnClickListener {
+            clearFilterSelector()
+            popular.isSelected = true
+            filterType = FilterType.POPULAR
+        }
+        nearest.setOnClickListener {
+            clearFilterSelector()
+            nearest.isSelected = true
+            filterType = FilterType.NEAREST
+        }
+        hottest.setOnClickListener {
+            clearFilterSelector()
+            hottest.isSelected = true
+            filterType = FilterType.HOTTEST
+        }
+
+        viewModel.users.observe(this, Observer {
+
+        })
+
+
+//        viewModel.listUser()
     }
 
-    override fun onAttach(context: Context) {
-        super.onAttach(context)
+    private fun clearFilterSelector() {
+        newest.isSelected = false
+        popular.isSelected = false
+        nearest.isSelected = false
+        hottest.isSelected = false
     }
 
-    override fun onDetach() {
-        super.onDetach()
+    private fun listUser() {
+        var latitude: String = ""
+        var longitude: String = ""
+        var type: String = ""
+        var page: String = ""
+        var city: String = ""
+        var heightStart: String = ""
+        var heightEnd: String = ""
+        var ageStart: String = ""
+        var ageEnd: String = ""
+        var cupStart: String = ""
+        var cupEnd: String = ""
     }
-
 
     companion object {
         @JvmStatic

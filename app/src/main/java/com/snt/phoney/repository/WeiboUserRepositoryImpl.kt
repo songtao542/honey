@@ -11,6 +11,7 @@ import com.snt.phoney.domain.repository.CacheRepository
 import com.snt.phoney.domain.repository.WeiboUserRepository
 import com.snt.phoney.utils.data.Constants
 import io.reactivex.Single
+import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.async
 import kotlinx.coroutines.runBlocking
 import javax.inject.Inject
@@ -50,7 +51,7 @@ class WeiboUserRepositoryImpl @Inject constructor(private val application: Appli
     override var accessToken: Oauth2AccessToken?
         set(value) {
             runBlocking {
-                async {
+                async(Dispatchers.Default) {
                     AccessTokenKeeper.writeAccessToken(application, value)
                 }.await()
             }
@@ -58,7 +59,7 @@ class WeiboUserRepositoryImpl @Inject constructor(private val application: Appli
         get() {
             if (_accessToken == null) {
                 runBlocking {
-                    async {
+                    async(Dispatchers.Default) {
                         _accessToken = AccessTokenKeeper.readAccessToken(application)
                     }.await()
                 }

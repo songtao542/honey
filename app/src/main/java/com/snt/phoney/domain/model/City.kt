@@ -2,6 +2,7 @@ package com.snt.phoney.domain.model
 
 import androidx.room.*
 import com.github.promeg.pinyinhelper.Pinyin
+import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.async
 import kotlinx.coroutines.runBlocking
 import kotlinx.serialization.Serializable
@@ -21,15 +22,18 @@ data class City(@PrimaryKey var id: Int = 0,
                 var name: String? = null)
 
 
-object CityPickerConvertor {
+object CityPickerConverter {
     @JvmStatic
     fun convert(cities: List<City>): List<com.zaaach.citypicker.model.City> {
         val results = ArrayList<com.zaaach.citypicker.model.City>()
         runBlocking {
-            async {
-                for ((index, city) in cities.withIndex()) {
-                    val pc = com.zaaach.citypicker.model.City(city.name, city.provinceName, Pinyin.toPinyin(city.name, ""), index.toString())
+            async(Dispatchers.Default) {
+                for (city in cities) {
+                    val pc = com.zaaach.citypicker.model.City(city.name, city.provinceName, Pinyin.toPinyin(city.name, ""), city.id.toString())
                     results.add(pc)
+                }
+                results.sortBy {
+                    it.pinyin
                 }
             }.await()
         }

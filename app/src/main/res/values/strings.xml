@@ -149,6 +149,9 @@
     <string name="pick_cup">请选择罩杯</string>
     <string name="verification_code_has_send">验证码已发送</string>
     <string name="bind_phone_success">绑定成功</string>
+    <string name="friend_tag_popular">人气最高</string>
+    <string name="friend_tag_nearest">距离最近</string>
+    <string name="friend_tag_hottest">身材最好</string>
 
 
 </resources>

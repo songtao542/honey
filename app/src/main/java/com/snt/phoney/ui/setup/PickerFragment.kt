@@ -2,6 +2,7 @@ package com.snt.phoney.ui.setup
 
 import android.app.Dialog
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -19,6 +20,7 @@ const val EXTRA_MIN = "min_value"
 const val EXTRA_MAX = "max_value"
 const val EXTRA_COLUMN_1_VALUES = "column1"
 const val EXTRA_COLUMN_2_VALUES = "column2"
+const val EXTRA_SHOW_PROGRESS = "progress"
 
 /**
  *
@@ -57,36 +59,18 @@ class PickerFragment : BottomDialogFragment() {
         arguments?.let {
             val title = it.getString(EXTRA_TITLE)
             this.title.text = title ?: getString(R.string.please_select)
-            val minValue = it.getInt(EXTRA_MIN, 0)
-            val maxValue = it.getInt(EXTRA_MAX, 0)
-            if (minValue != 0 && maxValue != 0) {
-                column1.minValue = minValue
-                column1.maxValue = maxValue
-                if (value1 in minValue..maxValue) {
-                    column1.value = value1
-                }
+            val showProgress = it.getBoolean(EXTRA_SHOW_PROGRESS, false)
+            showProgress(showProgress)
+
+            val minValue = it.getInt(EXTRA_MIN, -1)
+            val maxValue = it.getInt(EXTRA_MAX, -1)
+            if (minValue != -1 && maxValue != -1) {
+                setColumnInternal(minValue, maxValue)
             }
 
             val column1Values = it.getStringArray(EXTRA_COLUMN_1_VALUES)
-            if (column1Values != null) {
-                column1.displayedValues = column1Values
-                column1.minValue = 0
-                column1.maxValue = column1Values.size - 1
-                if (value1 > 0 && value1 < column1Values.size) {
-                    column1.value = value1
-                }
-            }
-
             val column2Values = it.getStringArray(EXTRA_COLUMN_2_VALUES)
-            if (column2Values != null) {
-                column2.visibility = View.VISIBLE
-                column2.displayedValues = column2Values
-                column2.minValue = 0
-                column2.maxValue = column2Values.size - 1
-                if (value2 > 0 && value2 < column2Values.size) {
-                    column2.value = value2
-                }
-            }
+            setColumnInternal(column1Values, column2Values)
         }
 
         confirm.setOnClickListener {
@@ -104,8 +88,90 @@ class PickerFragment : BottomDialogFragment() {
     var value1: Int = 0
     var value2: Int = 0
 
+    var minValue: Int = -1
+    var maxValue: Int = -1
+
+    var column1Values: Array<String>? = null
+    var column2Values: Array<String>? = null
+
+
+    private fun showProgress(show: Boolean) {
+        if (progress != null && pickers != null) {
+            if (show) {
+                progress.visibility = View.VISIBLE
+                pickers.visibility = View.GONE
+            } else {
+                progress.visibility = View.GONE
+                pickers.visibility = View.VISIBLE
+            }
+        }
+    }
+
+    fun setColumn(minValue: Int, maxValue: Int) {
+        this.minValue = minValue
+        this.maxValue = maxValue
+        setColumnInternal(minValue, maxValue)
+    }
+
+    private fun setColumnInternal(minValue: Int, maxValue: Int) {
+        if (column1 != null && minValue >= 0 && maxValue >= 0) {
+            column1.minValue = minValue
+            column1.maxValue = maxValue
+            if (value1 in minValue..maxValue) {
+                column1.value = value1
+            }
+            showProgress(false)
+        }
+    }
+
+    override fun onResume() {
+        super.onResume()
+        if (minValue != -1 && maxValue != -1) {
+            setColumnInternal(minValue, maxValue)
+        } else {
+            Log.d("TTTT", "xxxxxxxxxxxxxxxxxx$column1Values   $column2Values")
+            setColumnInternal(column1Values, column2Values)
+        }
+    }
+
+    fun setColumn(column1Values: Array<String>?, column2Values: Array<String>? = null) {
+        this.column1Values = column1Values
+        this.column2Values = column2Values
+        setColumnInternal(column1Values, column2Values)
+    }
+
+    private fun setColumnInternal(column1Values: Array<String>?, column2Values: Array<String>? = null) {
+        if (column1Values != null && column1 != null) {
+            column1.displayedValues = column1Values
+            column1.minValue = 0
+            column1.maxValue = column1Values.size - 1
+            if (value1 > 0 && value1 < column1Values.size) {
+                column1.value = value1
+            }
+        }
+
+        if (column2Values != null && column2 != null) {
+            column2.visibility = View.VISIBLE
+            column2.displayedValues = column2Values
+            column2.minValue = 0
+            column2.maxValue = column2Values.size - 1
+            if (value2 > 0 && value2 < column2Values.size) {
+                column2.value = value2
+            }
+        }
+        showProgress(false)
+    }
 
     companion object {
+
+        @JvmStatic
+        fun newInstance(title: String) = PickerFragment().apply {
+            arguments = Bundle().apply {
+                this.putString(EXTRA_TITLE, title)
+                this.putBoolean(EXTRA_SHOW_PROGRESS, true)
+            }
+        }
+
         @JvmStatic
         fun newInstance(title: String, minValue: Int, maxValue: Int) = PickerFragment().apply {
             arguments = Bundle().apply {

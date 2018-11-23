@@ -46,7 +46,8 @@ public class WxApiServiceModule {
         okHttpBuilder.addInterceptor(chain -> {
             Request request = chain.request();
             HttpUrl url = request.url().newBuilder()
-                    //.addQueryParameter(Constants.Api.APP_ID, Constants.Api.APP_ID_VALUE)
+                    .addQueryParameter("appid", Constants.Wechat.APP_ID)
+                    .addQueryParameter("secret", Constants.Wechat.APP_SECRET)
                     .build();
             return chain.proceed(request.newBuilder().url(url).build());
         });

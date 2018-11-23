@@ -9,8 +9,11 @@ import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
 import com.snt.phoney.R
 import com.snt.phoney.base.BaseFragment
-import com.snt.phoney.domain.model.CityPickerConvertor
+import com.snt.phoney.domain.model.Career
+import com.snt.phoney.domain.model.CityPickerConverter
+import com.snt.phoney.domain.model.Purpose
 import com.snt.phoney.domain.model.User
+import com.snt.phoney.ui.main.MainActivity
 import com.zaaach.citypicker.CityPickerFragment
 import com.zaaach.citypicker.model.City
 import kotlinx.android.synthetic.main.fragment_signup_3.*
@@ -22,7 +25,11 @@ class SetupWizardThreeFragment : BaseFragment() {
 
     private lateinit var user: User
 
-    private var selectCities: List<City>? = null
+    private var selectedCities: List<City>? = null
+    private var selectedJob: Career? = null
+    private var selectedJobIndex: Int = 0
+    private var selectedPurpose: Purpose? = null
+    private var selectedPurposeIndex: Int = 0
 
     lateinit var viewModel: SetupWizardViewModel
 
@@ -52,9 +59,14 @@ class SetupWizardThreeFragment : BaseFragment() {
         Log.d("TTTT", "vm=======3==========================$viewModel")
         back3.setNavigationOnClickListener { activity?.supportFragmentManager?.popBackStack() }
         confirmStep3.setOnClickListener {
-            context?.let {
-                //BindPhoneFragment.newInstance().show(childFragmentManager, "bindPhone")
-
+            if (isValid()) {
+                var cities = java.lang.StringBuilder()
+                selectedCities?.forEach { city ->
+                    cities.append(city.code).append(",")
+                }
+                cities.delete(cities.length - 1, cities.length)
+                viewModel.setUserInfo(cities.toString(), selectedJob?.name
+                        ?: "", selectedPurpose?.name ?: "")
             }
         }
 
@@ -62,20 +74,57 @@ class SetupWizardThreeFragment : BaseFragment() {
             pickCity()
         }
         purposeButton.setOnClickListener {
-
+            togglePicker(getString(R.string.select_job), selectedPurposeIndex, "purpose", provider = { picker ->
+                viewModel.purposes.observe(this, Observer { purposes ->
+                    val purposeNames = Array(purposes.size) { index ->
+                        purposes[index].name!!
+                    }
+                    picker.setColumn(purposeNames)
+                })
+            }) { value1, _ ->
+                selectedPurposeIndex = value1
+                selectedPurpose = viewModel.purposes.value?.get(value1)
+                purpose.text = selectedPurpose?.name
+            }
         }
         jobButton.setOnClickListener {
-
+            togglePicker(getString(R.string.select_job), selectedJobIndex, "career", provider = { picker ->
+                viewModel.careers.observe(this, Observer { careers ->
+                    val careerNames = Array(careers.size) { index ->
+                        careers[index].name!!
+                    }
+                    picker.setColumn(careerNames)
+                })
+            }) { value1, _ ->
+                selectedJobIndex = value1
+                selectedJob = viewModel.careers.value?.get(value1)
+                job.text = selectedJob?.name
+            }
         }
 
-
+        viewModel.setupUserInfo.observe(this, Observer {
+            context?.let {
+                startActivity(MainActivity.newIntent(it))
+                activity?.finish()
+                return@let
+            }
+        })
     }
 
-    private fun togglePicker(title: String, minValue: Int, maxValue: Int, tag: String, handler: ((value: Int, _: Int) -> Unit)) {
+    private fun isValid(): Boolean {
+        if (selectedCities != null && selectedJob != null && selectedPurpose != null) {
+            return true
+        }
+        return false
+    }
+
+    private fun togglePicker(title: String, value: Int, tag: String, provider: ((picker: PickerFragment) -> Unit), handler: ((value1: Int, value2: Int) -> Unit)) {
         activity?.supportFragmentManager?.let {
-            val pickerFragment = PickerFragment.newInstance(title, minValue, maxValue)
+            val pickerFragment = PickerFragment.newInstance(title)
             pickerFragment.setOnResultListener(handler)
+            pickerFragment.value1 = value
             pickerFragment.show(it, tag)
+            provider.invoke(pickerFragment)
         }
     }
 
@@ -86,13 +135,21 @@ class SetupWizardThreeFragment : BaseFragment() {
                 .multipleMode(true)
                 .enableHotCities(false)
                 .enableLocation(false)
+                .useDefaultCities(false)
                 .requestCitiesListener { cityPicker ->
                     viewModel.cities.observe(this@SetupWizardThreeFragment, Observer {
-                        cityPicker.setCities(CityPickerConvertor.convert(it))
+                        cityPicker.setCities(CityPickerConverter.convert(it))
                     })
                 }
                 .resultListener {
-                    selectCities = it
+                    if (it.isNotEmpty()) {
+                        selectedCities = it
+                        var text = StringBuilder()
+                        selectedCities!!.forEach { city ->
+                            text.append(city.name).append(" ")
+                        }
+                        city.text = text.toString()
+                    }
                 }
                 .show()
     }

@@ -206,13 +206,10 @@ dependencies {
     //    implementation deps.cache.layercache_retrofit
     //    implementation deps.cache.layercache_android_encryption
     //    implementation deps.cache.layercache_android_livedata
+
     implementation deps.dagger.runtime
     implementation deps.dagger.android
     implementation deps.dagger.android_support
-//    kapt  files('libs/dagger-android-processor-2.19.jar')
-//    kapt  files('libs/dagger-compiler-2.19.jar')
-//    kapt files('libs/dagger-android-processor-2.17.jar')
-//    kapt files('libs/dagger-compiler-2.17.jar')
     kapt deps.dagger.android_processor
     kapt deps.dagger.compiler
 
@@ -221,6 +218,9 @@ dependencies {
     implementation deps.kotlinx.coroutines_android
     androidTestImplementation deps.kotlin.reflect
     implementation deps.timber
+
+    implementation deps.location.smart_location
+    implementation deps.location.smart_location_rx
 
     implementation "cn.jiguang.sdk:jpush:3.1.6"
     implementation "cn.jiguang.sdk:jcore:1.2.5"

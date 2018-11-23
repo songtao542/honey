@@ -298,7 +298,7 @@ public class CityPickerDialogFragment extends AppCompatDialogFragment implements
         if (mAllCities != null) {
             ArrayList<City> results = new ArrayList<>();
             for (City city : mAllCities) {
-                if (city.getName().contains(keyword)) {
+                if (city.getName().contains(keyword) || city.getPinyin().contains(keyword)) {
                     results.add(city);
                 }
             }
@@ -372,6 +372,7 @@ public class CityPickerDialogFragment extends AppCompatDialogFragment implements
             mLoadingView.setVisibility(View.GONE);
             this.mAllCities = cities;
             mAdapter.setCities(this.mAllCities);
+            ((SectionItemDecoration) (mRecyclerView.getItemDecorationAt(0))).setData(mAllCities);
             if (mEnableLocation) {
                 mAllCities.add(0, mLocatedCity);
             }

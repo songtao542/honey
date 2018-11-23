@@ -15,9 +15,7 @@
 package com.snt.phoney.api
 
 import androidx.lifecycle.LiveData
-import com.snt.phoney.domain.model.Province
-import com.snt.phoney.domain.model.Response
-import com.snt.phoney.domain.model.User
+import com.snt.phoney.domain.model.*
 import io.reactivex.Single
 import retrofit2.http.Field
 import retrofit2.http.FormUrlEncoded
@@ -63,15 +61,69 @@ interface Api {
     @FormUrlEncoded
     @POST("users/setFeatures")
     fun setUserFeatures(@Field("token") token: String,
-                        @Field("height") height: Int,
-                        @Field("weight") weight: Int,
-                        @Field("age") age: Int,
+                        @Field("height") height: String,
+                        @Field("weight") weight: String,
+                        @Field("age") age: String,
                         @Field("cup") cup: String): Single<Response<String>>
+
+
+    /**
+     *@param citys 城市列表id用逗号分隔
+     *@param career 职业 对于文字，接口返回
+     *@param program 宣言 对应为文字 接口返回
+     */
+    @FormUrlEncoded
+    @POST("users/setBaseInfo")
+    fun setUserInfo(@Field("token") token: String,
+                    @Field("citys") cities: String,
+                    @Field("career") career: String,
+                    @Field("program") program: String): Single<Response<String>>
+
+    @FormUrlEncoded
+    @POST("users/other/listCareer")
+    fun listCareer(@Field("token") token: String): Single<Response<List<Career>>>
+
+    @FormUrlEncoded
+    @POST("users/other/listIntroduces")
+    fun listPurpose(@Field("token") token: String): Single<Response<List<Purpose>>>
 
 
     @FormUrlEncoded
     @POST("sms/sendMsg")
     fun sendMsg(@Field("phone") phone: String): Single<Response<String>>
+
+
+    /**
+     *@param   token:String	用户token
+     *@param   lat:String	注意经纬度是反的（当type=3 必填）
+     *@param   lng:String	（当type=3 必填）
+     *@param   type:String	type 0 默认全部（按时间倒叙） 1 今日新人 2 人气最高 3 距离最近 4 身材最好 5 更多筛选 6 查找城市
+     *@param   page:String	从1开始
+     *@param   city:String	城市（当type=6 必填）
+     *@param   height_start:String	身高开始（当type=5 必填）
+     *@param   height_end:String	身高结束（当type=5 必填）
+     *@param   age_start:String	年龄开始（当type=5 必填）
+     *@param   age_end:String	年龄结束（当type=5 必填）
+     *@param   cup_start:String	罩杯开始（当type=5 必填）30A---45G
+     *@param   cup_end:String	罩杯结束（当type=5 必填）
+     */
+    @FormUrlEncoded
+    @POST("users/listUsers")
+    fun listUser(
+            @Field("token") token: String,
+            @Field("lat") latitude: String,
+            @Field("lng") longitude: String,
+            @Field("type") type: String,
+            @Field("page") page: String,
+            @Field("city") city: String,
+            @Field("height_start") heightStart: String,
+            @Field("height_end") heightEnd: String,
+            @Field("age_start") ageStart: String,
+            @Field("age_end") ageEnd: String,
+            @Field("cup_start") cupStart: String,
+            @Field("cup_end") cupEnd: String
+    ): Single<Response<List<User>>>
+
 
     @FormUrlEncoded
     @POST("users/third/register")

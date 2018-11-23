@@ -80,6 +80,7 @@ versions.paging = "1.0.1"
 versions.navigation = "1.0.0-alpha06"
 versions.work = "1.0.0-alpha09"
 versions.layer_cache = "0.4.0"
+versions.smart_location = "3.3.3"
 versions.multidex = "1.0.3"
 def deps = [:]
 
@@ -278,6 +279,11 @@ cache.layercache_retrofit = "com.appmattus:layercache-retrofit:$versions.layer_c
 cache.layercache_android_encryption = "com.appmattus:layercache-android-encryption:$versions.layer_cache"
 cache.layercache_android_livedata = "com.appmattus:layercache-android-livedata:$versions.layer_cache"
 deps.cache = cache
+
+def location = [:]
+location.smart_location = "io.nlopez.smartlocation:library:$versions.smart_location"
+location.smart_location_rx = "io.nlopez.smartlocation:rx:$versions.smart_location"
+deps.location = location
 
 deps.multidex = "com.android.support:multidex:$versions.multidex"
 

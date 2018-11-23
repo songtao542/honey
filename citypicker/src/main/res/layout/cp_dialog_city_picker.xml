@@ -39,5 +39,6 @@
         <include layout="@layout/cp_empty_view" />
 
         <include layout="@layout/cp_loading_view" />
+
     </RelativeLayout>
 </LinearLayout>

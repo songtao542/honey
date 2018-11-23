@@ -23,14 +23,24 @@ import com.snt.phoney.api.Api
 import com.snt.phoney.domain.model.Response
 import com.snt.phoney.domain.model.User
 import com.snt.phoney.domain.repository.CacheRepository
-import com.snt.phoney.domain.repository.UserCredentialRepository
+import com.snt.phoney.domain.repository.UserRepository
 import com.snt.phoney.utils.data.Constants
 import io.reactivex.Single
 import javax.inject.Inject
 import javax.inject.Singleton
 
 @Singleton
-class UserCredentialRepositoryImpl @Inject constructor(private val cache: CacheRepository, private val api: Api) : UserCredentialRepository {
+class UserRepositoryImpl @Inject constructor(private val cache: CacheRepository, private val api: Api) : UserRepository {
+    override fun listUser(token: String, latitude: String, longitude: String, type: String, page: String, city: String,
+                          heightStart: String, heightEnd: String,
+                          ageStart: String, ageEnd: String,
+                          cupStart: String, cupEnd: String): Single<Response<List<User>>> {
+        return api.listUser(token, latitude, longitude, type, page, city, heightStart, heightEnd, ageStart, ageEnd, cupStart, cupEnd)
+    }
+
+    override fun setUserInfo(token: String, cities: String, career: String, program: String): Single<Response<String>> {
+        return api.setUserInfo(token, cities, career, program)
+    }
 
 
     override fun bindPhone(msgId: String, code: String, phone: String, uuid: String, token: String): Single<Response<String>> {
@@ -58,8 +68,9 @@ class UserCredentialRepositoryImpl @Inject constructor(private val cache: CacheR
                                  weight: Int,
                                  age: Int,
                                  cup: String): Single<Response<String>> {
-        return api.setUserFeatures(token, height, weight, age, cup)
+        return api.setUserFeatures(token, height.toString(), weight.toString(), age.toString(), cup)
     }
+
 
     override fun login(username: String, password: String): LiveData<Response<User>> {
         return api.login(username, password)
