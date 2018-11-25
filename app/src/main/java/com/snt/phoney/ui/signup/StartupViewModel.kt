@@ -16,12 +16,15 @@ import io.reactivex.rxkotlin.subscribeBy
 import io.reactivex.schedulers.Schedulers
 import javax.inject.Inject
 
-//@SignupScope
 class StartupViewModel @Inject constructor(private val application: Application, private val signinUseCase: SigninUseCase) : ViewModel() {
 
     val error = MutableLiveData<String>()
 
     val user = MutableLiveData<User>()
+
+    init {
+        user.value = signinUseCase.user
+    }
 
     fun signupByThirdPlatform(openId: String, thirdToken: String, plate: String, nickName: String, headPic: String): Disposable? {
         val mobilePlate = "android"
@@ -33,7 +36,6 @@ class StartupViewModel @Inject constructor(private val application: Application,
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribeBy {
-                    Log.d("TTTT", "signupByThirdPlatform==>$it")
                     if (it.code == 200) {
                         signinUseCase.user = it.data
                         user.value = it.data

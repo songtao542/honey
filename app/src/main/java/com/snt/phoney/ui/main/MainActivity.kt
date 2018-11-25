@@ -8,12 +8,15 @@ import androidx.fragment.app.Fragment
 import com.google.android.material.bottomnavigation.BottomNavigationView
 import com.snt.phoney.R
 import com.snt.phoney.base.BaseActivity
+import com.snt.phoney.domain.model.Sex
+import com.snt.phoney.domain.repository.UserRepository
 import com.snt.phoney.extensions.*
 import com.snt.phoney.ui.home.HomeFragment
 import com.snt.phoney.ui.message.MessageFragment
 import com.snt.phoney.ui.mine.MineFragment
 import com.snt.phoney.ui.square.SquareFragment
 import kotlinx.android.synthetic.main.activity_main.*
+import javax.inject.Inject
 
 class MainActivity : BaseActivity() {
 
@@ -27,6 +30,9 @@ class MainActivity : BaseActivity() {
     private val mineFragment = MineFragment.newInstance()
 
     private var currentFragment: Fragment? = null
+
+    @Inject
+    lateinit var userRepository: UserRepository
 
     private val mOnNavigationItemSelectedListener = BottomNavigationView.OnNavigationItemSelectedListener { item ->
         when (item.itemId) {
@@ -52,6 +58,17 @@ class MainActivity : BaseActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        when (Sex.from(userRepository.user?.sex ?: -1)) {
+            Sex.MALE -> {
+                setTheme(R.style.AppTheme_Male)
+            }
+            Sex.FEMALE -> {
+                setTheme(R.style.AppTheme_Female)
+            }
+            else -> {
+                setTheme(R.style.AppTheme_SexUnknown)
+            }
+        }
         setContentView(R.layout.activity_main)
         setLayoutFullscreen()
         //setStatusBarColor(colorOf(R.color.colorPrimaryFemale))

@@ -22,6 +22,7 @@ import androidx.lifecycle.LiveData
 import com.snt.phoney.api.Api
 import com.snt.phoney.domain.model.Response
 import com.snt.phoney.domain.model.User
+import com.snt.phoney.domain.model.UserInfo
 import com.snt.phoney.domain.repository.CacheRepository
 import com.snt.phoney.domain.repository.UserRepository
 import com.snt.phoney.utils.data.Constants
@@ -31,6 +32,10 @@ import javax.inject.Singleton
 
 @Singleton
 class UserRepositoryImpl @Inject constructor(private val cache: CacheRepository, private val api: Api) : UserRepository {
+    override fun getUserInfo(token: String, uid: String, latitude: Double, longitude: Double): Single<Response<UserInfo>> {
+        return api.getUserInfo(token, uid, latitude.toString(), longitude.toString())
+    }
+
     override fun listUser(token: String, latitude: String, longitude: String, type: String, page: String, city: String,
                           heightStart: String, heightEnd: String,
                           ageStart: String, ageEnd: String,

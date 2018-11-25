@@ -9,6 +9,7 @@ import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
 import com.snt.phoney.R
 import com.snt.phoney.base.BaseFragment
+import com.snt.phoney.domain.model.Sex
 import com.snt.phoney.domain.model.User
 import com.snt.phoney.extensions.addFragmentSafely
 import com.snt.phoney.extensions.disposedBy
@@ -40,8 +41,8 @@ class SetupWizardOneFragment : BaseFragment() {
 
         Log.d("TTTT", "vm=======1==========================$viewModel")
 
-        female.setOnClickListener { setSex(1) }
-        male.setOnClickListener { setSex(0) }
+        female.setOnClickListener { setSex(Sex.FEMALE) }
+        male.setOnClickListener { setSex(Sex.MALE) }
 
         viewModel.setupSex.observe(this, Observer {
             activity?.addFragmentSafely(R.id.containerLayout, SetupWizardTwoFragment.newInstance(user), "step2", false)
@@ -52,9 +53,9 @@ class SetupWizardOneFragment : BaseFragment() {
         })
     }
 
-    private fun setSex(sex: Int) {
-        user.sex = sex
-        viewModel.setSex(sex)?.disposedBy(disposeBag)
+    private fun setSex(sex: Sex) {
+        user.sex = sex.value
+        viewModel.setSex(sex.value)?.disposedBy(disposeBag)
     }
 
     companion object {

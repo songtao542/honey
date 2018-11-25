@@ -49,10 +49,6 @@ class WxViewModel @Inject constructor(application: Application, private val usec
         user.value = usecase.user
     }
 
-    fun clear() {
-        usecase.user = null
-    }
-
     private fun authorize() {
         wxApi.registerApp(Wechat.APP_ID)
         val req = SendAuth.Req()

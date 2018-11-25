@@ -34,11 +34,25 @@
         <item name="toolbarBackground">@color/colorPrimaryFemale</item>
     </style>
 
+    <style name="AppTheme.SexUnknown" parent="AppTheme">
+        <item name="colorPrimary">@color/colorPrimary</item>
+        <item name="colorPrimaryPressed">@color/colorPrimaryPressed</item>
+        <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
+        <item name="colorAccent">@color/colorAccent</item>
+        <item name="colorTheme">@color/colorPrimary</item>
+        <item name="colorThemePressed">@color/colorPrimaryPressed</item>
+
+        <item name="statusBarBackground">@color/colorPrimaryFemale</item>
+        <item name="toolbarBackground">@color/colorPrimaryFemale</item>
+    </style>
+
     <style name="AppTheme.NoActionBar">
         <item name="windowActionBar">false</item>
         <item name="windowNoTitle">true</item>
     </style>
-<style name="a" parent="android:Theme.NoDisplay"></style>
+
+    <style name="a" parent="android:Theme.NoDisplay"></style>
+
     <style name="AppTheme.NoDisplay" parent="android:Theme.Translucent.NoTitleBar">
         <item name="android:windowActionBar">false</item>
         <item name="android:windowNoTitle">true</item>

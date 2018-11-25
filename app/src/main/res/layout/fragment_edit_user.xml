@@ -21,7 +21,7 @@
             android:layout_width="match_parent"
             android:layout_height="?attr/actionBarSize"
             android:background="?attr/toolbarBackground"
-            app:navigationIcon="@drawable/cp_back"
+            app:navigationIcon="@drawable/ic_back"
             app:title="@string/edit_user_title"
             app:titleTextColor="@color/white" />
 

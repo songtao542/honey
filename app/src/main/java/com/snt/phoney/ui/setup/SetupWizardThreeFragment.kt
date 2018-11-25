@@ -9,10 +9,7 @@ import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
 import com.snt.phoney.R
 import com.snt.phoney.base.BaseFragment
-import com.snt.phoney.domain.model.Career
-import com.snt.phoney.domain.model.CityPickerConverter
-import com.snt.phoney.domain.model.Purpose
-import com.snt.phoney.domain.model.User
+import com.snt.phoney.domain.model.*
 import com.snt.phoney.ui.main.MainActivity
 import com.zaaach.citypicker.CityPickerFragment
 import com.zaaach.citypicker.model.City
@@ -42,12 +39,12 @@ class SetupWizardThreeFragment : BaseFragment() {
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         var view = inflater.inflate(R.layout.fragment_signup_3, container, false)
-        when (user.sex) {
-            0 -> {
-                view.confirmStep3.setBackgroundResource(R.drawable.button_femail_circle_corner_selector)
+        when (Sex.from(user.sex)) {
+            Sex.MALE -> {
+                view.confirmStep3.setBackgroundResource(R.drawable.button_mail_circle_corner_selector)
             }
             else -> {
-                view.confirmStep3.setBackgroundResource(R.drawable.button_mail_circle_corner_selector)
+                view.confirmStep3.setBackgroundResource(R.drawable.button_femail_circle_corner_selector)
             }
         }
         return view

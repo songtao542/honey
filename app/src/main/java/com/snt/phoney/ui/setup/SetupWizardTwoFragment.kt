@@ -10,6 +10,7 @@ import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
 import com.snt.phoney.R
 import com.snt.phoney.base.BaseFragment
+import com.snt.phoney.domain.model.Sex
 import com.snt.phoney.domain.model.User
 import com.snt.phoney.extensions.addFragmentSafely
 import com.snt.phoney.extensions.snackbar
@@ -45,16 +46,16 @@ class SetupWizardTwoFragment : BaseFragment() {
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         var view = inflater.inflate(R.layout.fragment_signup_2, container, false)
-        when (user.sex) {
-            0 -> {
-                view.cupButton.visibility = View.VISIBLE
-                view.weightButton.visibility = View.GONE
-                view.confirmStep2.setBackgroundResource(R.drawable.button_femail_circle_corner_selector)
-            }
-            else -> {
+        when (Sex.from(user.sex)) {
+            Sex.MALE -> {
                 view.cupButton.visibility = View.GONE
                 view.weightButton.visibility = View.VISIBLE
                 view.confirmStep2.setBackgroundResource(R.drawable.button_mail_circle_corner_selector)
+            }
+            else -> {
+                view.cupButton.visibility = View.VISIBLE
+                view.weightButton.visibility = View.GONE
+                view.confirmStep2.setBackgroundResource(R.drawable.button_femail_circle_corner_selector)
             }
         }
         return view

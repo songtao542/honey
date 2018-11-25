@@ -1,5 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
+    <color name="colorPrimary">#ffffff</color>
+    <color name="colorPrimaryDark">#ffffff</color>
+    <color name="colorAccent">#ffffff</color>
+    <color name="colorPrimaryPressed">#ffffff</color>
+
     <color name="colorPrimaryFemale">#fe4b7a</color>
     <color name="colorPrimaryDarkFemale">#fe4b7a</color>
     <color name="colorAccentFemale">#fe4b7a</color>

@@ -39,7 +39,7 @@
                 android:layout_height="?attr/actionBarSize"
                 android:elevation="0dp"
                 app:layout_collapseMode="pin"
-                app:navigationIcon="@drawable/cp_back"
+                app:navigationIcon="@drawable/ic_back"
                 app:titleMargin="0dp">
 
                 <TextView

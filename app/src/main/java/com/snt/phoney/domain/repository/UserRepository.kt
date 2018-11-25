@@ -18,7 +18,12 @@ package com.snt.phoney.domain.repository
 import androidx.lifecycle.LiveData
 import com.snt.phoney.domain.model.Response
 import com.snt.phoney.domain.model.User
+import com.snt.phoney.domain.model.UserInfo
+import io.reactivex.Observable
 import io.reactivex.Single
+import retrofit2.http.Field
+import retrofit2.http.FormUrlEncoded
+import retrofit2.http.POST
 
 interface UserRepository {
     fun signup(phone: String,
@@ -58,6 +63,19 @@ interface UserRepository {
                     career: String,
                     program: String): Single<Response<String>>
 
+
+    fun setFullUserInfo(token: String,
+                        height: String,
+                        weight: String,
+                        age: String,
+                        cup: String,
+                        cities: String,
+                        introduce: String,
+                        career: String,
+                        program: String,
+                        wechatAccount: String,
+                        nickname: String): Single<Response<String>>
+
     fun listUser(
             token: String,
             latitude: String,
@@ -72,6 +90,12 @@ interface UserRepository {
             cupStart: String,
             cupEnd: String
     ): Single<Response<List<User>>>
+
+
+    fun getUserInfo(token: String,
+                    uid: String,    //	用户uuid
+                    latitude: Double,
+                    longitude: Double): Single<Response<UserInfo>>
 
 
     fun login(username: String, password: String): LiveData<Response<User>>

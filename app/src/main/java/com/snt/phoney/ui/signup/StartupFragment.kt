@@ -16,8 +16,9 @@ import com.snt.phoney.domain.usecase.PLATFORM_WEIBO
 import com.snt.phoney.extensions.addFragmentSafely
 import com.snt.phoney.extensions.disposedBy
 import com.snt.phoney.extensions.snackbar
+import com.snt.phoney.ui.main.MainActivity
 import com.snt.phoney.ui.setup.SetupWizardActivity
-import kotlinx.android.synthetic.main.activity_startup.*
+import kotlinx.android.synthetic.main.fragment_startup.*
 
 
 class StartupFragment : BaseFragment() {
@@ -28,7 +29,7 @@ class StartupFragment : BaseFragment() {
     private lateinit var wxViewModel: WxViewModel
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
-        return inflater.inflate(R.layout.activity_startup, container, false)
+        return inflater.inflate(R.layout.fragment_startup, container, false)
     }
 
     override fun onActivityCreated(savedInstanceState: Bundle?) {
@@ -62,6 +63,16 @@ class StartupFragment : BaseFragment() {
             }
         }
 
+        if (viewModel.user.value != null) {
+            root.postDelayed({
+                startActivity(MainActivity.newIntent(requireContext()))
+                activity?.finish()
+            }, 1500)
+            return
+        }
+
+        content.visibility = View.VISIBLE
+
         qqViewModel.user.observe(this, Observer { user ->
             user?.let {
                 viewModel.signupByThirdPlatform(it.openId, it.thirdToken, PLATFORM_QQ, it.nickName, it.headPic)?.disposedBy(disposeBag)
@@ -84,7 +95,7 @@ class StartupFragment : BaseFragment() {
         })
 
         wxViewModel.user.observe(this, Observer { user ->
-            Log.d("TTTT","user---------===================>$user")
+            Log.d("TTTT", "user---------===================>$user")
             user?.let {
                 viewModel.signupByThirdPlatform(it.openid ?: "",
                         it.accessToken ?: "",
@@ -98,11 +109,13 @@ class StartupFragment : BaseFragment() {
             snackbar(it)
         })
 
-        viewModel.user.observe(this, Observer { user ->
-            snackbar("注册成功")
-            //context?.let { context -> startActivity(MainActivity.newIntent(context)) }
-            context?.let { context -> startActivity(SetupWizardActivity.newIntent(context, user)) }
-            activity?.finish()
+        viewModel.user.observe(this, Observer { it ->
+            it?.let { user ->
+                snackbar("注册成功")
+                context?.let { context -> startActivity(SetupWizardActivity.newIntent(context, user)) }
+                activity?.finish()
+                return@let
+            }
         })
     }
 
@@ -115,11 +128,6 @@ class StartupFragment : BaseFragment() {
     override fun onResume() {
         super.onResume()
         wxViewModel.resume()
-    }
-
-    override fun onDestroyView() {
-        wxViewModel.clear()
-        super.onDestroyView()
     }
 
     companion object {

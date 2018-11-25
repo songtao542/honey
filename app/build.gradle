@@ -57,9 +57,9 @@ android {
             //minifyEnabled true
             //multiDexKeepFile file('multidex-config.txt')
             //multiDexKeepProguard file('multidex-config.pro')
-            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+            //proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
             //testCoverageEnabled !project.hasProperty('android.injected.invoked.from.ide')
-            signingConfig signingConfigs.debug
+//            signingConfig signingConfigs.debug
         }
         release {
             shrinkResources true

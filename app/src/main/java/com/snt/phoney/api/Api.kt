@@ -17,10 +17,7 @@ package com.snt.phoney.api
 import androidx.lifecycle.LiveData
 import com.snt.phoney.domain.model.*
 import io.reactivex.Single
-import retrofit2.http.Field
-import retrofit2.http.FormUrlEncoded
-import retrofit2.http.GET
-import retrofit2.http.POST
+import retrofit2.http.*
 
 interface Api {
 
@@ -79,6 +76,179 @@ interface Api {
                     @Field("career") career: String,
                     @Field("program") program: String): Single<Response<String>>
 
+
+    @FormUrlEncoded
+    @POST("users/setUserInfo")
+    fun setFullUserInfo(@Field("token") token: String,
+                        @Field("height") height: String,// 	身高
+                        @Field("weight") weight: String,//	体重
+                        @Field("age") age: String,//	年龄
+                        @Field("cup") cup: String,//	罩杯
+                        @Field("citys") cities: String,//	常在城市
+                        @Field("introduce") introduce: String,//	个人介绍
+                        @Field("career") career: String,//	职业
+                        @Field("program") program: String,//	约会节目
+                        @Field("account_wx") wechatAccount: String,//	微信
+                        @Field("nickName") nickname: String  //	昵称
+    ): Single<Response<String>>
+
+
+    @FormUrlEncoded
+    @POST("users/getUsersPhoto")
+    fun getUserPhotoes(@Field("token") token: String): Single<Response<List<PhotoInfo>>>
+
+    @FormUrlEncoded
+    @POST("users/closePrivatePassword")
+    fun closePrivatePassword(@Field("token") token: String): Single<Response<String>>
+
+    /**
+     * 获取访客列表
+     */
+    @FormUrlEncoded
+    @POST("users/other/listVisitors")
+    fun listVisitors(@Field("token") token: String): Single<Response<List<UserInfo>>>
+
+    /**
+     * 获取我关注的人列表
+     */
+    @FormUrlEncoded
+    @POST("users/other/listCares")
+    fun listFollow(@Field("token") token: String): Single<Response<List<UserInfo>>>
+
+    @FormUrlEncoded
+    @POST("users/other/care")
+    fun follow(@Field("token") token: String,
+               @Field("uuid") uuid: String): Single<Response<Boolean>>
+
+    @FormUrlEncoded
+    @POST("users/other/amountInfoOfUsers")
+    fun getUserAmountInfo(@Field("token") token: String): Single<Response<List<UserInfo>>>
+
+    /**
+     * 发布约会
+     *@param  token    string	是	用户会话token
+     *@param  content    string	是	约会内容
+     *@param  city    number	是	约会城市
+     *@param  days    string	是	约会时长
+     *@param  latitude    string	否	纬度（和常规颠倒）
+     *@param  longitude    string	否	经度
+     *@param  title    string	否	定位的逆地理位置，可选
+     *@param  location    string	否	具体约会地点
+     *@param  program    string	是	约会节目（接口返回，传字符串， eg:吃饭）
+     */
+    @FormUrlEncoded
+    @POST("appointment/addAppointment")
+    fun publishDating(@Field("token") token: String,
+                      @Field("content") content: String,
+                      @Field("city") city: String,
+                      @Field("days") days: String,
+                      @Field("latitude") latitude: String,
+                      @Field("longitude") longitude: String,
+                      @Field("title") title: String,
+                      @Field("location") location: String,
+                      @Field("grogram") program: String): Single<Response<List<UserInfo>>>
+
+    /**
+     * 取消约会
+     */
+    @FormUrlEncoded
+    @POST("appointment/cancelAppointment")
+    fun cancelDating(@Field("token") token: String,
+                     @Field("uuid") uuid: String): Single<Response<String>>
+
+    /**
+     * 参加约会
+     */
+    @FormUrlEncoded
+    @POST("appointment/attendAppointment")
+    fun joinDating(@Field("token") token: String,
+                   @Field("uuid") uuid: String): Single<Response<String>>
+
+    /**
+     * 查看约会
+     */
+    @FormUrlEncoded
+    @POST("appointment/scanAppointment")
+    fun viewDating(@Field("token") token: String,
+                   @Field("uuid") uuid: String): Single<Response<String>>
+
+    /**
+     * 审核约会
+     */
+    @FormUrlEncoded
+    @POST("appointment/auditAttendAppointment")
+    fun reviewDating(@Field("token") token: String,
+                     @Field("uuid") uuid: String,
+                     @Field("state") state: String): Single<Response<String>>
+
+    /**
+     * 约会节目
+     */
+    @GET("users/other/listProgram")
+    fun listDatingProgram(@Query("token") token: String,
+                          @Query("uuid") uuid: String): Single<Response<List<DatingProgram>>>
+
+    /**
+     * 该用户发布的约会
+     */
+    @GET("appointment/listAppointmentsByUser")
+    fun listDatingByUser(@Query("token") token: String,
+                         @Query("uuid") uuid: String,
+                         @Query("page") pageIndex: String): Single<Response<List<Dating>>>
+
+    /**
+     * 推荐约会
+     */
+    @GET("appointment/listAppointment")
+    fun listRecommendDating(@Query("token") token: String,
+                            @Query("page") pageIndex: String,
+                            @Query("dateType") dateType: String,
+                            @Query("distanceType") distanceType: String,
+                            @Query("grogram") program: String,
+                            @Query("longitude") longitude: String,
+                            @Query("latitude") latitude: String): Single<Response<List<Dating>>>
+
+    /**
+     * 热门约会
+     */
+    @GET("appointment/listPopularAppointment")
+    fun listPopularDating(@Query("token") token: String,
+                          @Query("page") pageIndex: String): Single<Response<List<Dating>>>
+
+    /**
+     * 约会详情
+     */
+    @GET("appointment/detailAppointment")
+    fun getDatingDetail(@Query("token") token: String,
+                        @Query("uuid") uuid: String,
+                        @Query("latitude") latitude: String,
+                        @Query("longitude") longitude: String): Single<Response<List<Dating>>>
+
+    /**
+     * 参加的约会
+     */
+    @GET("appointment/listAppointmentAttend")
+    fun listJoinedDating(@Query("token") token: String,
+                         @Query("page") pageIndex: String): Single<Response<List<Dating>>>
+
+    /**
+     * 被申请的约会
+     */
+    @GET("appointment/listAttendedItem")
+    fun listAppliedDating(@Query("token") token: String,
+                          @Query("page") pageIndex: String): Single<Response<List<Dating>>>
+
+
+    /**
+     * @param password  MD5后的数字密码（32位）
+     * @param privatePassword  倒叙密码后的MD5的数字密码（32位）
+     */
+    @FormUrlEncoded
+    @POST("users/setPrivatePassword")
+    fun setPrivatePassword(@Field("token") token: String,
+                           @Field("password") password: String,
+                           @Field("privatePassword") privatePassword: String): Single<Response<String>>
+
     @FormUrlEncoded
     @POST("users/other/listCareer")
     fun listCareer(@Field("token") token: String): Single<Response<List<Career>>>
@@ -87,6 +257,23 @@ interface Api {
     @POST("users/other/listIntroduces")
     fun listPurpose(@Field("token") token: String): Single<Response<List<Purpose>>>
 
+    @FormUrlEncoded
+    @POST("report/listReportItems")
+    fun listReportReasons(): Single<Response<List<ReportReason>>>
+
+    @FormUrlEncoded
+    @POST("users/homePage/home")
+    fun getUserInfo(@Field("token") token: String,
+                    @Field("uid") uid: String,    //	用户uuid
+                    @Field("latitude") latitude: String,
+                    @Field("longitude") longitude: String): Single<Response<UserInfo>>
+
+    @FormUrlEncoded
+    @POST("report/report")
+    fun report(@Field("token") token: String,
+               @Field("type") type: String,
+               @Field("targetUid") targetUid: String,
+               @Field("content") content: String): Single<Response<String>>
 
     @FormUrlEncoded
     @POST("sms/sendMsg")

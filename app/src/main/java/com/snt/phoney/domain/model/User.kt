@@ -32,32 +32,29 @@ data class User(
         var photo: String? = null,
         var photoRight: String? = null,
         @SerializedName(value = "account_wx") var wechatAccount: String? = null,
-        var pauthentication: String? = null,
+        @SerializedName(value = "pauthentication") var verified: String? = null,
         var token: String? = null,
         var open: Int = 0,
         var price: Float = 0f,
-        var state: Int = 0) : Parcelable
+        var state: Int = 0,
+        var tag: String? = null,
+        @SerializedName(value = "cares") var followedSize: Int = 0,
+        @SerializedName(value = "utime") var updateTime: Long = 0) : Parcelable
 
 
+enum class Sex(var value: Int) {
+    MALE(0),
+    FEMALE(1),
+    UNKNOWN(-1);
 
-
-//"career": null,
-//"nickName": "纯蜜nrskpc",
-//"introduce": null,
-//"sex": -1,
-//"photoRight": 0,
-//"weight": null,
-//"photo": null,
-//"portrait": null,
-//"uuid": "u201811081829582566215b5a5a3b4f",
-//"account_wx": null,
-//"pauthentication": null,
-//"token": "ebe02e1475ceed3abc0827459b59cec7",
-//"isOpen": 0,
-//"price": null,
-//"id": 14,
-//"state": 0,
-//"age": null,
-//"height": null,
-//"cup": null
+    companion object {
+        fun from(value: Int): Sex {
+            return when (value) {
+                0 -> MALE
+                1 -> FEMALE
+                else -> UNKNOWN
+            }
+        }
+    }
+}
 

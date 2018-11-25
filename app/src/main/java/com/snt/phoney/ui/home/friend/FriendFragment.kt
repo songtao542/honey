@@ -5,6 +5,7 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.TextView
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
 import androidx.recyclerview.widget.GridLayoutManager
@@ -21,7 +22,7 @@ import retrofit2.http.Field
  */
 class FriendFragment : BaseFragment() {
 
-    lateinit var viewModel: FriendViewModel
+    private lateinit var viewModel: FriendViewModel
 
     /**
      *  0 默认全部（按时间倒叙）
@@ -32,11 +33,17 @@ class FriendFragment : BaseFragment() {
      *  5 更多筛选
      *  6 查找城市
      */
-    var filterType: FilterType = FilterType.DEFAULT
+    private var filterType: FilterType = FilterType.DEFAULT
 
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-    }
+    private var city: String = ""
+    private var heightStart: String = ""
+    private var heightEnd: String = ""
+    private var ageStart: String = ""
+    private var ageEnd: String = ""
+    private var cupStart: String = ""
+    private var cupEnd: String = ""
+
+    private var adapter: FriendRecyclerViewAdapter? = null
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         return inflater.inflate(R.layout.fragment_friend_list, container, false)
@@ -44,13 +51,12 @@ class FriendFragment : BaseFragment() {
 
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
-
         viewModel = ViewModelProviders.of(this, viewModelFactory).get(FriendViewModel::class.java)
 
-        with(list) {
-            addItemDecoration(ItemDecoration(dip(8)))
-            val gridLayoutManager = GridLayoutManager(context, 2)
-            gridLayoutManager.spanSizeLookup = object : GridLayoutManager.SpanSizeLookup() {
+        adapter = FriendRecyclerViewAdapter()
+        list.addItemDecoration(ItemDecoration(dip(8)))
+        list.layoutManager = GridLayoutManager(context, 2).apply {
+            spanSizeLookup = object : GridLayoutManager.SpanSizeLookup() {
                 override fun getSpanSize(position: Int): Int {
                     return when (position) {
                         0 -> 1
@@ -58,38 +64,39 @@ class FriendFragment : BaseFragment() {
                     }
                 }
             }
-            layoutManager = gridLayoutManager
-            adapter = FriendRecyclerViewAdapter()
         }
-
+        list.adapter = adapter
 
         newest.setOnClickListener {
-            clearFilterSelector()
-            newest.isSelected = true
-            filterType = FilterType.NEWEST
+            filter(FilterType.NEWEST, newest)
         }
         popular.setOnClickListener {
-            clearFilterSelector()
-            popular.isSelected = true
-            filterType = FilterType.POPULAR
+            filter(FilterType.POPULAR, popular)
         }
         nearest.setOnClickListener {
-            clearFilterSelector()
-            nearest.isSelected = true
-            filterType = FilterType.NEAREST
+            filter(FilterType.NEAREST, nearest)
         }
         hottest.setOnClickListener {
-            clearFilterSelector()
-            hottest.isSelected = true
-            filterType = FilterType.HOTTEST
+            filter(FilterType.HOTTEST, hottest)
         }
 
         viewModel.users.observe(this, Observer {
-
+            adapter?.data = it
         })
 
+        listUser()
+    }
 
-//        viewModel.listUser()
+    private fun filter(type: FilterType, view: TextView) {
+        clearFilterSelector()
+        if (filterType == type) {
+            view.isSelected = false
+            filterType = FilterType.DEFAULT
+        } else {
+            view.isSelected = true
+            filterType = type
+        }
+        listUser()
     }
 
     private fun clearFilterSelector() {
@@ -100,17 +107,8 @@ class FriendFragment : BaseFragment() {
     }
 
     private fun listUser() {
-        var latitude: String = ""
-        var longitude: String = ""
-        var type: String = ""
-        var page: String = ""
-        var city: String = ""
-        var heightStart: String = ""
-        var heightEnd: String = ""
-        var ageStart: String = ""
-        var ageEnd: String = ""
-        var cupStart: String = ""
-        var cupEnd: String = ""
+        viewModel.listUser(filterType, city, heightStart, heightEnd,
+                ageStart, ageEnd, cupStart, cupEnd)
     }
 
     companion object {

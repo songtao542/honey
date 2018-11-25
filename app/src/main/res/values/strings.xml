@@ -128,7 +128,7 @@
     <string name="add_attention">关注对方</string>
     <string name="view_detail">查看详情</string>
     <string name="publish_time_template">发布时间 %1$s</string>
-    <string name="distance_of_template">距离您200km</string>
+    <string name="distance_of_template">距离你 %1$s</string>
     <string name="view_dating_tip">看看他发布的约会消息</string>
     <string name="view_dating">查看</string>
     <string name="publish_time">发布时间</string>

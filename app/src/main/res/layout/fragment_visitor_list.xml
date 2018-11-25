@@ -15,7 +15,7 @@
         android:layout_height="?attr/actionBarSize"
         android:background="?attr/toolbarBackground"
         app:title="@string/recent_visitor"
-        app:navigationIcon="@drawable/cp_back"
+        app:navigationIcon="@drawable/ic_back"
         app:titleTextColor="@color/white">
 
     </com.snt.phoney.widget.Toolbar>

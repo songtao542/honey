@@ -22,7 +22,7 @@
           android:layout_height="?attr/actionBarSize"
           style="@style/AppTheme.Toolbar"
           android:background="?attr/toolbarBackground"
-          app:navigationIcon="@drawable/cp_back"
+          app:navigationIcon="@drawable/ic_back"
           app:title="@string/dating_list_title"
           app:titleTextColor="@color/white"
           ></com.snt.phoney.widget.Toolbar>
