@@ -18,7 +18,6 @@
 package com.snt.phoney.repository
 
 
-import androidx.lifecycle.LiveData
 import com.snt.phoney.api.Api
 import com.snt.phoney.domain.model.Response
 import com.snt.phoney.domain.model.User
@@ -32,6 +31,18 @@ import javax.inject.Singleton
 
 @Singleton
 class UserRepositoryImpl @Inject constructor(private val cache: CacheRepository, private val api: Api) : UserRepository {
+    override fun follow(token: String, uuid: String): Single<Response<Boolean>> {
+        return api.follow(token, uuid)
+    }
+
+    override fun listFollow(token: String): Single<Response<List<UserInfo>>> {
+        return api.listFollow(token)
+    }
+
+    override fun setFullUserInfo(token: String, height: Int, weight: Double, age: Int, cup: String, cities: String, introduce: String, career: String, program: String, wechatAccount: String, nickname: String): Single<Response<String>> {
+        return api.setFullUserInfo(token, height.toString(), weight.toString(), age.toString(), cup, cities, introduce, career, program, wechatAccount, nickname)
+    }
+
     override fun getUserInfo(token: String, uid: String, latitude: Double, longitude: Double): Single<Response<UserInfo>> {
         return api.getUserInfo(token, uid, latitude.toString(), longitude.toString())
     }
@@ -77,18 +88,15 @@ class UserRepositoryImpl @Inject constructor(private val cache: CacheRepository,
     }
 
 
-    override fun login(username: String, password: String): LiveData<Response<User>> {
-        return api.login(username, password)
-    }
-
-    override fun resetPassword(username: String, password: String): LiveData<Response<String>> {
-        return api.resetPassword(username, password)
-    }
-
-
-    override fun logout(username: String): LiveData<Response<String>> {
-        return api.logout(username)
-    }
+//    override fun login(username: String, password: String): LiveData<Response<User>> {
+//        return api.login(username, password)
+//    }
+//    override fun resetPassword(username: String, password: String): LiveData<Response<String>> {
+//        return api.resetPassword(username, password)
+//    }
+//    override fun logout(username: String): LiveData<Response<String>> {
+//        return api.logout(username)
+//    }
 
 
     override var user: User?

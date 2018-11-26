@@ -1,4 +1,4 @@
-package com.snt.phoney.ui.square
+package com.snt.phoney.ui.main.square
 
 
 import android.os.Bundle
@@ -13,8 +13,8 @@ import com.snt.phoney.base.BaseFragment
 import com.snt.phoney.base.CommonActivity
 import com.snt.phoney.base.Page
 import com.snt.phoney.ui.dating.DatingActivity
-import com.snt.phoney.ui.square.official.OfficialRecommendFragment
-import com.snt.phoney.ui.square.popular.PopularRecommendFragment
+import com.snt.phoney.ui.main.square.official.OfficialRecommendFragment
+import com.snt.phoney.ui.main.square.popular.PopularRecommendFragment
 import com.snt.phoney.widget.TabLayout
 import kotlinx.android.synthetic.main.fragment_square.*
 

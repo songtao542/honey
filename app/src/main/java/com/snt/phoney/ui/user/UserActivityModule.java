@@ -4,6 +4,7 @@ import com.snt.phoney.di.ActivityScope;
 import com.snt.phoney.di.FragmentScope;
 import com.snt.phoney.di.ViewModelKey;
 import com.snt.phoney.di.module.ViewModelFactoryModule;
+import com.snt.phoney.ui.setup.PickerFragment;
 
 import androidx.lifecycle.ViewModel;
 import dagger.Binds;
@@ -13,6 +14,10 @@ import dagger.multibindings.IntoMap;
 
 @Module(includes = ViewModelFactoryModule.class)
 public abstract class UserActivityModule {
+
+    @FragmentScope
+    @ContributesAndroidInjector
+    public abstract PickerFragment contributePickerFragment();
 
     @FragmentScope
     @ContributesAndroidInjector

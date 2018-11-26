@@ -5,7 +5,7 @@
     android:name="com.snt.phoney.ui.mine.MineFragment"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".ui.mine.MineFragment">
+    tools:context=".ui.main.mine.MineFragment">
 
     <com.google.android.material.appbar.AppBarLayout
         android:layout_width="match_parent"
@@ -68,7 +68,7 @@
 <!--<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"-->
     <!--xmlns:app="http://schemas.android.com/apk/res-auto"-->
     <!--xmlns:tools="http://schemas.android.com/tools"-->
-    <!--android:name="com.snt.phoney.ui.mine.MineFragment"-->
+    <!--android:name="com.snt.phoney.ui.main.mine.MineFragment"-->
     <!--android:layout_width="match_parent"-->
     <!--android:layout_height="match_parent"-->
     <!--android:orientation="vertical"-->

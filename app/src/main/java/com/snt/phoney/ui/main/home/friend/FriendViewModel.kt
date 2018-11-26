@@ -1,9 +1,8 @@
-package com.snt.phoney.ui.home.friend
+package com.snt.phoney.ui.main.home.friend
 
 import android.text.TextUtils
 import android.util.Log
 import androidx.lifecycle.MutableLiveData
-import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModel
 import com.snt.phoney.domain.model.Response
 import com.snt.phoney.domain.model.User

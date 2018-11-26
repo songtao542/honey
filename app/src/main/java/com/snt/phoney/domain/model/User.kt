@@ -4,9 +4,9 @@ import android.os.Parcelable
 import androidx.room.Entity
 import androidx.room.PrimaryKey
 import com.google.gson.annotations.SerializedName
+import kotlinx.android.parcel.Parcelize
 import kotlinx.serialization.Optional
 import kotlinx.serialization.Serializable
-import kotlinx.android.parcel.Parcelize
 
 @Entity(tableName = "User")
 @Parcelize
@@ -22,7 +22,7 @@ data class User(
         @Optional var avatar: String? = null,
         var sex: Int = -1,
         var height: Int = 0,
-        var weight: Float = 0f,
+        var weight: Double = 0.0,
         var age: Int = 0,
         var cup: String? = null,
         var city: String? = null,
@@ -42,7 +42,7 @@ data class User(
         @SerializedName(value = "utime") var updateTime: Long = 0) : Parcelable
 
 
-enum class Sex(var value: Int) {
+enum class Sex(val value: Int) {
     MALE(0),
     FEMALE(1),
     UNKNOWN(-1);

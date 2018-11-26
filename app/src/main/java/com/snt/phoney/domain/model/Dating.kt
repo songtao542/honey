@@ -10,4 +10,10 @@ data class Dating(
         var state: Int,//  "state": 2,
         var uuid: String,//  "uuid": "a201811162315375b737eb9a223d591",
         var content: String  // "content": "3455555555"
-)
+) {
+    fun photoUrls(): List<String> {
+        return cover.map {
+            it.path
+        }
+    }
+}

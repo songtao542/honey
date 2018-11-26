@@ -1,4 +1,4 @@
-package com.snt.phoney.ui.home.friend
+package com.snt.phoney.ui.main.home.friend
 
 enum class FilterType {
     DEFAULT,  //  0 默认全部（按时间倒叙）

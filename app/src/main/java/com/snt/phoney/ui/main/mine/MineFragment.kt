@@ -1,4 +1,4 @@
-package com.snt.phoney.ui.mine
+package com.snt.phoney.ui.main.mine
 
 import android.content.Context
 import android.os.Bundle

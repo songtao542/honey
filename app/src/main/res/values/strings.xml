@@ -69,7 +69,7 @@
     <string name="age_value_template">%1$d岁</string>
     <string name="weight_label">体重</string>
     <string name="weight_value_template">%1$dkg</string>
-    <string name="weight_cup_label">体重/罩杯</string>
+    <string name="cup_label">罩杯</string>
     <string name="self_introduction">自我介绍（可不填）</string>
     <string name="self_introduction_hint">用最简单的语句表达自己</string>
     <string name="edit_user_title">编辑个人信息</string>
@@ -152,6 +152,10 @@
     <string name="friend_tag_popular">人气最高</string>
     <string name="friend_tag_nearest">距离最近</string>
     <string name="friend_tag_hottest">身材最好</string>
+    <string name="join_dating">我要参加</string>
+    <string name="joined_dating">已参加</string>
+    <string name="follow">+关注对方</string>
+    <string name="followed">已关注</string>
 
 
 </resources>

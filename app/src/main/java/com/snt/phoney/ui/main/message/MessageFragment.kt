@@ -1,4 +1,4 @@
-package com.snt.phoney.ui.message
+package com.snt.phoney.ui.main.message
 
 import android.content.Context
 import android.os.Bundle

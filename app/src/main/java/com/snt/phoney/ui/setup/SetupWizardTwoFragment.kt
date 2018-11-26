@@ -14,7 +14,7 @@ import com.snt.phoney.domain.model.Sex
 import com.snt.phoney.domain.model.User
 import com.snt.phoney.extensions.addFragmentSafely
 import com.snt.phoney.extensions.snackbar
-import com.snt.phoney.extensions.toStringArray
+import com.snt.phoney.utils.Picker
 import kotlinx.android.synthetic.main.fragment_signup_2.*
 import kotlinx.android.synthetic.main.fragment_signup_2.view.*
 
@@ -83,19 +83,19 @@ class SetupWizardTwoFragment : BaseFragment() {
         }
 
         heightButton.setOnClickListener {
-            togglePicker(getString(R.string.pick_height), 150, 230, user.height, "height") { value, _ ->
+            Picker.togglePicker(activity, getString(R.string.pick_height), 150, 230, user.height, "height") { value, _ ->
                 height.text = getString(R.string.height_value_template, value)
                 user.height = value
             }
         }
         weightButton.setOnClickListener {
-            togglePicker(getString(R.string.pick_weight), 40, 150, user.weight.toInt(), "weight") { value, _ ->
+            Picker.togglePicker(activity, getString(R.string.pick_weight), 40, 150, user.weight.toInt(), "weight") { value, _ ->
                 weight.text = getString(R.string.weight_value_template, value)
-                user.weight = value.toFloat()
+                user.weight = value.toDouble()
             }
         }
         cupButton.setOnClickListener {
-            togglePicker(getString(R.string.pick_cup), cupNumberArray, cupNumber, cupSizeArray, cupSize, "cup") { value1, value2 ->
+            Picker.togglePicker(activity, getString(R.string.pick_cup), cupNumberArray, cupNumber, cupSizeArray, cupSize, "cup") { value1, value2 ->
                 val cupValue = "${cupNumberArray[value1]}${cupSizeArray[value2]}"
                 cupNumber = value1
                 cupSize = value2
@@ -104,7 +104,7 @@ class SetupWizardTwoFragment : BaseFragment() {
             }
         }
         ageButton.setOnClickListener {
-            togglePicker(getString(R.string.pick_age), 16, 70, user.age, "age") { value, _ ->
+            Picker.togglePicker(activity, getString(R.string.pick_age), 16, 70, user.age, "age") { value, _ ->
                 age.text = getString(R.string.age_value_template, value)
                 user.age = value
             }
@@ -119,25 +119,6 @@ class SetupWizardTwoFragment : BaseFragment() {
         })
     }
 
-
-    private fun togglePicker(title: String, minValue: Int, maxValue: Int, value: Int = 0, tag: String, handler: ((value: Int, _: Int) -> Unit)) {
-        activity?.supportFragmentManager?.let {
-            val pickerFragment = PickerFragment.newInstance(title, minValue, maxValue)
-            pickerFragment.setOnResultListener(handler)
-            pickerFragment.value1 = value
-            pickerFragment.show(it, tag)
-        }
-    }
-
-    private fun <T1, T2> togglePicker(title: String, column1: Array<T1>, value1: Int, column2: Array<T2>, value2: Int, tag: String, handler: ((value1: Int, value2: Int) -> Unit)) {
-        activity?.supportFragmentManager?.let {
-            val pickerFragment = PickerFragment.newInstance(title, column1 = column1.toStringArray(), column2 = column2.toStringArray())
-            pickerFragment.setOnResultListener(handler)
-            pickerFragment.value1 = value1
-            pickerFragment.value2 = value2
-            pickerFragment.show(it, tag)
-        }
-    }
 
     private fun isValid(): Boolean {
         if (user.age > 0 && user.height > 0) {

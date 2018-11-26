@@ -1,4 +1,4 @@
-package com.snt.phoney.ui.mine
+package com.snt.phoney.ui.main.mine
 
 
 import android.content.Context
@@ -16,7 +16,6 @@ import com.snt.phoney.base.CommonActivity
 import com.snt.phoney.base.Page
 import com.snt.phoney.ui.about.AboutActivity
 import com.snt.phoney.ui.dating.DatingActivity
-import com.snt.phoney.ui.privacy.AlbumPermissionSettingFragment
 import com.snt.phoney.ui.privacy.PrivacyActivity
 import com.snt.phoney.ui.report.ReportActivity
 import com.snt.phoney.ui.setup.BindPhoneFragment

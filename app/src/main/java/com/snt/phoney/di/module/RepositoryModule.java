@@ -1,12 +1,14 @@
 package com.snt.phoney.di.module;
 
 import com.snt.phoney.domain.repository.CacheRepository;
+import com.snt.phoney.domain.repository.DatingRepository;
 import com.snt.phoney.domain.repository.LocationRepository;
 import com.snt.phoney.domain.repository.ToolRepository;
 import com.snt.phoney.domain.repository.UserRepository;
 import com.snt.phoney.domain.repository.WeiboUserRepository;
 import com.snt.phoney.domain.repository.WxUserRepository;
 import com.snt.phoney.repository.CacheRepositoryImpl;
+import com.snt.phoney.repository.DatingRepositoryImpl;
 import com.snt.phoney.repository.LocationRepositoryImpl;
 import com.snt.phoney.repository.ToolRepositoryImpl;
 import com.snt.phoney.repository.UserRepositoryImpl;
@@ -35,4 +37,7 @@ public abstract class RepositoryModule {
 
     @Binds
     public abstract ToolRepository bindToolRepository(ToolRepositoryImpl repository);
+
+    @Binds
+    public abstract DatingRepository bindDatingRepository(DatingRepositoryImpl repository);
 }

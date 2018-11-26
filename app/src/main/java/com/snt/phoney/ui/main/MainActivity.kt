@@ -11,10 +11,10 @@ import com.snt.phoney.base.BaseActivity
 import com.snt.phoney.domain.model.Sex
 import com.snt.phoney.domain.repository.UserRepository
 import com.snt.phoney.extensions.*
-import com.snt.phoney.ui.home.HomeFragment
-import com.snt.phoney.ui.message.MessageFragment
-import com.snt.phoney.ui.mine.MineFragment
-import com.snt.phoney.ui.square.SquareFragment
+import com.snt.phoney.ui.main.home.HomeFragment
+import com.snt.phoney.ui.main.message.MessageFragment
+import com.snt.phoney.ui.main.mine.MineFragment
+import com.snt.phoney.ui.main.square.SquareFragment
 import kotlinx.android.synthetic.main.activity_main.*
 import javax.inject.Inject
 

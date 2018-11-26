@@ -1,4 +1,4 @@
-package com.snt.phoney.ui.home.friend
+package com.snt.phoney.ui.main.home.friend
 
 import android.graphics.Rect
 import android.os.Bundle
@@ -15,7 +15,6 @@ import com.snt.phoney.base.BaseFragment
 import com.snt.phoney.extensions.dip
 import kotlinx.android.synthetic.main.fragment_friend_list.*
 import kotlinx.android.synthetic.main.fragment_friend_tag.*
-import retrofit2.http.Field
 
 /**
  * A fragment representing a list of Items.

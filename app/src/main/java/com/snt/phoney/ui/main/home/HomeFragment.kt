@@ -1,9 +1,9 @@
-package com.snt.phoney.ui.home
+package com.snt.phoney.ui.main.home
 
 import android.os.Bundle
 import com.snt.phoney.R
-import com.snt.phoney.ui.home.following.FollowingFragment
-import com.snt.phoney.ui.home.friend.FriendFragment
+import com.snt.phoney.ui.main.home.following.FollowingFragment
+import com.snt.phoney.ui.main.home.friend.FriendFragment
 import kotlinx.android.synthetic.main.fragment_home.*
 import android.text.Spanned
 import android.text.style.RelativeSizeSpan

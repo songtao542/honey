@@ -1,4 +1,4 @@
-package com.snt.phoney.ui.mine
+package com.snt.phoney.ui.main.mine
 
 import androidx.lifecycle.ViewModel
 import javax.inject.Inject

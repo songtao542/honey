@@ -20,7 +20,7 @@
             android:layout_height="50dp"
             android:layout_alignParentLeft="true"
             android:layout_marginRight="10dp"
-            android:scaleType="centerInside"
+            android:scaleType="centerCrop"
             android:src="@mipmap/head" />
 
 
@@ -32,7 +32,7 @@
             android:layout_toRightOf="@+id/head"
             android:text="西风吴琴"
             android:textColor="@android:color/black"
-            android:textSize="@dimen/textsize_small" />
+            android:textSize="@dimen/textsize_large" />
 
         <TextView
             android:id="@+id/age"
@@ -44,6 +44,7 @@
             android:paddingLeft="5dp"
             android:paddingTop="2dp"
             android:paddingRight="5dp"
+            android:layout_marginTop="5dp"
             android:paddingBottom="2dp"
             android:text="30岁"
             android:textSize="@dimen/textsize_smaller" />
@@ -122,35 +123,17 @@
         android:textSize="@dimen/textsize_normal" />
 
     <com.snt.phoney.widget.FlowLayout
+        android:id="@+id/flowImages"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
+        app:alignContent="flex_start"
+        app:alignItems="flex_start"
         app:column="3"
-        app:space="5dp">
-
-        <com.snt.phoney.widget.SquareImageView
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:scaleType="centerCrop"
-            android:src="@mipmap/tem" />
-
-
-        <com.snt.phoney.widget.SquareImageView
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:scaleType="centerCrop"
-            android:src="@mipmap/tem" />
-
-
-        <com.snt.phoney.widget.SquareImageView
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:scaleType="centerCrop"
-            android:src="@mipmap/tem" />
-
+        app:flexWrap="wrap"
+        app:justifyContent="flex_start"
+        app:space="5dp"
+        app:square="true">
 
     </com.snt.phoney.widget.FlowLayout>
 
@@ -165,14 +148,14 @@
             android:id="@+id/follow"
             android:layout_width="wrap_content"
             android:layout_height="40dp"
-            android:text="+关注对方"
+            android:text="@string/add_attention"
             android:textSize="@dimen/textsize_normal" />
 
         <Button
             android:id="@+id/attend"
             android:layout_width="wrap_content"
             android:layout_height="40dp"
-            android:text="我要参加"
+            android:text="@string/join_dating"
             android:textSize="@dimen/textsize_normal" />
 
     </LinearLayout>

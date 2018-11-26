@@ -11,7 +11,7 @@ data class UserInfo(
         var cities: List<City>,//"cities": [
         var distance: Double,// "distance": 0.4,
         var city: String,//"city": "深圳市",
-        var nickname: String,//"nickName": "天涯若比邻",
+        @SerializedName(value = "nickName") var nickname: String,//"nickName": "天涯若比邻",
         var introduce: String,//"introduce": "我才不会",
         var sex: Int = -1,//"sex": 0,
         var photoRight: Int,// "photoRight": 1,
@@ -22,7 +22,7 @@ data class UserInfo(
         var price: Double,//"price": null,
         @SerializedName(value = "isCare") var care: Boolean,//"isCare": false,
         var state: Int,//"state": 0,
-        var hasWechat: Boolean,//"hasWX": true,
+        @SerializedName(value = "hasWX") var hasWechat: Boolean,//"hasWX": true,
         var age: Int,//"age": 24,
         var height: Int,//"height": 175,
         var cup: String//"cup": null

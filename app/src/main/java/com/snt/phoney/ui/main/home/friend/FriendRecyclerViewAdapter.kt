@@ -1,4 +1,4 @@
-package com.snt.phoney.ui.home.friend
+package com.snt.phoney.ui.main.home.friend
 
 
 import android.view.LayoutInflater
@@ -20,8 +20,10 @@ class FriendRecyclerViewAdapter() : RecyclerView.Adapter<RecyclerView.ViewHolder
 
     var data: List<User>? = null
         set(value) {
-            field = value
-            this@FriendRecyclerViewAdapter.notifyDataSetChanged()
+            value?.let {
+                field = it
+                this@FriendRecyclerViewAdapter.notifyDataSetChanged()
+            }
         }
 
 

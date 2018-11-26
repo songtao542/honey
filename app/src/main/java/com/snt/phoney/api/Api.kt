@@ -202,8 +202,8 @@ interface Api {
     @GET("appointment/listAppointment")
     fun listRecommendDating(@Query("token") token: String,
                             @Query("page") pageIndex: String,
-                            @Query("dateType") dateType: String,
-                            @Query("distanceType") distanceType: String,
+                            @Query("dateType") dateType: Int,
+                            @Query("distanceType") distanceType: Int,
                             @Query("grogram") program: String,
                             @Query("longitude") longitude: String,
                             @Query("latitude") latitude: String): Single<Response<List<Dating>>>

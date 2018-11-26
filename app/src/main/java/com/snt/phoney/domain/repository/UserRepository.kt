@@ -15,15 +15,10 @@
 package com.snt.phoney.domain.repository
 
 
-import androidx.lifecycle.LiveData
 import com.snt.phoney.domain.model.Response
 import com.snt.phoney.domain.model.User
 import com.snt.phoney.domain.model.UserInfo
-import io.reactivex.Observable
 import io.reactivex.Single
-import retrofit2.http.Field
-import retrofit2.http.FormUrlEncoded
-import retrofit2.http.POST
 
 interface UserRepository {
     fun signup(phone: String,
@@ -65,9 +60,9 @@ interface UserRepository {
 
 
     fun setFullUserInfo(token: String,
-                        height: String,
-                        weight: String,
-                        age: String,
+                        height: Int,
+                        weight: Double,
+                        age: Int,
                         cup: String,
                         cities: String,
                         introduce: String,
@@ -98,11 +93,13 @@ interface UserRepository {
                     longitude: Double): Single<Response<UserInfo>>
 
 
-    fun login(username: String, password: String): LiveData<Response<User>>
+    fun listFollow(token: String): Single<Response<List<UserInfo>>>
 
-    fun resetPassword(key: String, password: String): LiveData<Response<String>>
+    fun follow(token: String, uuid: String): Single<Response<Boolean>>
 
-    fun logout(username: String): LiveData<Response<String>>
+//    fun login(username: String, password: String): LiveData<Response<User>>
+//    fun resetPassword(key: String, password: String): LiveData<Response<String>>
+//    fun logout(username: String): LiveData<Response<String>>
 
     fun requestVerificationCode(phone: String): Single<Response<String>>
 

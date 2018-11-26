@@ -16,10 +16,6 @@ public abstract class PrivacyActivityModule {
 
     @FragmentScope
     @ContributesAndroidInjector
-    public abstract AlbumPermissionSettingFragment contributeAlbumPermissionSettingFragment();
-
-    @FragmentScope
-    @ContributesAndroidInjector
     public abstract CreateLockStep1Fragment contributeCreateLockStep1Fragment();
 
     @FragmentScope
