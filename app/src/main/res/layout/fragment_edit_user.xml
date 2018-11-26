@@ -150,7 +150,7 @@
                 android:layout_height="match_parent"
                 android:layout_weight="1"
                 android:gravity="center_vertical|right"
-                android:text="@{ConverterUtil.toString(user.height)}"
+                android:text="@{ConverterUtil.toString(user.height)+@string/unit_cm}"
                 android:textColor="@color/edit_user_item_value"
                 android:textSize="@dimen/textsize_normal" />
 
@@ -180,7 +180,7 @@
                 android:layout_height="match_parent"
                 android:layout_weight="1"
                 android:gravity="center_vertical|right"
-                android:text="@{ConverterUtil.toString(user.age)}"
+                android:text="@{ConverterUtil.toString(user.age)+@string/unit_age}"
                 android:textColor="@color/edit_user_item_value"
                 android:textSize="@dimen/textsize_normal" />
 
@@ -210,7 +210,7 @@
                 android:layout_height="match_parent"
                 android:layout_weight="1"
                 android:gravity="center_vertical|right"
-                android:text="@{user.sex == Sex.MALE.value ? ConverterUtil.toString(user.weight) : user.cup}"
+                android:text="@{user.sex == Sex.MALE.value ? ConverterUtil.toString(user.weight)+@string/unit_kg : user.cup}"
                 android:textColor="@color/edit_user_item_value"
                 android:textSize="@dimen/textsize_normal" />
 

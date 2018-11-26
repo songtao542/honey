@@ -16,7 +16,7 @@
         <FrameLayout
             android:layout_width="match_parent"
             android:layout_height="?attr/actionBarSize"
-            android:background="@color/picker_title">
+            android:background="@drawable/underline_gray">
 
             <TextView
                 android:id="@+id/title"

@@ -18,7 +18,7 @@ fun NumberPicker.setDividerColor(color: Int) {
 /**
  * 设置picker分割线的宽度
  */
-fun NumberPicker.setDividerHeight(height: Int) {
+fun NumberPicker.setDividerHeight(height: Float) {
     val fields = NumberPicker::class.java.declaredFields
     for (field in fields) {
         if (field.name == "mSelectionDividerHeight") {

@@ -40,7 +40,7 @@ class PickerFragment : BottomDialogFragment() {
 
     override fun onCreateDialog(savedInstanceState: Bundle?): Dialog {
         val dialog = super.onCreateDialog(savedInstanceState)
-        dialog.window?.addFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN)
+        //dialog.window?.addFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN)
         return dialog
     }
 
@@ -48,12 +48,12 @@ class PickerFragment : BottomDialogFragment() {
         super.onActivityCreated(savedInstanceState)
         column1.descendantFocusability = NumberPicker.FOCUS_BLOCK_DESCENDANTS
         column1.wrapSelectorWheel = false
-        column1.setDividerHeight(1)
+        column1.setDividerHeight(0.4f)
         column1.setDividerColor(colorOf(R.color.picker_title))
 
         column2.descendantFocusability = NumberPicker.FOCUS_BLOCK_DESCENDANTS
         column2.wrapSelectorWheel = false
-        column2.setDividerHeight(1)
+        column2.setDividerHeight(0.4f)
         column2.setDividerColor(colorOf(R.color.picker_title))
 
         arguments?.let {

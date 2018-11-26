@@ -30,21 +30,21 @@ public class SectionItemDecoration extends RecyclerView.ItemDecoration {
 
     private int mSectionPaddingStart;
 
-    public SectionItemDecoration(Context context, List<City> data) {
+    public SectionItemDecoration(Context themeContext, List<City> data) {
         this.mData = data;
         TypedValue typedValue = new TypedValue();
 
-        context.getTheme().resolveAttribute(R.attr.cpSectionBackground, typedValue, true);
-        mBgColor = context.getResources().getColor(typedValue.resourceId);
+        themeContext.getTheme().resolveAttribute(R.attr.cpSectionBackground, typedValue, true);
+        mBgColor = themeContext.getResources().getColor(typedValue.resourceId);
 
-        context.getTheme().resolveAttribute(R.attr.cpSectionHeight, typedValue, true);
-        mSectionHeight = context.getResources().getDimensionPixelSize(typedValue.resourceId);
+        themeContext.getTheme().resolveAttribute(R.attr.cpSectionHeight, typedValue, true);
+        mSectionHeight = themeContext.getResources().getDimensionPixelSize(typedValue.resourceId);
 
-        context.getTheme().resolveAttribute(R.attr.cpSectionTextSize, typedValue, true);
-        mTextSize = context.getResources().getDimensionPixelSize(typedValue.resourceId);
+        themeContext.getTheme().resolveAttribute(R.attr.cpSectionTextSize, typedValue, true);
+        mTextSize = themeContext.getResources().getDimensionPixelSize(typedValue.resourceId);
 
-        context.getTheme().resolveAttribute(R.attr.cpSectionTextColor, typedValue, true);
-        mTextColor = context.getResources().getColor(typedValue.resourceId);
+        themeContext.getTheme().resolveAttribute(R.attr.cpSectionTextColor, typedValue, true);
+        mTextColor = themeContext.getResources().getColor(typedValue.resourceId);
 
         mBgPaint = new Paint(Paint.ANTI_ALIAS_FLAG);
         mBgPaint.setColor(mBgColor);
@@ -53,7 +53,7 @@ public class SectionItemDecoration extends RecyclerView.ItemDecoration {
         mTextPaint.setTextSize(mTextSize);
         mTextPaint.setColor(mTextColor);
 
-        mSectionPaddingStart = context.getResources().getDimensionPixelSize(R.dimen.cp_content_padding_start);
+        mSectionPaddingStart = themeContext.getResources().getDimensionPixelSize(R.dimen.cp_content_padding_start);
         mBounds = new Rect();
     }
 

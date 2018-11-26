@@ -156,6 +156,10 @@
     <string name="joined_dating">已参加</string>
     <string name="follow">+关注对方</string>
     <string name="followed">已关注</string>
+    <string name="unit_cm">cm</string>
+    <string name="unit_age">岁</string>
+    <string name="unit_km">km</string>
+    <string name="unit_kg">kg</string>
 
 
 </resources>

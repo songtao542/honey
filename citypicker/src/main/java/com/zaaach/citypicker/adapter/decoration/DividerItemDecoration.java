@@ -15,13 +15,13 @@ public class DividerItemDecoration extends RecyclerView.ItemDecoration {
     private float dividerHeight;
     private Paint mPaint;
 
-    public DividerItemDecoration(Context context) {
+    public DividerItemDecoration(Context themeContext) {
         mPaint = new Paint(Paint.ANTI_ALIAS_FLAG);
 
         TypedValue typedValue = new TypedValue();
-        context.getTheme().resolveAttribute(R.attr.cpSectionBackground, typedValue, true);
-        mPaint.setColor(context.getResources().getColor(typedValue.resourceId));
-        dividerHeight = TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, 0.5f, context.getResources().getDisplayMetrics());
+        themeContext.getTheme().resolveAttribute(R.attr.cpSectionBackground, typedValue, true);
+        mPaint.setColor(themeContext.getResources().getColor(typedValue.resourceId));
+        dividerHeight = TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, 0.5f, themeContext.getResources().getDisplayMetrics());
     }
 
     @Override

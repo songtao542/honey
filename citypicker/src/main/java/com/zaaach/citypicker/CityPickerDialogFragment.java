@@ -1,11 +1,16 @@
 package com.zaaach.citypicker;
 
 import android.annotation.SuppressLint;
+import android.app.Activity;
 import android.app.Dialog;
+import android.content.Context;
+import android.content.res.Resources;
+import android.os.Build;
 import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextUtils;
 import android.text.TextWatcher;
+import android.util.DisplayMetrics;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -175,15 +180,20 @@ public class CityPickerDialogFragment extends AppCompatDialogFragment implements
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
+        //Context contextThemeWrapper = new ContextThemeWrapper(getActivity(), R.style.DefaultCityPickerTheme);
+        //LayoutInflater themeInflater = inflater.cloneInContext(contextThemeWrapper);
+        //mContentView = themeInflater.inflate(R.layout.cp_dialog_city_picker, container, false);
+        //getActivity().getTheme().applyStyle(R.style.DefaultCityPickerTheme, true);
+        inflater.getContext().getTheme().applyStyle(R.style.DefaultCityPickerTheme, false);
         mContentView = inflater.inflate(R.layout.cp_dialog_city_picker, container, false);
 
         mRecyclerView = mContentView.findViewById(R.id.cp_city_recyclerview);
         mLayoutManager = new LinearLayoutManager(getActivity(), RecyclerView.VERTICAL, false);
         mRecyclerView.setLayoutManager(mLayoutManager);
         mRecyclerView.setHasFixedSize(true);
-        mRecyclerView.addItemDecoration(new SectionItemDecoration(getActivity(), mAllCities), 0);
-        mRecyclerView.addItemDecoration(new DividerItemDecoration(getActivity()), 1);
-        mAdapter = new CityListAdapter(getActivity(), mAllCities, mHotCities, locateState, mMultipleMode);
+        mRecyclerView.addItemDecoration(new SectionItemDecoration(inflater.getContext(), mAllCities), 0);
+        mRecyclerView.addItemDecoration(new DividerItemDecoration(inflater.getContext()), 1);
+        mAdapter = new CityListAdapter(inflater.getContext(), mAllCities, mHotCities, locateState, mMultipleMode);
         mAdapter.setInnerListener(this);
         mAdapter.setLayoutManager(mLayoutManager);
         mRecyclerView.setAdapter(mAdapter);
@@ -250,12 +260,41 @@ public class CityPickerDialogFragment extends AppCompatDialogFragment implements
         if (window != null) {
             window.getDecorView().setPadding(0, 0, 0, 0);
             window.setBackgroundDrawableResource(android.R.color.transparent);
+
+//            int screenHeight = getScreenHeight(getActivity());
+//            int statusBarHeight = getStatusBarHeight(getContext());
+//            int dialogHeight = screenHeight - statusBarHeight;
+//            window.setLayout(ViewGroup.LayoutParams.MATCH_PARENT, dialogHeight == 0 ? ViewGroup.LayoutParams.MATCH_PARENT : dialogHeight);
+
             window.setLayout(WindowManager.LayoutParams.MATCH_PARENT, WindowManager.LayoutParams.MATCH_PARENT);
+
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+                window.addFlags(WindowManager.LayoutParams.FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS);
+            }
+//            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
+//                window.addFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS);
+//            }
             if (enableAnim) {
                 window.setWindowAnimations(mAnimStyle);
             }
         }
         return dialog;
+    }
+
+    private int getScreenHeight(Activity activity) {
+        DisplayMetrics displaymetrics = new DisplayMetrics();
+        activity.getWindowManager().getDefaultDisplay().getMetrics(displaymetrics);
+        return displaymetrics.heightPixels;
+    }
+
+    private int getStatusBarHeight(Context context) {
+        int statusBarHeight = 0;
+        Resources res = context.getResources();
+        int resourceId = res.getIdentifier("status_bar_height", "dimen", "android");
+        if (resourceId > 0) {
+            statusBarHeight = res.getDimensionPixelSize(resourceId);
+        }
+        return statusBarHeight;
     }
 
     /**

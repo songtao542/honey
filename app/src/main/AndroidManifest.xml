@@ -84,7 +84,6 @@
 
         <activity
             android:name=".ui.signup.SignupActivity"
-            android:label="@string/btn_login"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme.FullScreen">
             <intent-filter>

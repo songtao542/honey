@@ -40,7 +40,7 @@ class UserRepositoryImpl @Inject constructor(private val cache: CacheRepository,
     }
 
     override fun setFullUserInfo(token: String, height: Int, weight: Double, age: Int, cup: String, cities: String, introduce: String, career: String, program: String, wechatAccount: String, nickname: String): Single<Response<String>> {
-        return api.setFullUserInfo(token, height.toString(), weight.toString(), age.toString(), cup, cities, introduce, career, program, wechatAccount, nickname)
+        return api.setFullUserInfo(token, height.toString(), weight.toInt().toString(), age.toString(), cup, cities, introduce, career, program, wechatAccount, nickname)
     }
 
     override fun getUserInfo(token: String, uid: String, latitude: Double, longitude: Double): Single<Response<UserInfo>> {
