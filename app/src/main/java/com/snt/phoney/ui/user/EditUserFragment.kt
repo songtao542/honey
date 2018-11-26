@@ -57,7 +57,7 @@ class EditUserFragment : BaseFragment() {
 
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
-        enableOptionsMenu(toolbar, false)
+        enableOptionsMenu(toolbar, true)
         viewModel = ViewModelProviders.of(this, viewModelFactory).get(EditUserViewModel::class.java)
         binding.user = viewModel.user
 
