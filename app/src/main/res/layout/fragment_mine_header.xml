@@ -20,7 +20,7 @@
             android:id="@+id/head"
             android:layout_width="90dp"
             android:layout_height="90dp"
-            android:scaleType="centerInside"
+            android:scaleType="centerCrop"
             android:src="@mipmap/head" />
 
         <RelativeLayout

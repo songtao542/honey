@@ -12,9 +12,10 @@ import androidx.annotation.NonNull;
  */
 public class City {
     private String name;
-    private String province;
-    private String pinyin;
     private String code;
+    private String province;
+    private String provinceCode;
+    private String pinyin;
 
     private boolean selected = false;
 
@@ -23,7 +24,14 @@ public class City {
         this.province = province;
         this.pinyin = pinyin;
         this.code = code;
+    }
 
+    public void setProvinceCode(String provinceCode) {
+        this.provinceCode = provinceCode;
+    }
+
+    public String getProvinceCode() {
+        return this.provinceCode;
     }
 
     public void setSelected(boolean selected) {

@@ -16,7 +16,6 @@ import io.reactivex.rxkotlin.subscribeBy
 import io.reactivex.schedulers.Schedulers
 import javax.inject.Inject
 
-//@ActivityScope
 class SetupWizardViewModel @Inject constructor(private val application: Application, private val setupWizardUseCase: SetupWizardUseCase) : ViewModel() {
 
     val error = MutableLiveData<String>()
@@ -66,6 +65,7 @@ class SetupWizardViewModel @Inject constructor(private val application: Applicat
                     Log.d("TTTT", "getCities==>$it")
                     if (it.code == 200) {
                         setupSex.value = it.data
+                        setupWizardUseCase.user?.sex = sex
                     } else if (!TextUtils.isEmpty(it.message)) {
                         error.value = it.message
                     }
@@ -81,6 +81,10 @@ class SetupWizardViewModel @Inject constructor(private val application: Applicat
                 .subscribeBy {
                     Log.d("TTTT", "setUserFeatures==>$it")
                     if (it.code == 200) {
+                        val user = setupWizardUseCase.user?.copy(height = height, weight = weight.toDouble(), age = age, cup = cup)
+                        if (user != null) {
+                            setupWizardUseCase.user = user
+                        }
                         setupFeatures.value = it.data
                     } else if (!TextUtils.isEmpty(it.message)) {
                         error.value = it.message
@@ -93,14 +97,19 @@ class SetupWizardViewModel @Inject constructor(private val application: Applicat
      * @param career,职业 对于文字，接口返回
      * @param program,宣言 对应为文字 接口返回
      */
-    fun setUserInfo(cities: String, career: String, program: String): Disposable? {
+    fun setUserInfo(cities: List<City>, career: String, program: String): Disposable? {
         val token = setupWizardUseCase.user?.token ?: return null
-        return setupWizardUseCase.setUserInfo(token, cities, career, program)
+        val cityCodesString = cities.map { it.id }.joinToString(separator = ",")
+        return setupWizardUseCase.setUserInfo(token, cityCodesString, career, program)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribeBy {
                     Log.d("TTTT", "setUserInfo==>$it")
                     if (it.code == 200) {
+                        val user = setupWizardUseCase.user?.copy(cities = cities)
+                        if (user != null) {
+                            setupWizardUseCase.user = user
+                        }
                         setupUserInfo.value = it.data
                     } else if (!TextUtils.isEmpty(it.message)) {
                         error.value = it.message

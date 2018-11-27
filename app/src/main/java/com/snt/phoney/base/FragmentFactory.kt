@@ -10,7 +10,7 @@ import com.snt.phoney.ui.main.mine.AlbumPermissionSettingFragment
 import com.snt.phoney.ui.privacy.CreateLockFragment
 import com.snt.phoney.ui.report.ReportFragment
 import com.snt.phoney.ui.user.EditUserFragment
-import com.snt.phoney.ui.user.FollowmeFragment
+import com.snt.phoney.ui.user.FollowMeFragment
 import com.snt.phoney.ui.user.UserInfoFragment
 import com.snt.phoney.ui.user.VisitorFragment
 import com.snt.phoney.ui.vip.VipFragment
@@ -45,7 +45,7 @@ class FragmentFactory {
                 Page.EDIT_USER_INFO.ordinal -> EditUserFragment.newInstance(arguments)
                 Page.VIEW_USER_INFO.ordinal -> UserInfoFragment.newInstance(arguments)
                 Page.VIEW_RECENT_VISITOR.ordinal -> VisitorFragment.newInstance(arguments)
-                Page.VIEW_FOLLOW_ME.ordinal -> FollowmeFragment.newInstance(arguments)
+                Page.VIEW_FOLLOW_ME.ordinal -> FollowMeFragment.newInstance(arguments)
 
                 Page.VIEW_DATING_LIST.ordinal -> DatingListFragment.newInstance(arguments)
                 Page.VIEW_DATING_DETAIL.ordinal -> DatingDetailFragment.newInstance(arguments)

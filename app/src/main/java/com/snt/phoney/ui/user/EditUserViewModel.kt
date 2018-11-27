@@ -27,29 +27,25 @@ class EditUserViewModel @Inject constructor(private val usecase: EditUserUseCase
         }
     }
 
-    fun setFullUserInfo(
-            height: Int,
-            weight: Double,
-            age: Int,
-            cup: String,
-            cities: String,
-            introduce: String,
-            career: String,
-            program: String,
-            wechatAccount: String,
-            nickname: String): Disposable? {
+    fun setFullUserInfo(userArg: User): Disposable? {
         if (isSetting) {
             return null
         }
         isSetting = true
         val token = usecase.user?.token ?: return null
-        return usecase.setFullUserInfo(token, height, weight, age, cup, cities, introduce, career, program, wechatAccount, nickname)
+        return usecase.setFullUserInfo(token, userArg.height, userArg.weight, userArg.age, userArg.safeCup, userArg.cityCodesString, userArg.safeIntroduce, userArg.safeCareer, "", userArg.safeWechatAccount, userArg.safeNickname)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribeBy(
                         onSuccess = {
                             isSetting = false
                             if (it.code == 200) {
+                                val user = user?.copy(height = userArg.height, weight = userArg.weight, age = userArg.age,
+                                        cup = userArg.cup, cities = userArg.cities, introduce = userArg.introduce, career = userArg.career,
+                                        wechatAccount = userArg.wechatAccount, nickname = userArg.nickname)
+                                if (userArg != null) {
+                                    usecase.user = user
+                                }
                                 success.value = it.data
                             } else if (!TextUtils.isEmpty(it.message)) {
                                 error.value = it.message

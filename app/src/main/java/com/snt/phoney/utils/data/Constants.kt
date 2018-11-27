@@ -20,6 +20,7 @@ package com.snt.phoney.utils.data
 object Constants {
     object Extra {
         const val USER = "user"
+        const val USER_ID = "user_id"
     }
 
     object Preference {
@@ -32,7 +33,6 @@ object Constants {
     }
 
     object Cache {
-        const val USER_CACHE_NAME = "user_cache"
         const val USER = "user"
 
         const val WX_ACCESS_TOKEN = "wx_access_token"

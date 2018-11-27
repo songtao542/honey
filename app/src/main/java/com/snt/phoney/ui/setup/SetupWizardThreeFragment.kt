@@ -57,18 +57,12 @@ class SetupWizardThreeFragment : BaseFragment() {
         back3.setNavigationOnClickListener { activity?.supportFragmentManager?.popBackStack() }
         confirmStep3.setOnClickListener {
             if (isValid()) {
-                var cities = java.lang.StringBuilder()
-                selectedCities?.forEach { city ->
-                    cities.append(city.code).append(",")
-                }
-                cities.delete(cities.length - 1, cities.length)
-                viewModel.setUserInfo(cities.toString(), selectedJob?.name
-                        ?: "", selectedPurpose?.name ?: "")
+                viewModel.setUserInfo(CityPickerConverter.reverseConvert(selectedCities!!), selectedJob!!.safeName, selectedPurpose!!.safeName)
             }
         }
 
         cityButton.setOnClickListener {
-            Picker.toggleCityPicker(activity, { cityPicker ->
+            Picker.showCityPicker(activity, { cityPicker ->
                 viewModel.cities.observe(this@SetupWizardThreeFragment, Observer {
                     cityPicker.setCities(CityPickerConverter.convert(it))
                 })
@@ -84,7 +78,7 @@ class SetupWizardThreeFragment : BaseFragment() {
             }
         }
         purposeButton.setOnClickListener {
-            Picker.togglePicker(activity, getString(R.string.select_job), selectedPurposeIndex, "purpose", provider = { picker ->
+            Picker.showPicker(activity, getString(R.string.select_job), selectedPurposeIndex, "purpose", provider = { picker ->
                 viewModel.purposes.observe(this, Observer { purposes ->
                     val purposeNames = Array(purposes.size) { index ->
                         purposes[index].name!!
@@ -98,7 +92,7 @@ class SetupWizardThreeFragment : BaseFragment() {
             }
         }
         jobButton.setOnClickListener {
-            Picker.togglePicker(activity, getString(R.string.select_job), selectedJobIndex, "career", provider = { picker ->
+            Picker.showPicker(activity, getString(R.string.select_job), selectedJobIndex, "career", provider = { picker ->
                 viewModel.careers.observe(this, Observer { careers ->
                     val careerNames = Array(careers.size) { index ->
                         careers[index].name!!

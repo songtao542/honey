@@ -86,7 +86,7 @@
                 android:layout_height="match_parent"
                 android:layout_weight="1"
                 android:gravity="center_vertical|right"
-                android:text="@{user.city}"
+                android:text="@{user.cityNamesString}"
                 android:textColor="@color/edit_user_item_value"
                 android:textSize="@dimen/textsize_normal" />
 

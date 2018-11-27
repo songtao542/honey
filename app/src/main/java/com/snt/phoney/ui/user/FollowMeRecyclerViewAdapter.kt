@@ -1,7 +1,6 @@
 package com.snt.phoney.ui.user
 
 
-import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -13,12 +12,11 @@ import com.snt.phoney.R
 import com.snt.phoney.base.CommonActivity
 import com.snt.phoney.base.Page
 import com.snt.phoney.domain.model.UserInfo
-import com.snt.phoney.utils.data.Constants
-import kotlinx.android.synthetic.main.fragment_visitor.view.*
+import kotlinx.android.synthetic.main.fragment_followme.view.*
 
 /**
  */
-class VisitorRecyclerViewAdapter(val activity: CommonActivity?) : RecyclerView.Adapter<VisitorRecyclerViewAdapter.ViewHolder>() {
+class FollowMeRecyclerViewAdapter(private val activity: CommonActivity) : RecyclerView.Adapter<FollowMeRecyclerViewAdapter.ViewHolder>() {
 
     var data: List<UserInfo>? = null
         set(value) {
@@ -28,9 +26,8 @@ class VisitorRecyclerViewAdapter(val activity: CommonActivity?) : RecyclerView.A
             }
         }
 
-
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
-        val view = LayoutInflater.from(parent.context).inflate(R.layout.fragment_visitor, parent, false)
+        val view = LayoutInflater.from(parent.context).inflate(R.layout.fragment_followme, parent, false)
         return ViewHolder(view)
     }
 
@@ -47,9 +44,7 @@ class VisitorRecyclerViewAdapter(val activity: CommonActivity?) : RecyclerView.A
             mView.selfDescription.text = user.introduce
             mView.visitTime.text = "刚刚"
             mView.viewVisitor.setOnClickListener {
-                activity?.addFragmentSafely(Page.VIEW_USER_INFO, "view_user_info", true, argument = Bundle().apply {
-                    putParcelable(Constants.Extra.USER, user)
-                })
+                activity?.addFragmentSafely(Page.VIEW_USER_INFO, "view_user_info", true)
             }
         }
     }

@@ -1,9 +1,12 @@
 package com.snt.phoney.domain.model
 
+import android.os.Parcelable
 import com.google.gson.annotations.SerializedName
+import kotlinx.android.parcel.Parcelize
 import kotlinx.serialization.Serializable
 
 @Serializable
+@Parcelize
 data class UserInfo(
         var id: Int,//"id": 14,
         var uuid: String,//"uuid": "u201811081829582566215b5a5a3b4f",
@@ -26,11 +29,12 @@ data class UserInfo(
         var age: Int,//"age": 24,
         var height: Int,//"height": 175,
         var cup: String//"cup": null
-)
+) : Parcelable
 
-
+@Serializable
+@Parcelize
 data class PhotoInfo(
         var id: Int,      // "id": 44
         var path: String, //   "path": "http://phoney.alance.pub/phoney/phoney/512/users/photos/u201811081829582566215b5a5a3b4f/1542507758452-5-a61dd1050281015775b699c828a394bc.jpg",
         var flag: Int     //  "flag": 0,
-)
+) : Parcelable

@@ -21,7 +21,7 @@ public abstract class UserActivityModule {
 
     @FragmentScope
     @ContributesAndroidInjector
-    public abstract FollowmeFragment contributeFollowmeFragment();
+    public abstract FollowMeFragment contributeFollowMeFragment();
 
     @FragmentScope
     @ContributesAndroidInjector
@@ -41,11 +41,22 @@ public abstract class UserActivityModule {
     @ViewModelKey(UserInfoViewModel.class)
     public abstract ViewModel bindUserInfoViewModel(UserInfoViewModel viewModel);
 
-
     @Binds
     @IntoMap
     @ActivityScope
     @ViewModelKey(EditUserViewModel.class)
     public abstract ViewModel bindEditUserViewModel(EditUserViewModel viewModel);
+
+    @Binds
+    @IntoMap
+    @ActivityScope
+    @ViewModelKey(FollowMeViewModel.class)
+    public abstract ViewModel bindFollowMeViewModel(FollowMeViewModel viewModel);
+
+    @Binds
+    @IntoMap
+    @ActivityScope
+    @ViewModelKey(VisitorViewModel.class)
+    public abstract ViewModel bindVisitorViewModel(VisitorViewModel viewModel);
 
 }

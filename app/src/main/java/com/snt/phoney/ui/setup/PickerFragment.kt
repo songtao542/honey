@@ -2,11 +2,9 @@ package com.snt.phoney.ui.setup
 
 import android.app.Dialog
 import android.os.Bundle
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.view.WindowManager
 import android.widget.NumberPicker
 import com.snt.phoney.R
 import com.snt.phoney.base.BottomDialogFragment
@@ -129,7 +127,6 @@ class PickerFragment : BottomDialogFragment() {
         if (minValue != -1 && maxValue != -1) {
             setColumnInternal(minValue, maxValue)
         } else {
-            Log.d("TTTT", "xxxxxxxxxxxxxxxxxx$column1Values   $column2Values")
             setColumnInternal(column1Values, column2Values)
         }
     }

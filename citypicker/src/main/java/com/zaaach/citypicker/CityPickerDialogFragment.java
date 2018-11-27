@@ -5,7 +5,6 @@ import android.app.Activity;
 import android.app.Dialog;
 import android.content.Context;
 import android.content.res.Resources;
-import android.os.Build;
 import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextUtils;
@@ -261,16 +260,19 @@ public class CityPickerDialogFragment extends AppCompatDialogFragment implements
             window.getDecorView().setPadding(0, 0, 0, 0);
             window.setBackgroundDrawableResource(android.R.color.transparent);
 
-//            int screenHeight = getScreenHeight(getActivity());
-//            int statusBarHeight = getStatusBarHeight(getContext());
-//            int dialogHeight = screenHeight - statusBarHeight;
-//            window.setLayout(ViewGroup.LayoutParams.MATCH_PARENT, dialogHeight == 0 ? ViewGroup.LayoutParams.MATCH_PARENT : dialogHeight);
-
-            window.setLayout(WindowManager.LayoutParams.MATCH_PARENT, WindowManager.LayoutParams.MATCH_PARENT);
-
-            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
-                window.addFlags(WindowManager.LayoutParams.FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS);
+            if ((window.getAttributes().flags & WindowManager.LayoutParams.FLAG_FULLSCREEN) != 0) {
+                window.setLayout(WindowManager.LayoutParams.MATCH_PARENT, WindowManager.LayoutParams.MATCH_PARENT);
+            } else {
+                int screenHeight = getScreenHeight(getActivity());
+                int statusBarHeight = getStatusBarHeight(getContext());
+                int dialogHeight = screenHeight - statusBarHeight;
+                window.setLayout(ViewGroup.LayoutParams.MATCH_PARENT, dialogHeight == 0 ? ViewGroup.LayoutParams.MATCH_PARENT : dialogHeight);
             }
+
+//            window.setLayout(WindowManager.LayoutParams.MATCH_PARENT, WindowManager.LayoutParams.MATCH_PARENT);
+//            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+//                window.addFlags(WindowManager.LayoutParams.FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS);
+//            }
 //            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
 //                window.addFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS);
 //            }

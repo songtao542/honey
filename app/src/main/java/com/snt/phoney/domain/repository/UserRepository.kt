@@ -15,6 +15,7 @@
 package com.snt.phoney.domain.repository
 
 
+import com.snt.phoney.domain.model.AmountInfo
 import com.snt.phoney.domain.model.Response
 import com.snt.phoney.domain.model.User
 import com.snt.phoney.domain.model.UserInfo
@@ -92,8 +93,11 @@ interface UserRepository {
                     latitude: Double,
                     longitude: Double): Single<Response<UserInfo>>
 
+    fun getUserAmountInfo(token: String): Single<Response<AmountInfo>>
+
 
     fun listFollow(token: String): Single<Response<List<UserInfo>>>
+    fun listVisitor(token: String): Single<Response<List<UserInfo>>>
 
     fun follow(token: String, uuid: String): Single<Response<Boolean>>
 

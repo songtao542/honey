@@ -13,6 +13,7 @@ import com.snt.phoney.domain.model.CityPickerConverter
 import com.snt.phoney.domain.model.Sex
 import com.snt.phoney.domain.model.User
 import com.snt.phoney.extensions.autoCleared
+import com.snt.phoney.extensions.snackbar
 import com.snt.phoney.utils.Picker
 import com.zaaach.citypicker.model.City
 import kotlinx.android.synthetic.main.fragment_edit_user.*
@@ -69,7 +70,7 @@ class EditUserFragment : BaseFragment() {
 
 
         cityButton.setOnClickListener {
-            Picker.toggleCityPicker(activity, { cityPicker ->
+            Picker.showCityPicker(activity, { cityPicker ->
                 viewModel.cities.observe(this@EditUserFragment, Observer {
                     cityPicker.setCities(CityPickerConverter.convert(it))
                 })
@@ -85,19 +86,19 @@ class EditUserFragment : BaseFragment() {
             }
         }
         heightButton.setOnClickListener {
-            Picker.togglePicker(activity, getString(R.string.pick_height), 150, 230, user.height, "height") { value, _ ->
+            Picker.showPicker(activity, getString(R.string.pick_height), 150, 230, user.height, "height") { value, _ ->
                 height.text = getString(R.string.height_value_template, value)
                 user.height = value
             }
         }
         weightCupButton.setOnClickListener {
             if (viewModel.user?.sex == Sex.MALE.value) {
-                Picker.togglePicker(activity, getString(R.string.pick_weight), 40, 150, user.weight.toInt(), "weight") { value, _ ->
+                Picker.showPicker(activity, getString(R.string.pick_weight), 40, 150, user.weight.toInt(), "weight") { value, _ ->
                     weightCup.text = getString(R.string.weight_value_template, value)
                     user.weight = value.toDouble()
                 }
             } else if (viewModel.user?.sex == Sex.FEMALE.value) {
-                Picker.togglePicker(activity, getString(R.string.pick_cup), cupNumberArray, cupNumber, cupSizeArray, cupSize, "cup") { value1, value2 ->
+                Picker.showPicker(activity, getString(R.string.pick_cup), cupNumberArray, cupNumber, cupSizeArray, cupSize, "cup") { value1, value2 ->
                     val cupValue = "${cupNumberArray[value1]}${cupSizeArray[value2]}"
                     cupNumber = value1
                     cupSize = value2
@@ -108,11 +109,18 @@ class EditUserFragment : BaseFragment() {
         }
 
         ageButton.setOnClickListener {
-            Picker.togglePicker(activity, getString(R.string.pick_age), 16, 70, user.age, "age") { value, _ ->
+            Picker.showPicker(activity, getString(R.string.pick_age), 16, 70, user.age, "age") { value, _ ->
                 age.text = getString(R.string.age_value_template, value)
                 user.age = value
             }
         }
+
+        viewModel.success.observe(this, Observer {
+            snackbar(getString(R.string.modify_success))
+        })
+        viewModel.error.observe(this, Observer {
+            snackbar(getString(R.string.modify_failed))
+        })
     }
 
     override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
@@ -123,17 +131,13 @@ class EditUserFragment : BaseFragment() {
         return when (item?.itemId) {
             R.id.confirm -> {
                 if (isValid()) {
-                    var cities = java.lang.StringBuilder()
-                    selectedCities?.forEach { city ->
-                        cities.append(city.code).append(",")
+                    if (selectedCities != null && selectedCities!!.isNotEmpty()) {
+                        user.cities = CityPickerConverter.reverseConvert(selectedCities!!)
                     }
-                    cities.delete(cities.length - 1, cities.length)
-                    val introduce: String = introduce.text?.toString() ?: ""
-                    val nickname: String = nickname.text?.toString() ?: ""
-                    val wechatAccount: String = wechatAccount.text?.toString() ?: ""
-                    viewModel.setFullUserInfo(user.height, user.weight, user.age, user.cup
-                            ?: "", cities.toString(), introduce, user.career
-                            ?: "", "", wechatAccount, nickname)
+                    user.introduce = introduce.text?.toString() ?: ""
+                    user.nickname = nickname.text?.toString() ?: ""
+                    user.wechatAccount = wechatAccount.text?.toString() ?: ""
+                    viewModel.setFullUserInfo(user)
                     true
                 } else {
                     false

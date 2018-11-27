@@ -7,7 +7,13 @@ import javax.inject.Inject
 
 class EditUserUseCase @Inject constructor(private val repository: UserRepository, private val locationRepository: LocationRepository) {
 
-    var user: User? = repository.user
+    var user: User?
+        set(value) {
+            repository.user = value
+        }
+        get() {
+            return repository.user
+        }
 
     fun getCities() = locationRepository.cities
 

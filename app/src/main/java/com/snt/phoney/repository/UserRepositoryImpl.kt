@@ -19,6 +19,7 @@ package com.snt.phoney.repository
 
 
 import com.snt.phoney.api.Api
+import com.snt.phoney.domain.model.AmountInfo
 import com.snt.phoney.domain.model.Response
 import com.snt.phoney.domain.model.User
 import com.snt.phoney.domain.model.UserInfo
@@ -31,6 +32,14 @@ import javax.inject.Singleton
 
 @Singleton
 class UserRepositoryImpl @Inject constructor(private val cache: CacheRepository, private val api: Api) : UserRepository {
+    override fun listVisitor(token: String): Single<Response<List<UserInfo>>> {
+        return api.listVisitor(token)
+    }
+
+    override fun getUserAmountInfo(token: String): Single<Response<AmountInfo>> {
+        return api.getUserAmountInfo(token)
+    }
+
     override fun follow(token: String, uuid: String): Single<Response<Boolean>> {
         return api.follow(token, uuid)
     }

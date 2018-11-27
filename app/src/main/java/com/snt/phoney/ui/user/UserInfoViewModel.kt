@@ -1,8 +1,43 @@
 package com.snt.phoney.ui.user
 
+import android.util.Log
+import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
+import com.snt.phoney.domain.model.UserInfo
+import com.snt.phoney.domain.usecase.GetUserInfoUseCase
+import io.reactivex.android.schedulers.AndroidSchedulers
+import io.reactivex.disposables.Disposable
+import io.reactivex.rxkotlin.subscribeBy
+import io.reactivex.schedulers.Schedulers
 import javax.inject.Inject
 
-class UserInfoViewModel @Inject constructor() : ViewModel() {
-    // TODO: Implement the ViewModel
+class UserInfoViewModel @Inject constructor(private val usecase: GetUserInfoUseCase) : ViewModel() {
+
+    val userInfo = MutableLiveData<UserInfo>()
+    val error = MutableLiveData<String>()
+
+    fun getUserInfo(uuid: String): Disposable? {
+        Log.d("TTTT", "getUserInfo ---------getUserInfo-------- getUserInfo->$uuid")
+        val token = usecase.user?.token ?: return null
+        return usecase.getLocation()
+                .flatMap {
+                    usecase.getUserInfo(token, uuid, it.latitude, it.longitude)
+                            .toObservable()
+                            .subscribeOn(Schedulers.io())
+                            .observeOn(AndroidSchedulers.mainThread())
+                }
+                .singleOrError()
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribeBy(
+                        onSuccess = {
+                            if (it.code == 200) {
+                                userInfo.value = it.data
+                            }
+                        },
+                        onError = {
+                            Log.d("TTTT", "error ---------error-------- error->$it")
+                        })
+    }
+
 }

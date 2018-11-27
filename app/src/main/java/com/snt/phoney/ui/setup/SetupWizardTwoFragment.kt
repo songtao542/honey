@@ -66,16 +66,11 @@ class SetupWizardTwoFragment : BaseFragment() {
         viewModel = ViewModelProviders.of(this, viewModelFactory).get(SetupWizardViewModel::class.java)
         Log.d("TTTT", "vm=======2==========================$viewModel")
         back2.setNavigationOnClickListener {
-            if (activity?.supportFragmentManager?.backStackEntryCount ?: 0 > 0) {
-                activity?.supportFragmentManager?.popBackStack()
-            } else {
-                activity?.finish()
-            }
+             activity?.onBackPressed()
         }
         confirmStep2.setOnClickListener {
             if (isValid()) {
-                viewModel.setUserFeatures(user.height, user.weight.toInt(), user.age, user.cup
-                        ?: "")
+                viewModel.setUserFeatures(user.height, user.weight.toInt(), user.age, user.safeCup)
 
                 //for test
                 activity?.addFragmentSafely(R.id.containerLayout, SetupWizardThreeFragment.newInstance(user), "step3", true)
@@ -83,19 +78,19 @@ class SetupWizardTwoFragment : BaseFragment() {
         }
 
         heightButton.setOnClickListener {
-            Picker.togglePicker(activity, getString(R.string.pick_height), 150, 230, user.height, "height") { value, _ ->
+            Picker.showPicker(activity, getString(R.string.pick_height), 150, 230, user.height, "height") { value, _ ->
                 height.text = getString(R.string.height_value_template, value)
                 user.height = value
             }
         }
         weightButton.setOnClickListener {
-            Picker.togglePicker(activity, getString(R.string.pick_weight), 40, 150, user.weight.toInt(), "weight") { value, _ ->
+            Picker.showPicker(activity, getString(R.string.pick_weight), 40, 150, user.weight.toInt(), "weight") { value, _ ->
                 weight.text = getString(R.string.weight_value_template, value)
                 user.weight = value.toDouble()
             }
         }
         cupButton.setOnClickListener {
-            Picker.togglePicker(activity, getString(R.string.pick_cup), cupNumberArray, cupNumber, cupSizeArray, cupSize, "cup") { value1, value2 ->
+            Picker.showPicker(activity, getString(R.string.pick_cup), cupNumberArray, cupNumber, cupSizeArray, cupSize, "cup") { value1, value2 ->
                 val cupValue = "${cupNumberArray[value1]}${cupSizeArray[value2]}"
                 cupNumber = value1
                 cupSize = value2
@@ -104,7 +99,7 @@ class SetupWizardTwoFragment : BaseFragment() {
             }
         }
         ageButton.setOnClickListener {
-            Picker.togglePicker(activity, getString(R.string.pick_age), 16, 70, user.age, "age") { value, _ ->
+            Picker.showPicker(activity, getString(R.string.pick_age), 16, 70, user.age, "age") { value, _ ->
                 age.text = getString(R.string.age_value_template, value)
                 user.age = value
             }
@@ -122,10 +117,10 @@ class SetupWizardTwoFragment : BaseFragment() {
 
     private fun isValid(): Boolean {
         if (user.age > 0 && user.height > 0) {
-            if (user.sex == 0 && !TextUtils.isEmpty(user.cup)) {
+            if (user.sex == Sex.FEMALE.value && !TextUtils.isEmpty(user.cup)) {
                 return true
             }
-            if (user.sex == 1 && user.weight > 0) {
+            if (user.sex == Sex.MALE.value && user.weight > 0) {
                 return true
             }
         }

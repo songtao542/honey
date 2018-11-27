@@ -106,7 +106,7 @@ interface Api {
      */
     @FormUrlEncoded
     @POST("users/other/listVisitors")
-    fun listVisitors(@Field("token") token: String): Single<Response<List<UserInfo>>>
+    fun listVisitor(@Field("token") token: String): Single<Response<List<UserInfo>>>
 
     /**
      * 获取我关注的人列表
@@ -122,7 +122,7 @@ interface Api {
 
     @FormUrlEncoded
     @POST("users/other/amountInfoOfUsers")
-    fun getUserAmountInfo(@Field("token") token: String): Single<Response<List<UserInfo>>>
+    fun getUserAmountInfo(@Field("token") token: String): Single<Response<AmountInfo>>
 
     /**
      * 发布约会

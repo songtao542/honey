@@ -4,6 +4,8 @@ import android.app.Activity
 import android.content.Context
 import android.content.Intent
 import android.os.Bundle
+import androidx.annotation.AnimRes
+import androidx.fragment.app.Fragment
 import com.snt.phoney.R
 import com.snt.phoney.extensions.addFragmentSafely
 import com.snt.phoney.extensions.colorOf
@@ -37,4 +39,20 @@ open class CommonActivity : BaseActivity() {
             addFragmentSafely(R.id.container, fragment, fragment::class.simpleName!!)
         }
     }
+
+
+    fun addFragmentSafely(page: Page,
+                          tag: String,
+                          addToBackStack: Boolean = false,
+                          backStackName: String? = null,
+                          allowStateLoss: Boolean = false,
+                          argument: Bundle? = null,
+                          @AnimRes enterAnimation: Int = 0,
+                          @AnimRes exitAnimation: Int = 0,
+                          @AnimRes popEnterAnimation: Int = 0,
+                          @AnimRes popExitAnimation: Int = 0): Fragment {
+        val fragment = FragmentFactory.create(page.ordinal, argument)
+        return addFragmentSafely(R.id.container, fragment, tag, addToBackStack, backStackName, allowStateLoss, enterAnimation, exitAnimation, popEnterAnimation, popExitAnimation)
+    }
+
 }

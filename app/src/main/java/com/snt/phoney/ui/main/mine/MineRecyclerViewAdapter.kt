@@ -14,6 +14,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.snt.phoney.R
 import com.snt.phoney.base.CommonActivity
 import com.snt.phoney.base.Page
+import com.snt.phoney.domain.model.AmountInfo
 import com.snt.phoney.ui.about.AboutActivity
 import com.snt.phoney.ui.dating.DatingActivity
 import com.snt.phoney.ui.privacy.PrivacyActivity
@@ -37,6 +38,12 @@ class MineRecyclerViewAdapter(val fragment: Fragment) : RecyclerView.Adapter<Rec
 
     private val settings = ArrayList<Setting>()
     private val photos = ArrayList<String>()
+
+    var amountInfo: AmountInfo? = null
+        set(value) {
+            field = value
+            notifyDataSetChanged()
+        }
 
     init {
         settings.add(Setting(R.drawable.ic_photo, "相册权限", ""))
@@ -91,14 +98,13 @@ class MineRecyclerViewAdapter(val fragment: Fragment) : RecyclerView.Adapter<Rec
     }
 
     override fun onBindViewHolder(holder: RecyclerView.ViewHolder, position: Int) {
-        if (holder is HeadViewHolder) {
-            holder.setData()
-        } else if (holder is SettingViewHolder) {
-            holder.setData(setting = settings[position - 2])
-        } else if (holder is PhotoViewHolder) {
-            holder.setData(photos)
-        } else if (holder is FooterViewHolder) {
+        when (holder) {
+            is HeadViewHolder -> holder.setData(amountInfo)
+            is SettingViewHolder -> holder.setData(setting = settings[position - 2])
+            is PhotoViewHolder -> holder.setData(photos)
+            is FooterViewHolder -> {
 
+            }
         }
     }
 
@@ -114,31 +120,42 @@ class MineRecyclerViewAdapter(val fragment: Fragment) : RecyclerView.Adapter<Rec
         private val mMyDatingButton: LinearLayout = mView.myDatingButton
         private val mAuthenticate = mView.authenticate
 
-        fun setData() {
-            //TODO
-            mRecentVisitor.text = "1000"
-            mFollowMe.text = "100"
-            mMyDating.text = "10000"
+        fun setData(amountInfo: AmountInfo?) {
+            amountInfo?.let {
+                mRecentVisitor.text = "${it.countVisitor}"
+                mFollowMe.text = "${it.countFollowed}"
+                mMyDating.text = "${it.countDating}"
+            }
             mFollowMeButton.setOnClickListener { context.startActivity(CommonActivity.newIntent<UserActivity>(context, Page.VIEW_FOLLOW_ME)) }
             mRecentVisitorButton.setOnClickListener { context.startActivity(CommonActivity.newIntent<UserActivity>(context, Page.VIEW_RECENT_VISITOR)) }
             mMyDatingButton.setOnClickListener { context.startActivity(CommonActivity.newIntent<DatingActivity>(context, Page.VIEW_DATING_LIST)) }
             mAuthenticate.setOnClickListener { }
+
         }
     }
 
     inner class PhotoViewHolder(private val mView: View) : RecyclerView.ViewHolder(mView) {
         private val context = mView.context
+        private var noPhotoStubInflated = false
+        private var hasPhotoStubInflated = false
 
         fun setData(photos: List<String>) {
             if (photos.isNotEmpty()) {
-                mView.hasPhotoStub.inflate()
+                if (!hasPhotoStubInflated) {
+                    hasPhotoStubInflated = true
+                    mView.hasPhotoStub.inflate()
+                }
                 val flexbox = mView.flexbox
                 flexbox.viewFactory = PhotoWallFactory(context).setUrls(photos).setMaxShow(12).setLastAsAdd(true)
                 flexbox.setOnItemClickListener { view, index ->
                     Log.d("TTTT", "index=$index")
                 }
             } else {
-                mView.noPhotoStub.inflate()
+                Log.d("TTTT", "mView.noPhotoStub===>${mView.noPhotoStub}")
+                if (!noPhotoStubInflated) {
+                    noPhotoStubInflated = true
+                    mView.noPhotoStub.inflate()
+                }
                 mView.uploadPhoto.setOnClickListener {
                     Log.d("TTTT", "vvvvvvvvvvvvvvvvvvvvv")
                 }

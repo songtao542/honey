@@ -51,4 +51,9 @@ abstract class BaseActivity : AppCompatActivity(), HasSupportFragmentInjector {
         return super.dispatchTouchEvent(ev)
     }
 
+    override fun onRequestPermissionsResult(requestCode: Int, permissions: Array<out String>, grantResults: IntArray) {
+        super.onRequestPermissionsResult(requestCode, permissions, grantResults)
+
+    }
+
 }
