@@ -21,7 +21,7 @@ import com.snt.phoney.extensions.checkAndRequestPermission
 import com.snt.phoney.extensions.checkAppPermission
 import com.snt.phoney.extensions.dip
 import com.snt.phoney.utils.data.Constants
-import com.snt.phoney.widget.PhotoWallFactory
+import com.snt.phoney.widget.PhotoFlowAdapter
 import kotlinx.android.synthetic.main.fragment_user_info.*
 import kotlinx.android.synthetic.main.fragment_user_info_header.*
 
@@ -98,7 +98,7 @@ class UserInfoFragment : BaseFragment() {
         chatWith.setOnClickListener {
 
         }
-        photos.viewFactory = PhotoWallFactory(requireContext()).setUrls(user.photos?.map {
+        photos.viewAdapter = PhotoFlowAdapter(requireContext()).setUrls(user.photos?.map {
             it.path ?: ""
         } ?: emptyList()).setMaxShow(12).setLastAsAdd(false)
 

@@ -17,7 +17,7 @@ import com.snt.phoney.base.Page
 import com.snt.phoney.domain.model.AmountInfo
 import com.snt.phoney.ui.dating.DatingActivity
 import com.snt.phoney.ui.user.UserActivity
-import com.snt.phoney.widget.PhotoWallFactory
+import com.snt.phoney.widget.PhotoFlowAdapter
 import kotlinx.android.synthetic.main.fragment_mine_footer.view.*
 import kotlinx.android.synthetic.main.fragment_mine_list_header.view.*
 import kotlinx.android.synthetic.main.fragment_mine_list_no_photo.view.*
@@ -150,7 +150,7 @@ class MineRecyclerViewAdapter(val fragment: Fragment) : RecyclerView.Adapter<Rec
                     mView.hasPhotoStub.inflate()
                 }
                 val flexbox = mView.flexbox
-                flexbox.viewFactory = PhotoWallFactory(context).setUrls(photos).setMaxShow(12).setLastAsAdd(true)
+                flexbox.viewAdapter = PhotoFlowAdapter(context).setUrls(photos).setMaxShow(12).setLastAsAdd(true)
                 flexbox.setOnItemClickListener { view, index ->
                     Log.d("TTTT", "index=$index")
                 }

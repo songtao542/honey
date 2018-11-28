@@ -71,22 +71,30 @@ class FlowLayout : FlexboxLayout {
         mOnItemClickListener = listener
     }
 
-    var viewFactory: ViewFactory? = null
+    var viewAdapter: ViewAdapter? = null
         set(value) {
-            value?.let {
-                removeAllViews()
-                for (index in 0 until it.getItemCount()) {
-                    val child = it.create(index)
-                    child.setTag(R.id.tag_index, index)
+            field = value
+            notifyAdapterSizeChanged()
+        }
+
+    fun notifyAdapterSizeChanged() {
+        viewAdapter?.let {
+            removeAllViews()
+            for (index in 0 until it.getItemCount()) {
+                val child = it.create(index)
+                child.setTag(R.id.tag_index, index)
+                if (!child.hasOnClickListeners()) {
                     child.setOnClickListener { view ->
                         mOnItemClickListener?.invoke(view, view.getTag(R.id.tag_index) as Int)
                     }
-                    addView(child)
                 }
+                addView(child)
             }
         }
+    }
 
-    interface ViewFactory {
+
+    interface ViewAdapter {
         fun create(index: Int): View
         fun getItemCount(): Int
     }

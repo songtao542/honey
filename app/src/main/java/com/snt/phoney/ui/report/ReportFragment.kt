@@ -8,7 +8,7 @@ import androidx.lifecycle.ViewModelProviders
 
 import com.snt.phoney.R
 import com.snt.phoney.base.BaseFragment
-import com.snt.phoney.widget.PhotoWallFactory
+import com.snt.phoney.widget.PhotoFlowAdapter
 import kotlinx.android.synthetic.main.fragment_report.*
 
 class ReportFragment : BaseFragment() {
@@ -31,7 +31,7 @@ class ReportFragment : BaseFragment() {
         viewModel = ViewModelProviders.of(this, viewModelFactory).get(ReportViewModel::class.java)
 
         context?.let { context ->
-            attachments.viewFactory = PhotoWallFactory(context).setMaxShow(4).setLastAsAdd(true).setUrls(ArrayList())
+            attachments.viewAdapter = PhotoFlowAdapter(context).setMaxShow(4).setLastAsAdd(true).setUrls(ArrayList())
         }
     }
 

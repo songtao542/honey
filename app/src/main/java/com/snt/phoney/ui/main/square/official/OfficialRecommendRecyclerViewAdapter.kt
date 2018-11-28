@@ -10,7 +10,7 @@ import com.snt.phoney.R
 import com.snt.phoney.domain.model.Dating
 import com.snt.phoney.extensions.disposedBy
 import com.snt.phoney.ui.main.square.SquareViewModel
-import com.snt.phoney.widget.PhotoWallFactory
+import com.snt.phoney.widget.PhotoFlowAdapter
 import io.reactivex.disposables.CompositeDisposable
 import io.reactivex.rxkotlin.subscribeBy
 import kotlinx.android.synthetic.main.fragment_official_recommend.view.*
@@ -45,7 +45,7 @@ class OfficialRecommendRecyclerViewAdapter(val viewModel: SquareViewModel, val d
                 return
             }
             Glide.with(mView).load(data.user?.portrait).into(mView.head)
-            mView.flowImages.viewFactory = PhotoWallFactory(mView.context).setUrls(data.photoUrls()).setLastAsAdd(false)
+            mView.flowImages.viewAdapter = PhotoFlowAdapter(mView.context).setUrls(data.photoUrls()).setLastAsAdd(false)
             mView.name.text = data.user?.nickname
             mView.age.text = mView.context.getString(R.string.age_value_template, data.user?.age)
             mView.publishTime.text = getPublishTime(data.createTime)

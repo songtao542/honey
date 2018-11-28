@@ -22,7 +22,7 @@
             android:layout_gravity="center"
             android:layout_marginBottom="20dp"
             android:scaleType="centerCrop"
-            android:src="@drawable/ic_add_black" />
+            android:src="@drawable/ic_add_darker" />
 
         <TextView
             android:layout_width="match_parent"

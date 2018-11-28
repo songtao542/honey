@@ -3,12 +3,10 @@ package com.snt.phoney.ui.dating.create
 import android.os.Bundle
 import android.util.Log
 import android.view.*
-import androidx.databinding.DataBindingUtil
 import androidx.lifecycle.ViewModelProviders
 import com.snt.phoney.R
 import com.snt.phoney.base.BaseFragment
-import com.snt.phoney.databinding.CreateDatingFragmentBinding
-import com.snt.phoney.extensions.autoCleared
+import com.snt.phoney.widget.PhotoFlowAdapter
 import kotlinx.android.synthetic.main.fragment_dating_create.*
 
 class CreateDatingFragment : BaseFragment() {
@@ -21,18 +19,40 @@ class CreateDatingFragment : BaseFragment() {
 
     private lateinit var viewModel: CreateDatingViewModel
 
-    var binding by autoCleared<CreateDatingFragmentBinding>()
+    private lateinit var photoFactory: PhotoFlowAdapter
+    private var photoUrls = ArrayList<String>()
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View {
-        binding = DataBindingUtil.inflate(inflater, R.layout.fragment_dating_create, container, false)
-        return binding.root
+        return inflater.inflate(R.layout.fragment_dating_create, container, false)
     }
 
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
         enableOptionsMenu(toolbar)
         viewModel = ViewModelProviders.of(this, viewModelFactory).get(CreateDatingViewModel::class.java)
-        binding.toolbar.setNavigationOnClickListener { activity?.finish() }
+        toolbar.setNavigationOnClickListener { activity?.onBackPressed() }
+
+        selectDatingAddress.setOnClickListener {
+
+        }
+        selectDatingTime.setOnClickListener {
+
+        }
+        selectDatingProgram.setOnClickListener {
+
+        }
+        photoFactory = PhotoFlowAdapter(requireContext())
+                .setMaxShow(8)
+                .setAddButtonStyle(PhotoFlowAdapter.AddButtonStyle.BORDER)
+                .setShowAddWhenFull(false)
+                .setUrls(photoUrls)
+                .setLastAsAdd(true)
+                .setOnAddClickListener {
+                    photoUrls.add("https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1543427137051&di=980490a9ba8764b0daf759c9ab55a760&imgtype=0&src=http%3A%2F%2Fimg2.woyaogexing.com%2F2017%2F08%2F17%2F96b585776aadaa67%2521400x400_big.jpg")
+                    photos.notifyAdapterSizeChanged()
+                }
+
+        photos.viewAdapter = photoFactory
     }
 
     override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {

@@ -168,6 +168,12 @@
     <string name="unfill">未留下只言片语</string>
     <string name="unknown">未知</string>
     <string name="program_label">约会节目</string>
+    <string name="dating_address">约会地点</string>
+    <string name="select_dating_address">选择地点</string>
+    <string name="dating_time">约会天数</string>
+    <string name="select_dating_time">选择天数</string>
+    <string name="dating_program">约会节目</string>
+    <string name="select_dating_program">选择标签</string>
 
 
 </resources>

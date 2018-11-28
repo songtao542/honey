@@ -1,6 +1,7 @@
 package com.snt.phoney.widget
 
 import android.content.Context
+import android.util.Log
 import android.view.Gravity
 import android.view.View
 import android.widget.ImageView
@@ -13,23 +14,47 @@ import com.snt.phoney.R
 import com.snt.phoney.extensions.colorOf
 import com.snt.phoney.extensions.dip
 
-class PhotoWallFactory(private val context: Context) : FlowLayout.ViewFactory {
+class PhotoFlowAdapter(private val context: Context) : FlowLayout.ViewAdapter {
+
+    enum class AddButtonStyle {
+        BORDER,
+        SOLID;
+    }
 
     private var mUrls: List<String>? = null
     private var mMaxShow = Int.MAX_VALUE
     private var mShowLastAsAdd = true
+    private var mShowAddWhenFull = true
+    private var addStyle: AddButtonStyle = AddButtonStyle.SOLID
 
-    fun setUrls(urls: List<String>): PhotoWallFactory {
+    private var mOnAddClickListener: ((size: Int) -> Unit)? = null
+
+    fun setOnAddClickListener(listener: (size: Int) -> Unit): PhotoFlowAdapter {
+        mOnAddClickListener = listener
+        return this
+    }
+
+    fun setUrls(urls: List<String>): PhotoFlowAdapter {
         this.mUrls = urls
         return this
     }
 
-    fun setMaxShow(max: Int): PhotoWallFactory {
+    fun setMaxShow(max: Int): PhotoFlowAdapter {
         mMaxShow = max
         return this
     }
 
-    fun setLastAsAdd(lastAsAdd: Boolean): PhotoWallFactory {
+    fun setAddButtonStyle(style: AddButtonStyle): PhotoFlowAdapter {
+        this.addStyle = style
+        return this
+    }
+
+    fun setShowAddWhenFull(show: Boolean): PhotoFlowAdapter {
+        this.mShowAddWhenFull = show
+        return this
+    }
+
+    fun setLastAsAdd(lastAsAdd: Boolean): PhotoFlowAdapter {
         mShowLastAsAdd = lastAsAdd
         return this
     }
@@ -43,7 +68,11 @@ class PhotoWallFactory(private val context: Context) : FlowLayout.ViewFactory {
 
     private fun createLastAdd(): View {
         val add = LinearLayout(context)
-        add.setBackgroundColor(context.colorOf(R.color.photo_wall_add))
+        if (addStyle == AddButtonStyle.SOLID) {
+            add.setBackgroundColor(context.colorOf(R.color.photo_wall_add))
+        } else {
+            add.setBackgroundResource(R.drawable.add_button_border)
+        }
         add.orientation = LinearLayout.VERTICAL
 
         val spaceTop = Space(context)
@@ -60,7 +89,11 @@ class PhotoWallFactory(private val context: Context) : FlowLayout.ViewFactory {
         val ilp = LinearLayout.LayoutParams(context.dip(20), context.dip(20))
         ilp.gravity = Gravity.CENTER
         icon.layoutParams = ilp
-        icon.setImageResource(R.drawable.ic_add)
+        if (addStyle == AddButtonStyle.SOLID) {
+            icon.setImageResource(R.drawable.ic_add)
+        } else {
+            icon.setImageResource(R.drawable.ic_add_darker)
+        }
         icon.scaleType = ImageView.ScaleType.CENTER_INSIDE
 
         val text = TextView(context)
@@ -68,19 +101,29 @@ class PhotoWallFactory(private val context: Context) : FlowLayout.ViewFactory {
         tlp.gravity = Gravity.CENTER
         tlp.topMargin = context.dip(10)
         text.layoutParams = tlp
-        text.setTextColor(context.colorOf(R.color.photo_wall_add_text))
+        if (addStyle == AddButtonStyle.SOLID) {
+            text.setTextColor(context.colorOf(R.color.photo_wall_add_text))
+        } else {
+            text.setTextColor(context.colorOf(R.color.darker))
+        }
         text.setText(R.string.add_image)
 
         add.addView(spaceTop)
         add.addView(icon)
         add.addView(text)
         add.addView(spaceBottom)
+        if (mOnAddClickListener != null) {
+            add.setOnClickListener { mOnAddClickListener?.invoke(getItemCount()) }
+        }
         return add
     }
 
     override fun create(index: Int): View {
         if (mShowLastAsAdd && index == getItemCount() - 1) {
-            return createLastAdd()
+            val size = mUrls?.size ?: 0
+            if (size < mMaxShow || (size >= mMaxShow && mShowAddWhenFull)) {
+                return createLastAdd()
+            }
         }
         return createImageView(mUrls!![index])
     }
