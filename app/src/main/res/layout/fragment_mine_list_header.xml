@@ -27,7 +27,7 @@
                 android:id="@+id/recentVisitor"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="10000"
+                android:text="0"
                 android:textSize="@dimen/textsize_normal" />
 
             <TextView
@@ -62,7 +62,7 @@
                 android:id="@+id/followMe"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="10000"
+                android:text="0"
                 android:textSize="@dimen/textsize_normal" />
 
             <TextView
@@ -98,7 +98,7 @@
                 android:id="@+id/myDating"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="10000"
+                android:text="0"
                 android:textSize="@dimen/textsize_normal" />
 
             <TextView

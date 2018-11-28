@@ -4,7 +4,6 @@ import android.util.Log
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import com.snt.phoney.domain.model.User
-import com.snt.phoney.domain.model.UserInfo
 import com.snt.phoney.domain.usecase.GetFollowUseCase
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.disposables.Disposable
@@ -15,7 +14,7 @@ import javax.inject.Inject
 class FollowMeViewModel @Inject constructor(private val usecase: GetFollowUseCase) : ViewModel() {
 
     val user: User? = usecase.user
-    val follower = MutableLiveData<List<UserInfo>>()
+    val follower = MutableLiveData<List<User>>()
 
     fun listFollow(): Disposable? {
         val token = usecase.user?.token ?: return null

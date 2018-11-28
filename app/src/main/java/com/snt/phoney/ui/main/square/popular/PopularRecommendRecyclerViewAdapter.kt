@@ -6,6 +6,8 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
+import com.bumptech.glide.load.resource.drawable.DrawableTransitionOptions
+import com.bumptech.glide.request.RequestOptions
 import com.snt.phoney.R
 import com.snt.phoney.domain.model.Dating
 import com.snt.phoney.extensions.disposedBy
@@ -43,29 +45,34 @@ class PopularRecommendRecyclerViewAdapter(val viewModel: SquareViewModel, val di
             if (data == null) {
                 return
             }
-            Glide.with(mView).load(data.userInfo.portrait).into(mView.head)
+            //Glide.with(mView).load(data.user?.portrait).into(mView.head)
+            Glide.with(mView).load(data.user?.portrait).apply(RequestOptions().circleCrop()).transition(DrawableTransitionOptions.withCrossFade()).into(mView.head)
             mView.flowImages.viewFactory = PhotoWallFactory(mView.context).setUrls(data.photoUrls()).setLastAsAdd(false)
-            mView.name.text = data.userInfo.nickname
-            mView.age.text = mView.context.getString(R.string.age_value_template, data.userInfo.age)
+            mView.name.text = data.user?.nickname
+            mView.age.text = mView.context.getString(R.string.age_value_template, data.user?.age)
             mView.publishTime.text = getPublishTime(data.createTime)
             mView.content.text = data.content
 
             mView.attend.setOnClickListener {
-                viewModel.joinDating(data.uuid)
-                        ?.subscribeBy { response ->
-                            if (response.code == 200) {
-                                mView.attend.text = getString(R.string.joined_dating)
+                data.uuid?.let { uuid ->
+                    viewModel.joinDating(uuid)
+                            ?.subscribeBy { response ->
+                                if (response.code == 200) {
+                                    mView.attend.text = getString(R.string.joined_dating)
+                                }
                             }
-                        }
-                        ?.disposedBy(disposeBag)
+                            ?.disposedBy(disposeBag)
+                }
             }
             mView.follow.text = if (data.care) getString(R.string.follow) else getString(R.string.followed)
             mView.follow.setOnClickListener {
-                viewModel.follow(data.userInfo.uuid)
-                        ?.subscribeBy { response ->
-                            mView.follow.text = if (response.data == true) getString(R.string.follow) else getString(R.string.followed)
-                        }
-                        ?.disposedBy(disposeBag)
+                data.user?.uuid?.let { uuid ->
+                    viewModel.follow(uuid)
+                            ?.subscribeBy { response ->
+                                mView.follow.text = if (response.data == true) getString(R.string.follow) else getString(R.string.followed)
+                            }
+                            ?.disposedBy(disposeBag)
+                }
             }
         }
 

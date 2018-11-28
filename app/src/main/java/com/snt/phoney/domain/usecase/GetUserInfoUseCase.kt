@@ -14,5 +14,16 @@ class GetUserInfoUseCase @Inject constructor(private val userRepository: UserRep
 
     fun getLocation() = locationRepository.getLocation()
 
-    var user: User? = userRepository.user
+    fun setPhotoPermission(token: String,
+                           photoPermission: Int,
+                           money: Double,
+                           photoId: String) = userRepository.setPhotoPermission(token, photoPermission, money, photoId)
+
+    fun deleteUser(token: String) = userRepository.deleteUser(token)
+
+    var user: User?
+        get() = userRepository.user
+        set(value) {
+            userRepository.user = value
+        }
 }

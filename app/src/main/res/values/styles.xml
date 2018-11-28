@@ -17,6 +17,7 @@
         <item name="colorAccent">@color/colorAccentMale</item>
         <item name="colorTheme">@color/colorPrimaryMale</item>
         <item name="colorThemePressed">@color/colorPrimaryPressedMale</item>
+        <item name="mainNavigationTextColor">@color/navigation_text_color_male_selector</item>
 
         <item name="statusBarBackground">@drawable/gradient_bg</item>
         <item name="toolbarBackground">@drawable/gradient_bg</item>
@@ -29,6 +30,7 @@
         <item name="colorAccent">@color/colorAccentFemale</item>
         <item name="colorTheme">@color/colorPrimaryFemale</item>
         <item name="colorThemePressed">@color/colorPrimaryPressedFemale</item>
+        <item name="mainNavigationTextColor">@color/navigation_text_color_female_selector</item>
 
         <item name="statusBarBackground">@color/colorPrimaryFemale</item>
         <item name="toolbarBackground">@color/colorPrimaryFemale</item>
@@ -41,9 +43,10 @@
         <item name="colorAccent">@color/colorAccent</item>
         <item name="colorTheme">@color/colorPrimary</item>
         <item name="colorThemePressed">@color/colorPrimaryPressed</item>
+        <item name="mainNavigationTextColor">@color/navigation_text_color_selector</item>
 
-        <item name="statusBarBackground">@color/colorPrimaryFemale</item>
-        <item name="toolbarBackground">@color/colorPrimaryFemale</item>
+        <item name="statusBarBackground">@color/colorPrimary</item>
+        <item name="toolbarBackground">@color/colorPrimary</item>
     </style>
 
     <style name="AppTheme.NoActionBar">

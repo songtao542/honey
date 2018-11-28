@@ -78,7 +78,7 @@ interface Api {
 
 
     @FormUrlEncoded
-    @POST("users/setUserInfo")
+    @POST("users/setUser")
     fun setFullUserInfo(@Field("token") token: String,
                         @Field("height") height: String,// 	身高
                         @Field("weight") weight: String,//	体重
@@ -94,8 +94,12 @@ interface Api {
 
 
     @FormUrlEncoded
+    @POST("users/delUser")
+    fun deleteUser(@Field("token") token: String): Single<Response<String>>
+
+    @FormUrlEncoded
     @POST("users/getUsersPhoto")
-    fun getUserPhotoes(@Field("token") token: String): Single<Response<List<PhotoInfo>>>
+    fun getUserPhotoes(@Field("token") token: String): Single<Response<List<Photo>>>
 
     @FormUrlEncoded
     @POST("users/closePrivatePassword")
@@ -106,14 +110,14 @@ interface Api {
      */
     @FormUrlEncoded
     @POST("users/other/listVisitors")
-    fun listVisitor(@Field("token") token: String): Single<Response<List<UserInfo>>>
+    fun listVisitor(@Field("token") token: String): Single<Response<List<User>>>
 
     /**
      * 获取我关注的人列表
      */
     @FormUrlEncoded
     @POST("users/other/listCares")
-    fun listFollow(@Field("token") token: String): Single<Response<List<UserInfo>>>
+    fun listFollow(@Field("token") token: String): Single<Response<List<User>>>
 
     @FormUrlEncoded
     @POST("users/other/care")
@@ -146,7 +150,7 @@ interface Api {
                       @Field("longitude") longitude: String,
                       @Field("title") title: String,
                       @Field("location") location: String,
-                      @Field("grogram") program: String): Single<Response<List<UserInfo>>>
+                      @Field("grogram") program: String): Single<Response<List<User>>>
 
     /**
      * 取消约会
@@ -249,6 +253,18 @@ interface Api {
                            @Field("password") password: String,
                            @Field("privatePassword") privatePassword: String): Single<Response<String>>
 
+    /**
+     * @param photoPermission string 权限值(0 全部公开 1 红包（只有单张） 2 解锁相册(全部) 3 需要申请查看 4 不可查看)
+     * @param money string	金额（红包类型必填）
+     * @param money string	照片id（红包照片必填）
+     */
+    @FormUrlEncoded
+    @POST("users/setPhotoRight")
+    fun setPhotoPermission(@Field("token") token: String,
+                           @Field("photoRight") photoPermission: String,
+                           @Field("money") money: String,
+                           @Field("id") photoId: String): Single<Response<String>>
+
     @FormUrlEncoded
     @POST("users/other/listCareer")
     fun listCareer(@Field("token") token: String): Single<Response<List<Career>>>
@@ -266,7 +282,7 @@ interface Api {
     fun getUserInfo(@Field("token") token: String,
                     @Field("uid") uid: String,    //	用户uuid
                     @Field("latitude") latitude: String,
-                    @Field("longitude") longitude: String): Single<Response<UserInfo>>
+                    @Field("longitude") longitude: String): Single<Response<User>>
 
     @FormUrlEncoded
     @POST("report/report")

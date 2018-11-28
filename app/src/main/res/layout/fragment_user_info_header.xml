@@ -62,17 +62,15 @@
             android:id="@+id/address"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="深圳市"
             android:textColor="@color/white"
             android:textSize="@dimen/textsize_normal" />
 
         <TextView
-            android:id="@+id/age"
+            android:id="@+id/userAge"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginLeft="8dp"
             android:layout_marginRight="8dp"
-            android:text="24岁"
             android:textColor="@color/white"
             android:textSize="@dimen/textsize_normal" />
 
@@ -80,7 +78,6 @@
             android:id="@+id/job"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="CEO"
             android:textColor="@color/white"
             android:textSize="@dimen/textsize_small" />
 
@@ -94,7 +91,6 @@
             android:paddingTop="4dp"
             android:paddingRight="8dp"
             android:paddingBottom="4dp"
-            android:text="CEO"
             android:textColor="@color/white"
             android:textSize="@dimen/textsize_smaller" />
 
@@ -111,7 +107,6 @@
         android:drawableLeft="@drawable/ic_location_small"
         android:drawablePadding="5dp"
         android:gravity="center"
-        android:text="@string/distance_of_template"
         android:textColor="@color/white"
         android:textSize="@dimen/textsize_normal" />
 

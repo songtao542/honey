@@ -22,7 +22,6 @@ import com.snt.phoney.api.Api
 import com.snt.phoney.domain.model.AmountInfo
 import com.snt.phoney.domain.model.Response
 import com.snt.phoney.domain.model.User
-import com.snt.phoney.domain.model.UserInfo
 import com.snt.phoney.domain.repository.CacheRepository
 import com.snt.phoney.domain.repository.UserRepository
 import com.snt.phoney.utils.data.Constants
@@ -32,7 +31,11 @@ import javax.inject.Singleton
 
 @Singleton
 class UserRepositoryImpl @Inject constructor(private val cache: CacheRepository, private val api: Api) : UserRepository {
-    override fun listVisitor(token: String): Single<Response<List<UserInfo>>> {
+    override fun setPhotoPermission(token: String, photoPermission: Int, money: Double, photoId: String): Single<Response<String>> {
+        return api.setPhotoPermission(token, photoPermission.toString(), money.toString(), photoId)
+    }
+
+    override fun listVisitor(token: String): Single<Response<List<User>>> {
         return api.listVisitor(token)
     }
 
@@ -44,7 +47,7 @@ class UserRepositoryImpl @Inject constructor(private val cache: CacheRepository,
         return api.follow(token, uuid)
     }
 
-    override fun listFollow(token: String): Single<Response<List<UserInfo>>> {
+    override fun listFollow(token: String): Single<Response<List<User>>> {
         return api.listFollow(token)
     }
 
@@ -52,7 +55,7 @@ class UserRepositoryImpl @Inject constructor(private val cache: CacheRepository,
         return api.setFullUserInfo(token, height.toString(), weight.toInt().toString(), age.toString(), cup, cities, introduce, career, program, wechatAccount, nickname)
     }
 
-    override fun getUserInfo(token: String, uid: String, latitude: Double, longitude: Double): Single<Response<UserInfo>> {
+    override fun getUserInfo(token: String, uid: String, latitude: Double, longitude: Double): Single<Response<User>> {
         return api.getUserInfo(token, uid, latitude.toString(), longitude.toString())
     }
 
@@ -107,6 +110,10 @@ class UserRepositoryImpl @Inject constructor(private val cache: CacheRepository,
 //        return api.logout(username)
 //    }
 
+
+    override fun deleteUser(token: String): Single<Response<String>> {
+        return api.deleteUser(token)
+    }
 
     override var user: User?
         set(value) = cache.set(Constants.Cache.USER, value)

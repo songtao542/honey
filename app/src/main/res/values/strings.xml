@@ -128,7 +128,7 @@
     <string name="add_attention">关注对方</string>
     <string name="view_detail">查看详情</string>
     <string name="publish_time_template">发布时间 %1$s</string>
-    <string name="distance_of_template">距离你 %1$s</string>
+    <string name="distance_of_template">距离你%1$s</string>
     <string name="view_dating_tip">看看他发布的约会消息</string>
     <string name="view_dating">查看</string>
     <string name="publish_time">发布时间</string>
@@ -162,6 +162,12 @@
     <string name="unit_kg">kg</string>
     <string name="modify_success">修改成功</string>
     <string name="modify_failed">修改失败</string>
+    <string name="chat_limit1">对方聊天已设置为1分钟80蜜币</string>
+    <string name="introduce_label">个人介绍</string>
+    <string name="frequent_city_label">常在地点</string>
+    <string name="unfill">未留下只言片语</string>
+    <string name="unknown">未知</string>
+    <string name="program_label">约会节目</string>
 
 
 </resources>

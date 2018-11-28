@@ -1,6 +1,5 @@
 package com.snt.phoney.ui.main.square
 
-import android.util.Log
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import com.snt.phoney.domain.model.Dating
@@ -31,9 +30,10 @@ class SquareViewModel @Inject constructor(private val usecase: SquareUseCase) : 
         val token = usecase.user?.token ?: return null
         return usecase.location
                 .flatMap {
-                    Log.d("TTTT", "Lllllllllllllllllllllllllllllllll=>$it")
                     usecase.listRecommendDating(token, recommendPageIndex, dateType, distanceType, program, it.latitude, it.longitude)
                             .toObservable()
+                            .subscribeOn(Schedulers.io())
+                            .observeOn(AndroidSchedulers.mainThread())
                 }
                 .singleOrError()
                 .subscribeOn(Schedulers.io())

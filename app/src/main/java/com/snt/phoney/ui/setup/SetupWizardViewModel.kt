@@ -104,7 +104,7 @@ class SetupWizardViewModel @Inject constructor(private val application: Applicat
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribeBy {
-                    Log.d("TTTT", "setUserInfo==>$it")
+                    Log.d("TTTT", "setUser==>$it")
                     if (it.code == 200) {
                         val user = setupWizardUseCase.user?.copy(cities = cities)
                         if (user != null) {

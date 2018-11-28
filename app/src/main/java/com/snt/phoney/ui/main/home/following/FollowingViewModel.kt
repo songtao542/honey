@@ -5,7 +5,7 @@ import android.util.Log
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import com.snt.phoney.domain.model.Response
-import com.snt.phoney.domain.model.UserInfo
+import com.snt.phoney.domain.model.User
 import com.snt.phoney.domain.usecase.FollowListUseCase
 import io.reactivex.Single
 import io.reactivex.android.schedulers.AndroidSchedulers
@@ -16,7 +16,7 @@ import javax.inject.Inject
 
 class FollowingViewModel @Inject constructor(private val usecase: FollowListUseCase) : ViewModel() {
 
-    val users = MutableLiveData<List<UserInfo>>()
+    val users = MutableLiveData<List<User>>()
     val error = MutableLiveData<String>()
     var pageIndex: Int = 0
 

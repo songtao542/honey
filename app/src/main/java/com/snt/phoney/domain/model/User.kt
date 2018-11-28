@@ -16,7 +16,7 @@ import kotlinx.serialization.json.JSON
 @Serializable
 @TypeConverters(value = [Converter::class])
 data class User(
-        @PrimaryKey var id: String = "",
+        @PrimaryKey var id: Int = 0,
         var uuid: String? = null,
         var username: String? = null,
         @SerializedName(value = "nickName") var nickname: String? = null,
@@ -34,15 +34,18 @@ data class User(
         var career: String? = null,
         var portrait: String? = null,
         var introduce: String? = null,
-        var photo: String? = null,
-        var photoRight: String? = null,
+        @SerializedName(value = "photo") var photos: List<Photo>? = null,
+        @SerializedName(value = "photoRight") var photoPermission: Int = 0,
         @SerializedName(value = "account_wx") var wechatAccount: String? = null,
         @SerializedName(value = "pauthentication") var verified: String? = null,
         var token: String? = null,
         var open: Int = 0,
-        var price: Float = 0f,
+        var price: Double = 0.0,
         var state: Int = 0,
         var tag: String? = null,
+        var distance: Double = 0.0,
+        var program: String? = null,
+        @SerializedName(value = "isCare") var care: Boolean = false,
         @SerializedName(value = "cares") var followedSize: Int = 0,
         @SerializedName(value = "utime") var updateTime: Long = 0) : Parcelable {
 
@@ -77,6 +80,7 @@ data class User(
         get() {
             return cities?.map { it.name }?.joinToString(separator = " ") ?: city ?: ""
         }
+
 }
 
 enum class Sex(val value: Int) {
@@ -97,6 +101,17 @@ enum class Sex(val value: Int) {
 
 
 class Converter {
+
+
+    @TypeConverter
+    fun toPhotoList(value: String): List<Photo> {
+        return JSON.nonstrict.parse(Photo.serializer().list, value)
+    }
+
+    @TypeConverter
+    fun photoListToJson(list: List<Photo>): String {
+        return JSON.nonstrict.stringify(Photo.serializer().list, list)
+    }
 
     @TypeConverter
     fun toCityList(value: String): List<City> {

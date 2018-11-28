@@ -35,42 +35,51 @@
         </LinearLayout>
 
         <TextView
+            android:id="@+id/publicAlbum"
             android:layout_width="match_parent"
             android:layout_height="50dp"
+            android:background="@drawable/album_permission_setting_item_selector"
             android:gravity="center"
             android:paddingLeft="10dp"
             android:text="@string/album_permission_public"
-            android:textColor="@color/black"
+            android:textColor="@color/album_permission_setting_item_text_selector"
             android:textSize="@dimen/textsize_normal" />
 
         <TextView
+            android:id="@+id/needCharge"
             android:layout_width="match_parent"
             android:layout_height="50dp"
+            android:background="@drawable/album_permission_setting_item_selector"
             android:gravity="center"
             android:paddingLeft="10dp"
             android:text="@string/album_permission_need_pay"
-            android:textColor="@color/black"
+            android:textColor="@color/album_permission_setting_item_text_selector"
             android:textSize="@dimen/textsize_normal" />
 
         <TextView
+            android:id="@+id/needApply"
             android:layout_width="match_parent"
             android:layout_height="50dp"
+            android:background="@drawable/album_permission_setting_item_selector"
             android:gravity="center"
             android:paddingLeft="10dp"
             android:text="@string/album_permission_need_my_agree"
-            android:textColor="@color/black"
+            android:textColor="@color/album_permission_setting_item_text_selector"
             android:textSize="@dimen/textsize_normal" />
 
         <TextView
+            android:id="@+id/privateAlbum"
             android:layout_width="match_parent"
             android:layout_height="50dp"
+            android:background="@drawable/album_permission_setting_item_selector"
             android:gravity="center"
             android:paddingLeft="10dp"
             android:text="@string/album_permission_private"
-            android:textColor="@color/black"
+            android:textColor="@color/album_permission_setting_item_text_selector"
             android:textSize="@dimen/textsize_normal" />
 
         <Button
+            android:id="@+id/confirm"
             android:layout_width="match_parent"
             android:layout_height="50dp"
             android:background="@drawable/album_permission_setting_btn_selector"

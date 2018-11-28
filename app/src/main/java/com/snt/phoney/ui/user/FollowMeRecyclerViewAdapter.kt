@@ -11,14 +11,14 @@ import com.bumptech.glide.request.RequestOptions
 import com.snt.phoney.R
 import com.snt.phoney.base.CommonActivity
 import com.snt.phoney.base.Page
-import com.snt.phoney.domain.model.UserInfo
+import com.snt.phoney.domain.model.User
 import kotlinx.android.synthetic.main.fragment_followme.view.*
 
 /**
  */
 class FollowMeRecyclerViewAdapter(private val activity: CommonActivity) : RecyclerView.Adapter<FollowMeRecyclerViewAdapter.ViewHolder>() {
 
-    var data: List<UserInfo>? = null
+    var data: List<User>? = null
         set(value) {
             value?.let {
                 field = it
@@ -38,7 +38,7 @@ class FollowMeRecyclerViewAdapter(private val activity: CommonActivity) : Recycl
     override fun getItemCount(): Int = data?.size ?: 0
 
     inner class ViewHolder(val mView: View) : RecyclerView.ViewHolder(mView) {
-        fun setData(user: UserInfo) {
+        fun setData(user: User) {
             Glide.with(mView).load(user.portrait).apply(RequestOptions().circleCrop()).transition(DrawableTransitionOptions.withCrossFade()).into(mView.head)
             mView.nickname.text = user.nickname
             mView.selfDescription.text = user.introduce

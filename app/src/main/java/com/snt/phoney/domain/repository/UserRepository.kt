@@ -18,7 +18,6 @@ package com.snt.phoney.domain.repository
 import com.snt.phoney.domain.model.AmountInfo
 import com.snt.phoney.domain.model.Response
 import com.snt.phoney.domain.model.User
-import com.snt.phoney.domain.model.UserInfo
 import io.reactivex.Single
 
 interface UserRepository {
@@ -91,13 +90,18 @@ interface UserRepository {
     fun getUserInfo(token: String,
                     uid: String,    //	用户uuid
                     latitude: Double,
-                    longitude: Double): Single<Response<UserInfo>>
+                    longitude: Double): Single<Response<User>>
+
+    fun setPhotoPermission(token: String,
+                           photoPermission: Int,
+                           money: Double,
+                           photoId: String): Single<Response<String>>
 
     fun getUserAmountInfo(token: String): Single<Response<AmountInfo>>
 
 
-    fun listFollow(token: String): Single<Response<List<UserInfo>>>
-    fun listVisitor(token: String): Single<Response<List<UserInfo>>>
+    fun listFollow(token: String): Single<Response<List<User>>>
+    fun listVisitor(token: String): Single<Response<List<User>>>
 
     fun follow(token: String, uuid: String): Single<Response<Boolean>>
 
@@ -107,6 +111,7 @@ interface UserRepository {
 
     fun requestVerificationCode(phone: String): Single<Response<String>>
 
+    fun deleteUser(token: String): Single<Response<String>>
 
     var user: User?
 

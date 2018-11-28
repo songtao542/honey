@@ -17,10 +17,14 @@ package com.snt.phoney.base
 import android.app.Activity
 import android.content.Context
 import android.content.Intent
+import android.os.Bundle
 import android.view.MotionEvent
 import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
+import com.snt.phoney.R
+import com.snt.phoney.domain.model.Sex
+import com.snt.phoney.domain.repository.UserRepository
 import com.snt.phoney.extensions.autoCleared
 import com.snt.phoney.extensions.hideSoftKeyboard
 import dagger.android.DispatchingAndroidInjector
@@ -42,6 +46,9 @@ abstract class BaseActivity : AppCompatActivity(), HasSupportFragmentInjector {
     @Inject
     lateinit var viewModelFactory: ViewModelProvider.Factory
 
+    @Inject
+    lateinit var userRepository: UserRepository
+
     protected var disposeBag by autoCleared(CompositeDisposable())
 
     override fun supportFragmentInjector() = dispatchingAndroidInjector
@@ -51,9 +58,23 @@ abstract class BaseActivity : AppCompatActivity(), HasSupportFragmentInjector {
         return super.dispatchTouchEvent(ev)
     }
 
-    override fun onRequestPermissionsResult(requestCode: Int, permissions: Array<out String>, grantResults: IntArray) {
-        super.onRequestPermissionsResult(requestCode, permissions, grantResults)
-
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        if (onConfigureTheme()) {
+            when (Sex.from(userRepository.user?.sex ?: Sex.UNKNOWN.value)) {
+                Sex.MALE -> {
+                    setTheme(R.style.AppTheme_Male)
+                }
+                Sex.FEMALE -> {
+                    setTheme(R.style.AppTheme_Female)
+                }
+                else -> {
+                    setTheme(R.style.AppTheme_SexUnknown)
+                }
+            }
+        }
     }
+
+    open fun onConfigureTheme(): Boolean = true
 
 }

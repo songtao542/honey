@@ -3,7 +3,7 @@ package com.snt.phoney.domain.repository
 import com.snt.phoney.domain.model.Dating
 import com.snt.phoney.domain.model.DatingProgram
 import com.snt.phoney.domain.model.Response
-import com.snt.phoney.domain.model.UserInfo
+import com.snt.phoney.domain.model.User
 import io.reactivex.Single
 
 interface DatingRepository {
@@ -16,7 +16,7 @@ interface DatingRepository {
                       longitude: Double,
                       title: String,
                       location: String,
-                      program: String): Single<Response<List<UserInfo>>>
+                      program: String): Single<Response<List<User>>>
 
     /**
      * 取消约会

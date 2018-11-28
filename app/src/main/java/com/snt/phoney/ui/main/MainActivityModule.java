@@ -17,6 +17,8 @@ import com.snt.phoney.ui.main.square.SquareFragment;
 import com.snt.phoney.ui.main.square.SquareViewModel;
 import com.snt.phoney.ui.main.square.official.OfficialRecommendFragment;
 import com.snt.phoney.ui.main.square.popular.PopularRecommendFragment;
+import com.snt.phoney.ui.setup.BindPhoneFragment;
+import com.snt.phoney.ui.setup.BindPhoneViewModel;
 import com.snt.phoney.ui.share.ShareFragment;
 
 import androidx.lifecycle.ViewModel;
@@ -67,6 +69,16 @@ public abstract class MainActivityModule {
     @FragmentScope
     @ContributesAndroidInjector
     public abstract ShareFragment contributeShareFragment();
+
+    @FragmentScope
+    @ContributesAndroidInjector
+    public abstract BindPhoneFragment contributeBindPhoneFragment();
+
+    @Binds
+    @IntoMap
+    @ActivityScope
+    @ViewModelKey(BindPhoneViewModel.class)
+    public abstract ViewModel bindBindPhoneViewModel(BindPhoneViewModel viewModel);
 
     @Binds
     @IntoMap

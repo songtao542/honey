@@ -5,12 +5,10 @@ import android.content.Intent
 import android.os.Bundle
 import com.snt.phoney.R
 import com.snt.phoney.base.BaseActivity
-import com.snt.phoney.domain.repository.UserRepository
 import com.snt.phoney.extensions.addFragmentSafely
 import com.snt.phoney.extensions.colorOf
 import com.snt.phoney.extensions.forwardOnActivityResult
 import com.snt.phoney.extensions.setStatusBarColor
-import javax.inject.Inject
 
 class SignupActivity : BaseActivity() {
 
@@ -33,6 +31,10 @@ class SignupActivity : BaseActivity() {
     }
 
     private fun handleIntent(intent: Intent) {
+    }
+
+    override fun onConfigureTheme(): Boolean {
+        return false
     }
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {

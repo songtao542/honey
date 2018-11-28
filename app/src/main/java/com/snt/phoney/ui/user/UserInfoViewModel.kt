@@ -3,7 +3,7 @@ package com.snt.phoney.ui.user
 import android.util.Log
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
-import com.snt.phoney.domain.model.UserInfo
+import com.snt.phoney.domain.model.User
 import com.snt.phoney.domain.usecase.GetUserInfoUseCase
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.disposables.Disposable
@@ -13,11 +13,11 @@ import javax.inject.Inject
 
 class UserInfoViewModel @Inject constructor(private val usecase: GetUserInfoUseCase) : ViewModel() {
 
-    val userInfo = MutableLiveData<UserInfo>()
+    val userInfo = MutableLiveData<User>()
     val error = MutableLiveData<String>()
 
     fun getUserInfo(uuid: String): Disposable? {
-        Log.d("TTTT", "getUserInfo ---------getUserInfo-------- getUserInfo->$uuid")
+        Log.d("TTTT", "getUser ---------getUser-------- getUser->$uuid")
         val token = usecase.user?.token ?: return null
         return usecase.getLocation()
                 .flatMap {
@@ -26,11 +26,11 @@ class UserInfoViewModel @Inject constructor(private val usecase: GetUserInfoUseC
                             .subscribeOn(Schedulers.io())
                             .observeOn(AndroidSchedulers.mainThread())
                 }
-                .singleOrError()
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribeBy(
-                        onSuccess = {
+                        onNext = {
+                            Log.d("TTTT", "success ---------success-------- success->$it")
                             if (it.code == 200) {
                                 userInfo.value = it.data
                             }

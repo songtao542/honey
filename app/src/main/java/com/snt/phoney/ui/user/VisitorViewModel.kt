@@ -4,7 +4,6 @@ import android.util.Log
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import com.snt.phoney.domain.model.User
-import com.snt.phoney.domain.model.UserInfo
 import com.snt.phoney.domain.usecase.GetVisitorUseCase
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.disposables.Disposable
@@ -16,7 +15,7 @@ class VisitorViewModel @Inject constructor(private val usecase: GetVisitorUseCas
 
     val user: User? = usecase.user
 
-    val visitors = MutableLiveData<List<UserInfo>>()
+    val visitors = MutableLiveData<List<User>>()
 
     fun listVisitor(): Disposable? {
         val token = usecase.user?.token ?: return null

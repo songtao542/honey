@@ -4,6 +4,7 @@ import android.util.Log
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import com.snt.phoney.domain.model.AmountInfo
+import com.snt.phoney.domain.model.PhotoPermission
 import com.snt.phoney.domain.usecase.GetUserInfoUseCase
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.disposables.Disposable
@@ -28,5 +29,23 @@ class MineViewModel @Inject constructor(private val usecase: GetUserInfoUseCase)
                         amountInfo.value = it.data
                     }
                 }
+    }
+
+    fun setPhotoPermission(photoPermission: PhotoPermission, money: Double, photoId: String): Disposable? {
+        val token = usecase.user?.token ?: return null
+        return usecase.setPhotoPermission(token, photoPermission.value, money, photoId)
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribeBy {
+
+                }
+    }
+
+    fun signOut() {
+        /***********test**************/
+        val token = usecase.user?.token ?: ""
+        usecase.deleteUser(token)
+        /***********test**************/
+        usecase.user = null
     }
 }

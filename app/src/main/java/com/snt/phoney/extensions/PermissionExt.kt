@@ -21,11 +21,19 @@ val permissions = arrayOf(
         Manifest.permission.ACCESS_FINE_LOCATION
 )
 
-fun Context.checkAppPermission(): Boolean {
+fun Context.checkAppPermission(vararg permissions: String): Boolean {
     var requestList = ArrayList<String>()
-    for (permission in permissions) {
-        if (PackageManager.PERMISSION_GRANTED != ContextCompat.checkSelfPermission(this, permission)) {
-            requestList.add(permission)
+    if (permissions.isNotEmpty()) {
+        for (permission in permissions) {
+            if (PackageManager.PERMISSION_GRANTED != ContextCompat.checkSelfPermission(this, permission)) {
+                requestList.add(permission)
+            }
+        }
+    } else {
+        for (permission in com.snt.phoney.extensions.permissions) {
+            if (PackageManager.PERMISSION_GRANTED != ContextCompat.checkSelfPermission(this, permission)) {
+                requestList.add(permission)
+            }
         }
     }
     if (requestList.isEmpty()) {

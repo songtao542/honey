@@ -68,7 +68,8 @@
                 android:layout_height="wrap_content"
                 android:background="@drawable/underline_gray"
                 android:orientation="horizontal"
-                android:paddingTop="2dp">
+                android:paddingBottom="10dp"
+                android:paddingTop="12dp">
 
                 <LinearLayout
                     android:layout_width="0dp"
@@ -87,7 +88,6 @@
                         android:layout_height="50dp"
                         android:background="@drawable/user_info_circle_bg"
                         android:gravity="center"
-                        android:text="175"
                         android:textColor="@color/black"
                         android:textSize="@dimen/textsize_normal" />
 
@@ -117,7 +117,6 @@
                         android:layout_height="50dp"
                         android:background="@drawable/user_info_circle_bg"
                         android:gravity="center"
-                        android:text="28"
                         android:textColor="@color/black"
                         android:textSize="@dimen/textsize_normal" />
 
@@ -143,16 +142,16 @@
 
 
                     <TextView
-                        android:id="@+id/cup"
+                        android:id="@+id/cupWeight"
                         android:layout_width="50dp"
                         android:layout_height="50dp"
                         android:background="@drawable/user_info_circle_bg"
                         android:gravity="center"
-                        android:text="F"
                         android:textColor="@color/black"
                         android:textSize="@dimen/textsize_normal" />
 
                     <TextView
+                        android:id="@+id/cupWeightLabel"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginTop="3dp"
@@ -183,6 +182,7 @@
 
 
                 <TextView
+                    android:id="@+id/chatLimit"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center_vertical"
@@ -193,10 +193,11 @@
                     android:paddingTop="8dp"
                     android:paddingRight="10dp"
                     android:paddingBottom="8dp"
-                    android:text="对帮聊天已设置为1分钟80密闭 "
+                    android:text="@string/chat_limit1"
                     android:textColor="@color/black" />
 
                 <Button
+                    android:id="@+id/chatWith"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center_vertical"
@@ -214,36 +215,18 @@
             </LinearLayout>
 
             <com.snt.phoney.widget.FlowLayout
+                android:id="@+id/photos"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="10dp"
                 android:layout_marginTop="10dp"
                 android:layout_marginRight="10dp"
-                app:alignItems="center"
-                app:column="4"
-                app:justifyContent="space_around"
-                app:space="5dp">
+                app:alignContent="flex_start"
+                app:alignItems="flex_start"
+                app:flexWrap="wrap"
+                app:justifyContent="flex_start"
+                app:square="true">
 
-                <com.snt.phoney.widget.SquareImageView
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:scaleType="centerCrop"
-                    android:src="@mipmap/tem" />
-
-                <com.snt.phoney.widget.SquareImageView
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:scaleType="centerCrop"
-                    android:src="@mipmap/tem" />
-
-                <com.snt.phoney.widget.SquareImageView
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:scaleType="centerCrop"
-                    android:src="@mipmap/tem" />
             </com.snt.phoney.widget.FlowLayout>
 
             <LinearLayout
@@ -272,6 +255,7 @@
                     android:textColor="@color/black" />
 
                 <Button
+                    android:id="@+id/viewDating"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center_vertical"
@@ -301,17 +285,18 @@
                     android:paddingTop="10dp"
                     android:paddingRight="10dp"
                     android:paddingBottom="10dp"
-                    android:text="个人介绍"
+                    android:text="@string/introduce_label"
                     android:textSize="@dimen/textsize_normal" />
 
                 <TextView
+                    android:id="@+id/introduce"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:paddingLeft="10dp"
                     android:paddingTop="10dp"
                     android:paddingRight="10dp"
                     android:paddingBottom="10dp"
-                    android:text="吃货，身材棒棒的"
+                    android:text="@string/unfill"
                     android:textSize="@dimen/textsize_small" />
 
                 <View
@@ -326,16 +311,17 @@
                     android:paddingTop="10dp"
                     android:paddingRight="10dp"
                     android:paddingBottom="10dp"
-                    android:text="常在地点" />
+                    android:text="@string/frequent_city_label" />
 
                 <TextView
+                    android:id="@+id/frequentCity"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:paddingLeft="10dp"
                     android:paddingTop="10dp"
                     android:paddingRight="10dp"
                     android:paddingBottom="10dp"
-                    android:text="深圳，广州，武汉，苏州"
+                    android:text="@string/unknown"
                     android:textSize="@dimen/textsize_small" />
 
                 <View
@@ -350,50 +336,17 @@
                     android:paddingTop="10dp"
                     android:paddingRight="10dp"
                     android:paddingBottom="10dp"
-                    android:text="约会节目"
+                    android:text="@string/program_label"
                     android:textSize="@dimen/textsize_normal" />
 
                 <LinearLayout
+                    android:id="@+id/programContainer"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:paddingRight="10dp"
+                    android:orientation="horizontal"
                     android:paddingBottom="10dp">
 
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_marginLeft="10dp"
-                        android:background="@drawable/user_info_plan_bg"
-                        android:paddingLeft="10dp"
-                        android:paddingTop="6dp"
-                        android:paddingRight="10dp"
-                        android:paddingBottom="6dp"
-                        android:text="吃饭"
-                        android:textSize="@dimen/textsize_small" />
-
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_marginLeft="10dp"
-                        android:background="@drawable/user_info_plan_bg"
-                        android:paddingLeft="10dp"
-                        android:paddingTop="6dp"
-                        android:paddingRight="10dp"
-                        android:paddingBottom="6dp"
-                        android:text="唱歌"
-                        android:textSize="@dimen/textsize_small" />
-
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_marginLeft="10dp"
-                        android:background="@drawable/user_info_plan_bg"
-                        android:paddingLeft="10dp"
-                        android:paddingTop="6dp"
-                        android:paddingRight="10dp"
-                        android:paddingBottom="6dp"
-                        android:text="逛街"
-                        android:textSize="@dimen/textsize_small" />
                 </LinearLayout>
             </LinearLayout>
 

@@ -21,6 +21,7 @@ object Constants {
     object Extra {
         const val USER = "user"
         const val USER_ID = "user_id"
+        const val PERMISSION = "permission"
     }
 
     object Preference {

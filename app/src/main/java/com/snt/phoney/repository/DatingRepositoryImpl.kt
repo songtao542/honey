@@ -4,7 +4,7 @@ import com.snt.phoney.api.Api
 import com.snt.phoney.domain.model.Dating
 import com.snt.phoney.domain.model.DatingProgram
 import com.snt.phoney.domain.model.Response
-import com.snt.phoney.domain.model.UserInfo
+import com.snt.phoney.domain.model.User
 import com.snt.phoney.domain.repository.DatingRepository
 import io.reactivex.Single
 import javax.inject.Inject
@@ -14,7 +14,7 @@ class DatingRepositoryImpl @Inject constructor(private val api: Api) : DatingRep
         return api.follow(token, uuid)
     }
 
-    override fun publishDating(token: String, content: String, city: String, days: String, latitude: Double, longitude: Double, title: String, location: String, program: String): Single<Response<List<UserInfo>>> {
+    override fun publishDating(token: String, content: String, city: String, days: String, latitude: Double, longitude: Double, title: String, location: String, program: String): Single<Response<List<User>>> {
         return api.publishDating(token, content, city, days, latitude.toString(), longitude.toString(), title, location, program)
     }
 

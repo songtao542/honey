@@ -16,6 +16,7 @@ import com.snt.phoney.domain.usecase.PLATFORM_WEIBO
 import com.snt.phoney.extensions.addFragmentSafely
 import com.snt.phoney.extensions.disposedBy
 import com.snt.phoney.extensions.snackbar
+import com.snt.phoney.extensions.toast
 import com.snt.phoney.ui.main.MainActivity
 import com.snt.phoney.ui.setup.SetupWizardActivity
 import kotlinx.android.synthetic.main.fragment_startup.*
@@ -38,8 +39,6 @@ class StartupFragment : BaseFragment() {
         qqViewModel = ViewModelProviders.of(this, viewModelFactory).get(QQViewModel::class.java)
         weiboViewModel = ViewModelProviders.of(this, viewModelFactory).get(WeiboViewModel::class.java)
         wxViewModel = ViewModelProviders.of(this, viewModelFactory).get(WxViewModel::class.java)
-
-        Log.d("TTTT", "xxxxxxxx11111111111xxxxxxxxxxxwxViewMode>$wxViewModel")
 
         signin.setOnClickListener {
             activity?.addFragmentSafely(R.id.containerLayout, SignupFragment.newInstance(), "signin")
@@ -86,7 +85,6 @@ class StartupFragment : BaseFragment() {
                         PLATFORM_WEIBO,
                         it.name ?: "",
                         it.avatarLarge ?: "")?.disposedBy(disposeBag)
-
             }
         })
 
@@ -111,7 +109,8 @@ class StartupFragment : BaseFragment() {
 
         viewModel.user.observe(this, Observer { it ->
             it?.let { user ->
-                snackbar("注册成功")
+                Log.d("TTTT", "success user---------===================>$user")
+                toast("注册成功")
                 context?.let { context -> startActivity(SetupWizardActivity.newIntent(context, user)) }
                 activity?.finish()
                 return@let

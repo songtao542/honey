@@ -15,14 +15,8 @@ import com.snt.phoney.R
 import com.snt.phoney.base.CommonActivity
 import com.snt.phoney.base.Page
 import com.snt.phoney.domain.model.AmountInfo
-import com.snt.phoney.ui.about.AboutActivity
 import com.snt.phoney.ui.dating.DatingActivity
-import com.snt.phoney.ui.privacy.PrivacyActivity
-import com.snt.phoney.ui.report.ReportActivity
-import com.snt.phoney.ui.setup.BindPhoneFragment
-import com.snt.phoney.ui.share.ShareFragment
 import com.snt.phoney.ui.user.UserActivity
-import com.snt.phoney.ui.wallet.WalletActivity
 import com.snt.phoney.widget.PhotoWallFactory
 import kotlinx.android.synthetic.main.fragment_mine_footer.view.*
 import kotlinx.android.synthetic.main.fragment_mine_list_header.view.*
@@ -38,6 +32,16 @@ class MineRecyclerViewAdapter(val fragment: Fragment) : RecyclerView.Adapter<Rec
 
     private val settings = ArrayList<Setting>()
     private val photos = ArrayList<String>()
+    private var onSettingItemClickListener: OnSettingItemClickListener? = null
+    private var onSignOutClickListener: OnSignOutClickListener? = null
+
+    fun setOnSettingItemClickListener(onSettingItemClickListener: OnSettingItemClickListener) {
+        this.onSettingItemClickListener = onSettingItemClickListener
+    }
+
+    fun setOnSignOutClickListener(onSignOutClickListener: OnSignOutClickListener) {
+        this.onSignOutClickListener = onSignOutClickListener
+    }
 
     var amountInfo: AmountInfo? = null
         set(value) {
@@ -169,7 +173,7 @@ class MineRecyclerViewAdapter(val fragment: Fragment) : RecyclerView.Adapter<Rec
         private val mTitle: TextView = mView.title
         private val mInfo: TextView = mView.info
         private val mNews: View = mView.news
-        private var setting: Setting? = null
+        private lateinit var setting: Setting
 
         fun setData(setting: Setting) {
             this.setting = setting
@@ -188,47 +192,25 @@ class MineRecyclerViewAdapter(val fragment: Fragment) : RecyclerView.Adapter<Rec
         }
 
         override fun onClick(v: View?) {
-            setting?.let { setting ->
-                when (setting.icon) {
-                    R.drawable.ic_photo -> {
-//                        context.startActivity(CommonActivity.newIntent(context, Page.SET_ALBUM_PERMISSION))
-                        AlbumPermissionSettingFragment.newInstance().show(fragment.childFragmentManager, "album_setting")
-                    }
-                    R.drawable.ic_dating -> {
-                        context.startActivity(CommonActivity.newIntent<DatingActivity>(context, Page.VIEW_DATING_LIST))
-                    }
-                    R.drawable.ic_wallet -> {
-                        context.startActivity(CommonActivity.newIntent<WalletActivity>(context, Page.VIEW_MY_WALLET))
-                    }
-                    R.drawable.ic_privacy -> {
-                        context.startActivity(CommonActivity.newIntent<PrivacyActivity>(context, Page.CREATE_PRIVACY_PASS))
-                    }
-                    R.drawable.ic_bind_phone -> {
-                        BindPhoneFragment.newInstance().show(fragment.childFragmentManager, "bindPhone")
-                    }
-                    R.drawable.ic_share -> {
-                        ShareFragment.newInstance().show(fragment.childFragmentManager, "share")
-                    }
-                    R.drawable.ic_user_protocol -> {
-                    }
-                    R.drawable.ic_clear_cache -> {
-                        context.startActivity(CommonActivity.newIntent<ReportActivity>(context, Page.CREATE_REPORT))
-                    }
-                    R.drawable.ic_about -> {
-                        context.startActivity(CommonActivity.newIntent<AboutActivity>(context, Page.VIEW_ABOUT))
-                    }
-                }
-            }
+            onSettingItemClickListener?.onSettingItemClick(setting)
         }
     }
 
     inner class FooterViewHolder(private val mView: View) : RecyclerView.ViewHolder(mView) {
         init {
             mView.signout.setOnClickListener {
-
+                onSignOutClickListener?.onSignOutClick()
             }
         }
     }
+}
+
+interface OnSettingItemClickListener {
+    fun onSettingItemClick(setting: Setting)
+}
+
+interface OnSignOutClickListener {
+    fun onSignOutClick()
 }
 
 
