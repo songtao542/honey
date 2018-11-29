@@ -16,13 +16,11 @@ import com.amap.api.maps.model.LatLng
 import com.amap.api.maps.model.MarkerOptions
 import com.amap.api.services.core.LatLonPoint
 import com.amap.api.services.core.PoiItem
-import com.amap.api.services.geocoder.GeocodeResult
-import com.amap.api.services.geocoder.GeocodeSearch
-import com.amap.api.services.geocoder.RegeocodeQuery
-import com.amap.api.services.geocoder.RegeocodeResult
+import com.amap.api.services.geocoder.*
 import com.amap.api.services.poisearch.PoiResult
 import com.amap.api.services.poisearch.PoiSearch
 import com.snt.phoney.domain.model.PoiAddress
+import com.snt.phoney.domain.model.Position
 import javax.inject.Inject
 
 
@@ -152,7 +150,7 @@ class AMapProxy @Inject constructor(val context: Context) : MapProxy {
 
     override fun searchPoi(keyword: String, location: Location): LiveData<List<PoiAddress>> {
         val result = MutableLiveData<List<PoiAddress>>()
-        val poiSearchQuery = PoiSearch.Query("充电桩", "")
+        val poiSearchQuery = PoiSearch.Query(keyword, "")
         val poiSearch = PoiSearch(context, poiSearchQuery)
         poiSearch.setOnPoiSearchListener(object : PoiSearch.OnPoiSearchListener {
             override fun onPoiSearched(pageResult: PoiResult?, errorCode: Int) {
@@ -185,4 +183,28 @@ fun AMapLocation.description(): String {
 }
 
 
+fun RegeocodeAddress.toPoiAddress(): PoiAddress {
+    return PoiAddress(
+            country = country,
+            province = province,
+            district = district,
+            city = city,
+            street = streetNumber?.street,
+            streetNumber = streetNumber?.number,
+            address = formatAddress
+    )
+}
 
+fun PoiItem.toPoiAddress(): PoiAddress {
+    return PoiAddress(
+            title = title,
+            distance = distance.toDouble(),
+            position = if (latLonPoint != null) Position(latLonPoint.latitude, latLonPoint.longitude) else null,
+            entrancePosition = if (enter != null) Position(enter.latitude, enter.longitude) else null,
+            exitPosition = if (exit != null) Position(exit.latitude, exit.longitude) else null,
+            tel = tel,
+            province = provinceName,
+            city = cityName,
+            street = snippet,
+            postalCode = postcode)
+}

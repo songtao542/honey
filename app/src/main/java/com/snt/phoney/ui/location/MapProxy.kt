@@ -68,5 +68,12 @@ object MapLocationFactory {
         }
     }
 
+    @JvmStatic
+    fun create(context: Context, mapView: TextureMapView): MapProxy {
+        return AMapProxy(context.applicationContext).apply {
+            initialize(mapView)
+        }
+    }
+
 }
 

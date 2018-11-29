@@ -7,6 +7,7 @@ import androidx.lifecycle.ViewModelProviders
 import com.snt.phoney.R
 import com.snt.phoney.base.BaseFragment
 import com.snt.phoney.base.CommonActivity
+import com.snt.phoney.ui.location.LocationPicker
 import com.snt.phoney.ui.location.LocationPickerFragment
 import com.snt.phoney.widget.PhotoFlowAdapter
 import kotlinx.android.synthetic.main.fragment_dating_create.*
@@ -37,7 +38,7 @@ class CreateDatingFragment : BaseFragment() {
 
         selectDatingAddress.setOnClickListener {
             activity?.let { activity ->
-                (activity as CommonActivity).addFragmentSafely(LocationPickerFragment.newInstance(), "location_picker", addToBackStack = true)
+                (activity as CommonActivity).addFragmentSafely(LocationPicker.newInstance(), "location_picker", addToBackStack = true)
             }
         }
         selectDatingTime.setOnClickListener {

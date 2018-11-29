@@ -14,12 +14,11 @@
         android:layout_height="wrap_content"
         android:gravity="center_vertical"
         android:paddingLeft="10dp"
-        android:paddingTop="14dp"
+        android:paddingTop="10dp"
         android:paddingRight="10dp"
-        android:paddingBottom="12dp"
-        android:text="深圳人才公园"
+        android:paddingBottom="5dp"
         android:textColor="@color/black"
-        android:textSize="@dimen/textsize_largest" />
+        android:textSize="@dimen/textsize_large" />
 
     <TextView
         android:id="@+id/address"
@@ -30,8 +29,7 @@
         android:minHeight="40dp"
         android:paddingLeft="10dp"
         android:paddingRight="10dp"
-        android:paddingBottom="14dp"
-        android:text="深圳市南山区前海湾海德三道航天科技广场"
+        android:paddingBottom="10dp"
         android:textColor="@color/dark_gray"
         android:textSize="@dimen/textsize_normal" />
 

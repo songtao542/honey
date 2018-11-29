@@ -66,29 +66,3 @@ class PoiSearcher @Inject constructor(private val application: Application) {
         return result
     }
 }
-
-fun RegeocodeAddress.toPoiAddress(): PoiAddress {
-    return PoiAddress(
-            country = country,
-            province = province,
-            district = district,
-            city = city,
-            street = streetNumber?.street,
-            streetNumber = streetNumber?.number,
-            address = formatAddress
-    )
-}
-
-fun PoiItem.toPoiAddress(): PoiAddress {
-    return PoiAddress(
-            title = title,
-            distance = distance.toDouble(),
-            position = if (latLonPoint != null) Position(latLonPoint.latitude, latLonPoint.longitude) else null,
-            entrancePosition = if (enter != null) Position(enter.latitude, enter.longitude) else null,
-            exitPosition = if (exit != null) Position(exit.latitude, exit.longitude) else null,
-            tel = tel,
-            province = provinceName,
-            city = cityName,
-            street = snippet,
-            postalCode = postcode)
-}

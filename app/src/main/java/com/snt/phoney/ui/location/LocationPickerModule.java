@@ -5,6 +5,7 @@ import com.snt.phoney.di.FragmentScope;
 import com.snt.phoney.di.ViewModelKey;
 
 import androidx.lifecycle.ViewModel;
+
 import dagger.Binds;
 import dagger.Module;
 import dagger.android.ContributesAndroidInjector;
@@ -16,6 +17,10 @@ public abstract class LocationPickerModule {
     @FragmentScope
     @ContributesAndroidInjector
     public abstract LocationPickerFragment contributeLocationPickerFragment();
+
+    @FragmentScope
+    @ContributesAndroidInjector
+    public abstract LocationPicker contributeLocationPicker();
 
     @Binds
     @IntoMap
