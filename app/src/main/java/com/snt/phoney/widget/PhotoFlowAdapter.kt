@@ -1,9 +1,9 @@
 package com.snt.phoney.widget
 
 import android.content.Context
-import android.util.Log
 import android.view.Gravity
 import android.view.View
+import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.LinearLayout
 import android.widget.LinearLayout.LayoutParams
@@ -13,8 +13,10 @@ import com.bumptech.glide.Glide
 import com.snt.phoney.R
 import com.snt.phoney.extensions.colorOf
 import com.snt.phoney.extensions.dip
+import java.util.*
 
 class PhotoFlowAdapter(private val context: Context) : FlowLayout.ViewAdapter {
+
 
     enum class AddButtonStyle {
         BORDER,
@@ -59,14 +61,25 @@ class PhotoFlowAdapter(private val context: Context) : FlowLayout.ViewAdapter {
         return this
     }
 
+    private val cache = ArrayDeque<ImageView>()
+    private var cachedAdd: View? = null
+
     private fun createImageView(url: String): View {
-        var imageView = ImageView(context)
+        var imageView = if (cache.size > 0) cache.pop() else ImageView(context) //ImageView(context)//
         imageView.scaleType = ImageView.ScaleType.CENTER_CROP
         Glide.with(context).load(url).into(imageView)
         return imageView
     }
 
     private fun createLastAdd(): View {
+        cachedAdd?.let {
+            val alp = it.layoutParams
+            if (alp is ViewGroup.MarginLayoutParams) {
+                alp.rightMargin = 0
+            }
+            cachedAdd!!.layoutParams = alp
+            return cachedAdd!!
+        }
         val add = LinearLayout(context)
         if (addStyle == AddButtonStyle.SOLID) {
             add.setBackgroundColor(context.colorOf(R.color.photo_wall_add))
@@ -126,6 +139,14 @@ class PhotoFlowAdapter(private val context: Context) : FlowLayout.ViewAdapter {
             }
         }
         return createImageView(mUrls!![index])
+    }
+
+    override fun onRecycleView(view: View) {
+        if (view is ImageView) {
+            cache.add(view)
+        } else {
+            cachedAdd = view
+        }
     }
 
     override fun getItemCount(): Int {

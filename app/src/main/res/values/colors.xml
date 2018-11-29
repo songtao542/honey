@@ -40,8 +40,9 @@
     <color name="recommend_divider_bg">#aaaaaa</color>
     <color name="recommend_list_bg">#dddddd</color>
     <color name="gray">#aaaaaa</color>
-    <color name="black">#000000</color>
+    <color name="dark_gray">#888888</color>
     <color name="light_gray">#eeeeee</color>
+    <color name="black">#000000</color>
     <color name="underline">#999999</color>
     <color name="gray_underline">#e5e5e7</color>
     <color name="dark">#343434</color>
@@ -82,6 +83,9 @@
     <color name="friend_tag_more_normal">#4a4a4a</color>
     <color name="picker_title">#e5e5e7</color>
     <color name="bind_phone_title">#f8e71c</color>
+    <color name="location_picker_search_bg">#ddffffff</color>
+    <color name="location_picker_my_location">#eeffffff</color>
+    <color name="location_picker_my_location_pressed">#eedddddd</color>
 
 
 </resources>

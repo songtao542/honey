@@ -28,6 +28,7 @@ import kotlinx.android.synthetic.main.fragment_user_info_header.*
 class UserInfoFragment : BaseFragment() {
 
     companion object {
+        @JvmStatic
         fun newInstance(arguments: Bundle? = null) = UserInfoFragment().apply {
             this.arguments = arguments
         }

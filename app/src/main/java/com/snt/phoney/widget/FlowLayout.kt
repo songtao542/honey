@@ -79,6 +79,9 @@ class FlowLayout : FlexboxLayout {
 
     fun notifyAdapterSizeChanged() {
         viewAdapter?.let {
+            forEach { view ->
+                it.onRecycleView(view)
+            }
             removeAllViews()
             for (index in 0 until it.getItemCount()) {
                 val child = it.create(index)
@@ -97,6 +100,7 @@ class FlowLayout : FlexboxLayout {
     interface ViewAdapter {
         fun create(index: Int): View
         fun getItemCount(): Int
+        fun onRecycleView(view: View)
     }
 }
 

@@ -15,6 +15,7 @@ import kotlinx.android.synthetic.main.fragment_vip.*
 class VipFragment : BaseFragment() {
 
     companion object {
+        @JvmStatic
         fun newInstance(arguments: Bundle? = null) = VipFragment().apply {
             this.arguments = arguments
         }

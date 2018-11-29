@@ -21,6 +21,7 @@ import kotlinx.android.synthetic.main.fragment_edit_user.*
 class EditUserFragment : BaseFragment() {
 
     companion object {
+        @JvmStatic
         fun newInstance(arguments: Bundle? = null) = EditUserFragment().apply {
             this.arguments = arguments
         }

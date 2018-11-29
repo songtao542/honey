@@ -6,6 +6,7 @@ import com.snt.phoney.ui.about.AboutFragment
 import com.snt.phoney.ui.dating.create.CreateDatingFragment
 import com.snt.phoney.ui.dating.detail.DatingDetailFragment
 import com.snt.phoney.ui.dating.list.DatingListFragment
+import com.snt.phoney.ui.location.LocationPickerFragment
 import com.snt.phoney.ui.main.mine.AlbumPermissionSettingFragment
 import com.snt.phoney.ui.privacy.CreateLockFragment
 import com.snt.phoney.ui.report.ReportFragment
@@ -35,6 +36,8 @@ enum class Page {
     VIEW_ABOUT,
     SET_ALBUM_PERMISSION,
     CREATE_PRIVACY_PASS,
+
+    LOCATION_PICKER
 }
 
 class FragmentFactory {
@@ -57,6 +60,8 @@ class FragmentFactory {
                 Page.VIEW_ABOUT.ordinal -> AboutFragment.newInstance(arguments)
                 Page.SET_ALBUM_PERMISSION.ordinal -> AlbumPermissionSettingFragment.newInstance(arguments)
                 Page.CREATE_PRIVACY_PASS.ordinal -> CreateLockFragment.newInstance(arguments)
+
+                Page.LOCATION_PICKER.ordinal -> LocationPickerFragment.newInstance(arguments)
 
 
                 else -> Fragment()

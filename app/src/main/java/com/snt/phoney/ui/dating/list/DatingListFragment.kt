@@ -17,6 +17,7 @@ import kotlinx.android.synthetic.main.fragment_dating_list.*
 class DatingListFragment : BaseFragment() {
 
     companion object {
+        @JvmStatic
         fun newInstance(arguments: Bundle? = null) = DatingListFragment().apply {
             this.arguments = arguments
         }

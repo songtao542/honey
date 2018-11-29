@@ -13,6 +13,7 @@ import kotlinx.android.synthetic.main.fragment_create_lock.*
 class CreateLockFragment : BaseFragment() {
 
     companion object {
+        @JvmStatic
         fun newInstance(arguments: Bundle? = null) = CreateLockFragment().apply {
             this.arguments = arguments
         }

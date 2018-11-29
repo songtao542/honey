@@ -110,6 +110,7 @@ dependencies {
     implementation deps.androidx.lifecycle_viewmodel_ktx
     implementation deps.androidx.lifecycle_livedata
     implementation deps.androidx.lifecycle_runtime
+    implementation 'androidx.legacy:legacy-support-v4:1.0.0'
     kapt deps.androidx.lifecycle_compiler
     implementation deps.androidx.lifecycle_common_java8
     implementation deps.androidx.lifecycle_reactivestreams

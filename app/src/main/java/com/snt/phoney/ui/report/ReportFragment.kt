@@ -14,6 +14,7 @@ import kotlinx.android.synthetic.main.fragment_report.*
 class ReportFragment : BaseFragment() {
 
     companion object {
+        @JvmStatic
         fun newInstance(arguments: Bundle? = null) = ReportFragment().apply {
             this.arguments = arguments
         }

@@ -1,4 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
+
+
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
@@ -20,183 +22,188 @@
         app:title="发布约会信息"
         app:titleTextColor="@color/white" />
 
-    <LinearLayout
+    <ScrollView
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="vertical">
+        android:layout_height="wrap_content">
 
-        <FrameLayout
-            android:id="@+id/selectDatingAddress"
-            android:layout_width="match_parent"
-            android:layout_height="@dimen/setting_item_height"
-            android:layout_marginTop="10dp"
-            android:background="@color/setting_item_bg_color"
-            android:paddingStart="@dimen/content_padding_start"
-            android:paddingEnd="@dimen/content_padding_end">
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="match_parent"
-                android:gravity="center_vertical"
-                android:text="@string/dating_address"
-                android:textColor="@android:color/black"
-                android:textSize="@dimen/textsize_normal" />
-
-            <TextView
-                android:id="@+id/datingAddress"
-                android:layout_width="wrap_content"
-                android:layout_height="match_parent"
-                android:layout_gravity="right"
-                android:gravity="center_vertical"
-                android:text="@string/select_dating_address"
-                android:textColor="@android:color/darker_gray"
-                android:textSize="@dimen/textsize_normal" />
-        </FrameLayout>
-
-        <View
-            android:layout_width="match_parent"
-            android:layout_height="@dimen/setting_item_divider_height"
-            android:background="@color/setting_item_divider_color" />
-
-        <FrameLayout
-            android:id="@+id/selectDatingTime"
-            android:layout_width="match_parent"
-            android:layout_height="@dimen/setting_item_height"
-            android:background="@color/setting_item_bg_color"
-            android:paddingStart="@dimen/content_padding_start"
-            android:paddingEnd="@dimen/content_padding_end">
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="match_parent"
-                android:gravity="center_vertical"
-                android:text="@string/dating_time"
-                android:textColor="@android:color/black"
-                android:textSize="@dimen/textsize_normal" />
-
-            <TextView
-                android:id="@+id/datingTime"
-                android:layout_width="wrap_content"
-                android:layout_height="match_parent"
-                android:layout_gravity="right"
-                android:gravity="center_vertical"
-                android:text="@string/select_dating_time"
-                android:textColor="@android:color/darker_gray"
-                android:textSize="@dimen/textsize_normal" />
-        </FrameLayout>
-
-        <View
-            android:layout_width="match_parent"
-            android:layout_height="@dimen/setting_item_divider_height"
-            android:background="@color/setting_item_divider_color" />
-
-        <FrameLayout
-            android:id="@+id/selectDatingProgram"
-            android:layout_width="match_parent"
-            android:layout_height="@dimen/setting_item_height"
-            android:background="@color/setting_item_bg_color"
-            android:paddingStart="@dimen/content_padding_start"
-            android:paddingEnd="@dimen/content_padding_end">
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="match_parent"
-                android:gravity="center_vertical"
-                android:text="@string/dating_program"
-                android:textColor="@android:color/black"
-                android:textSize="@dimen/textsize_normal" />
-
-            <TextView
-                android:id="@+id/datingProgram"
-                android:layout_width="wrap_content"
-                android:layout_height="match_parent"
-                android:layout_gravity="right"
-                android:gravity="center_vertical"
-                android:text="@string/select_dating_program"
-                android:textColor="@android:color/darker_gray"
-                android:textSize="@dimen/textsize_normal" />
-        </FrameLayout>
-
-        <View
-            android:layout_width="match_parent"
-            android:layout_height="@dimen/setting_item_divider_height"
-            android:background="@color/setting_item_divider_color" />
-
-        <com.snt.phoney.widget.FlowLayout
-            android:id="@+id/photos"
+        <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="10dp"
-            android:background="@color/white"
-            android:paddingLeft="10dp"
-            android:paddingRight="10dp"
-            android:paddingTop="10dp"
-            android:paddingBottom="10dp"
-            app:alignContent="flex_start"
-            app:alignItems="flex_start"
-            app:flexWrap="wrap"
-            app:justifyContent="flex_start"
-            app:square="true" />
+            android:orientation="vertical">
 
-
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="30dp"
-            android:layout_marginTop="10dp"
-            android:gravity="center_vertical"
-            android:paddingStart="@dimen/content_padding_start"
-            android:paddingEnd="@dimen/content_padding_end"
-            android:text="约会内容"
-            android:textColor="@android:color/black"
-            android:textSize="@dimen/textsize_normal" />
-
-        <FrameLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:background="@color/setting_item_bg_color"
-            android:minHeight="120dp"
-            android:paddingStart="@dimen/content_padding_start"
-            android:paddingEnd="@dimen/content_padding_end">
-
-            <EditText
-                android:id="@+id/datingContent"
+            <FrameLayout
+                android:id="@+id/selectDatingAddress"
                 android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:background="@null"
-                android:gravity="left"
-                android:hint="约会"
+                android:layout_height="@dimen/setting_item_height"
+                android:layout_marginTop="10dp"
+                android:background="@color/setting_item_bg_color"
+                android:paddingStart="@dimen/content_padding_start"
+                android:paddingEnd="@dimen/content_padding_end">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:gravity="center_vertical"
+                    android:text="@string/dating_address"
+                    android:textColor="@android:color/black"
+                    android:textSize="@dimen/textsize_normal" />
+
+                <TextView
+                    android:id="@+id/datingAddress"
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:layout_gravity="right"
+                    android:gravity="center_vertical"
+                    android:text="@string/select_dating_address"
+                    android:textColor="@android:color/darker_gray"
+                    android:textSize="@dimen/textsize_normal" />
+            </FrameLayout>
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/setting_item_divider_height"
+                android:background="@color/setting_item_divider_color" />
+
+            <FrameLayout
+                android:id="@+id/selectDatingTime"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/setting_item_height"
+                android:background="@color/setting_item_bg_color"
+                android:paddingStart="@dimen/content_padding_start"
+                android:paddingEnd="@dimen/content_padding_end">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:gravity="center_vertical"
+                    android:text="@string/dating_time"
+                    android:textColor="@android:color/black"
+                    android:textSize="@dimen/textsize_normal" />
+
+                <TextView
+                    android:id="@+id/datingTime"
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:layout_gravity="right"
+                    android:gravity="center_vertical"
+                    android:text="@string/select_dating_time"
+                    android:textColor="@android:color/darker_gray"
+                    android:textSize="@dimen/textsize_normal" />
+            </FrameLayout>
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/setting_item_divider_height"
+                android:background="@color/setting_item_divider_color" />
+
+            <FrameLayout
+                android:id="@+id/selectDatingProgram"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/setting_item_height"
+                android:background="@color/setting_item_bg_color"
+                android:paddingStart="@dimen/content_padding_start"
+                android:paddingEnd="@dimen/content_padding_end">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:gravity="center_vertical"
+                    android:text="@string/dating_program"
+                    android:textColor="@android:color/black"
+                    android:textSize="@dimen/textsize_normal" />
+
+                <TextView
+                    android:id="@+id/datingProgram"
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:layout_gravity="right"
+                    android:gravity="center_vertical"
+                    android:text="@string/select_dating_program"
+                    android:textColor="@android:color/darker_gray"
+                    android:textSize="@dimen/textsize_normal" />
+            </FrameLayout>
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/setting_item_divider_height"
+                android:background="@color/setting_item_divider_color" />
+
+            <com.snt.phoney.widget.FlowLayout
+                android:id="@+id/photos"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                android:background="@color/white"
+                android:paddingLeft="10dp"
                 android:paddingTop="10dp"
+                android:paddingRight="10dp"
                 android:paddingBottom="10dp"
-                android:maxLines="5"
-                android:textColor="@android:color/black"
-                android:textSize="@dimen/textsize_normal" />
+                app:alignContent="flex_start"
+                app:alignItems="flex_start"
+                app:flexWrap="wrap"
+                app:justifyContent="flex_start"
+                app:square="true" />
+
 
             <TextView
                 android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_gravity="right|bottom"
+                android:layout_height="30dp"
+                android:layout_marginTop="10dp"
                 android:gravity="center_vertical"
-                android:padding="8dp"
-                android:text="最多60个字"
-                android:textColor="@android:color/darker_gray"
+                android:paddingStart="@dimen/content_padding_start"
+                android:paddingEnd="@dimen/content_padding_end"
+                android:text="约会内容"
+                android:textColor="@android:color/black"
                 android:textSize="@dimen/textsize_normal" />
-        </FrameLayout>
-    </LinearLayout>
 
-    <Button
-        android:id="@+id/publish"
-        style="?android:attr/borderlessButtonStyle"
-        android:layout_width="match_parent"
-        android:layout_height="@dimen/button_height"
-        android:layout_marginLeft="20dp"
-        android:layout_marginTop="30dp"
-        android:layout_marginRight="20dp"
-        android:layout_marginBottom="20dp"
-        android:background="@drawable/button_rounded_corner_selector"
-        android:elevation="0dp"
-        android:text="发布信息"
-        android:textColor="@android:color/white"
-        android:textSize="@dimen/textsize_normal"
-        app:layout_constraintBottom_toBottomOf="parent" />
+            <FrameLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@color/setting_item_bg_color"
+                android:minHeight="120dp"
+                android:paddingStart="@dimen/content_padding_start"
+                android:paddingEnd="@dimen/content_padding_end">
 
+                <EditText
+                    android:id="@+id/datingContent"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:background="@null"
+                    android:gravity="left"
+                    android:hint="约会"
+                    android:maxLines="5"
+                    android:paddingTop="10dp"
+                    android:paddingBottom="10dp"
+                    android:textColor="@android:color/black"
+                    android:textSize="@dimen/textsize_normal" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="right|bottom"
+                    android:gravity="center_vertical"
+                    android:padding="8dp"
+                    android:text="最多60个字"
+                    android:textColor="@android:color/darker_gray"
+                    android:textSize="@dimen/textsize_normal" />
+            </FrameLayout>
+
+            <Button
+                android:id="@+id/publish"
+                style="?android:attr/borderlessButtonStyle"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/button_height"
+                android:layout_marginLeft="20dp"
+                android:layout_marginTop="30dp"
+                android:layout_marginRight="20dp"
+                android:layout_marginBottom="20dp"
+                android:background="@drawable/button_rounded_corner_selector"
+                android:elevation="0dp"
+                android:text="发布信息"
+                android:textColor="@android:color/white"
+                android:textSize="@dimen/textsize_normal"
+                app:layout_constraintBottom_toBottomOf="parent" />
+
+        </LinearLayout>
+    </ScrollView>
 </LinearLayout>

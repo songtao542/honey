@@ -48,4 +48,11 @@ abstract class BaseFragment : Fragment(), Injectable {
             }
         }
     }
+
+
+    companion object {
+        inline fun <reified T : Fragment> newInstance(arguments: Bundle? = null) = T::class.java.newInstance().apply {
+            this.arguments = arguments
+        }
+    }
 }

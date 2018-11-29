@@ -6,12 +6,15 @@ import android.view.*
 import androidx.lifecycle.ViewModelProviders
 import com.snt.phoney.R
 import com.snt.phoney.base.BaseFragment
+import com.snt.phoney.base.CommonActivity
+import com.snt.phoney.ui.location.LocationPickerFragment
 import com.snt.phoney.widget.PhotoFlowAdapter
 import kotlinx.android.synthetic.main.fragment_dating_create.*
 
 class CreateDatingFragment : BaseFragment() {
 
     companion object {
+        @JvmStatic
         fun newInstance(arguments: Bundle? = null) = CreateDatingFragment().apply {
             this.arguments = arguments
         }
@@ -19,7 +22,7 @@ class CreateDatingFragment : BaseFragment() {
 
     private lateinit var viewModel: CreateDatingViewModel
 
-    private lateinit var photoFactory: PhotoFlowAdapter
+    private lateinit var photoAdapter: PhotoFlowAdapter
     private var photoUrls = ArrayList<String>()
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View {
@@ -33,7 +36,9 @@ class CreateDatingFragment : BaseFragment() {
         toolbar.setNavigationOnClickListener { activity?.onBackPressed() }
 
         selectDatingAddress.setOnClickListener {
-
+            activity?.let { activity ->
+                (activity as CommonActivity).addFragmentSafely(LocationPickerFragment.newInstance(), "location_picker", addToBackStack = true)
+            }
         }
         selectDatingTime.setOnClickListener {
 
@@ -41,7 +46,7 @@ class CreateDatingFragment : BaseFragment() {
         selectDatingProgram.setOnClickListener {
 
         }
-        photoFactory = PhotoFlowAdapter(requireContext())
+        photoAdapter = PhotoFlowAdapter(requireContext())
                 .setMaxShow(8)
                 .setAddButtonStyle(PhotoFlowAdapter.AddButtonStyle.BORDER)
                 .setShowAddWhenFull(false)
@@ -52,7 +57,7 @@ class CreateDatingFragment : BaseFragment() {
                     photos.notifyAdapterSizeChanged()
                 }
 
-        photos.viewAdapter = photoFactory
+        photos.viewAdapter = photoAdapter
     }
 
     override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {

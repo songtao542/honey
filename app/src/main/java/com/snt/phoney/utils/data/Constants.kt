@@ -22,6 +22,8 @@ object Constants {
         const val USER = "user"
         const val USER_ID = "user_id"
         const val PERMISSION = "permission"
+        const val LIST = "list"
+        const val TITLE = "title"
     }
 
     object Preference {

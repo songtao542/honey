@@ -55,4 +55,17 @@ open class CommonActivity : BaseActivity() {
         return addFragmentSafely(R.id.container, fragment, tag, addToBackStack, backStackName, allowStateLoss, enterAnimation, exitAnimation, popEnterAnimation, popExitAnimation)
     }
 
+    fun addFragmentSafely(fragment: Fragment,
+                          tag: String,
+                          addToBackStack: Boolean = false,
+                          backStackName: String? = null,
+                          allowStateLoss: Boolean = false,
+                          argument: Bundle? = null,
+                          @AnimRes enterAnimation: Int = 0,
+                          @AnimRes exitAnimation: Int = 0,
+                          @AnimRes popEnterAnimation: Int = 0,
+                          @AnimRes popExitAnimation: Int = 0): Fragment {
+        return addFragmentSafely(R.id.container, fragment, tag, addToBackStack, backStackName, allowStateLoss, enterAnimation, exitAnimation, popEnterAnimation, popExitAnimation)
+    }
+
 }
