@@ -83,7 +83,7 @@ class LocationPickerFragment : BaseFragment() {
             }
         }
 
-        viewModel.myLocation.observe(this, Observer {
+        viewModel.location.observe(this, Observer {
             myLocation = it
             setMyLocation(it, 18f)
         })

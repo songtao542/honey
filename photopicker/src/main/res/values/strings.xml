@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="utf-8"?><!--
+  Copyright 2017 Zhihu Inc.
+
+  Licensed under the Apache License, Version 2.0 (the "License");
+  you may not use this file except in compliance with the License.
+  You may obtain a copy of the License at
+
+  http://www.apache.org/licenses/LICENSE-2.0
+
+  Unless required by applicable law or agreed to in writing, software
+  distributed under the License is distributed on an "AS IS" BASIS,
+  WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+  See the License for the specific language governing permissions and
+  limitations under the License.
+  -->
+<resources xmlns:tools="http://schemas.android.com/tools">
+    <string name="album_name_all" tools:ignore="MissingTranslation">All Media</string>
+
+    <string name="button_preview" tools:ignore="MissingTranslation">Preview</string>
+    <string name="button_apply_default" tools:ignore="MissingTranslation">Apply</string>
+    <string name="button_apply" tools:ignore="MissingTranslation">Apply(%1$d)</string>
+    <string name="button_back" tools:ignore="MissingTranslation">Back</string>
+    <string name="photo_grid_capture" tools:ignore="MissingTranslation">Camera</string>
+    <string name="empty_text" tools:ignore="MissingTranslation">No media yet</string>
+    <string name="button_ok" tools:ignore="MissingTranslation">OK</string>
+
+    <string name="error_over_count_default" tools:ignore="MissingTranslation">You have reached max selectable</string>
+    <plurals name="error_over_count">
+        <item quantity="one">You can only select one media file</item>
+        <item quantity="many">You can only select up to %1$d media files</item>
+    </plurals>
+    <string name="error_over_count" tools:ignore="MissingTranslation">You can only select up to %1$d media files</string>
+    <string name="error_under_quality" tools:ignore="MissingTranslation">Under quality</string>
+    <string name="error_over_quality" tools:ignore="MissingTranslation">Over quality</string>
+    <string name="error_file_type" tools:ignore="MissingTranslation">Unsupported file type</string>
+    <string name="error_type_conflict" tools:ignore="MissingTranslation">Can\'t select images and videos at the same time</string>
+    <string name="error_no_video_activity" tools:ignore="MissingTranslation">No App found supporting video preview</string>
+    <string name="button_original" tools:ignore="MissingTranslation">Original</string>
+    <string name="button_sure_default" tools:ignore="MissingTranslation">Sure</string>
+    <string name="button_sure" tools:ignore="MissingTranslation">Sure(%1$d)</string>
+</resources>

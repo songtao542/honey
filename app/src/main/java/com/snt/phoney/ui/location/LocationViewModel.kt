@@ -1,8 +1,10 @@
 package com.snt.phoney.ui.location
 
 import android.location.Location
+import android.util.Log
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
+import com.amap.api.location.AMapLocation
 import com.snt.phoney.domain.usecase.GetLocationUseCase
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.disposables.Disposable
@@ -12,7 +14,8 @@ import javax.inject.Inject
 
 class LocationViewModel @Inject constructor(private var usecase: GetLocationUseCase) : ViewModel() {
 
-    val myLocation = MutableLiveData<Location>()
+    val location = MutableLiveData<Location>()
+    val error = MutableLiveData<String>()
 
     private var locating = false
 
@@ -26,18 +29,19 @@ class LocationViewModel @Inject constructor(private var usecase: GetLocationUseC
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribeBy(
                         onNext = {
-                            it?.let { location ->
-                                if (handler == null) {
-                                    myLocation.value = location
-                                } else {
-                                    handler.invoke(location)
-                                }
+                            locating = false
+                            it?.let { loc ->
+                                location.value = loc
+                                handler?.invoke(loc)
+                                return@let
                             }
                         },
-                        onComplete = {
+                        onError = {
                             locating = false
+                            error.value = "无法获取位置"
                         })
     }
+
 
 
 }

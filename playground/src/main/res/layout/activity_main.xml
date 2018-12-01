@@ -1,133 +1,36 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical"
-    tools:context=".MainActivity">
+    android:orientation="vertical">
 
-    <TextView
-        android:id="@+id/text"
-        android:layout_width="wrap_content"
+    <Button
+        android:id="@+id/cityPicker"
+        android:layout_width="match_parent"
         android:layout_height="40dp"
-        android:gravity="center"
-        android:text="Hello World!" />
+        android:layout_marginTop="10dp"
+        android:text="City Picker" />
 
+    <Button
+        android:id="@+id/photoPicker"
+        android:layout_width="match_parent"
+        android:layout_height="40dp"
+        android:layout_marginTop="10dp"
+        android:text="Photo Picker" />
 
-    <expandable.widget.ExpandableLayout
+    <Button
         android:id="@+id/expandable"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        app:indicatorId="@id/indicator">
+        android:layout_height="40dp"
+        android:layout_marginTop="10dp"
+        android:text="Expandable" />
 
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="40dp"
-            android:orientation="horizontal"
-            app:layout_showAtTop="true">
-
-            <LinearLayout
-                android:id="@+id/publishTime"
-                android:layout_width="0dp"
-                android:layout_height="match_parent"
-                android:layout_weight="1"
-                android:orientation="horizontal">
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="match_parent"
-                    android:layout_gravity="center"
-                    android:drawablePadding="10dp"
-                    android:gravity="center"
-                    android:text="CCCC"
-                    android:textColor="@android:color/black"
-                    android:textSize="14sp" />
-
-                <ImageView
-                    android:id="@+id/indicator"
-                    android:layout_width="20dp"
-                    android:layout_height="20dp"
-                    android:layout_gravity="center"
-                    android:src="@drawable/ic_dropdown" />
-
-            </LinearLayout>
-
-            <LinearLayout
-                android:id="@+id/distance"
-                android:layout_width="0dp"
-                android:layout_height="match_parent"
-                android:layout_weight="1"
-                android:orientation="vertical">
-
-                <TextView
-
-                    android:layout_width="wrap_content"
-                    android:layout_height="match_parent"
-                    android:layout_gravity="center"
-                    android:drawableRight="@drawable/ic_dropdown"
-                    android:drawablePadding="10dp"
-                    android:gravity="center"
-                    android:text="BBBB"
-                    android:textColor="@android:color/black"
-                    android:textSize="14sp" />
-            </LinearLayout>
-
-            <LinearLayout
-                android:id="@+id/datingContent"
-                android:layout_width="0dp"
-                android:layout_height="match_parent"
-                android:layout_weight="1"
-                android:orientation="vertical">
-
-                <TextView
-
-                    android:layout_width="wrap_content"
-                    android:layout_height="match_parent"
-                    android:layout_gravity="center"
-                    android:drawableRight="@drawable/ic_dropdown"
-                    android:drawablePadding="10dp"
-                    android:gravity="center"
-                    android:text="AAAA"
-                    android:textColor="@android:color/black"
-                    android:textSize="14sp" />
-            </LinearLayout>
-
-        </LinearLayout>
-
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="vertical">
-
-            <TextView
-                android:layout_width="match_parent"
-                android:layout_height="40dp"
-                android:gravity="center"
-                android:text="AAAAAAAAAAAAAAAAAAAAAA" />
-
-            <TextView
-                android:layout_width="match_parent"
-                android:layout_height="40dp"
-                android:gravity="center"
-                android:text="AAAAAAAAAAAAAAAAAAAAAA" />
-
-            <TextView
-                android:layout_width="match_parent"
-                android:layout_height="40dp"
-                android:gravity="center"
-                android:text="AAAAAAAAAAAAAAAAAAAAAA" />
-
-            <TextView
-                android:layout_width="match_parent"
-                android:layout_height="40dp"
-                android:gravity="center"
-                android:text="AAAAAAAAAAAAAAAAAAAAAA" />
-
-        </LinearLayout>
-
-
-    </expandable.widget.ExpandableLayout>
+    <Button
+        android:id="@+id/expandableSample"
+        android:layout_width="match_parent"
+        android:layout_height="40dp"
+        android:layout_marginTop="10dp"
+        android:text="Expandable Sample" />
 
 
 </LinearLayout>

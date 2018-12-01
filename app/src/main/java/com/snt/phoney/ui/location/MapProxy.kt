@@ -1,11 +1,11 @@
 package com.snt.phoney.ui.location
 
 import android.content.Context
-import android.location.Location
 import android.os.Bundle
 import android.view.View
 import androidx.lifecycle.LiveData
 import com.amap.api.maps.TextureMapView
+import com.snt.phoney.domain.model.Position
 import com.snt.phoney.domain.model.PoiAddress
 import com.snt.phoney.utils.location.AMapLocationProvider
 import io.nlopez.smartlocation.location.LocationProvider
@@ -24,7 +24,9 @@ interface MapProxy {
 
     fun removeMarkers(markers: List<Marker>)
 
-    fun setCenter(location: Location, zoomLevel: Float? = null)
+    fun setCenter(location: Position, zoomLevel: Float? = null)
+
+    fun scrollBy(xPixel: Float, yPixel: Float)
 
     fun onResume()
 
@@ -42,9 +44,9 @@ interface MapProxy {
         //default do nothing
     }
 
-    fun reverseGeocode(location: Location): LiveData<PoiAddress>
+    fun reverseGeocode(location: Position): LiveData<PoiAddress>
 
-    fun searchPoi(keyword: String, location: Location): LiveData<List<PoiAddress>>
+    fun searchPoi(keyword: String, location: Position? = null): LiveData<List<PoiAddress>>
 
     fun getMapView(): View?
 }

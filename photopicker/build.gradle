@@ -1,0 +1,72 @@
+apply plugin: 'com.android.library'
+
+android {
+    compileSdkVersion build_versions.target_sdk
+    defaultConfig {
+        minSdkVersion build_versions.min_sdk
+        targetSdkVersion build_versions.target_sdk
+        versionCode 1
+        versionName "1.0"
+
+        testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
+
+        vectorDrawables.useSupportLibrary = true
+    }
+
+    buildTypes {
+        release {
+            minifyEnabled false
+            proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
+        }
+    }
+
+    compileOptions {
+        sourceCompatibility JavaVersion.VERSION_1_8
+        targetCompatibility JavaVersion.VERSION_1_8
+    }
+
+    lintOptions {
+        abortOnError false
+    }
+
+    sourceSets {
+        main {
+            res.srcDirs = ['src/main/res', 'src/main/res-ucrop']
+        }
+    }
+}
+
+dependencies {
+    implementation fileTree(dir: 'libs', include: ['*.jar'])
+
+    implementation project(path: ':zoomimage')
+
+    implementation deps.androidx.core
+    implementation deps.androidx.fragment
+    implementation deps.androidx.recyclerview
+    implementation deps.androidx.appcompat
+    implementation deps.androidx.material
+
+    compileOnly deps.glide.runtime
+    annotationProcessor deps.glide.compiler
+
+    compileOnly deps.picasso
+
+
+    testImplementation deps.junit
+
+    androidTestImplementation deps.androidx.test_rules
+    androidTestImplementation deps.androidx.test_runner
+    androidTestImplementation deps.androidx.espresso_core
+    androidTestImplementation deps.androidx.espresso_contrib
+}
+
+task checkstyle(type: Checkstyle) {
+    description 'Runs Checkstyle inspection against matisse sourcesets.'
+    group = 'Code Quality'
+    configFile rootProject.file('checkstyle.xml')
+    ignoreFailures = false
+    showViolations true
+    classpath = files()
+    source 'src/main/java'
+}

@@ -5,31 +5,81 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.snt.phoney.R
+import com.snt.phoney.domain.model.AddressType
 import com.snt.phoney.domain.model.PoiAddress
 import kotlinx.android.synthetic.main.fragment_location_sheet_item.view.*
+import kotlinx.android.synthetic.main.fragment_location_sheet_item_address.view.*
 
-class LocationPickerRecyclerViewAdapter() : RecyclerView.Adapter<LocationPickerRecyclerViewAdapter.ViewHolder>() {
+class LocationPickerRecyclerViewAdapter : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
+
+    private var _onItemClickListener: ((item: PoiAddress) -> Unit)? = null
 
     var data: List<PoiAddress>? = null
         set(value) {
-            field = value
-            notifyDataSetChanged()
+            value?.let {
+                field = it
+                notifyDataSetChanged()
+            }
         }
+
+    fun setOnItemClickListener(onItemClickListener: ((item: PoiAddress) -> Unit)?) {
+        this._onItemClickListener = onItemClickListener
+    }
+
+    private var lastSelected: PoiAddress? = null
+
+    fun getSelected(): PoiAddress? {
+        return lastSelected
+    }
+
+    private fun setSelected(address: PoiAddress) {
+        lastSelected?.selected = false
+        address.selected = true
+        lastSelected = address
+        notifyDataSetChanged()
+    }
 
     override fun getItemCount(): Int = data?.size ?: 0
 
-    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
-        return ViewHolder(LayoutInflater.from(parent.context).inflate(R.layout.fragment_location_sheet_item, parent, false))
+    override fun getItemViewType(position: Int): Int {
+        return data!![position].type
     }
 
-    override fun onBindViewHolder(holder: ViewHolder, position: Int) {
-        holder.setData(data!![position])
+    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder {
+        return when (AddressType.from(viewType)) {
+            AddressType.ADDRESS -> AddressViewHolder(LayoutInflater.from(parent.context).inflate(R.layout.fragment_location_sheet_item_address, parent, false))
+            AddressType.POI_ADDRESS -> ViewHolder(LayoutInflater.from(parent.context).inflate(R.layout.fragment_location_sheet_item, parent, false))
+        }
+    }
+
+    override fun onBindViewHolder(holder: RecyclerView.ViewHolder, position: Int) {
+        if (holder is AddressViewHolder) {
+            holder.setData(data!![position])
+        } else if (holder is ViewHolder) {
+            holder.setData(data!![position])
+        }
+    }
+
+    inner class AddressViewHolder(private val view: View) : RecyclerView.ViewHolder(view) {
+        fun setData(address: PoiAddress) {
+            view.selectAddress.text = address.address
+            view.checkedAddress.visibility = if (address.selected) View.VISIBLE else View.INVISIBLE
+            view.setOnClickListener {
+                setSelected(address)
+                _onItemClickListener?.invoke(address)
+            }
+        }
     }
 
     inner class ViewHolder(private val view: View) : RecyclerView.ViewHolder(view) {
         fun setData(address: PoiAddress) {
             view.title.text = address.title
             view.address.text = address.formatAddress
+            view.checked.visibility = if (address.selected) View.VISIBLE else View.INVISIBLE
+            view.setOnClickListener {
+                setSelected(address)
+                _onItemClickListener?.invoke(address)
+            }
         }
     }
 }

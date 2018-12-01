@@ -1,7 +1,7 @@
 package com.snt.phoney.ui.location
 
 import android.content.Context
-import android.location.Location
+import android.graphics.Point
 import android.os.Bundle
 import android.view.View
 import androidx.lifecycle.LiveData
@@ -19,8 +19,9 @@ import com.amap.api.services.core.PoiItem
 import com.amap.api.services.geocoder.*
 import com.amap.api.services.poisearch.PoiResult
 import com.amap.api.services.poisearch.PoiSearch
-import com.snt.phoney.domain.model.PoiAddress
+import com.snt.phoney.domain.model.AddressType
 import com.snt.phoney.domain.model.Position
+import com.snt.phoney.domain.model.PoiAddress
 import javax.inject.Inject
 
 
@@ -70,6 +71,7 @@ class AMapProxy @Inject constructor(val context: Context) : MapProxy {
                 marker.imageResourceId?.let { resId ->
                     bitmapDescriptor = BitmapDescriptorFactory.fromResource(resId)
                 }
+
                 if (bitmapDescriptor == null) {
                     bitmapDescriptor = BitmapDescriptorFactory.fromBitmap(marker.imageBitmap)
                 }
@@ -112,7 +114,7 @@ class AMapProxy @Inject constructor(val context: Context) : MapProxy {
         }
     }
 
-    override fun setCenter(location: Location, zoomLevel: Float?) {
+    override fun setCenter(location: Position, zoomLevel: Float?) {
         if (location.latitude != null && location.longitude != null) {
             //var latLng = convertGpsToGCJ02(location.latitude!!, location.longitude!!)
             //使用高德定位之后，国内默认是GCJ02
@@ -125,13 +127,21 @@ class AMapProxy @Inject constructor(val context: Context) : MapProxy {
         }
     }
 
-    override fun reverseGeocode(location: Location): LiveData<PoiAddress> {
+    override fun scrollBy(xPixel: Float, yPixel: Float) {
+        mapView?.map?.animateCamera(CameraUpdateFactory.scrollBy(xPixel, yPixel))
+    }
+
+    override fun reverseGeocode(location: Position): LiveData<PoiAddress> {
         val result = MutableLiveData<PoiAddress>()
         if (location.latitude != null && location.longitude != null) {
             val geocoderSearch = GeocodeSearch(context)
             geocoderSearch.setOnGeocodeSearchListener(object : GeocodeSearch.OnGeocodeSearchListener {
                 override fun onRegeocodeSearched(regeocodeResult: RegeocodeResult?, p1: Int) {
-                    result.postValue(regeocodeResult?.regeocodeAddress?.toPoiAddress())
+                    val address = regeocodeResult?.regeocodeAddress?.toPoiAddress()
+                    address?.position = location
+                    address?.let {
+                        result.postValue(address)
+                    }
                 }
 
                 override fun onGeocodeSearched(geocodeResult: GeocodeResult?, p1: Int) {
@@ -148,7 +158,7 @@ class AMapProxy @Inject constructor(val context: Context) : MapProxy {
         return result
     }
 
-    override fun searchPoi(keyword: String, location: Location): LiveData<List<PoiAddress>> {
+    override fun searchPoi(keyword: String, location: Position?): LiveData<List<PoiAddress>> {
         val result = MutableLiveData<List<PoiAddress>>()
         val poiSearchQuery = PoiSearch.Query(keyword, "")
         val poiSearch = PoiSearch(context, poiSearchQuery)
@@ -168,9 +178,11 @@ class AMapProxy @Inject constructor(val context: Context) : MapProxy {
             override fun onPoiItemSearched(poiItem: PoiItem, errorCode: Int) {
             }
         })
-        //var latLng = convertGpsToGCJ02(location.latitude!!, location.longitude!!)
-        val latLng = LatLng(location.latitude!!, location.longitude!!)
-        poiSearch.bound = PoiSearch.SearchBound(LatLonPoint(latLng.latitude, latLng.longitude), 5000)
+        location?.let {
+            //var latLng = convertGpsToGCJ02(location.latitude!!, location.longitude!!)
+            val latLng = LatLng(location.latitude!!, location.longitude!!)
+            poiSearch.bound = PoiSearch.SearchBound(LatLonPoint(latLng.latitude, latLng.longitude), 5000)
+        }
         poiSearch.searchPOIAsyn()
         return result
     }
@@ -207,4 +219,27 @@ fun PoiItem.toPoiAddress(): PoiAddress {
             city = cityName,
             street = snippet,
             postalCode = postcode)
+}
+
+fun AMapLocation.toPoiAddress(): PoiAddress {
+    return PoiAddress(
+            title = poiName,
+            district = district,
+            position = Position(latitude, longitude),
+            province = province,
+            city = city,
+            street = street,
+            address = address,
+            type = AddressType.ADDRESS.value)
+}
+
+fun TextureMapView.getCenter(): LatLng {
+    val left = left
+    val top = top
+    val right = right
+    val bottom = bottom
+    val x = (x + (right - left) / 2)
+    val y = (y + (bottom - top) / 2)
+    val projection = map.projection
+    return projection.fromScreenLocation(Point(x.toInt(), y.toInt()))
 }

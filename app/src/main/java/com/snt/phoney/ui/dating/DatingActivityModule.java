@@ -11,14 +11,16 @@ import com.snt.phoney.ui.dating.detail.DatingDetailViewModel;
 import com.snt.phoney.ui.dating.list.DatingListFragment;
 import com.snt.phoney.ui.dating.list.DatingListViewModel;
 import com.snt.phoney.ui.location.LocationPickerModule;
+import com.snt.phoney.ui.picker.PickerModule;
 
 import androidx.lifecycle.ViewModel;
+
 import dagger.Binds;
 import dagger.Module;
 import dagger.android.ContributesAndroidInjector;
 import dagger.multibindings.IntoMap;
 
-@Module(includes = {ViewModelFactoryModule.class, LocationPickerModule.class})
+@Module(includes = {ViewModelFactoryModule.class, LocationPickerModule.class, PickerModule.class})
 public abstract class DatingActivityModule {
 
     @FragmentScope

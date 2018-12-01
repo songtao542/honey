@@ -17,24 +17,29 @@
             </intent-filter>
         </activity>
 
-        <activity android:name="city.picker.MainActivity"
-            android:theme="@style/CustomTheme">
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
 
-                <category android:name="android.intent.category.LAUNCHER" />
-            </intent-filter>
-        </activity>
-        <activity android:name="expandable.sample.ExpansionPanelMainActivity">
-
-        </activity>
+        <activity
+            android:name="city.picker.SampleCityPickerActivity"
+            android:theme="@style/CustomTheme"></activity>
+        <activity android:name=".SampleExpandableActivity" />
+        <activity android:name="expandable.sample.ExpansionPanelMainActivity"></activity>
         <activity android:name="expandable.sample.ExpansionPanelSampleActivity"></activity>
         <activity android:name="expandable.sample.ExpansionPanelSampleActivityProgrammatically"></activity>
         <activity android:name="expandable.sample.ExpansionPanelSampleActivityRecycler"></activity>
         <activity android:name="expandable.sample.ExpansionPanelSampleActivityViewGroup"></activity>
 
 
+        <activity android:name="photo.picker.sample.SamplePhotoPickerActivity"></activity>
 
+        <provider
+            android:name="androidx.core.content.FileProvider"
+            android:authorities="com.zhihu.matisse.sample.fileprovider"
+            android:exported="false"
+            android:grantUriPermissions="true">
+            <meta-data
+                android:name="android.support.FILE_PROVIDER_PATHS"
+                android:resource="@xml/file_paths_public"></meta-data>
+        </provider>
     </application>
 
 </manifest>

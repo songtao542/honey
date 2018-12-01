@@ -24,7 +24,7 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
-        <com.snt.phoney.widget.NestedParentLayout
+        <com.snt.phoney.widget.NestedFrameLayout
             android:id="@+id/nestLayout"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
@@ -33,13 +33,20 @@
 
             <FrameLayout
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:background="#ff89ffff">
+                android:layout_height="wrap_content">
 
                 <com.amap.api.maps.TextureMapView
                     android:id="@+id/mapView"
                     android:layout_width="match_parent"
                     android:layout_height="400dp" />
+
+                <ImageView
+                    android:id="@+id/centerLocation"
+                    android:layout_width="30dp"
+                    android:layout_height="30dp"
+                    android:layout_gravity="center"
+                    android:layout_marginBottom="28dp"
+                    android:src="@drawable/ic_location_pin" />
 
                 <ImageView
                     android:id="@+id/myLocationButton"
@@ -57,8 +64,10 @@
             <androidx.recyclerview.widget.RecyclerView
                 android:id="@+id/list"
                 android:layout_width="match_parent"
-                android:layout_height="match_parent" />
-        </com.snt.phoney.widget.NestedParentLayout>
+                android:layout_height="match_parent"
+                android:layout_marginTop="400dp"
+                android:background="@color/white" />
+        </com.snt.phoney.widget.NestedFrameLayout>
 
         <LinearLayout
             android:layout_width="match_parent"

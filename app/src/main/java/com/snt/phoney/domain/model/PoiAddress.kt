@@ -21,8 +21,9 @@ data class PoiAddress(
         var street: String? = null,
         var streetNumber: String? = null,
         var postalCode: String? = null,
-        var address: String? = null
-) : Parcelable {
+        var address: String? = null,
+        var type: Int = AddressType.POI_ADDRESS.value
+) : Selectable(), Parcelable {
 
     val latitude: Double
         get() = position?.latitude ?: 0.0
@@ -38,11 +39,23 @@ data class PoiAddress(
                 "${province ?: ""}${city ?: ""}${district ?: ""}${street ?: ""}"
             }
         }
+
+    val location: Position
+        get() {
+            return Position(latitude, longitude)
+        }
 }
 
-@Serializable
-@Parcelize
-data class Position(
-        var latitude: Double = 0.0,
-        var longitude: Double = 0.0
-) : Parcelable
+enum class AddressType(val value: Int) {
+    ADDRESS(0),
+    POI_ADDRESS(1);
+
+    companion object {
+        fun from(value: Int): AddressType {
+            return when (value) {
+                0 -> ADDRESS
+                else -> POI_ADDRESS
+            }
+        }
+    }
+}

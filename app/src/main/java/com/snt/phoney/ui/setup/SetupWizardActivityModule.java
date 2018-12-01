@@ -1,22 +1,20 @@
 package com.snt.phoney.ui.setup;
 
+import androidx.lifecycle.ViewModel;
+
 import com.snt.phoney.di.ActivityScope;
 import com.snt.phoney.di.FragmentScope;
 import com.snt.phoney.di.ViewModelKey;
 import com.snt.phoney.di.module.ViewModelFactoryModule;
+import com.snt.phoney.ui.picker.PickerModule;
 
-import androidx.lifecycle.ViewModel;
 import dagger.Binds;
 import dagger.Module;
 import dagger.android.ContributesAndroidInjector;
 import dagger.multibindings.IntoMap;
 
-@Module(includes = ViewModelFactoryModule.class)
+@Module(includes = {ViewModelFactoryModule.class, PickerModule.class})
 public abstract class SetupWizardActivityModule {
-
-    @FragmentScope
-    @ContributesAndroidInjector
-    public abstract PickerFragment contributePickerFragment();
 
     @FragmentScope
     @ContributesAndroidInjector

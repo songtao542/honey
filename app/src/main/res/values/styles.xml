@@ -13,6 +13,7 @@
     <style name="AppTheme.Male" parent="AppTheme">
         <item name="colorPrimary">@color/colorPrimaryMale</item>
         <item name="colorPrimaryPressed">@color/colorPrimaryPressedMale</item>
+        <item name="colorPrimaryTranslucent">@color/colorPrimaryMale</item>
         <item name="colorPrimaryDark">@color/colorPrimaryDarkMale</item>
         <item name="colorAccent">@color/colorAccentMale</item>
         <item name="colorTheme">@color/colorPrimaryMale</item>
@@ -26,6 +27,7 @@
     <style name="AppTheme.Female" parent="AppTheme">
         <item name="colorPrimary">@color/colorPrimaryFemale</item>
         <item name="colorPrimaryPressed">@color/colorPrimaryPressedFemale</item>
+        <item name="colorPrimaryTranslucent">@color/colorPrimaryFemaleTranslucent</item>
         <item name="colorPrimaryDark">@color/colorPrimaryDarkFemale</item>
         <item name="colorAccent">@color/colorAccentFemale</item>
         <item name="colorTheme">@color/colorPrimaryFemale</item>
@@ -39,6 +41,7 @@
     <style name="AppTheme.SexUnknown" parent="AppTheme">
         <item name="colorPrimary">@color/colorPrimary</item>
         <item name="colorPrimaryPressed">@color/colorPrimaryPressed</item>
+        <item name="colorPrimaryTranslucent">@color/colorPrimaryTranslucent</item>
         <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
         <item name="colorAccent">@color/colorAccent</item>
         <item name="colorTheme">@color/colorPrimary</item>

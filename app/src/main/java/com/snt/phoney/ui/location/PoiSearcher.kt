@@ -11,7 +11,6 @@ import com.amap.api.services.geocoder.*
 import com.amap.api.services.poisearch.PoiResult
 import com.amap.api.services.poisearch.PoiSearch
 import com.snt.phoney.domain.model.PoiAddress
-import com.snt.phoney.domain.model.Position
 import javax.inject.Inject
 
 

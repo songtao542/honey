@@ -245,7 +245,7 @@ public class CityPickerDialogFragment extends AppCompatDialogFragment implements
     @Override
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
-        if (mAllCities == null || mAllCities.size() == 0 && mOnRequestCitiesListener != null) {
+        if ((mAllCities == null || mAllCities.size() == 0) && mOnRequestCitiesListener != null) {
             mOnRequestCitiesListener.onRequestCities(new MyCityPicker(this));
         }
     }

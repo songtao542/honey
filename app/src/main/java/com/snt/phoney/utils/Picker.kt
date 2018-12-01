@@ -3,7 +3,7 @@ package com.snt.phoney.utils
 import androidx.fragment.app.FragmentActivity
 import com.snt.phoney.R
 import com.snt.phoney.extensions.toStringArray
-import com.snt.phoney.ui.setup.PickerFragment
+import com.snt.phoney.ui.picker.PickerFragment
 import com.zaaach.citypicker.CityPickerFragment
 import com.zaaach.citypicker.adapter.CityPicker
 import com.zaaach.citypicker.model.City
