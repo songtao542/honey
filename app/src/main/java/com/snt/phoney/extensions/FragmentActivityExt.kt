@@ -107,11 +107,41 @@ fun Activity.hideSoftKeyboard(): Boolean {
     return false
 }
 
+/**
+ * Method to try to hide soft keyboard
+ */
+fun Fragment.hideSoftKeyboard(): Boolean {
+    var hidden = false
+    activity?.let {
+        val inputMethodManager = it.getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
+        view?.let { view ->
+            hidden = inputMethodManager.hideSoftInputFromWindow(view.windowToken, InputMethodManager.HIDE_NOT_ALWAYS)
+        }
+        return@let
+    }
+    return hidden
+}
+
 fun FragmentActivity.forwardOnActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
     val fragments = supportFragmentManager.fragments
     for (fragment in fragments) {
         if (!fragment.isDetached) {
             fragment.onActivityResult(requestCode, resultCode, data)
         }
+    }
+}
+
+
+fun Activity.setSoftInputMode(softInputMode: Int) {
+    AndroidBug5497Workaround.assistActivity(this)
+    window?.setSoftInputMode(softInputMode)
+}
+
+
+fun Fragment.setSoftInputMode(softInputMode: Int) {
+    activity?.let {
+        AndroidBug5497Workaround.assistActivity(it)
+        it?.window?.setSoftInputMode(softInputMode)
+        return@let
     }
 }

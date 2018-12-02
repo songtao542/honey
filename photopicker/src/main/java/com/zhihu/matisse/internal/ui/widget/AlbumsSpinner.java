@@ -66,7 +66,6 @@ public class AlbumsSpinner {
         float width = context.getResources().getDisplayMetrics().widthPixels;
         mListPopupWindow.setContentWidth((int) width);
 
-
         mListPopupWindow.setOnItemClickListener((parent, view, position, id) -> {
             boolean valid = AlbumsSpinner.this.onItemSelected(parent.getContext(), position);
             if (valid && mOnItemSelectedListener != null) {

@@ -4,9 +4,10 @@ import com.snt.phoney.api.Api
 import com.snt.phoney.domain.model.Dating
 import com.snt.phoney.domain.model.DatingProgram
 import com.snt.phoney.domain.model.Response
-import com.snt.phoney.domain.model.User
 import com.snt.phoney.domain.repository.DatingRepository
+import com.snt.phoney.utils.media.MultipartUtil
 import io.reactivex.Single
+import java.io.File
 import javax.inject.Inject
 
 class DatingRepositoryImpl @Inject constructor(private val api: Api) : DatingRepository {
@@ -14,8 +15,9 @@ class DatingRepositoryImpl @Inject constructor(private val api: Api) : DatingRep
         return api.follow(token, uuid)
     }
 
-    override fun publishDating(token: String, content: String, city: String, days: String, latitude: Double, longitude: Double, title: String, location: String, program: String): Single<Response<List<User>>> {
-        return api.publishDating(token, content, city, days, latitude.toString(), longitude.toString(), title, location, program)
+    override fun publishDating(token: String, title: String, program: String, content: String, days: Int, city: String, location: String, latitude: Double, longitude: Double, cover: List<File>): Single<Response<String>> {
+        val coverParts = MultipartUtil.getMultipartList("cover", cover)
+        return api.publishDating(token, title, program, content, days, city, location, latitude.toString(), longitude.toString(), coverParts)
     }
 
     override fun cancelDating(token: String, uuid: String): Single<Response<String>> {

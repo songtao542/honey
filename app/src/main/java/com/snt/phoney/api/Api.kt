@@ -17,6 +17,7 @@ package com.snt.phoney.api
 import androidx.lifecycle.LiveData
 import com.snt.phoney.domain.model.*
 import io.reactivex.Single
+import okhttp3.MultipartBody
 import retrofit2.http.*
 
 interface Api {
@@ -140,17 +141,18 @@ interface Api {
      *@param  location    string	否	具体约会地点
      *@param  program    string	是	约会节目（接口返回，传字符串， eg:吃饭）
      */
-    @FormUrlEncoded
+    @Multipart
     @POST("appointment/addAppointment")
-    fun publishDating(@Field("token") token: String,
-                      @Field("content") content: String,
-                      @Field("city") city: String,
-                      @Field("days") days: String,
-                      @Field("latitude") latitude: String,
-                      @Field("longitude") longitude: String,
-                      @Field("title") title: String,
-                      @Field("location") location: String,
-                      @Field("grogram") program: String): Single<Response<List<User>>>
+    fun publishDating(@Part("token") token: String,
+                      @Part("title") title: String,
+                      @Part("grogram") program: String,
+                      @Part("content") content: String,
+                      @Part("days") days: Int,
+                      @Part("city") city: String,
+                      @Part("location") location: String,
+                      @Part("latitude") latitude: String,
+                      @Part("longitude") longitude: String,
+                      @Part cover: List<MultipartBody.Part>): Single<Response<String>>
 
     /**
      * 取消约会

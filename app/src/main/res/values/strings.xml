@@ -178,6 +178,10 @@
     <string name="location_picker_title">选择地点</string>
     <string name="search_result">搜索结果</string>
     <string name="search_result_templete">搜索“%1$s”</string>
+    <string name="error_gif">长宽不小于 %1$dpx，且大小不超过 %2$sM。</string>
+    <string name="dating_date_template">%1$d年%2$d月%3$d日</string>
+    <string name="days_template">%1$d天</string>
+    <string name="publish_success">发布成功</string>
 
 
 </resources>

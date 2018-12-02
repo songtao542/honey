@@ -99,7 +99,8 @@
             android:theme="@style/AppTheme.Signup" />
 
 
-        <activity android:name=".ui.dating.DatingActivity" />
+        <activity android:name=".ui.dating.DatingActivity"
+            android:windowSoftInputMode="adjustResize"/>
 
         <activity android:name=".ui.vip.VipActivity" />
 

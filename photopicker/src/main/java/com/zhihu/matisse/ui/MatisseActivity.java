@@ -15,10 +15,12 @@
  */
 package com.zhihu.matisse.ui;
 
+import android.Manifest;
 import android.annotation.SuppressLint;
 import android.annotation.TargetApi;
 import android.app.Activity;
 import android.content.Intent;
+import android.content.pm.PackageManager;
 import android.content.res.TypedArray;
 import android.database.Cursor;
 import android.graphics.PorterDuff;
@@ -36,12 +38,16 @@ import android.view.WindowManager;
 import android.widget.AdapterView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.ColorInt;
+import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
+import androidx.core.app.ActivityCompat;
+import androidx.core.content.ContextCompat;
 import androidx.fragment.app.Fragment;
 
 import com.zhihu.matisse.R;
@@ -165,6 +171,36 @@ public class MatisseActivity extends AppCompatActivity implements
         }
         updateBottomToolbar();
 
+        if (checkPermission()) {
+            initAlbum(savedInstanceState);
+        } else {
+            String[] permissions = new String[]{
+                    Manifest.permission.READ_EXTERNAL_STORAGE
+            };
+            ActivityCompat.requestPermissions(this, permissions, 123);
+        }
+    }
+
+    @Override
+    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
+        super.onRequestPermissionsResult(requestCode, permissions, grantResults);
+        if (checkPermission()) {
+            initAlbum(null);
+        } else {
+            Toast.makeText(this.getApplicationContext(), getString(R.string.read_external_storage_permission_denial), Toast.LENGTH_LONG).show();
+            finish();
+        }
+    }
+
+    private boolean checkPermission() {
+        String permission = Manifest.permission.READ_EXTERNAL_STORAGE;
+        if (PackageManager.PERMISSION_GRANTED != ContextCompat.checkSelfPermission(this, permission)) {
+            return false;
+        }
+        return true;
+    }
+
+    private void initAlbum(Bundle savedInstanceState) {
         mAlbumsAdapter = new AlbumsAdapter(this, null, false);
         mAlbumsSpinner = new AlbumsSpinner(this);
         mAlbumsSpinner.setOnItemSelectedListener(this);

@@ -1,5 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?>
-<!--
+<?xml version="1.0" encoding="utf-8"?><!--
   Copyright 2017 Zhihu Inc.
 
   Licensed under the Apache License, Version 2.0 (the "License");
@@ -37,4 +36,5 @@
     <string name="button_original">原图</string>
     <string name="button_sure_default">确定</string>
     <string name="button_sure">确定(%1$d)</string>
+    <string name="read_external_storage_permission_denial">读取文件失败!</string>
 </resources>

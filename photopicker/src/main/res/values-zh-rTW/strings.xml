@@ -35,4 +35,6 @@
     <string name="button_original">原圖</string>
     <string name="button_sure_default">确定</string>
     <string name="button_sure">确定(%1$d)</string>
+
+    <string name="read_external_storage_permission_denial">读取文件失败!</string>
 </resources>

@@ -5,18 +5,21 @@ import com.snt.phoney.domain.model.DatingProgram
 import com.snt.phoney.domain.model.Response
 import com.snt.phoney.domain.model.User
 import io.reactivex.Single
+import java.io.File
 
 interface DatingRepository {
 
     fun publishDating(token: String,
+                      title: String,
+                      program: String,
                       content: String,
+                      days: Int,
                       city: String,
-                      days: String,
+                      location: String,
                       latitude: Double,
                       longitude: Double,
-                      title: String,
-                      location: String,
-                      program: String): Single<Response<List<User>>>
+                      cover: List<File>
+    ): Single<Response<String>>
 
     /**
      * 取消约会

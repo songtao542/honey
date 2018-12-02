@@ -24,7 +24,7 @@
             android:foreground="?selectableItemBackground"
             android:gravity="center"
             android:text="@string/ucrop_label_edit_photo"
-            android:textColor="?attr/album.element.color"
+            android:textColor="?attr/album_element_color"
             android:textSize="16sp" />
         <!--   android:textColor="@color/ucrop_color_toolbar_widget" -->
 

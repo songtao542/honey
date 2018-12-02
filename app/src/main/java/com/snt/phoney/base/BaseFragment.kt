@@ -16,11 +16,13 @@ package com.snt.phoney.base
 
 import android.os.Bundle
 import android.view.View
+import android.view.WindowManager
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.Toolbar
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import com.snt.phoney.di.Injectable
+import com.snt.phoney.extensions.AndroidBug5497Workaround
 import com.snt.phoney.extensions.autoCleared
 import io.reactivex.disposables.CompositeDisposable
 import javax.inject.Inject
@@ -48,7 +50,6 @@ abstract class BaseFragment : Fragment(), Injectable {
             }
         }
     }
-
 
     companion object {
         inline fun <reified T : Fragment> newInstance(arguments: Bundle? = null) = T::class.java.newInstance().apply {

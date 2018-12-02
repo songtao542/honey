@@ -99,6 +99,7 @@ dependencies {
     implementation project(path: ':flexbox')
     implementation project(path: ':expandable_layout')
     implementation project(path: ':citypicker')
+    implementation project(path: ':photopicker')
 
     // A Map
     implementation(name: 'AMap', ext: 'aar')
@@ -159,6 +160,7 @@ dependencies {
     implementation deps.androidx.constraintlayout
     implementation deps.androidx.multidex
     implementation deps.androidx.material
+    implementation deps.androidx.exifinterface
 
     //    kapt deps.androidx.databinding_compiler
     //    implementation deps.support.v4

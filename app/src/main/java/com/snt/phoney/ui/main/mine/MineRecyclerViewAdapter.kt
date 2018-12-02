@@ -50,10 +50,10 @@ class MineRecyclerViewAdapter(val fragment: Fragment) : RecyclerView.Adapter<Rec
         }
 
     init {
-        settings.add(Setting(R.drawable.ic_photo, "相册权限", ""))
-        settings.add(Setting(R.drawable.ic_dating, "我的约会", "新消息"))
-        settings.add(Setting(R.drawable.ic_wallet, "我的钱包", ""))
-        settings.add(Setting(R.drawable.ic_privacy, "隐私设置", ""))
+        settings.add(Setting(R.drawable.ic_photo_permission, "相册权限", ""))
+        settings.add(Setting(R.drawable.ic_my_dating, "我的约会", "新消息"))
+        settings.add(Setting(R.drawable.ic_my_wallet, "我的钱包", ""))
+        settings.add(Setting(R.drawable.ic_privacy_setting, "隐私设置", ""))
         settings.add(Setting(R.drawable.ic_bind_phone, "绑定手机", ""))
         settings.add(Setting(R.drawable.ic_share, "分享给好友", ""))
         settings.add(Setting(R.drawable.ic_user_protocol, "用户协议", ""))

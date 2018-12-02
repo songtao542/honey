@@ -71,20 +71,20 @@ class MineFragment : BaseFragment(), OnSettingItemClickListener, OnSignOutClickL
 
     override fun onSettingItemClick(setting: Setting) {
         when (setting.icon) {
-            R.drawable.ic_photo -> {
+            R.drawable.ic_photo_permission -> {
                 viewModel.user?.photoPermission?.let { permission ->
                     activity?.let {
                         AlbumPermissionSettingFragment.newInstance(permission).show(it.supportFragmentManager, "album_setting")
                     }
                 }
             }
-            R.drawable.ic_dating -> {
+            R.drawable.ic_my_dating -> {
                 activity?.startActivity(CommonActivity.newIntent<DatingActivity>(requireContext(), Page.VIEW_DATING_LIST))
             }
-            R.drawable.ic_wallet -> {
+            R.drawable.ic_my_wallet -> {
                 activity?.startActivity(CommonActivity.newIntent<WalletActivity>(requireContext(), Page.VIEW_MY_WALLET))
             }
-            R.drawable.ic_privacy -> {
+            R.drawable.ic_privacy_setting -> {
                 activity?.startActivity(CommonActivity.newIntent<PrivacyActivity>(requireContext(), Page.CREATE_PRIVACY_PASS))
             }
             R.drawable.ic_bind_phone -> {

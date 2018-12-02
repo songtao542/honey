@@ -21,6 +21,7 @@
     <color name="dracula_album_popup_bg">#0b0f19</color>
     <color name="dracula_album_dropdown_title_text">#DEFFFFFF</color>
     <color name="dracula_album_dropdown_count_text">#89FFFFFF</color>
+    <color name="dracula_album_dropdown_divider">#141a2a</color>
     <color name="dracula_album_dropdown_thumbnail_placeholder">#455A64</color>
     <color name="dracula_album_empty_view">#0b0f19</color>
 

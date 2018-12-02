@@ -2,11 +2,9 @@ package com.snt.phoney.widget;
 
 import android.content.Context;
 import android.util.AttributeSet;
-import android.util.Log;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.FrameLayout;
-import android.widget.LinearLayout;
 import android.widget.Scroller;
 
 import androidx.annotation.Nullable;
@@ -14,6 +12,7 @@ import androidx.annotation.Nullable;
 
 public class NestedFrameLayout extends FrameLayout {
 
+    @SuppressWarnings("unused")
     private static final String TAG = "NestedParentLayout";
 
     private int mTopViewHeight;
@@ -43,6 +42,7 @@ public class NestedFrameLayout extends FrameLayout {
         init(context);
     }
 
+    @SuppressWarnings("unused")
     public NestedFrameLayout(Context context, AttributeSet attrs, int defStyleAttr, int defStyleRes) {
         super(context, attrs, defStyleAttr, defStyleRes);
         init(context);
@@ -56,6 +56,7 @@ public class NestedFrameLayout extends FrameLayout {
         this.mMinHeight = minHeight;
     }
 
+    @SuppressWarnings("RedundantIfStatement")
     @Override
     public boolean onStartNestedScroll(View child, View target, int nestedScrollAxes) {
         //Log.d(TAG, "onStartNestedScroll target=" + target);
@@ -83,7 +84,7 @@ public class NestedFrameLayout extends FrameLayout {
 
     @Override
     public void onStopNestedScroll(View target) {
-        if (mScroller.isFinished()) {
+        if (mScroller.isFinished() && getScrollY() > 0 && getScrollY() < mTopViewHeight - mMinHeight) {
             // mDirection>0 向下
             mScroller.forceFinished(true);
             int scrollY = getScrollY();
@@ -93,6 +94,7 @@ public class NestedFrameLayout extends FrameLayout {
                 mScroller.startScroll(0, scrollY, 0, mTopViewHeight - mMinHeight - scrollY);
             }
             invalidate();
+            mDirection = 0;
         }
     }
 
@@ -165,7 +167,7 @@ public class NestedFrameLayout extends FrameLayout {
 
     @Override
     public void computeScroll() {
-        if (mScroller.computeScrollOffset()) {
+        if (!mScroller.isFinished() && mScroller.computeScrollOffset()) {
             int y = mScroller.getCurrY();
             scrollTo(0, y);
             mTopView.scrollTo(0, -y / 2);
@@ -233,15 +235,17 @@ public class NestedFrameLayout extends FrameLayout {
     }
 
     /**
-     * @param scaleable
+     * @param scaleable is scale able
      */
+    @SuppressWarnings("unused")
     public void setTopScaleable(boolean scaleable) {
         mTopScaleable = scaleable;
     }
 
     /**
-     * @param listener
+     * @param listener listen
      */
+    @SuppressWarnings("unused")
     public void setOnTopVisibleHeightChangeListener(OnTopVisibleHeightChangeListener listener) {
         mTopHeightChangeListener = listener;
     }
