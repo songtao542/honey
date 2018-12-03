@@ -115,6 +115,7 @@ class UserInfoFragment : BaseFragment() {
 
         introduce.text = user.introduce
         frequentCity.text = user.cities?.map { it.name }?.joinToString(separator = ",") ?: ""
+        //TODO 服务器返回值，字段名错误，后期提醒修改
         setProgram(user.program)
     }
 

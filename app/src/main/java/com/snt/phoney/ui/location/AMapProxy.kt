@@ -20,8 +20,8 @@ import com.amap.api.services.geocoder.*
 import com.amap.api.services.poisearch.PoiResult
 import com.amap.api.services.poisearch.PoiSearch
 import com.snt.phoney.domain.model.AddressType
-import com.snt.phoney.domain.model.Position
 import com.snt.phoney.domain.model.PoiAddress
+import com.snt.phoney.domain.model.Position
 import javax.inject.Inject
 
 
@@ -189,6 +189,7 @@ class AMapProxy @Inject constructor(val context: Context) : MapProxy {
 
 }
 
+@Suppress("unused")
 fun AMapLocation.description(): String {
     return "{latitude:$latitude, longitude:$longitude, address:$address, country:$country, province$province, city:$city, " +
             "district$district, street:$street, streetNumber:$streetNum, description:$description}"

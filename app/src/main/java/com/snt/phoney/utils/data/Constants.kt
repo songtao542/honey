@@ -24,6 +24,8 @@ object Constants {
         const val PERMISSION = "permission"
         const val LIST = "list"
         const val TITLE = "title"
+        const val URL = "url"
+        const val INDEX = "index"
     }
 
     object Preference {

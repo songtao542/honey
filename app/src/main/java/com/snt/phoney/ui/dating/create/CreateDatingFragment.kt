@@ -3,19 +3,20 @@ package com.snt.phoney.ui.dating.create
 import android.app.Activity
 import android.content.Intent
 import android.os.Bundle
-import android.util.Log
 import android.view.*
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
 import com.snt.phoney.R
 import com.snt.phoney.base.BaseFragment
 import com.snt.phoney.base.CommonActivity
+import com.snt.phoney.base.Page
 import com.snt.phoney.domain.model.DatingProgram
 import com.snt.phoney.domain.model.PoiAddress
 import com.snt.phoney.extensions.setSoftInputMode
 import com.snt.phoney.extensions.snackbar
 import com.snt.phoney.ui.location.LocationPicker
 import com.snt.phoney.utils.Picker
+import com.snt.phoney.utils.data.Constants
 import com.snt.phoney.widget.PhotoFlowAdapter
 import com.zhihu.matisse.Matisse
 import kotlinx.android.synthetic.main.fragment_dating_create.*
@@ -98,6 +99,12 @@ class CreateDatingFragment : BaseFragment() {
                 }
 
         photos.viewAdapter = photoAdapter
+        photos.setOnItemClickListener { _, index ->
+            (activity as CommonActivity).addFragmentSafely(Page.PHOTO_VIEWER, "photo_viewer", true, argument = Bundle().apply {
+                putStringArrayList(Constants.Extra.LIST, selectedPhotos)
+                putInt(Constants.Extra.INDEX, index)
+            })
+        }
 
         viewModel.error.observe(this, Observer {
             snackbar(it)

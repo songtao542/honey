@@ -35,12 +35,12 @@ import retrofit2.Retrofit;
  * you must {@linkplain Retrofit.Builder#addConverterFactory(Converter.Factory) add this instance}
  * last to allow the other converters a chance to see their types.
  */
-public final class ResponseConverterFactory extends Converter.Factory {
+public final class GsonResponseConverterFactory extends Converter.Factory {
     /**
      * Create an instance using a default {@link Gson} instance for conversion. Encoding to JSON and
      * decoding from JSON (when no charset is specified by a header) will use UTF-8.
      */
-    public static ResponseConverterFactory create() {
+    public static GsonResponseConverterFactory create() {
         return create(new Gson());
     }
 
@@ -49,26 +49,26 @@ public final class ResponseConverterFactory extends Converter.Factory {
      * decoding from JSON (when no charset is specified by a header) will use UTF-8.
      */
     @SuppressWarnings("ConstantConditions") // Guarding public API nullability.
-    public static ResponseConverterFactory create(Gson gson) {
+    public static GsonResponseConverterFactory create(Gson gson) {
         if (gson == null) throw new NullPointerException("gson == null");
-        return new ResponseConverterFactory(gson);
+        return new GsonResponseConverterFactory(gson);
     }
 
     private final Gson gson;
 
-    private ResponseConverterFactory(Gson gson) {
+    private GsonResponseConverterFactory(Gson gson) {
         this.gson = gson;
     }
 
     @Override
     public Converter<ResponseBody, ?> responseBodyConverter(Type type, Annotation[] annotations, Retrofit retrofit) {
         TypeAdapter<?> adapter = gson.getAdapter(TypeToken.get(type));
-        return new ResponseBodyConverter<>(gson, adapter);
+        return new GsonResponseBodyConverter<>(gson, adapter);
     }
 
     @Override
     public Converter<?, RequestBody> requestBodyConverter(Type type, Annotation[] parameterAnnotations, Annotation[] methodAnnotations, Retrofit retrofit) {
         TypeAdapter<?> adapter = gson.getAdapter(TypeToken.get(type));
-        return new RequestBodyConverter<>(gson, adapter);
+        return new GsonRequestBodyConverter<>(gson, adapter);
     }
 }

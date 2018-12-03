@@ -18,7 +18,7 @@ import kotlinx.serialization.json.JSON
 data class User(
         @PrimaryKey var id: Int = 0,
         var uuid: String? = null,
-        var username: String? = null,
+        @SerializedName(value = "userName") var username: String? = null,
         @SerializedName(value = "nickName") var nickname: String? = null,
         var email: String? = null,
         var phone: String? = null,
@@ -29,6 +29,7 @@ data class User(
         var weight: Double = 0.0,
         var age: Int = 0,
         var cup: String? = null,
+        var purpose: String? = null,
         var city: String? = null,
         var cities: List<City>? = null,
         var career: String? = null,
@@ -39,12 +40,13 @@ data class User(
         @SerializedName(value = "account_wx") var wechatAccount: String? = null,
         @SerializedName(value = "pauthentication") var verified: String? = null,
         var token: String? = null,
-        var open: Int = 0,
+        @SerializedName(value = "isOpen") var open: Int = 0,
         var price: Double = 0.0,
         var state: Int = 0,
         var tag: String? = null,
         var distance: Double = 0.0,
         var program: String? = null,
+        var im: ImInfo? = null,
         @SerializedName(value = "isCare") var care: Boolean = false,
         @SerializedName(value = "cares") var followedSize: Int = 0,
         @SerializedName(value = "utime") var updateTime: Long = 0) : Parcelable {
@@ -81,6 +83,15 @@ data class User(
             return cities?.map { it.name }?.joinToString(separator = " ") ?: city ?: ""
         }
 
+    @Transient
+    val valid: Boolean
+        get() {
+            return when (sex) {
+                1 -> height > 0 && age > 0 && cup != null && cities?.isNotEmpty() ?: false && career != null && purpose != null
+                0 -> height > 0 && age > 0 && weight > 0 && cities?.isNotEmpty() ?: false && career != null && purpose != null
+                else -> false
+            }
+        }
 }
 
 enum class Sex(val value: Int) {
@@ -102,6 +113,15 @@ enum class Sex(val value: Int) {
 
 class Converter {
 
+    @TypeConverter
+    fun toImInfo(value: String): ImInfo {
+        return JSON.nonstrict.parse(ImInfo.serializer(), value)
+    }
+
+    @TypeConverter
+    fun imInfoToJson(info: ImInfo): String {
+        return JSON.nonstrict.stringify(ImInfo.serializer(), info)
+    }
 
     @TypeConverter
     fun toPhotoList(value: String): List<Photo> {

@@ -1,5 +1,6 @@
 package com.snt.phoney.di.module;
 
+import com.google.gson.Gson;
 import com.snt.phoney.BuildConfig;
 import com.snt.phoney.api.WeiboApi;
 import com.snt.phoney.utils.adapter.LiveDataCallAdapterFactory;
@@ -24,10 +25,10 @@ public class WeiboApiServiceModule {
     @Singleton
     @Provides
     @Named("weibo_api")
-    public static Retrofit provideApiRetrofit() {
+    public static Retrofit provideApiRetrofit(Gson gson) {
         return new Retrofit.Builder()
                 .baseUrl(Constants.Weibo.BASE_URL)
-                .addConverterFactory(GsonConverterFactory.create())
+                .addConverterFactory(GsonConverterFactory.create(gson))
                 .addCallAdapterFactory(RxJava2CallAdapterFactory.create())
                 .addCallAdapterFactory(new LiveDataCallAdapterFactory())
                 .client(getOkHttpClientBuilder().build())

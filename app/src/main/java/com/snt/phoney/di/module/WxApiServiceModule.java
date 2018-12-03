@@ -1,5 +1,6 @@
 package com.snt.phoney.di.module;
 
+import com.google.gson.Gson;
 import com.snt.phoney.BuildConfig;
 import com.snt.phoney.api.WxApi;
 import com.snt.phoney.utils.adapter.LiveDataCallAdapterFactory;
@@ -24,10 +25,10 @@ public class WxApiServiceModule {
     @Singleton
     @Provides
     @Named("wx_api")
-    public static Retrofit provideWeiboApiRetrofit() {
+    public static Retrofit provideWeiboApiRetrofit(Gson gson) {
         return new Retrofit.Builder()
                 .baseUrl(Constants.Wechat.BASE_URL)
-                .addConverterFactory(GsonConverterFactory.create())
+                .addConverterFactory(GsonConverterFactory.create(gson))
                 .addCallAdapterFactory(RxJava2CallAdapterFactory.create())
                 .addCallAdapterFactory(new LiveDataCallAdapterFactory())
                 .client(getOkHttpClientBuilder().build())

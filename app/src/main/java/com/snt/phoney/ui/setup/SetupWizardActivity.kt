@@ -21,12 +21,19 @@ class SetupWizardActivity : BaseActivity() {
         setStatusBarColor(colorOf(android.R.color.white))
         val user = intent?.getParcelableExtra<User>(EXTRA_USER)
                 ?: throw IllegalArgumentException("Must have a user to set up")
-        var step = if (user.sex == -1) 1 else 2
-        Log.d("TTTT", "set up wizard sex=${user.sex}")
-        when (step) {
+        when (computeStep(user)) {
             1 -> addFragmentSafely(R.id.containerLayout, SetupWizardOneFragment.newInstance(user), "step1", false)
             2 -> addFragmentSafely(R.id.containerLayout, SetupWizardTwoFragment.newInstance(user), "step2", false)
             3 -> addFragmentSafely(R.id.containerLayout, SetupWizardThreeFragment.newInstance(user), "step3", false)
+        }
+    }
+
+    private fun computeStep(user: User): Int {
+        Log.d("TTTT", "set up wizard sex=${user.sex}")
+        return if (user.sex == -1) 1 else if (user.sex == 1) {
+            if (user.height == 0 || user.age == 0 || user.cup == null) 2 else 3
+        } else {
+            if (user.height == 0 || user.age == 0 || user.weight == 0.0) 2 else 3
         }
     }
 

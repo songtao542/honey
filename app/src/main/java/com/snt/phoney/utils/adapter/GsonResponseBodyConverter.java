@@ -28,11 +28,11 @@ import java.util.Set;
 import okhttp3.ResponseBody;
 import retrofit2.Converter;
 
-final class ResponseBodyConverter<T> implements Converter<ResponseBody, T> {
+final class GsonResponseBodyConverter<T> implements Converter<ResponseBody, T> {
     private final Gson gson;
     private final TypeAdapter<T> adapter;
 
-    ResponseBodyConverter(Gson gson, TypeAdapter<T> adapter) {
+    GsonResponseBodyConverter(Gson gson, TypeAdapter<T> adapter) {
         this.gson = gson;
         this.adapter = adapter;
     }

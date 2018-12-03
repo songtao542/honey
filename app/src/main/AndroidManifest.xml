@@ -103,6 +103,7 @@
             android:windowSoftInputMode="adjustResize"/>
 
         <activity android:name=".ui.vip.VipActivity" />
+        <activity android:name=".ui.photo.PhotoViewerActivity" />
 
         <activity
             android:name=".ui.nearby.NearbyActivity"

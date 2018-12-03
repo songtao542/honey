@@ -1,9 +1,10 @@
 package com.snt.phoney.di.module;
 
+import com.google.gson.Gson;
 import com.snt.phoney.BuildConfig;
 import com.snt.phoney.api.Api;
 import com.snt.phoney.utils.adapter.LiveDataCallAdapterFactory;
-import com.snt.phoney.utils.adapter.ResponseConverterFactory;
+import com.snt.phoney.utils.adapter.GsonResponseConverterFactory;
 import com.snt.phoney.utils.data.Constants;
 
 import javax.inject.Named;
@@ -21,13 +22,20 @@ import retrofit2.adapter.rxjava2.RxJava2CallAdapterFactory;
 @Module
 public class RestApiServiceModule {
 
+
+    @Singleton
+    @Provides
+    public static Gson provideGson() {
+        return new Gson();
+    }
+
     @Singleton
     @Provides
     @Named("api")
-    public static Retrofit provideApiRetrofit() {
+    public static Retrofit provideApiRetrofit(Gson gson) {
         return new Retrofit.Builder()
                 .baseUrl(Constants.Api.BASE_URL)
-                .addConverterFactory(ResponseConverterFactory.create())
+                .addConverterFactory(GsonResponseConverterFactory.create(gson))
                 .addCallAdapterFactory(RxJava2CallAdapterFactory.create())
                 .addCallAdapterFactory(new LiveDataCallAdapterFactory())
                 .client(getOkHttpClientBuilder().build())
@@ -59,3 +67,5 @@ public class RestApiServiceModule {
         return retrofit.create(Api.class);
     }
 }
+
+
