@@ -7,6 +7,7 @@ import android.os.Build
 import android.view.View
 import android.view.ViewGroup
 import android.view.WindowManager
+import androidx.fragment.app.Fragment
 
 
 fun Activity.setStatusBarColor(color: Int) {
@@ -48,6 +49,10 @@ fun Context.getStatusBarHeight(): Int {
         resourceId > 0 -> resources.getDimensionPixelSize(resourceId)
         else -> dip(24)
     }
+}
+
+fun Fragment.getStatusBarHeight(): Int {
+    return requireContext().getStatusBarHeight()
 }
 
 fun Activity.setLayoutFullscreen() {

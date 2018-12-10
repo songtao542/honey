@@ -4,19 +4,9 @@ import android.os.Build
 import android.util.TypedValue
 import androidx.annotation.AnimRes
 import androidx.annotation.IdRes
+import androidx.appcompat.app.AppCompatActivity
+import androidx.appcompat.widget.Toolbar
 import androidx.fragment.app.Fragment
-
-fun Fragment.colorOf(id: Int): Int {
-    return if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
-        context?.getColor(id) ?: resources.getColor(id)
-    } else {
-        resources.getColor(id)
-    }
-}
-
-fun Fragment.dip(dip: Int): Int {
-    return TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, dip.toFloat(), resources.displayMetrics).toInt()
-}
 
 
 /**
@@ -97,4 +87,17 @@ inline fun Fragment.existFragmentOfTag(tag: String): Boolean {
  */
 inline fun Fragment.findFragmentByTag(tag: String): Fragment? {
     return childFragmentManager.findFragmentByTag(tag)
+}
+
+
+fun Fragment.enableOptionsMenu(toolbar: Toolbar, showTitle: Boolean = true) {
+    toolbar?.let { toolbar ->
+        activity?.let { activity ->
+            setHasOptionsMenu(true)
+            if (activity is AppCompatActivity) {
+                activity.setSupportActionBar(toolbar)
+                activity.supportActionBar?.setDisplayShowTitleEnabled(showTitle)
+            }
+        }
+    }
 }

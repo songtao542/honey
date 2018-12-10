@@ -1,6 +1,7 @@
 package com.snt.phoney.widget
 
 import android.content.Context
+import android.net.Uri
 import android.view.Gravity
 import android.view.View
 import android.view.ViewGroup
@@ -24,6 +25,7 @@ class PhotoFlowAdapter(private val context: Context) : FlowLayout.ViewAdapter {
     }
 
     private var mUrls: List<String>? = null
+    private var mUris: List<Uri>? = null
     private var mMaxShow = Int.MAX_VALUE
     private var mShowLastAsAdd = true
     private var mShowAddWhenFull = true
@@ -38,6 +40,11 @@ class PhotoFlowAdapter(private val context: Context) : FlowLayout.ViewAdapter {
 
     fun setUrls(urls: List<String>): PhotoFlowAdapter {
         this.mUrls = urls
+        return this
+    }
+
+    fun setUris(uris: List<Uri>): PhotoFlowAdapter {
+        this.mUris = uris
         return this
     }
 
@@ -68,6 +75,13 @@ class PhotoFlowAdapter(private val context: Context) : FlowLayout.ViewAdapter {
         var imageView = if (cache.size > 0) cache.pop() else ImageView(context) //ImageView(context)//
         imageView.scaleType = ImageView.ScaleType.CENTER_CROP
         Glide.with(context).load(url).into(imageView)
+        return imageView
+    }
+
+    private fun createImageView(uri: Uri): View {
+        var imageView = if (cache.size > 0) cache.pop() else ImageView(context) //ImageView(context)//
+        imageView.scaleType = ImageView.ScaleType.CENTER_CROP
+        Glide.with(context).load(uri).into(imageView)
         return imageView
     }
 
@@ -133,12 +147,16 @@ class PhotoFlowAdapter(private val context: Context) : FlowLayout.ViewAdapter {
 
     override fun create(index: Int): View {
         if (mShowLastAsAdd && index == getItemCount() - 1) {
-            val size = mUrls?.size ?: 0
+            val size = mUris?.size ?: mUrls?.size ?: 0
             if (size < mMaxShow || (size >= mMaxShow && mShowAddWhenFull)) {
                 return createLastAdd()
             }
         }
-        return createImageView(mUrls!![index])
+        return if (mUris != null) {
+            createImageView(mUris!![index])
+        } else {
+            createImageView(mUrls!![index])
+        }
     }
 
     override fun onRecycleView(view: View) {
@@ -150,7 +168,7 @@ class PhotoFlowAdapter(private val context: Context) : FlowLayout.ViewAdapter {
     }
 
     override fun getItemCount(): Int {
-        val size = mUrls?.size ?: 0
+        val size = mUris?.size ?: mUrls?.size ?: 0
         val add = if (mShowLastAsAdd) 1 else 0
         return when {
             size == 0 -> add

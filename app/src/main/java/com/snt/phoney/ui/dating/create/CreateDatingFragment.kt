@@ -2,27 +2,29 @@ package com.snt.phoney.ui.dating.create
 
 import android.app.Activity
 import android.content.Intent
+import android.net.Uri
 import android.os.Bundle
 import android.view.*
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
 import com.snt.phoney.R
 import com.snt.phoney.base.BaseFragment
-import com.snt.phoney.base.CommonActivity
-import com.snt.phoney.base.Page
+import com.snt.phoney.base.addFragmentSafely
 import com.snt.phoney.domain.model.DatingProgram
 import com.snt.phoney.domain.model.PoiAddress
 import com.snt.phoney.extensions.setSoftInputMode
 import com.snt.phoney.extensions.snackbar
 import com.snt.phoney.ui.location.LocationPicker
+import com.snt.phoney.ui.photo.PhotoViewerFragment
 import com.snt.phoney.utils.Picker
 import com.snt.phoney.utils.data.Constants
 import com.snt.phoney.widget.PhotoFlowAdapter
 import com.zhihu.matisse.Matisse
+import com.zhihu.matisse.internal.utils.PathUtils
 import kotlinx.android.synthetic.main.fragment_dating_create.*
 import java.io.File
 
-class CreateDatingFragment : BaseFragment() {
+class CreateDatingFragment : BaseFragment(), PhotoViewerFragment.OnResultListener {
 
     companion object {
         @JvmStatic
@@ -34,7 +36,7 @@ class CreateDatingFragment : BaseFragment() {
     private lateinit var viewModel: CreateDatingViewModel
 
     private lateinit var photoAdapter: PhotoFlowAdapter
-    private var selectedPhotos = ArrayList<String>()
+    private var selectedPhotoUris = ArrayList<Uri>()
 
     private var selectedAddress: PoiAddress? = null
     private var selectedProgram: DatingProgram? = null
@@ -60,7 +62,7 @@ class CreateDatingFragment : BaseFragment() {
                     selectedAddress = address
                     datingAddress.text = address.title ?: address.formatAddress
                 }
-                (activity as CommonActivity).addFragmentSafely(locationPicker, "location_picker", addToBackStack = true)
+                activity?.addFragmentSafely(locationPicker, "location_picker", addToBackStack = true)
                 return@let
             }
         }
@@ -92,7 +94,7 @@ class CreateDatingFragment : BaseFragment() {
                 .setMaxShow(8)
                 .setAddButtonStyle(PhotoFlowAdapter.AddButtonStyle.BORDER)
                 .setShowAddWhenFull(false)
-                .setUrls(selectedPhotos)
+                .setUris(selectedPhotoUris)
                 .setLastAsAdd(true)
                 .setOnAddClickListener {
                     Picker.showPhotoPicker(fragment = this@CreateDatingFragment, max = 8)
@@ -100,8 +102,15 @@ class CreateDatingFragment : BaseFragment() {
 
         photos.viewAdapter = photoAdapter
         photos.setOnItemClickListener { _, index ->
-            (activity as CommonActivity).addFragmentSafely(Page.PHOTO_VIEWER, "photo_viewer", true, argument = Bundle().apply {
-                putStringArrayList(Constants.Extra.LIST, selectedPhotos)
+            val fragment = PhotoViewerFragment.newInstance(Bundle().apply {
+                putParcelableArrayList(Constants.Extra.LIST, selectedPhotoUris)
+                putInt(Constants.Extra.INDEX, index)
+            }).apply {
+                setOnResultListener(this@CreateDatingFragment)
+            }
+
+            activity?.addFragmentSafely(fragment, "photo_viewer", true, argument = Bundle().apply {
+                putParcelableArrayList(Constants.Extra.LIST, selectedPhotoUris)
                 putInt(Constants.Extra.INDEX, index)
             })
         }
@@ -124,7 +133,7 @@ class CreateDatingFragment : BaseFragment() {
             R.id.publishDatingConfirm -> {
                 if (isValid()) {
                     val content = datingContent.text?.toString() ?: ""
-                    val cover = selectedPhotos.map { File(it) }
+                    val cover = selectedPhotoUris.map { File(PathUtils.getPath(requireContext(), it)) }
                     viewModel.publish("", selectedProgram!!.safeName, content, selectedDay, selectedAddress!!, cover)
                 }
                 true
@@ -134,7 +143,7 @@ class CreateDatingFragment : BaseFragment() {
     }
 
     private fun isValid(): Boolean {
-        if (selectedAddress == null || selectedProgram == null || selectedDay == 0 || selectedPhotos.isEmpty()) {
+        if (selectedAddress == null || selectedProgram == null || selectedDay == 0 || selectedPhotoUris.isEmpty()) {
             return false
         }
         return true
@@ -148,10 +157,19 @@ class CreateDatingFragment : BaseFragment() {
     private fun handlePhotoPick(requestCode: Int, resultCode: Int, data: Intent?) {
         if (requestCode == Picker.REQUEST_CODE_CHOOSE && resultCode == Activity.RESULT_OK) {
             val paths = Matisse.obtainPathResult(data)
+            val uris = Matisse.obtainResult(data)
             paths?.let {
-                selectedPhotos.addAll(paths)
+                selectedPhotoUris.addAll(uris)
                 photos.notifyAdapterSizeChanged()
             }
+        }
+    }
+
+    override fun onResult(deletedUris: List<Uri>?, deletedUrls: List<String>?) {
+        deletedUris?.let { deleted ->
+            selectedPhotoUris.removeAll(deleted)
+            photos.notifyAdapterSizeChanged()
+            return@let
         }
     }
 

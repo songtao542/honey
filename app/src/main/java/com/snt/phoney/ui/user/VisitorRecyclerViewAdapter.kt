@@ -12,6 +12,7 @@ import com.bumptech.glide.request.RequestOptions
 import com.snt.phoney.R
 import com.snt.phoney.base.CommonActivity
 import com.snt.phoney.base.Page
+import com.snt.phoney.base.addFragmentSafely
 import com.snt.phoney.domain.model.User
 import com.snt.phoney.utils.data.Constants
 import kotlinx.android.synthetic.main.fragment_visitor.view.*

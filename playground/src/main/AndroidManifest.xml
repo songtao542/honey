@@ -14,9 +14,21 @@
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
+
+            </intent-filter>
+
+            <intent-filter>
+                <action android:name="android.intent.action.VIEW" />
+
+                <category android:name="android.intent.category.DEFAULT" />
+                <category android:name="android.intent.category.BROWSABLE" />
+
+                <data
+                    android:host="tt.lolii.cn"
+                    android:scheme="tttt"></data>
             </intent-filter>
         </activity>
-
+        <!--<a href="tttt://tt.lolii.cn">TTTT</a>-->
 
         <activity
             android:name="city.picker.SampleCityPickerActivity"

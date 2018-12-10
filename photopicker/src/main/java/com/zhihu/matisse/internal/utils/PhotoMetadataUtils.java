@@ -72,9 +72,6 @@ public final class PhotoMetadataUtils {
         float screenHeight = (float) metrics.heightPixels;
         float widthScale = screenWidth / w;
         float heightScale = screenHeight / h;
-        if (widthScale > heightScale) {
-            return new Point((int) (w * widthScale), (int) (h * heightScale));
-        }
         return new Point((int) (w * widthScale), (int) (h * heightScale));
     }
 

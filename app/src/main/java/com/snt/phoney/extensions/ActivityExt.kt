@@ -1,13 +1,10 @@
 package com.snt.phoney.extensions
 
 import android.app.Activity
-import android.content.Intent
 import android.graphics.Rect
 import android.view.View
-import android.view.View.*
-import android.view.WindowManager
 import android.widget.FrameLayout
-import android.view.ViewTreeObserver
+import androidx.appcompat.app.AppCompatActivity
 
 
 //fun Activity.enterFullscreen() {
@@ -35,6 +32,40 @@ import android.view.ViewTreeObserver
 //            or View.SYSTEM_UI_FLAG_LAYOUT_HIDE_NAVIGATION
 //            or View.SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN)
 //}
+
+fun Activity.hideSystemUI() {
+    val option = View.SYSTEM_UI_FLAG_IMMERSIVE or View.SYSTEM_UI_FLAG_LAYOUT_STABLE or View.SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN or View.SYSTEM_UI_FLAG_FULLSCREEN
+    window.decorView.systemUiVisibility = option
+}
+
+fun Activity.showSystemUI() {
+    val option = View.SYSTEM_UI_FLAG_LAYOUT_STABLE or View.SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN
+    window.decorView.systemUiVisibility = option
+}
+
+fun Activity.hideActionBar() {
+    if (this is AppCompatActivity) {
+        supportActionBar?.hide()
+    } else {
+        actionBar.hide()
+    }
+}
+
+fun Activity.showActionBar() {
+    if (this is AppCompatActivity) {
+        supportActionBar?.show()
+    } else {
+        actionBar.show()
+    }
+}
+
+fun Activity.isActionBarShowing(): Boolean {
+    return if (this is AppCompatActivity) {
+        supportActionBar?.isShowing ?: false
+    } else {
+        actionBar.isShowing
+    }
+}
 
 class AndroidBug5497Workaround private constructor(activity: Activity) {
 

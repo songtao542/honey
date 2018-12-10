@@ -25,6 +25,7 @@ object Constants {
         const val LIST = "list"
         const val TITLE = "title"
         const val URL = "url"
+        const val URI = "uri"
         const val INDEX = "index"
     }
 
@@ -48,7 +49,7 @@ object Constants {
     }
 
     object Api {
-        const val BASE_URL = "http://phoney.alance.pub"
+        const val BASE_URL = "https://api.chunmi69.com"//"http://phoney.alance.pub"
     }
 
     object Tencent {

@@ -1,13 +1,52 @@
 <?xml version="1.0" encoding="utf-8"?>
 <FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".ui.photo.PhotoViewerFragment">
 
-    <androidx.viewpager.widget.ViewPager
+    <com.zhihu.matisse.internal.ui.widget.PreviewViewPager
         android:id="@+id/viewPager"
         android:layout_width="match_parent"
-        android:layout_height="match_parent" />
+        android:layout_height="match_parent"
+        android:background="@android:color/black" />
+
+    <!--<com.snt.phoney.widget.Toolbar-->
+    <!--android:id="@+id/toolbar"-->
+    <!--style="@style/AppTheme.ToolbarWithTab"-->
+    <!--android:layout_width="match_parent"-->
+    <!--android:layout_height="?attr/actionBarSize"-->
+    <!--android:background="?attr/toolbarBackground"-->
+    <!--android:fitsSystemWindows="false"-->
+    <!--android:theme="@style/AppTheme.PopupOverlay"-->
+    <!--app:navigationIcon="@drawable/ic_back"-->
+    <!--app:popupTheme="@style/AppTheme.PopupOverlay"-->
+    <!--app:titleTextColor="@color/white" />-->
+
+    <FrameLayout
+        android:id="@+id/actionBar"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="#4d4d4d">
+
+        <ImageView
+            android:id="@+id/back"
+            android:layout_width="?attr/actionBarSize"
+            android:layout_height="?attr/actionBarSize"
+            android:background="?attr/selectableItemBackgroundBorderless"
+            android:scaleType="centerInside"
+            android:src="@drawable/ic_back" />
+
+        <ImageView
+            android:id="@+id/delete"
+            android:layout_width="?attr/actionBarSize"
+            android:layout_height="?attr/actionBarSize"
+            android:layout_gravity="center_vertical|right"
+            android:background="?attr/selectableItemBackgroundBorderless"
+            android:scaleType="centerInside"
+            android:src="@drawable/ic_delete" />
+
+    </FrameLayout>
 
 </FrameLayout>

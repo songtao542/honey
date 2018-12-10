@@ -29,8 +29,7 @@ import com.zhihu.matisse.internal.ui.adapter.PreviewPagerAdapter;
 import java.util.ArrayList;
 import java.util.List;
 
-public class AlbumPreviewActivity extends BasePreviewActivity implements
-        AlbumMediaCollection.AlbumMediaCallbacks {
+public class AlbumPreviewActivity extends BasePreviewActivity implements AlbumMediaCollection.AlbumMediaCallbacks {
 
     public static final String EXTRA_ALBUM = "extra_album";
     public static final String EXTRA_ITEM = "extra_item";
