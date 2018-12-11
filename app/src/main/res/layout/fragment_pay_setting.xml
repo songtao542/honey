@@ -1,0 +1,118 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    tools:context=".ui.album.PaySettingFragment">
+
+
+    <com.snt.phoney.widget.Toolbar
+        android:id="@+id/toolbar"
+        style="@style/AppTheme.Toolbar"
+        android:layout_width="match_parent"
+        android:layout_height="?attr/actionBarSize"
+        android:background="?attr/toolbarBackground"
+        app:navigationIcon="@drawable/ic_back" />
+
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_weight="1">
+
+        <com.snt.phoney.widget.CompatRadioButton
+            android:id="@+id/needPay"
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            android:gravity="center_vertical"
+            android:paddingLeft="10dp"
+            android:paddingRight="10dp"
+            android:text="@string/pay_money"
+            app:checked="false"
+            app:icon="@drawable/ic_radio_button"
+            app:iconSize="20dp"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintRight_toRightOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/list"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            app:layout_constraintBottom_toTopOf="@id/inputPrice"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintRight_toRightOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/needPay" />
+
+        <LinearLayout
+            android:id="@+id/inputPrice"
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            android:background="@drawable/underline_gray"
+            android:orientation="horizontal"
+            app:layout_constraintBottom_toTopOf="@id/unlockAll"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintRight_toRightOf="parent">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:gravity="center_vertical"
+                android:paddingLeft="10dp"
+                android:paddingRight="10dp"
+                android:text="@string/price_label"
+                android:textSize="@dimen/textsize_normal" />
+
+            <EditText
+                android:id="@+id/price"
+                android:layout_width="match_parent"
+                android:layout_height="50dp"
+                android:background="@color/white"
+                android:gravity="center_vertical|right"
+                android:hint="@string/price_hint"
+                android:paddingLeft="10dp"
+                android:paddingRight="10dp"
+                android:textSize="@dimen/textsize_normal" />
+        </LinearLayout>
+
+        <com.snt.phoney.widget.CompatRadioButton
+            android:id="@+id/unlockAll"
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            android:layout_marginBottom="20dp"
+            android:gravity="center_vertical"
+            android:paddingLeft="10dp"
+            android:paddingRight="10dp"
+            android:text="@string/unlock_all"
+            app:checked="false"
+            app:icon="@drawable/ic_radio_button"
+            app:iconSize="20dp"
+            app:layout_constraintBottom_toTopOf="@id/confirm"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintRight_toRightOf="parent" />
+
+        <Button
+            android:id="@+id/confirm"
+            style="?android:attr/borderlessButtonStyle"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/button_height"
+            android:layout_marginLeft="20dp"
+            android:layout_marginTop="30dp"
+            android:layout_marginRight="20dp"
+            android:layout_marginBottom="20dp"
+            android:background="@drawable/button_primary_circle_corner_selector"
+            android:elevation="0dp"
+            android:text="@string/confirm"
+            android:textColor="@android:color/white"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintRight_toRightOf="parent" />
+
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+
+</LinearLayout>

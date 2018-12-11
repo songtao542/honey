@@ -33,7 +33,7 @@ class PopularRecommendFragment : BaseFragment() {
 
         // Set the adapter
         list.layoutManager = LinearLayoutManager(context)
-        adapter = PopularRecommendRecyclerViewAdapter(viewModel, disposeBag)
+        adapter = PopularRecommendRecyclerViewAdapter(this, viewModel, disposeBag)
         list.adapter = adapter
 
         viewModel.popularDating.observe(this, Observer {

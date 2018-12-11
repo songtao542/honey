@@ -17,4 +17,8 @@ open class BottomDialogFragment : BottomSheetDialogFragment(), Injectable {
     protected fun setMinWidth(width: Int) {
         dialog?.window?.setLayout(width, WindowManager.LayoutParams.WRAP_CONTENT)
     }
+
+//    override fun onCreateDialog(savedInstanceState: Bundle?): Dialog {
+//        return BottomSheetDialog(requireContext(), theme)
+//    }
 }

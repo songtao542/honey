@@ -142,6 +142,7 @@ interface Api {
      *@param  program    string	是	约会节目（接口返回，传字符串， eg:吃饭）
      */
     @Multipart
+    //@Headers(value = ["Content-Type: application/x-www-form-urlencoded; charset=UTF-8"])
     @POST("appointment/addAppointment")
     fun publishDating(@Part("token") token: String,
                       @Part("title") title: String,

@@ -83,3 +83,34 @@ fun Activity.addFragmentSafely(fragment: Fragment,
         fragment
     }
 }
+
+fun Fragment.addFragmentSafely(page: Page,
+                               tag: String,
+                               addToBackStack: Boolean = false,
+                               backStackName: String? = null,
+                               allowStateLoss: Boolean = false,
+                               argument: Bundle? = null,
+                               @AnimRes enterAnimation: Int = 0,
+                               @AnimRes exitAnimation: Int = 0,
+                               @AnimRes popEnterAnimation: Int = 0,
+                               @AnimRes popExitAnimation: Int = 0): Fragment {
+    val fragment = FragmentFactory.create(page.ordinal, argument)
+    return activity?.addFragmentSafely(fragment, tag, addToBackStack,
+            backStackName, allowStateLoss, argument,
+            enterAnimation, exitAnimation, popEnterAnimation, popExitAnimation) ?: fragment
+}
+
+fun Fragment.addFragmentSafely(fragment: Fragment,
+                               tag: String,
+                               addToBackStack: Boolean = false,
+                               backStackName: String? = null,
+                               allowStateLoss: Boolean = false,
+                               argument: Bundle? = null,
+                               @AnimRes enterAnimation: Int = 0,
+                               @AnimRes exitAnimation: Int = 0,
+                               @AnimRes popEnterAnimation: Int = 0,
+                               @AnimRes popExitAnimation: Int = 0): Fragment {
+    return activity?.addFragmentSafely(fragment, tag, addToBackStack,
+            backStackName, allowStateLoss, argument,
+            enterAnimation, exitAnimation, popEnterAnimation, popExitAnimation) ?: fragment
+}

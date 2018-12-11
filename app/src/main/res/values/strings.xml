@@ -182,6 +182,10 @@
     <string name="dating_date_template">%1$d年%2$d月%3$d日</string>
     <string name="days_template">%1$d天</string>
     <string name="publish_success">发布成功</string>
+    <string name="price_label">填写红包</string>
+    <string name="price_hint">输入金额</string>
+    <string name="unlock_all">全部解锁</string>
+    <string name="pay_money">红包付费</string>
 
 
 </resources>

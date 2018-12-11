@@ -23,10 +23,13 @@ object Constants {
         const val USER_ID = "user_id"
         const val PERMISSION = "permission"
         const val LIST = "list"
+        const val URL_LIST = "url_list"
+        const val URI_LIST = "uri_list"
         const val TITLE = "title"
         const val URL = "url"
         const val URI = "uri"
         const val INDEX = "index"
+        const val DELETABLE = "deletable"
     }
 
     object Preference {

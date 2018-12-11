@@ -10,15 +10,19 @@ import androidx.annotation.IdRes
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentActivity
 
-inline fun FragmentActivity.setContentFragment(@IdRes containerViewId: Int, f: () -> Fragment): Fragment {
-    return f().apply { supportFragmentManager?.beginTransaction()?.add(containerViewId, this)?.commit() }
+inline fun Activity.setContentFragment(@IdRes containerViewId: Int, f: () -> Fragment): Fragment {
+    val fragment = f()
+    if (this is FragmentActivity) {
+        supportFragmentManager?.beginTransaction()?.add(containerViewId, fragment)?.commit()
+    }
+    return fragment
 }
 
 /**
  * Method to replace the fragment. The [fragment] is added to the container view with id
  * [containerViewId] and a [tag]. The operation is performed by the supportFragmentManager.
  */
-inline fun <T : Fragment> FragmentActivity.replaceFragmentSafely(
+inline fun <T : Fragment> Activity.replaceFragmentSafely(
         @IdRes containerViewId: Int,
         fragment: T,
         tag: String,
@@ -28,19 +32,20 @@ inline fun <T : Fragment> FragmentActivity.replaceFragmentSafely(
         @AnimRes enterAnimation: Int = 0,
         @AnimRes exitAnimation: Int = 0,
         @AnimRes popEnterAnimation: Int = 0,
-        @AnimRes popExitAnimation: Int = 0
-): T {
-    val ft = supportFragmentManager
-            .beginTransaction()
-            .setCustomAnimations(enterAnimation, exitAnimation, popEnterAnimation, popExitAnimation)
-            .replace(containerViewId, fragment, tag)
-    if (addToBackStack) {
-        ft.addToBackStack(backStackName ?: tag)
-    }
-    if (!supportFragmentManager.isStateSaved) {
-        ft.commit()
-    } else if (allowStateLoss) {
-        ft.commitAllowingStateLoss()
+        @AnimRes popExitAnimation: Int = 0): T {
+    if (this is FragmentActivity) {
+        val ft = supportFragmentManager
+                .beginTransaction()
+                .setCustomAnimations(enterAnimation, exitAnimation, popEnterAnimation, popExitAnimation)
+                .replace(containerViewId, fragment, tag)
+        if (addToBackStack) {
+            ft.addToBackStack(backStackName ?: tag)
+        }
+        if (!supportFragmentManager.isStateSaved) {
+            ft.commit()
+        } else if (allowStateLoss) {
+            ft.commitAllowingStateLoss()
+        }
     }
     return fragment
 }
@@ -51,7 +56,7 @@ inline fun <T : Fragment> FragmentActivity.replaceFragmentSafely(
  * This method checks if fragment exists.
  * @return the fragment added.
  */
-inline fun <T : Fragment> FragmentActivity.addFragmentSafely(
+inline fun <T : Fragment> Activity.addFragmentSafely(
         @IdRes containerViewId: Int,
         fragment: T,
         tag: String,
@@ -61,23 +66,25 @@ inline fun <T : Fragment> FragmentActivity.addFragmentSafely(
         @AnimRes enterAnimation: Int = 0,
         @AnimRes exitAnimation: Int = 0,
         @AnimRes popEnterAnimation: Int = 0,
-        @AnimRes popExitAnimation: Int = 0
-): T {
-    if (!existFragmentOfTag(tag)) {
-        val ft = supportFragmentManager.beginTransaction()
-                .setCustomAnimations(enterAnimation, exitAnimation, popEnterAnimation, popExitAnimation)
-                .add(containerViewId, fragment, tag)
-        if (addToBackStack) {
-            ft.addToBackStack(backStackName)
+        @AnimRes popExitAnimation: Int = 0): T {
+    if (this is FragmentActivity) {
+        if (!existFragmentOfTag(tag)) {
+            val ft = supportFragmentManager.beginTransaction()
+                    .setCustomAnimations(enterAnimation, exitAnimation, popEnterAnimation, popExitAnimation)
+                    .add(containerViewId, fragment, tag)
+            if (addToBackStack) {
+                ft.addToBackStack(backStackName)
+            }
+            if (!supportFragmentManager.isStateSaved) {
+                ft.commit()
+            } else if (allowStateLoss) {
+                ft.commitAllowingStateLoss()
+            }
+            return fragment
         }
-        if (!supportFragmentManager.isStateSaved) {
-            ft.commit()
-        } else if (allowStateLoss) {
-            ft.commitAllowingStateLoss()
-        }
-        return fragment
+        return findFragmentByTag(tag) as T
     }
-    return findFragmentByTag(tag) as T
+    return fragment
 }
 
 /**

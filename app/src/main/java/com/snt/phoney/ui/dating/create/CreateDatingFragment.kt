@@ -103,16 +103,13 @@ class CreateDatingFragment : BaseFragment(), PhotoViewerFragment.OnResultListene
         photos.viewAdapter = photoAdapter
         photos.setOnItemClickListener { _, index ->
             val fragment = PhotoViewerFragment.newInstance(Bundle().apply {
-                putParcelableArrayList(Constants.Extra.LIST, selectedPhotoUris)
+                putParcelableArrayList(Constants.Extra.URI_LIST, selectedPhotoUris)
                 putInt(Constants.Extra.INDEX, index)
+                putBoolean(Constants.Extra.DELETABLE, true)
             }).apply {
                 setOnResultListener(this@CreateDatingFragment)
             }
-
-            activity?.addFragmentSafely(fragment, "photo_viewer", true, argument = Bundle().apply {
-                putParcelableArrayList(Constants.Extra.LIST, selectedPhotoUris)
-                putInt(Constants.Extra.INDEX, index)
-            })
+            activity?.addFragmentSafely(fragment, "photo_viewer", true)
         }
 
         viewModel.error.observe(this, Observer {

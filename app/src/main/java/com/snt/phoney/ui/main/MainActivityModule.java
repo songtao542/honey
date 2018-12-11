@@ -1,5 +1,7 @@
 package com.snt.phoney.ui.main;
 
+import androidx.lifecycle.ViewModel;
+
 import com.snt.phoney.di.ActivityScope;
 import com.snt.phoney.di.FragmentScope;
 import com.snt.phoney.di.ViewModelKey;
@@ -21,13 +23,12 @@ import com.snt.phoney.ui.setup.BindPhoneFragment;
 import com.snt.phoney.ui.setup.BindPhoneViewModel;
 import com.snt.phoney.ui.share.ShareFragment;
 
-import androidx.lifecycle.ViewModel;
 import dagger.Binds;
 import dagger.Module;
 import dagger.android.ContributesAndroidInjector;
 import dagger.multibindings.IntoMap;
 
-@Module(includes = ViewModelFactoryModule.class)
+@Module(includes = {ViewModelFactoryModule.class})
 public abstract class MainActivityModule {
 
     @FragmentScope

@@ -25,9 +25,10 @@ class PhotoViewerFragment : Fragment(), PhotoViewFragment.OnPhotoSingleTapListen
     }
 
     private lateinit var adapter: PhotoViewerAdapter
-    private lateinit var urls: ArrayList<String>
-    private lateinit var uris: ArrayList<Uri>
+    private var urls: ArrayList<String>? = null
+    private var uris: ArrayList<Uri>? = null
     private var index: Int = 0
+    private var deletable = false
 
     private var deletedUrls: ArrayList<String>? = null
     private var deletedUris: ArrayList<Uri>? = null
@@ -38,9 +39,10 @@ class PhotoViewerFragment : Fragment(), PhotoViewFragment.OnPhotoSingleTapListen
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         arguments?.let {
-            urls = it.getStringArrayList(Constants.Extra.LIST)
-            uris = it.getParcelableArrayList(Constants.Extra.LIST)
+            urls = it.getStringArrayList(Constants.Extra.URL_LIST)
+            uris = it.getParcelableArrayList(Constants.Extra.URI_LIST)
             index = it.getInt(Constants.Extra.INDEX, 0)
+            deletable = it.getBoolean(Constants.Extra.DELETABLE, false)
         }
     }
 
@@ -52,10 +54,14 @@ class PhotoViewerFragment : Fragment(), PhotoViewFragment.OnPhotoSingleTapListen
         super.onActivityCreated(savedInstanceState)
         actionBar.setPadding(0, getStatusBarHeight(), 0, 0)
         back.setOnClickListener { activity?.onBackPressed() }
-        delete.setOnClickListener {
-            deletePhoto()
+        if (deletable) {
+            delete.setOnClickListener {
+                deletePhoto()
+            }
+        } else {
+            delete.visibility = View.GONE
         }
-        adapter = PhotoViewerAdapter(childFragmentManager)
+        adapter = PhotoViewerAdapter(childFragmentManager, deletable)
         adapter.onPhotoSingleTapListener = this
         if (uris != null) {
             adapter.uris = uris
@@ -80,6 +86,7 @@ class PhotoViewerFragment : Fragment(), PhotoViewFragment.OnPhotoSingleTapListen
 
     private fun deletePhoto() {
         if (uris != null) {
+            val uris = uris!!
             if (uris.size > 0) {
                 if (deletedUris == null) {
                     deletedUris = ArrayList()
@@ -99,11 +106,12 @@ class PhotoViewerFragment : Fragment(), PhotoViewFragment.OnPhotoSingleTapListen
                         activity?.supportFragmentManager?.popBackStack()
                     }
                 } else {
-                    Log.d("TTTT","delete dddddddddddddddddddddddddddddddddddddddddddddddddd")
+                    Log.d("TTTT", "delete dddddddddddddddddddddddddddddddddddddddddddddddddd")
                     adapter.notifyDataSetChanged()
                 }
             }
         } else if (urls != null) {
+            val urls = urls!!
             if (urls.size > 0) {
                 if (deletedUrls == null) {
                     deletedUrls = ArrayList()

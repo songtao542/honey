@@ -7,6 +7,8 @@ import com.snt.phoney.ui.main.MainActivity;
 import com.snt.phoney.ui.main.MainActivityModule;
 import com.snt.phoney.ui.nearby.NearbyActivity;
 import com.snt.phoney.ui.nearby.NearbyActivityModule;
+import com.snt.phoney.ui.photo.PhotoViewerActivity;
+import com.snt.phoney.ui.photo.PhotoViewerModule;
 import com.snt.phoney.ui.privacy.PrivacyActivity;
 import com.snt.phoney.ui.privacy.PrivacyActivityModule;
 import com.snt.phoney.ui.report.ReportActivity;
@@ -88,4 +90,11 @@ public abstract class ActivityContributorModule {
             PrivacyActivityModule.class
     })
     public abstract PrivacyActivity contributePrivacyActivity();
+
+    @ActivityScope
+    @ContributesAndroidInjector(modules = {
+            EmptyViewModelFactoryModule.class,
+            PhotoViewerModule.class
+    })
+    public abstract PhotoViewerActivity contributePhotoViewerActivity();
 }

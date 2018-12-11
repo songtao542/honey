@@ -6,7 +6,7 @@ import androidx.fragment.app.FragmentManager
 import androidx.fragment.app.FragmentStatePagerAdapter
 import androidx.viewpager.widget.PagerAdapter
 
-class PhotoViewerAdapter(fragmentManager: FragmentManager) : FragmentStatePagerAdapter(fragmentManager) {
+class PhotoViewerAdapter(fragmentManager: FragmentManager, private val deletable: Boolean) : FragmentStatePagerAdapter(fragmentManager) {
 
     var urls: List<String>? = null
         set(value) {
@@ -36,6 +36,6 @@ class PhotoViewerAdapter(fragmentManager: FragmentManager) : FragmentStatePagerA
     override fun getCount(): Int = uris?.size ?: urls?.size ?: 0
 
     override fun getItemPosition(obj: Any): Int {
-        return PagerAdapter.POSITION_NONE
+        return if (deletable) PagerAdapter.POSITION_NONE else super.getItemPosition(obj)
     }
 }
