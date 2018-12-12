@@ -1,6 +1,5 @@
 package com.snt.phoney.ui.main.home.friend
 
-import android.graphics.Rect
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -9,10 +8,10 @@ import android.widget.TextView
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
 import androidx.recyclerview.widget.GridLayoutManager
-import androidx.recyclerview.widget.RecyclerView
 import com.snt.phoney.R
 import com.snt.phoney.base.BaseFragment
 import com.snt.phoney.extensions.dip
+import com.snt.phoney.widget.itemdecoration.MonospacedItemDecoration
 import kotlinx.android.synthetic.main.fragment_friend_list.*
 import kotlinx.android.synthetic.main.fragment_friend_tag.*
 
@@ -53,7 +52,7 @@ class FriendFragment : BaseFragment() {
         viewModel = ViewModelProviders.of(this, viewModelFactory).get(FriendViewModel::class.java)
 
         adapter = FriendRecyclerViewAdapter()
-        list.addItemDecoration(ItemDecoration(dip(8)))
+        list.addItemDecoration(MonospacedItemDecoration(dip(8)))
         list.layoutManager = GridLayoutManager(context, 2).apply {
             spanSizeLookup = object : GridLayoutManager.SpanSizeLookup() {
                 override fun getSpanSize(position: Int): Int {
@@ -116,25 +115,5 @@ class FriendFragment : BaseFragment() {
     }
 
 
-    inner class ItemDecoration(private val space: Int) : RecyclerView.ItemDecoration() {
-        override fun getItemOffsets(outRect: Rect, view: View, parent: RecyclerView, state: RecyclerView.State) {
-            var params = view.layoutParams
-            if (params is GridLayoutManager.LayoutParams) {
-                var spanSize = params.spanSize
-                var spanIndex = params.spanIndex
-                var position = params.viewLayoutPosition
-                if (spanSize == 1 && spanIndex == 0) {
-                    outRect.left = space
-                    outRect.right = space / 2
-                    outRect.top = space / 2
-                    outRect.bottom = space / 2
-                } else if (spanSize == 1 && spanIndex == 1) {
-                    outRect.left = space / 2
-                    outRect.right = space
-                    outRect.top = space / 2
-                    outRect.bottom = space / 2
-                }
-            }
-        }
-    }
+
 }

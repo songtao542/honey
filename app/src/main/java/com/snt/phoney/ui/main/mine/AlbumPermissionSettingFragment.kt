@@ -7,10 +7,10 @@ import android.view.View
 import android.view.ViewGroup
 import com.snt.phoney.R
 import com.snt.phoney.base.BottomDialogFragment
-import com.snt.phoney.base.addFragmentSafely
+import com.snt.phoney.base.CommonActivity
+import com.snt.phoney.base.Page
 import com.snt.phoney.domain.model.PhotoPermission
-import com.snt.phoney.extensions.addFragmentSafely
-import com.snt.phoney.ui.album.PaySettingFragment
+import com.snt.phoney.ui.album.AlbumSettingActivity
 import com.snt.phoney.utils.data.Constants
 import kotlinx.android.synthetic.main.fragment_album_permission_setting.*
 
@@ -46,7 +46,9 @@ class AlbumPermissionSettingFragment : BottomDialogFragment() {
             Log.d("TTTT", "aaaaaaaaaaaaaaaaaaaaaaaaaaaa" + photoPermission)
             if (photoPermission == PhotoPermission.NEED_CHARGE) {
                 Log.d("TTTT", "xxxxxxxxxxxxxxxxx ppppppppppppppppp")
-                activity?.addFragmentSafely(R.id.container, PaySettingFragment.newInstance(), "pay", true)
+                activity?.let { activity ->
+                    activity.startActivity(CommonActivity.newIntent<AlbumSettingActivity>(activity, Page.PAY_SETTING))
+                }
             }
         }
     }

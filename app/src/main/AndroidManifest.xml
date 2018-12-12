@@ -114,6 +114,7 @@
         <activity android:name=".ui.privacy.PrivacyActivity"></activity>
         <activity android:name=".ui.wallet.WalletActivity"></activity>
         <activity android:name=".ui.about.AboutActivity"></activity>
+        <activity android:name=".ui.album.AlbumSettingActivity"></activity>
 
         <provider
             android:name="androidx.core.content.FileProvider"

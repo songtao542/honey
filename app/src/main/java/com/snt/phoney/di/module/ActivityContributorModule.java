@@ -1,6 +1,8 @@
 package com.snt.phoney.di.module;
 
 import com.snt.phoney.di.ActivityScope;
+import com.snt.phoney.ui.album.AlbumSettingActivity;
+import com.snt.phoney.ui.album.AlbumSettingActivityModule;
 import com.snt.phoney.ui.dating.DatingActivity;
 import com.snt.phoney.ui.dating.DatingActivityModule;
 import com.snt.phoney.ui.main.MainActivity;
@@ -97,4 +99,12 @@ public abstract class ActivityContributorModule {
             PhotoViewerModule.class
     })
     public abstract PhotoViewerActivity contributePhotoViewerActivity();
+
+    @ActivityScope
+    @ContributesAndroidInjector(modules = {
+            AlbumSettingActivityModule.class
+    })
+    public abstract AlbumSettingActivity contributeAlbumSettingActivity();
+
+
 }

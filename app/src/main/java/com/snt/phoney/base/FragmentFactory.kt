@@ -3,6 +3,7 @@ package com.snt.phoney.base
 import android.os.Bundle
 import androidx.fragment.app.Fragment
 import com.snt.phoney.ui.about.AboutFragment
+import com.snt.phoney.ui.album.PaySettingFragment
 import com.snt.phoney.ui.dating.create.CreateDatingFragment
 import com.snt.phoney.ui.dating.detail.DatingDetailFragment
 import com.snt.phoney.ui.dating.list.DatingListFragment
@@ -40,7 +41,9 @@ enum class Page {
 
     LOCATION_PICKER,
 
-    PHOTO_VIEWER
+    PHOTO_VIEWER,
+
+    PAY_SETTING,
 }
 
 class FragmentFactory {
@@ -67,6 +70,8 @@ class FragmentFactory {
                 Page.LOCATION_PICKER.ordinal -> LocationPickerFragment.newInstance(arguments)
 
                 Page.PHOTO_VIEWER.ordinal -> PhotoViewerFragment.newInstance(arguments)
+
+                Page.PAY_SETTING.ordinal -> PaySettingFragment.newInstance(arguments)
 
                 else -> Fragment()
             }

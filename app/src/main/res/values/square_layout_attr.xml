@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <declare-styleable name="SquareLayout">
+        <!-- 将父控件均分为 spanCount 等份 -->
+        <attr name="spanCount" format="integer" />
+        <!-- 每等份之间的间距 -->
+        <attr name="spaceWidth" format="dimension" />
+        <!-- 左右两边是否显示间距 -->
+        <attr name="hasEdgeScape" format="boolean" />
+    </declare-styleable>
+</resources>

@@ -59,27 +59,6 @@ class MineRecyclerViewAdapter(val fragment: Fragment) : RecyclerView.Adapter<Rec
         settings.add(Setting(R.drawable.ic_user_protocol, "用户协议", ""))
         settings.add(Setting(R.drawable.ic_clear_cache, "清理缓存", ""))
         settings.add(Setting(R.drawable.ic_about, "关于", ""))
-
-        val addr = "http://pic.58pic.com/58pic/15/35/50/50X58PICZkd_1024.jpg"
-
-//        photos.add(addr)
-//        photos.add(addr)
-//        photos.add(addr)
-//        photos.add(addr)
-//        photos.add(addr)
-//        photos.add(addr)
-//        photos.add(addr)
-//        photos.add(addr)
-//        photos.add(addr)
-//        photos.add(addr)
-//        photos.add(addr)
-//        photos.add(addr)
-//        photos.add(addr)
-//        photos.add(addr)
-//        photos.add(addr)
-//        photos.add(addr)
-//        photos.add(addr)
-//        photos.add(addr)
     }
 
 
