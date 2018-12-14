@@ -14,7 +14,8 @@
         android:layout_width="match_parent"
         android:layout_height="?attr/actionBarSize"
         android:background="?attr/toolbarBackground"
-        app:navigationIcon="@drawable/ic_back" />
+        app:navigationIcon="@drawable/ic_back"
+        app:title="@string/album_permission_setting" />
 
 
     <LinearLayout
@@ -74,6 +75,7 @@
                     android:background="@android:color/transparent"
                     android:gravity="center_vertical|right"
                     android:hint="@string/price_hint"
+                    android:inputType="numberSigned"
                     android:paddingLeft="@dimen/content_padding"
                     android:paddingRight="@dimen/content_padding"
                     android:textSize="@dimen/textsize_normal" />

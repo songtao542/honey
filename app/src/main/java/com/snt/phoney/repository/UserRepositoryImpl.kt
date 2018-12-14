@@ -20,6 +20,7 @@ package com.snt.phoney.repository
 
 import com.snt.phoney.api.Api
 import com.snt.phoney.domain.model.AmountInfo
+import com.snt.phoney.domain.model.Photo
 import com.snt.phoney.domain.model.Response
 import com.snt.phoney.domain.model.User
 import com.snt.phoney.domain.repository.CacheRepository
@@ -33,6 +34,10 @@ import javax.inject.Singleton
 class UserRepositoryImpl @Inject constructor(private val cache: CacheRepository, private val api: Api) : UserRepository {
     override fun setPhotoPermission(token: String, photoPermission: Int, money: Double, photoId: String): Single<Response<String>> {
         return api.setPhotoPermission(token, photoPermission.toString(), money.toString(), photoId)
+    }
+
+    override fun getUserPhotos(token: String): Single<Response<List<Photo>>> {
+        return api.getUserPhotos(token)
     }
 
     override fun listVisitor(token: String): Single<Response<List<User>>> {

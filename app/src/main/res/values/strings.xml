@@ -186,6 +186,7 @@
     <string name="price_hint">输入金额</string>
     <string name="unlock_all">全部解锁</string>
     <string name="pay_money">红包付费</string>
+    <string name="album_permission_setting">设置相册权限</string>
 
 
 </resources>

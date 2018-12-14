@@ -11,7 +11,14 @@ object MultipartUtil {
         val parts = ArrayList<MultipartBody.Part>(files.size)
         for (file in files) {
             val mediaType = MediaFile.getFileType(file.path)
-            val requestBody = RequestBody.create(MediaType.parse(mediaType.mimeType), file)
+            val mimeType = when {
+                mediaType != null -> mediaType.mimeType
+                file.path.contains("jpeg", true) -> "image/jpeg"
+                file.path.contains("png", true) -> "image/png"
+                file.path.contains("gif", true) -> "image/gif"
+                else -> "image/jpeg"
+            }
+            val requestBody = RequestBody.create(MediaType.parse(mimeType), file)
             val part = MultipartBody.Part.createFormData(name, file.name, requestBody)
             parts.add(part)
         }

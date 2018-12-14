@@ -5,26 +5,52 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.RecyclerView
+import com.bumptech.glide.Glide
 import com.snt.phoney.R
+import com.snt.phoney.domain.model.Photo
+import kotlinx.android.synthetic.main.fragment_pay_setting_list_item.view.*
 
-class PaySettingRecyclerViewAdapter(val fragment: Fragment) : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
+class PaySettingRecyclerViewAdapter(val fragment: Fragment) : RecyclerView.Adapter<PaySettingRecyclerViewAdapter.ViewHolder>() {
+
+    var data: List<Photo>? = null
+        set(value) {
+            value?.let {
+                field = it
+                notifyDataSetChanged()
+            }
+        }
+
+    val selected = ArrayList<Photo>()
 
 
     override fun getItemViewType(position: Int): Int {
         return super.getItemViewType(position)
     }
 
-    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder {
+    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
         return ViewHolder(LayoutInflater.from(parent.context).inflate(R.layout.fragment_pay_setting_list_item, parent, false))
     }
 
-    override fun getItemCount(): Int = 30
+    override fun getItemCount(): Int = data?.size ?: 0
 
-    override fun onBindViewHolder(holder: RecyclerView.ViewHolder, position: Int) {
+    override fun onBindViewHolder(holder: ViewHolder, position: Int) {
+        holder.setData(data!![position])
     }
 
     inner class ViewHolder(private val mView: View) : RecyclerView.ViewHolder(mView) {
-
+        private var photo: Photo? = null
+        fun setData(photo: Photo) {
+            this.photo = photo
+            Glide.with(mView.image).load(photo.path).into(mView.image)
+            mView.checkbox.checked = photo.selected
+            mView.checkbox.setOnCheckedChangeListener { _, isChecked ->
+                if (isChecked) {
+                    selected.add(photo)
+                } else {
+                    selected.remove(photo)
+                }
+            }
+        }
     }
 
 }

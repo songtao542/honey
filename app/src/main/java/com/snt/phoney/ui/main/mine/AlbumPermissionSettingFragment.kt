@@ -1,10 +1,10 @@
 package com.snt.phoney.ui.main.mine
 
 import android.os.Bundle
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.lifecycle.ViewModelProviders
 import com.snt.phoney.R
 import com.snt.phoney.base.BottomDialogFragment
 import com.snt.phoney.base.CommonActivity
@@ -20,6 +20,8 @@ class AlbumPermissionSettingFragment : BottomDialogFragment() {
 
     private lateinit var photoPermission: PhotoPermission
 
+    private lateinit var viewModel: MineViewModel
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         arguments?.let {
@@ -33,6 +35,7 @@ class AlbumPermissionSettingFragment : BottomDialogFragment() {
 
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
+        viewModel = ViewModelProviders.of(this, viewModelFactory).get(MineViewModel::class.java)
         publicAlbum.background = resources.getDrawable(R.drawable.album_permission_setting_item_selector, activity?.theme)
         needCharge.background = resources.getDrawable(R.drawable.album_permission_setting_item_selector, activity?.theme)
         needApply.background = resources.getDrawable(R.drawable.album_permission_setting_item_selector, activity?.theme)
@@ -43,13 +46,31 @@ class AlbumPermissionSettingFragment : BottomDialogFragment() {
         needApply.setOnClickListener { select(PhotoPermission.NEED_APPLY) }
         privateAlbum.setOnClickListener { select(PhotoPermission.PRIVATE) }
         confirm.setOnClickListener {
-            Log.d("TTTT", "aaaaaaaaaaaaaaaaaaaaaaaaaaaa" + photoPermission)
-            if (photoPermission == PhotoPermission.NEED_CHARGE) {
-                Log.d("TTTT", "xxxxxxxxxxxxxxxxx ppppppppppppppppp")
-                activity?.let { activity ->
-                    activity.startActivity(CommonActivity.newIntent<AlbumSettingActivity>(activity, Page.PAY_SETTING))
-                }
+            activity?.let { activity ->
+                activity.startActivity(CommonActivity.newIntent<AlbumSettingActivity>(activity, Page.PAY_SETTING, Bundle().apply {
+                    putInt(Constants.Extra.PERMISSION, photoPermission.value)
+                }))
             }
+            dismiss()
+//            when (photoPermission) {
+//                PhotoPermission.NEED_CHARGE -> {
+//                    activity?.let { activity ->
+//                        activity.startActivity(CommonActivity.newIntent<AlbumSettingActivity>(activity, Page.PAY_SETTING))
+//                    }
+//                }
+//                PhotoPermission.PUBLIC -> {
+//                    viewModel.setPhotoPermission(photoPermission)
+//                }
+//                PhotoPermission.UNLOCKED -> {
+//                    viewModel.setPhotoPermission(photoPermission)
+//                }
+//                PhotoPermission.NEED_APPLY -> {
+//                    viewModel.setPhotoPermission(photoPermission)
+//                }
+//                PhotoPermission.PRIVATE -> {
+//                    viewModel.setPhotoPermission(photoPermission)
+//                }
+//            }
         }
     }
 

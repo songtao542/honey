@@ -100,7 +100,7 @@ interface Api {
 
     @FormUrlEncoded
     @POST("users/getUsersPhoto")
-    fun getUserPhotoes(@Field("token") token: String): Single<Response<List<Photo>>>
+    fun getUserPhotos(@Field("token") token: String): Single<Response<List<Photo>>>
 
     @FormUrlEncoded
     @POST("users/closePrivatePassword")

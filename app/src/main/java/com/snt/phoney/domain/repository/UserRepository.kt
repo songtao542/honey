@@ -16,6 +16,7 @@ package com.snt.phoney.domain.repository
 
 
 import com.snt.phoney.domain.model.AmountInfo
+import com.snt.phoney.domain.model.Photo
 import com.snt.phoney.domain.model.Response
 import com.snt.phoney.domain.model.User
 import io.reactivex.Single
@@ -96,6 +97,8 @@ interface UserRepository {
                            photoPermission: Int,
                            money: Double,
                            photoId: String): Single<Response<String>>
+
+    fun getUserPhotos(token: String): Single<Response<List<Photo>>>
 
     fun getUserAmountInfo(token: String): Single<Response<AmountInfo>>
 

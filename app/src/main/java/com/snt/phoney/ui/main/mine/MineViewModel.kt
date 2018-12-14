@@ -31,7 +31,7 @@ class MineViewModel @Inject constructor(private val usecase: GetUserInfoUseCase)
                 }
     }
 
-    fun setPhotoPermission(photoPermission: PhotoPermission, money: Double, photoId: String): Disposable? {
+    fun setPhotoPermission(photoPermission: PhotoPermission, money: Double = 0.0, photoId: String = ""): Disposable? {
         val token = usecase.user?.token ?: return null
         return usecase.setPhotoPermission(token, photoPermission.value, money, photoId)
                 .subscribeOn(Schedulers.io())
