@@ -48,6 +48,12 @@ android {
         doNotStrip '*/mips/*.so'
         doNotStrip '*/mips64/*.so'
     }
+
+    dexOptions {
+        javaMaxHeapSize "4g"
+        preDexLibraries = true
+    }
+
     buildTypes {
         debug {
             defaultConfig {
@@ -62,10 +68,14 @@ android {
 //            signingConfig signingConfigs.debug
         }
         release {
+            defaultConfig {
+                minSdkVersion 21
+                multiDexEnabled true
+            }
             shrinkResources true
             minifyEnabled true
-            multiDexKeepFile file('multidex-config.txt')
-            multiDexKeepProguard file('multidex-config.pro')
+            //multiDexKeepFile file('multidex-config.txt')
+            //multiDexKeepProguard file('multidex-config.pro')
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
             signingConfig signingConfigs.release
         }
@@ -97,7 +107,7 @@ android {
 dependencies {
     implementation fileTree(include: ['*.jar'], dir: 'libs')
     implementation project(path: ':flexbox')
-    implementation project(path: ':expandable_layout')
+    //implementation project(path: ':expandable_layout')
     implementation project(path: ':citypicker')
     implementation project(path: ':zoomimage')
     implementation project(path: ':photopicker')
@@ -142,15 +152,15 @@ dependencies {
     //androidTestImplementation deps.androidx.work_testing
     androidTestImplementation deps.androidx.test_rules
     androidTestImplementation deps.androidx.test_runner
-    androidTestImplementation deps.androidx.espresso_core
-    androidTestImplementation deps.androidx.espresso_contrib
+    //androidTestImplementation deps.androidx.espresso_core
+    //androidTestImplementation deps.androidx.espresso_contrib
     implementation deps.androidx.core
     implementation deps.androidx.fragment
     implementation deps.androidx.cardview
     implementation deps.androidx.support_v4
     implementation deps.androidx.coordinatorlayout
-    implementation deps.androidx.recyclerview
-    implementation deps.androidx.recyclerview_selection
+    //implementation deps.androidx.recyclerview
+    //implementation deps.androidx.recyclerview_selection
     implementation deps.androidx.annotation
     implementation deps.androidx.vectordrawable
     implementation deps.androidx.vectordrawable_animated
@@ -159,10 +169,10 @@ dependencies {
     implementation deps.androidx.viewpager
     implementation deps.androidx.appcompat
     implementation deps.androidx.constraintlayout
-    implementation deps.androidx.multidex
     implementation deps.androidx.material
     implementation deps.androidx.exifinterface
 
+    //implementation deps.androidx.multidex
     //    kapt deps.androidx.databinding_compiler
     //    implementation deps.support.v4
     //    implementation deps.support.app_compat
@@ -221,7 +231,7 @@ dependencies {
     implementation deps.kotlin.stdlib
     implementation deps.kotlinx.serialization_runtime
     implementation deps.kotlinx.coroutines_android
-    androidTestImplementation deps.kotlin.reflect
+    //androidTestImplementation deps.kotlin.reflect
     implementation deps.timber
 
     implementation deps.location.smart_location

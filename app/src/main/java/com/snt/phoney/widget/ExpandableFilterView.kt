@@ -8,8 +8,6 @@ import android.view.View
 import android.widget.TextView
 import com.snt.phoney.R
 import com.snt.phoney.extensions.dip
-import expandable.widget.ExpandableLayout
-import kotlin.collections.ArrayList
 
 class ExpandableFilterView : ExpandableLayout, View.OnClickListener {
     constructor(context: Context) : super(context) {

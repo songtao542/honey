@@ -8,7 +8,7 @@ android {
         targetSdkVersion build_versions.target_sdk
         versionCode 1
         versionName "1.0"
-
+        multiDexEnabled true
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
 
     }
@@ -30,8 +30,8 @@ dependencies {
 
     androidTestImplementation deps.androidx.test_rules
     androidTestImplementation deps.androidx.test_runner
-    androidTestImplementation deps.androidx.espresso_core
-    androidTestImplementation deps.androidx.espresso_contrib
+    //androidTestImplementation deps.androidx.espresso_core
+    //androidTestImplementation deps.androidx.espresso_contrib
 
     implementation deps.androidx.annotation
 }

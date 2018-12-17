@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <declare-styleable name="ExpandableLayout">
+        <attr name="animateExpand" format="boolean" />
+        <attr name="indicatorId" format="reference" />
+
+    </declare-styleable>
+    <declare-styleable name="ExpandableLayout_Layout">
+        <attr name="layout_showAtTop" format="boolean" />
+    </declare-styleable>
+</resources>

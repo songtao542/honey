@@ -32,6 +32,7 @@
 
 #app
 -keep public class com.snt.phoney.domain.**
+-keep public class com.snt.phoney.base.**
 -keep public class com.snt.phoney.repository.**
 
 -keep public class * extends android.arch.lifecycle.ViewModel
@@ -54,7 +55,7 @@
 
 
 ##---------------Begin: proguard configuration for kotlinx.serialization  ----------
--keepattributes *Annotation*, InnerClasses
+-keepattributes InnerClasses
 -dontnote kotlinx.serialization.SerializationKt
 -keep,includedescriptorclasses class com.snt.phoney.**$$serializer { *; } # <-- change package name to your app's
 -keepclassmembers class com.snt.phoney.** { # <-- change package name to your app's
@@ -115,7 +116,6 @@
 
 ##---------------Begin: proguard configuration for okhttp3  ----------
 -keepattributes Signature
--keepattributes *Annotation*
 -keep class okhttp3.** { *; }
 -keep interface okhttp3.** { *; }
 -dontwarn okhttp3.**
@@ -140,6 +140,51 @@
 -keep public class * extends android.support.v4.view.ActionProvider {
     public <init>(android.content.Context);
 }
+-keep class androidx.fragment.** { *; }
+-keep interface androidx.fragment.** { *; }
+-keep public class androidx.core.** { *; }
+
+-keep public class * extends android.app.Activity
+-keep public class * extends android.app.Application
+-keep public class * extends android.app.Service
+-keep public class * extends android.content.BroadcastReceiver
+-keep public class * extends android.content.ContentProvider
+-keep public class * extends android.app.backup.BackupAgentHelper
+-keep public class * extends android.preference.Preference
+-keep public class com.android.vending.licensing.ILicensingService
+-keepclasseswithmembernames class * {
+    native <methods>;
+}
+-keepclasseswithmembers class * {
+    public <init>(android.content.Context, android.util.AttributeSet);
+}
+-keepclasseswithmembers class * {
+    public <init>(android.content.Context, android.util.AttributeSet, int);
+}
+-keepclassmembers class * extends android.app.Activity {
+    public void *(android.view.View);
+}
+-keepclassmembers enum * {
+    public static **[] values();
+    public static ** valueOf(java.lang.String);
+}
+-keep class * implements android.os.Parcelable {
+    public static final android.os.Parcelable$Creator *;
+}
+
+-keep class kotlin.** { *; }
+-keep class kotlin.Metadata { *; }
+-dontwarn kotlin.**
+-keepclassmembers class **$WhenMappings {
+    <fields>;
+}
+-keepclassmembers class kotlin.Metadata {
+    public <methods>;
+}
+-assumenosideeffects class kotlin.jvm.internal.Intrinsics {
+    static void checkParameterIsNotNull(java.lang.Object, java.lang.String);
+}
+
 -keep class androidx.cardview.widget.RoundRectDrawable { *; }
 -keepclassmembers class **.R$* {
     public static <fields>;
