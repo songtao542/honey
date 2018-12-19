@@ -2,10 +2,7 @@ package com.snt.phoney.repository
 
 
 import com.snt.phoney.api.Api
-import com.snt.phoney.domain.model.AmountInfo
-import com.snt.phoney.domain.model.Photo
-import com.snt.phoney.domain.model.Response
-import com.snt.phoney.domain.model.User
+import com.snt.phoney.domain.model.*
 import com.snt.phoney.domain.repository.CacheRepository
 import com.snt.phoney.domain.repository.UserRepository
 import com.snt.phoney.utils.data.Constants
@@ -15,6 +12,34 @@ import javax.inject.Singleton
 
 @Singleton
 class UserRepositoryImpl @Inject constructor(private val cache: CacheRepository, private val api: Api) : UserRepository {
+    override fun setPrivacyPassword(token: String, password: String, privatePassword: String): Single<Response<String>> {
+        return api.setPrivacyPassword(token, password, privatePassword)
+    }
+
+    override fun hasPrivacyPassword(token: String): Single<Response<Boolean>> {
+        return api.hasPrivacyPassword(token)
+    }
+
+    override fun closePrivacyPassword(token: String): Single<Response<String>> {
+        return api.closePrivacyPassword(token)
+    }
+
+    override fun listVipCombo(token: String): Single<Response<List<VipCombo>>> {
+        return api.listVipCombo(token)
+    }
+
+    override fun getMibiAmount(token: String): Single<Response<Int>> {
+        return api.getMibiAmount(token)
+    }
+
+    override fun getMibiWallet(token: String): Single<Response<MibiWallet>> {
+        return api.getMibiWallet(token)
+    }
+
+    override fun getVipInfo(token: String): Single<Response<VipInfo>> {
+        return getVipInfo(token)
+    }
+
     override fun setPhotoPermission(token: String, photoPermission: Int, money: Double, photoId: String): Single<Response<String>> {
         return api.setPhotoPermission(token, photoPermission.toString(), money.toString(), photoId)
     }
@@ -103,8 +128,14 @@ class UserRepositoryImpl @Inject constructor(private val cache: CacheRepository,
         return api.deleteUser(token)
     }
 
+    /**
+     * Note: get 方法阻塞当前线程
+     */
     override var user: User?
         set(value) = cache.set(Constants.Cache.USER, value)
         get() = cache.get(Constants.Cache.USER)
 
 }
+
+
+

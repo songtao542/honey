@@ -1,10 +1,7 @@
 package com.snt.phoney.domain.repository
 
 
-import com.snt.phoney.domain.model.AmountInfo
-import com.snt.phoney.domain.model.Photo
-import com.snt.phoney.domain.model.Response
-import com.snt.phoney.domain.model.User
+import com.snt.phoney.domain.model.*
 import io.reactivex.Single
 
 interface UserRepository {
@@ -94,6 +91,23 @@ interface UserRepository {
 
     fun follow(token: String, uuid: String): Single<Response<Boolean>>
 
+
+    fun setPrivacyPassword(token: String,
+                           password: String,
+                           privatePassword: String): Single<Response<String>>
+
+    fun hasPrivacyPassword(token: String): Single<Response<Boolean>>
+
+    fun closePrivacyPassword(token: String): Single<Response<String>>
+
+    fun listVipCombo(token: String): Single<Response<List<VipCombo>>>
+
+    fun getMibiAmount(token: String): Single<Response<Int>>
+
+    fun getMibiWallet(token: String): Single<Response<MibiWallet>>
+
+    fun getVipInfo(token: String): Single<Response<VipInfo>>
+
 //    fun login(username: String, password: String): LiveData<Response<User>>
 //    fun resetPassword(key: String, password: String): LiveData<Response<String>>
 //    fun logout(username: String): LiveData<Response<String>>
@@ -101,6 +115,7 @@ interface UserRepository {
     fun requestVerificationCode(phone: String): Single<Response<String>>
 
     fun deleteUser(token: String): Single<Response<String>>
+
 
     var user: User?
 

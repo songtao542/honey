@@ -3,7 +3,7 @@ package com.snt.phoney.ui.setup
 import android.text.TextUtils
 import android.util.Log
 import androidx.lifecycle.MutableLiveData
-import androidx.lifecycle.ViewModel
+import com.snt.phoney.base.AppViewModel
 import com.snt.phoney.domain.usecase.BindPhoneUseCase
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.disposables.Disposable
@@ -11,7 +11,7 @@ import io.reactivex.rxkotlin.subscribeBy
 import io.reactivex.schedulers.Schedulers
 import javax.inject.Inject
 
-class BindPhoneViewModel @Inject constructor(private val usecase: BindPhoneUseCase) : ViewModel() {
+class BindPhoneViewModel @Inject constructor(private val usecase: BindPhoneUseCase) : AppViewModel() {
 
     var verificationCodeId = MutableLiveData<String>()
 

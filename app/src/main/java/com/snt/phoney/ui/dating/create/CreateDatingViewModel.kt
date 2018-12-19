@@ -3,10 +3,9 @@ package com.snt.phoney.ui.dating.create
 import android.text.TextUtils
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
-import androidx.lifecycle.ViewModel
+import com.snt.phoney.base.AppViewModel
 import com.snt.phoney.domain.model.DatingProgram
 import com.snt.phoney.domain.model.PoiAddress
-import com.snt.phoney.domain.model.Purpose
 import com.snt.phoney.domain.usecase.CreateDatingUseCase
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.disposables.Disposable
@@ -15,7 +14,7 @@ import io.reactivex.schedulers.Schedulers
 import java.io.File
 import javax.inject.Inject
 
-class CreateDatingViewModel @Inject constructor(private val usecase: CreateDatingUseCase) : ViewModel() {
+class CreateDatingViewModel @Inject constructor(private val usecase: CreateDatingUseCase) : AppViewModel() {
 
     val success = MutableLiveData<String>()
     val error = MutableLiveData<String>()

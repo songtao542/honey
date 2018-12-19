@@ -3,10 +3,11 @@ package com.snt.phoney.di;
 
 import android.app.Activity;
 
+import androidx.lifecycle.ViewModel;
+
 import java.lang.annotation.Documented;
 import java.lang.annotation.Target;
 
-import androidx.lifecycle.ViewModel;
 import dagger.MapKey;
 import dagger.internal.Beta;
 

@@ -2,6 +2,8 @@ package com.snt.phoney.base
 
 import android.app.Activity
 import android.app.Application
+import android.content.Context
+import androidx.multidex.MultiDex
 import com.snt.phoney.BuildConfig
 import com.snt.phoney.di.AppInjector
 import dagger.android.DispatchingAndroidInjector
@@ -27,9 +29,9 @@ class App :   Application(), HasActivityInjector {
     override fun activityInjector() = dispatchingAndroidInjector
 
 
-//    override fun attachBaseContext(base: Context) {
-//        super.attachBaseContext(base)
-//        MultiDex.install(this)
-//    }
+    override fun attachBaseContext(base: Context) {
+        super.attachBaseContext(base)
+        MultiDex.install(this)
+    }
 
 }

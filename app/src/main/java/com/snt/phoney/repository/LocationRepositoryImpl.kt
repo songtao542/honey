@@ -16,9 +16,7 @@ import io.nlopez.smartlocation.rx.ObservableFactory
 import io.reactivex.Observable
 import io.reactivex.Single
 import io.reactivex.rxkotlin.subscribeBy
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.async
-import kotlinx.coroutines.runBlocking
+import kotlinx.coroutines.*
 import javax.inject.Inject
 import javax.inject.Singleton
 
@@ -37,23 +35,25 @@ class LocationRepositoryImpl @Inject constructor(private val application: Applic
 
     private var _provinces = ArrayList<Province>()
 
+    /**
+     * get 方法会阻塞当前线程
+     */
     private var provinces: List<Province>
         set(value) {
             value?.let {
-                runBlocking {
-                    async(Dispatchers.Default) {
+                GlobalScope.launch(Dispatchers.Main) {
+                    withContext(Dispatchers.Default) {
                         _provinces.clear()
                         _provinces.addAll(value)
                         provinceCityDao.insertAllProvinces(_provinces)
-                        return@async
-                    }.await()
+                    }
                 }
             }
         }
         get() {
             if (_provinces.size == 0) {
                 runBlocking {
-                    async(Dispatchers.Default) {
+                    withContext(Dispatchers.Default) {
                         //先尝试从本地数据库加载
                         provinceCityDao.getProvinces()?.let {
                             _provinces.addAll(it)
@@ -68,18 +68,21 @@ class LocationRepositoryImpl @Inject constructor(private val application: Applic
                                 }
                             }
                         }
-                    }.await()
+                    }
                 }
             }
+            Log.d("TTTT", "pppppppppppp return===$_provinces")
             return _provinces
         }
 
-
+    /**
+     * get 方法会阻塞当前线程
+     */
     override val cities: List<City>
         get() {
             val results = ArrayList<City>()
             runBlocking {
-                async(Dispatchers.Default) {
+                withContext(Dispatchers.Default) {
                     provinces.forEach { province ->
                         val cities = provinceCityDao.getCities(province.id)
                         cities?.forEach { city ->
@@ -89,8 +92,9 @@ class LocationRepositoryImpl @Inject constructor(private val application: Applic
                         }
                         province.cities = cities
                     }
-                }.await()
+                }
             }
+            Log.d("TTTT", "ccccccccccccccc return===$results")
             return results
         }
 

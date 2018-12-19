@@ -1,31 +1,36 @@
 package com.snt.phoney.ui.setup
 
-import android.app.Application
 import android.text.TextUtils
 import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
-import androidx.lifecycle.ViewModel
+import com.snt.phoney.base.AppViewModel
 import com.snt.phoney.domain.model.Career
 import com.snt.phoney.domain.model.City
+import com.snt.phoney.domain.model.CityPickerConverter
 import com.snt.phoney.domain.model.Purpose
 import com.snt.phoney.domain.usecase.SetupWizardUseCase
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.disposables.Disposable
 import io.reactivex.rxkotlin.subscribeBy
 import io.reactivex.schedulers.Schedulers
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.GlobalScope
+import kotlinx.coroutines.launch
 import javax.inject.Inject
 
-class SetupWizardViewModel @Inject constructor(private val application: Application, private val setupWizardUseCase: SetupWizardUseCase) : ViewModel() {
+class SetupWizardViewModel @Inject constructor(private val setupWizardUseCase: SetupWizardUseCase) : AppViewModel() {
 
     val error = MutableLiveData<String>()
     val setupSex = MutableLiveData<String>()
     val setupFeatures = MutableLiveData<String>()
     val setupUserInfo = MutableLiveData<String>()
 
-    val cities = object : LiveData<List<City>>() {
+    val cities = object : LiveData<List<com.zaaach.citypicker.model.City>>() {
         override fun onActive() {
-            postValue(setupWizardUseCase.getCities())
+            GlobalScope.launch(Dispatchers.Default) {
+                postValue(CityPickerConverter.convert(setupWizardUseCase.getCities()))
+            }
         }
     }
 

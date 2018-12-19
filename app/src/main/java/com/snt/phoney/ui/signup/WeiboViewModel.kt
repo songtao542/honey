@@ -1,9 +1,7 @@
 package com.snt.phoney.ui.signup
 
 import android.app.Activity
-import android.app.Application
 import android.content.Intent
-import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.MutableLiveData
 import com.sina.weibo.sdk.WbSdk
 import com.sina.weibo.sdk.auth.AuthInfo
@@ -11,6 +9,7 @@ import com.sina.weibo.sdk.auth.Oauth2AccessToken
 import com.sina.weibo.sdk.auth.WbAuthListener
 import com.sina.weibo.sdk.auth.WbConnectErrorMessage
 import com.sina.weibo.sdk.auth.sso.SsoHandler
+import com.snt.phoney.base.AppViewModel
 import com.snt.phoney.domain.model.WeiboUser
 import com.snt.phoney.domain.usecase.WeiboSigninUseCase
 import com.snt.phoney.utils.data.Constants.Weibo
@@ -20,8 +19,7 @@ import io.reactivex.rxkotlin.subscribeBy
 import io.reactivex.schedulers.Schedulers
 import javax.inject.Inject
 
-//@SignupScope
-class WeiboViewModel @Inject constructor(application: Application, private val weiboUseCase: WeiboSigninUseCase) : AndroidViewModel(application) {
+class WeiboViewModel @Inject constructor(private val weiboUseCase: WeiboSigninUseCase) : AppViewModel() {
 
     private var ssoHandler: SsoHandler? = null
     private var accessToken: Oauth2AccessToken? = null
@@ -29,7 +27,7 @@ class WeiboViewModel @Inject constructor(application: Application, private val w
     val user = MutableLiveData<WeiboUser>()
     val error = MutableLiveData<String>()
 
-    init {
+    override fun initialize() {
         WbSdk.install(application, AuthInfo(application, Weibo.APP_KEY, Weibo.REDIRECT_URL, Weibo.SCOPE))
     }
 

@@ -7,8 +7,7 @@ import com.zaaach.citypicker.model.LocatedCity;
 import java.util.List;
 
 public interface CityPicker {
-    public void updateLocation(LocatedCity location, @LocateState.State int state);
+    void updateLocation(LocatedCity location, @LocateState.State int state);
 
-    public void setCities(List<City> cities);
-
+    void setCities(List<City> cities);
 }

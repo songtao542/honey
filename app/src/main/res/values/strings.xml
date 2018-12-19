@@ -1,6 +1,9 @@
 <resources>
     <string name="app_name">纯蜜</string>
 
+    <string name="status_success">success</string>
+    <string name="status_error">error</string>
+
     <string name="hello_blank_fragment">Hello blank fragment</string>
     <string name="title_home">首页</string>
     <string name="title_square">广场</string>
@@ -84,7 +87,7 @@
     <string name="mine_authenticate">立即认证</string>
     <string name="mine_max_photo_number_tip">最多可以上传19张图片</string>
     <string name="upgrade_vip_title">开通纯蜜会员</string>
-    <string name="pay_amount">支付金额：43.5</string>
+    <string name="pay_amount_template">支付金额：%1$s元</string>
     <string name="vip_privilege_text">【看的更多】   每天不限次数查看女士\n【看得看省】   每天10次免费机会查看付费相册或联系方式\n【看的更久】   查看阅后即焚照片的时间从2秒提升到6秒\n【约的更爽】   免费发布约会广播</string>
     <string name="vip_period">会员有效期</string>
     <string name="vip_recommend">推荐</string>
@@ -187,6 +190,18 @@
     <string name="unlock_all">全部解锁</string>
     <string name="pay_money">红包付费</string>
     <string name="album_permission_setting">设置相册权限</string>
+    <string name="create_privacy_success">设置成功</string>
+    <string name="password_validate_no_equal">与前一次输入的密码不一致</string>
+    <string name="close_privacy_password">关闭隐私密码</string>
+    <string name="close_privacy_password_success">关闭隐私密码成功</string>
+    <string name="unit_rmb">元</string>
+    <string name="unit_month">月</string>
+    <string name="vip_duration_template">%1$s个月</string>
+    <string name="vip_price_template">%1$s元/月</string>
+    <string name="create_order_failed">创建订单失败</string>
+    <string name="buy_vip_failed">购买失败</string>
+    <string name="buy_vip_success">购买成功</string>
+    <string name="wechat_auth_failed">微信授权失败</string>
 
 
 </resources>

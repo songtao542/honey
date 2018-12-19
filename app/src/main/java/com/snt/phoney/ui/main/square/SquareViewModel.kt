@@ -1,7 +1,7 @@
 package com.snt.phoney.ui.main.square
 
 import androidx.lifecycle.MutableLiveData
-import androidx.lifecycle.ViewModel
+import com.snt.phoney.base.AppViewModel
 import com.snt.phoney.domain.model.Dating
 import com.snt.phoney.domain.model.Response
 import com.snt.phoney.domain.usecase.SquareUseCase
@@ -12,7 +12,7 @@ import io.reactivex.rxkotlin.subscribeBy
 import io.reactivex.schedulers.Schedulers
 import javax.inject.Inject
 
-class SquareViewModel @Inject constructor(private val usecase: SquareUseCase) : ViewModel() {
+class SquareViewModel @Inject constructor(private val usecase: SquareUseCase) : AppViewModel() {
 
     private var recommendPageIndex: Int = 0
     private var popularPageIndex: Int = 0

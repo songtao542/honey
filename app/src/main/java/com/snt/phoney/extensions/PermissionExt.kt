@@ -42,7 +42,7 @@ fun Context.checkAppPermission(vararg permissions: String): Boolean {
     return false
 }
 
-fun Activity.checkAndRequestPermission(vararg permissions: String) {
+fun Activity.checkAndRequestPermission(vararg permissions: String): Boolean {
     var requestList = ArrayList<String>()
     if (permissions.isNotEmpty()) {
         for (permission in permissions) {
@@ -57,15 +57,18 @@ fun Activity.checkAndRequestPermission(vararg permissions: String) {
             }
         }
     }
-    if (!requestList.isEmpty()) {
-        var array = Array(requestList.size) {
+    return if (!requestList.isEmpty()) {
+        val array = Array(requestList.size) {
             requestList[it]
         }
         ActivityCompat.requestPermissions(this, array, 123)
+        false
+    } else {
+        true
     }
 }
 
-fun Fragment.checkAndRequestPermission(vararg permissions: String) {
+fun Fragment.checkAndRequestPermission(vararg permissions: String): Boolean {
     activity?.let { activity ->
         var requestList = ArrayList<String>()
         if (permissions.isNotEmpty()) {
@@ -81,11 +84,14 @@ fun Fragment.checkAndRequestPermission(vararg permissions: String) {
                 }
             }
         }
-        if (!requestList.isEmpty()) {
-            var array = Array(requestList.size) {
+        return if (!requestList.isEmpty()) {
+            val array = Array(requestList.size) {
                 requestList[it]
             }
             this.requestPermissions(array, 123)
+            false
+        } else {
+            true
         }
     }
 }

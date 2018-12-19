@@ -2,7 +2,7 @@ package com.snt.phoney.ui.user
 
 import android.util.Log
 import androidx.lifecycle.MutableLiveData
-import androidx.lifecycle.ViewModel
+import com.snt.phoney.base.AppViewModel
 import com.snt.phoney.domain.model.User
 import com.snt.phoney.domain.usecase.GetVisitorUseCase
 import io.reactivex.android.schedulers.AndroidSchedulers
@@ -11,7 +11,7 @@ import io.reactivex.rxkotlin.subscribeBy
 import io.reactivex.schedulers.Schedulers
 import javax.inject.Inject
 
-class VisitorViewModel @Inject constructor(private val usecase: GetVisitorUseCase) : ViewModel() {
+class VisitorViewModel @Inject constructor(private val usecase: GetVisitorUseCase) : AppViewModel() {
 
     val user: User? = usecase.user
 

@@ -65,6 +65,12 @@
             android:theme="@style/AppTheme.NoDisplay"
             tools:node="replace"></activity>
 
+        <activity
+            android:name=".wxapi.WXPayEntryActivity"
+            android:exported="true"
+            android:theme="@style/AppTheme.NoDisplay"
+            tools:node="replace"></activity>
+
         <provider
             android:name=".provider.SettingsProvider"
             android:authorities="com.snt.phoney.settings"
@@ -99,8 +105,9 @@
             android:theme="@style/AppTheme.Signup" />
 
 
-        <activity android:name=".ui.dating.DatingActivity"
-            android:windowSoftInputMode="adjustResize"/>
+        <activity
+            android:name=".ui.dating.DatingActivity"
+            android:windowSoftInputMode="adjustResize" />
 
         <activity android:name=".ui.vip.VipActivity" />
         <activity android:name=".ui.photo.PhotoViewerActivity" />

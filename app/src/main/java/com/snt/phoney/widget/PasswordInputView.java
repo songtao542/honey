@@ -11,12 +11,12 @@ import android.util.TypedValue;
 import android.view.KeyEvent;
 import android.view.inputmethod.InputMethodManager;
 
+import androidx.appcompat.widget.AppCompatEditText;
+
 import com.snt.phoney.R;
 
 import java.util.ArrayList;
 import java.util.List;
-
-import androidx.appcompat.widget.AppCompatEditText;
 
 public class PasswordInputView extends AppCompatEditText {
 
@@ -159,6 +159,10 @@ public class PasswordInputView extends AppCompatEditText {
     public void setNumberLength(int numLength) {
         this.length = numLength;
         list.clear();
+    }
+
+    public String getPassword() {
+        return text;
     }
 
     public void setBoxSelectColor(int boxSelectColor) {

@@ -19,7 +19,7 @@ object ViewModelProviders {
             is FragmentActivity -> androidx.lifecycle.ViewModelProviders.of(activity, factory).get(modelClass)
             is ComponentActivity -> {
                 val application = activity.application
-                        ?: throw   IllegalStateException("Your activity/fragment is not yet attached to Application. You can't request ViewModel before onCreate call.")
+                        ?: throw   IllegalStateException("Your activity/fragment is not yet attached to Application. You can't request AppViewModel before onCreate call.")
                 ViewModelProvider(activity.viewModelStore, factory
                         ?: ViewModelProvider.AndroidViewModelFactory.getInstance(application)).get(modelClass)
             }

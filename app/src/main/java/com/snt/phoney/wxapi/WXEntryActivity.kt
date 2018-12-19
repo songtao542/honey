@@ -2,10 +2,9 @@ package com.snt.phoney.wxapi
 
 import android.content.Intent
 import android.os.Bundle
-import android.util.Log
 import androidx.lifecycle.Observer
 import com.snt.phoney.base.BaseOriginalActivity
-import com.snt.phoney.ui.signup.WxViewModel
+import com.snt.phoney.ui.signup.WechatViewModel
 import com.snt.phoney.utils.life.ViewModelProviders
 import com.tencent.mm.opensdk.modelbase.BaseReq
 import com.tencent.mm.opensdk.modelbase.BaseResp
@@ -13,30 +12,25 @@ import com.tencent.mm.opensdk.openapi.IWXAPIEventHandler
 
 class WXEntryActivity : BaseOriginalActivity(), IWXAPIEventHandler {
 
-    private lateinit var wxViewModel: WxViewModel
+    private lateinit var viewModel: WechatViewModel
 
     public override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        wxViewModel = ViewModelProviders.of(this, viewModelFactory, WxViewModel::class.java)
-
-        Log.d("TTTT", "xxxxxxxx22222222222xxxxxxxxxxxwxViewMode>$wxViewModel")
+        viewModel = ViewModelProviders.of(this, viewModelFactory, WechatViewModel::class.java)
 
         try {
-            if (!wxViewModel.handleIntent(intent)) {
+            if (!viewModel.handleIntent(intent, this)) {
                 finish()
             }
         } catch (e: Exception) {
             e.printStackTrace()
         }
 
-        wxViewModel.error.observe(this, Observer {
+        viewModel.error.observe(this, Observer {
             finish()
         })
 
-        wxViewModel.success.observe(this, Observer { user ->
-//            startActivity(SignupActivity.newIntent(this).apply {
-//                putExtra(Constants.Extra.USER, user)
-//            })
+        viewModel.success.observe(this, Observer {
             finish()
         })
     }
@@ -44,19 +38,27 @@ class WXEntryActivity : BaseOriginalActivity(), IWXAPIEventHandler {
     override fun onNewIntent(intent: Intent) {
         super.onNewIntent(intent)
         setIntent(intent)
-        wxViewModel.handleIntent(intent)
+        if (!viewModel.handleIntent(intent, this)) {
+            finish()
+        }
     }
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent) {
         super.onActivityResult(requestCode, resultCode, data)
-        wxViewModel.handleIntent(data)
+        if (!viewModel.handleIntent(intent, this)) {
+            finish()
+        }
     }
 
-    override fun onReq(baseReq: BaseReq) {
-        wxViewModel.onReq(baseReq)
+    override fun onReq(req: BaseReq?) {
+        req?.let {
+
+        }
     }
 
-    override fun onResp(baseResp: BaseResp) {
-        wxViewModel.onResp(baseResp)
+    override fun onResp(resp: BaseResp?) {
+        resp?.let {
+
+        }
     }
 }

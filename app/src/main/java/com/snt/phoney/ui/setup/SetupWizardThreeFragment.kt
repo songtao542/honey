@@ -15,6 +15,8 @@ import com.snt.phoney.utils.Picker
 import com.zaaach.citypicker.model.City
 import kotlinx.android.synthetic.main.fragment_signup_3.*
 import kotlinx.android.synthetic.main.fragment_signup_3.view.*
+import kotlinx.coroutines.GlobalScope
+import kotlinx.coroutines.launch
 
 private const val ARG_USER = "user"
 
@@ -63,8 +65,8 @@ class SetupWizardThreeFragment : BaseFragment() {
 
         cityButton.setOnClickListener {
             Picker.showCityPicker(activity, { cityPicker ->
-                viewModel.cities.observe(this@SetupWizardThreeFragment, Observer {
-                    cityPicker.setCities(CityPickerConverter.convert(it))
+                viewModel.cities.observe(this@SetupWizardThreeFragment, Observer { cities ->
+                    cityPicker.setCities(cities)
                 })
             }) { cities ->
                 if (cities.isNotEmpty()) {

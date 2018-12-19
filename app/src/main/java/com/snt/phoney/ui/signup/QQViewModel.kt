@@ -1,11 +1,10 @@
 package com.snt.phoney.ui.signup
 
 import android.app.Activity
-import android.app.Application
 import android.content.Intent
 import android.util.Log
-import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.MutableLiveData
+import com.snt.phoney.base.AppViewModel
 import com.snt.phoney.domain.model.QQUser
 import com.snt.phoney.utils.data.Constants
 import com.tencent.connect.UserInfo
@@ -16,13 +15,14 @@ import org.json.JSONObject
 import javax.inject.Inject
 
 //@SignupScope
-class QQViewModel @Inject constructor(application: Application) : AndroidViewModel(application), IUiListener {
+class QQViewModel @Inject constructor() : AppViewModel(), IUiListener {
 
-    private var mTencent: Tencent = Tencent.createInstance(Constants.Tencent.APP_ID, getApplication())
+    private val mTencent: Tencent by lazy { Tencent.createInstance(Constants.Tencent.APP_ID, application) }
 
     val token = MutableLiveData<String>()
     var openId: String = ""
     val user = MutableLiveData<QQUser>()
+
 
     fun login(activity: Activity) {
         mTencent.login(activity, "all", this)
@@ -51,7 +51,7 @@ class QQViewModel @Inject constructor(application: Application) : AndroidViewMod
     }
 
     private fun getUserInfo() {
-        val userInfo = UserInfo(getApplication(), mTencent.qqToken)
+        val userInfo = UserInfo(application, mTencent.qqToken)
         userInfo.getUserInfo(object : IUiListener {
             override fun onComplete(info: Any?) {
                 var json = info as? JSONObject

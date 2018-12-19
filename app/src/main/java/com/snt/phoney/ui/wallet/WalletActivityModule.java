@@ -1,16 +1,17 @@
 package com.snt.phoney.ui.wallet;
 
+import androidx.lifecycle.ViewModel;
+
 import com.snt.phoney.di.ActivityScope;
 import com.snt.phoney.di.ViewModelKey;
-import com.snt.phoney.ui.vip.VipViewModel;
+import com.snt.phoney.di.module.ViewModelFactoryModule;
 
-import androidx.lifecycle.ViewModel;
 import dagger.Binds;
 import dagger.Module;
 import dagger.android.ContributesAndroidInjector;
 import dagger.multibindings.IntoMap;
 
-@Module
+@Module(includes = ViewModelFactoryModule.class)
 public abstract class WalletActivityModule {
 
 

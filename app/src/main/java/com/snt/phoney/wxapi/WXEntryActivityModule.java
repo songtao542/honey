@@ -1,11 +1,11 @@
 package com.snt.phoney.wxapi;
 
+import androidx.lifecycle.ViewModel;
+
 import com.snt.phoney.di.ActivityScope;
 import com.snt.phoney.di.ViewModelKey;
 import com.snt.phoney.di.module.ViewModelFactoryModule;
-import com.snt.phoney.ui.signup.WxViewModel;
 
-import androidx.lifecycle.ViewModel;
 import dagger.Binds;
 import dagger.Module;
 import dagger.multibindings.IntoMap;
@@ -16,7 +16,7 @@ public abstract class WXEntryActivityModule {
     @Binds
     @IntoMap
     @ActivityScope
-    @ViewModelKey(WxViewModel.class)
-    public abstract ViewModel bindWxViewModel(WxViewModel viewModel);
+    @ViewModelKey(WXAuthViewModel.class)
+    public abstract ViewModel bindWXAuthViewModel(WXAuthViewModel viewModel);
 
 }

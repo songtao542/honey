@@ -13,6 +13,7 @@ object Constants {
         const val URI = "uri"
         const val INDEX = "index"
         const val DELETABLE = "deletable"
+        const val PASSWORD = "password"
     }
 
     object Preference {

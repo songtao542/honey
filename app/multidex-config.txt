@@ -1,2 +1,2 @@
-android/arch/lifecycle/ProcessLifecycleOwnerInitializer.class
+androidx/lifecycle/ProcessLifecycleOwnerInitializer.class
 com/snt/phoney/base/App.class

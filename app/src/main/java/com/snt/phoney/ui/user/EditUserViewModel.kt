@@ -3,17 +3,20 @@ package com.snt.phoney.ui.user
 import android.text.TextUtils
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
-import androidx.lifecycle.ViewModel
-import com.snt.phoney.domain.model.City
+import com.snt.phoney.base.AppViewModel
+import com.snt.phoney.domain.model.CityPickerConverter
 import com.snt.phoney.domain.model.User
 import com.snt.phoney.domain.usecase.EditUserUseCase
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.disposables.Disposable
 import io.reactivex.rxkotlin.subscribeBy
 import io.reactivex.schedulers.Schedulers
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.GlobalScope
+import kotlinx.coroutines.launch
 import javax.inject.Inject
 
-class EditUserViewModel @Inject constructor(private val usecase: EditUserUseCase) : ViewModel() {
+class EditUserViewModel @Inject constructor(private val usecase: EditUserUseCase) : AppViewModel() {
 
     val user: User? = usecase.user
 
@@ -21,9 +24,11 @@ class EditUserViewModel @Inject constructor(private val usecase: EditUserUseCase
     var success = MutableLiveData<String>()
     var error = MutableLiveData<String>()
 
-    val cities = object : LiveData<List<City>>() {
+    val cities = object : LiveData<List<com.zaaach.citypicker.model.City>>() {
         override fun onActive() {
-            postValue(usecase.getCities())
+            GlobalScope.launch(Dispatchers.Default) {
+                postValue(CityPickerConverter.convert(usecase.getCities()))
+            }
         }
     }
 

@@ -1,73 +1,57 @@
-package com.snt.phoney.ui.signup
+package com.snt.phoney.wxapi
 
-import android.app.Application
 import android.content.Intent
-import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.MutableLiveData
-import com.google.gson.Gson
+import com.snt.phoney.R
+import com.snt.phoney.base.AppViewModel
 import com.snt.phoney.domain.model.WxAccessToken
-import com.snt.phoney.domain.model.WxUser
 import com.snt.phoney.domain.usecase.WxSigninUseCase
-import com.snt.phoney.utils.data.Constants.Wechat
+import com.snt.phoney.utils.WechatApi
 import com.tencent.mm.opensdk.modelbase.BaseReq
 import com.tencent.mm.opensdk.modelbase.BaseResp
 import com.tencent.mm.opensdk.modelmsg.SendAuth
-import com.tencent.mm.opensdk.openapi.IWXAPI
 import com.tencent.mm.opensdk.openapi.IWXAPIEventHandler
-import com.tencent.mm.opensdk.openapi.WXAPIFactory
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.rxkotlin.subscribeBy
 import io.reactivex.schedulers.Schedulers
 import javax.inject.Inject
 
-//@SignupScope
-class WxViewModel @Inject constructor(application: Application, private val usecase: WxSigninUseCase) : AndroidViewModel(application), IWXAPIEventHandler {
+open class WXAuthViewModel @Inject constructor(private val usecase: WxSigninUseCase) : AppViewModel(), IWXAPIEventHandler {
 
-    private val wxApi: IWXAPI = WXAPIFactory.createWXAPI(application, Wechat.APP_ID, false)
-    val error = MutableLiveData<String>()
     val success = MutableLiveData<String>()
-    val user = MutableLiveData<WxUser>()
+    val error = MutableLiveData<String>()
 
-    private var wxState: Long = 0
-
+    private val wxApi: WechatApi by lazy { WechatApi(application) }
     private var accessToken: WxAccessToken? = null
+    private var eventHandler: IWXAPIEventHandler? = null
 
     init {
         accessToken = usecase.accessToken
-        user.value = usecase.user
     }
 
-    fun login() {
+    fun authorize() {
         if (accessToken == null || accessToken?.isSessionValid() == false) {
-            authorize()
+            wxApi.authorize()
         } else {
             getUserInfo()
         }
     }
 
-    fun resume() {
-        user.value = usecase.user
-    }
-
-    private fun authorize() {
-        wxApi.registerApp(Wechat.APP_ID)
-        val req = SendAuth.Req()
-        req.scope = "snsapi_userinfo"
-        wxState = System.currentTimeMillis()
-        req.state = "$wxState"
-        wxApi.sendReq(req)
+    override fun onReq(req: BaseReq?) {
+        req?.let { req ->
+            eventHandler?.onReq(req)
+        }
     }
 
     override fun onResp(resp: BaseResp?) {
-        val openId = resp?.openId
-
-        resp?.let {
-            val gson = Gson()
-            if (it.errCode == BaseResp.ErrCode.ERR_OK) {
-                val code = (it as SendAuth.Resp).code
+        resp?.let { resp ->
+            eventHandler?.onResp(resp)
+            //val openId = resp?.openId
+            if (resp.errCode == BaseResp.ErrCode.ERR_OK) {
+                val code = (resp as SendAuth.Resp).code
                 getAccessToken(code)
             } else {
-                error.value = "出错了"
+                error.value = context.getString(R.string.wechat_auth_failed)
             }
         }
     }
@@ -84,7 +68,7 @@ class WxViewModel @Inject constructor(application: Application, private val usec
                             getUserInfo()
                         },
                         onError = {
-                            error.value = "出错了"
+                            error.value = context.getString(R.string.wechat_auth_failed)
                         }
                 )
     }
@@ -99,19 +83,16 @@ class WxViewModel @Inject constructor(application: Application, private val usec
                             wxuser.accessToken = accessToken?.accessToken
                             wxuser.refreshToken = accessToken?.refreshToken
                             usecase.user = wxuser
-                            user.value = wxuser
                             success.value = "success"
                         },
                         onError = {
-                            error.value = "出错了"
+                            error.value = context.getString(R.string.wechat_auth_failed)
                         }
                 )
     }
 
-    override fun onReq(req: BaseReq?) {
-    }
-
-    fun handleIntent(intent: Intent): Boolean {
+    fun handleIntent(intent: Intent, eventHandler: IWXAPIEventHandler? = null): Boolean {
+        this.eventHandler = eventHandler
         return wxApi.handleIntent(intent, this)
     }
 }

@@ -32,12 +32,24 @@
 
 #app
 -keep public class com.snt.phoney.domain.**
--keep public class com.snt.phoney.base.**
--keep public class com.snt.phoney.repository.**
 
--keep public class * extends android.arch.lifecycle.ViewModel
+# keep the class and specified members from being removed or renamed
+-keep class com.snt.phoney.base.App { *; }
+
+# keep the specified class members from being removed or renamed
+# only if the class is preserved
+-keepclassmembers class com.snt.phoney.base.App { *; }
+
+# keep the class and specified members from being renamed only
+-keepnames class com.snt.phoney.base.App { *; }
+
+# keep the specified class members from being renamed only
+-keepclassmembernames class com.snt.phoney.base.App { *; }
+
+#-keep public class com.snt.phoney.repository.**
+
+#-keep public class * extends android.arch.lifecycle.AppViewModel
 -keep public class kotlin.reflect.**
--keep public class kotlinx.**
 -keep public class com.appmattus.**
 
 
@@ -172,12 +184,15 @@
     public static final android.os.Parcelable$Creator *;
 }
 
--keep class kotlin.** { *; }
+-keepnames class kotlinx.** { *; }
 -keep class kotlin.Metadata { *; }
 -dontwarn kotlin.**
+-keep class kotlin.** {*;}
 -keepclassmembers class **$WhenMappings {
     <fields>;
+    <methods>;
 }
+
 -keepclassmembers class kotlin.Metadata {
     public <methods>;
 }

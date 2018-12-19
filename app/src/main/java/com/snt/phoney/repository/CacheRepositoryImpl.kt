@@ -1,11 +1,15 @@
 package com.snt.phoney.repository
 
 import android.app.Application
+import android.util.Log
 import com.appmattus.layercache.Cache
 import com.appmattus.layercache.MapCache
 import com.appmattus.layercache.jsonSerializer
 import com.snt.phoney.domain.repository.CacheRepository
 import com.snt.phoney.utils.cache.KeyValueDatabaseCache
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.GlobalScope
+import kotlinx.coroutines.launch
 import kotlinx.coroutines.runBlocking
 import kotlinx.serialization.Serializable
 import javax.inject.Inject
@@ -23,6 +27,9 @@ class CacheRepositoryImpl @Inject constructor(application: Application) : CacheR
         cache = firstCache.compose(secondCache)
     }
 
+    /**
+     * 会阻塞当前线程
+     */
     override fun <T : Any> get(key: String): T? {
         var result: T? = null
         runBlocking {
@@ -33,18 +40,18 @@ class CacheRepositoryImpl @Inject constructor(application: Application) : CacheR
 
     override fun <T : Any> set(key: String, value: T?) {
         if (value != null) {
-            runBlocking {
+            GlobalScope.launch(Dispatchers.Main) {
                 cache.set(key, Value(value)).await()
             }
         } else {
-            runBlocking {
+            GlobalScope.launch(Dispatchers.Main) {
                 cache.evict(key).await()
             }
         }
     }
 
     override fun clear(key: String) {
-        runBlocking {
+        GlobalScope.launch(Dispatchers.Main) {
             cache.evict(key).await()
         }
     }

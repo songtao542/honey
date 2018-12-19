@@ -15,6 +15,9 @@ class EditUserUseCase @Inject constructor(private val repository: UserRepository
             return repository.user
         }
 
+    /**
+     * Note: 阻塞当前线程
+     */
     fun getCities() = locationRepository.cities
 
     fun setFullUserInfo(token: String,

@@ -1,6 +1,12 @@
 package com.snt.phoney.di.module;
 
+import android.app.Application;
+import android.content.Context;
+
+import javax.inject.Singleton;
+
 import dagger.Module;
+import dagger.Provides;
 
 @Module(includes = {
         ActivityContributorModule.class,
@@ -11,4 +17,11 @@ import dagger.Module;
         WxApiServiceModule.class
 })
 public abstract class AppModule {
+
+    @Singleton
+    @Provides
+    public static Context provideContext(Application application) {
+        return application;
+    }
+
 }

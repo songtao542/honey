@@ -13,6 +13,8 @@ import dagger.android.support.AndroidSupportInjection
 import dagger.android.support.HasSupportFragmentInjector
 
 object AppInjector {
+
+    @JvmStatic
     fun init(app: App) {
         DaggerAppComponent.builder().application(app).build().inject(app)
         app.registerActivityLifecycleCallbacks(object : Application.ActivityLifecycleCallbacks {
@@ -34,6 +36,7 @@ object AppInjector {
         })
     }
 
+    @JvmStatic
     private fun handleActivity(activity: Activity) {
         if (activity is HasSupportFragmentInjector) {
             AndroidInjection.inject(activity)

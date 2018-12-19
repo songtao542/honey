@@ -1,8 +1,8 @@
 package com.snt.phoney.ui.dating.detail
 
-import androidx.lifecycle.ViewModel
+import com.snt.phoney.base.AppViewModel
 import javax.inject.Inject
 
-class DatingDetailViewModel @Inject constructor() : ViewModel() {
-    // TODO: Implement the ViewModel
+class DatingDetailViewModel @Inject constructor( ) : AppViewModel() {
+    // TODO: Implement the AppViewModel
 }

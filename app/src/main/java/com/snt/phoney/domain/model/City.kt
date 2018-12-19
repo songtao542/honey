@@ -1,12 +1,15 @@
 package com.snt.phoney.domain.model
 
 import android.os.Parcelable
-import androidx.room.*
+import androidx.room.Entity
+import androidx.room.ForeignKey
+import androidx.room.Index
+import androidx.room.PrimaryKey
 import com.github.promeg.pinyinhelper.Pinyin
 import kotlinx.android.parcel.Parcelize
 import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.async
 import kotlinx.coroutines.runBlocking
+import kotlinx.coroutines.withContext
 import kotlinx.serialization.Serializable
 
 @Serializable
@@ -21,16 +24,19 @@ import kotlinx.serialization.Serializable
 ], tableName = "City", indices = [Index(value = ["provinceId"], unique = true)])
 data class City(@PrimaryKey var id: Int = 0,
                 var provinceId: Int = 0,
-                @Ignore var provinceName: String? = null,
+                var provinceName: String? = null,
                 var name: String? = null) : Parcelable
 
 
 object CityPickerConverter {
+    /**
+     * Note: 阻塞当前线程
+     */
     @JvmStatic
     fun convert(cities: List<City>): List<com.zaaach.citypicker.model.City> {
         val results = ArrayList<com.zaaach.citypicker.model.City>()
         runBlocking {
-            async(Dispatchers.Default) {
+            withContext(Dispatchers.Default) {
                 for (city in cities) {
                     val pc = com.zaaach.citypicker.model.City(city.name, city.provinceName, Pinyin.toPinyin(city.name, ""), city.id.toString())
                     pc.provinceCode = city.provinceId.toString()
@@ -39,20 +45,23 @@ object CityPickerConverter {
                 results.sortBy {
                     it.pinyin
                 }
-            }.await()
+            }
         }
         return results
     }
 
+    /**
+     * Note: 阻塞当前线程
+     */
     fun reverseConvert(cities: List<com.zaaach.citypicker.model.City>): List<City> {
         val results = ArrayList<City>()
         runBlocking {
-            async(Dispatchers.Default) {
+            withContext(Dispatchers.Default) {
                 for (city in cities) {
                     val pc = City(city.code.toInt(), city.provinceCode.toInt(), city.province, city.name)
                     results.add(pc)
                 }
-            }.await()
+            }
         }
         return results
     }

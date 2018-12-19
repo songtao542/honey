@@ -27,7 +27,7 @@ class DatingDetailFragment : BaseFragment() {
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
         viewModel = ViewModelProviders.of(this,viewModelFactory).get(DatingDetailViewModel::class.java)
-        // TODO: Use the ViewModel
+        // TODO: Use the AppViewModel
     }
 
 

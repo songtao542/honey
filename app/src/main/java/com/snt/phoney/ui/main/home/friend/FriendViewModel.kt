@@ -3,7 +3,7 @@ package com.snt.phoney.ui.main.home.friend
 import android.text.TextUtils
 import android.util.Log
 import androidx.lifecycle.MutableLiveData
-import androidx.lifecycle.ViewModel
+import com.snt.phoney.base.AppViewModel
 import com.snt.phoney.domain.model.Response
 import com.snt.phoney.domain.model.User
 import com.snt.phoney.domain.usecase.FriendListUseCase
@@ -14,7 +14,7 @@ import io.reactivex.rxkotlin.subscribeBy
 import io.reactivex.schedulers.Schedulers
 import javax.inject.Inject
 
-class FriendViewModel @Inject constructor(private val usecase: FriendListUseCase) : ViewModel() {
+class FriendViewModel @Inject constructor(private val usecase: FriendListUseCase) : AppViewModel() {
 
     val users = MutableLiveData<List<User>>()
     val error = MutableLiveData<String>()
@@ -40,12 +40,16 @@ class FriendViewModel @Inject constructor(private val usecase: FriendListUseCase
                                         type.ordinal.toString(), pageIndex.toString(), city,
                                         heightStart, heightEnd, ageStart, ageEnd, cupStart, cupEnd)
                                         .toObservable()
+                                        .subscribeOn(Schedulers.io())
+                                        .observeOn(AndroidSchedulers.mainThread())
                             }
                 } else {
                     usecase.listUser(token, latitude, longitude,
                             type.ordinal.toString(), pageIndex.toString(), city,
                             heightStart, heightEnd, ageStart, ageEnd, cupStart, cupEnd)
                             .toObservable()
+                            .subscribeOn(Schedulers.io())
+                            .observeOn(AndroidSchedulers.mainThread())
                 }
         return observable.subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())

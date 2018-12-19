@@ -35,6 +35,7 @@ abstract class ProvinceCityDao {
             province.cities?.let { cities ->
                 cities.forEach { city ->
                     city.provinceId = province.id
+                    city.provinceName = province.name
                 }
                 insertCities(cities)
             }

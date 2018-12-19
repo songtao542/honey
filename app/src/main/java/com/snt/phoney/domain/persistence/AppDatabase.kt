@@ -9,7 +9,7 @@ import com.snt.phoney.domain.model.KeyValue
 import com.snt.phoney.domain.model.Province
 import com.snt.phoney.domain.model.User
 
-@Database(entities = [User::class, KeyValue::class, Province::class, City::class], exportSchema = false, version = 2)
+@Database(entities = [User::class, KeyValue::class, Province::class, City::class], exportSchema = false, version = 1)
 abstract class AppDatabase : RoomDatabase() {
 
     abstract fun userDao(): UserDao

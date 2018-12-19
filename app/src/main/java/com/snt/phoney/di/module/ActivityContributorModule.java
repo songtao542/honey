@@ -23,8 +23,12 @@ import com.snt.phoney.ui.user.UserActivity;
 import com.snt.phoney.ui.user.UserActivityModule;
 import com.snt.phoney.ui.vip.VipActivity;
 import com.snt.phoney.ui.vip.VipActivityModule;
+import com.snt.phoney.ui.wallet.WalletActivity;
+import com.snt.phoney.ui.wallet.WalletActivityModule;
 import com.snt.phoney.wxapi.WXEntryActivity;
 import com.snt.phoney.wxapi.WXEntryActivityModule;
+import com.snt.phoney.wxapi.WXPayEntryActivity;
+import com.snt.phoney.wxapi.WXPayEntryActivityModule;
 
 import dagger.Module;
 import dagger.android.ContributesAndroidInjector;
@@ -44,6 +48,12 @@ public abstract class ActivityContributorModule {
             WXEntryActivityModule.class
     })
     public abstract WXEntryActivity contributeWXEntryActivity();
+
+    @ActivityScope
+    @ContributesAndroidInjector(modules = {
+            WXPayEntryActivityModule.class
+    })
+    public abstract WXPayEntryActivity contributeWXPayEntryActivity();
 
     @ActivityScope
     @ContributesAndroidInjector(modules = {
@@ -105,6 +115,12 @@ public abstract class ActivityContributorModule {
             AlbumSettingActivityModule.class
     })
     public abstract AlbumSettingActivity contributeAlbumSettingActivity();
+
+    @ActivityScope
+    @ContributesAndroidInjector(modules = {
+            WalletActivityModule.class
+    })
+    public abstract WalletActivity contributeWalletActivity();
 
 
 }

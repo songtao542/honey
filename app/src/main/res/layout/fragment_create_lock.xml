@@ -45,6 +45,18 @@
         android:textSize="@dimen/textsize_small" />
 
     <Button
+        android:id="@+id/closePassword"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="40dp"
+        android:layout_marginTop="30dp"
+        android:layout_marginRight="40dp"
+        android:background="@drawable/button_primary_circle_corner_selector"
+        android:text="@string/close_privacy_password"
+        android:textColor="@color/white"
+        android:textSize="@dimen/textsize_normal" />
+
+    <Button
         android:id="@+id/setPassword"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"

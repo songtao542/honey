@@ -1,10 +1,8 @@
 package com.snt.phoney.ui.signup
 
-import android.app.Application
 import android.text.TextUtils
-import android.util.Log
 import androidx.lifecycle.MutableLiveData
-import androidx.lifecycle.ViewModel
+import com.snt.phoney.base.AppViewModel
 import com.snt.phoney.domain.model.User
 import com.snt.phoney.domain.usecase.SigninUseCase
 import com.snt.phoney.extensions.getAndroidVersion
@@ -16,7 +14,7 @@ import io.reactivex.rxkotlin.subscribeBy
 import io.reactivex.schedulers.Schedulers
 import javax.inject.Inject
 
-class StartupViewModel @Inject constructor(private val application: Application, private val signinUseCase: SigninUseCase) : ViewModel() {
+class StartupViewModel @Inject constructor(private val signinUseCase: SigninUseCase) : AppViewModel() {
 
     val error = MutableLiveData<String>()
 

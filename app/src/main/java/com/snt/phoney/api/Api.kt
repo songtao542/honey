@@ -88,10 +88,6 @@ interface Api {
     @POST("users/getUsersPhoto")
     fun getUserPhotos(@Field("token") token: String): Single<Response<List<Photo>>>
 
-    @FormUrlEncoded
-    @POST("users/closePrivatePassword")
-    fun closePrivatePassword(@Field("token") token: String): Single<Response<String>>
-
     /**
      * 获取访客列表
      */
@@ -238,9 +234,116 @@ interface Api {
      */
     @FormUrlEncoded
     @POST("users/setPrivatePassword")
-    fun setPrivatePassword(@Field("token") token: String,
+    fun setPrivacyPassword(@Field("token") token: String,
                            @Field("password") password: String,
                            @Field("privatePassword") privatePassword: String): Single<Response<String>>
+
+    @FormUrlEncoded
+    @POST("users/closePrivatePassword")
+    fun closePrivacyPassword(@Field("token") token: String): Single<Response<String>>
+
+    @FormUrlEncoded
+    @POST("users/getPrivateStatus")
+    fun hasPrivacyPassword(@Field("token") token: String): Single<Response<Boolean>>
+
+
+    @FormUrlEncoded
+    @POST("member/listMemberCombos")
+    fun listVipCombo(@Field("token") token: String): Single<Response<List<VipCombo>>>
+
+    @FormUrlEncoded
+    @POST("member/getIntimateGold")
+    fun getMibiAmount(@Field("token") token: String): Single<Response<Int>>
+
+    @FormUrlEncoded
+    @POST("member/wallet/myWallet")
+    fun getMibiWallet(@Field("token") token: String): Single<Response<MibiWallet>>
+
+    @FormUrlEncoded
+    @POST("member/getMemberInfo")
+    fun getVipInfo(@Field("token") token: String): Single<Response<VipInfo>>
+
+
+    /**
+     *@param token string 必须	用户token
+     *@param type string 必须	订单类型订单类型 0 购买蜜币 1 购买会员 10 消费红包蜜币 11 消费解锁相册蜜币 12 语音蜜，31 蜜币提现
+     *@param target string 必须  对应类型的uuid 购买蜜币(蜜币规则uuid) 购买会员(会员规则uuid) 消费红包蜜币（相片id） 消费解锁相册蜜币（相册id） 语音蜜（蜜币记录uuid）
+     *@param uid string  非必须   目标用户uuid(当时红包和相册蜜币的时候，uid必填)
+     */
+    @FormUrlEncoded
+    @POST("payment/order/unifiedOrder")
+    fun createOrder(@Field("token") token: String,
+                    @Field("type") type: String,
+                    @Field("target") target: String,
+                    @Field("uid") uid: String): Single<Response<String>>
+
+    /**
+     *@param token string 用户token
+     *@param unifiedOrder string 订单唯一标示
+     */
+    @FormUrlEncoded
+    @POST("payment/pay/payWithPhoney")
+    fun payInMibi(@Field("token") token: String,
+                  @Field("unifiedOrder") unifiedOrder: String): Single<Response<String>>
+
+    /**
+     *@param token string 用户token
+     *@param unifiedOrder string 订单唯一标示
+     *
+     *@return 返回微信统支付相关签名信息
+     */
+    @FormUrlEncoded
+    @POST("payment/pay/wechatPay")
+    fun wechatPay(@Field("token") token: String,
+                  @Field("unifiedOrder") unifiedOrder: String): Single<Response<WxPrePayResult>>
+
+    /**
+     *@param token string 用户token
+     *@param unifiedOrder string 订单唯一标示
+     *
+     *@return 返回支付宝支付相关签名信息
+     */
+    @FormUrlEncoded
+    @POST("payment/pay/alipay")
+    fun alipay(@Field("token") token: String,
+               @Field("unifiedOrder") unifiedOrder: String): Single<Response<String>>
+
+    @FormUrlEncoded
+    @POST("payment/withdrawDeposit/preWithdraw")
+    fun preWithdraw(@Field("token") token: String): Single<Response<PreWithdraw>>
+
+    /**
+     * @param money 金额
+     * @return 返回用户提现唯一标示uuid
+     */
+    @FormUrlEncoded
+    @POST("payment/withdrawDeposit/withdraw")
+    fun withdraw(@Field("token") token: String,
+                 @Field("money") money: Double): Single<Response<PreWithdraw>>
+
+    /**
+     *@param token    string	是	用户token
+     *@param uuid    string	是	提现uuid
+     */
+    @FormUrlEncoded
+    @POST("payment/withdrawDeposit/detailWithdraw")
+    fun getWithdrawInfo(@Field("token") token: String,
+                        @Field("uuid") uuid: String): Single<Response<WithdrawInfo>>
+
+    /**
+     *@param token    string	是	用户token
+     *@param type    string	是	类型 0 入账（充值明细） 1 消费明细
+     *@param page    string	是	1
+     *@param startTime    string	否	范围检索时候使用（开始日期 eg:2018-11-11)
+     *@param endTime    string	否	结束日期，范围检索的时候传
+     */
+    @FormUrlEncoded
+    @POST("payment/order/listOrders")
+    fun listOrder(@Field("token") token: String,
+                  @Field("type") type: String,
+                  @Field("page") page: String,
+                  @Field("startTime") startTime: String,
+                  @Field("endTime") endTime: String): Single<Response<String>>
 
     /**
      * @param photoPermission string 权限值(0 全部公开 1 红包（只有单张） 2 解锁相册(全部) 3 需要申请查看 4 不可查看)

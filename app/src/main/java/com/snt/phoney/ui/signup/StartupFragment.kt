@@ -27,7 +27,7 @@ class StartupFragment : BaseFragment() {
     private lateinit var viewModel: StartupViewModel
     private lateinit var qqViewModel: QQViewModel
     private lateinit var weiboViewModel: WeiboViewModel
-    private lateinit var wxViewModel: WxViewModel
+    private lateinit var wxViewModel: WechatViewModel
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         return inflater.inflate(R.layout.fragment_startup, container, false)
@@ -38,7 +38,7 @@ class StartupFragment : BaseFragment() {
         viewModel = ViewModelProviders.of(this, viewModelFactory).get(StartupViewModel::class.java)
         qqViewModel = ViewModelProviders.of(this, viewModelFactory).get(QQViewModel::class.java)
         weiboViewModel = ViewModelProviders.of(this, viewModelFactory).get(WeiboViewModel::class.java)
-        wxViewModel = ViewModelProviders.of(this, viewModelFactory).get(WxViewModel::class.java)
+        wxViewModel = ViewModelProviders.of(this, viewModelFactory).get(WechatViewModel::class.java)
 
         signin.setOnClickListener {
             activity?.addFragmentSafely(R.id.containerLayout, SignupFragment.newInstance(), "signin")

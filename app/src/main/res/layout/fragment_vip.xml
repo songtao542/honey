@@ -1,171 +1,167 @@
 <?xml version="1.0" encoding="utf-8"?>
-<layout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools">
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/vip"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/light_gray"
+    android:orientation="vertical"
+    tools:context=".ui.vip.VipActivity">
 
-    <data class="VipFragmentBinding">
-
-        <variable
-            name="viewModel"
-            type="com.snt.phoney.ui.vip.VipViewModel" />
-    </data>
-
-    <LinearLayout
-        android:id="@+id/vip"
+    <com.snt.phoney.widget.Toolbar
+        android:id="@+id/toolbar"
+        style="@style/AppTheme.Toolbar"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:background="@color/light_gray"
-        android:orientation="vertical"
-        tools:context=".ui.vip.VipActivity">
+        android:layout_height="?attr/actionBarSize"
+        android:background="?attr/toolbarBackground"
+        app:navigationIcon="@drawable/ic_back"
+        app:title="@string/upgrade_vip_title" />
 
-        <com.snt.phoney.widget.Toolbar
-            android:id="@+id/toolbar"
-            style="@style/AppTheme.Toolbar"
-            android:layout_width="match_parent"
-            android:layout_height="?attr/actionBarSize"
-            android:background="?attr/toolbarBackground"
-            app:navigationIcon="@drawable/ic_back"
-            app:title="@string/upgrade_vip_title" />
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
 
-        <ScrollView
+        <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content">
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
 
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:layout_marginBottom="20dp"
+                android:background="@color/white"
                 android:orientation="vertical">
 
-                <LinearLayout
+                <TextView
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginBottom="20dp"
-                    android:background="@color/white"
-                    android:orientation="vertical">
+                    android:layout_marginLeft="16dp"
+                    android:layout_marginTop="10dp"
+                    android:layout_marginRight="10dp"
+                    android:paddingTop="5dp"
+                    android:paddingBottom="5dp"
+                    android:text="@string/vip_privilege"
+                    android:textColor="@android:color/black" />
+
+                <LinearLayout
+                    android:id="@+id/privilegeContainer"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:background="@drawable/underline_5dp_gray"
+                    android:orientation="vertical"
+                    android:paddingBottom="18dp">
+
+                    <com.snt.phoney.widget.VipPrivilegeView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:visibility="gone" />
+
+                    <com.snt.phoney.widget.VipPrivilegeView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:visibility="gone" />
 
                     <TextView
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:layout_marginLeft="16dp"
-                        android:layout_marginTop="10dp"
-                        android:layout_marginRight="10dp"
-                        android:paddingTop="5dp"
-                        android:paddingBottom="5dp"
-                        android:text="@string/vip_privilege"
-                        android:textColor="@android:color/black" />
-
-                    <LinearLayout
-                        android:id="@+id/privilegeContainer"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:background="@drawable/underline_5dp_gray"
-                        android:orientation="vertical"
-                        android:paddingBottom="18dp">
-
-                        <com.snt.phoney.widget.VipPrivilegeView
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:visibility="gone" />
-
-                        <com.snt.phoney.widget.VipPrivilegeView
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:visibility="gone" />
-
-                        <TextView
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:lineSpacingExtra="1.2dp"
-                            android:lineSpacingMultiplier="1.2"
-                            android:paddingLeft="10dp"
-                            android:paddingRight="10dp"
-                            android:text="@string/vip_privilege_text"
-                            android:textColor="@color/black"
-                            android:textSize="@dimen/textsize_normal" />
-                    </LinearLayout>
-
-                    <com.snt.phoney.widget.FlowLayout
-                        android:id="@+id/vipCardContainer"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_marginLeft="16dp"
-                        android:layout_marginTop="20dp"
-                        android:layout_marginRight="16dp"
-                        android:orientation="horizontal"
-                        app:column="2"
-                        app:space="10dp">
-
-                        <com.snt.phoney.widget.VipCardView
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content" />
-
-                        <com.snt.phoney.widget.VipCardView
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content" />
-
-                        <com.snt.phoney.widget.VipCardView
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content" />
-
-                        <com.snt.phoney.widget.VipCardView
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content" />
-                    </com.snt.phoney.widget.FlowLayout>
-
-                    <RadioGroup
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_marginLeft="10dp"
-                        android:layout_marginRight="10dp"
+                        android:lineSpacingExtra="1.5dp"
+                        android:lineSpacingMultiplier="1.2"
                         android:paddingLeft="10dp"
-                        android:paddingRight="10dp">
-
-                        <com.snt.phoney.widget.CompatRadioButton
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:layout_marginTop="20dp"
-                            android:drawableLeft="@drawable/ic_alipay"
-                            android:drawablePadding="10dp"
-                            android:layoutDirection="rtl"
-                            android:paddingTop="15dp"
-                            android:paddingBottom="15dp"
-                            android:text="@string/alipay" />
-
-                        <com.snt.phoney.widget.CompatRadioButton
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:layout_marginTop="10dp"
-                            android:drawableLeft="@drawable/ic_wechat_pay"
-                            android:drawablePadding="10dp"
-                            android:layoutDirection="rtl"
-                            android:paddingTop="15dp"
-                            android:paddingBottom="15dp"
-                            android:text="@string/wechat" />
-                    </RadioGroup>
-
-                    <TextView
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:background="@drawable/topline_gray"
-                        android:gravity="center_vertical|right"
-                        android:minHeight="50dp"
-                        android:paddingLeft="20dp"
-                        android:paddingRight="20dp"
-                        android:text="@string/pay_amount" />
-
+                        android:paddingRight="10dp"
+                        android:text="@string/vip_privilege_text"
+                        android:textColor="@color/dark_gray"
+                        android:textSize="@dimen/textsize_normal" />
                 </LinearLayout>
 
-                <Button
+                <com.snt.phoney.widget.FlowLayout
+                    android:id="@+id/vipCardContainer"
                     android:layout_width="match_parent"
-                    android:layout_height="@dimen/button_height"
-                    android:layout_marginLeft="30dp"
-                    android:layout_marginRight="30dp"
-                    android:layout_marginBottom="20dp"
-                    android:background="@drawable/button_primary_circle_corner_selector"
-                    android:text="@string/open_vip"
-                    android:textColor="@color/white" />
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="16dp"
+                    android:layout_marginTop="20dp"
+                    android:layout_marginRight="16dp"
+                    android:orientation="horizontal"
+                    app:column="2"
+                    app:space="10dp">
+
+                    <!--<com.snt.phoney.widget.VipCardView-->
+                    <!--android:layout_width="match_parent"-->
+                    <!--android:layout_height="wrap_content" />-->
+
+                    <!--<com.snt.phoney.widget.VipCardView-->
+                    <!--android:layout_width="match_parent"-->
+                    <!--android:layout_height="wrap_content" />-->
+
+                    <!--<com.snt.phoney.widget.VipCardView-->
+                    <!--android:layout_width="match_parent"-->
+                    <!--android:layout_height="wrap_content" />-->
+
+                    <!--<com.snt.phoney.widget.VipCardView-->
+                    <!--android:layout_width="match_parent"-->
+                    <!--android:layout_height="wrap_content" />-->
+                </com.snt.phoney.widget.FlowLayout>
+
+                <RadioGroup
+                    android:id="@+id/radioGroup"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="10dp"
+                    android:layout_marginRight="10dp"
+                    android:paddingLeft="10dp"
+                    android:paddingRight="10dp">
+
+                    <androidx.appcompat.widget.AppCompatRadioButton
+                        android:id="@+id/alipayRadio"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="20dp"
+                        android:checked="true"
+                        android:drawableLeft="@drawable/ic_alipay"
+                        android:drawablePadding="10dp"
+                        android:layoutDirection="rtl"
+                        android:paddingTop="15dp"
+                        android:paddingBottom="15dp"
+                        android:text="@string/alipay" />
+
+                    <androidx.appcompat.widget.AppCompatRadioButton
+                        android:id="@+id/wechatPayRadio"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="10dp"
+                        android:drawableLeft="@drawable/ic_wechat_pay"
+                        android:drawablePadding="10dp"
+                        android:layoutDirection="rtl"
+                        android:paddingTop="15dp"
+                        android:paddingBottom="15dp"
+                        android:text="@string/wechat" />
+                </RadioGroup>
+
+                <TextView
+                    android:id="@+id/payAmount"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:background="@drawable/topline_gray"
+                    android:gravity="center_vertical|right"
+                    android:minHeight="50dp"
+                    android:paddingLeft="20dp"
+                    android:paddingRight="20dp"
+                    android:text="@string/pay_amount_template" />
 
             </LinearLayout>
-        </ScrollView>
-    </LinearLayout>
-</layout>
+
+            <Button
+                android:id="@+id/payButton"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/button_height"
+                android:layout_marginLeft="30dp"
+                android:layout_marginRight="30dp"
+                android:layout_marginBottom="20dp"
+                android:background="@drawable/button_primary_circle_corner_selector"
+                android:text="@string/open_vip"
+                android:textColor="@color/white" />
+
+        </LinearLayout>
+    </ScrollView>
+</LinearLayout>

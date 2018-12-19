@@ -2,7 +2,7 @@ package com.snt.phoney.ui.main.mine
 
 import android.util.Log
 import androidx.lifecycle.MutableLiveData
-import androidx.lifecycle.ViewModel
+import com.snt.phoney.base.AppViewModel
 import com.snt.phoney.domain.model.AmountInfo
 import com.snt.phoney.domain.model.PhotoPermission
 import com.snt.phoney.domain.usecase.GetUserInfoUseCase
@@ -12,7 +12,7 @@ import io.reactivex.rxkotlin.subscribeBy
 import io.reactivex.schedulers.Schedulers
 import javax.inject.Inject
 
-class MineViewModel @Inject constructor(private val usecase: GetUserInfoUseCase) : ViewModel() {
+class MineViewModel @Inject constructor(private val usecase: GetUserInfoUseCase) : AppViewModel() {
 
     val user = usecase.user
 

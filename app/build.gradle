@@ -42,7 +42,7 @@ android {
                 JPUSH_APPKEY : "eacade5d281c93bfb55b59d3",
                 JPUSH_CHANNEL: "developer-default"
         ]
-        javaCompileOptions { annotationProcessorOptions { includeCompileClasspath = true } }
+        //javaCompileOptions { annotationProcessorOptions { includeCompileClasspath = true } }
     }
     packagingOptions {
         doNotStrip '*/mips/*.so'
@@ -65,17 +65,19 @@ android {
             //multiDexKeepProguard file('multidex-config.pro')
             //proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
             //testCoverageEnabled !project.hasProperty('android.injected.invoked.from.ide')
-//            signingConfig signingConfigs.debug
+            signingConfig signingConfigs.debug
         }
         release {
             defaultConfig {
                 minSdkVersion 21
                 multiDexEnabled true
+
             }
             shrinkResources true
             minifyEnabled true
-            //multiDexKeepFile file('multidex-config.txt')
-            //multiDexKeepProguard file('multidex-config.pro')
+            //runProguard true
+            multiDexKeepFile file('multidex-config.txt')
+            multiDexKeepProguard file('multidex-config.pro')
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
             signingConfig signingConfigs.release
         }
@@ -86,6 +88,7 @@ android {
     androidExtensions {
         experimental = true
     }
+
     kapt {
         useBuildCache = false
     }
@@ -114,6 +117,7 @@ dependencies {
 
     // A Map
     implementation(name: 'AMap', ext: 'aar')
+    implementation(name: 'alipaySdk-15.5.9-20181123210601', ext: 'aar')
 
     //    implementation project(path: ":dagger_androidx")
     implementation deps.androidx.concurrent_futures
@@ -172,7 +176,7 @@ dependencies {
     implementation deps.androidx.material
     implementation deps.androidx.exifinterface
 
-    //implementation deps.androidx.multidex
+    implementation deps.androidx.multidex
     //    kapt deps.androidx.databinding_compiler
     //    implementation deps.support.v4
     //    implementation deps.support.app_compat

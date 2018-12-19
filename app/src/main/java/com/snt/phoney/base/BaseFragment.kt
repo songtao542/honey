@@ -2,18 +2,22 @@ package com.snt.phoney.base
 
 import android.os.Bundle
 import android.view.View
-import android.view.WindowManager
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.Toolbar
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import com.snt.phoney.di.Injectable
-import com.snt.phoney.extensions.AndroidBug5497Workaround
 import com.snt.phoney.extensions.autoCleared
 import io.reactivex.disposables.CompositeDisposable
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.Job
 import javax.inject.Inject
 
-abstract class BaseFragment : Fragment(), Injectable {
+abstract class BaseFragment : Fragment(), Injectable, CoroutineScope {
+
+    override val coroutineContext = Job() + Dispatchers.Main
+
     @Inject
     lateinit var viewModelFactory: ViewModelProvider.Factory
 
@@ -35,6 +39,12 @@ abstract class BaseFragment : Fragment(), Injectable {
                 }
             }
         }
+    }
+
+    override fun onDestroyView() {
+        super.onDestroyView()
+        disposeBag.dispose()
+        disposeBag.clear()
     }
 
     companion object {

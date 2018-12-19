@@ -19,7 +19,7 @@ public class EmptyViewModelFactoryModule {
             @NonNull
             @Override
             public <T extends ViewModel> T create(@NonNull Class<T> modelClass) {
-                throw new IllegalStateException("Empty ViewModel factory can not create ViewModel!");
+                throw new IllegalStateException("Empty AppViewModel factory can not create AppViewModel!");
             }
         };
     }

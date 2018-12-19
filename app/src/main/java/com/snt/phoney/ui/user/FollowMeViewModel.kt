@@ -2,7 +2,7 @@ package com.snt.phoney.ui.user
 
 import android.util.Log
 import androidx.lifecycle.MutableLiveData
-import androidx.lifecycle.ViewModel
+import com.snt.phoney.base.AppViewModel
 import com.snt.phoney.domain.model.User
 import com.snt.phoney.domain.usecase.GetFollowUseCase
 import io.reactivex.android.schedulers.AndroidSchedulers
@@ -11,7 +11,7 @@ import io.reactivex.rxkotlin.subscribeBy
 import io.reactivex.schedulers.Schedulers
 import javax.inject.Inject
 
-class FollowMeViewModel @Inject constructor(private val usecase: GetFollowUseCase) : ViewModel() {
+class FollowMeViewModel @Inject constructor(private val usecase: GetFollowUseCase) : AppViewModel() {
 
     val user: User? = usecase.user
     val follower = MutableLiveData<List<User>>()

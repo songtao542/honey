@@ -18,8 +18,7 @@ import androidx.lifecycle.ReportFragment;
 import androidx.lifecycle.ViewModelStore;
 import androidx.lifecycle.ViewModelStoreOwner;
 
-@SuppressLint("Registered")
-public class ComponentActivity extends Activity implements LifecycleOwner, ViewModelStoreOwner {
+public abstract class ComponentActivity extends Activity implements LifecycleOwner, ViewModelStoreOwner {
 
     static final class NonConfigurationInstances {
         ViewModelStore viewModelStore;
@@ -29,6 +28,7 @@ public class ComponentActivity extends Activity implements LifecycleOwner, ViewM
 
     private ViewModelStore mViewModelStore;
 
+    @SuppressWarnings("ConstantConditions")
     @SuppressLint("ObsoleteSdkInt")
     public ComponentActivity() {
         Lifecycle lifecycle = getLifecycle();
@@ -58,14 +58,13 @@ public class ComponentActivity extends Activity implements LifecycleOwner, ViewM
         });
     }
 
+    @SuppressLint("RestrictedApi")
     @Override
-    @SuppressWarnings("RestrictedApi")
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         ReportFragment.injectIfNeededIn(this);
     }
 
-    @SuppressLint("RestrictedApi")
     @CallSuper
     @Override
     protected void onSaveInstanceState(@NonNull Bundle outState) {
@@ -109,7 +108,7 @@ public class ComponentActivity extends Activity implements LifecycleOwner, ViewM
     public ViewModelStore getViewModelStore() {
         if (getApplication() == null) {
             throw new IllegalStateException("Your activity is not yet attached to the "
-                    + "Application instance. You can't request ViewModel before onCreate call.");
+                    + "Application instance. You can't request AppViewModel before onCreate call.");
         }
         if (mViewModelStore == null) {
             NonConfigurationInstances nc = (NonConfigurationInstances) getLastNonConfigurationInstance();

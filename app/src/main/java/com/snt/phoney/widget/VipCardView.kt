@@ -3,9 +3,12 @@ package com.snt.phoney.widget
 import android.content.Context
 import android.util.AttributeSet
 import android.view.LayoutInflater
+import android.view.View
 import android.widget.RelativeLayout
 import com.snt.phoney.R
 import kotlinx.android.synthetic.main.vip_card_view.view.*
+import java.text.DecimalFormat
+
 
 class VipCardView : RelativeLayout {
     constructor(context: Context) : this(context, null)
@@ -26,7 +29,18 @@ class VipCardView : RelativeLayout {
         this.duration.text = duration
     }
 
+    public fun setDurationPrice(length: Double, price: Double) {
+        this.duration.text = context.getString(R.string.vip_duration_template, DecimalFormat.getInstance().format(length))
+        this.price.text = context.getString(R.string.vip_price_template, DecimalFormat.getInstance().format(price / length))
+    }
+
     public fun setPrice(price: CharSequence) {
         this.price.text = price
     }
+
+    public fun setRecommend(recommend: Boolean) {
+        this.recommend.visibility = if (recommend) View.VISIBLE else View.GONE
+    }
+
+
 }
