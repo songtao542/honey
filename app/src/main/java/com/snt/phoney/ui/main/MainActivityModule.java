@@ -9,6 +9,8 @@ import com.snt.phoney.di.module.ViewModelFactoryModule;
 import com.snt.phoney.ui.main.home.HomeFragment;
 import com.snt.phoney.ui.main.home.following.FollowingFragment;
 import com.snt.phoney.ui.main.home.following.FollowingViewModel;
+import com.snt.phoney.ui.main.home.friend.FilterFragment;
+import com.snt.phoney.ui.main.home.friend.FilterViewModel;
 import com.snt.phoney.ui.main.home.friend.FriendFragment;
 import com.snt.phoney.ui.main.home.friend.FriendViewModel;
 import com.snt.phoney.ui.main.message.MessageFragment;
@@ -38,6 +40,10 @@ public abstract class MainActivityModule {
     @FragmentScope
     @ContributesAndroidInjector
     public abstract FriendFragment contributeFriendFragment();
+
+    @FragmentScope
+    @ContributesAndroidInjector
+    public abstract FilterFragment contributeFilterFragment();
 
     @FragmentScope
     @ContributesAndroidInjector
@@ -104,6 +110,12 @@ public abstract class MainActivityModule {
     @ActivityScope
     @ViewModelKey(SquareViewModel.class)
     public abstract ViewModel bindSquareViewModel(SquareViewModel viewModel);
+
+    @Binds
+    @IntoMap
+    @ActivityScope
+    @ViewModelKey(FilterViewModel.class)
+    public abstract ViewModel bindFilterViewModel(FilterViewModel viewModel);
 
 
 }

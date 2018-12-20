@@ -1,4 +1,4 @@
-package com.snt.phoney.repository
+package com.snt.phoney.domain.repository.impl
 
 import com.snt.phoney.api.Api
 import com.snt.phoney.domain.model.Dating
@@ -52,7 +52,7 @@ class DatingRepositoryImpl @Inject constructor(private val api: Api) : DatingRep
         return api.listPopularDating(token, pageIndex.toString())
     }
 
-    override fun getDatingDetail(token: String, uuid: String, latitude: Double, longitude: Double): Single<Response<List<Dating>>> {
+    override fun getDatingDetail(token: String, uuid: String, latitude: Double, longitude: Double): Single<Response<Dating>> {
         return api.getDatingDetail(token, uuid, latitude.toString(), longitude.toString())
     }
 

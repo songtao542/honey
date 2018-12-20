@@ -18,7 +18,7 @@ class UserInfoViewModel @Inject constructor(private val usecase: GetUserInfoUseC
 
     fun getUserInfo(uuid: String): Disposable? {
         Log.d("TTTT", "getUser ---------getUser-------- getUser->$uuid")
-        val token = usecase.user?.token ?: return null
+        val token = usecase.getAccessToken() ?: return null
         return usecase.getLocation()
                 .flatMap {
                     usecase.getUserInfo(token, uuid, it.latitude, it.longitude)

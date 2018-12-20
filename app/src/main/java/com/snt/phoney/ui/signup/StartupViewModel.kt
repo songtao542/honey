@@ -21,7 +21,7 @@ class StartupViewModel @Inject constructor(private val signinUseCase: SigninUseC
     val user = MutableLiveData<User>()
 
     init {
-        user.value = signinUseCase.user
+        user.value = signinUseCase.getUser()
     }
 
     fun signupByThirdPlatform(openId: String, thirdToken: String, plate: String, nickName: String, headPic: String): Disposable? {
@@ -35,7 +35,7 @@ class StartupViewModel @Inject constructor(private val signinUseCase: SigninUseC
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribeBy {
                     if (it.code == 200) {
-                        signinUseCase.user = it.data
+                        signinUseCase.setUser(it.data)
                         user.value = it.data
                     } else if (!TextUtils.isEmpty(it.message)) {
                         error.value = it.message

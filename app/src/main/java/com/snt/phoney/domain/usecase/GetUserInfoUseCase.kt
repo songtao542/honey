@@ -1,12 +1,11 @@
 package com.snt.phoney.domain.usecase
 
-import com.snt.phoney.domain.model.User
 import com.snt.phoney.domain.repository.LocationRepository
 import com.snt.phoney.domain.repository.UserRepository
 import javax.inject.Inject
 
 
-class GetUserInfoUseCase @Inject constructor(private val userRepository: UserRepository, private val locationRepository: LocationRepository) {
+class GetUserInfoUseCase @Inject constructor(private val userRepository: UserRepository, private val locationRepository: LocationRepository) : AccessUserUseCase(userRepository) {
 
     fun getUserAmountInfo(token: String) = userRepository.getUserAmountInfo(token)
 
@@ -21,9 +20,4 @@ class GetUserInfoUseCase @Inject constructor(private val userRepository: UserRep
 
     fun deleteUser(token: String) = userRepository.deleteUser(token)
 
-    var user: User?
-        get() = userRepository.user
-        set(value) {
-            userRepository.user = value
-        }
 }

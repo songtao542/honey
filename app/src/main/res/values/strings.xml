@@ -165,7 +165,7 @@
     <string name="unit_kg">kg</string>
     <string name="modify_success">修改成功</string>
     <string name="modify_failed">修改失败</string>
-    <string name="chat_limit1">对方聊天已设置为1分钟80蜜币</string>
+    <string name="chat_price_template">对方聊天已设置为1分钟%1$s蜜币</string>
     <string name="introduce_label">个人介绍</string>
     <string name="frequent_city_label">常在地点</string>
     <string name="unfill">未留下只言片语</string>
@@ -202,6 +202,32 @@
     <string name="buy_vip_failed">购买失败</string>
     <string name="buy_vip_success">购买成功</string>
     <string name="wechat_auth_failed">微信授权失败</string>
+    <string name="friend_tag_more_filter">更多筛选</string>
+    <string name="friend_more_filter">条件筛选</string>
+    <string name="height_start">160cm</string>
+    <string name="height_end">220cm</string>
+    <string name="age_start">16周岁</string>
+    <string name="age_end">40周岁</string>
+    <string name="cup_end">g</string>
+    <string name="cup_start">a</string>
+    <string name="query_by_filter">按筛选查找</string>
+    <string name="cannot_get_location">无法获取位置</string>
+    <string name="view_dating_detail">查看发布详情</string>
+    <string name="dating_publish_success">发布约会成功</string>
+    <string name="program_eating">吃饭</string>
+    <string name="program_see_film">看电影</string>
+    <string name="program_shopping">逛街</string>
+    <string name="program_other">其他</string>
+    <string name="dating_times">约会时间</string>
+    <string name="time_limit">离约会发布有效时间还有</string>
+    <string name="load_failed">加载失败</string>
+    <string name="publish_failed">发布失败</string>
+    <string name="official_authenticated">官方认证</string>
+    <string name="not_authenticated">未认证</string>
+    <string name="join_dating_success_title">参加通知</string>
+    <string name="join_dating_success">参加约会成功</string>
+    <string name="back">返回</string>
+    <string name="join_dating_failed">参加约会失败</string>
 
 
 </resources>

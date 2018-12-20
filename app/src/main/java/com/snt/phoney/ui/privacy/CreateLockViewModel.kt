@@ -24,7 +24,7 @@ class CreateLockViewModel @Inject constructor(private val usecase: CreatePrivacy
      * @param privatePassword  倒叙密码后的MD5的数字密码（32位）
      */
     fun setPrivacyPassword(password: String, privatePassword: String): Disposable? {
-        val token = usecase.user?.token ?: return null
+        val token = usecase.getAccessToken() ?: return null
         return usecase.setPrivacyPassword(token, password, privatePassword)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
@@ -43,7 +43,7 @@ class CreateLockViewModel @Inject constructor(private val usecase: CreatePrivacy
     }
 
     fun closePrivacyPassword(): Disposable? {
-        val token = usecase.user?.token ?: return null
+        val token = usecase.getAccessToken() ?: return null
         return usecase.closePrivacyPassword(token)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
@@ -62,7 +62,7 @@ class CreateLockViewModel @Inject constructor(private val usecase: CreatePrivacy
     }
 
     fun hasPrivacyPassword(): Disposable? {
-        val token = usecase.user?.token ?: return null
+        val token = usecase.getAccessToken() ?: return null
         return usecase.hasPrivacyPassword(token)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())

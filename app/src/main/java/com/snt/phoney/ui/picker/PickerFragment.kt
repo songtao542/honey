@@ -1,13 +1,12 @@
 package com.snt.phoney.ui.picker
 
-import android.app.Dialog
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.NumberPicker
 import com.snt.phoney.R
-import com.snt.phoney.base.BottomDialogFragment
+import com.snt.phoney.base.NoInjectBottomDialogFragment
 import com.snt.phoney.extensions.colorOf
 import com.snt.phoney.extensions.setDividerColor
 import com.snt.phoney.extensions.setDividerHeight
@@ -23,21 +22,10 @@ const val EXTRA_SHOW_PROGRESS = "progress"
 /**
  *
  */
-class PickerFragment : BottomDialogFragment() {
-
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-    }
+class PickerFragment : NoInjectBottomDialogFragment() {
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         return inflater.inflate(R.layout.fragment_picker, container, false)
-    }
-
-
-    override fun onCreateDialog(savedInstanceState: Bundle?): Dialog {
-        val dialog = super.onCreateDialog(savedInstanceState)
-        //dialog.window?.addFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN)
-        return dialog
     }
 
     override fun onActivityCreated(savedInstanceState: Bundle?) {

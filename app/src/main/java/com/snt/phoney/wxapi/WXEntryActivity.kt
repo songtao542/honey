@@ -4,7 +4,6 @@ import android.content.Intent
 import android.os.Bundle
 import androidx.lifecycle.Observer
 import com.snt.phoney.base.BaseOriginalActivity
-import com.snt.phoney.ui.signup.WechatViewModel
 import com.snt.phoney.utils.life.ViewModelProviders
 import com.tencent.mm.opensdk.modelbase.BaseReq
 import com.tencent.mm.opensdk.modelbase.BaseResp
@@ -12,11 +11,11 @@ import com.tencent.mm.opensdk.openapi.IWXAPIEventHandler
 
 class WXEntryActivity : BaseOriginalActivity(), IWXAPIEventHandler {
 
-    private lateinit var viewModel: WechatViewModel
+    private lateinit var viewModel: WXAuthViewModel
 
     public override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        viewModel = ViewModelProviders.of(this, viewModelFactory, WechatViewModel::class.java)
+        viewModel = ViewModelProviders.of(this, viewModelFactory, WXAuthViewModel::class.java)
 
         try {
             if (!viewModel.handleIntent(intent, this)) {

@@ -18,7 +18,7 @@ import javax.inject.Inject
 
 class EditUserViewModel @Inject constructor(private val usecase: EditUserUseCase) : AppViewModel() {
 
-    val user: User? = usecase.user
+    val user: User? = usecase.getUser()
 
     private var isSetting: Boolean = false
     var success = MutableLiveData<String>()
@@ -37,7 +37,7 @@ class EditUserViewModel @Inject constructor(private val usecase: EditUserUseCase
             return null
         }
         isSetting = true
-        val token = usecase.user?.token ?: return null
+        val token = usecase.getAccessToken() ?: return null
         return usecase.setFullUserInfo(token, userArg.height, userArg.weight, userArg.age, userArg.safeCup, userArg.cityCodesString, userArg.safeIntroduce, userArg.safeCareer, "", userArg.safeWechatAccount, userArg.safeNickname)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
@@ -49,7 +49,7 @@ class EditUserViewModel @Inject constructor(private val usecase: EditUserUseCase
                                         cup = userArg.cup, cities = userArg.cities, introduce = userArg.introduce, career = userArg.career,
                                         wechatAccount = userArg.wechatAccount, nickname = userArg.nickname)
                                 if (userArg != null) {
-                                    usecase.user = user
+                                    usecase.setUser(user)
                                 }
                                 success.value = it.data
                             } else if (!TextUtils.isEmpty(it.message)) {

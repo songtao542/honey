@@ -14,6 +14,7 @@ object Constants {
         const val INDEX = "index"
         const val DELETABLE = "deletable"
         const val PASSWORD = "password"
+        const val UUID = "uuid"
     }
 
     object Preference {

@@ -33,7 +33,7 @@ class WeiboViewModel @Inject constructor(private val weiboUseCase: WeiboSigninUs
 
     fun login(activity: Activity) {
         if (accessToken == null) {
-            accessToken = weiboUseCase.accessToken
+            accessToken = weiboUseCase.getWeiboAccessToken()
         }
         if (accessToken == null) { //accessToken == null 说明没有授权过
             authorize(activity)
@@ -52,7 +52,7 @@ class WeiboViewModel @Inject constructor(private val weiboUseCase: WeiboSigninUs
             override fun onSuccess(token: Oauth2AccessToken?) {
                 if (token?.isSessionValid == true) {
                     accessToken = token
-                    weiboUseCase.accessToken = token
+                    weiboUseCase.setWeiboAccessToken(token)
                     getWeiboUserInfo()
                 }
             }

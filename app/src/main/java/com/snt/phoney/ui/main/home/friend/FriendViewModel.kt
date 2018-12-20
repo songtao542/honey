@@ -29,7 +29,7 @@ class FriendViewModel @Inject constructor(private val usecase: FriendListUseCase
             ageEnd: String,
             cupStart: String,
             cupEnd: String): Disposable? {
-        val token = usecase.user?.token ?: return null
+        val token = usecase.getAccessToken() ?: return null
         var latitude = ""
         var longitude = ""
         var observable: Observable<Response<List<User>>> =

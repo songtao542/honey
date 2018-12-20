@@ -7,10 +7,7 @@ import android.os.Bundle
 import androidx.annotation.AnimRes
 import androidx.fragment.app.Fragment
 import com.snt.phoney.R
-import com.snt.phoney.extensions.addFragmentSafely
-import com.snt.phoney.extensions.colorOf
-import com.snt.phoney.extensions.setLayoutFullscreen
-import com.snt.phoney.extensions.setStatusBarColor
+import com.snt.phoney.extensions.*
 
 const val EXTRA_ARGUMENT = "argument"
 const val EXTRA_PAGE = "page"
@@ -42,16 +39,16 @@ open class CommonActivity : BaseActivity() {
 
 }
 
-fun Activity.addFragmentSafely(page: Page,
-                               tag: String,
-                               addToBackStack: Boolean = false,
-                               backStackName: String? = null,
-                               allowStateLoss: Boolean = false,
-                               argument: Bundle? = null,
-                               @AnimRes enterAnimation: Int = 0,
-                               @AnimRes exitAnimation: Int = 0,
-                               @AnimRes popEnterAnimation: Int = 0,
-                               @AnimRes popExitAnimation: Int = 0): Fragment {
+inline fun Activity.addFragmentSafely(page: Page,
+                                      tag: String,
+                                      addToBackStack: Boolean = false,
+                                      backStackName: String? = null,
+                                      allowStateLoss: Boolean = false,
+                                      argument: Bundle? = null,
+                                      @AnimRes enterAnimation: Int = 0,
+                                      @AnimRes exitAnimation: Int = 0,
+                                      @AnimRes popEnterAnimation: Int = 0,
+                                      @AnimRes popExitAnimation: Int = 0): Fragment {
     val fragment = FragmentFactory.create(page.ordinal, argument)
     return if (this is CommonActivity) {
         this.addFragmentSafely(R.id.container, fragment, tag, addToBackStack, backStackName, allowStateLoss, enterAnimation, exitAnimation, popEnterAnimation, popExitAnimation)
@@ -60,16 +57,16 @@ fun Activity.addFragmentSafely(page: Page,
     }
 }
 
-fun Activity.addFragmentSafely(fragment: Fragment,
-                               tag: String,
-                               addToBackStack: Boolean = false,
-                               backStackName: String? = null,
-                               allowStateLoss: Boolean = false,
-                               argument: Bundle? = null,
-                               @AnimRes enterAnimation: Int = 0,
-                               @AnimRes exitAnimation: Int = 0,
-                               @AnimRes popEnterAnimation: Int = 0,
-                               @AnimRes popExitAnimation: Int = 0): Fragment {
+inline fun Activity.addFragmentSafely(fragment: Fragment,
+                                      tag: String,
+                                      addToBackStack: Boolean = false,
+                                      backStackName: String? = null,
+                                      allowStateLoss: Boolean = false,
+                                      argument: Bundle? = null,
+                                      @AnimRes enterAnimation: Int = 0,
+                                      @AnimRes exitAnimation: Int = 0,
+                                      @AnimRes popEnterAnimation: Int = 0,
+                                      @AnimRes popExitAnimation: Int = 0): Fragment {
     return if (this is CommonActivity) {
         argument?.let { args ->
             if (fragment.arguments != null) {
@@ -84,33 +81,110 @@ fun Activity.addFragmentSafely(fragment: Fragment,
     }
 }
 
-fun Fragment.addFragmentSafely(page: Page,
-                               tag: String,
-                               addToBackStack: Boolean = false,
-                               backStackName: String? = null,
-                               allowStateLoss: Boolean = false,
-                               argument: Bundle? = null,
-                               @AnimRes enterAnimation: Int = 0,
-                               @AnimRes exitAnimation: Int = 0,
-                               @AnimRes popEnterAnimation: Int = 0,
-                               @AnimRes popExitAnimation: Int = 0): Fragment {
+inline fun Activity.replaceFragmentSafely(page: Page,
+                                          tag: String,
+                                          addToBackStack: Boolean = false,
+                                          backStackName: String? = null,
+                                          allowStateLoss: Boolean = false,
+                                          argument: Bundle? = null,
+                                          @AnimRes enterAnimation: Int = 0,
+                                          @AnimRes exitAnimation: Int = 0,
+                                          @AnimRes popEnterAnimation: Int = 0,
+                                          @AnimRes popExitAnimation: Int = 0): Fragment {
+    val fragment = FragmentFactory.create(page.ordinal, argument)
+    return if (this is CommonActivity) {
+        this.replaceFragmentSafely(R.id.container, fragment, tag, addToBackStack, backStackName, allowStateLoss, enterAnimation, exitAnimation, popEnterAnimation, popExitAnimation)
+    } else {
+        fragment
+    }
+}
+
+inline fun <T : Fragment> Activity.replaceFragmentSafely(
+        fragment: T,
+        tag: String,
+        addToBackStack: Boolean = false,
+        backStackName: String? = null,
+        allowStateLoss: Boolean = false,
+        argument: Bundle? = null,
+        @AnimRes enterAnimation: Int = 0,
+        @AnimRes exitAnimation: Int = 0,
+        @AnimRes popEnterAnimation: Int = 0,
+        @AnimRes popExitAnimation: Int = 0): T {
+    return if (this is CommonActivity) {
+        argument?.let { args ->
+            if (fragment.arguments != null) {
+                fragment.arguments!!.putAll(args)
+            } else {
+                fragment.arguments = args
+            }
+        }
+        this.replaceFragmentSafely(R.id.container, fragment, tag, addToBackStack, backStackName, allowStateLoss, enterAnimation, exitAnimation, popEnterAnimation, popExitAnimation)
+    } else {
+        fragment
+    }
+}
+
+inline fun Fragment.addFragmentSafely(page: Page,
+                                      tag: String,
+                                      addToBackStack: Boolean = false,
+                                      backStackName: String? = null,
+                                      allowStateLoss: Boolean = false,
+                                      argument: Bundle? = null,
+                                      @AnimRes enterAnimation: Int = 0,
+                                      @AnimRes exitAnimation: Int = 0,
+                                      @AnimRes popEnterAnimation: Int = 0,
+                                      @AnimRes popExitAnimation: Int = 0): Fragment {
     val fragment = FragmentFactory.create(page.ordinal, argument)
     return activity?.addFragmentSafely(fragment, tag, addToBackStack,
             backStackName, allowStateLoss, argument,
             enterAnimation, exitAnimation, popEnterAnimation, popExitAnimation) ?: fragment
 }
 
-fun Fragment.addFragmentSafely(fragment: Fragment,
-                               tag: String,
-                               addToBackStack: Boolean = false,
-                               backStackName: String? = null,
-                               allowStateLoss: Boolean = false,
-                               argument: Bundle? = null,
-                               @AnimRes enterAnimation: Int = 0,
-                               @AnimRes exitAnimation: Int = 0,
-                               @AnimRes popEnterAnimation: Int = 0,
-                               @AnimRes popExitAnimation: Int = 0): Fragment {
+inline fun Fragment.addFragmentSafely(fragment: Fragment,
+                                      tag: String,
+                                      addToBackStack: Boolean = false,
+                                      backStackName: String? = null,
+                                      allowStateLoss: Boolean = false,
+                                      argument: Bundle? = null,
+                                      @AnimRes enterAnimation: Int = 0,
+                                      @AnimRes exitAnimation: Int = 0,
+                                      @AnimRes popEnterAnimation: Int = 0,
+                                      @AnimRes popExitAnimation: Int = 0): Fragment {
     return activity?.addFragmentSafely(fragment, tag, addToBackStack,
             backStackName, allowStateLoss, argument,
             enterAnimation, exitAnimation, popEnterAnimation, popExitAnimation) ?: fragment
 }
+
+
+inline fun Fragment.replaceFragmentSafely(page: Page,
+                                          tag: String,
+                                          addToBackStack: Boolean = false,
+                                          backStackName: String? = null,
+                                          allowStateLoss: Boolean = false,
+                                          argument: Bundle? = null,
+                                          @AnimRes enterAnimation: Int = 0,
+                                          @AnimRes exitAnimation: Int = 0,
+                                          @AnimRes popEnterAnimation: Int = 0,
+                                          @AnimRes popExitAnimation: Int = 0): Fragment {
+    val fragment = FragmentFactory.create(page.ordinal, argument)
+    return activity?.replaceFragmentSafely(fragment, tag, addToBackStack,
+            backStackName, allowStateLoss, argument,
+            enterAnimation, exitAnimation, popEnterAnimation, popExitAnimation) ?: fragment
+}
+
+inline fun <T : Fragment> Fragment.replaceFragmentSafely(
+        fragment: T,
+        tag: String,
+        addToBackStack: Boolean = false,
+        backStackName: String? = null,
+        allowStateLoss: Boolean = false,
+        argument: Bundle? = null,
+        @AnimRes enterAnimation: Int = 0,
+        @AnimRes exitAnimation: Int = 0,
+        @AnimRes popEnterAnimation: Int = 0,
+        @AnimRes popExitAnimation: Int = 0): T {
+    return activity?.replaceFragmentSafely(fragment, tag, addToBackStack,
+            backStackName, allowStateLoss, argument,
+            enterAnimation, exitAnimation, popEnterAnimation, popExitAnimation) ?: fragment
+}
+

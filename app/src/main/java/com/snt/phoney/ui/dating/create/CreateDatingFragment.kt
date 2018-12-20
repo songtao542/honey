@@ -11,10 +11,12 @@ import com.snt.phoney.R
 import com.snt.phoney.base.BaseFragment
 import com.snt.phoney.base.ProgressDialog
 import com.snt.phoney.base.addFragmentSafely
+import com.snt.phoney.base.replaceFragmentSafely
 import com.snt.phoney.domain.model.DatingProgram
 import com.snt.phoney.domain.model.PoiAddress
 import com.snt.phoney.extensions.setSoftInputMode
 import com.snt.phoney.extensions.snackbar
+import com.snt.phoney.ui.dating.detail.DatingDetailFragment
 import com.snt.phoney.ui.location.LocationPicker
 import com.snt.phoney.ui.photo.PhotoViewerFragment
 import com.snt.phoney.utils.Picker
@@ -114,14 +116,23 @@ class CreateDatingFragment : BaseFragment(), PhotoViewerFragment.OnResultListene
             activity?.addFragmentSafely(fragment, "photo_viewer", true)
         }
 
+        confirmButton.setOnClickListener {
+            val fragment = DatingDetailFragment.newInstance(Bundle().apply {
+                putString(Constants.Extra.UUID, viewModel.success.value)
+            })
+            activity?.replaceFragmentSafely(fragment, "dating_detail")
+        }
+
         viewModel.error.observe(this, Observer {
             progressDialog?.dismiss()
             snackbar(it)
         })
         viewModel.success.observe(this, Observer {
+            toolbar.menu.clear()
             progressDialog?.dismiss()
+            publishLayout.visibility = View.GONE
+            successLayout.visibility = View.VISIBLE
             snackbar(getString(R.string.publish_success))
-            activity?.finish()
         })
     }
 

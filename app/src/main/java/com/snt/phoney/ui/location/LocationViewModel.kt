@@ -2,6 +2,7 @@ package com.snt.phoney.ui.location
 
 import android.location.Location
 import androidx.lifecycle.MutableLiveData
+import com.snt.phoney.R
 import com.snt.phoney.base.AppViewModel
 import com.snt.phoney.domain.usecase.GetLocationUseCase
 import io.reactivex.android.schedulers.AndroidSchedulers
@@ -36,7 +37,7 @@ class LocationViewModel @Inject constructor(private var usecase: GetLocationUseC
                         },
                         onError = {
                             locating = false
-                            error.value = "无法获取位置"
+                            error.value = context.getString(R.string.cannot_get_location)
                         })
     }
 

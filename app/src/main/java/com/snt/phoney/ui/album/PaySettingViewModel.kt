@@ -16,7 +16,7 @@ class PaySettingViewModel @Inject constructor(private val usecase: AlbumSettingU
     val photos = MutableLiveData<List<Photo>>()
 
     fun setPhotoPermission(photoPermission: PhotoPermission, money: Double = 0.0, photoId: String = ""): Disposable? {
-        val token = usecase.user?.token ?: return null
+        val token = usecase.getAccessToken() ?: return null
         return usecase.setPhotoPermission(token, photoPermission.value, money, photoId)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
@@ -25,8 +25,8 @@ class PaySettingViewModel @Inject constructor(private val usecase: AlbumSettingU
                 }
     }
 
-    fun getUserPhotoes(): Disposable? {
-        val token = usecase.user?.token ?: return null
+    fun getUserPhotos(): Disposable? {
+        val token = usecase.getAccessToken() ?: return null
         return usecase.getUserPhotos(token)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())

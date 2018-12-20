@@ -1,6 +1,5 @@
 package com.snt.phoney.domain.usecase
 
-import com.snt.phoney.domain.model.User
 import com.snt.phoney.domain.repository.LocationRepository
 import com.snt.phoney.domain.repository.ToolRepository
 import com.snt.phoney.domain.repository.UserRepository
@@ -8,7 +7,7 @@ import javax.inject.Inject
 
 class SetupWizardUseCase @Inject constructor(private val locationRepository: LocationRepository,
                                              private val userRepository: UserRepository,
-                                             private val toolRepository: ToolRepository) {
+                                             private val toolRepository: ToolRepository) : AccessUserUseCase(userRepository) {
 
     fun getCities() = locationRepository.cities
 
@@ -26,11 +25,4 @@ class SetupWizardUseCase @Inject constructor(private val locationRepository: Loc
 
     fun setUserInfo(token: String, cities: String, career: String, program: String) = userRepository.setUserInfo(token, cities, career, program)
 
-    var user: User?
-        set(value) {
-            userRepository.user = value
-        }
-        get() {
-            return userRepository.user
-        }
 }

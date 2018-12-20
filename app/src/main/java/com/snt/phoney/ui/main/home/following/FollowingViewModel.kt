@@ -21,7 +21,7 @@ class FollowingViewModel @Inject constructor(private val usecase: FollowListUseC
     var pageIndex: Int = 0
 
     fun listFollow( ): Disposable? {
-        val token = usecase.user?.token ?: return null
+        val token = usecase.getAccessToken() ?: return null
         return usecase.listFollow(token).subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribeBy {
@@ -36,7 +36,7 @@ class FollowingViewModel @Inject constructor(private val usecase: FollowListUseC
 
 
     fun follow(uuid: String): Single<Response<Boolean>>? {
-        val token = usecase.user?.token ?: return null
+        val token = usecase.getAccessToken() ?: return null
         return usecase.follow(token, uuid)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())

@@ -69,7 +69,7 @@ class PaySettingFragment : BaseFragment() {
             viewModel.setPhotoPermission(photoPermission, amount)
         }
 
-        viewModel.getUserPhotoes()
+        viewModel.getUserPhotos()
     }
 
 }

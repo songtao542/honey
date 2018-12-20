@@ -13,11 +13,11 @@ import javax.inject.Inject
 
 class FollowMeViewModel @Inject constructor(private val usecase: GetFollowUseCase) : AppViewModel() {
 
-    val user: User? = usecase.user
+    val user: User? = usecase.getUser()
     val follower = MutableLiveData<List<User>>()
 
     fun listFollow(): Disposable? {
-        val token = usecase.user?.token ?: return null
+        val token = usecase.getAccessToken() ?: return null
         return usecase.listFollow(token)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())

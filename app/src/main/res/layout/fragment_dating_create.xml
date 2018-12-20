@@ -21,6 +21,7 @@
         app:titleTextColor="@color/white" />
 
     <ScrollView
+        android:id="@+id/publishLayout"
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
 
@@ -54,9 +55,9 @@
                     android:layout_height="match_parent"
                     android:layout_gravity="right"
                     android:layout_weight="1"
+                    android:ellipsize="end"
                     android:gravity="center_vertical|right"
                     android:text="@string/select_dating_address"
-                    android:ellipsize="end"
                     android:textColor="@android:color/darker_gray"
                     android:textSize="@dimen/textsize_normal" />
             </LinearLayout>
@@ -168,9 +169,9 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:background="@color/setting_item_bg_color"
-                android:paddingStart="@dimen/content_padding_start"
                 android:focusable="true"
                 android:focusableInTouchMode="true"
+                android:paddingStart="@dimen/content_padding_start"
                 android:paddingEnd="@dimen/content_padding_end">
 
                 <EditText
@@ -207,14 +208,51 @@
                 android:layout_marginTop="30dp"
                 android:layout_marginRight="20dp"
                 android:layout_marginBottom="20dp"
-                android:visibility="gone"
                 android:background="@drawable/button_rounded_corner_selector"
                 android:elevation="0dp"
                 android:text="发布信息"
                 android:textColor="@android:color/white"
                 android:textSize="@dimen/textsize_normal"
+                android:visibility="gone"
                 app:layout_constraintBottom_toBottomOf="parent" />
 
         </LinearLayout>
     </ScrollView>
+
+    <LinearLayout
+        android:id="@+id/successLayout"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        android:visibility="gone">
+
+        <ImageView
+            android:layout_width="60dp"
+            android:layout_height="60dp"
+            android:layout_gravity="center_horizontal"
+            android:layout_marginTop="50dp"
+            android:src="@drawable/ic_success" />
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="20dp"
+            android:gravity="center"
+            android:text="@string/dating_publish_success"
+            android:textColor="@color/darker"
+            android:textSize="@dimen/textsize_large" />
+
+        <Button
+            android:id="@+id/confirmButton"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/button_height"
+            android:layout_marginLeft="40dp"
+            android:layout_marginTop="40dp"
+            android:layout_marginRight="40dp"
+            android:layout_marginBottom="20dp"
+            android:background="@drawable/button_primary_circle_corner_selector"
+            android:text="@string/view_dating_detail"
+            android:textColor="@color/white" />
+    </LinearLayout>
+
 </LinearLayout>

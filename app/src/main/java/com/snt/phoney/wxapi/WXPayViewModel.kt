@@ -30,7 +30,7 @@ open class WXPayViewModel @Inject constructor(private val usecase: PayOrderUseCa
     private var eventHandler: IWXAPIEventHandler? = null
 
     fun buy(type: OrderType, target: String, uid: String? = null): Disposable? {
-        val token = usecase.user?.token ?: return null
+        val token = usecase.getAccessToken() ?: return null
         return usecase.createOrder(token, type.value.toString(), target, uid ?: "")
                 .flatMap {
                     return@flatMap if (it.code == Response.SUCCESS && !TextUtils.isEmpty(it.data)) {

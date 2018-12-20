@@ -27,7 +27,7 @@ class SquareViewModel @Inject constructor(private val usecase: SquareUseCase) : 
         if (refresh) {
             recommendPageIndex = 0
         }
-        val token = usecase.user?.token ?: return null
+        val token = usecase.getAccessToken() ?: return null
         return usecase.location
                 .flatMap {
                     usecase.listRecommendDating(token, recommendPageIndex, dateType, distanceType, program, it.latitude, it.longitude)
@@ -58,7 +58,7 @@ class SquareViewModel @Inject constructor(private val usecase: SquareUseCase) : 
         if (refresh) {
             popularPageIndex = 0
         }
-        val token = usecase.user?.token ?: return null
+        val token = usecase.getAccessToken() ?: return null
         return usecase.listPopularDating(token, popularPageIndex)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
@@ -77,14 +77,14 @@ class SquareViewModel @Inject constructor(private val usecase: SquareUseCase) : 
 
 
     fun joinDating(uuid: String): Single<Response<String>>? {
-        val token = usecase.user?.token ?: return null
+        val token = usecase.getAccessToken() ?: return null
         return usecase.joinDating(token, uuid)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
     }
 
     fun follow(uuid: String): Single<Response<Boolean>>? {
-        val token = usecase.user?.token ?: return null
+        val token = usecase.getAccessToken() ?: return null
         return usecase.follow(token, uuid)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())

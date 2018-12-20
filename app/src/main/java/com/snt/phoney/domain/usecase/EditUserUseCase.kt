@@ -1,19 +1,10 @@
 package com.snt.phoney.domain.usecase
 
-import com.snt.phoney.domain.model.User
 import com.snt.phoney.domain.repository.LocationRepository
 import com.snt.phoney.domain.repository.UserRepository
 import javax.inject.Inject
 
-class EditUserUseCase @Inject constructor(private val repository: UserRepository, private val locationRepository: LocationRepository) {
-
-    var user: User?
-        set(value) {
-            repository.user = value
-        }
-        get() {
-            return repository.user
-        }
+class EditUserUseCase @Inject constructor(private val repository: UserRepository, private val locationRepository: LocationRepository) : AccessUserUseCase(repository) {
 
     /**
      * Note: 阻塞当前线程

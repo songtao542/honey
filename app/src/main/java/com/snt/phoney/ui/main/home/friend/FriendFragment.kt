@@ -1,6 +1,7 @@
 package com.snt.phoney.ui.main.home.friend
 
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -10,6 +11,7 @@ import androidx.lifecycle.ViewModelProviders
 import androidx.recyclerview.widget.GridLayoutManager
 import com.snt.phoney.R
 import com.snt.phoney.base.BaseFragment
+import com.snt.phoney.extensions.addFragmentSafely
 import com.snt.phoney.extensions.dip
 import com.snt.phoney.widget.itemdecoration.MonospacedItemDecoration
 import kotlinx.android.synthetic.main.fragment_friend_list.*
@@ -65,6 +67,22 @@ class FriendFragment : BaseFragment() {
         }
         list.adapter = adapter
 
+        moreTag.setOnClickListener {
+            val fragment = FilterFragment.newInstance()
+            fragment.setOnResultListener { result ->
+                heightStart = result.startHeight.toString()
+                heightEnd = result.endHeight.toString()
+                ageStart = result.startAge.toString()
+                ageEnd = result.endAge.toString()
+                cupStart = result.startCup
+                cupEnd = result.endCup
+                Log.d("TTTT", "result=================$result")
+                listUser()
+            }
+            activity?.addFragmentSafely(android.R.id.content, fragment, "filter", true,
+                    enterAnimation = R.anim.slide_in_right, popExitAnimation = R.anim.slide_out_right)
+        }
+
         newest.setOnClickListener {
             filter(FilterType.NEWEST, newest)
         }
@@ -113,7 +131,6 @@ class FriendFragment : BaseFragment() {
         @JvmStatic
         fun newInstance() = FriendFragment()
     }
-
 
 
 }

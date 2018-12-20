@@ -38,12 +38,11 @@ class LocationPickerFragment : BaseFragment() {
     @Inject
     lateinit var poiSearcher: PoiSearcher
 
-    var myLocation: Location? = null
+    private var myLocation: Location? = null
 
-    lateinit var mapProxy: MapProxy
+    private lateinit var mapProxy: MapProxy
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
-        // Inflate the layout for this fragment
         return inflater.inflate(R.layout.fragment_location_picker, container, false)
     }
 

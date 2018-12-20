@@ -122,4 +122,12 @@ public abstract class ComponentActivity extends Activity implements LifecycleOwn
         }
         return mViewModelStore;
     }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        if (mViewModelStore != null && !isChangingConfigurations()) {
+            mViewModelStore.clear();
+        }
+    }
 }

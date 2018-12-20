@@ -79,7 +79,8 @@
     <color name="share_button_normal">#f8e71c</color>
     <color name="share_cancel_button_pressed">#eeeeee</color>
     <color name="share_cancel_button_normal">#ffffff</color>
-    <color name="user_info_authenticate">#ff4352</color>
+    <color name="user_info_authenticate">#FFEB3B</color>
+    <color name="user_info_unauthenticate">#FAFAFA</color>
     <color name="message_search_bg">#dddddd</color>
     <color name="friend_tag_normal">#f2f3f7</color>
     <color name="friend_tag_more_pressed">#444444</color>

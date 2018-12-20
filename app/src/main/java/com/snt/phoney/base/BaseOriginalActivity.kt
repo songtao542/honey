@@ -10,6 +10,7 @@ import androidx.lifecycle.ViewModelProvider
 import com.snt.phoney.R
 import com.snt.phoney.domain.model.Sex
 import com.snt.phoney.domain.repository.UserRepository
+import com.snt.phoney.extensions.ClearableCompositeDisposable
 import com.snt.phoney.extensions.autoCleared
 import com.snt.phoney.extensions.hideSoftKeyboard
 import dagger.android.DispatchingAndroidInjector
@@ -35,7 +36,10 @@ abstract class BaseOriginalActivity : ComponentActivity(), HasSupportFragmentInj
     @Inject
     lateinit var userRepository: UserRepository
 
-    protected var disposeBag by autoCleared(CompositeDisposable())
+    private var clearableDisposeBag: ClearableCompositeDisposable by autoCleared(ClearableCompositeDisposable(CompositeDisposable()))
+
+    protected val disposeBag: CompositeDisposable
+        get() = clearableDisposeBag.compositeDisposable
 
     override fun supportFragmentInjector() = dispatchingAndroidInjector
 
@@ -47,7 +51,7 @@ abstract class BaseOriginalActivity : ComponentActivity(), HasSupportFragmentInj
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         if (onConfigureTheme()) {
-            when (Sex.from(userRepository.user?.sex ?: Sex.UNKNOWN.value)) {
+            when (Sex.from(userRepository.getUser()?.sex ?: Sex.UNKNOWN.value)) {
                 Sex.MALE -> {
                     setTheme(R.style.AppTheme_Male)
                 }

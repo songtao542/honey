@@ -1,10 +1,9 @@
 package com.snt.phoney.domain.usecase
 
-import com.snt.phoney.domain.model.User
 import com.snt.phoney.domain.repository.UserRepository
 import javax.inject.Inject
 
-class AlbumSettingUseCase @Inject constructor(val repository: UserRepository) {
+class AlbumSettingUseCase @Inject constructor(val repository: UserRepository) : AccessUserUseCase(repository) {
     fun setPhotoPermission(token: String,
                            photoPermission: Int,
                            money: Double,
@@ -12,12 +11,4 @@ class AlbumSettingUseCase @Inject constructor(val repository: UserRepository) {
 
     fun getUserPhotos(token: String) = repository.getUserPhotos(token)
 
-    /**
-     *  Note: get 方法阻塞当前线程
-     */
-    var user: User?
-        get() = repository.user
-        set(value) {
-            repository.user = value
-        }
 }

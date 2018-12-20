@@ -114,6 +114,7 @@ dependencies {
     implementation project(path: ':citypicker')
     implementation project(path: ':zoomimage')
     implementation project(path: ':photopicker')
+    implementation project(path: ':rangebar')
 
     // A Map
     implementation(name: 'AMap', ext: 'aar')

@@ -1,10 +1,11 @@
 package com.snt.phoney.domain.repository
 
 
+import com.snt.phoney.domain.accessor.UserAccessor
 import com.snt.phoney.domain.model.*
 import io.reactivex.Single
 
-interface UserRepository {
+interface UserRepository : UserAccessor {
     fun signup(phone: String,
                msgId: String,
                code: String,
@@ -70,9 +71,11 @@ interface UserRepository {
             cupEnd: String
     ): Single<Response<List<User>>>
 
-
+    /**
+     *  用户uuid
+     */
     fun getUserInfo(token: String,
-                    uid: String,    //	用户uuid
+                    uid: String,
                     latitude: Double,
                     longitude: Double): Single<Response<User>>
 
@@ -115,8 +118,5 @@ interface UserRepository {
     fun requestVerificationCode(phone: String): Single<Response<String>>
 
     fun deleteUser(token: String): Single<Response<String>>
-
-
-    var user: User?
 
 }

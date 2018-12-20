@@ -1,7 +1,6 @@
-package com.snt.phoney.repository
+package com.snt.phoney.domain.repository.impl
 
 import android.app.Application
-import android.util.Log
 import com.appmattus.layercache.Cache
 import com.appmattus.layercache.MapCache
 import com.appmattus.layercache.jsonSerializer
@@ -10,7 +9,6 @@ import com.snt.phoney.utils.cache.KeyValueDatabaseCache
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.launch
-import kotlinx.coroutines.runBlocking
 import kotlinx.serialization.Serializable
 import javax.inject.Inject
 import javax.inject.Singleton
@@ -30,12 +28,8 @@ class CacheRepositoryImpl @Inject constructor(application: Application) : CacheR
     /**
      * 会阻塞当前线程
      */
-    override fun <T : Any> get(key: String): T? {
-        var result: T? = null
-        runBlocking {
-            result = cache.get(key).await()?.value as? T
-        }
-        return result
+    override suspend fun <T : Any> get(key: String): T? {
+        return cache.get(key).await()?.value as? T
     }
 
     override fun <T : Any> set(key: String, value: T?) {

@@ -13,6 +13,4 @@ interface LocationRepository {
     fun getLocation(): Observable<Location>
 
     val cities: List<City>
-
-
 }

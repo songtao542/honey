@@ -1,10 +1,10 @@
 package com.snt.phoney.ui.location;
 
+import androidx.lifecycle.ViewModel;
+
 import com.snt.phoney.di.ActivityScope;
 import com.snt.phoney.di.FragmentScope;
 import com.snt.phoney.di.ViewModelKey;
-
-import com.snt.phoney.base.AppViewModel;
 
 import dagger.Binds;
 import dagger.Module;
@@ -26,6 +26,6 @@ public abstract class LocationPickerModule {
     @IntoMap
     @ActivityScope
     @ViewModelKey(LocationViewModel.class)
-    public abstract AppViewModel bindLocationViewModel(LocationViewModel viewModel);
+    public abstract ViewModel bindLocationViewModel(LocationViewModel viewModel);
 
 }

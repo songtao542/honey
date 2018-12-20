@@ -1,4 +1,4 @@
-package com.snt.phoney.repository
+package com.snt.phoney.domain.repository.impl
 
 import android.app.Application
 import android.location.Location

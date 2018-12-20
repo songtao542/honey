@@ -14,12 +14,12 @@ import javax.inject.Inject
 
 class MineViewModel @Inject constructor(private val usecase: GetUserInfoUseCase) : AppViewModel() {
 
-    val user = usecase.user
+    val user = usecase.getUser()
 
     val amountInfo = MutableLiveData<AmountInfo>()
 
     fun getUserAmountInfo(): Disposable? {
-        val token = usecase.user?.token ?: return null
+        val token = usecase.getAccessToken() ?: return null
         return usecase.getUserAmountInfo(token)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
@@ -32,7 +32,7 @@ class MineViewModel @Inject constructor(private val usecase: GetUserInfoUseCase)
     }
 
     fun setPhotoPermission(photoPermission: PhotoPermission, money: Double = 0.0, photoId: String = ""): Disposable? {
-        val token = usecase.user?.token ?: return null
+        val token = usecase.getAccessToken() ?: return null
         return usecase.setPhotoPermission(token, photoPermission.value, money, photoId)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
@@ -43,9 +43,8 @@ class MineViewModel @Inject constructor(private val usecase: GetUserInfoUseCase)
 
     fun signOut() {
         /***********test**************/
-        val token = usecase.user?.token ?: ""
-        usecase.deleteUser(token)
+        usecase.getAccessToken()?.let { usecase.deleteUser(it) }
         /***********test**************/
-        usecase.user = null
+        usecase.setUser(null)
     }
 }

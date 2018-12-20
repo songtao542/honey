@@ -11,6 +11,7 @@ import dagger.Provides;
 @Module(includes = {
         ActivityContributorModule.class,
         RestApiServiceModule.class,
+        AccessorModule.class,
         RepositoryModule.class,
         DaoModule.class,
         WeiboApiServiceModule.class,

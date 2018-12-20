@@ -13,12 +13,12 @@ import javax.inject.Inject
 
 class VisitorViewModel @Inject constructor(private val usecase: GetVisitorUseCase) : AppViewModel() {
 
-    val user: User? = usecase.user
+    val user: User? = usecase.getUser()
 
     val visitors = MutableLiveData<List<User>>()
 
     fun listVisitor(): Disposable? {
-        val token = usecase.user?.token ?: return null
+        val token = usecase.getAccessToken() ?: return null
         return usecase.listVisitor(token)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())

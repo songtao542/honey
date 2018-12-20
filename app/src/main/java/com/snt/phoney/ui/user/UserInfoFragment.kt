@@ -24,6 +24,7 @@ import com.snt.phoney.utils.data.Constants
 import com.snt.phoney.widget.PhotoFlowAdapter
 import kotlinx.android.synthetic.main.fragment_user_info.*
 import kotlinx.android.synthetic.main.fragment_user_info_header.*
+import java.text.DecimalFormat
 
 class UserInfoFragment : BaseFragment() {
 
@@ -81,21 +82,27 @@ class UserInfoFragment : BaseFragment() {
         address.text = user.city
         userAge.text = getString(R.string.age_value_template, user.age)
         job.text = user.career
-        authenticate.text = user.career
-        distance.text = getString(R.string.distance_of_template, " ${user.distance}")
+        if (user.verified) {
+            authenticate.text = getString(R.string.official_authenticated)
+        } else {
+            authenticate.text = getString(R.string.not_authenticated)
+        }
+        distance.text = getString(R.string.distance_of_template, "${user.distance}m")
 
         height.text = "${user.height}"
         age.text = "${user.age}"
+
+        val df = DecimalFormat.getInstance()
 
         if (user.sex == Sex.FEMALE.value) {
             cupWeightLabel.text = getString(R.string.cup_label)
             cupWeight.text = user.cup
         } else {
             cupWeightLabel.text = getString(R.string.weight_label)
-            cupWeight.text = "${user.weight}"
+            cupWeight.text = "${df.format(user.weight)}"
         }
 
-        chatLimit.text = getString(R.string.chat_limit1)
+        chatLimit.text = getString(R.string.chat_price_template, df.format(user.price))
         chatWith.setOnClickListener {
 
         }

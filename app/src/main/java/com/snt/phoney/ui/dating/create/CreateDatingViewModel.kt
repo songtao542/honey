@@ -3,6 +3,7 @@ package com.snt.phoney.ui.dating.create
 import android.text.TextUtils
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
+import com.snt.phoney.R
 import com.snt.phoney.base.AppViewModel
 import com.snt.phoney.domain.model.DatingProgram
 import com.snt.phoney.domain.model.PoiAddress
@@ -21,8 +22,8 @@ class CreateDatingViewModel @Inject constructor(private val usecase: CreateDatin
 
     val programs = object : LiveData<List<DatingProgram>>() {
         override fun onActive() {
-            usecase.user?.token?.let { token ->
-                usecase.listDatingProgram(token, usecase.user!!.uuid ?: "")
+            usecase.getAccessToken()?.let { token ->
+                usecase.listDatingProgram(token, usecase.getUser()!!.uuid ?: "")
                         .subscribeOn(Schedulers.io())
                         .observeOn(AndroidSchedulers.mainThread())
                         .subscribeBy {
@@ -33,22 +34,22 @@ class CreateDatingViewModel @Inject constructor(private val usecase: CreateDatin
     }
 
     fun publish(title: String, program: String, content: String, days: Int, location: PoiAddress, cover: List<File>): Disposable? {
-        val token = usecase.user?.token ?: return null
+        val token = usecase.getAccessToken() ?: return null
         val address = location.address ?: location.formatAddress ?: ""
         val city = location.city ?: ""
-        return usecase.publishDating(token, title, program, content, days , city, address, location.latitude, location.longitude, cover)
+        return usecase.publishDating(token, title, program, content, days, city, address, location.latitude, location.longitude, cover)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribeBy(
                         onSuccess = {
                             if (it.code == 200) {
-                                success.value = "success"
+                                success.value = it.data
                             } else if (!TextUtils.isEmpty(it.message)) {
                                 error.value = it.message
                             }
                         },
                         onError = {
-                            error.value = "发布失败"
+                            error.value = context.getString(R.string.publish_failed)
                         })
 
     }

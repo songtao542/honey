@@ -36,7 +36,7 @@ class SetupWizardViewModel @Inject constructor(private val setupWizardUseCase: S
 
     val careers = object : LiveData<List<Career>>() {
         override fun onActive() {
-            setupWizardUseCase.user?.token?.let { token ->
+            setupWizardUseCase.getAccessToken()?.let { token ->
                 setupWizardUseCase.listCareer(token)
                         .subscribeOn(Schedulers.io())
                         .observeOn(AndroidSchedulers.mainThread())
@@ -49,7 +49,7 @@ class SetupWizardViewModel @Inject constructor(private val setupWizardUseCase: S
 
     val purposes = object : LiveData<List<Purpose>>() {
         override fun onActive() {
-            setupWizardUseCase.user?.token?.let { token ->
+            setupWizardUseCase.getAccessToken()?.let { token ->
                 setupWizardUseCase.listPurpose(token)
                         .subscribeOn(Schedulers.io())
                         .observeOn(AndroidSchedulers.mainThread())
@@ -62,7 +62,7 @@ class SetupWizardViewModel @Inject constructor(private val setupWizardUseCase: S
 
 
     fun setSex(sex: Int): Disposable? {
-        val token = setupWizardUseCase.user?.token ?: return null
+        val token = setupWizardUseCase.getAccessToken() ?: return null
         return setupWizardUseCase.setUserSex(token, sex)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
@@ -70,7 +70,7 @@ class SetupWizardViewModel @Inject constructor(private val setupWizardUseCase: S
                     Log.d("TTTT", "getCities==>$it")
                     if (it.code == 200) {
                         setupSex.value = it.data
-                        setupWizardUseCase.user?.sex = sex
+                        setupWizardUseCase.getUser()?.sex = sex
                     } else if (!TextUtils.isEmpty(it.message)) {
                         error.value = it.message
                     }
@@ -79,16 +79,16 @@ class SetupWizardViewModel @Inject constructor(private val setupWizardUseCase: S
 
 
     fun setUserFeatures(height: Int, weight: Int, age: Int, cup: String): Disposable? {
-        val token = setupWizardUseCase.user?.token ?: return null
+        val token = setupWizardUseCase.getAccessToken() ?: return null
         return setupWizardUseCase.setUserFeatures(token, height, weight, age, cup)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribeBy {
                     Log.d("TTTT", "setUserFeatures==>$it")
                     if (it.code == 200) {
-                        val user = setupWizardUseCase.user?.copy(height = height, weight = weight.toDouble(), age = age, cup = cup)
+                        val user = setupWizardUseCase.getUser()?.copy(height = height, weight = weight.toDouble(), age = age, cup = cup)
                         if (user != null) {
-                            setupWizardUseCase.user = user
+                            setupWizardUseCase.setUser(user)
                         }
                         setupFeatures.value = it.data
                     } else if (!TextUtils.isEmpty(it.message)) {
@@ -103,7 +103,7 @@ class SetupWizardViewModel @Inject constructor(private val setupWizardUseCase: S
      * @param program,宣言 对应为文字 接口返回
      */
     fun setUserInfo(cities: List<City>, career: String, program: String): Disposable? {
-        val token = setupWizardUseCase.user?.token ?: return null
+        val token = setupWizardUseCase.getAccessToken() ?: return null
         val cityCodesString = cities.map { it.id }.joinToString(separator = ",")
         return setupWizardUseCase.setUserInfo(token, cityCodesString, career, program)
                 .subscribeOn(Schedulers.io())
@@ -111,9 +111,9 @@ class SetupWizardViewModel @Inject constructor(private val setupWizardUseCase: S
                 .subscribeBy {
                     Log.d("TTTT", "setUser==>$it")
                     if (it.code == 200) {
-                        val user = setupWizardUseCase.user?.copy(cities = cities)
+                        val user = setupWizardUseCase.getUser()?.copy(cities = cities)
                         if (user != null) {
-                            setupWizardUseCase.user = user
+                            setupWizardUseCase.setUser(user)
                         }
                         setupUserInfo.value = it.data
                     } else if (!TextUtils.isEmpty(it.message)) {

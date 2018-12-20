@@ -211,7 +211,7 @@ interface Api {
     fun getDatingDetail(@Query("token") token: String,
                         @Query("uuid") uuid: String,
                         @Query("latitude") latitude: String,
-                        @Query("longitude") longitude: String): Single<Response<List<Dating>>>
+                        @Query("longitude") longitude: String): Single<Response<Dating>>
 
     /**
      * 参加的约会

@@ -16,8 +16,14 @@ class AutoClearedValue<T : Any>(val lifecycle: Lifecycle, private var value: T? 
 
     init {
         lifecycle.addObserver(object : LifecycleObserver {
+            @Suppress("unused")
             @OnLifecycleEvent(Lifecycle.Event.ON_DESTROY)
             fun onDestroy() {
+                value?.let {
+                    if (it is Clearable) {
+                        it.clear()
+                    }
+                }
                 value = null
             }
         })
@@ -32,7 +38,12 @@ class AutoClearedValue<T : Any>(val lifecycle: Lifecycle, private var value: T? 
     override fun setValue(thisRef: LifecycleOwner, property: KProperty<*>, value: T) {
         this.value = value
     }
+
+    interface Clearable {
+        fun clear()
+    }
 }
+
 
 /**
  * Creates an [AutoClearedValue] associated with this LifecycleOwner.

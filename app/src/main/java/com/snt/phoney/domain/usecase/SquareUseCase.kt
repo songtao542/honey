@@ -1,14 +1,13 @@
 package com.snt.phoney.domain.usecase
 
 import android.location.Location
-import com.snt.phoney.domain.model.User
 import com.snt.phoney.domain.repository.DatingRepository
 import com.snt.phoney.domain.repository.LocationRepository
 import com.snt.phoney.domain.repository.UserRepository
 import io.reactivex.Observable
 import javax.inject.Inject
 
-class SquareUseCase @Inject constructor(private val repository: DatingRepository, private val userRepository: UserRepository, private val locationRepository: LocationRepository) {
+class SquareUseCase @Inject constructor(private val repository: DatingRepository, private val userRepository: UserRepository, private val locationRepository: LocationRepository): AccessUserUseCase(userRepository)  {
 
     /**
      * 推荐约会
@@ -31,5 +30,4 @@ class SquareUseCase @Inject constructor(private val repository: DatingRepository
 
     var location: Observable<Location> = locationRepository.getLocation()
 
-    var user: User? = userRepository.user
 }

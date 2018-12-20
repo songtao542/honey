@@ -26,7 +26,7 @@ open class WXAuthViewModel @Inject constructor(private val usecase: WxSigninUseC
     private var eventHandler: IWXAPIEventHandler? = null
 
     init {
-        accessToken = usecase.accessToken
+        accessToken = usecase.getWxAccessToken()
     }
 
     fun authorize() {
@@ -64,7 +64,7 @@ open class WXAuthViewModel @Inject constructor(private val usecase: WxSigninUseC
                 .subscribeBy(
                         onSuccess = {
                             accessToken = it
-                            usecase.accessToken = accessToken
+                            usecase.setWxAccessToken(accessToken)
                             getUserInfo()
                         },
                         onError = {
@@ -82,7 +82,7 @@ open class WXAuthViewModel @Inject constructor(private val usecase: WxSigninUseC
                             //{"openid":"o4PN51DasTTHB1Ieds6NIC5AM5OA","nickname":"songtao","sex":1,"language":"en","city":"","province":"","country":"","headimgurl":"http://thirdwx.qlogo.cn/mmopen/vi_32/7KaRIUuOoUrZDcmvibZNia8kDCsfPiaO2bt5NwgCZaic17hiafVDOneG5SVSE1cniaf5a1Om5ia0x4oD21LNFBMbdd28Q/132","privilege":[],"unionid":"ocGSv5_JyViQROMku0z65_AAg1x8"}
                             wxuser.accessToken = accessToken?.accessToken
                             wxuser.refreshToken = accessToken?.refreshToken
-                            usecase.user = wxuser
+                            usecase.setWxUser(wxuser)
                             success.value = "success"
                         },
                         onError = {

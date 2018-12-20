@@ -14,6 +14,7 @@ import com.snt.phoney.domain.model.User
 import com.snt.phoney.ui.user.UserActivity
 import com.snt.phoney.utils.data.Constants
 import kotlinx.android.synthetic.main.fragment_friend.view.*
+import kotlinx.android.synthetic.main.fragment_friend_tag.view.*
 
 /**
  */
@@ -53,7 +54,11 @@ class FriendRecyclerViewAdapter() : RecyclerView.Adapter<RecyclerView.ViewHolder
 
 
     inner class TagViewHolder(val mView: View) : RecyclerView.ViewHolder(mView) {
-
+        init {
+            mView.moreTag.setOnClickListener {
+                
+            }
+        }
     }
 
     inner class ViewHolder(val mView: View) : RecyclerView.ViewHolder(mView) {

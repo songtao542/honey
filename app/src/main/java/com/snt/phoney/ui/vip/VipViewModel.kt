@@ -31,7 +31,7 @@ class VipViewModel @Inject constructor(private val vipUsecase: GetVipInfoUseCase
 //    val mibiAmount = MutableLiveData<Int>()
 //    val mibiWallet = MutableLiveData<MibiWallet>()
 //    fun getMibiAmount(): Disposable? {
-//        val token = usecase.user?.token ?: return null
+//        val token = usecase.getAccessToken() ?: return null
 //        return vipUsecase.getMibiAmount(token)
 //                .subscribeOn(Schedulers.io())
 //                .observeOn(AndroidSchedulers.mainThread())
@@ -44,7 +44,7 @@ class VipViewModel @Inject constructor(private val vipUsecase: GetVipInfoUseCase
 //
 //
 //    fun getMibiWallet(): Disposable? {
-//        val token = usecase.user?.token ?: return null
+//        val token = usecase.getAccessToken() ?: return null
 //        return vipUsecase.getMibiWallet(token)
 //                .subscribeOn(Schedulers.io())
 //                .observeOn(AndroidSchedulers.mainThread())
@@ -57,7 +57,7 @@ class VipViewModel @Inject constructor(private val vipUsecase: GetVipInfoUseCase
 //
 //
 //    fun getVipInfo(): Disposable? {
-//        val token = usecase.user?.token ?: return null
+//        val token = usecase.getAccessToken() ?: return null
 //        return vipUsecase.getVipInfo(token)
 //                .subscribeOn(Schedulers.io())
 //                .observeOn(AndroidSchedulers.mainThread())
@@ -73,7 +73,7 @@ class VipViewModel @Inject constructor(private val vipUsecase: GetVipInfoUseCase
     }
 
     fun listVipCombo(): Disposable? {
-        val token = usecase.user?.token ?: return null
+        val token = usecase.getAccessToken() ?: return null
         return vipUsecase.listVipCombo(token)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
@@ -89,7 +89,7 @@ class VipViewModel @Inject constructor(private val vipUsecase: GetVipInfoUseCase
     }
 
     fun buyVipWithAlipay(type: OrderType, target: String, uid: String? = null): Disposable? {
-        val token = usecase.user?.token ?: return null
+        val token = usecase.getAccessToken() ?: return null
         return usecase.createOrder(token, type.value.toString(), target, uid ?: "")
                 .flatMap {
                     return@flatMap if (it.code == Response.SUCCESS && !TextUtils.isEmpty(it.data)) {

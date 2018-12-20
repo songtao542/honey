@@ -50,7 +50,7 @@ class SignupViewModel @Inject constructor(private val usecase: SigninUseCase) : 
                     Log.d("TTTT", "signup success->$it")
                     if (it.code == 200) {
                         user.value = it.data
-                        usecase.user = it.data
+                        usecase.setUser(it.data)
                     } else if (!TextUtils.isEmpty(it.message)) {
                         error.value = it.message
                     }

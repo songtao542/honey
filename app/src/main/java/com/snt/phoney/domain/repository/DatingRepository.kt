@@ -75,7 +75,7 @@ interface DatingRepository {
     fun getDatingDetail(token: String,
                         uuid: String,
                         latitude: Double,
-                        longitude: Double): Single<Response<List<Dating>>>
+                        longitude: Double): Single<Response<Dating>>
 
     /**
      * 参加的约会

@@ -1,4 +1,4 @@
-package com.snt.phoney.repository
+package com.snt.phoney.domain.repository.impl
 
 import com.snt.phoney.api.Api
 import com.snt.phoney.domain.model.Career

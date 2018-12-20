@@ -1,0 +1,201 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/white"
+    android:orientation="vertical">
+
+    <com.snt.phoney.widget.Toolbar
+        android:id="@+id/toolbar"
+        style="@style/AppTheme.Toolbar"
+        android:layout_width="match_parent"
+        android:layout_height="?attr/actionBarSize"
+        android:background="?attr/toolbarBackground"
+        android:theme="@style/AppTheme.PopupOverlay"
+        app:navigationIcon="@drawable/ic_back"
+        app:title="@string/friend_more_filter"
+        app:titleTextColor="@color/white" />
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="20dp"
+        android:paddingLeft="20dp"
+        android:paddingRight="20dp"
+        android:text="@string/height_label"
+        android:textColor="@color/black"
+        android:textSize="@dimen/textsize_normal" />
+
+
+    <cust.material.widget.rangebar.RangeBar
+        android:id="@+id/heightBar"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="20dp"
+        android:layout_marginEnd="20dp"
+        app:mrb_connectingLineColors="@array/connecting_colors"
+        app:mrb_connectingLineWeight="10dp"
+        app:mrb_pinColor="@android:color/transparent"
+        app:mrb_pinMaxFont="12sp"
+        app:mrb_pinMinFont="10sp"
+        app:mrb_pinRadius="14dp"
+        app:mrb_pinTextColor="@color/dark_gray"
+        app:mrb_rangeBar="true"
+        app:mrb_rangeBarPaddingBottom="16dp"
+        app:mrb_rangeBar_rounded="true"
+        app:mrb_selectorBoundaryColor="@color/light_gray"
+        app:mrb_selectorBoundarySize="1dp"
+        app:mrb_selectorColor="@color/white"
+        app:mrb_selectorSize="14dp"
+        app:mrb_temporaryPins="false"
+        app:mrb_tickColor="#03A9F4"
+        app:mrb_tickEnd="220"
+        app:mrb_tickInterval="1"
+        app:mrb_tickStart="160" />
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1px"
+        android:layout_marginTop="20dp"
+        android:background="@color/gray_underline" />
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="20dp"
+        android:paddingLeft="20dp"
+        android:paddingRight="20dp"
+        android:text="@string/age_label"
+        android:textColor="@color/black"
+        android:textSize="@dimen/textsize_normal" />
+
+
+    <cust.material.widget.rangebar.RangeBar
+        android:id="@+id/ageBar"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="20dp"
+        android:layout_marginEnd="20dp"
+        app:mrb_connectingLineColors="@array/connecting_colors"
+        app:mrb_connectingLineWeight="10dp"
+        app:mrb_pinColor="@android:color/transparent"
+        app:mrb_pinMaxFont="12sp"
+        app:mrb_pinMinFont="10sp"
+        app:mrb_pinRadius="14dp"
+        app:mrb_pinTextColor="@color/dark_gray"
+        app:mrb_rangeBar="true"
+        app:mrb_rangeBarPaddingBottom="16dp"
+        app:mrb_rangeBar_rounded="true"
+        app:mrb_selectorBoundaryColor="@color/light_gray"
+        app:mrb_selectorBoundarySize="1dp"
+        app:mrb_selectorColor="@color/white"
+        app:mrb_selectorSize="14dp"
+        app:mrb_temporaryPins="false"
+        app:mrb_tickColor="#03A9F4"
+        app:mrb_tickEnd="40"
+        app:mrb_tickInterval="1"
+        app:mrb_tickStart="16" />
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1px"
+        android:layout_marginTop="20dp"
+        android:background="@color/gray_underline" />
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="20dp"
+        android:paddingLeft="20dp"
+        android:paddingRight="20dp"
+        android:text="@string/cup_label"
+        android:textColor="@color/black"
+        android:textSize="@dimen/textsize_normal" />
+
+
+    <cust.material.widget.rangebar.RangeBar
+        android:id="@+id/cupBar"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="20dp"
+        android:layout_marginEnd="20dp"
+        app:mrb_connectingLineColors="@array/connecting_colors"
+        app:mrb_connectingLineWeight="10dp"
+        app:mrb_pinColor="@android:color/transparent"
+        app:mrb_pinMaxFont="12sp"
+        app:mrb_pinMinFont="10sp"
+        app:mrb_pinRadius="14dp"
+        app:mrb_pinTextColor="@color/dark_gray"
+        app:mrb_rangeBar="true"
+        app:mrb_rangeBarPaddingBottom="16dp"
+        app:mrb_rangeBar_rounded="true"
+        app:mrb_selectorBoundaryColor="@color/light_gray"
+        app:mrb_selectorBoundarySize="1dp"
+        app:mrb_selectorColor="@color/white"
+        app:mrb_selectorSize="14dp"
+        app:mrb_temporaryPins="false"
+        app:mrb_tickColor="#03A9F4"
+        app:mrb_tickEnd="7"
+        app:mrb_tickInterval="1"
+        app:mrb_tickStart="1" />
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1px"
+        android:layout_marginTop="20dp"
+        android:background="@color/gray_underline" />
+
+    <FrameLayout
+        android:id="@+id/programButton"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@drawable/underline_gray"
+        android:clickable="true"
+        android:minHeight="60dp"
+        android:paddingLeft="20dp"
+        android:paddingRight="20dp">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="@dimen/button_get_verification_code_height"
+            android:layout_gravity="center|left"
+            android:layout_marginRight="20dp"
+            android:gravity="center"
+            android:text="@string/dating_program"
+            android:textColor="@android:color/black"
+            android:textSize="@dimen/textsize_normal" />
+
+        <TextView
+            android:id="@+id/datingProgram"
+            android:layout_width="wrap_content"
+            android:layout_height="@dimen/edittext_height"
+            android:layout_gravity="center_vertical|right"
+            android:gravity="center"
+            android:paddingLeft="36sp"
+            android:paddingRight="20dp"
+            android:text="@string/select_dating_program"
+            android:textColor="@color/dark_gray"
+            android:textSize="@dimen/textsize_normal" />
+
+        <ImageView
+            android:layout_width="18dp"
+            android:layout_height="18dp"
+            android:layout_gravity="center_vertical|right"
+            android:src="@drawable/ic_right_arrow" />
+
+    </FrameLayout>
+
+    <Button
+        android:id="@+id/confirmButton"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/button_height"
+        android:layout_marginLeft="40dp"
+        android:layout_marginTop="20dp"
+        android:layout_marginRight="40dp"
+        android:layout_marginBottom="20dp"
+        android:background="@drawable/button_primary_circle_corner_selector"
+        android:text="@string/query_by_filter"
+        android:textColor="@color/white" />
+
+</LinearLayout>

@@ -1,17 +1,17 @@
-package com.snt.phoney.repository
+package com.snt.phoney.domain.repository.impl
 
 
 import com.snt.phoney.api.Api
+import com.snt.phoney.domain.accessor.UserAccessor
 import com.snt.phoney.domain.model.*
-import com.snt.phoney.domain.repository.CacheRepository
 import com.snt.phoney.domain.repository.UserRepository
-import com.snt.phoney.utils.data.Constants
 import io.reactivex.Single
 import javax.inject.Inject
 import javax.inject.Singleton
 
 @Singleton
-class UserRepositoryImpl @Inject constructor(private val cache: CacheRepository, private val api: Api) : UserRepository {
+class UserRepositoryImpl @Inject constructor(private val userAccessor: UserAccessor,
+                                             private val api: Api) : UserRepository, UserAccessor by userAccessor {
     override fun setPrivacyPassword(token: String, password: String, privatePassword: String): Single<Response<String>> {
         return api.setPrivacyPassword(token, password, privatePassword)
     }
@@ -127,13 +127,6 @@ class UserRepositoryImpl @Inject constructor(private val cache: CacheRepository,
     override fun deleteUser(token: String): Single<Response<String>> {
         return api.deleteUser(token)
     }
-
-    /**
-     * Note: get 方法阻塞当前线程
-     */
-    override var user: User?
-        set(value) = cache.set(Constants.Cache.USER, value)
-        get() = cache.get(Constants.Cache.USER)
 
 }
 
