@@ -17,7 +17,7 @@
         app:title="@string/friend_more_filter"
         app:titleTextColor="@color/white" />
 
-    <TextView
+    <androidx.appcompat.widget.AppCompatTextView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="20dp"
@@ -60,7 +60,7 @@
         android:layout_marginTop="20dp"
         android:background="@color/gray_underline" />
 
-    <TextView
+    <androidx.appcompat.widget.AppCompatTextView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="20dp"
@@ -103,7 +103,7 @@
         android:layout_marginTop="20dp"
         android:background="@color/gray_underline" />
 
-    <TextView
+    <androidx.appcompat.widget.AppCompatTextView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="20dp"
@@ -156,7 +156,7 @@
         android:paddingLeft="20dp"
         android:paddingRight="20dp">
 
-        <TextView
+        <androidx.appcompat.widget.AppCompatTextView
             android:layout_width="wrap_content"
             android:layout_height="@dimen/button_get_verification_code_height"
             android:layout_gravity="center|left"
@@ -166,7 +166,7 @@
             android:textColor="@android:color/black"
             android:textSize="@dimen/textsize_normal" />
 
-        <TextView
+        <androidx.appcompat.widget.AppCompatTextView
             android:id="@+id/datingProgram"
             android:layout_width="wrap_content"
             android:layout_height="@dimen/edittext_height"
