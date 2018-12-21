@@ -48,7 +48,7 @@ abstract class BaseActivity : AppCompatActivity(), HasSupportFragmentInjector {
         return super.dispatchTouchEvent(ev)
     }
 
-    var themeId = R.style.AppTheme_SexUnknown
+    var themeId = -1
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -63,6 +63,7 @@ abstract class BaseActivity : AppCompatActivity(), HasSupportFragmentInjector {
                     setTheme(R.style.AppTheme_Female)
                 }
                 else -> {
+                    themeId = R.style.AppTheme_SexUnknown
                     setTheme(R.style.AppTheme_SexUnknown)
                 }
             }
@@ -73,10 +74,14 @@ abstract class BaseActivity : AppCompatActivity(), HasSupportFragmentInjector {
 
 }
 
+/**
+ * @return -1, 表示 #onConfigureTheme() 为 false
+ */
 @Suppress("unused")
 fun Activity.getThemeId(): Int {
-    if (this is BaseActivity) {
-        return this.themeId
+    return when {
+        this is BaseActivity -> this.themeId
+        this is BaseOriginalActivity -> this.themeId
+        else -> -1
     }
-    return R.style.AppTheme_SexUnknown
 }

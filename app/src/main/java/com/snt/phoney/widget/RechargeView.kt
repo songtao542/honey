@@ -3,6 +3,7 @@ package com.snt.phoney.widget
 import android.content.Context
 import android.util.AttributeSet
 import android.view.LayoutInflater
+import android.view.View
 import android.widget.LinearLayout
 import com.snt.phoney.R
 import kotlinx.android.synthetic.main.recharge_view.view.*
@@ -18,15 +19,19 @@ class RechargeView : LinearLayout {
         LayoutInflater.from(context).inflate(R.layout.recharge_view, this, true)
     }
 
-    public fun setIcon(icon: Int) {
+    fun setIcon(icon: Int) {
         this.icon.setImageResource(icon)
     }
 
-    public fun setText(text: CharSequence) {
+    fun setText(text: CharSequence) {
         this.text.text = text
     }
 
-    public fun setPrice(price: CharSequence) {
+    fun setPrice(price: CharSequence) {
         this.price.text = price
+    }
+
+    fun setOnRechargeClickListener(listener: ((view: View) -> Unit)) {
+        this.price.setOnClickListener { listener.invoke(it) }
     }
 }

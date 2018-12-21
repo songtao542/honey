@@ -60,6 +60,7 @@
     <dimen name="location_picker_my_location_btn_radius">2dp</dimen>
     <dimen name="progress_dialog_size">120dp</dimen>
     <dimen name="progress_dialog_bar_size">50dp</dimen>
+    <dimen name="pay_picker_button_round_corner_radius">2dp</dimen>
 
 
 </resources>

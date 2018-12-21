@@ -4,4 +4,7 @@ import com.snt.phoney.base.CommonActivity
 
 
 class WalletActivity : CommonActivity() {
+
+    override fun onConfigureTheme() = false
+
 }

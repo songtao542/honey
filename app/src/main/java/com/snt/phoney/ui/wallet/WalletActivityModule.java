@@ -14,9 +14,11 @@ import dagger.multibindings.IntoMap;
 @Module(includes = ViewModelFactoryModule.class)
 public abstract class WalletActivityModule {
 
-
     @ContributesAndroidInjector
     public abstract WalletFragment contributeWalletFragment();
+
+    @ContributesAndroidInjector
+    public abstract DetailFragment contributeDetailFragment();
 
     @Binds
     @IntoMap

@@ -11,4 +11,7 @@ data class MibiRule(
         var uuid: String? = null,// "uuid": "pr20181113182346f660abec7a88c33c"
         var money: Int = 0,//  "money": 12,
         @SerializedName(value = "phoney") var mibi: Int = 0// "": 180,
-)
+) {
+    val safeUuid: String
+        get() = uuid ?: ""
+}

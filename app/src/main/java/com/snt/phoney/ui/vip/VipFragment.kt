@@ -9,9 +9,11 @@ import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
 import com.snt.phoney.R
 import com.snt.phoney.base.BaseFragment
-import com.snt.phoney.domain.model.OrderType
 import com.snt.phoney.domain.model.VipCombo
-import com.snt.phoney.extensions.*
+import com.snt.phoney.extensions.asSequence
+import com.snt.phoney.extensions.checkAndRequestPermission
+import com.snt.phoney.extensions.checkAppPermission
+import com.snt.phoney.extensions.snackbar
 import com.snt.phoney.widget.VipCardView
 import kotlinx.android.synthetic.main.fragment_vip.*
 import java.text.DecimalFormat
@@ -44,7 +46,7 @@ class VipFragment : BaseFragment() {
             setVipCombos(it)
         })
 
-        viewModel.listVipCombo()?.disposedBy(disposeBag)
+        viewModel.listVipCombo()
 
         viewModel.error.observe(this, Observer {
             snackbar(it)
@@ -60,10 +62,10 @@ class VipFragment : BaseFragment() {
                 selected?.let { combo ->
                     when (radioGroup.checkedRadioButtonId) {
                         R.id.alipayRadio -> {
-                            viewModel.buyVipWithAlipay(OrderType.BUY_VIP, combo.safeUuid)
+                            viewModel.buyVipWithAlipay(combo.safeUuid)
                         }
                         R.id.wechatPayRadio -> {
-                            viewModel.buyVipWithWechat(OrderType.BUY_VIP, combo.safeUuid)
+                            viewModel.buyVipWithWechat(combo.safeUuid)
                         }
                         else -> {
                         }

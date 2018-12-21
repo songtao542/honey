@@ -10,6 +10,7 @@ import com.snt.phoney.domain.model.OrderType
 import com.snt.phoney.domain.model.Response
 import com.snt.phoney.domain.model.WxPrePayResult
 import com.snt.phoney.domain.usecase.PayOrderUseCase
+import com.snt.phoney.extensions.disposedBy
 import com.snt.phoney.utils.WechatApi
 import com.tencent.mm.opensdk.constants.ConstantsAPI
 import com.tencent.mm.opensdk.modelbase.BaseReq
@@ -17,7 +18,6 @@ import com.tencent.mm.opensdk.modelbase.BaseResp
 import com.tencent.mm.opensdk.openapi.IWXAPIEventHandler
 import io.reactivex.Single
 import io.reactivex.android.schedulers.AndroidSchedulers
-import io.reactivex.disposables.Disposable
 import io.reactivex.rxkotlin.subscribeBy
 import io.reactivex.schedulers.Schedulers
 import javax.inject.Inject
@@ -29,9 +29,9 @@ open class WXPayViewModel @Inject constructor(private val usecase: PayOrderUseCa
     private val wechatApi: WechatApi by lazy { WechatApi(application) }
     private var eventHandler: IWXAPIEventHandler? = null
 
-    fun buy(type: OrderType, target: String, uid: String? = null): Disposable? {
-        val token = usecase.getAccessToken() ?: return null
-        return usecase.createOrder(token, type.value.toString(), target, uid ?: "")
+    fun buy(type: OrderType, target: String, uid: String? = null) {
+        val token = usecase.getAccessToken() ?: return
+        usecase.createOrder(token, type.value.toString(), target, uid ?: "")
                 .flatMap {
                     return@flatMap if (it.code == Response.SUCCESS && !TextUtils.isEmpty(it.data)) {
                         usecase.wechatPay(token, it.data!!)
@@ -54,7 +54,7 @@ open class WXPayViewModel @Inject constructor(private val usecase: PayOrderUseCa
                         onError = {
                             error.value = context.getString(R.string.buy_vip_failed)
                         }
-                )
+                ).disposedBy(disposeBag)
     }
 
     private fun payByWechat(prePayInfo: WxPrePayResult) {

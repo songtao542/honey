@@ -1,19 +1,11 @@
-<resources>
+<resources xmlns:tools="http://schemas.android.com/tools">
 
     <style name="BaseAppTheme" parent="Theme.AppCompat.Light.NoActionBar">
         <item name="actionBarStyle">@style/AppTheme.Toolbar</item>
         <item name="toolbarStyle">@style/AppTheme.Toolbar</item>
     </style>
 
-    <!-- Base application theme. -->
-    <style name="AppTheme" parent="BaseAppTheme">
-        <!-- Customize your theme here. -->
-    </style>
-
-    <!-- Base application theme. -->
-    <style name="AppLightTheme" parent="BaseAppTheme">
-        <!-- Customize your theme here. -->
-    </style>
+    <!-- 针对不同API的差异性属性在 AppTheme和AppLightTheme中定义 -->
 
     <style name="AppTheme.Light" parent="AppLightTheme">
         <item name="colorPrimary">@color/colorPrimaryLight</item>

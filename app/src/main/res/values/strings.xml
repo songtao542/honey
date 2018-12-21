@@ -236,6 +236,12 @@
     <string name="copyright">中山市苏格拉底网络科技有限公司版权所有</string>
     <string name="unit_mibi">蜜币</string>
     <string name="wallet_unit_mibi">/蜜币</string>
+    <string name="view_records">明细查询</string>
+    <string name="money_template">%1$s元</string>
+    <string name="wallet_mibi_combo_template">%1$s个蜜币</string>
+    <string name="pay_picker_title">选择支付方式</string>
+    <string name="wechat_pay">微信支付</string>
+    <string name="alipay_pay">支付宝支付</string>
 
 
 </resources>

@@ -120,7 +120,10 @@
         <activity android:name=".ui.user.UserActivity"></activity>
         <activity android:name=".ui.report.ReportActivity"></activity>
         <activity android:name=".ui.privacy.PrivacyActivity"></activity>
-        <activity android:name=".ui.wallet.WalletActivity"></activity>
+
+        <activity
+            android:name=".ui.wallet.WalletActivity"
+            android:theme="@style/AppTheme.Light"></activity>
 
         <activity
             android:name=".ui.about.AboutActivity"

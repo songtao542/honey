@@ -63,7 +63,16 @@ fun Activity.setLayoutFullscreen() {
 //        window.setBackgroundDrawable(background)
 
         val decorView = window.decorView
-        val option = View.SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN or View.SYSTEM_UI_FLAG_LAYOUT_STABLE
+        val option = decorView.systemUiVisibility or View.SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN or View.SYSTEM_UI_FLAG_LAYOUT_STABLE
+        decorView.systemUiVisibility = option
+        window.statusBarColor = Color.TRANSPARENT
+    }
+}
+
+fun Activity.setLightStatusBar() {
+    if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+        val decorView = window.decorView
+        val option = decorView.systemUiVisibility or View.SYSTEM_UI_FLAG_LIGHT_STATUS_BAR
         decorView.systemUiVisibility = option
         window.statusBarColor = Color.TRANSPARENT
     }

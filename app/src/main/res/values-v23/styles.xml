@@ -6,12 +6,10 @@
     </style>
 
     <style name="AppLightTheme" parent="BaseAppTheme">
+        <item name="android:windowTranslucentStatus">false</item>
         <item name="android:statusBarColor">@android:color/white</item>
-        <item name="android:windowBackground">@android:color/white</item>
         <item name="android:windowLightStatusBar">true</item>
-
-        <item name="statusBarBackground">@color/white</item>
-        <item name="toolbarBackground">@color/white</item>
+        <item name="android:windowDrawsSystemBarBackgrounds">true</item>
     </style>
 
 </resources>

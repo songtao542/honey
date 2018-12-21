@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:id="@+id/cp_search_view"
     android:layout_width="match_parent"
     android:layout_height="?attr/actionBarSize"
@@ -9,14 +10,14 @@
     android:orientation="horizontal"
     tools:showIn="@layout/cp_dialog_city_picker">
 
-    <ImageView
+    <androidx.appcompat.widget.AppCompatImageView
         android:id="@+id/cp_back"
         android:layout_width="?attr/actionBarSize"
         android:layout_height="match_parent"
         android:background="?attr/selectableItemBackground"
         android:clickable="true"
         android:scaleType="centerInside"
-        android:src="?attr/cpBackIcon" />
+        app:srcCompat="?attr/cpBackIcon" />
 
     <EditText
         android:id="@+id/cp_search_box"
@@ -33,7 +34,7 @@
         android:textCursorDrawable="?attr/cpSearchCursorDrawable"
         android:textSize="?attr/cpSearchTextSize" />
 
-    <ImageView
+    <androidx.appcompat.widget.AppCompatImageView
         android:id="@+id/cp_clear_all"
         android:layout_width="?attr/actionBarSize"
         android:layout_height="match_parent"
@@ -41,7 +42,7 @@
         android:clickable="true"
         android:padding="2dp"
         android:scaleType="centerInside"
-        android:src="?attr/cpClearTextIcon"
+        app:srcCompat="?attr/cpClearTextIcon"
         android:visibility="gone" />
 
     <View

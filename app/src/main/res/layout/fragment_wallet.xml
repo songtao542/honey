@@ -12,9 +12,9 @@
         android:layout_width="match_parent"
         android:layout_height="?attr/actionBarSize"
         android:background="?attr/toolbarBackground"
-        app:navigationIcon="@drawable/ic_back"
+        app:navigationIcon="@drawable/ic_back_black"
         app:title="@string/my_wallet"
-        app:titleTextColor="@color/white" />
+        app:titleTextColor="@color/black" />
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -25,7 +25,7 @@
         <RelativeLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:background="?attr/toolbarBackground"
+            android:background="@drawable/gradient_bg"
             android:paddingTop="10dp"
             android:paddingBottom="10dp">
 
@@ -91,15 +91,14 @@
                 android:paddingBottom="6dp"
                 android:text="@string/withdraw"
                 android:textColor="@color/white"
-                android:textSize="@dimen/textsize_small" />
+                android:textSize="@dimen/textsize_smaller" />
         </RelativeLayout>
 
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="vertical"
-            android:paddingBottom="5dp">
+            android:orientation="vertical">
 
             <androidx.appcompat.widget.AppCompatTextView
                 android:layout_width="match_parent"

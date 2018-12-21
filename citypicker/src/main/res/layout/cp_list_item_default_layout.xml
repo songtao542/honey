@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content">
@@ -20,7 +21,7 @@
         tools:ignore="RtlSymmetry" />
 
 
-    <ImageView
+    <androidx.appcompat.widget.AppCompatImageView
         android:id="@+id/cp_selected"
         android:layout_width="20dp"
         android:layout_height="20dp"
@@ -29,7 +30,7 @@
         android:background="@drawable/cp_unselected_bg"
         android:padding="4dp"
         android:scaleType="centerInside"
-        android:src="@drawable/cp_unselected" />
+        app:srcCompat="@drawable/cp_unselected" />
 
 
 </FrameLayout>

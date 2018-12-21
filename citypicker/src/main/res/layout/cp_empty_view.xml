@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:id="@+id/cp_empty_view"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
@@ -12,11 +13,11 @@
         android:layout_width="match_parent"
         android:layout_height="108dp" />
 
-    <ImageView
+    <androidx.appcompat.widget.AppCompatImageView
         android:id="@+id/cp_no_result_icon"
         android:layout_width="?attr/cpEmptyIconWidth"
         android:layout_height="?attr/cpEmptyIconHeight"
-        android:src="?attr/cpEmptyIcon"
+        app:srcCompat="?attr/cpEmptyIcon"
         android:scaleType="fitCenter"/>
 
     <TextView
