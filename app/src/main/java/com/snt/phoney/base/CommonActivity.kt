@@ -15,6 +15,7 @@ const val EXTRA_PAGE = "page"
 open class CommonActivity : BaseActivity() {
 
     companion object {
+        @JvmStatic
         inline fun <reified T : Activity> newIntent(context: Context, page: Page, argument: Bundle? = null): Intent {
             val intent = BaseActivity.newIntent(context, T::class.java, page)
             argument?.let {

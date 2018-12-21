@@ -41,7 +41,7 @@
             android:paddingLeft="@dimen/edit_user_padding"
             android:paddingRight="@dimen/edit_user_padding">
 
-            <TextView
+            <androidx.appcompat.widget.AppCompatTextView
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent"
                 android:gravity="center"
@@ -72,7 +72,7 @@
             android:paddingLeft="@dimen/edit_user_padding"
             android:paddingRight="@dimen/edit_user_padding">
 
-            <TextView
+            <androidx.appcompat.widget.AppCompatTextView
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent"
                 android:gravity="center"
@@ -80,7 +80,7 @@
                 android:textColor="@color/edit_user_item_label"
                 android:textSize="@dimen/textsize_normal" />
 
-            <TextView
+            <androidx.appcompat.widget.AppCompatTextView
                 android:id="@+id/city"
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent"
@@ -101,7 +101,7 @@
             android:paddingLeft="@dimen/edit_user_padding"
             android:paddingRight="@dimen/edit_user_padding">
 
-            <TextView
+            <androidx.appcompat.widget.AppCompatTextView
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent"
                 android:gravity="center"
@@ -136,7 +136,7 @@
             android:paddingLeft="@dimen/edit_user_padding"
             android:paddingRight="@dimen/edit_user_padding">
 
-            <TextView
+            <androidx.appcompat.widget.AppCompatTextView
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent"
                 android:gravity="center"
@@ -144,7 +144,7 @@
                 android:textColor="@color/edit_user_item_label"
                 android:textSize="@dimen/textsize_normal" />
 
-            <TextView
+            <androidx.appcompat.widget.AppCompatTextView
                 android:id="@+id/height"
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent"
@@ -166,7 +166,7 @@
             android:paddingLeft="@dimen/edit_user_padding"
             android:paddingRight="@dimen/edit_user_padding">
 
-            <TextView
+            <androidx.appcompat.widget.AppCompatTextView
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent"
                 android:gravity="center"
@@ -174,7 +174,7 @@
                 android:textColor="@color/edit_user_item_label"
                 android:textSize="@dimen/textsize_normal" />
 
-            <TextView
+            <androidx.appcompat.widget.AppCompatTextView
                 android:id="@+id/age"
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent"
@@ -196,7 +196,7 @@
             android:paddingLeft="@dimen/edit_user_padding"
             android:paddingRight="@dimen/edit_user_padding">
 
-            <TextView
+            <androidx.appcompat.widget.AppCompatTextView
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent"
                 android:gravity="center"
@@ -204,7 +204,7 @@
                 android:textColor="@color/edit_user_item_label"
                 android:textSize="@dimen/textsize_normal" />
 
-            <TextView
+            <androidx.appcompat.widget.AppCompatTextView
                 android:id="@+id/weightCup"
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent"
@@ -216,7 +216,7 @@
 
         </LinearLayout>
 
-        <TextView
+        <androidx.appcompat.widget.AppCompatTextView
             android:layout_width="match_parent"
             android:layout_height="@dimen/edit_user_item_height"
             android:background="@color/light_gray"

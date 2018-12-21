@@ -18,7 +18,7 @@
         app:title="@string/report_title"
         app:titleTextColor="@color/white" />
 
-    <TextView
+    <androidx.appcompat.widget.AppCompatTextView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:background="@color/light_gray"
@@ -69,7 +69,7 @@
             android:textSize="@dimen/textsize_normal" />
     </RadioGroup>
 
-    <TextView
+    <androidx.appcompat.widget.AppCompatTextView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:background="@color/light_gray"
@@ -89,7 +89,7 @@
         app:space="5dp"
         app:square="true" />
 
-    <TextView
+    <androidx.appcompat.widget.AppCompatTextView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:background="@color/light_gray"

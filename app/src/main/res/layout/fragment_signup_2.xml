@@ -18,7 +18,7 @@
     </androidx.appcompat.widget.Toolbar>
 
 
-    <TextView
+    <androidx.appcompat.widget.AppCompatTextView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_gravity="center_horizontal"
@@ -29,7 +29,7 @@
         android:textSize="30sp" />
 
 
-    <TextView
+    <androidx.appcompat.widget.AppCompatTextView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_gravity="center_horizontal"
@@ -49,7 +49,7 @@
         android:paddingLeft="20dp"
         android:paddingRight="20dp">
 
-        <TextView
+        <androidx.appcompat.widget.AppCompatTextView
             android:layout_width="wrap_content"
             android:layout_height="@dimen/button_get_verification_code_height"
             android:layout_gravity="center|left"
@@ -61,7 +61,7 @@
             android:textColor="@android:color/black"
             android:textSize="@dimen/textsize_normal" />
 
-        <TextView
+        <androidx.appcompat.widget.AppCompatTextView
             android:id="@+id/height"
             android:layout_width="wrap_content"
             android:layout_height="@dimen/edittext_height"
@@ -73,12 +73,12 @@
             android:textSize="@dimen/textsize_normal" />
 
 
-        <ImageView
+        <androidx.appcompat.widget.AppCompatImageView
             android:id="@+id/heightArrow"
             android:layout_width="18dp"
             android:layout_height="18dp"
             android:layout_gravity="center_vertical|right"
-            android:src="@drawable/ic_right_arrow" />
+            app:srcCompat="@drawable/ic_right_arrow" />
 
     </FrameLayout>
 
@@ -93,7 +93,7 @@
         android:paddingRight="20dp">
 
 
-        <TextView
+        <androidx.appcompat.widget.AppCompatTextView
             android:layout_width="wrap_content"
             android:layout_height="@dimen/button_get_verification_code_height"
             android:layout_gravity="center|left"
@@ -105,7 +105,7 @@
             android:textColor="@android:color/black"
             android:textSize="@dimen/textsize_normal" />
 
-        <TextView
+        <androidx.appcompat.widget.AppCompatTextView
             android:id="@+id/age"
             android:layout_width="wrap_content"
             android:layout_height="@dimen/edittext_height"
@@ -117,12 +117,12 @@
             android:textSize="@dimen/textsize_normal" />
 
 
-        <ImageView
+        <androidx.appcompat.widget.AppCompatImageView
             android:id="@+id/ageArrow"
             android:layout_width="18dp"
             android:layout_height="18dp"
             android:layout_gravity="center_vertical|right"
-            android:src="@drawable/ic_right_arrow" />
+            app:srcCompat="@drawable/ic_right_arrow" />
 
     </FrameLayout>
 
@@ -137,7 +137,7 @@
         android:paddingRight="20dp">
 
 
-        <TextView
+        <androidx.appcompat.widget.AppCompatTextView
             android:layout_width="wrap_content"
             android:layout_height="@dimen/button_get_verification_code_height"
             android:layout_gravity="center|left"
@@ -150,7 +150,7 @@
             android:textSize="@dimen/textsize_normal" />
 
 
-        <TextView
+        <androidx.appcompat.widget.AppCompatTextView
             android:id="@+id/weight"
             android:layout_width="wrap_content"
             android:layout_height="@dimen/edittext_height"
@@ -162,12 +162,12 @@
             android:textSize="@dimen/textsize_normal" />
 
 
-        <ImageView
+        <androidx.appcompat.widget.AppCompatImageView
             android:id="@+id/weightArrow"
             android:layout_width="18dp"
             android:layout_height="18dp"
             android:layout_gravity="center_vertical|right"
-            android:src="@drawable/ic_right_arrow" />
+            app:srcCompat="@drawable/ic_right_arrow" />
 
 
     </FrameLayout>
@@ -184,7 +184,7 @@
         android:visibility="gone">
 
 
-        <TextView
+        <androidx.appcompat.widget.AppCompatTextView
             android:layout_width="wrap_content"
             android:layout_height="@dimen/button_get_verification_code_height"
             android:layout_gravity="center|left"
@@ -197,7 +197,7 @@
             android:textSize="@dimen/textsize_normal" />
 
 
-        <TextView
+        <androidx.appcompat.widget.AppCompatTextView
             android:id="@+id/cup"
             android:layout_width="wrap_content"
             android:layout_height="@dimen/edittext_height"
@@ -209,12 +209,12 @@
             android:textSize="@dimen/textsize_normal" />
 
 
-        <ImageView
+        <androidx.appcompat.widget.AppCompatImageView
             android:id="@+id/cupArrow"
             android:layout_width="18dp"
             android:layout_height="18dp"
             android:layout_gravity="center_vertical|right"
-            android:src="@drawable/ic_right_arrow" />
+            app:srcCompat="@drawable/ic_right_arrow" />
 
 
     </FrameLayout>

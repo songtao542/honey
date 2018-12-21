@@ -40,7 +40,7 @@
     <dimen name="underline">1px</dimen>
     <dimen name="vip_card_corner_radius">4dp</dimen>
     <dimen name="wallet_withdraw_corner_radius">4dp</dimen>
-    <dimen name="recharge_corner_radius">4dp</dimen>
+    <dimen name="recharge_corner_radius">2dp</dimen>
     <dimen name="white_corner_radius">4dp</dimen>
     <dimen name="bind_phone_edittext_corner_radius">4dp</dimen>
     <dimen name="edit_user_item_height">50dp</dimen>

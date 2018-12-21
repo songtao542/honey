@@ -28,16 +28,16 @@
             android:orientation="vertical">
 
 
-            <ImageView
+            <androidx.appcompat.widget.AppCompatImageView
                 android:id="@+id/shareByWechat"
                 android:layout_width="70dp"
                 android:layout_height="70dp"
                 android:background="@drawable/share_button_selector"
                 android:clickable="true"
                 android:padding="16dp"
-                android:src="@drawable/ic_wechat_friend" />
+                app:srcCompat="@drawable/ic_wechat_friend" />
 
-            <TextView
+            <androidx.appcompat.widget.AppCompatTextView
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent"
                 android:layout_gravity="center"
@@ -55,16 +55,16 @@
             android:orientation="vertical">
 
 
-            <ImageView
+            <androidx.appcompat.widget.AppCompatImageView
                 android:id="@+id/shareByQQ"
                 android:layout_width="70dp"
                 android:layout_height="70dp"
                 android:background="@drawable/share_button_selector"
                 android:clickable="true"
                 android:padding="16dp"
-                android:src="@drawable/ic_qzone" />
+                app:srcCompat="@drawable/ic_qzone" />
 
-            <TextView
+            <androidx.appcompat.widget.AppCompatTextView
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent"
                 android:layout_gravity="center"
@@ -82,16 +82,16 @@
             android:orientation="vertical">
 
 
-            <ImageView
+            <androidx.appcompat.widget.AppCompatImageView
                 android:id="@+id/shareByWeibo"
                 android:layout_width="70dp"
                 android:layout_height="70dp"
                 android:background="@drawable/share_button_selector"
                 android:clickable="true"
                 android:padding="16dp"
-                android:src="@drawable/ic_weibo_icon" />
+                app:srcCompat="@drawable/ic_weibo_icon" />
 
-            <TextView
+            <androidx.appcompat.widget.AppCompatTextView
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent"
                 android:layout_gravity="center"

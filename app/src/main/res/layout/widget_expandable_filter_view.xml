@@ -6,7 +6,7 @@
     android:orientation="vertical"
     tools:parentTag="expandable.widget.ExpandableLayout">
 
-    <TextView
+    <androidx.appcompat.widget.AppCompatTextView
         android:layout_width="match_parent"
         android:layout_height="@dimen/expandable_filter_menu_height"
         android:gravity="center"

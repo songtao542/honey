@@ -6,14 +6,20 @@
     <color name="colorAccent">#444444</color>
     <color name="colorPrimaryPressed">#444444</color>
 
+    <color name="colorPrimaryLight">#ffffff</color>
+    <color name="colorPrimaryTranslucentLight">#99ffffff</color>
+    <color name="colorPrimaryDarkLight">#ffffff</color>
+    <color name="colorAccentLight">#ffffff</color>
+    <color name="colorPrimaryPressedLight">#ffffff</color>
+
     <color name="colorPrimaryFemale">#fe4b7a</color>
-    <color name="colorPrimaryFemaleTranslucent">#99fe4b7a</color>
+    <color name="colorPrimaryTranslucentFemale">#99fe4b7a</color>
     <color name="colorPrimaryDarkFemale">#fe4b7a</color>
     <color name="colorAccentFemale">#fe4b7a</color>
     <color name="colorPrimaryPressedFemale">#fe4b7a</color>
 
     <color name="colorPrimaryMale">#9013fe</color>
-    <color name="colorPrimaryMaleTranslucent">#999013fe</color>
+    <color name="colorPrimaryTranslucentMale">#999013fe</color>
     <color name="colorPrimaryDarkMale">#9013fe</color>
     <color name="colorAccentMale">#9013fe</color>
     <color name="colorPrimaryPressedMale">#9013fe</color>
@@ -51,12 +57,12 @@
     <color name="dark">#343434</color>
     <color name="darker">#444444</color>
     <color name="white">#ffffff</color>
-    <color name="wallet_withdraw_color">#aaaaaa</color>
-    <color name="wallet_withdraw_pressed_color">#999999</color>
+    <color name="wallet_withdraw_color">#9013fe</color>
+    <color name="wallet_withdraw_pressed_color">#9E34FE</color>
     <color name="recharge_bg">#ffffff</color>
     <color name="recharge_btn_bg">#ffffff</color>
     <color name="recharge_btn_pressed_bg">#eeeeee</color>
-    <color name="recharge_btn_border">#4567ff</color>
+    <color name="recharge_btn_border">#9013fe</color>
     <color name="bind_phone_edittext_border">#d7d7d7</color>
     <color name="bind_phone_edittext_focus_border">#f8e71c</color>
     <color name="bind_phone_edittext_bg">#f2f3f7</color>

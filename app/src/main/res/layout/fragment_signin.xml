@@ -19,7 +19,7 @@
         android:paddingEnd="@dimen/sign_content_padding_end">
 
 
-        <TextView
+        <androidx.appcompat.widget.AppCompatTextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="50dp"
@@ -28,7 +28,7 @@
             android:textSize="32sp" />
 
 
-        <TextView
+        <androidx.appcompat.widget.AppCompatTextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="40dp"
@@ -40,7 +40,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content">
 
-            <TextView
+            <androidx.appcompat.widget.AppCompatTextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center_vertical|left"
@@ -67,7 +67,7 @@
                 android:textSize="@dimen/textsize_large" />
         </FrameLayout>
 
-        <TextView
+        <androidx.appcompat.widget.AppCompatTextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="40dp"
@@ -92,7 +92,7 @@
                 android:textSize="@dimen/textsize_large" />
 
 
-            <TextView
+            <androidx.appcompat.widget.AppCompatTextView
                 android:id="@+id/getVerificationCode"
                 android:layout_width="wrap_content"
                 android:layout_height="@dimen/button_get_verification_code_height"
@@ -120,7 +120,7 @@
             android:text="@string/btn_login"
             android:textColor="@android:color/white" />
 
-        <TextView
+        <androidx.appcompat.widget.AppCompatTextView
             android:id="@+id/forgetPassword"
             android:layout_width="match_parent"
             android:layout_height="@dimen/button_height"
@@ -139,36 +139,36 @@
             android:paddingRight="10dp"
             android:visibility="gone">
 
-            <ImageView
+            <androidx.appcompat.widget.AppCompatImageView
                 android:id="@+id/qq"
                 android:layout_width="60dp"
                 android:layout_height="60dp"
                 android:scaleType="centerInside"
-                android:src="@drawable/ic_qq_icon" />
+                app:srcCompat="@drawable/ic_qq_icon" />
 
             <Space
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
                 android:layout_weight="1" />
 
-            <ImageView
+            <androidx.appcompat.widget.AppCompatImageView
                 android:id="@+id/weixin"
                 android:layout_width="60dp"
                 android:layout_height="60dp"
                 android:scaleType="centerInside"
-                android:src="@drawable/ic_wechat_icon" />
+                app:srcCompat="@drawable/ic_wechat_icon" />
 
             <Space
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
                 android:layout_weight="1" />
 
-            <ImageView
+            <androidx.appcompat.widget.AppCompatImageView
                 android:id="@+id/weibo"
                 android:layout_width="60dp"
                 android:layout_height="60dp"
                 android:scaleType="centerInside"
-                android:src="@drawable/ic_weibo_icon" />
+                app:srcCompat="@drawable/ic_weibo_icon" />
         </LinearLayout>
 
     </LinearLayout>

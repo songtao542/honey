@@ -18,15 +18,15 @@
         app:title="@string/privacy_lock_title"
         app:titleTextColor="@color/white" />
 
-    <ImageView
+    <androidx.appcompat.widget.AppCompatImageView
         android:layout_width="280dp"
         android:layout_height="280dp"
         android:layout_gravity="center_horizontal"
         android:layout_marginTop="30dp"
         android:scaleType="centerInside"
-        android:src="@drawable/ic_privacy_tip" />
+        app:srcCompat="@drawable/ic_privacy_tip" />
 
-    <TextView
+    <androidx.appcompat.widget.AppCompatTextView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="20dp"
@@ -35,7 +35,7 @@
         android:textColor="@color/black"
         android:textSize="@dimen/textsize_larger" />
 
-    <TextView
+    <androidx.appcompat.widget.AppCompatTextView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="20dp"

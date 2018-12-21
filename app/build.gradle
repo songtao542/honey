@@ -51,13 +51,14 @@ android {
 
     dexOptions {
         javaMaxHeapSize "4g"
-        preDexLibraries = true
+        preDexLibraries = false
     }
 
     buildTypes {
         debug {
             defaultConfig {
                 minSdkVersion 21
+                multiDexEnabled true
             }
             //shrinkResources true
             //minifyEnabled true
@@ -71,10 +72,9 @@ android {
             defaultConfig {
                 minSdkVersion 21
                 multiDexEnabled true
-
             }
-            shrinkResources true
-            minifyEnabled true
+            //shrinkResources true
+            //minifyEnabled true
             //runProguard true
             multiDexKeepFile file('multidex-config.txt')
             multiDexKeepProguard file('multidex-config.pro')
@@ -119,6 +119,7 @@ dependencies {
     // A Map
     implementation(name: 'AMap', ext: 'aar')
     implementation(name: 'alipaySdk-15.5.9-20181123210601', ext: 'aar')
+    implementation 'com.tencent.bugly:crashreport:latest.release'
 
     //    implementation project(path: ":dagger_androidx")
     implementation deps.androidx.concurrent_futures

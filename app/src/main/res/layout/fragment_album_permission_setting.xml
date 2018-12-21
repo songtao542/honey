@@ -19,7 +19,7 @@
             android:orientation="horizontal">
 
 
-            <TextView
+            <androidx.appcompat.widget.AppCompatTextView
                 android:layout_width="0dp"
                 android:layout_height="50dp"
                 android:layout_weight="1"
@@ -29,12 +29,12 @@
                 android:textColor="@color/black"
                 android:textSize="@dimen/textsize_normal" />
 
-            <ImageView
+            <androidx.appcompat.widget.AppCompatImageView
                 android:layout_width="50dp"
                 android:layout_height="50dp" />
         </LinearLayout>
 
-        <TextView
+        <androidx.appcompat.widget.AppCompatTextView
             android:id="@+id/publicAlbum"
             android:layout_width="match_parent"
             android:layout_height="50dp"
@@ -44,7 +44,7 @@
             android:textColor="@color/album_permission_setting_item_text_selector"
             android:textSize="@dimen/textsize_normal" />
 
-        <TextView
+        <androidx.appcompat.widget.AppCompatTextView
             android:id="@+id/needCharge"
             android:layout_width="match_parent"
             android:layout_height="50dp"
@@ -54,7 +54,7 @@
             android:textColor="@color/album_permission_setting_item_text_selector"
             android:textSize="@dimen/textsize_normal" />
 
-        <TextView
+        <androidx.appcompat.widget.AppCompatTextView
             android:id="@+id/needApply"
             android:layout_width="match_parent"
             android:layout_height="50dp"
@@ -64,7 +64,7 @@
             android:textColor="@color/album_permission_setting_item_text_selector"
             android:textSize="@dimen/textsize_normal" />
 
-        <TextView
+        <androidx.appcompat.widget.AppCompatTextView
             android:id="@+id/privateAlbum"
             android:layout_width="match_parent"
             android:layout_height="50dp"

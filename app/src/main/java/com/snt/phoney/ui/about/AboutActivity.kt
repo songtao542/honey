@@ -1,6 +1,5 @@
 package com.snt.phoney.ui.about
 
-import com.snt.phoney.base.BaseActivity
+import com.snt.phoney.base.CommonActivity
 
-class AboutActivity : BaseActivity() {
-}
+class AboutActivity : CommonActivity()

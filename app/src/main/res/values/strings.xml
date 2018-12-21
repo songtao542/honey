@@ -41,7 +41,7 @@
     <string name="back_home">返回首页</string>
     <string name="vip_privilege">会员特权</string>
     <string name="open_vip">开通会员</string>
-    <string name="withdraw">提现</string>
+    <string name="withdraw">我要提现</string>
     <string name="signin_by_phone">手机号码快速登录</string>
     <string name="signin_label">动态登录</string>
     <string name="phone_number">手机号</string>
@@ -228,6 +228,14 @@
     <string name="join_dating_success">参加约会成功</string>
     <string name="back">返回</string>
     <string name="join_dating_failed">参加约会失败</string>
+    <string name="use_help">使用帮助</string>
+    <string name="give_me_star">给我评分</string>
+    <string name="privacy_policy">隐私政策</string>
+    <string name="about_version_template">for android v%1$s</string>
+    <string name="about_title">关于纯蜜</string>
+    <string name="copyright">中山市苏格拉底网络科技有限公司版权所有</string>
+    <string name="unit_mibi">蜜币</string>
+    <string name="wallet_unit_mibi">/蜜币</string>
 
 
 </resources>

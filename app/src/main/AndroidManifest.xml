@@ -9,10 +9,11 @@
     <uses-permission android:name="android.permission.ACCESS_WIFI_STATE" />
     <uses-permission android:name="android.permission.READ_PHONE_STATE" />
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
-    <uses-permission android:name="android.permission.READ_PHONE_STATE" />
 
     <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
     <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
+
+    <uses-permission android:name="android.permission.READ_LOGS" />
 
     <application
         android:name=".base.App"
@@ -55,7 +56,7 @@
             android:configChanges="keyboardHidden|orientation"
             android:exported="false"
             android:screenOrientation="portrait"
-            android:theme="@style/AppTheme.Common"
+            android:theme="@style/AppTheme.Light"
             android:windowSoftInputMode="adjustResize"
             tools:node="replace"></activity>
 
@@ -114,13 +115,17 @@
 
         <activity
             android:name=".ui.nearby.NearbyActivity"
-            android:theme="@style/AppTheme.Common" />
+            android:theme="@style/AppTheme.Light" />
 
         <activity android:name=".ui.user.UserActivity"></activity>
         <activity android:name=".ui.report.ReportActivity"></activity>
         <activity android:name=".ui.privacy.PrivacyActivity"></activity>
         <activity android:name=".ui.wallet.WalletActivity"></activity>
-        <activity android:name=".ui.about.AboutActivity"></activity>
+
+        <activity
+            android:name=".ui.about.AboutActivity"
+            android:theme="@style/AppTheme.Light"></activity>
+
         <activity android:name=".ui.album.AlbumSettingActivity"></activity>
 
         <provider

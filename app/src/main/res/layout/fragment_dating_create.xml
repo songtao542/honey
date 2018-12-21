@@ -41,7 +41,7 @@
                 android:paddingStart="@dimen/content_padding_start"
                 android:paddingEnd="@dimen/content_padding_end">
 
-                <TextView
+                <androidx.appcompat.widget.AppCompatTextView
                     android:layout_width="wrap_content"
                     android:layout_height="match_parent"
                     android:gravity="center_vertical"
@@ -49,7 +49,7 @@
                     android:textColor="@android:color/black"
                     android:textSize="@dimen/textsize_normal" />
 
-                <TextView
+                <androidx.appcompat.widget.AppCompatTextView
                     android:id="@+id/datingAddress"
                     android:layout_width="wrap_content"
                     android:layout_height="match_parent"
@@ -77,7 +77,7 @@
                 android:paddingStart="@dimen/content_padding_start"
                 android:paddingEnd="@dimen/content_padding_end">
 
-                <TextView
+                <androidx.appcompat.widget.AppCompatTextView
                     android:layout_width="wrap_content"
                     android:layout_height="match_parent"
                     android:gravity="center_vertical"
@@ -85,7 +85,7 @@
                     android:textColor="@android:color/black"
                     android:textSize="@dimen/textsize_normal" />
 
-                <TextView
+                <androidx.appcompat.widget.AppCompatTextView
                     android:id="@+id/datingTime"
                     android:layout_width="wrap_content"
                     android:layout_height="match_parent"
@@ -112,7 +112,7 @@
                 android:paddingStart="@dimen/content_padding_start"
                 android:paddingEnd="@dimen/content_padding_end">
 
-                <TextView
+                <androidx.appcompat.widget.AppCompatTextView
                     android:layout_width="wrap_content"
                     android:layout_height="match_parent"
                     android:gravity="center_vertical"
@@ -120,7 +120,7 @@
                     android:textColor="@android:color/black"
                     android:textSize="@dimen/textsize_normal" />
 
-                <TextView
+                <androidx.appcompat.widget.AppCompatTextView
                     android:id="@+id/datingProgram"
                     android:layout_width="wrap_content"
                     android:layout_height="match_parent"
@@ -154,7 +154,7 @@
                 app:square="true" />
 
 
-            <TextView
+            <androidx.appcompat.widget.AppCompatTextView
                 android:layout_width="wrap_content"
                 android:layout_height="30dp"
                 android:layout_marginTop="10dp"
@@ -188,7 +188,7 @@
                     android:textColor="@android:color/black"
                     android:textSize="@dimen/textsize_normal" />
 
-                <TextView
+                <androidx.appcompat.widget.AppCompatTextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_gravity="right|bottom"
@@ -226,14 +226,14 @@
         android:orientation="vertical"
         android:visibility="gone">
 
-        <ImageView
+        <androidx.appcompat.widget.AppCompatImageView
             android:layout_width="60dp"
             android:layout_height="60dp"
             android:layout_gravity="center_horizontal"
             android:layout_marginTop="50dp"
-            android:src="@drawable/ic_success" />
+            app:srcCompat="@drawable/ic_success" />
 
-        <TextView
+        <androidx.appcompat.widget.AppCompatTextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="20dp"

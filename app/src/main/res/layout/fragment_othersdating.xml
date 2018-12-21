@@ -7,7 +7,7 @@
     android:background="@android:color/white"
     android:orientation="vertical">
 
-    <TextView
+    <androidx.appcompat.widget.AppCompatTextView
         android:id="@+id/state"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -28,17 +28,17 @@
         android:paddingRight="10dp"
         android:paddingBottom="15dp">
 
-        <ImageView
+        <androidx.appcompat.widget.AppCompatImageView
             android:id="@+id/head"
             android:layout_width="50dp"
             android:layout_height="50dp"
             android:layout_alignParentLeft="true"
             android:layout_marginRight="10dp"
             android:scaleType="centerInside"
-            android:src="@mipmap/head" />
+            app:srcCompat="@mipmap/head" />
 
 
-        <TextView
+        <androidx.appcompat.widget.AppCompatTextView
             android:id="@+id/name"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -48,7 +48,7 @@
             android:textColor="@android:color/black"
             android:textSize="@dimen/textsize_small" />
 
-        <TextView
+        <androidx.appcompat.widget.AppCompatTextView
             android:id="@+id/age"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -62,7 +62,7 @@
             android:text="30岁"
             android:textSize="@dimen/textsize_smaller" />
 
-        <TextView
+        <androidx.appcompat.widget.AppCompatTextView
             android:id="@+id/reliableValue"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -78,7 +78,7 @@
             android:textSize="@dimen/textsize_smaller" />
 
 
-        <TextView
+        <androidx.appcompat.widget.AppCompatTextView
             android:id="@+id/publishTime"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -96,7 +96,7 @@
 
     </RelativeLayout>
 
-    <TextView
+    <androidx.appcompat.widget.AppCompatTextView
         android:id="@+id/content"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -120,7 +120,7 @@
             android:layout_height="wrap_content"
             android:layout_weight="1"
             android:scaleType="centerCrop"
-            android:src="@mipmap/tem" />
+            app:srcCompat="@mipmap/tem" />
 
 
         <com.snt.phoney.widget.SquareImageView
@@ -128,7 +128,7 @@
             android:layout_height="wrap_content"
             android:layout_weight="1"
             android:scaleType="centerCrop"
-            android:src="@mipmap/tem" />
+            app:srcCompat="@mipmap/tem" />
 
 
         <com.snt.phoney.widget.SquareImageView
@@ -136,7 +136,7 @@
             android:layout_height="wrap_content"
             android:layout_weight="1"
             android:scaleType="centerCrop"
-            android:src="@mipmap/tem" />
+            app:srcCompat="@mipmap/tem" />
 
 
     </com.snt.phoney.widget.FlowLayout>
@@ -148,7 +148,7 @@
         android:layout_gravity="right"
         android:layout_marginTop="8dp">
 
-        <TextView
+        <androidx.appcompat.widget.AppCompatTextView
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_gravity="center_vertical"

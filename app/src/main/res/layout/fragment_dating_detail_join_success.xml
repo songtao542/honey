@@ -18,12 +18,12 @@
         app:title="@string/join_dating_success_title"
         app:titleTextColor="@color/white" />
 
-    <ImageView
+    <androidx.appcompat.widget.AppCompatImageView
         android:layout_width="60dp"
         android:layout_height="60dp"
         android:layout_gravity="center_horizontal"
         android:layout_marginTop="50dp"
-        android:src="@drawable/ic_success" />
+        app:srcCompat="@drawable/ic_success" />
 
     <TextView
         android:layout_width="match_parent"

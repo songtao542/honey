@@ -24,7 +24,7 @@
             android:orientation="horizontal">
 
 
-            <TextView
+            <androidx.appcompat.widget.AppCompatTextView
                 android:id="@+id/newest"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -38,7 +38,7 @@
                 android:textColor="@color/friend_filter_selector"
                 android:textSize="@dimen/textsize_small" />
 
-            <TextView
+            <androidx.appcompat.widget.AppCompatTextView
                 android:id="@+id/popular"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -52,7 +52,7 @@
                 android:textColor="@color/friend_filter_selector"
                 android:textSize="@dimen/textsize_small" />
 
-            <TextView
+            <androidx.appcompat.widget.AppCompatTextView
                 android:id="@+id/nearest"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -66,7 +66,7 @@
                 android:textColor="@color/friend_filter_selector"
                 android:textSize="@dimen/textsize_small" />
 
-            <TextView
+            <androidx.appcompat.widget.AppCompatTextView
                 android:id="@+id/hottest"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -82,7 +82,7 @@
         </LinearLayout>
     </HorizontalScrollView>
 
-    <TextView
+    <androidx.appcompat.widget.AppCompatTextView
         android:id="@+id/moreTag"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"

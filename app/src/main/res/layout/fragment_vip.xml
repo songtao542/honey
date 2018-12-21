@@ -34,7 +34,7 @@
                 android:background="@color/white"
                 android:orientation="vertical">
 
-                <TextView
+                <androidx.appcompat.widget.AppCompatTextView
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginLeft="16dp"
@@ -63,7 +63,7 @@
                         android:layout_height="wrap_content"
                         android:visibility="gone" />
 
-                    <TextView
+                    <androidx.appcompat.widget.AppCompatTextView
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:lineSpacingExtra="1.5dp"
@@ -138,7 +138,7 @@
                         android:text="@string/wechat" />
                 </RadioGroup>
 
-                <TextView
+                <androidx.appcompat.widget.AppCompatTextView
                     android:id="@+id/payAmount"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"

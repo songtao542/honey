@@ -10,10 +10,29 @@
         <!-- Customize your theme here. -->
     </style>
 
+    <!-- Base application theme. -->
+    <style name="AppLightTheme" parent="BaseAppTheme">
+        <!-- Customize your theme here. -->
+    </style>
+
+    <style name="AppTheme.Light" parent="AppLightTheme">
+        <item name="colorPrimary">@color/colorPrimaryLight</item>
+        <item name="colorPrimaryPressed">@color/colorPrimaryPressedLight</item>
+        <item name="colorPrimaryTranslucent">@color/colorPrimaryTranslucentLight</item>
+        <item name="colorPrimaryDark">@color/colorPrimaryDarkLight</item>
+        <item name="colorAccent">@color/colorAccentLight</item>
+        <item name="colorTheme">@color/colorPrimaryLight</item>
+        <item name="colorThemePressed">@color/colorPrimaryPressedLight</item>
+        <item name="mainNavigationTextColor">@color/navigation_text_color_male_selector</item>
+
+        <item name="statusBarBackground">@color/white</item>
+        <item name="toolbarBackground">@color/white</item>
+    </style>
+
     <style name="AppTheme.Male" parent="AppTheme">
         <item name="colorPrimary">@color/colorPrimaryMale</item>
         <item name="colorPrimaryPressed">@color/colorPrimaryPressedMale</item>
-        <item name="colorPrimaryTranslucent">@color/colorPrimaryMaleTranslucent</item>
+        <item name="colorPrimaryTranslucent">@color/colorPrimaryTranslucentMale</item>
         <item name="colorPrimaryDark">@color/colorPrimaryDarkMale</item>
         <item name="colorAccent">@color/colorAccentMale</item>
         <item name="colorTheme">@color/colorPrimaryMale</item>
@@ -27,7 +46,7 @@
     <style name="AppTheme.Female" parent="AppTheme">
         <item name="colorPrimary">@color/colorPrimaryFemale</item>
         <item name="colorPrimaryPressed">@color/colorPrimaryPressedFemale</item>
-        <item name="colorPrimaryTranslucent">@color/colorPrimaryFemaleTranslucent</item>
+        <item name="colorPrimaryTranslucent">@color/colorPrimaryTranslucentFemale</item>
         <item name="colorPrimaryDark">@color/colorPrimaryDarkFemale</item>
         <item name="colorAccent">@color/colorAccentFemale</item>
         <item name="colorTheme">@color/colorPrimaryFemale</item>

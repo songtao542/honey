@@ -1,18 +1,22 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
+    android:minHeight="60dp"
     android:orientation="horizontal"
     android:padding="10dp">
 
-    <ImageView
+    <androidx.appcompat.widget.AppCompatImageView
         android:id="@+id/icon"
-        android:layout_width="46dp"
-        android:layout_height="46dp"
+        android:layout_width="30dp"
+        android:layout_height="30dp"
         android:layout_gravity="center_vertical"
-        android:src="@mipmap/tem" />
+        android:background="@drawable/wallet_recharge_shape_border_circle"
+        android:padding="4dp"
+        app:srcCompat="@drawable/ic_heart_solid_red" />
 
-    <TextView
+    <androidx.appcompat.widget.AppCompatTextView
         android:id="@+id/text"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
@@ -23,7 +27,7 @@
         android:textColor="@color/darker"
         android:textSize="@dimen/textsize_normal" />
 
-    <TextView
+    <androidx.appcompat.widget.AppCompatTextView
         android:id="@+id/price"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -36,6 +40,7 @@
         android:paddingRight="15dp"
         android:paddingBottom="6dp"
         android:text="8元"
+        android:textColor="@color/recharge_btn_border"
         android:textSize="@dimen/textsize_normal" />
 
 </LinearLayout>

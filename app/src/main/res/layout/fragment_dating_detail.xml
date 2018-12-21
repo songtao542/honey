@@ -48,7 +48,7 @@
                     app:navigationIcon="@drawable/ic_back"
                     app:titleMargin="0dp">
 
-                    <TextView
+                    <androidx.appcompat.widget.AppCompatTextView
                         android:id="@+id/toolbarTitle"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
@@ -89,7 +89,7 @@
                         android:paddingBottom="8dp">
 
 
-                        <TextView
+                        <androidx.appcompat.widget.AppCompatTextView
                             android:id="@+id/height"
                             android:layout_width="50dp"
                             android:layout_height="50dp"
@@ -98,7 +98,7 @@
                             android:textColor="@color/black"
                             android:textSize="@dimen/textsize_normal" />
 
-                        <TextView
+                        <androidx.appcompat.widget.AppCompatTextView
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_marginTop="3dp"
@@ -118,7 +118,7 @@
                         android:paddingBottom="8dp">
 
 
-                        <TextView
+                        <androidx.appcompat.widget.AppCompatTextView
                             android:id="@+id/age"
                             android:layout_width="50dp"
                             android:layout_height="50dp"
@@ -127,7 +127,7 @@
                             android:textColor="@color/black"
                             android:textSize="@dimen/textsize_normal" />
 
-                        <TextView
+                        <androidx.appcompat.widget.AppCompatTextView
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_marginTop="3dp"
@@ -148,7 +148,7 @@
                         android:paddingBottom="8dp">
 
 
-                        <TextView
+                        <androidx.appcompat.widget.AppCompatTextView
                             android:id="@+id/cupWeight"
                             android:layout_width="50dp"
                             android:layout_height="50dp"
@@ -157,7 +157,7 @@
                             android:textColor="@color/black"
                             android:textSize="@dimen/textsize_normal" />
 
-                        <TextView
+                        <androidx.appcompat.widget.AppCompatTextView
                             android:id="@+id/cupWeightLabel"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
@@ -176,7 +176,7 @@
                     android:paddingTop="10dp"
                     android:paddingBottom="15dp">
 
-                    <TextView
+                    <androidx.appcompat.widget.AppCompatTextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_gravity="center_vertical"
@@ -191,7 +191,7 @@
                         android:textColor="@color/black"
                         android:textSize="@dimen/textsize_normal" />
 
-                    <TextView
+                    <androidx.appcompat.widget.AppCompatTextView
                         android:id="@+id/remainingTime"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
@@ -230,7 +230,7 @@
                     android:paddingTop="15dp"
                     android:paddingBottom="10dp">
 
-                    <TextView
+                    <androidx.appcompat.widget.AppCompatTextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_gravity="center_vertical"
@@ -242,7 +242,7 @@
                         android:textColor="@color/black"
                         android:textSize="@dimen/textsize_normal" />
 
-                    <TextView
+                    <androidx.appcompat.widget.AppCompatTextView
                         android:id="@+id/datingAddress"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
@@ -264,7 +264,7 @@
                     android:paddingTop="10dp"
                     android:paddingBottom="10dp">
 
-                    <TextView
+                    <androidx.appcompat.widget.AppCompatTextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_gravity="center_vertical"
@@ -276,7 +276,7 @@
                         android:textColor="@color/black"
                         android:textSize="@dimen/textsize_normal" />
 
-                    <TextView
+                    <androidx.appcompat.widget.AppCompatTextView
                         android:id="@+id/datingTime"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"

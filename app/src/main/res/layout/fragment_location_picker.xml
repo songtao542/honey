@@ -38,12 +38,12 @@
             android:background="@drawable/location_picker_search_selector"
             android:orientation="horizontal">
 
-            <ImageView
+            <androidx.appcompat.widget.AppCompatImageView
                 android:layout_width="18dp"
                 android:layout_height="18dp"
                 android:layout_gravity="center_vertical"
                 android:layout_marginLeft="16dp"
-                android:src="@drawable/ic_search" />
+                app:srcCompat="@drawable/ic_search" />
 
             <EditText
                 android:id="@+id/searchBox"
@@ -60,7 +60,7 @@
                 android:textSize="@dimen/textsize_normal" />
         </LinearLayout>
 
-        <ImageView
+        <androidx.appcompat.widget.AppCompatImageView
             android:id="@+id/myLocationButton"
             android:layout_width="46dp"
             android:layout_height="46dp"
@@ -69,7 +69,7 @@
             android:layout_marginBottom="10dp"
             android:background="@drawable/location_picker_my_location_selector"
             android:padding="12dp"
-            android:src="@drawable/ic_my_location" />
+            app:srcCompat="@drawable/ic_my_location" />
 
     </FrameLayout>
 

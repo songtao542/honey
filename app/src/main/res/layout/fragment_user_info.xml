@@ -42,7 +42,7 @@
                 app:navigationIcon="@drawable/ic_back"
                 app:titleMargin="0dp">
 
-                <TextView
+                <androidx.appcompat.widget.AppCompatTextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="@string/user_info_title"
@@ -82,7 +82,7 @@
                     android:paddingBottom="8dp">
 
 
-                    <TextView
+                    <androidx.appcompat.widget.AppCompatTextView
                         android:id="@+id/height"
                         android:layout_width="50dp"
                         android:layout_height="50dp"
@@ -91,7 +91,7 @@
                         android:textColor="@color/black"
                         android:textSize="@dimen/textsize_normal" />
 
-                    <TextView
+                    <androidx.appcompat.widget.AppCompatTextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginTop="3dp"
@@ -111,7 +111,7 @@
                     android:paddingBottom="8dp">
 
 
-                    <TextView
+                    <androidx.appcompat.widget.AppCompatTextView
                         android:id="@+id/age"
                         android:layout_width="50dp"
                         android:layout_height="50dp"
@@ -120,7 +120,7 @@
                         android:textColor="@color/black"
                         android:textSize="@dimen/textsize_normal" />
 
-                    <TextView
+                    <androidx.appcompat.widget.AppCompatTextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginTop="3dp"
@@ -141,7 +141,7 @@
                     android:paddingBottom="8dp">
 
 
-                    <TextView
+                    <androidx.appcompat.widget.AppCompatTextView
                         android:id="@+id/cupWeight"
                         android:layout_width="50dp"
                         android:layout_height="50dp"
@@ -150,7 +150,7 @@
                         android:textColor="@color/black"
                         android:textSize="@dimen/textsize_normal" />
 
-                    <TextView
+                    <androidx.appcompat.widget.AppCompatTextView
                         android:id="@+id/cupWeightLabel"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
@@ -161,7 +161,7 @@
             </LinearLayout>
 
 
-            <TextView
+            <androidx.appcompat.widget.AppCompatTextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:background="@color/light_gray"
@@ -182,7 +182,7 @@
                 android:paddingRight="10dp">
 
 
-                <TextView
+                <androidx.appcompat.widget.AppCompatTextView
                     android:id="@+id/chatLimit"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
@@ -243,7 +243,7 @@
                 android:paddingBottom="15dp">
 
 
-                <TextView
+                <androidx.appcompat.widget.AppCompatTextView
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center_vertical"
@@ -283,7 +283,7 @@
                 android:layout_marginTop="10dp"
                 android:orientation="vertical">
 
-                <TextView
+                <androidx.appcompat.widget.AppCompatTextView
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:paddingLeft="10dp"
@@ -293,7 +293,7 @@
                     android:text="@string/introduce_label"
                     android:textSize="@dimen/textsize_normal" />
 
-                <TextView
+                <androidx.appcompat.widget.AppCompatTextView
                     android:id="@+id/introduce"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
@@ -309,7 +309,7 @@
                     android:layout_height="1px"
                     android:background="@color/gray" />
 
-                <TextView
+                <androidx.appcompat.widget.AppCompatTextView
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:paddingLeft="10dp"
@@ -318,7 +318,7 @@
                     android:paddingBottom="10dp"
                     android:text="@string/frequent_city_label" />
 
-                <TextView
+                <androidx.appcompat.widget.AppCompatTextView
                     android:id="@+id/frequentCity"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
@@ -334,7 +334,7 @@
                     android:layout_height="1px"
                     android:background="@color/gray" />
 
-                <TextView
+                <androidx.appcompat.widget.AppCompatTextView
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:paddingLeft="10dp"

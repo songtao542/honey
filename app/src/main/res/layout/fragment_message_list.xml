@@ -20,7 +20,7 @@
         app:popupTheme="@style/AppTheme.PopupOverlay"
         app:titleTextColor="@color/white">
 
-        <TextView
+        <androidx.appcompat.widget.AppCompatTextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="@string/tab_message"

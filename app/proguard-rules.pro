@@ -233,6 +233,9 @@
 -keep class com.tencent.open.PKDialog$*
 -keep class com.tencent.open.PKDialog$* {*;}
 
+-dontwarn com.tencent.bugly.**
+-keep public class com.tencent.bugly.**{*;}
+
 -keep class com.tencent.mm.opensdk.** {*;}
 -keep class com.tencent.wxop.** {*;}
 -keep class com.tencent.mm.sdk.** {*;}

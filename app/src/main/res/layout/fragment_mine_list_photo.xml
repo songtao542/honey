@@ -28,16 +28,16 @@
         android:layout_marginTop="2dp"
         android:orientation="horizontal">
 
-        <ImageView
+        <androidx.appcompat.widget.AppCompatImageView
             android:layout_width="16dp"
             android:layout_height="16dp"
             android:layout_gravity="center_vertical"
             android:layout_marginLeft="10dp"
             android:layout_marginRight="5dp"
             android:scaleType="centerInside"
-            android:src="@drawable/ic_warning" />
+            app:srcCompat="@drawable/ic_warning" />
 
-        <TextView
+        <androidx.appcompat.widget.AppCompatTextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center_vertical"
