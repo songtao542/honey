@@ -9,6 +9,7 @@
 
 
     <androidx.appcompat.widget.AppCompatTextView
+        android:id="@+id/datingState"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginStart="10dp"
@@ -92,6 +93,7 @@
                 android:textSize="@dimen/textsize_smallest" />
 
             <androidx.appcompat.widget.AppCompatTextView
+                android:id="@+id/cancelDating"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center_vertical"
@@ -104,9 +106,11 @@
                 android:paddingBottom="4dp"
                 android:text="@string/cancel_dating"
                 android:textColor="@color/white"
-                android:textSize="@dimen/textsize_smallest" />
+                android:textSize="@dimen/textsize_smallest"
+                android:visibility="gone" />
 
             <androidx.appcompat.widget.AppCompatTextView
+                android:id="@+id/viewApply"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center_vertical"

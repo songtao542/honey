@@ -10,8 +10,10 @@ import com.snt.phoney.ui.dating.create.CreateDatingFragment;
 import com.snt.phoney.ui.dating.create.CreateDatingViewModel;
 import com.snt.phoney.ui.dating.detail.DatingDetailFragment;
 import com.snt.phoney.ui.dating.detail.DatingDetailViewModel;
+import com.snt.phoney.ui.dating.list.ApplicantListFragment;
 import com.snt.phoney.ui.dating.list.DatingListFragment;
-import com.snt.phoney.ui.dating.list.DatingListViewModel;
+import com.snt.phoney.ui.dating.list.DatingViewModel;
+import com.snt.phoney.ui.dating.list.OthersDatingFragment;
 import com.snt.phoney.ui.location.LocationPickerModule;
 import com.snt.phoney.ui.photo.PhotoViewerModule;
 import com.snt.phoney.ui.picker.PickerModule;
@@ -36,6 +38,15 @@ public abstract class DatingActivityModule {
     @ContributesAndroidInjector
     public abstract DatingDetailFragment contributeDatingDetailFragment();
 
+
+    @FragmentScope
+    @ContributesAndroidInjector
+    public abstract ApplicantListFragment contributeApplicantListFragment();
+
+    @FragmentScope
+    @ContributesAndroidInjector
+    public abstract OthersDatingFragment contributeOthersDatingFragment();
+
     @Binds
     @IntoMap
     @ActivityScope
@@ -45,8 +56,8 @@ public abstract class DatingActivityModule {
     @Binds
     @IntoMap
     @ActivityScope
-    @ViewModelKey(DatingListViewModel.class)
-    public abstract ViewModel bindDatingListViewModel(DatingListViewModel viewModel);
+    @ViewModelKey(DatingViewModel.class)
+    public abstract ViewModel bindDatingViewModel(DatingViewModel viewModel);
 
     @Binds
     @IntoMap

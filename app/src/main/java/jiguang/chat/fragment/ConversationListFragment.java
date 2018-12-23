@@ -17,6 +17,7 @@ import android.util.DisplayMetrics;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ListView;
 
 import androidx.fragment.app.Fragment;
 
@@ -95,6 +96,10 @@ public class ConversationListFragment extends Fragment {
         }
         initReceiver();
 
+    }
+
+    public ListView getListView() {
+        return mConvListView.getConvListView();
     }
 
     private void initReceiver() {

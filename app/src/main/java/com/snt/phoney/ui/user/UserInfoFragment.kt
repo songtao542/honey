@@ -2,12 +2,14 @@ package com.snt.phoney.ui.user
 
 import android.Manifest
 import android.os.Bundle
+import android.text.TextUtils
 import android.util.TypedValue
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.LinearLayout
 import android.widget.TextView
+import androidx.appcompat.app.AlertDialog
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
 import com.bumptech.glide.Glide
@@ -15,13 +17,20 @@ import com.bumptech.glide.load.resource.drawable.DrawableTransitionOptions
 import com.bumptech.glide.request.RequestOptions
 import com.snt.phoney.R
 import com.snt.phoney.base.BaseFragment
-import com.snt.phoney.domain.model.Sex
-import com.snt.phoney.domain.model.User
+import com.snt.phoney.base.CommonActivity
+import com.snt.phoney.base.Page
+import com.snt.phoney.domain.model.*
 import com.snt.phoney.extensions.checkAndRequestPermission
 import com.snt.phoney.extensions.checkAppPermission
 import com.snt.phoney.extensions.dip
+import com.snt.phoney.extensions.snackbar
+import com.snt.phoney.ui.dating.DatingActivity
+import com.snt.phoney.ui.report.ReportActivity
+import com.snt.phoney.utils.Chat
 import com.snt.phoney.utils.data.Constants
+import com.snt.phoney.widget.PayPickerView
 import com.snt.phoney.widget.PhotoFlowAdapter
+import com.snt.phoney.widget.WECHAT
 import kotlinx.android.synthetic.main.fragment_user_info.*
 import kotlinx.android.synthetic.main.fragment_user_info_header.*
 import java.text.DecimalFormat
@@ -37,12 +46,12 @@ class UserInfoFragment : BaseFragment() {
 
     private lateinit var viewModel: UserInfoViewModel
 
-    private lateinit var argUser: User
+    private lateinit var user: User
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         arguments?.let {
-            argUser = it.getParcelable(Constants.Extra.USER)
+            user = it.getParcelable(Constants.Extra.USER)
         }
     }
 
@@ -57,15 +66,75 @@ class UserInfoFragment : BaseFragment() {
             activity?.onBackPressed()
         }
 
-        setupUserInfo(argUser)
+        setupUserInfo(user)
 
         viewModel.userInfo.observe(this, Observer {
-            setupUserInfo(it)
+            it?.let { u ->
+                user = u
+                setupUserInfo(u)
+            }
         })
 
+        viewModel.error.observe(this, Observer {
+            it?.let { message ->
+                snackbar(message)
+                viewModel.error.value = null
+            }
+        })
+
+        viewModel.success.observe(this, Observer {
+            it?.let { message ->
+                snackbar(message)
+                viewModel.success.value = null
+            }
+        })
+
+        viewModel.followSuccess.observe(this, Observer {
+            it?.let { success ->
+                if (success) {
+                    snackbar(getString(R.string.has_follow))
+                    follow.setImageResource(R.drawable.ic_heart_solid_red)
+                } else {
+                    snackbar(getString(R.string.has_canceld_follow))
+                    follow.setImageResource(R.drawable.ic_heart_solid)
+                }
+                viewModel.followSuccess.value = null
+            }
+        })
+
+        follow.setOnClickListener {
+            viewModel.follow(user.safeUuid)
+        }
+
+        report.setOnClickListener {
+            context?.let { context ->
+                context.startActivity(CommonActivity.newIntent<ReportActivity>(context, Page.CREATE_REPORT, Bundle().apply {
+                    putString(Constants.Extra.UUID, user.safeUuid)
+                    putInt(Constants.Extra.TYPE, ReportType.USER.value)
+                }))
+            }
+        }
+
+        chatButton.setOnClickListener {
+            context?.let { context ->
+                user.im?.let { im ->
+                    Chat.start(context, im)
+                }
+            }
+        }
+
+        viewDating.setOnClickListener {
+            user?.let { user ->
+                context?.let { context ->
+                    context.startActivity(CommonActivity.newIntent<DatingActivity>(context, Page.VIEW_OTHERS_DATING, Bundle().apply {
+                        putParcelable(Constants.Extra.USER, user)
+                    }))
+                }
+            }
+        }
 
         if (checkPermission()) {
-            argUser.uuid?.let {
+            user.uuid?.let {
                 viewModel.getUserInfo(it)
             }
         } else {
@@ -103,15 +172,17 @@ class UserInfoFragment : BaseFragment() {
         }
 
         chatLimit.text = getString(R.string.chat_price_template, df.format(user.price))
-        chatWith.setOnClickListener {
 
-        }
-        photos.viewAdapter = PhotoFlowAdapter(requireContext()).setUrls(user.photos?.map {
-            it.path ?: ""
-        } ?: emptyList()).setMaxShow(12).setLastAsAdd(false)
-
-        viewDating.setOnClickListener {
-
+        user.photos?.let {
+            photos.viewAdapter = PhotoFlowAdapter(requireContext()).setPhotos(it).setMaxShow(12).setLastAsAdd(false)
+            photos.setOnItemClickListener { view, _ ->
+                val photo = view.getTag(R.id.tag) as? Photo
+                photo?.let { photo ->
+                    if (TextUtils.isEmpty(photo.path)) {
+                        buy(photo)
+                    }
+                }
+            }
         }
 
         if (user.care) {
@@ -124,6 +195,22 @@ class UserInfoFragment : BaseFragment() {
         frequentCity.text = user.cities?.map { it.name }?.joinToString(separator = ",") ?: ""
         //TODO 服务器返回值，字段名错误，后期提醒修改
         setProgram(user.program)
+
+    }
+
+    private fun buy(photo: Photo) {
+        context?.let { context ->
+            AlertDialog.Builder(context)
+                    .setTitle(R.string.buy_tip)
+                    .setMessage(R.string.buy_warning)
+                    .setCancelable(false)
+                    .setNegativeButton(R.string.cancel) { dialog, which ->
+                        dialog.dismiss()
+                    }.setPositiveButton(R.string.confirm) { dialog, which ->
+                        dialog.dismiss()
+                        viewModel.buyWithMibi(OrderType.USE_PHOTO_MIBI, photo.id.toString(), user.uuid)
+                    }.show()
+        }
     }
 
     private fun setProgram(program: String?) {
@@ -149,13 +236,14 @@ class UserInfoFragment : BaseFragment() {
         }
     }
 
+
     private fun checkPermission(): Boolean {
         return context?.checkAppPermission(Manifest.permission.ACCESS_FINE_LOCATION, Manifest.permission.ACCESS_COARSE_LOCATION) == true
     }
 
     override fun onRequestPermissionsResult(requestCode: Int, permissions: Array<out String>, grantResults: IntArray) {
         if (checkPermission()) {
-            argUser.uuid?.let {
+            user.uuid?.let {
                 viewModel.getUserInfo(it)
             }
         }

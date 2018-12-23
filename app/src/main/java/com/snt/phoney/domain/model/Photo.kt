@@ -1,6 +1,7 @@
 package com.snt.phoney.domain.model
 
 import android.os.Parcelable
+import com.google.gson.annotations.SerializedName
 import kotlinx.android.parcel.Parcelize
 import kotlinx.serialization.Serializable
 
@@ -9,7 +10,8 @@ import kotlinx.serialization.Serializable
 data class Photo(
         var id: Int = 0,      // "id": 44
         var path: String? = null, //   "path": "http://phoney.alance.pub/phoney/phoney/512/users/photos/u201811081829582566215b5a5a3b4f/1542507758452-5-a61dd1050281015775b699c828a394bc.jpg",
-        var flag: Int = 0     //  "flag": 0,
+        var flag: Int = 0,
+        @SerializedName(value = "money") var price: Int = 0//  "flag": 0,
 ) : Selectable(), Parcelable {
 
     override fun equals(other: Any?): Boolean {

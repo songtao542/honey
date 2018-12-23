@@ -76,7 +76,6 @@ public class ConversationListView {
         mConvListView.setOnItemLongClickListener(listener);
     }
 
-
     public void showHeaderView() {
         mHeader.findViewById(R.id.network_disconnected_iv).setVisibility(View.VISIBLE);
         mHeader.findViewById(R.id.check_network_hit).setVisibility(View.VISIBLE);
@@ -87,6 +86,10 @@ public class ConversationListView {
         mHeader.findViewById(R.id.check_network_hit).setVisibility(View.GONE);
     }
 
+
+    public ListView getConvListView() {
+        return mConvListView;
+    }
 
     public void showLoadingHeader() {
         mLoadingIv.setVisibility(View.VISIBLE);

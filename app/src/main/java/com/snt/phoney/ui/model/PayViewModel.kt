@@ -23,6 +23,36 @@ open class PayViewModel constructor(private val usecase: PayOrderUseCase) : WXPa
         activityRef = WeakReference(activity)
     }
 
+    fun buyWithMibi(type: OrderType, target: String, uid: String? = null) {
+        val token = usecase.getAccessToken() ?: return
+        usecase.createOrder(token, type.value.toString(), target, uid ?: "")
+                .flatMap {
+                    return@flatMap if (it.code == Response.SUCCESS && !TextUtils.isEmpty(it.data)) {
+                        usecase.payInMibi(token, it.data!!)
+                                .subscribeOn(Schedulers.io())
+                                .observeOn(AndroidSchedulers.mainThread())
+                    } else {
+                        Single.create<Response<String>> { Response<String>(code = 999, message = context.getString(R.string.create_order_failed)) }
+                    }
+                }
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribeBy(
+                        onSuccess = {
+                            if (it.code == Response.SUCCESS && it.data != null) {
+                                success.value = context.getString(R.string.buy_vip_success)
+                            } else if (!TextUtils.isEmpty(it.message)) {
+                                error.value = it.message
+                            } else {
+                                error.value = context.getString(R.string.buy_failed)
+                            }
+                        },
+                        onError = {
+                            error.value = context.getString(R.string.buy_failed)
+                        }
+                ).disposedBy(disposeBag)
+    }
+
     fun buyWithWechat(type: OrderType, target: String, uid: String? = null) {
         buy(type, target, uid)
     }
@@ -59,7 +89,7 @@ open class PayViewModel constructor(private val usecase: PayOrderUseCase) : WXPa
         activityRef?.get()?.let { activity ->
             AlipayApi.pay(activity, orderInfo) {
                 if (it == 9000) {
-                    success.value = context.getString(R.string.buy_vip_success)
+                    success.value = context.getString(R.string.buy_success)
                 } else {
                     error.value = context.getString(R.string.buy_vip_failed)
                 }

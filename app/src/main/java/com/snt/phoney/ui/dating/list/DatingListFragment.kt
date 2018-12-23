@@ -4,43 +4,104 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.TextView
-import androidx.databinding.DataBindingUtil
+import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.snt.phoney.R
 import com.snt.phoney.base.BaseFragment
-import com.snt.phoney.databinding.DatingListFragmentBinding
-import com.snt.phoney.extensions.autoCleared
+import com.snt.phoney.domain.model.User
+import com.snt.phoney.extensions.snackbar
+import com.snt.phoney.utils.data.Constants
 import kotlinx.android.synthetic.main.fragment_dating_list.*
 
 class DatingListFragment : BaseFragment() {
 
     companion object {
+        /**
+         * 我发布的
+         */
+        val TYPE_PUBLISH = 0
+        /**
+         * 我参加的
+         */
+        val TYPE_JOINED = 1
+        /**
+         * 别人发布的
+         */
+        val TYPE_OTHER = 1
+
         @JvmStatic
         fun newInstance(arguments: Bundle? = null) = DatingListFragment().apply {
             this.arguments = arguments
         }
     }
 
-    private lateinit var viewModel: DatingListViewModel
+    private lateinit var viewModel: DatingViewModel
 
-    var binding by autoCleared<DatingListFragmentBinding>()
+    private lateinit var adapter: DatingListRecyclerViewAdapter
+
+    private var user: User? = null
+    private var type: Int = TYPE_PUBLISH
+    private var toolbarVisibility = View.VISIBLE
+
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        arguments?.let {
+            user = it.getParcelable(Constants.Extra.USER)
+            type = it.getInt(Constants.Extra.TYPE, 0)
+            toolbarVisibility = it.getInt("TOOLBAR_VISIBILITY", View.VISIBLE)
+        }
+    }
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View {
-        binding = DataBindingUtil.inflate(inflater, R.layout.fragment_dating_list, container, false)
-        return binding.root
+        return inflater.inflate(R.layout.fragment_dating_list, container, false)
     }
 
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
-        viewModel = ViewModelProviders.of(this, viewModelFactory).get(DatingListViewModel::class.java)
-        binding.viewModel = viewModel
-        list?.let {
-            it.layoutManager = LinearLayoutManager(context)
-            it.adapter = DatingListRecyclerViewAdapter()
+        viewModel = ViewModelProviders.of(this, viewModelFactory).get(DatingViewModel::class.java)
+
+        list.layoutManager = LinearLayoutManager(context)
+        adapter = DatingListRecyclerViewAdapter(this, viewModel, type)
+        list.adapter = adapter
+
+        toolbar.visibility = toolbarVisibility
+        toolbar.setNavigationOnClickListener { activity?.onBackPressed() }
+
+
+
+        viewModel.error.observe(this, Observer {
+            it?.let { message ->
+                snackbar(message)
+                viewModel.error.value = null
+            }
+        })
+
+        if (type == TYPE_PUBLISH) {
+            viewModel.publishDatings.observe(this, Observer {
+                adapter.data = it
+            })
+            viewModel.listMyDating()
+        } else if (type == TYPE_JOINED) {
+            viewModel.joinedDatings.observe(this, Observer {
+                adapter.data = it
+            })
+            viewModel.quitSuccess.observe(this, Observer {
+                it?.let { message ->
+                    snackbar(message)
+                    adapter.notifyDataSetChanged()
+                    viewModel.quitSuccess.value = null
+                }
+            })
+            viewModel.listJoinedDating()
+        } else if (type == TYPE_OTHER) {
+            viewModel.otherDatings.observe(this, Observer {
+                adapter.data = it
+            })
+            if (user != null) {
+                viewModel.listDating(user!!.safeUuid)
+            }
         }
-        toolbar.setNavigationOnClickListener { activity?.finish() }
     }
 
 }

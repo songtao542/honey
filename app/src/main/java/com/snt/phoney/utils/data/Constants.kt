@@ -17,6 +17,8 @@ object Constants {
         const val DELETABLE = "deletable"
         const val PASSWORD = "password"
         const val UUID = "uuid"
+        const val DATA = "data"
+        const val TYPE = "type"
     }
 
     object Preference {

@@ -1,6 +1,7 @@
 package com.snt.phoney.domain.repository.impl
 
 import com.snt.phoney.api.Api
+import com.snt.phoney.domain.model.Applicant
 import com.snt.phoney.domain.model.Dating
 import com.snt.phoney.domain.model.DatingProgram
 import com.snt.phoney.domain.model.Response
@@ -28,6 +29,10 @@ class DatingRepositoryImpl @Inject constructor(private val api: Api) : DatingRep
         return api.joinDating(token, uuid)
     }
 
+    override fun quitDating(token: String, uuid: String): Single<Response<String>> {
+        return api.quitDating(token, uuid)
+    }
+
     override fun viewDating(token: String, uuid: String): Single<Response<String>> {
         return api.viewDating(token, uuid)
     }
@@ -42,6 +47,10 @@ class DatingRepositoryImpl @Inject constructor(private val api: Api) : DatingRep
 
     override fun listDatingByUser(token: String, uuid: String, pageIndex: Int): Single<Response<List<Dating>>> {
         return api.listDatingByUser(token, uuid, pageIndex.toString())
+    }
+
+    override fun listMyDating(token: String, pageIndex: Int): Single<Response<List<Dating>>> {
+        return api.listMyDating(token, pageIndex.toString())
     }
 
     override fun listRecommendDating(token: String, pageIndex: Int, dateType: Int, distanceType: Int, program: String, latitude: Double, longitude: Double): Single<Response<List<Dating>>> {
@@ -60,8 +69,12 @@ class DatingRepositoryImpl @Inject constructor(private val api: Api) : DatingRep
         return api.listJoinedDating(token, pageIndex.toString())
     }
 
-    override fun listAppliedDating(token: String, pageIndex: Int): Single<Response<List<Dating>>> {
-        return api.listAppliedDating(token, pageIndex.toString())
+    override fun listDatingApplicant(token: String, uuid: String, pageIndex: Int): Single<Response<List<Applicant>>> {
+        return api.listDatingApplicant(token, uuid, pageIndex.toString())
+    }
+
+    override fun listApplicant(token: String, pageIndex: Int): Single<Response<List<Applicant>>> {
+        return api.listApplicant(token, pageIndex.toString())
     }
 
 }

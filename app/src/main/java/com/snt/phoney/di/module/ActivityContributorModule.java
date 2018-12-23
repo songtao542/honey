@@ -4,6 +4,9 @@ import com.snt.phoney.di.ActivityScope;
 import com.snt.phoney.ui.about.AboutActivity;
 import com.snt.phoney.ui.album.AlbumSettingActivity;
 import com.snt.phoney.ui.album.AlbumSettingActivityModule;
+import com.snt.phoney.ui.browser.BrowerActivityModule;
+import com.snt.phoney.ui.browser.BrowserActivity;
+import com.snt.phoney.ui.browser.WebBrowserActivity;
 import com.snt.phoney.ui.dating.DatingActivity;
 import com.snt.phoney.ui.dating.DatingActivityModule;
 import com.snt.phoney.ui.main.MainActivity;
@@ -138,6 +141,16 @@ public abstract class ActivityContributorModule {
     @ActivityScope
     @ContributesAndroidInjector
     public abstract BrowserViewPagerActivity contributeBrowserViewPagerActivity();
+
+    @ActivityScope
+    @ContributesAndroidInjector(modules = {
+            BrowerActivityModule.class
+    })
+    public abstract BrowserActivity contributeBrowserActivity();
+
+    @ActivityScope
+    @ContributesAndroidInjector
+    public abstract WebBrowserActivity contributeWebBrowserActivity();
 
 
 }

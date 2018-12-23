@@ -37,8 +37,14 @@ data class User(
         var introduce: String? = null,
         @SerializedName(value = "photo") var photos: List<Photo>? = null,
         @SerializedName(value = "photoRight") var photoPermission: Int = 0,
+        @SerializedName(value = "isPhotoFree") var photoFree: Boolean = true,
+        @SerializedName(value = "hasWX") var hasWechatAccount: Boolean = false,
         @SerializedName(value = "account_wx") var wechatAccount: String? = null,
         @SerializedName(value = "pauthentication") var verified: Boolean = false,
+        /**
+         * 相册价格
+         */
+        @SerializedName(value = "photoAllPrice") var photoPrice: Int = 0,
         var token: String? = null,
         @SerializedName(value = "isOpen") var open: Int = 0,
         var price: Double = 0.0,
@@ -66,6 +72,10 @@ data class User(
     @Transient
     val safeCareer: String
         get() = career ?: ""
+
+    @Transient
+    val safeUuid: String
+        get() = uuid ?: ""
 
     @Transient
     val safeWechatAccount: String

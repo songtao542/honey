@@ -151,7 +151,7 @@ class MineFragment : BaseFragment(), OnSettingItemClickListener, OnSignOutClickL
                 }
             }
             R.drawable.ic_my_dating -> {
-                activity?.startActivity(CommonActivity.newIntent<DatingActivity>(requireContext(), Page.VIEW_DATING_LIST))
+                activity?.startActivity(CommonActivity.newIntent<DatingActivity>(requireContext(), Page.VIEW_MY_DATING))
             }
             R.drawable.ic_my_wallet -> {
                 activity?.startActivity(CommonActivity.newIntent<WalletActivity>(requireContext(), Page.VIEW_MY_WALLET))

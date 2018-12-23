@@ -14,6 +14,7 @@ import com.snt.phoney.ui.main.home.friend.FilterViewModel;
 import com.snt.phoney.ui.main.home.friend.FriendFragment;
 import com.snt.phoney.ui.main.home.friend.FriendViewModel;
 import com.snt.phoney.ui.main.message.MessageFragment;
+import com.snt.phoney.ui.main.message.MessageViewModel;
 import com.snt.phoney.ui.main.mine.AlbumPermissionSettingFragment;
 import com.snt.phoney.ui.main.mine.MineFragment;
 import com.snt.phoney.ui.main.mine.MineViewModel;
@@ -110,6 +111,12 @@ public abstract class MainActivityModule {
     @ActivityScope
     @ViewModelKey(FollowingViewModel.class)
     public abstract ViewModel bindFollowingViewModel(FollowingViewModel viewModel);
+
+    @Binds
+    @IntoMap
+    @ActivityScope
+    @ViewModelKey(MessageViewModel.class)
+    public abstract ViewModel bindMessageViewModel(MessageViewModel viewModel);
 
     @Binds
     @IntoMap

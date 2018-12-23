@@ -26,4 +26,17 @@ object MultipartUtil {
     }
 
 
+    fun getMultipart(name: String, file: File): MultipartBody.Part {
+        val mediaType = MediaFile.getFileType(file.path)
+        val mimeType = when {
+            mediaType != null -> mediaType.mimeType
+            file.path.contains("jpeg", true) -> "image/jpeg"
+            file.path.contains("png", true) -> "image/png"
+            file.path.contains("gif", true) -> "image/gif"
+            else -> "image/jpeg"
+        }
+        val requestBody = RequestBody.create(MediaType.parse(mimeType), file)
+        return MultipartBody.Part.createFormData(name, file.name, requestBody)
+    }
+
 }

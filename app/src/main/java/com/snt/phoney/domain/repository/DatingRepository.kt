@@ -1,9 +1,6 @@
 package com.snt.phoney.domain.repository
 
-import com.snt.phoney.domain.model.Dating
-import com.snt.phoney.domain.model.DatingProgram
-import com.snt.phoney.domain.model.Response
-import com.snt.phoney.domain.model.User
+import com.snt.phoney.domain.model.*
 import io.reactivex.Single
 import java.io.File
 
@@ -31,6 +28,8 @@ interface DatingRepository {
      */
     fun joinDating(token: String, uuid: String): Single<Response<String>>
 
+    fun quitDating(token: String, uuid: String): Single<Response<String>>
+
     /**
      * 查看约会
      */
@@ -52,6 +51,8 @@ interface DatingRepository {
     fun listDatingByUser(token: String,
                          uuid: String,
                          pageIndex: Int): Single<Response<List<Dating>>>
+
+    fun listMyDating(token: String, pageIndex: Int): Single<Response<List<Dating>>>
 
     /**
      * 推荐约会
@@ -85,7 +86,12 @@ interface DatingRepository {
     /**
      * 被申请的约会
      */
-    fun listAppliedDating(token: String, pageIndex: Int): Single<Response<List<Dating>>>
+    fun listDatingApplicant(token: String, uuid: String, pageIndex: Int): Single<Response<List<Applicant>>>
+
+    /**
+     * 被申请的约会
+     */
+    fun listApplicant(token: String, pageIndex: Int): Single<Response<List<Applicant>>>
 
     fun follow(token: String, uuid: String): Single<Response<Boolean>>
 }

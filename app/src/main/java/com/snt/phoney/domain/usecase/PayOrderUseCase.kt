@@ -12,4 +12,6 @@ class PayOrderUseCase @Inject constructor(val repository: UserRepository, val or
 
     fun wechatPay(token: String, orderId: String) = orderRepository.wechatPay(token, orderId)
 
+    fun payInMibi(token: String, orderId: String) = orderRepository.payInMibi(token, orderId)
+
 }

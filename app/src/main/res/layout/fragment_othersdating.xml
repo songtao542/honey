@@ -49,17 +49,39 @@
             android:textSize="@dimen/textsize_small" />
 
         <androidx.appcompat.widget.AppCompatTextView
-            android:id="@+id/age"
+            android:id="@+id/city"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_below="@+id/name"
             android:layout_toRightOf="@+id/head"
-            android:background="@drawable/recommend_age_bg"
             android:paddingLeft="5dp"
             android:paddingTop="2dp"
             android:paddingRight="5dp"
             android:paddingBottom="2dp"
-            android:text="30岁"
+            android:textSize="@dimen/textsize_smaller" />
+
+        <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/age"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/name"
+            android:layout_toRightOf="@id/city"
+            android:paddingLeft="5dp"
+            android:paddingTop="2dp"
+            android:paddingRight="5dp"
+            android:paddingBottom="2dp"
+            android:textSize="@dimen/textsize_smaller" />
+
+        <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/job"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/name"
+            android:layout_toRightOf="@id/age"
+            android:paddingLeft="5dp"
+            android:paddingTop="2dp"
+            android:paddingRight="5dp"
+            android:paddingBottom="2dp"
             android:textSize="@dimen/textsize_smaller" />
 
         <androidx.appcompat.widget.AppCompatTextView
@@ -75,11 +97,12 @@
             android:paddingRight="5dp"
             android:paddingBottom="2dp"
             android:text="靠谱值4500"
-            android:textSize="@dimen/textsize_smaller" />
+            android:textSize="@dimen/textsize_smaller"
+            android:visibility="gone" />
 
 
         <androidx.appcompat.widget.AppCompatTextView
-            android:id="@+id/publishTime"
+            android:id="@+id/follow"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_alignBaseline="@+id/age"
@@ -108,6 +131,7 @@
         android:textSize="@dimen/textsize_normal" />
 
     <com.snt.phoney.widget.FlowLayout
+        android:id="@+id/photos"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
@@ -149,6 +173,7 @@
         android:layout_marginTop="8dp">
 
         <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/publishTime"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_gravity="center_vertical"

@@ -46,9 +46,18 @@ class FlowLayout : FlexboxLayout {
 
     }
 
+    override fun onMeasure(widthMeasureSpec: Int, heightMeasureSpec: Int) {
+        resizeChildren(MeasureSpec.getSize(widthMeasureSpec))
+        super.onMeasure(widthMeasureSpec, heightMeasureSpec)
+    }
+
     override fun onLayout(changed: Boolean, left: Int, top: Int, right: Int, bottom: Int) {
+        resizeChildren(width)
+        super.onLayout(changed, left, top, right, bottom)
+    }
+
+    private fun resizeChildren(width: Int) {
         forEach { index, child ->
-            val width = width
             val childWidth = (width - paddingLeft - paddingRight - (space * (column - 1))) / column
             val childHeight = if (square) childWidth else MarginLayoutParams.WRAP_CONTENT
             val lp = child.layoutParams as? MarginLayoutParams
@@ -65,7 +74,6 @@ class FlowLayout : FlexboxLayout {
             }
             child.layoutParams = lp
         }
-        super.onLayout(changed, left, top, right, bottom)
     }
 
     private var mOnItemClickListener: ((view: View, index: Int) -> Unit)? = null

@@ -8,6 +8,9 @@ data class Response<T>(val data: T? = null, val code: Int = 0, val message: Stri
         @JvmStatic
         val SUCCESS = 200
     }
+
+    val success: Boolean
+        get() = code == 200 && data != null
 }
 
 

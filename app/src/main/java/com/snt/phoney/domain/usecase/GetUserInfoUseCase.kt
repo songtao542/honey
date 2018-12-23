@@ -25,6 +25,8 @@ class GetUserInfoUseCase @Inject constructor(private val userRepository: UserRep
 
     fun deletePhotos(token: String, photoIds: List<String>) = userRepository.deletePhotos(token, photoIds)
 
+    fun follow(token: String, uuid: String) = userRepository.follow(token, uuid)
+
     fun deleteUser(token: String) = userRepository.deleteUser(token)
 
 }

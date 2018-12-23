@@ -6,6 +6,7 @@ import android.text.TextUtils;
 import android.view.View;
 import android.view.WindowManager;
 import android.widget.AdapterView;
+import android.widget.ListView;
 
 import com.snt.phoney.R;
 
@@ -74,7 +75,6 @@ public class ConversationListController implements View.OnClickListener,
             topConv.addAll(forCurrent);
             mDatas.removeAll(forCurrent);
             mDatas.removeAll(delFeedBack);
-
         } else {
             mConvListView.setNullConversation(false);
         }
@@ -108,7 +108,8 @@ public class ConversationListController implements View.OnClickListener,
         Intent intent = new Intent();
         if (position > 0) {
             //这里-3是减掉添加的三个headView
-            Conversation conv = mDatas.get(position - 3);
+            int headerCount = mConvListView.getConvListView().getHeaderViewsCount();
+            Conversation conv = mDatas.get(position - headerCount);
             intent.putExtra(Constants.CONV_TITLE, conv.getTitle());
             //群聊
             if (conv.getType() == ConversationType.group) {
@@ -144,44 +145,42 @@ public class ConversationListController implements View.OnClickListener,
 
     @Override
     public boolean onItemLongClick(AdapterView<?> parent, View view, final int position, long id) {
-        final Conversation conv = mDatas.get(position - 3);
+        final int headerCount = ((ListView) parent).getHeaderViewsCount();
+        final Conversation conv = mDatas.get(position - headerCount);
         if (conv != null) {
-            View.OnClickListener listener = new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    switch (v.getId()) {
-                        //会话置顶
-                        case R.id.jmui_top_conv_ll:
-                            //已经置顶,去取消
-                            if (!TextUtils.isEmpty(conv.getExtra())) {
-                                mListAdapter.setCancelConvTop(conv);
-                                //没有置顶,去置顶
-                            } else {
-                                mListAdapter.setConvTop(conv);
-                            }
-                            mDialog.dismiss();
-                            break;
-                        //删除会话
-                        case R.id.jmui_delete_conv_ll:
-                            if (conv.getType() == ConversationType.group) {
-                                JMessageClient.deleteGroupConversation(((GroupInfo) conv.getTargetInfo()).getGroupID());
-                            } else {
-                                JMessageClient.deleteSingleConversation(((UserInfo) conv.getTargetInfo()).getUserName());
-                            }
-                            mDatas.remove(position - 3);
-                            if (mDatas.size() > 0) {
-                                mConvListView.setNullConversation(true);
-                            } else {
-                                mConvListView.setNullConversation(false);
-                            }
-                            mListAdapter.notifyDataSetChanged();
-                            mDialog.dismiss();
-                            break;
-                        default:
-                            break;
-                    }
-
+            View.OnClickListener listener = v -> {
+                switch (v.getId()) {
+                    //会话置顶
+                    case R.id.jmui_top_conv_ll:
+                        //已经置顶,去取消
+                        if (!TextUtils.isEmpty(conv.getExtra())) {
+                            mListAdapter.setCancelConvTop(conv);
+                            //没有置顶,去置顶
+                        } else {
+                            mListAdapter.setConvTop(conv);
+                        }
+                        mDialog.dismiss();
+                        break;
+                    //删除会话
+                    case R.id.jmui_delete_conv_ll:
+                        if (conv.getType() == ConversationType.group) {
+                            JMessageClient.deleteGroupConversation(((GroupInfo) conv.getTargetInfo()).getGroupID());
+                        } else {
+                            JMessageClient.deleteSingleConversation(((UserInfo) conv.getTargetInfo()).getUserName());
+                        }
+                        mDatas.remove(position - headerCount);
+                        if (mDatas.size() > 0) {
+                            mConvListView.setNullConversation(true);
+                        } else {
+                            mConvListView.setNullConversation(false);
+                        }
+                        mListAdapter.notifyDataSetChanged();
+                        mDialog.dismiss();
+                        break;
+                    default:
+                        break;
                 }
+
             };
             mDialog = DialogCreator.createDelConversationDialog(mContext.getActivity(), listener, TextUtils.isEmpty(conv.getExtra()));
             mDialog.show();

@@ -13,6 +13,7 @@ import com.bumptech.glide.request.RequestOptions
 import com.snt.phoney.R
 import com.snt.phoney.base.BaseFragment
 import com.snt.phoney.domain.model.Dating
+import com.snt.phoney.domain.model.DatingState
 import com.snt.phoney.domain.model.Sex
 import com.snt.phoney.domain.model.User
 import com.snt.phoney.extensions.checkAndRequestPermission
@@ -138,7 +139,17 @@ class DatingDetailFragment : BaseFragment() {
         distance.text = getString(R.string.distance_of_template, "${df.format(dating.distance)}m")
         datingAddress.text = dating.location
         datingTime.text = dating.formatTime()
-        remainingTime.text = dating.remainingTime()
+
+        if (dating.state == DatingState.ONGOING.value || dating.remaining() > 0) {
+            remainingTime.text = dating.remainingTime()
+        } else {
+            when {
+                dating.state == DatingState.EXPIRED.value -> remainingTime.setText(R.string.has_out_of_time)
+                dating.state == DatingState.FINISHED.value -> remainingTime.setText(R.string.has_finish)
+                dating.state == DatingState.CANCELED.value -> remainingTime.setText(R.string.has_canceled)
+            }
+        }
+
     }
 
 }

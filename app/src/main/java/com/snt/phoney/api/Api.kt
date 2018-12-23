@@ -52,8 +52,8 @@ interface Api {
     @FormUrlEncoded
     @POST("users/updateUserLocation")
     fun updateUserLocation(@Field("token") token: String,
-                           @Field("lat") latitude: String,
-                           @Field("lng") longitude: String,
+                           @Field("lng") latitude: String,
+                           @Field("lat") longitude: String,
                            @Field("title") address: String,
                            @Field("city") city: String): Single<Response<String>>
 
@@ -120,7 +120,7 @@ interface Api {
     @FormUrlEncoded
     @POST("users/other/care")
     fun follow(@Field("token") token: String,
-               @Field("uuid") uuid: String): Single<Response<Boolean>>
+               @Field("uid") uuid: String): Single<Response<Boolean>>
 
     @FormUrlEncoded
     @POST("users/other/amountInfoOfUsers")
@@ -148,8 +148,8 @@ interface Api {
                       @Part("days") days: Int,
                       @Part("city") city: String,
                       @Part("location") location: String,
-                      @Part("latitude") latitude: String,
-                      @Part("longitude") longitude: String,
+                      @Part("longitude") latitude: String,
+                      @Part("latitude") longitude: String,
                       @Part cover: List<MultipartBody.Part>): Single<Response<String>>
 
     /**
@@ -166,6 +166,14 @@ interface Api {
     @FormUrlEncoded
     @POST("appointment/attendAppointment")
     fun joinDating(@Field("token") token: String,
+                   @Field("uuid") uuid: String): Single<Response<String>>
+
+    /**
+     * 参加约会
+     */
+    @FormUrlEncoded
+    @POST("appointment/cancelAppointmentItem")
+    fun quitDating(@Field("token") token: String,
                    @Field("uuid") uuid: String): Single<Response<String>>
 
     /**
@@ -201,6 +209,13 @@ interface Api {
                          @Query("page") pageIndex: String): Single<Response<List<Dating>>>
 
     /**
+     * 该用户发布的约会
+     */
+    @GET("appointment/listAppointmentPublish")
+    fun listMyDating(@Query("token") token: String,
+                     @Query("page") pageIndex: String): Single<Response<List<Dating>>>
+
+    /**
      * 推荐约会
      */
     @GET("appointment/listAppointment")
@@ -209,8 +224,8 @@ interface Api {
                             @Query("dateType") dateType: Int,
                             @Query("distanceType") distanceType: Int,
                             @Query("grogram") program: String,
-                            @Query("longitude") longitude: String,
-                            @Query("latitude") latitude: String): Single<Response<List<Dating>>>
+                            @Query("latitude") longitude: String,
+                            @Query("longitude") latitude: String): Single<Response<List<Dating>>>
 
     /**
      * 热门约会
@@ -225,8 +240,8 @@ interface Api {
     @GET("appointment/detailAppointment")
     fun getDatingDetail(@Query("token") token: String,
                         @Query("uuid") uuid: String,
-                        @Query("latitude") latitude: String,
-                        @Query("longitude") longitude: String): Single<Response<Dating>>
+                        @Query("longitude") latitude: String,
+                        @Query("latitude") longitude: String): Single<Response<Dating>>
 
     /**
      * 参加的约会
@@ -237,10 +252,23 @@ interface Api {
 
     /**
      * 被申请的约会
+     * @param token
+     * @param uuid    string 被申请的约会表uuid
+     * @param pageIndex    string 分页码
      */
     @GET("appointment/listAttendedItem")
-    fun listAppliedDating(@Query("token") token: String,
-                          @Query("page") pageIndex: String): Single<Response<List<Dating>>>
+    fun listDatingApplicant(@Query("token") token: String,
+                            @Query("uuid") uuid: String,
+                            @Query("page") pageIndex: String): Single<Response<List<Applicant>>>
+
+    /**
+     * 被申请的约会
+     * @param token
+     * @param pageIndex  string 分页码
+     */
+    @GET("appointment/listAllAttendedItems")
+    fun listApplicant(@Query("token") token: String,
+                      @Query("page") pageIndex: String): Single<Response<List<Applicant>>>
 
 
     /**
@@ -391,6 +419,9 @@ interface Api {
     fun listPurpose(@Field("token") token: String): Single<Response<List<Purpose>>>
 
     @FormUrlEncoded
+    @POST("message/listOfficesMessage")
+    fun listOfficialMessage(@Field("token") token: String): Single<Response<List<OfficialMessage>>>
+
     @POST("report/listReportItems")
     fun listReportReasons(): Single<Response<List<ReportReason>>>
 
@@ -398,15 +429,26 @@ interface Api {
     @POST("users/homePage/home")
     fun getUserInfo(@Field("token") token: String,
                     @Field("uid") uid: String,    //	用户uuid
-                    @Field("latitude") latitude: String,
-                    @Field("longitude") longitude: String): Single<Response<User>>
+                    @Field("longitude") latitude: String,
+                    @Field("latitude") longitude: String): Single<Response<User>>
 
-    @FormUrlEncoded
+    /**
+     *@param token    string	是	用户token
+     *@param type    string	是	举报类型 id
+     *@param targetUid    string	是	举报用户uid
+     *@param content    string	是	举报内容
+     *@param cover    string	是	图片上传参数名
+     *@param rtype    string	是	0 用户 1 约会
+     */
+    @Multipart
     @POST("report/report")
-    fun report(@Field("token") token: String,
-               @Field("type") type: String,
-               @Field("targetUid") targetUid: String,
-               @Field("content") content: String): Single<Response<String>>
+    fun report(@Part("token") token: String,
+               @Part("type") type: String,
+               @Part("targetUid") targetUid: String,
+               @Part("content") content: String,
+               @Part("rtype") rtype: String,
+               @Part cover: MultipartBody.Part
+    ): Single<Response<String>>
 
     @FormUrlEncoded
     @POST("sms/sendMsg")
@@ -431,8 +473,8 @@ interface Api {
     @POST("users/listUsers")
     fun listUser(
             @Field("token") token: String,
-            @Field("lat") latitude: String,
-            @Field("lng") longitude: String,
+            @Field("lng") latitude: String,
+            @Field("lat") longitude: String,
             @Field("type") type: String,
             @Field("page") page: String,
             @Field("city") city: String,

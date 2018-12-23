@@ -5,6 +5,7 @@ import androidx.lifecycle.MutableLiveData
 import com.snt.phoney.base.AppViewModel
 import com.snt.phoney.domain.model.User
 import com.snt.phoney.domain.usecase.GetFollowUseCase
+import com.snt.phoney.extensions.disposedBy
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.disposables.Disposable
 import io.reactivex.rxkotlin.subscribeBy
@@ -16,9 +17,9 @@ class FollowMeViewModel @Inject constructor(private val usecase: GetFollowUseCas
     val user: User? = usecase.getUser()
     val follower = MutableLiveData<List<User>>()
 
-    fun listFollow(): Disposable? {
-        val token = usecase.getAccessToken() ?: return null
-        return usecase.listFollow(token)
+    fun listFollow() {
+        val token = usecase.getAccessToken() ?: return
+        usecase.listFollow(token)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribeBy(
@@ -30,7 +31,8 @@ class FollowMeViewModel @Inject constructor(private val usecase: GetFollowUseCas
                         },
                         onError = {
 
-                        })
+                        }
+                ).disposedBy(disposeBag)
     }
 
 }

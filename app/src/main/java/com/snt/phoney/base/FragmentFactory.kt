@@ -4,9 +4,13 @@ import android.os.Bundle
 import androidx.fragment.app.Fragment
 import com.snt.phoney.ui.about.AboutFragment
 import com.snt.phoney.ui.album.PaySettingFragment
+import com.snt.phoney.ui.browser.OfficialMessageFragment
 import com.snt.phoney.ui.dating.create.CreateDatingFragment
 import com.snt.phoney.ui.dating.detail.DatingDetailFragment
+import com.snt.phoney.ui.dating.list.ApplicantListFragment
 import com.snt.phoney.ui.dating.list.DatingListFragment
+import com.snt.phoney.ui.dating.list.MyDatingFragment
+import com.snt.phoney.ui.dating.list.OthersDatingFragment
 import com.snt.phoney.ui.location.LocationPickerFragment
 import com.snt.phoney.ui.main.mine.AlbumPermissionSettingFragment
 import com.snt.phoney.ui.photo.PhotoViewerFragment
@@ -27,6 +31,8 @@ enum class Page {
     VIEW_FOLLOW_ME,
 
     VIEW_DATING_LIST,
+    VIEW_MY_DATING,
+    VIEW_OTHERS_DATING,
     VIEW_DATING_DETAIL,
     CREATE_DATING,
 
@@ -44,6 +50,10 @@ enum class Page {
     PHOTO_VIEWER,
 
     PAY_SETTING,
+
+    VIEW_OFFICIAL_MESSAGE,
+
+    VIEW_DATING_APPLYING,
 }
 
 class FragmentFactory {
@@ -57,8 +67,11 @@ class FragmentFactory {
                 Page.VIEW_FOLLOW_ME.ordinal -> FollowMeFragment.newInstance(arguments)
 
                 Page.VIEW_DATING_LIST.ordinal -> DatingListFragment.newInstance(arguments)
+                Page.VIEW_MY_DATING.ordinal -> MyDatingFragment.newInstance(arguments)
+                Page.VIEW_OTHERS_DATING.ordinal -> OthersDatingFragment.newInstance(arguments)
                 Page.VIEW_DATING_DETAIL.ordinal -> DatingDetailFragment.newInstance(arguments)
                 Page.CREATE_DATING.ordinal -> CreateDatingFragment.newInstance(arguments)
+
                 Page.CREATE_REPORT.ordinal -> ReportFragment.newInstance(arguments)
 
                 Page.UPGRADE_VIP.ordinal -> VipFragment.newInstance(arguments)
@@ -72,6 +85,10 @@ class FragmentFactory {
                 Page.PHOTO_VIEWER.ordinal -> PhotoViewerFragment.newInstance(arguments)
 
                 Page.PAY_SETTING.ordinal -> PaySettingFragment.newInstance(arguments)
+
+                Page.VIEW_OFFICIAL_MESSAGE.ordinal -> OfficialMessageFragment.newInstance(arguments)
+
+                Page.VIEW_DATING_APPLYING.ordinal -> ApplicantListFragment.newInstance(arguments)
 
                 else -> Fragment()
             }

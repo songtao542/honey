@@ -217,20 +217,25 @@
 
             </LinearLayout>
 
-            <com.snt.phoney.widget.FlowLayout
-                android:id="@+id/photos"
+            <FrameLayout
+                android:id="@+id/photoLayout"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginLeft="10dp"
-                android:layout_marginTop="10dp"
-                android:layout_marginRight="10dp"
-                app:alignContent="flex_start"
-                app:alignItems="flex_start"
-                app:flexWrap="wrap"
-                app:justifyContent="flex_start"
-                app:square="true">
+                android:layout_marginTop="10dp">
 
-            </com.snt.phoney.widget.FlowLayout>
+                <com.snt.phoney.widget.FlowLayout
+                    android:id="@+id/photos"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="10dp"
+                    android:layout_marginRight="10dp"
+                    app:alignContent="flex_start"
+                    app:alignItems="flex_start"
+                    app:flexWrap="wrap"
+                    app:justifyContent="flex_start"
+                    app:square="true" />
+
+            </FrameLayout>
 
             <LinearLayout
                 android:layout_width="match_parent"
@@ -264,6 +269,7 @@
                     android:layout_height="wrap_content"
                     android:layout_gravity="center_vertical"
                     android:background="@drawable/button_primary_round_corner_selector"
+                    android:clickable="true"
                     android:gravity="center"
                     android:minWidth="80dp"
                     android:minHeight="30dp"
@@ -356,26 +362,27 @@
             </LinearLayout>
 
             <Button
+                android:id="@+id/chatButton"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="20dp"
                 android:layout_marginTop="20dp"
                 android:layout_marginRight="20dp"
                 android:layout_marginBottom="20dp"
-                android:background="@drawable/button_rounded_corner_selector"
+                android:background="@drawable/button_primary_circle_corner_selector"
                 android:minHeight="40dp"
                 android:text="@string/btn_talk"
                 android:textColor="@android:color/white" />
 
             <!-- 底部添加一个View 是为了解决 NestedScrollView 底部显示不全的bug -->
-            <View
-                android:layout_width="match_parent"
-                android:layout_height="20dp"
-                android:layout_marginLeft="20dp"
-                android:layout_marginTop="20dp"
-                android:layout_marginRight="20dp"
-                android:layout_marginBottom="20dp"
-                android:background="@android:color/transparent" />
+            <!--<View-->
+                <!--android:layout_width="match_parent"-->
+                <!--android:layout_height="20dp"-->
+                <!--android:layout_marginLeft="20dp"-->
+                <!--android:layout_marginTop="20dp"-->
+                <!--android:layout_marginRight="20dp"-->
+                <!--android:layout_marginBottom="20dp"-->
+                <!--android:background="@android:color/transparent" />-->
 
         </LinearLayout>
     </androidx.core.widget.NestedScrollView>

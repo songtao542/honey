@@ -19,6 +19,7 @@
         app:justifyContent="space_around">
 
         <com.snt.phoney.widget.SquareImageView
+            android:id="@+id/report"
             android:layout_width="40dp"
             android:layout_height="40dp"
             android:layout_gravity="center_vertical"

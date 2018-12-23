@@ -134,6 +134,12 @@
         <activity
             android:name=".ui.about.AboutActivity"
             android:theme="@style/AppTheme.Light"></activity>
+        <activity
+            android:name=".ui.browser.BrowserActivity"
+            android:theme="@style/AppTheme.Light"></activity>
+        <activity
+            android:name=".ui.browser.WebBrowserActivity"
+            android:theme="@style/AppTheme.Light"></activity>
 
         <activity android:name=".ui.album.AlbumSettingActivity"></activity>
 
