@@ -47,6 +47,11 @@ data class Dating(
         } ?: emptyList()
     }
 
+    fun formatCreateTime(): String {
+        val df = SimpleDateFormat("yyyy.MM.dd HH:mm")
+        return df.format(createTime)
+    }
+
     fun formatTime(): String {
         val df = SimpleDateFormat("yyyy.MM.dd HH:mm")
         return if (startTime > 0 && endTime > 0) {

@@ -14,6 +14,7 @@ import com.snt.phoney.base.CommonActivity
 import com.snt.phoney.base.Page
 import com.snt.phoney.domain.model.Dating
 import com.snt.phoney.extensions.colorOf
+import com.snt.phoney.extensions.dip
 import com.snt.phoney.ui.dating.DatingActivity
 import com.snt.phoney.ui.photo.PhotoViewerActivity
 import com.snt.phoney.utils.data.Constants
@@ -103,11 +104,13 @@ class OthersDatingRecyclerViewAdapter(private val fragment: OthersDatingFragment
                 job.text = user.career
                 if (user.care) {
                     val cd = context.getDrawable(R.drawable.ic_heart_solid_red)
-                    cd.setBounds(0, 0, cd.intrinsicWidth, cd.intrinsicHeight)
+                    val size = context.dip(12)
+                    cd.setBounds(0, 0, size, size)
                     follow.setCompoundDrawables(cd, null, null, null)
                 } else {
-                    val cd = context.getDrawable(R.drawable.ic_heart_solid)
-                    cd.setBounds(0, 0, cd.intrinsicWidth, cd.intrinsicHeight)
+                    val cd = context.getDrawable(R.drawable.ic_heart_border)
+                    val size = context.dip(12)
+                    cd.setBounds(0, 0, size, size)
                     follow.setCompoundDrawables(cd, null, null, null)
                 }
 
@@ -121,7 +124,7 @@ class OthersDatingRecyclerViewAdapter(private val fragment: OthersDatingFragment
             photos.setOnItemClickListener(onPhotoItemClickListener)
             photos.viewAdapter = photoFlowAdapter
 
-            publishTime.text = context.getString(R.string.publish_time_template, dating.formatTime())
+            publishTime.text = context.getString(R.string.publish_time_template, dating.formatCreateTime())
 
             viewDetail.setOnClickListener {
                 fragment.startActivity(CommonActivity.newIntent<DatingActivity>(mView.context, Page.VIEW_DATING_DETAIL, Bundle().apply {

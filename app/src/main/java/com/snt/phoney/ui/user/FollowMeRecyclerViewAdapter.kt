@@ -1,6 +1,7 @@
 package com.snt.phoney.ui.user
 
 
+import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -13,6 +14,7 @@ import com.snt.phoney.base.CommonActivity
 import com.snt.phoney.base.Page
 import com.snt.phoney.base.addFragmentSafely
 import com.snt.phoney.domain.model.User
+import com.snt.phoney.utils.data.Constants
 import kotlinx.android.synthetic.main.fragment_followme.view.*
 
 /**
@@ -39,13 +41,16 @@ class FollowMeRecyclerViewAdapter(private val activity: CommonActivity) : Recycl
     override fun getItemCount(): Int = data?.size ?: 0
 
     inner class ViewHolder(val mView: View) : RecyclerView.ViewHolder(mView) {
+
         fun setData(user: User) {
             Glide.with(mView).load(user.portrait).apply(RequestOptions().circleCrop()).transition(DrawableTransitionOptions.withCrossFade()).into(mView.head)
             mView.nickname.text = user.nickname
             mView.selfDescription.text = user.introduce
             mView.visitTime.text = "刚刚"
             mView.viewVisitor.setOnClickListener {
-                activity?.addFragmentSafely(Page.VIEW_USER_INFO, "view_user_info", true)
+                activity?.addFragmentSafely(Page.VIEW_USER_INFO, "view_user_info", true, argument = Bundle().apply {
+                    putParcelable(Constants.Extra.USER, user)
+                })
             }
         }
     }

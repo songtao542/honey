@@ -304,14 +304,14 @@
                     android:textColor="@android:color/white" />
 
                 <!-- 底部添加一个View 是为了解决 NestedScrollView 底部显示不全的bug -->
-                <View
-                    android:layout_width="match_parent"
-                    android:layout_height="20dp"
-                    android:layout_marginLeft="20dp"
-                    android:layout_marginTop="20dp"
-                    android:layout_marginRight="20dp"
-                    android:layout_marginBottom="20dp"
-                    android:background="@android:color/transparent" />
+                <!--<View-->
+                <!--android:layout_width="match_parent"-->
+                <!--android:layout_height="20dp"-->
+                <!--android:layout_marginLeft="20dp"-->
+                <!--android:layout_marginTop="20dp"-->
+                <!--android:layout_marginRight="20dp"-->
+                <!--android:layout_marginBottom="20dp"-->
+                <!--android:background="@android:color/transparent" />-->
 
             </LinearLayout>
         </androidx.core.widget.NestedScrollView>

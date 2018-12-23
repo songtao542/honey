@@ -26,9 +26,9 @@ class OfficialRecommendFragment : BaseFragment() {
 
     lateinit var adapter: OfficialRecommendRecyclerViewAdapter
 
-    var filterTime: FilterTime = FilterTime.ALL
-    var filterDistance: FilterDistance = FilterDistance.ALL
-    var filterContent: FilterContent = FilterContent.ALL
+    private var filterTime: FilterTime = FilterTime.ALL
+    private var filterDistance: FilterDistance = FilterDistance.ALL
+    private var filterContent: FilterContent = FilterContent.ALL
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         return inflater.inflate(R.layout.fragment_official_recommend_list, container, false)

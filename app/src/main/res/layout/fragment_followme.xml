@@ -1,19 +1,20 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="wrap_content"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:layout_height="wrap_content">
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:background="@drawable/underline_gray">
 
 
     <androidx.appcompat.widget.AppCompatImageView
         android:id="@+id/head"
-        android:layout_width="60dp"
-        android:layout_height="60dp"
+        android:layout_width="50dp"
+        android:layout_height="50dp"
         android:layout_centerVertical="true"
         android:layout_marginLeft="10dp"
-        android:layout_marginTop="20dp"
+        android:layout_marginTop="10dp"
         android:layout_marginRight="10dp"
-        android:layout_marginBottom="20dp"
+        android:layout_marginBottom="10dp"
         app:srcCompat="@mipmap/head" />
 
     <androidx.appcompat.widget.AppCompatTextView
@@ -24,13 +25,13 @@
         android:layout_centerVertical="true"
         android:layout_marginRight="10dp"
         android:background="@drawable/button_primary_round_corner_selector"
-        android:paddingLeft="8dp"
+        android:paddingLeft="10dp"
         android:paddingTop="8dp"
-        android:paddingRight="8dp"
+        android:paddingRight="10dp"
         android:paddingBottom="8dp"
         android:text="@string/viewVisitor"
         android:textColor="@color/white"
-        android:textSize="@dimen/textsize_small" />
+        android:textSize="@dimen/textsize_smaller" />
 
     <androidx.appcompat.widget.AppCompatTextView
         android:id="@+id/visitTime"
@@ -41,7 +42,8 @@
         android:layout_marginTop="10dp"
         android:layout_marginRight="18dp"
         android:text="今天17:56"
-        android:textSize="@dimen/textsize_smaller" />
+        android:textSize="@dimen/textsize_smaller"
+        android:visibility="gone" />
 
     <LinearLayout
         android:layout_width="match_parent"

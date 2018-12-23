@@ -14,8 +14,8 @@ import javax.inject.Inject
 
 class SquareViewModel @Inject constructor(private val usecase: SquareUseCase) : AppViewModel() {
 
-    private var recommendPageIndex: Int = 0
-    private var popularPageIndex: Int = 0
+    private var recommendPageIndex: Int = 1
+    private var popularPageIndex: Int = 1
 
     val recommendDating = MutableLiveData<List<Dating>>()
     val popularDating = MutableLiveData<List<Dating>>()
@@ -25,7 +25,7 @@ class SquareViewModel @Inject constructor(private val usecase: SquareUseCase) : 
      */
     fun listRecommendDating(refresh: Boolean, dateType: Int, distanceType: Int, program: String): Disposable? {
         if (refresh) {
-            recommendPageIndex = 0
+            recommendPageIndex = 1
         }
         val token = usecase.getAccessToken() ?: return null
         return usecase.location
@@ -56,7 +56,7 @@ class SquareViewModel @Inject constructor(private val usecase: SquareUseCase) : 
      */
     fun listPopularDating(refresh: Boolean): Disposable? {
         if (refresh) {
-            popularPageIndex = 0
+            popularPageIndex = 1
         }
         val token = usecase.getAccessToken() ?: return null
         return usecase.listPopularDating(token, popularPageIndex)

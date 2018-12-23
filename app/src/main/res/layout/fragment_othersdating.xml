@@ -3,8 +3,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:layout_marginBottom="4dp"
-    android:background="@android:color/white"
+    android:background="@drawable/underline_gray"
     android:orientation="vertical">
 
     <androidx.appcompat.widget.AppCompatTextView
@@ -22,11 +21,10 @@
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:background="@drawable/underline_gray"
         android:paddingLeft="10dp"
         android:paddingTop="10dp"
         android:paddingRight="10dp"
-        android:paddingBottom="15dp">
+        android:paddingBottom="5dp">
 
         <androidx.appcompat.widget.AppCompatImageView
             android:id="@+id/head"
@@ -109,11 +107,12 @@
             android:layout_alignParentRight="true"
             android:layout_marginLeft="10dp"
             android:drawableLeft="@drawable/ic_heart_small"
+            android:drawablePadding="4dp"
             android:gravity="center"
             android:paddingLeft="5dp"
             android:paddingTop="2dp"
             android:paddingRight="5dp"
-            android:paddingBottom="2dp"
+            android:paddingBottom="3dp"
             android:text="@string/add_attention"
             android:textSize="@dimen/textsize_smaller" />
 
@@ -124,9 +123,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:paddingLeft="10dp"
-        android:paddingTop="12dp"
         android:paddingRight="10dp"
-        android:paddingBottom="10dp"
         android:text="AAAAAAAAAAAAAAAAAAAAAAAAAAa"
         android:textSize="@dimen/textsize_normal" />
 
@@ -170,7 +167,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_gravity="right"
-        android:layout_marginTop="8dp">
+        android:paddingBottom="10dp">
 
         <androidx.appcompat.widget.AppCompatTextView
             android:id="@+id/publishTime"
