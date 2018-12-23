@@ -5,6 +5,7 @@ import android.app.Application
 import android.content.Context
 import android.text.TextUtils
 import androidx.multidex.MultiDex
+import cn.jpush.im.android.api.JMessageClient
 import com.snt.phoney.BuildConfig
 import com.snt.phoney.di.AppInjector
 import com.tencent.bugly.crashreport.CrashReport
@@ -31,6 +32,8 @@ class App : Application(), HasActivityInjector {
 
         AppInjector.init(this)
 
+        initJMessage()
+
         initBugly()
     }
 
@@ -40,6 +43,15 @@ class App : Application(), HasActivityInjector {
     override fun attachBaseContext(base: Context) {
         super.attachBaseContext(base)
         MultiDex.install(this)
+    }
+
+    private fun initJMessage() {
+        if (BuildConfig.DEBUG) {
+            JMessageClient.setDebugMode(true)
+        } else {
+            JMessageClient.setDebugMode(false)
+        }
+        JMessageClient.init(this)
     }
 
     private fun initBugly() {
@@ -52,7 +64,12 @@ class App : Application(), HasActivityInjector {
         val strategy = UserStrategy(context)
         strategy.isUploadProcess = processName == null || processName == packageName
         // 初始化Bugly, 测试阶段建议设置成true，发布时设置为false
-        CrashReport.initCrashReport(context, "注册时申请的APPID", true, strategy)
+        if (BuildConfig.DEBUG) {
+            CrashReport.initCrashReport(context, "注册时申请的APPID", true, strategy)
+        } else {
+            CrashReport.initCrashReport(context, "注册时申请的APPID", false, strategy)
+        }
+
     }
 
     private fun getProcessName(pid: Int): String? {

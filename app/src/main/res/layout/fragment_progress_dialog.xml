@@ -9,14 +9,30 @@
     <RelativeLayout
         android:layout_width="@dimen/progress_dialog_size"
         android:layout_height="@dimen/progress_dialog_size"
-        android:layout_centerInParent="true"
+        android:layout_gravity="center"
         android:background="@color/white">
 
-        <com.snt.phoney.widget.ProgressBar
-            android:layout_width="@dimen/progress_dialog_bar_size"
-            android:layout_height="@dimen/progress_dialog_bar_size"
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
             android:layout_centerInParent="true"
-            app:progressColor="?attr/colorPrimary" />
+            android:background="@color/white"
+            android:orientation="vertical">
 
+            <com.snt.phoney.widget.ProgressBar
+                android:layout_width="@dimen/progress_dialog_bar_size"
+                android:layout_height="@dimen/progress_dialog_bar_size"
+                android:layout_centerInParent="true"
+                app:progressColor="?attr/colorPrimary" />
+
+            <androidx.appcompat.widget.AppCompatTextView
+                android:id="@+id/titleView"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:singleLine="true"
+                android:textSize="@dimen/textsize_smaller"
+                android:visibility="gone" />
+
+        </LinearLayout>
     </RelativeLayout>
 </RelativeLayout>

@@ -13,6 +13,7 @@ import com.snt.phoney.base.ProgressDialog
 import com.snt.phoney.base.addFragmentSafely
 import com.snt.phoney.base.replaceFragmentSafely
 import com.snt.phoney.domain.model.DatingProgram
+import com.snt.phoney.domain.model.Photo
 import com.snt.phoney.domain.model.PoiAddress
 import com.snt.phoney.extensions.setSoftInputMode
 import com.snt.phoney.extensions.snackbar
@@ -178,7 +179,7 @@ class CreateDatingFragment : BaseFragment(), PhotoViewerFragment.OnResultListene
         }
     }
 
-    override fun onResult(deletedUris: List<Uri>?, deletedUrls: List<String>?) {
+    override fun onResult(deletedUris: List<Uri>?, deletedUrls: List<String>?, deletedPhotos: List<Photo>?) {
         deletedUris?.let { deleted ->
             selectedPhotoUris.removeAll(deleted)
             photos.notifyAdapterSizeChanged()

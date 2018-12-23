@@ -136,6 +136,6 @@ public class CompatRadioButton extends AppCompatTextView implements View.OnClick
          * @param view      The compound button view whose state has changed.
          * @param isChecked The new checked state of buttonView.
          */
-        void onCheckedChanged(View view, boolean isChecked);
+        void onCheckedChanged(CompatRadioButton view, boolean isChecked);
     }
 }

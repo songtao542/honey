@@ -89,7 +89,12 @@ class PhotoFlowAdapter(private val context: Context) : FlowLayout.ViewAdapter {
         cachedAdd?.let {
             val alp = it.layoutParams
             if (alp is ViewGroup.MarginLayoutParams) {
+                alp.topMargin = 0
+                alp.leftMargin = 0
+                alp.bottomMargin = 0
                 alp.rightMargin = 0
+                alp.marginEnd = 0
+                alp.marginStart = 0
             }
             cachedAdd!!.layoutParams = alp
             return cachedAdd!!

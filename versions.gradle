@@ -67,7 +67,7 @@ versions.dexmaker = "2.2.0"
 versions.constraint_layout = "1.1.3"
 versions.glide = "4.8.0"
 versions.timber = "4.5.1"
-versions.android_gradle_plugin = '3.4.0-alpha08' // '3.3.0-alpha06'
+versions.android_gradle_plugin = '3.4.0-alpha09' // '3.3.0-alpha06'
 versions.rxjava2 = "2.1.3"
 versions.rx_android = "2.0.1"
 versions.rx_kotlin = "2.2.0"
@@ -311,6 +311,7 @@ def addRepos(RepositoryHandler handler) {
     handler.maven { url 'https://kotlin.bintray.com/kotlinx' }
     handler.maven { url "https://dl.bintray.com/thelasterstar/maven/" }
     handler.maven { url "https://bintray.com/wechat-sdk-team/maven" }
+    handler.maven { url "https://jitpack.io" }
     handler.flatDir { dirs 'libs' }
 }
 

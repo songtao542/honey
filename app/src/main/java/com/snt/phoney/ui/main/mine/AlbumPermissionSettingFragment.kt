@@ -22,6 +22,8 @@ class AlbumPermissionSettingFragment : BottomDialogFragment() {
 
     private lateinit var viewModel: MineViewModel
 
+    private var listener: ((permission: PhotoPermission) -> Unit)? = null
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         arguments?.let {
@@ -46,31 +48,24 @@ class AlbumPermissionSettingFragment : BottomDialogFragment() {
         needApply.setOnClickListener { select(PhotoPermission.NEED_APPLY) }
         privateAlbum.setOnClickListener { select(PhotoPermission.PRIVATE) }
         confirm.setOnClickListener {
-            activity?.let { activity ->
-                activity.startActivity(CommonActivity.newIntent<AlbumSettingActivity>(activity, Page.PAY_SETTING, Bundle().apply {
-                    putInt(Constants.Extra.PERMISSION, photoPermission.value)
-                }))
-            }
             dismiss()
-//            when (photoPermission) {
-//                PhotoPermission.NEED_CHARGE -> {
-//                    activity?.let { activity ->
-//                        activity.startActivity(CommonActivity.newIntent<AlbumSettingActivity>(activity, Page.PAY_SETTING))
-//                    }
-//                }
-//                PhotoPermission.PUBLIC -> {
-//                    viewModel.setPhotoPermission(photoPermission)
-//                }
-//                PhotoPermission.UNLOCKED -> {
-//                    viewModel.setPhotoPermission(photoPermission)
-//                }
-//                PhotoPermission.NEED_APPLY -> {
-//                    viewModel.setPhotoPermission(photoPermission)
-//                }
-//                PhotoPermission.PRIVATE -> {
-//                    viewModel.setPhotoPermission(photoPermission)
-//                }
-//            }
+            when (photoPermission) {
+                PhotoPermission.NEED_CHARGE -> {
+                    listener?.invoke(PhotoPermission.NEED_CHARGE)
+                }
+                PhotoPermission.PUBLIC -> {
+                    listener?.invoke(PhotoPermission.PUBLIC)
+                }
+                PhotoPermission.UNLOCKED -> {
+                    listener?.invoke(PhotoPermission.UNLOCKED)
+                }
+                PhotoPermission.NEED_APPLY -> {
+                    listener?.invoke(PhotoPermission.NEED_APPLY)
+                }
+                PhotoPermission.PRIVATE -> {
+                    listener?.invoke(PhotoPermission.PRIVATE)
+                }
+            }
         }
     }
 
@@ -96,6 +91,10 @@ class AlbumPermissionSettingFragment : BottomDialogFragment() {
         needCharge.isSelected = false
         needApply.isSelected = false
         privateAlbum.isSelected = false
+    }
+
+    fun setOnSelectListener(listener: ((permission: PhotoPermission) -> Unit)) {
+        this.listener = listener
     }
 
     companion object {

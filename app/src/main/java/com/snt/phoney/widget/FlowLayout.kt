@@ -2,6 +2,7 @@ package com.snt.phoney.widget
 
 import android.content.Context
 import android.util.AttributeSet
+import android.util.Log
 import android.view.View
 import com.google.android.flexbox.*
 import com.snt.phoney.R
@@ -45,15 +46,17 @@ class FlowLayout : FlexboxLayout {
 
     }
 
-    override fun onMeasure(widthMeasureSpec: Int, heightMeasureSpec: Int) {
+    override fun onLayout(changed: Boolean, left: Int, top: Int, right: Int, bottom: Int) {
         forEach { index, child ->
-            val width = MeasureSpec.getSize(widthMeasureSpec)
+            val width = width
             val childWidth = (width - paddingLeft - paddingRight - (space * (column - 1))) / column
             val childHeight = if (square) childWidth else MarginLayoutParams.WRAP_CONTENT
             val lp = child.layoutParams as? MarginLayoutParams
                     ?: MarginLayoutParams(childWidth, childHeight)
             lp.width = childWidth
             lp.height = childHeight
+            lp.rightMargin = 0
+            lp.topMargin = 0
             if ((index % column) != column - 1) {
                 lp.rightMargin = space
             }
@@ -62,7 +65,7 @@ class FlowLayout : FlexboxLayout {
             }
             child.layoutParams = lp
         }
-        super.onMeasure(widthMeasureSpec, heightMeasureSpec)
+        super.onLayout(changed, left, top, right, bottom)
     }
 
     private var mOnItemClickListener: ((view: View, index: Int) -> Unit)? = null

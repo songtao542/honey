@@ -22,6 +22,6 @@
         android:layout_height="40dp"
         android:layout_gravity="top|right"
         android:paddingRight="6dp"
-        app:icon="@drawable/ic_checkbox_button" />
+        app:icon="@drawable/ic_radio_circle_button" />
 
 </com.snt.phoney.widget.SquareLayout>

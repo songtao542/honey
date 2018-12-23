@@ -22,6 +22,8 @@ class PaySettingRecyclerViewAdapter(val fragment: Fragment) : RecyclerView.Adapt
 
     val selected = ArrayList<Photo>()
 
+    var selectedPhoto: Photo? = null
+    private var lastSelectedView: View? = null
 
     override fun getItemViewType(position: Int): Int {
         return super.getItemViewType(position)
@@ -45,10 +47,17 @@ class PaySettingRecyclerViewAdapter(val fragment: Fragment) : RecyclerView.Adapt
             mView.checkbox.checked = photo.selected
             mView.checkbox.setOnCheckedChangeListener { _, isChecked ->
                 if (isChecked) {
-                    selected.add(photo)
+                    //selected.add(photo)
+                    selectedPhoto?.selected = false
+                    photo.selected = true
+                    selectedPhoto = photo
                 } else {
-                    selected.remove(photo)
+                    //selected.remove(photo)
+                    selectedPhoto?.selected = false
+                    photo.selected = false
+                    selectedPhoto = null
                 }
+                notifyDataSetChanged()
             }
         }
     }

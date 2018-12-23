@@ -2,6 +2,7 @@ package com.snt.phoney.ui.photo
 
 import android.net.Uri
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -10,6 +11,7 @@ import com.bumptech.glide.Glide
 import com.bumptech.glide.Priority
 import com.bumptech.glide.request.RequestOptions
 import com.snt.phoney.R
+import com.snt.phoney.domain.model.Photo
 import com.snt.phoney.utils.data.Constants
 import com.zhihu.matisse.internal.utils.PhotoMetadataUtils
 import it.sephiroth.android.library.imagezoom.ImageViewTouchBase
@@ -34,17 +36,26 @@ class PhotoViewFragment : Fragment() {
                 putParcelable(Constants.Extra.URI, uri)
             }
         }
+
+        @JvmStatic
+        fun newInstance(photo: Photo) = PhotoViewFragment().apply {
+            arguments = Bundle().apply {
+                putParcelable(Constants.Extra.PHOTO, photo)
+            }
+        }
     }
 
     private var onPhotoSingleTapListener: OnPhotoSingleTapListener? = null
     private var uri: Uri? = null
     private var url: String? = null
+    private var photo: Photo? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         arguments?.let {
             uri = it.getParcelable(Constants.Extra.URI)
             url = it.getString(Constants.Extra.URL)
+            photo = it.getParcelable(Constants.Extra.PHOTO)
         }
     }
 
@@ -56,16 +67,7 @@ class PhotoViewFragment : Fragment() {
         super.onActivityCreated(savedInstanceState)
         imageView.displayType = ImageViewTouchBase.DisplayType.FIT_TO_SCREEN
         imageView.setSingleTapListener {
-            //            activity?.let { activity ->
-//                Log.d("TTTT", "xxxxxxxxxxxxx vvvvvvvvvv xxxxxxx")
-//                if (activity.isActionBarShowing()) {
-//                    activity.hideActionBar()
-//                } else {
-//                    activity.showActionBar()
-//                }
-//            }
             onPhotoSingleTapListener?.onPhotoSingleTap()
-
         }
 
         if (uri != null) {
@@ -84,7 +86,16 @@ class PhotoViewFragment : Fragment() {
                             .priority(Priority.HIGH)
                             .fitCenter())
                     .into(imageView)
+        } else if (photo != null && photo!!.path != null) {
+            Glide.with(this)
+                    .load(photo!!.path!!)
+                    .apply(RequestOptions()
+                            .priority(Priority.HIGH)
+                            .fitCenter())
+                    .into(imageView)
         }
+
+        Log.d("TTTT", "pathhhhhhhhhhhhhhhhhhhhhhhhhh$photo")
     }
 
     fun setOnPhotoSingleTapListener(listener: OnPhotoSingleTapListener?) {

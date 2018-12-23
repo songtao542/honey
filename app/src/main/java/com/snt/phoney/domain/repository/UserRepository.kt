@@ -4,6 +4,9 @@ package com.snt.phoney.domain.repository
 import com.snt.phoney.domain.accessor.UserAccessor
 import com.snt.phoney.domain.model.*
 import io.reactivex.Single
+import okhttp3.MultipartBody
+import retrofit2.http.Field
+import java.io.File
 
 interface UserRepository : UserAccessor {
     fun signup(phone: String,
@@ -83,6 +86,23 @@ interface UserRepository : UserAccessor {
                            photoPermission: Int,
                            money: Double,
                            photoId: String): Single<Response<String>>
+
+    fun uploadPhotos(token: String, photos: List<File>): Single<Response<List<Photo>>>
+
+    fun deletePhotos(token: String, photoIds: List<String>): Single<Response<List<Photo>>>
+
+    /**
+     *@param token  string
+     *@param latitude    string		纬度
+     *@param longitude    string		经度
+     *@param address  string	    可选(详细地址）
+     *@param city   string		城市（必填）
+     */
+    fun updateUserLocation(token: String,
+                           latitude: Double,
+                           longitude: Double,
+                           address: String,
+                           city: String): Single<Response<String>>
 
     fun getUserPhotos(token: String): Single<Response<List<Photo>>>
 

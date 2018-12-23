@@ -37,12 +37,18 @@ android {
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
         vectorDrawables.useSupportLibrary = true
         multiDexEnabled true
+        //javaCompileOptions { annotationProcessorOptions { includeCompileClasspath = true } }
+
         manifestPlaceholders = [
                 JPUSH_PKGNAME: applicationId,
                 JPUSH_APPKEY : "eacade5d281c93bfb55b59d3",
                 JPUSH_CHANNEL: "developer-default"
         ]
-        //javaCompileOptions { annotationProcessorOptions { includeCompileClasspath = true } }
+        ndk {
+            //选择要添加的对应cpu类型的.so库。
+            abiFilters 'armeabi', 'armeabi-v7a', 'armeabi-v8a'
+            // 还可以添加 'x86', 'x86_64', 'mips', 'mips64'
+        }
     }
     packagingOptions {
         doNotStrip '*/mips/*.so'
@@ -99,6 +105,14 @@ android {
     lintOptions {
         lintConfig rootProject.file('lint.xml')
     }
+
+    sourceSets {
+        main {
+            res.srcDirs = ['src/main/res', 'src/main/res-chat']
+            java.srcDirs = ['src/main/java']
+        }
+    }
+
 }
 
 //configurations.all {
@@ -245,8 +259,13 @@ dependencies {
 
     implementation "cn.jiguang.sdk:jpush:3.1.6"
     implementation "cn.jiguang.sdk:jcore:1.2.5"
+    implementation 'cn.jiguang.sdk:jmessage:2.7.1'
+    implementation 'com.github.w446108264:AndroidEmoji:1.0.0'
+    implementation 'org.greenrobot:eventbus:3.1.1'
+    //implementation 'com.github.w446108264:XhsEmoticonsKeyboard:2.0.4'
     implementation 'com.sina.weibo.sdk:core:4.3.4:openDefaultRelease@aar'
     implementation 'com.tencent.mm.opensdk:wechat-sdk-android-with-mta:+'
+
 
     //    androidTestImplementation deps.android_support_test.runner
     //    androidTestImplementation deps.android_support_test.rules

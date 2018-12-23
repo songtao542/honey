@@ -9,20 +9,20 @@
     <color name="colorPrimaryLight">#ffffff</color>
     <color name="colorPrimaryTranslucentLight">#99ffffff</color>
     <color name="colorPrimaryDarkLight">#ffffff</color>
-    <color name="colorAccentLight">#ffffff</color>
+    <color name="colorAccentLight">#03A9F4</color>
     <color name="colorPrimaryPressedLight">#ffffff</color>
 
     <color name="colorPrimaryFemale">#fe4b7a</color>
     <color name="colorPrimaryTranslucentFemale">#99fe4b7a</color>
     <color name="colorPrimaryDarkFemale">#fe4b7a</color>
     <color name="colorAccentFemale">#fe4b7a</color>
-    <color name="colorPrimaryPressedFemale">#fe4b7a</color>
+    <color name="colorPrimaryPressedFemale">#e1446d</color>
 
     <color name="colorPrimaryMale">#9013fe</color>
     <color name="colorPrimaryTranslucentMale">#999013fe</color>
     <color name="colorPrimaryDarkMale">#9013fe</color>
     <color name="colorAccentMale">#9013fe</color>
-    <color name="colorPrimaryPressedMale">#9013fe</color>
+    <color name="colorPrimaryPressedMale">#9530ef</color>
 
     <color name="edittextBorderColor">#94cbd4</color>
     <color name="edittextBorderFocusColor">#7bcfdd</color>

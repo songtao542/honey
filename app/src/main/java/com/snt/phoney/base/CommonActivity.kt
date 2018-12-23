@@ -17,7 +17,8 @@ open class CommonActivity : BaseActivity() {
     companion object {
         @JvmStatic
         inline fun <reified T : Activity> newIntent(context: Context, page: Page, argument: Bundle? = null): Intent {
-            val intent = BaseActivity.newIntent(context, T::class.java, page)
+            val intent = Intent(context, T::class.java)
+            intent.putExtra(EXTRA_PAGE, page.ordinal)
             argument?.let {
                 intent.putExtra(EXTRA_ARGUMENT, argument)
             }

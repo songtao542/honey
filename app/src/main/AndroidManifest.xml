@@ -72,6 +72,12 @@
             android:theme="@style/AppTheme.NoDisplay"
             tools:node="replace"></activity>
 
+        <activity
+            android:name="jiguang.chat.activity.ChatActivity"
+            android:theme="@style/AppTheme.Light"></activity>
+
+        <activity android:name="jiguang.chat.activity.BrowserViewPagerActivity"></activity>
+
         <provider
             android:name=".provider.SettingsProvider"
             android:authorities="com.snt.phoney.settings"

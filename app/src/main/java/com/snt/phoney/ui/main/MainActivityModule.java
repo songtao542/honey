@@ -84,6 +84,12 @@ public abstract class MainActivityModule {
     @Binds
     @IntoMap
     @ActivityScope
+    @ViewModelKey(MainViewModel.class)
+    public abstract ViewModel bindMainViewModel(MainViewModel viewModel);
+
+    @Binds
+    @IntoMap
+    @ActivityScope
     @ViewModelKey(BindPhoneViewModel.class)
     public abstract ViewModel bindBindPhoneViewModel(BindPhoneViewModel viewModel);
 

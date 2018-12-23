@@ -42,6 +42,21 @@ interface Api {
     fun setUserSex(@Field("token") token: String,
                    @Field("sex") sex: Int): Single<Response<String>>
 
+    /**
+     *@param token  string
+     *@param lat    string		纬度
+     *@param lng    string		经度
+     *@param title  string	    可选(详细地址）
+     *@param city   string		城市（必填）
+     */
+    @FormUrlEncoded
+    @POST("users/updateUserLocation")
+    fun updateUserLocation(@Field("token") token: String,
+                           @Field("lat") latitude: String,
+                           @Field("lng") longitude: String,
+                           @Field("title") address: String,
+                           @Field("city") city: String): Single<Response<String>>
+
     @FormUrlEncoded
     @POST("users/setFeatures")
     fun setUserFeatures(@Field("token") token: String,
@@ -353,9 +368,19 @@ interface Api {
     @FormUrlEncoded
     @POST("users/setPhotoRight")
     fun setPhotoPermission(@Field("token") token: String,
-                           @Field("photoRight") photoPermission: String,
-                           @Field("money") money: String,
+                           @Field("photoRight") photoPermission: Int,
+                           @Field("money") money: Int,
                            @Field("id") photoId: String): Single<Response<String>>
+
+    @Multipart
+    @POST("users/setPhotos")
+    fun uploadPhotos(@Part("token") token: String,
+                     @Part photos: List<MultipartBody.Part>): Single<Response<List<Photo>>>
+
+    @FormUrlEncoded
+    @POST("users/setPhotos")
+    fun deletePhotos(@Field("token") token: String,
+                     @Field("ids") photoIds: List<String>): Single<Response<List<Photo>>>
 
     @FormUrlEncoded
     @POST("users/other/listCareer")

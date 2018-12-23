@@ -33,6 +33,8 @@ import com.snt.phoney.wxapi.WXPayEntryActivityModule;
 
 import dagger.Module;
 import dagger.android.ContributesAndroidInjector;
+import jiguang.chat.activity.BrowserViewPagerActivity;
+import jiguang.chat.activity.ChatActivity;
 
 
 @Module
@@ -128,6 +130,14 @@ public abstract class ActivityContributorModule {
             WalletActivityModule.class
     })
     public abstract WalletActivity contributeWalletActivity();
+
+    @ActivityScope
+    @ContributesAndroidInjector
+    public abstract ChatActivity contributeChatActivity();
+
+    @ActivityScope
+    @ContributesAndroidInjector
+    public abstract BrowserViewPagerActivity contributeBrowserViewPagerActivity();
 
 
 }

@@ -1,11 +1,13 @@
 package com.snt.phoney.ui.main.message
 
 
+import android.content.Intent
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.snt.phoney.R
+import jiguang.chat.activity.ChatActivity
 
 /**
  */
@@ -40,6 +42,10 @@ class MessageRecyclerViewAdapter() : RecyclerView.Adapter<RecyclerView.ViewHolde
     }
 
     inner class ViewHolder(val mView: View) : RecyclerView.ViewHolder(mView) {
-
+        init {
+            mView.setOnClickListener {
+                mView.context.startActivity(Intent(mView.context, ChatActivity::class.java))
+            }
+        }
     }
 }

@@ -5,9 +5,11 @@ import android.content.Intent
 import android.os.Bundle
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
+import androidx.lifecycle.ViewModelProviders
 import com.google.android.material.bottomnavigation.BottomNavigationView
 import com.snt.phoney.R
 import com.snt.phoney.base.BaseActivity
+import com.snt.phoney.domain.repository.JMessageRepository
 import com.snt.phoney.extensions.disableShiftMode
 import com.snt.phoney.extensions.forEach
 import com.snt.phoney.extensions.hideIcon
@@ -17,6 +19,7 @@ import com.snt.phoney.ui.main.message.MessageFragment
 import com.snt.phoney.ui.main.mine.MineFragment
 import com.snt.phoney.ui.main.square.SquareFragment
 import kotlinx.android.synthetic.main.activity_main.*
+import javax.inject.Inject
 
 class MainActivity : BaseActivity() {
 
@@ -30,6 +33,8 @@ class MainActivity : BaseActivity() {
     private val mineFragment = MineFragment.newInstance()
 
     private var currentFragment: Fragment? = null
+
+    lateinit var viewModel: MainViewModel
 
     private val mOnNavigationItemSelectedListener = BottomNavigationView.OnNavigationItemSelectedListener { item ->
         when (item.itemId) {
@@ -58,6 +63,7 @@ class MainActivity : BaseActivity() {
         setContentView(R.layout.activity_main)
         setLayoutFullscreen()
         //setStatusBarColor(colorOf(R.color.colorPrimaryFemale))
+        viewModel = ViewModelProviders.of(this, viewModelFactory).get(MainViewModel::class.java)
         navigation.disableShiftMode()
         navigation.hideIcon()
         showFragment("home")
@@ -72,6 +78,9 @@ class MainActivity : BaseActivity() {
             }
             if (consumed) insets.consumeSystemWindowInsets() else insets
         }
+
+        viewModel.updateUserLocation()
+        viewModel.loginJMessage()
     }
 
     private fun showFragment(tag: String) {
@@ -105,4 +114,6 @@ class MainActivity : BaseActivity() {
             else -> mineFragment
         }
     }
+
+
 }

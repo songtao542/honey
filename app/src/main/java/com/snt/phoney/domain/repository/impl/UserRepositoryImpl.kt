@@ -5,7 +5,10 @@ import com.snt.phoney.api.Api
 import com.snt.phoney.domain.accessor.UserAccessor
 import com.snt.phoney.domain.model.*
 import com.snt.phoney.domain.repository.UserRepository
+import com.snt.phoney.utils.media.MultipartUtil
 import io.reactivex.Single
+import okhttp3.MultipartBody
+import java.io.File
 import javax.inject.Inject
 import javax.inject.Singleton
 
@@ -41,7 +44,20 @@ class UserRepositoryImpl @Inject constructor(private val userAccessor: UserAcces
     }
 
     override fun setPhotoPermission(token: String, photoPermission: Int, money: Double, photoId: String): Single<Response<String>> {
-        return api.setPhotoPermission(token, photoPermission.toString(), money.toString(), photoId)
+        return api.setPhotoPermission(token, photoPermission, money.toInt(), photoId)
+    }
+
+    override fun uploadPhotos(token: String, photos: List<File>): Single<Response<List<Photo>>> {
+        val photoParts = MultipartUtil.getMultipartList("photos", photos)
+        return api.uploadPhotos(token, photoParts)
+    }
+
+    override fun deletePhotos(token: String, photoIds: List<String>): Single<Response<List<Photo>>> {
+        return api.deletePhotos(token, photoIds)
+    }
+
+    override fun updateUserLocation(token: String, latitude: Double, longitude: Double, address: String, city: String): Single<Response<String>> {
+        return api.updateUserLocation(token, latitude.toString(), longitude.toString(), address, city)
     }
 
     override fun getUserPhotos(token: String): Single<Response<List<Photo>>> {

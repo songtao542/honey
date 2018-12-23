@@ -242,3 +242,38 @@
 
 -keep class com.snt.phoney.ui.signin.QQViewModel
 -keep class com.snt.phoney.ui.signin.WeiboViewModel
+
+-dontoptimize
+-dontpreverify
+-keepattributes  EnclosingMethod,Signature
+-dontwarn cn.jpush.**
+-keep class cn.jpush.** { *; }
+
+-dontwarn cn.jiguang.**
+-keep class cn.jiguang.** { *; }
+
+ -keepclassmembers class ** {
+     public void onEvent*(**);
+ }
+
+#========================gson================================
+-dontwarn com.google.**
+-keep class com.google.gson.** {*;}
+
+#========================protobuf================================
+-keep class com.google.protobuf.** {*;}
+
+#========================support=================================
+-dontwarn cn.jmessage.support.**
+-keep class cn.jmessage.support.**{*;}
+
+-keepattributes *Annotation*
+-keepclassmembers class * {
+    @org.greenrobot.eventbus.Subscribe <methods>;
+}
+-keep enum org.greenrobot.eventbus.ThreadMode { *; }
+
+# Only required if you use AsyncExecutor
+-keepclassmembers class * extends org.greenrobot.eventbus.util.ThrowableFailureEvent {
+    <init>(java.lang.Throwable);
+}

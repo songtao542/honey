@@ -33,7 +33,7 @@
             android:paddingLeft="@dimen/content_padding"
             android:paddingRight="@dimen/content_padding"
             android:text="@string/pay_money"
-            app:checked="false"
+            app:checked="true"
             app:icon="@drawable/ic_radio_circle_button"
             app:iconSize="20dp"
             app:layout_constraintLeft_toLeftOf="parent"

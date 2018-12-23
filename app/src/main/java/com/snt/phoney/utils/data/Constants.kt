@@ -8,6 +8,8 @@ object Constants {
         const val LIST = "list"
         const val URL_LIST = "url_list"
         const val URI_LIST = "uri_list"
+        const val PHOTO_LIST = "photo_list"
+        const val PHOTO = "photo"
         const val TITLE = "title"
         const val URL = "url"
         const val URI = "uri"

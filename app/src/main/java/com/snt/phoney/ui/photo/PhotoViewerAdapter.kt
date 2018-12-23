@@ -5,6 +5,7 @@ import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentManager
 import androidx.fragment.app.FragmentStatePagerAdapter
 import androidx.viewpager.widget.PagerAdapter
+import com.snt.phoney.domain.model.Photo
 
 class PhotoViewerAdapter(fragmentManager: FragmentManager, private val deletable: Boolean) : FragmentStatePagerAdapter(fragmentManager) {
 
@@ -22,18 +23,27 @@ class PhotoViewerAdapter(fragmentManager: FragmentManager, private val deletable
                 notifyDataSetChanged()
             }
         }
+    var photos: List<Photo>? = null
+        set(value) {
+            value?.let {
+                field = it
+                notifyDataSetChanged()
+            }
+        }
 
     var onPhotoSingleTapListener: PhotoViewFragment.OnPhotoSingleTapListener? = null
 
     override fun getItem(position: Int): Fragment {
         return if (uris != null) {
             PhotoViewFragment.newInstance(uris!![position]).apply { setOnPhotoSingleTapListener(onPhotoSingleTapListener) }
-        } else {
+        } else if (urls != null) {
             PhotoViewFragment.newInstance(urls!![position]).apply { setOnPhotoSingleTapListener(onPhotoSingleTapListener) }
+        } else {
+            PhotoViewFragment.newInstance(photos!![position]).apply { setOnPhotoSingleTapListener(onPhotoSingleTapListener) }
         }
     }
 
-    override fun getCount(): Int = uris?.size ?: urls?.size ?: 0
+    override fun getCount(): Int = uris?.size ?: urls?.size ?: photos?.size ?: 0
 
     override fun getItemPosition(obj: Any): Int {
         return if (deletable) PagerAdapter.POSITION_NONE else super.getItemPosition(obj)

@@ -15,6 +15,7 @@ import com.snt.phoney.R
 import com.snt.phoney.base.CommonActivity
 import com.snt.phoney.base.Page
 import com.snt.phoney.domain.model.AmountInfo
+import com.snt.phoney.domain.model.Photo
 import com.snt.phoney.ui.dating.DatingActivity
 import com.snt.phoney.ui.user.UserActivity
 import com.snt.phoney.widget.PhotoFlowAdapter
@@ -31,9 +32,11 @@ class MineRecyclerViewAdapter(val fragment: Fragment) : RecyclerView.Adapter<Rec
 
 
     private val settings = ArrayList<Setting>()
-    private val photos = ArrayList<String>()
+    var photos: List<Photo>? = null
     private var onSettingItemClickListener: OnSettingItemClickListener? = null
     private var onSignOutClickListener: OnSignOutClickListener? = null
+    private var onAddPhotoClickListener: OnAddPhotoClickListener? = null
+    private var onPhotoClickListener: OnPhotoClickListener? = null
 
     fun setOnSettingItemClickListener(onSettingItemClickListener: OnSettingItemClickListener) {
         this.onSettingItemClickListener = onSettingItemClickListener
@@ -41,6 +44,14 @@ class MineRecyclerViewAdapter(val fragment: Fragment) : RecyclerView.Adapter<Rec
 
     fun setOnSignOutClickListener(onSignOutClickListener: OnSignOutClickListener) {
         this.onSignOutClickListener = onSignOutClickListener
+    }
+
+    fun setOnAddPhotoClickListener(onAddPhotoClickListener: OnAddPhotoClickListener) {
+        this.onAddPhotoClickListener = onAddPhotoClickListener
+    }
+
+    fun setOnPhotoClickListener(onPhotoClickListener: OnPhotoClickListener) {
+        this.onPhotoClickListener = onPhotoClickListener
     }
 
     var amountInfo: AmountInfo? = null
@@ -121,26 +132,42 @@ class MineRecyclerViewAdapter(val fragment: Fragment) : RecyclerView.Adapter<Rec
         private val context = mView.context
         private var noPhotoStubInflated = false
         private var hasPhotoStubInflated = false
+        private var photos: List<Photo>? = null
 
-        fun setData(photos: List<String>) {
-            if (photos.isNotEmpty()) {
-                if (!hasPhotoStubInflated) {
-                    hasPhotoStubInflated = true
-                    mView.hasPhotoStub.inflate()
-                }
-                val flexbox = mView.flexbox
-                flexbox.viewAdapter = PhotoFlowAdapter(context).setUrls(photos).setMaxShow(12).setLastAsAdd(true)
-                flexbox.setOnItemClickListener { view, index ->
-                    Log.d("TTTT", "index=$index")
+        fun setData(photoList: List<Photo>?) {
+            if (photoList != null && photoList.isNotEmpty()) {
+                photos = photoList
+                photos?.let { photos ->
+                    if (!hasPhotoStubInflated) {
+                        hasPhotoStubInflated = true
+                        mView.hasPhotoStub.inflate()
+                    } else {
+                        mView.photosLayout.visibility = View.VISIBLE
+                    }
+                    if (noPhotoStubInflated) {
+                        mView.noPhotosLayout.visibility = View.GONE
+                    }
+                    val flexbox = mView.flexbox
+                    flexbox.viewAdapter = PhotoFlowAdapter(context).setUrls(photos.map { it.path!! }).setMaxShow(19).setLastAsAdd(true).setOnAddClickListener {
+                        onAddPhotoClickListener?.onAddPhotoClick()
+                    }
+                    flexbox.setOnItemClickListener { _, index ->
+                        onPhotoClickListener?.onPhotoClick(index, photos[index])
+                    }
                 }
             } else {
                 Log.d("TTTT", "mView.noPhotoStub===>${mView.noPhotoStub}")
                 if (!noPhotoStubInflated) {
                     noPhotoStubInflated = true
                     mView.noPhotoStub.inflate()
+                } else {
+                    mView.noPhotosLayout.visibility = View.VISIBLE
+                }
+                if (hasPhotoStubInflated) {
+                    mView.photosLayout.visibility = View.GONE
                 }
                 mView.uploadPhoto.setOnClickListener {
-                    Log.d("TTTT", "vvvvvvvvvvvvvvvvvvvvv")
+                    onAddPhotoClickListener?.onAddPhotoClick()
                 }
             }
         }
@@ -182,6 +209,14 @@ class MineRecyclerViewAdapter(val fragment: Fragment) : RecyclerView.Adapter<Rec
             }
         }
     }
+}
+
+interface OnPhotoClickListener {
+    fun onPhotoClick(index: Int, photo: Photo)
+}
+
+interface OnAddPhotoClickListener {
+    fun onAddPhotoClick()
 }
 
 interface OnSettingItemClickListener {

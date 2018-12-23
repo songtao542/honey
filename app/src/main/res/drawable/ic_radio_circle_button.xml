@@ -2,8 +2,8 @@
 <selector xmlns:android="http://schemas.android.com/apk/res/android">
 
 
-    <item android:drawable="@drawable/ic_radio_circle_checked" android:state_selected="true"></item>
+    <item android:drawable="@drawable/ic_radio_checked" android:state_selected="true"></item>
 
-    <item android:drawable="@drawable/ic_radio_circle_unchecked"></item>
+    <item android:drawable="@drawable/ic_radio_unchecked"></item>
 
 </selector>
