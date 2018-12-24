@@ -22,6 +22,9 @@ class FollowingViewModel @Inject constructor(private val usecase: FollowUseCase)
     private var mPageIndex: Int = 1
 
     fun listMyFollow(refresh: Boolean, loadMore: LoadMoreAdapter.LoadMore? = null) {
+        if (isLoading("my_follow")) {
+            return
+        }
         if (refresh) {
             mPageIndex = 1
         }
@@ -30,6 +33,7 @@ class FollowingViewModel @Inject constructor(private val usecase: FollowUseCase)
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribeBy(
                         onSuccess = {
+                            setLoading("my_follow", false)
                             Log.d("TTTT", "listMyFollow==>$it")
                             if (it.success) {
                                 if (refresh) {
@@ -46,7 +50,7 @@ class FollowingViewModel @Inject constructor(private val usecase: FollowUseCase)
                             }
                         },
                         onError = {
-
+                            setLoading("my_follow", false)
                         }
                 ).disposedBy(disposeBag)
     }

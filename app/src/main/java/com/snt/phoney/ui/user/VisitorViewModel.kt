@@ -5,6 +5,9 @@ import androidx.lifecycle.MutableLiveData
 import com.snt.phoney.base.AppViewModel
 import com.snt.phoney.domain.model.User
 import com.snt.phoney.domain.usecase.GetVisitorUseCase
+import com.snt.phoney.extensions.addList
+import com.snt.phoney.extensions.disposedBy
+import cust.widget.loadmore.LoadMoreAdapter
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.disposables.Disposable
 import io.reactivex.rxkotlin.subscribeBy
@@ -16,22 +19,38 @@ class VisitorViewModel @Inject constructor(private val usecase: GetVisitorUseCas
     val user: User? = usecase.getUser()
 
     val visitors = MutableLiveData<List<User>>()
+    private val mVisitors = ArrayList<User>()
 
-    fun listVisitor(): Disposable? {
-        val token = usecase.getAccessToken() ?: return null
-        return usecase.listVisitor(token)
+    private var mPageIndex = 1
+
+    fun listVisitor(refresh: Boolean, loadMore: LoadMoreAdapter.LoadMore? = null) {
+        if (isLoading("visitor")) {
+            return
+        }
+        if (refresh) {
+            mPageIndex = 1
+        }
+        val token = usecase.getAccessToken() ?: return
+        usecase.listVisitor(token)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribeBy(
                         onSuccess = {
+                            setLoading("visitor", false)
                             Log.d("TTTT", "list follow==========>$it")
-                            if (it.code == 200) {
-                                visitors.value = it.data
+                            if (it.success) {
+                                if (it.isNotEmpty) {
+                                    visitors.value = mVisitors.addList(it.data)
+                                    mPageIndex++
+                                } else {
+                                    loadMore?.isEnable = false
+                                }
                             }
                         },
                         onError = {
-
-                        })
+                            setLoading("visitor", false)
+                        }
+                ).disposedBy(disposeBag)
     }
 
 }

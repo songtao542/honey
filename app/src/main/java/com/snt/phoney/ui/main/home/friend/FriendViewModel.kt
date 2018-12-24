@@ -64,7 +64,7 @@ open class FriendViewModel @Inject constructor(private val usecase: FriendListUs
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribeBy(
                         onNext = {
-                            Log.d("TTTT", "getCities= eeeeeeeeeeeeeeeeeeeee =>success=${it.success}  empty=${it.isEmpty}")
+                            Log.d("TTTT", "getCities= eeeeeeeeeeeeeeeeeeeee =>success=${it.success}  isNotEmpty=${it.isNotEmpty}")
                             setLoading("user", false)
                             if (it.success) {
                                 if (refresh) {
@@ -74,6 +74,10 @@ open class FriendViewModel @Inject constructor(private val usecase: FriendListUs
                                     users.value = mUsers.addList(it.data)
                                     mPageIndex++
                                 } else {
+
+                                    Log.d("TTTT", "getCities= xxxxxxxxxxx =>success=${it.success}  isEmpty=${it.isEmpty} loadMore=$loadMore")
+
+
                                     loadMore?.isEnable = false
                                 }
                             } else if (!TextUtils.isEmpty(it.message)) {

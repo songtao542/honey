@@ -357,6 +357,7 @@ public class LoadMoreAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolde
         @Override
         public void notifyChanged() {
             mShouldRemove = true;
+            notifyFooterHolderChanged();
         }
 
         @Override
@@ -522,7 +523,6 @@ public class LoadMoreAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolde
             LoadMoreAdapter.this.notifyItemChanged(mAdapter.getItemCount());
         } else if (mShouldRemove) {
             mShouldRemove = false;
-
             /*
               fix IndexOutOfBoundsException when setEnable(false) and then use onItemRangeInserted
               @see android.support.v7.widget.RecyclerView.Recycler#validateViewHolderForOffsetPosition(RecyclerView.ViewHolder)

@@ -100,7 +100,7 @@ class DatingListFragment : BaseFragment() {
         }
 
         list.setLoadMoreListener {
-            load(false)
+            load(false, it)
         }
 
         load(true)

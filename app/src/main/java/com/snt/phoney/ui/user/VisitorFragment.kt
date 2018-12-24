@@ -10,6 +10,9 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import com.snt.phoney.R
 import com.snt.phoney.base.BaseFragment
 import com.snt.phoney.base.CommonActivity
+import com.snt.phoney.extensions.setLoadMoreEnable
+import com.snt.phoney.extensions.setLoadMoreListener
+import cust.widget.loadmore.LoadMoreAdapter
 import kotlinx.android.synthetic.main.fragment_visitor_list.*
 
 /**
@@ -45,7 +48,18 @@ class VisitorFragment : BaseFragment() {
             adapter.data = it
         })
 
-        viewModel.listVisitor()
+        list.setLoadMoreListener {
+            load(true, it)
+        }
+
+        load(true)
+    }
+
+    private fun load(refresh: Boolean, loadMore: LoadMoreAdapter.LoadMore? = null) {
+        if (refresh) {
+            list.setLoadMoreEnable(true)
+        }
+        viewModel.listVisitor(refresh, loadMore)
     }
 
     companion object {

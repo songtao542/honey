@@ -1,5 +1,6 @@
 package com.snt.phoney.ui.dating.list
 
+import android.util.Log
 import androidx.lifecycle.MutableLiveData
 import com.snt.phoney.R
 import com.snt.phoney.base.AppViewModel
@@ -106,6 +107,7 @@ class DatingViewModel @Inject constructor(private val usecase: GetDatingUseCase,
                                     publishDatings.value = mPublishDatings.addList(it.data)
                                     mDatingPageIndex++
                                 } else {
+                                    Log.d("TTTT", "bbbbbbbbbbbbbbbbb loadMore=$loadMore")
                                     loadMore?.isEnable = false
                                 }
                             } else {
