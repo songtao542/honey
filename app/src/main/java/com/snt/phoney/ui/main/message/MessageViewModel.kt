@@ -15,7 +15,6 @@ class MessageViewModel @Inject constructor(private val usecase: GetMessageUseCas
 
     val messages = MutableLiveData<List<OfficialMessage>>()
     val applicants = MutableLiveData<List<Applicant>>()
-    val error = MutableLiveData<String>()
     var pageIndex: Int = 0
 
     fun listOfficialMessage() {

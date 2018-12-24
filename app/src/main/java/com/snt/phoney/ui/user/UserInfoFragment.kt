@@ -1,6 +1,7 @@
 package com.snt.phoney.ui.user
 
 import android.Manifest
+import android.content.Intent
 import android.os.Bundle
 import android.text.TextUtils
 import android.util.TypedValue
@@ -26,11 +27,10 @@ import com.snt.phoney.extensions.dip
 import com.snt.phoney.extensions.snackbar
 import com.snt.phoney.ui.dating.DatingActivity
 import com.snt.phoney.ui.report.ReportActivity
+import com.snt.phoney.ui.voicecall.VoiceCallActivity
 import com.snt.phoney.utils.Chat
 import com.snt.phoney.utils.data.Constants
-import com.snt.phoney.widget.PayPickerView
 import com.snt.phoney.widget.PhotoFlowAdapter
-import com.snt.phoney.widget.WECHAT
 import kotlinx.android.synthetic.main.fragment_user_info.*
 import kotlinx.android.synthetic.main.fragment_user_info_header.*
 import java.text.DecimalFormat
@@ -129,6 +129,16 @@ class UserInfoFragment : BaseFragment() {
                     context.startActivity(CommonActivity.newIntent<DatingActivity>(context, Page.VIEW_OTHERS_DATING, Bundle().apply {
                         putParcelable(Constants.Extra.USER, user)
                     }))
+                }
+            }
+        }
+
+        chatWith.setOnClickListener {
+            user?.let {
+                context?.let { context ->
+                    context.startActivity(Intent(context, VoiceCallActivity::class.java))
+                    activity?.finish()
+                    return@setOnClickListener
                 }
             }
         }

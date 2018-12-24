@@ -3,43 +3,74 @@ package com.snt.phoney.ui.main.home.following
 import android.text.TextUtils
 import android.util.Log
 import androidx.lifecycle.MutableLiveData
+import com.snt.phoney.R
 import com.snt.phoney.base.AppViewModel
-import com.snt.phoney.domain.model.Response
 import com.snt.phoney.domain.model.User
-import com.snt.phoney.domain.usecase.FollowListUseCase
-import io.reactivex.Single
+import com.snt.phoney.domain.usecase.FollowUseCase
+import com.snt.phoney.extensions.addList
+import com.snt.phoney.extensions.disposedBy
+import cust.widget.loadmore.LoadMoreAdapter
 import io.reactivex.android.schedulers.AndroidSchedulers
-import io.reactivex.disposables.Disposable
 import io.reactivex.rxkotlin.subscribeBy
 import io.reactivex.schedulers.Schedulers
 import javax.inject.Inject
 
-class FollowingViewModel @Inject constructor(private val usecase: FollowListUseCase) : AppViewModel() {
+class FollowingViewModel @Inject constructor(private val usecase: FollowUseCase) : AppViewModel() {
 
+    private val mUsers = ArrayList<User>()
     val users = MutableLiveData<List<User>>()
-    val error = MutableLiveData<String>()
-    var pageIndex: Int = 0
+    private var mPageIndex: Int = 1
 
-    fun listFollow( ): Disposable? {
-        val token = usecase.getAccessToken() ?: return null
-        return usecase.listFollow(token).subscribeOn(Schedulers.io())
+    fun listMyFollow(refresh: Boolean, loadMore: LoadMoreAdapter.LoadMore? = null) {
+        if (refresh) {
+            mPageIndex = 1
+        }
+        val token = usecase.getAccessToken() ?: return
+        usecase.listMyFollow(token, mPageIndex).subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
-                .subscribeBy {
-                    Log.d("TTTT", "listFollow==>$it")
-                    if (it.code == 200) {
-                        users.value = it.data
-                    } else if (!TextUtils.isEmpty(it.message)) {
-                        error.value = it.message
-                    }
-                }
+                .subscribeBy(
+                        onSuccess = {
+                            Log.d("TTTT", "listMyFollow==>$it")
+                            if (it.success) {
+                                if (refresh) {
+                                    mUsers.clear()
+                                }
+                                if (it.isNotEmpty) {
+                                    users.value = mUsers.addList(it.data)
+                                    mPageIndex++
+                                } else {
+                                    loadMore?.isEnable = false
+                                }
+                            } else if (!TextUtils.isEmpty(it.message)) {
+                                error.value = it.message
+                            }
+                        },
+                        onError = {
+
+                        }
+                ).disposedBy(disposeBag)
     }
 
-
-    fun follow(uuid: String): Single<Response<Boolean>>? {
-        val token = usecase.getAccessToken() ?: return null
-        return usecase.follow(token, uuid)
+    fun follow(user: User) {
+        val token = usecase.getAccessToken() ?: return
+        usecase.follow(token, user.safeUuid)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
+                .subscribeBy(
+                        onSuccess = {
+                            Log.d("TTTT", "listMyFollow==>$it")
+                            if (it.success) {
+                                success.value = context.getString(R.string.has_follow)
+                            } else if (it.hasMessage) {
+                                error.value = it.message
+                            } else {
+                                error.value = context.getString(R.string.follow_failed)
+                            }
+                        },
+                        onError = {
+                            error.value = context.getString(R.string.follow_failed)
+                        }
+                ).disposedBy(disposeBag)
     }
 
 }

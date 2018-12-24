@@ -16,8 +16,6 @@ import javax.inject.Inject
 
 class StartupViewModel @Inject constructor(private val signinUseCase: SigninUseCase) : AppViewModel() {
 
-    val error = MutableLiveData<String>()
-
     val user = MutableLiveData<User>()
 
     init {

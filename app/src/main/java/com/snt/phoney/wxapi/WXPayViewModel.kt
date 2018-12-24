@@ -3,7 +3,6 @@ package com.snt.phoney.wxapi
 import android.content.Intent
 import android.text.TextUtils
 import android.util.Log
-import androidx.lifecycle.MutableLiveData
 import com.snt.phoney.R
 import com.snt.phoney.base.AppViewModel
 import com.snt.phoney.domain.model.OrderType
@@ -24,8 +23,6 @@ import javax.inject.Inject
 
 open class WXPayViewModel @Inject constructor(private val usecase: PayOrderUseCase) : AppViewModel(), IWXAPIEventHandler {
 
-    val success = MutableLiveData<String>()
-    val error = MutableLiveData<String>()
     private val wechatApi: WechatApi by lazy { WechatApi(application) }
     private var eventHandler: IWXAPIEventHandler? = null
 

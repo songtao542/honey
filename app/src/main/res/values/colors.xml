@@ -29,7 +29,7 @@
 
     <color name="buttonBgColor">#555555</color>
     <color name="buttonPressedBgColor">#333333</color>
-    <color name="buttonBorderPressedColor">#ffffff</color>
+    <color name="buttonBorderPressedColor">#cccccc</color>
     <color name="buttonBorderColor">#ffffff</color>
 
     <color name="buttonGetVerificationCodeBgColor">#8d8d8d</color>

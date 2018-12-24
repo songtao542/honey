@@ -64,7 +64,7 @@ interface UserRepository : UserAccessor {
             latitude: String,
             longitude: String,
             type: String,
-            page: String,
+            pageIndex: Int,
             city: String,
             heightStart: String,
             heightEnd: String,
@@ -73,6 +73,12 @@ interface UserRepository : UserAccessor {
             cupStart: String,
             cupEnd: String
     ): Single<Response<List<User>>>
+
+
+    fun listRecommendUser(token: String,
+                          longitude: String,
+                          latitude: String,
+                          pageIndex: Int): Single<Response<List<User>>>
 
     /**
      *  用户uuid
@@ -109,7 +115,8 @@ interface UserRepository : UserAccessor {
     fun getUserAmountInfo(token: String): Single<Response<AmountInfo>>
 
 
-    fun listFollow(token: String): Single<Response<List<User>>>
+    fun listMyFollow(token: String, pageIndex: Int): Single<Response<List<User>>>
+    fun listFollowMe(token: String, pageIndex: Int): Single<Response<List<User>>>
     fun listVisitor(token: String): Single<Response<List<User>>>
 
     fun follow(token: String, uuid: String): Single<Response<Boolean>>

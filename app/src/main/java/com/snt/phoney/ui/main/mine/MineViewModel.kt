@@ -23,9 +23,7 @@ class MineViewModel @Inject constructor(private val usecase: GetUserInfoUseCase)
 
     val user = usecase.getUser()
 
-    val success = MutableLiveData<String>()
     val toast = MutableLiveData<String>()
-    val error = MutableLiveData<String>()
     val photos = MutableLiveData<List<Photo>>()
 
     val amountInfo = MutableLiveData<AmountInfo>()

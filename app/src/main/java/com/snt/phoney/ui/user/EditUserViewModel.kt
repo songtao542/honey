@@ -21,8 +21,6 @@ class EditUserViewModel @Inject constructor(private val usecase: EditUserUseCase
     val user: User? = usecase.getUser()
 
     private var isSetting: Boolean = false
-    var success = MutableLiveData<String>()
-    var error = MutableLiveData<String>()
 
     val cities = object : LiveData<List<com.zaaach.citypicker.model.City>>() {
         override fun onActive() {

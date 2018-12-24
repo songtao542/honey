@@ -15,7 +15,6 @@ import javax.inject.Inject
 class DatingDetailViewModel @Inject constructor(private val usecase: GetDatingUseCase) : AppViewModel() {
 
     val dating = MutableLiveData<Dating>()
-    val error = MutableLiveData<String>()
     val joinSuccess = MutableLiveData<String>()
 
     fun getDatingDetail(uuid: String) {

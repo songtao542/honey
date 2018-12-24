@@ -1,6 +1,6 @@
 package com.snt.phoney.ui.nearby
 
-import com.snt.phoney.base.BaseActivity
+import com.snt.phoney.base.CommonActivity
 
-class NearbyActivity : BaseActivity() {
+class NearbyActivity : CommonActivity() {
 }

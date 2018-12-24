@@ -18,9 +18,6 @@ import javax.inject.Inject
 
 open class WXAuthViewModel @Inject constructor(private val usecase: WxSigninUseCase) : AppViewModel(), IWXAPIEventHandler {
 
-    val success = MutableLiveData<String>()
-    val error = MutableLiveData<String>()
-
     private val wxApi: WechatApi by lazy { WechatApi(application) }
     private var accessToken: WxAccessToken? = null
     private var eventHandler: IWXAPIEventHandler? = null

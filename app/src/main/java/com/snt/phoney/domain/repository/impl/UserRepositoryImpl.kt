@@ -7,7 +7,6 @@ import com.snt.phoney.domain.model.*
 import com.snt.phoney.domain.repository.UserRepository
 import com.snt.phoney.utils.media.MultipartUtil
 import io.reactivex.Single
-import okhttp3.MultipartBody
 import java.io.File
 import javax.inject.Inject
 import javax.inject.Singleton
@@ -76,8 +75,12 @@ class UserRepositoryImpl @Inject constructor(private val userAccessor: UserAcces
         return api.follow(token, uuid)
     }
 
-    override fun listFollow(token: String): Single<Response<List<User>>> {
-        return api.listFollow(token)
+    override fun listMyFollow(token: String, pageIndex: Int): Single<Response<List<User>>> {
+        return api.listMyFollow(token, pageIndex.toString())
+    }
+
+    override fun listFollowMe(token: String, pageIndex: Int): Single<Response<List<User>>> {
+        return api.listFollowMe(token, pageIndex.toString())
     }
 
     override fun setFullUserInfo(token: String, height: Int, weight: Double, age: Int, cup: String, cities: String, introduce: String, career: String, program: String, wechatAccount: String, nickname: String): Single<Response<String>> {
@@ -88,11 +91,15 @@ class UserRepositoryImpl @Inject constructor(private val userAccessor: UserAcces
         return api.getUserInfo(token, uid, latitude.toString(), longitude.toString())
     }
 
-    override fun listUser(token: String, latitude: String, longitude: String, type: String, page: String, city: String,
+    override fun listUser(token: String, latitude: String, longitude: String, type: String, pageIndex: Int, city: String,
                           heightStart: String, heightEnd: String,
                           ageStart: String, ageEnd: String,
                           cupStart: String, cupEnd: String): Single<Response<List<User>>> {
-        return api.listUser(token, latitude, longitude, type, page, city, heightStart, heightEnd, ageStart, ageEnd, cupStart, cupEnd)
+        return api.listUser(token, latitude, longitude, type, pageIndex.toString(), city, heightStart, heightEnd, ageStart, ageEnd, cupStart, cupEnd)
+    }
+
+    override fun listRecommendUser(token: String, latitude: String, longitude: String, pageIndex: Int): Single<Response<List<User>>> {
+        return api.listRecommendUser(token, latitude, longitude, pageIndex.toString())
     }
 
     override fun setUserInfo(token: String, cities: String, career: String, program: String): Single<Response<String>> {

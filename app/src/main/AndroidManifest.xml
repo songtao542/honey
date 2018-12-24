@@ -5,15 +5,16 @@
 
     <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
-
     <uses-permission android:name="android.permission.ACCESS_WIFI_STATE" />
     <uses-permission android:name="android.permission.READ_PHONE_STATE" />
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
-
     <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
     <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
-
     <uses-permission android:name="android.permission.READ_LOGS" />
+
+    <uses-permission android:name="android.permission.RECORD_AUDIO" />
+    <uses-permission android:name="android.permission.CAMERA" />
+    <uses-permission android:name="android.permission.MODIFY_AUDIO_SETTINGS" />
 
     <application
         android:name=".base.App"
@@ -23,13 +24,15 @@
         android:roundIcon="@drawable/ic_launcher"
         android:supportsRtl="true"
         android:theme="@style/AppTheme.Female">
+        <activity android:name=".ui.voicecall.VoiceCallActivity"></activity>
 
-        <!--android:roundIcon="@mipmap/ic_launcher_round"-->
+        <service
+            android:name=".service.VoiceCallService"
+            android:enabled="true"
+            android:exported="false" /> <!-- android:roundIcon="@mipmap/ic_launcher_round" -->
         <meta-data
             android:name="com.amap.api.v2.apikey"
-            android:value="23a40ad949d9ab5a652d4920642ddb19" />
-
-        <!-- 定位需要的服务 使用2.0的定位需要加上这个 -->
+            android:value="23a40ad949d9ab5a652d4920642ddb19" /> <!-- 定位需要的服务 使用2.0的定位需要加上这个 -->
         <service android:name="com.amap.api.location.APSService" />
 
         <activity
@@ -50,7 +53,6 @@
             android:configChanges="orientation|keyboardHidden"
             android:screenOrientation="behind"
             android:theme="@android:style/Theme.Translucent.NoTitleBar" />
-
         <activity
             android:name="com.sina.weibo.sdk.web.WeiboSdkWebActivity"
             android:configChanges="keyboardHidden|orientation"
@@ -58,25 +60,21 @@
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme.Light"
             android:windowSoftInputMode="adjustResize"
-            tools:node="replace"></activity>
-
+            tools:node="replace" />
         <activity
             android:name=".wxapi.WXEntryActivity"
             android:exported="true"
             android:theme="@style/AppTheme.NoDisplay"
-            tools:node="replace"></activity>
-
+            tools:node="replace" />
         <activity
             android:name=".wxapi.WXPayEntryActivity"
             android:exported="true"
             android:theme="@style/AppTheme.NoDisplay"
-            tools:node="replace"></activity>
-
+            tools:node="replace" />
         <activity
             android:name="jiguang.chat.activity.ChatActivity"
-            android:theme="@style/AppTheme.Light"></activity>
-
-        <activity android:name="jiguang.chat.activity.BrowserViewPagerActivity"></activity>
+            android:theme="@style/AppTheme.Light" />
+        <activity android:name="jiguang.chat.activity.BrowserViewPagerActivity" />
 
         <provider
             android:name=".provider.SettingsProvider"
@@ -88,13 +86,14 @@
         <activity
             android:name=".ui.main.MainActivity"
             android:screenOrientation="portrait">
-            <!--<intent-filter>-->
-            <!--<action android:name="android.intent.action.MAIN" />-->
 
-            <!--<category android:name="android.intent.category.LAUNCHER" />-->
-            <!--</intent-filter>-->
+            <!-- <intent-filter> -->
+            <!-- <action android:name="android.intent.action.MAIN" /> -->
+
+
+            <!-- <category android:name="android.intent.category.LAUNCHER" /> -->
+            <!-- </intent-filter> -->
         </activity>
-
         <activity
             android:name=".ui.signup.SignupActivity"
             android:screenOrientation="portrait"
@@ -105,43 +104,33 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-
         <activity
             android:name=".ui.setup.SetupWizardActivity"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme.Signup" />
-
-
         <activity
             android:name=".ui.dating.DatingActivity"
             android:windowSoftInputMode="adjustResize" />
-
         <activity android:name=".ui.vip.VipActivity" />
         <activity android:name=".ui.photo.PhotoViewerActivity" />
-
         <activity
-            android:name=".ui.nearby.NearbyActivity"
-            android:theme="@style/AppTheme.Light" />
-
-        <activity android:name=".ui.user.UserActivity"></activity>
-        <activity android:name=".ui.report.ReportActivity"></activity>
-        <activity android:name=".ui.privacy.PrivacyActivity"></activity>
-
+            android:name=".ui.nearby.NearbyActivity" />
+        <activity android:name=".ui.user.UserActivity" />
+        <activity android:name=".ui.report.ReportActivity" />
+        <activity android:name=".ui.privacy.PrivacyActivity" />
         <activity
             android:name=".ui.wallet.WalletActivity"
-            android:theme="@style/AppTheme.Light"></activity>
-
+            android:theme="@style/AppTheme.Light" />
         <activity
             android:name=".ui.about.AboutActivity"
-            android:theme="@style/AppTheme.Light"></activity>
+            android:theme="@style/AppTheme.Light" />
         <activity
             android:name=".ui.browser.BrowserActivity"
-            android:theme="@style/AppTheme.Light"></activity>
+            android:theme="@style/AppTheme.Light" />
         <activity
             android:name=".ui.browser.WebBrowserActivity"
-            android:theme="@style/AppTheme.Light"></activity>
-
-        <activity android:name=".ui.album.AlbumSettingActivity"></activity>
+            android:theme="@style/AppTheme.Light" />
+        <activity android:name=".ui.album.AlbumSettingActivity" />
 
         <provider
             android:name="androidx.core.content.FileProvider"
@@ -150,9 +139,8 @@
             android:grantUriPermissions="true">
             <meta-data
                 android:name="android.support.FILE_PROVIDER_PATHS"
-                android:resource="@xml/file_paths_public"></meta-data>
+                android:resource="@xml/file_paths_public" />
         </provider>
-
     </application>
 
 </manifest>

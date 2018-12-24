@@ -13,6 +13,7 @@ import com.snt.phoney.ui.dating.list.MyDatingFragment
 import com.snt.phoney.ui.dating.list.OthersDatingFragment
 import com.snt.phoney.ui.location.LocationPickerFragment
 import com.snt.phoney.ui.main.mine.AlbumPermissionSettingFragment
+import com.snt.phoney.ui.nearby.NearbyFragment
 import com.snt.phoney.ui.photo.PhotoViewerFragment
 import com.snt.phoney.ui.privacy.CreateLockFragment
 import com.snt.phoney.ui.report.ReportFragment
@@ -54,6 +55,8 @@ enum class Page {
     VIEW_OFFICIAL_MESSAGE,
 
     VIEW_DATING_APPLYING,
+
+    VIEW_NEARBY_USER,
 }
 
 class FragmentFactory {
@@ -89,6 +92,8 @@ class FragmentFactory {
                 Page.VIEW_OFFICIAL_MESSAGE.ordinal -> OfficialMessageFragment.newInstance(arguments)
 
                 Page.VIEW_DATING_APPLYING.ordinal -> ApplicantListFragment.newInstance(arguments)
+
+                Page.VIEW_NEARBY_USER.ordinal -> NearbyFragment.newInstance(arguments)
 
                 else -> Fragment()
             }

@@ -1,6 +1,5 @@
 package com.snt.phoney.ui.report
 
-import android.util.Log
 import androidx.lifecycle.MutableLiveData
 import com.snt.phoney.R
 import com.snt.phoney.base.AppViewModel
@@ -18,7 +17,6 @@ class ReportViewModel @Inject constructor(private val usecase: ReportUseCase) : 
 
     val reportReasons = MutableLiveData<List<ReportReason>>()
     val reportSuccess = MutableLiveData<String>()
-    val error = MutableLiveData<String>()
 
     fun listReportReasons() {
         usecase.listReportReasons()

@@ -10,8 +10,11 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import com.snt.phoney.R
 import com.snt.phoney.base.BaseFragment
 import com.snt.phoney.domain.model.User
+import com.snt.phoney.extensions.setLoadMoreEnable
+import com.snt.phoney.extensions.setLoadMoreListener
 import com.snt.phoney.extensions.snackbar
 import com.snt.phoney.utils.data.Constants
+import cust.widget.loadmore.LoadMoreAdapter
 import kotlinx.android.synthetic.main.fragment_othersdating_list.*
 
 /**
@@ -59,8 +62,19 @@ class OthersDatingFragment : BaseFragment() {
             }
         })
 
+        list.setLoadMoreListener {
+            load(false, it)
+        }
+
+        load(true)
+    }
+
+    private fun load(refresh: Boolean, loadMore: LoadMoreAdapter.LoadMore? = null) {
         user?.let {
-            viewModel.listDating(it.safeUuid)
+            if (refresh) {
+                list.setLoadMoreEnable(true)
+            }
+            viewModel.listDating(refresh, it.safeUuid, loadMore)
         }
     }
 

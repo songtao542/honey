@@ -13,7 +13,10 @@ import com.snt.phoney.R
 import com.snt.phoney.base.BaseFragment
 import com.snt.phoney.extensions.addFragmentSafely
 import com.snt.phoney.extensions.dip
+import com.snt.phoney.extensions.setLoadMoreEnable
+import com.snt.phoney.extensions.setLoadMoreListener
 import com.snt.phoney.widget.itemdecoration.MonospacedItemDecoration
+import cust.widget.loadmore.LoadMoreAdapter
 import kotlinx.android.synthetic.main.fragment_friend_list.*
 import kotlinx.android.synthetic.main.fragment_friend_tag.*
 
@@ -77,7 +80,7 @@ class FriendFragment : BaseFragment() {
                 cupStart = result.startCup
                 cupEnd = result.endCup
                 Log.d("TTTT", "result=================$result")
-                listUser()
+                load(true)
             }
             activity?.addFragmentSafely(android.R.id.content, fragment, "filter", true,
                     enterAnimation = R.anim.slide_in_right, popExitAnimation = R.anim.slide_out_right)
@@ -96,11 +99,15 @@ class FriendFragment : BaseFragment() {
             filter(FilterType.HOTTEST, hottest)
         }
 
+        list.setLoadMoreListener {
+            load(false, it)
+        }
+
         viewModel.users.observe(this, Observer {
             adapter?.data = it
         })
 
-        listUser()
+        load(true)
     }
 
     private fun filter(type: FilterType, view: TextView) {
@@ -112,7 +119,7 @@ class FriendFragment : BaseFragment() {
             view.isSelected = true
             filterType = type
         }
-        listUser()
+        load(true)
     }
 
     private fun clearFilterSelector() {
@@ -122,9 +129,12 @@ class FriendFragment : BaseFragment() {
         hottest.isSelected = false
     }
 
-    private fun listUser() {
-        viewModel.listUser(filterType, city, heightStart, heightEnd,
-                ageStart, ageEnd, cupStart, cupEnd)
+    private fun load(refresh: Boolean, loadMore: LoadMoreAdapter.LoadMore? = null) {
+        if (refresh) {
+            list.setLoadMoreEnable(true)
+        }
+        viewModel.listUser(refresh, filterType, city, heightStart, heightEnd,
+                ageStart, ageEnd, cupStart, cupEnd, loadMore)
     }
 
     companion object {

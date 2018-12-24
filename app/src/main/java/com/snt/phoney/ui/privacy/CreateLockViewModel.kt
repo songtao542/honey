@@ -12,9 +12,6 @@ import javax.inject.Inject
 
 class CreateLockViewModel @Inject constructor(private val usecase: CreatePrivacyLockUseCase) : AppViewModel() {
 
-    val success = MutableLiveData<String>()
-    val error = MutableLiveData<String>()
-
     val closeSuccess = MutableLiveData<String>()
 
     val hasPrivacyPassword = MutableLiveData<Boolean>()

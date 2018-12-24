@@ -111,11 +111,20 @@ interface Api {
     fun listVisitor(@Field("token") token: String): Single<Response<List<User>>>
 
     /**
-     * 获取我关注的人列表
+     * 获取关注我的人列表
      */
     @FormUrlEncoded
     @POST("users/other/listCares")
-    fun listFollow(@Field("token") token: String): Single<Response<List<User>>>
+    fun listMyFollow(@Field("token") token: String,
+                     @Field("page") pageIndex: String): Single<Response<List<User>>>
+
+    /**
+     * 获取我关注的人列表
+     */
+    @FormUrlEncoded
+    @POST("users/other/listFollows")
+    fun listFollowMe(@Field("token") token: String,
+                     @Field("page") pageIndex: String): Single<Response<List<User>>>
 
     @FormUrlEncoded
     @POST("users/other/care")
@@ -486,6 +495,20 @@ interface Api {
             @Field("cup_end") cupEnd: String
     ): Single<Response<List<User>>>
 
+
+    /**
+     *@param token    string	是	用户token
+     *@param latitude    string	是	纬度（与实际的纬度值）
+     *@param longitude    string	是	经度
+     *@param page    string	是	1
+     */
+    @FormUrlEncoded
+    @POST("users/listRecommendsUsers")
+    fun listRecommendUser(@Field("token") token: String,
+                          @Field("latitude") longitude: String,
+                          @Field("longitude") latitude: String,
+                          @Field("page") pageIndex: String
+    ): Single<Response<List<User>>>
 
     @FormUrlEncoded
     @POST("users/third/register")

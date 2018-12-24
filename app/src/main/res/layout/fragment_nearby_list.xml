@@ -1,38 +1,42 @@
 <?xml version="1.0" encoding="utf-8"?>
-<layout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools">
+    xmlns:tools="http://schemas.android.com/tools"
+    android:name="com.snt.phoney.ui.nearby.NearbyFragment"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    tools:context=".ui.nearby.NearbyFragment">
 
-    <data class="NearbyFragmentBinding">
-
-        <variable
-            name="viewModel"
-            type="com.snt.phoney.ui.nearby.NearbyViewModel" />
-    </data>
-
-
-    <LinearLayout
-        android:orientation="vertical"
-        android:name="com.snt.phoney.ui.nearby.NearbyFragment"
+    <com.snt.phoney.widget.Toolbar
+        android:id="@+id/toolbar"
+        style="@style/AppTheme.Toolbar"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        tools:context=".ui.nearby.NearbyFragment">
+        android:layout_height="?attr/actionBarSize"
+        android:background="?attr/toolbarBackground"
+        app:navigationIcon="@drawable/ic_back"
+        app:title="@string/recommend_people" />
 
-        <com.snt.phoney.widget.Toolbar
-            android:id="@+id/toolbar"
-            style="@style/AppTheme.Toolbar"
-            android:layout_width="match_parent"
-            android:background="?attr/toolbarBackground"
-            android:layout_height="?attr/actionBarSize"
-            app:navigationIcon="@drawable/ic_back"></com.snt.phoney.widget.Toolbar>
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/list"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1"
+        app:layoutManager="androidx.recyclerview.widget.GridLayoutManager"
+        app:spanCount="3"
+        tools:listitem="@layout/fragment_nearby" />
 
-        <androidx.recyclerview.widget.RecyclerView
-            android:id="@+id/list"
-            android:layout_width="match_parent"
-            android:layout_height="0dp"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/back"
-            tools:listitem="@layout/fragment_nearby" />
 
-    </LinearLayout>
-</layout>
+    <androidx.appcompat.widget.AppCompatButton
+        android:id="@+id/changeBatch"
+        android:layout_width="240dp"
+        android:layout_height="@dimen/button_height"
+        android:layout_gravity="center_horizontal"
+        android:layout_marginTop="50dp"
+        android:layout_marginBottom="50dp"
+        android:background="@drawable/button_primary_circle_corner_selector"
+        android:text="@string/change_batch"
+        android:textColor="@color/white"
+        android:textSize="@dimen/textsize_normal" />
+
+</LinearLayout>

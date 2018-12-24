@@ -277,3 +277,11 @@
 -keepclassmembers class * extends org.greenrobot.eventbus.util.ThrowableFailureEvent {
     <init>(java.lang.Throwable);
 }
+
+#========================JMRTC================================
+-dontwarn cn.jiguang.jmrtc.**
+-keep class cn.jiguang.jmrtc.api.** {*;}
+
+#========================Agora================================
+-dontwarn io.agora.rtc.**
+-keep class io.agora.rtc.** {*;}

@@ -41,7 +41,8 @@ object Constants {
     }
 
     object Api {
-        const val BASE_URL = "https://api.chunmi69.com"//"http://phoney.alance.pub"
+        const val DOMAIN_NAME = "api.chunmi69.com"//"http://phoney.alance.pub"
+        const val BASE_URL = "https://$DOMAIN_NAME"//"http://phoney.alance.pub"
     }
 
     object Tencent {

@@ -1,6 +1,5 @@
 package com.snt.phoney.ui.main.home.following
 
-import android.content.Context
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -10,6 +9,10 @@ import androidx.lifecycle.ViewModelProviders
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.snt.phoney.R
 import com.snt.phoney.base.BaseFragment
+import com.snt.phoney.extensions.setLoadMoreEnable
+import com.snt.phoney.extensions.setLoadMoreListener
+import com.snt.phoney.extensions.snackbar
+import cust.widget.loadmore.LoadMoreAdapter
 import kotlinx.android.synthetic.main.fragment_following_list.*
 
 /**
@@ -37,16 +40,27 @@ class FollowingFragment : BaseFragment() {
             adapter.data = it
         })
 
-        viewModel.listFollow()
+        viewModel.success.observe(this, Observer {
+            adapter.notifyDataSetChanged()
+            snackbar(it)
+        })
+
+        viewModel.error.observe(this, Observer {
+            snackbar(it)
+        })
+
+        list.setLoadMoreListener {
+            load(false, it)
+        }
+
+        load(true)
     }
 
-    override fun onAttach(context: Context) {
-        super.onAttach(context)
-
-    }
-
-    override fun onDetach() {
-        super.onDetach()
+    private fun load(refresh: Boolean, loadMore: LoadMoreAdapter.LoadMore? = null) {
+        if (refresh) {
+            list.setLoadMoreEnable(true)
+        }
+        viewModel.listMyFollow(refresh, loadMore)
     }
 
     companion object {

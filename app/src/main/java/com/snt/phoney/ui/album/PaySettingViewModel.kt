@@ -16,9 +16,6 @@ class PaySettingViewModel @Inject constructor(private val usecase: AlbumSettingU
 
     val photos = MutableLiveData<List<Photo>>()
 
-    val success = MutableLiveData<String>()
-    val error = MutableLiveData<String>()
-
     fun setPhotoPermission(photoPermission: PhotoPermission, money: Double = 0.0, photoId: String = ""): Disposable? {
         val token = usecase.getAccessToken() ?: return null
         return usecase.setPhotoPermission(token, photoPermission.value, money, photoId)

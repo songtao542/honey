@@ -1,7 +1,6 @@
 package com.snt.phoney.ui.main.message
 
 import android.os.Bundle
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.Menu
 import android.view.MenuInflater
@@ -16,6 +15,7 @@ import com.snt.phoney.di.Injectable
 import com.snt.phoney.extensions.enableOptionsMenu
 import com.snt.phoney.ui.browser.BrowserActivity
 import com.snt.phoney.ui.dating.DatingActivity
+import com.snt.phoney.ui.nearby.NearbyActivity
 import jiguang.chat.fragment.ConversationListFragment
 import kotlinx.android.synthetic.main.fragment_conv_list.*
 import kotlinx.android.synthetic.main.fragment_message.view.*
@@ -89,7 +89,9 @@ class MessageFragment : ConversationListFragment(), Injectable {
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         return when (item?.itemId) {
             R.id.friendRecommend -> {
-
+                context?.let { context ->
+                    startActivity(CommonActivity.newIntent<NearbyActivity>(context, Page.VIEW_NEARBY_USER))
+                }
                 true
             }
             else -> super.onOptionsItemSelected(item)

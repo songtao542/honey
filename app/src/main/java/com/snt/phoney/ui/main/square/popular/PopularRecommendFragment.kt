@@ -1,6 +1,5 @@
 package com.snt.phoney.ui.main.square.popular
 
-import android.content.Context
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -10,7 +9,10 @@ import androidx.lifecycle.ViewModelProviders
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.snt.phoney.R
 import com.snt.phoney.base.BaseFragment
+import com.snt.phoney.extensions.setLoadMoreEnable
+import com.snt.phoney.extensions.setLoadMoreListener
 import com.snt.phoney.ui.main.square.SquareViewModel
+import cust.widget.loadmore.LoadMoreAdapter
 import kotlinx.android.synthetic.main.fragment_popular_recommend_list.*
 
 /**
@@ -36,19 +38,24 @@ class PopularRecommendFragment : BaseFragment() {
         adapter = PopularRecommendRecyclerViewAdapter(this, viewModel, disposeBag)
         list.adapter = adapter
 
+
+
         viewModel.popularDating.observe(this, Observer {
             adapter.data = it
         })
 
-        viewModel.listPopularDating(true)
+        list.setLoadMoreListener {
+            load(false, it)
+        }
+
+        load(true)
     }
 
-    override fun onAttach(context: Context) {
-        super.onAttach(context)
-    }
-
-    override fun onDetach() {
-        super.onDetach()
+    private fun load(refresh: Boolean, loadMore: LoadMoreAdapter.LoadMore? = null) {
+        if (refresh) {
+            list.setLoadMoreEnable(true)
+        }
+        viewModel.listPopularDating(refresh, loadMore)
     }
 
     companion object {

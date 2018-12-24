@@ -5,6 +5,9 @@ import com.snt.phoney.base.AppViewModel
 import com.snt.phoney.domain.model.Dating
 import com.snt.phoney.domain.model.Response
 import com.snt.phoney.domain.usecase.SquareUseCase
+import com.snt.phoney.extensions.addList
+import com.snt.phoney.extensions.disposedBy
+import cust.widget.loadmore.LoadMoreAdapter
 import io.reactivex.Single
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.disposables.Disposable
@@ -14,8 +17,11 @@ import javax.inject.Inject
 
 class SquareViewModel @Inject constructor(private val usecase: SquareUseCase) : AppViewModel() {
 
-    private var recommendPageIndex: Int = 1
-    private var popularPageIndex: Int = 1
+    private var mRecommendPageIndex: Int = 1
+    private var mPopularPageIndex: Int = 1
+
+    private val mRecommendDating = ArrayList<Dating>()
+    private val mPopularDating = ArrayList<Dating>()
 
     val recommendDating = MutableLiveData<List<Dating>>()
     val popularDating = MutableLiveData<List<Dating>>()
@@ -23,14 +29,14 @@ class SquareViewModel @Inject constructor(private val usecase: SquareUseCase) : 
     /**
      * 推荐约会
      */
-    fun listRecommendDating(refresh: Boolean, dateType: Int, distanceType: Int, program: String): Disposable? {
+    fun listRecommendDating(refresh: Boolean, dateType: Int, distanceType: Int, program: String, loadMore: LoadMoreAdapter.LoadMore? = null): Disposable? {
         if (refresh) {
-            recommendPageIndex = 1
+            mRecommendPageIndex = 1
         }
         val token = usecase.getAccessToken() ?: return null
         return usecase.location
                 .flatMap {
-                    usecase.listRecommendDating(token, recommendPageIndex, dateType, distanceType, program, it.latitude, it.longitude)
+                    usecase.listRecommendDating(token, mRecommendPageIndex, dateType, distanceType, program, it.latitude, it.longitude)
                             .toObservable()
                             .subscribeOn(Schedulers.io())
                             .observeOn(AndroidSchedulers.mainThread())
@@ -40,9 +46,16 @@ class SquareViewModel @Inject constructor(private val usecase: SquareUseCase) : 
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribeBy(
                         onSuccess = {
-                            if (it.code == 200) {
-                                recommendPageIndex++
-                                recommendDating.value = it.data
+                            if (it.success) {
+                                if (refresh) {
+                                    mRecommendDating.clear()
+                                }
+                                if (!it.isEmpty) {
+                                    recommendDating.value = mRecommendDating.addList(it.data)
+                                    mRecommendPageIndex++
+                                } else {
+                                    loadMore?.isEnable = false
+                                }
                             }
                         },
                         onError = {
@@ -54,25 +67,32 @@ class SquareViewModel @Inject constructor(private val usecase: SquareUseCase) : 
     /**
      * 热门约会
      */
-    fun listPopularDating(refresh: Boolean): Disposable? {
+    fun listPopularDating(refresh: Boolean, loadMore: LoadMoreAdapter.LoadMore? = null) {
         if (refresh) {
-            popularPageIndex = 1
+            mPopularPageIndex = 1
         }
-        val token = usecase.getAccessToken() ?: return null
-        return usecase.listPopularDating(token, popularPageIndex)
+        val token = usecase.getAccessToken() ?: return
+        usecase.listPopularDating(token, mPopularPageIndex)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribeBy(
                         onSuccess = {
-                            if (it.code == 200) {
-                                popularPageIndex++
-                                popularDating.value = it.data
+                            if (it.success) {
+                                if (refresh) {
+                                    mPopularDating.clear()
+                                }
+                                if (!it.isEmpty) {
+                                    popularDating.value = mPopularDating.addList(it.data)
+                                    mPopularPageIndex++
+                                } else {
+                                    loadMore?.isEnable = false
+                                }
                             }
                         },
                         onError = {
 
                         }
-                )
+                ).disposedBy(disposeBag)
     }
 
 

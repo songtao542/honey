@@ -10,9 +10,8 @@ import com.bumptech.glide.load.resource.drawable.DrawableTransitionOptions
 import com.bumptech.glide.request.RequestOptions
 import com.snt.phoney.R
 import com.snt.phoney.domain.model.User
-import com.snt.phoney.extensions.disposedBy
+import com.snt.phoney.utils.Chat
 import io.reactivex.disposables.CompositeDisposable
-import io.reactivex.rxkotlin.subscribeBy
 import kotlinx.android.synthetic.main.fragment_following.view.*
 
 /**
@@ -40,27 +39,29 @@ class FollowingRecyclerViewAdapter(private val viewModel: FollowingViewModel, va
     override fun getItemCount(): Int = data?.size ?: 0
 
     inner class ViewHolder(val mView: View) : RecyclerView.ViewHolder(mView) {
-        fun setData(data: User?) {
-            if (data == null) {
+        private val context = mView.context
+        private val chat = mView.chat
+        private val follow = mView.follow
+        private val name = mView.name
+        private val content = mView.content
+        private val head = mView.head
+
+        fun setData(user: User?) {
+            if (user == null) {
                 return
             }
             //Glide.with(mView).load(data.portrait).into(mView.head)
-            Glide.with(mView).load(data.portrait).apply(RequestOptions().circleCrop()).transition(DrawableTransitionOptions.withCrossFade()).into(mView.head)
+            Glide.with(mView).load(user.portrait).apply(RequestOptions().circleCrop()).transition(DrawableTransitionOptions.withCrossFade()).into(head)
 
-            mView.name.text = data.nickname
-            mView.content.text = data.introduce
-            mView.chat.setOnClickListener {
-
-            }
-            mView.follow.setOnClickListener {
-                data.uuid?.let { uuid ->
-                    viewModel.follow(uuid)
-                            ?.subscribeBy {
-
-                            }
-                            ?.disposedBy(disposeBag)
+            name.text = user.nickname
+            content.text = user.introduce
+            chat.setOnClickListener {
+                user.im?.let { im ->
+                    Chat.start(context, im)
                 }
-
+            }
+            follow.setOnClickListener {
+                viewModel.follow(user)
             }
         }
     }

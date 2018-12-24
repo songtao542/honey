@@ -14,7 +14,6 @@ import javax.inject.Inject
 class LocationViewModel @Inject constructor(private var usecase: GetLocationUseCase) : AppViewModel() {
 
     val location = MutableLiveData<Location>()
-    val error = MutableLiveData<String>()
 
     private var locating = false
 

@@ -10,8 +10,11 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import com.snt.phoney.R
 import com.snt.phoney.base.BaseFragment
 import com.snt.phoney.domain.model.User
+import com.snt.phoney.extensions.setLoadMoreEnable
+import com.snt.phoney.extensions.setLoadMoreListener
 import com.snt.phoney.extensions.snackbar
 import com.snt.phoney.utils.data.Constants
+import cust.widget.loadmore.LoadMoreAdapter
 import kotlinx.android.synthetic.main.fragment_dating_list.*
 
 class DatingListFragment : BaseFragment() {
@@ -68,8 +71,6 @@ class DatingListFragment : BaseFragment() {
         toolbar.visibility = toolbarVisibility
         toolbar.setNavigationOnClickListener { activity?.onBackPressed() }
 
-
-
         viewModel.error.observe(this, Observer {
             it?.let { message ->
                 snackbar(message)
@@ -77,29 +78,45 @@ class DatingListFragment : BaseFragment() {
             }
         })
 
+        when (type) {
+            TYPE_PUBLISH -> viewModel.publishDatings.observe(this, Observer {
+                adapter.data = it
+            })
+            TYPE_JOINED -> {
+                viewModel.joinedDatings.observe(this, Observer {
+                    adapter.data = it
+                })
+                viewModel.quitSuccess.observe(this, Observer {
+                    it?.let { message ->
+                        snackbar(message)
+                        adapter.notifyDataSetChanged()
+                        viewModel.quitSuccess.value = null
+                    }
+                })
+            }
+            TYPE_OTHER -> viewModel.otherDatings.observe(this, Observer {
+                adapter.data = it
+            })
+        }
+
+        list.setLoadMoreListener {
+            load(false)
+        }
+
+        load(true)
+    }
+
+    private fun load(refresh: Boolean, loadMore: LoadMoreAdapter.LoadMore? = null) {
+        if (refresh) {
+            list.setLoadMoreEnable(true)
+        }
         if (type == TYPE_PUBLISH) {
-            viewModel.publishDatings.observe(this, Observer {
-                adapter.data = it
-            })
-            viewModel.listMyDating()
+            viewModel.listMyDating(refresh, loadMore)
         } else if (type == TYPE_JOINED) {
-            viewModel.joinedDatings.observe(this, Observer {
-                adapter.data = it
-            })
-            viewModel.quitSuccess.observe(this, Observer {
-                it?.let { message ->
-                    snackbar(message)
-                    adapter.notifyDataSetChanged()
-                    viewModel.quitSuccess.value = null
-                }
-            })
-            viewModel.listJoinedDating()
+            viewModel.listJoinedDating(refresh, loadMore)
         } else if (type == TYPE_OTHER) {
-            viewModel.otherDatings.observe(this, Observer {
-                adapter.data = it
-            })
             if (user != null) {
-                viewModel.listDating(user!!.safeUuid)
+                viewModel.listDating(refresh, user!!.safeUuid, loadMore)
             }
         }
     }

@@ -291,6 +291,14 @@
     <string name="buy_tip">购买提醒</string>
     <string name="buy_warning">你即将使用蜜币支付</string>
     <string name="pay_mibi_template">支付%1$s蜜币</string>
+    <string name="connecting">正在接通...</string>
+    <string name="cancel_voice_call_tip">断开通话</string>
+    <string name="cancel_voice_call_warn">你即将断开语音通话</string>
+    <string name="disconnect">断开</string>
+    <string name="unit_m">m</string>
+    <string name="change_batch">换一批</string>
+    <string name="say_hello">打招呼</string>
+    <string name="recommend_people">推荐的人</string>
 
 
 </resources>

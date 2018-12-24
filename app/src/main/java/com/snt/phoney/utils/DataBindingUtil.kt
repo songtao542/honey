@@ -1,20 +1,17 @@
 package com.snt.phoney.utils
 
 import android.view.View
-import android.widget.ImageView
-import androidx.databinding.BindingAdapter
 import androidx.databinding.BindingConversion
-import com.bumptech.glide.Glide
 import java.text.DecimalFormat
 
 
 object BindingAdapters {
 
-    @BindingAdapter("app:url")
-    @JvmStatic
-    fun url(view: ImageView, url: String) {
-        Glide.with(view).load(url).into(view)
-    }
+//    @BindingAdapter("app:url")
+//    @JvmStatic
+//    fun url(view: ImageView, url: String) {
+//        Glide.with(view).load(url).into(view)
+//    }
 
 }
 

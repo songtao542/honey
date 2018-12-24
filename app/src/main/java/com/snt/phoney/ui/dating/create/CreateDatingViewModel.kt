@@ -2,7 +2,6 @@ package com.snt.phoney.ui.dating.create
 
 import android.text.TextUtils
 import androidx.lifecycle.LiveData
-import androidx.lifecycle.MutableLiveData
 import com.snt.phoney.R
 import com.snt.phoney.base.AppViewModel
 import com.snt.phoney.domain.model.DatingProgram
@@ -16,9 +15,6 @@ import java.io.File
 import javax.inject.Inject
 
 class CreateDatingViewModel @Inject constructor(private val usecase: CreateDatingUseCase) : AppViewModel() {
-
-    val success = MutableLiveData<String>()
-    val error = MutableLiveData<String>()
 
     val programs = object : LiveData<List<DatingProgram>>() {
         override fun onActive() {

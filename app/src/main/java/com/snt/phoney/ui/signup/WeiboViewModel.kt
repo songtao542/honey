@@ -25,7 +25,6 @@ class WeiboViewModel @Inject constructor(private val weiboUseCase: WeiboSigninUs
     private var accessToken: Oauth2AccessToken? = null
 
     val user = MutableLiveData<WeiboUser>()
-    val error = MutableLiveData<String>()
 
     override fun initialize() {
         WbSdk.install(application, AuthInfo(application, Weibo.APP_KEY, Weibo.REDIRECT_URL, Weibo.SCOPE))

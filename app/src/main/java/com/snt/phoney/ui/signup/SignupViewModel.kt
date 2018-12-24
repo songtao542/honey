@@ -21,8 +21,6 @@ class SignupViewModel @Inject constructor(private val usecase: SigninUseCase) : 
 
     val user = MutableLiveData<User>()
 
-    val error = MutableLiveData<String>()
-
     fun requestVerificationCode(phone: String): Disposable {
         return usecase.requestVerificationCode(phone)
                 .subscribeOn(Schedulers.io())

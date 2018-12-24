@@ -10,9 +10,12 @@ import androidx.lifecycle.ViewModelProviders
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.snt.phoney.R
 import com.snt.phoney.base.BaseFragment
+import com.snt.phoney.extensions.setLoadMoreEnable
+import com.snt.phoney.extensions.setLoadMoreListener
 import com.snt.phoney.ui.main.square.SquareViewModel
 import com.snt.phoney.widget.DropdownLabelView
 import com.snt.phoney.widget.PopupList
+import cust.widget.loadmore.LoadMoreAdapter
 import kotlinx.android.synthetic.main.fragment_official_recommend_list.*
 
 
@@ -48,25 +51,26 @@ class OfficialRecommendFragment : BaseFragment() {
             }
             return@setOnTouchListener false
         }
+
         publishTime.setOnClickListener {
             //expandFilter(publishTime, R.array.filter_publish_time)
             popupMenu(publishTime, R.array.filter_publish_time) { position ->
                 filterTime = FilterTime.from(position)
-                loadDating()
+                loadDating(true)
             }
         }
         distance.setOnClickListener {
             //expandFilter(distance, R.array.filter_distance)
             popupMenu(distance, R.array.filter_distance) { position ->
                 filterDistance = FilterDistance.from(position)
-                loadDating()
+                loadDating(true)
             }
         }
         datingContent.setOnClickListener {
             //expandFilter(datingContent, R.array.filter_dating_content)
             popupMenu(datingContent, R.array.filter_dating_content) { position ->
                 filterContent = FilterContent.from(position)
-                loadDating()
+                loadDating(true)
             }
         }
 
@@ -74,11 +78,19 @@ class OfficialRecommendFragment : BaseFragment() {
             adapter.data = it
         })
 
-        loadDating()
+        list.setLoadMoreListener {
+            loadDating(false, it)
+        }
+
+
+        loadDating(true)
     }
 
-    private fun loadDating() {
-        viewModel.listRecommendDating(true, filterTime.value, filterDistance.value, filterContent.content)
+    private fun loadDating(refresh: Boolean, loadMore: LoadMoreAdapter.LoadMore? = null) {
+        if (refresh) {
+            list.setLoadMoreEnable(true)
+        }
+        viewModel.listRecommendDating(refresh, filterTime.value, filterDistance.value, filterContent.content, loadMore)
     }
 
     private fun expandFilter(dropdownLabel: DropdownLabelView, menus: Int) {

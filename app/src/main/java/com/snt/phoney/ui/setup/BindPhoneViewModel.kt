@@ -15,9 +15,6 @@ class BindPhoneViewModel @Inject constructor(private val usecase: BindPhoneUseCa
 
     var verificationCodeId = MutableLiveData<String>()
 
-    val error = MutableLiveData<String>()
-    val success = MutableLiveData<String>()
-
     fun bindPhone(phone: String, code: String): Disposable? {
         val uuid = usecase.getUser()?.uuid
         val token = usecase.getAccessToken()

@@ -21,7 +21,6 @@ import javax.inject.Inject
 
 class SetupWizardViewModel @Inject constructor(private val setupWizardUseCase: SetupWizardUseCase) : AppViewModel() {
 
-    val error = MutableLiveData<String>()
     val setupSex = MutableLiveData<String>()
     val setupFeatures = MutableLiveData<String>()
     val setupUserInfo = MutableLiveData<String>()
