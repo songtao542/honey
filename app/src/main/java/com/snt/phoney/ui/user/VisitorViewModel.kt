@@ -39,6 +39,10 @@ class VisitorViewModel @Inject constructor(private val usecase: GetVisitorUseCas
                             setLoading("visitor", false)
                             Log.d("TTTT", "list follow==========>$it")
                             if (it.success) {
+                                if (refresh) {
+                                    mVisitors.clear()
+                                    visitors.value = mVisitors
+                                }
                                 if (it.isNotEmpty) {
                                     visitors.value = mVisitors.addList(it.data)
                                     mPageIndex++

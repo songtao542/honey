@@ -48,9 +48,9 @@ class VisitorFragment : BaseFragment() {
             adapter.data = it
         })
 
-        list.setLoadMoreListener {
-            load(true, it)
-        }
+//        list.setLoadMoreListener {
+//            load(false, it)
+//        }
 
         load(true)
     }

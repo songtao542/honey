@@ -56,7 +56,7 @@ class FriendRecyclerViewAdapter() : RecyclerView.Adapter<RecyclerView.ViewHolder
     inner class TagViewHolder(val mView: View) : RecyclerView.ViewHolder(mView) {
         init {
             mView.moreTag.setOnClickListener {
-                
+
             }
         }
     }

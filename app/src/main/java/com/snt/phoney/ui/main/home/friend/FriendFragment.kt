@@ -104,6 +104,7 @@ class FriendFragment : BaseFragment() {
         }
 
         viewModel.users.observe(this, Observer {
+            Log.d("TTTT","nnnnnnnnnnnnnnnnnnn")
             adapter?.data = it
         })
 

@@ -32,9 +32,11 @@ open class FriendViewModel @Inject constructor(private val usecase: FriendListUs
                  cupStart: String,
                  cupEnd: String,
                  loadMore: LoadMoreAdapter.LoadMore? = null) {
+        Log.d("TTTT", "HHHHHHHHHHHHHHHHHHHHHHH$refresh")
         if (isLoading("user")) {
             return
         }
+        Log.d("TTTT", "RRRRRRRRRRRRRRRRRRRRRRR$refresh")
         if (refresh) {
             mPageIndex = 1
         }
@@ -64,28 +66,29 @@ open class FriendViewModel @Inject constructor(private val usecase: FriendListUs
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribeBy(
                         onNext = {
-                            Log.d("TTTT", "getCities= eeeeeeeeeeeeeeeeeeeee =>success=${it.success}  isNotEmpty=${it.isNotEmpty}")
+                            Log.d("TTTT", "NNNNNNNNNNNNNNNNNNNNNNN")
                             setLoading("user", false)
                             if (it.success) {
                                 if (refresh) {
                                     mUsers.clear()
+                                    users.value = mUsers
                                 }
                                 if (it.isNotEmpty) {
                                     users.value = mUsers.addList(it.data)
                                     mPageIndex++
                                 } else {
-
-                                    Log.d("TTTT", "getCities= xxxxxxxxxxx =>success=${it.success}  isEmpty=${it.isEmpty} loadMore=$loadMore")
-
-
                                     loadMore?.isEnable = false
                                 }
                             } else if (!TextUtils.isEmpty(it.message)) {
                                 error.value = it.message
                             }
-
                         },
                         onError = {
+                            Log.d("TTTT", "EEEEEEEEEEEEEEEEEEEEEEEE")
+                            setLoading("user", false)
+                        },
+                        onComplete = {
+                            Log.d("TTTT", "CCCCCCCCCCCCCCCCCCCCCCCCC")
                             setLoading("user", false)
                         }
                 ).disposedBy(disposeBag)
