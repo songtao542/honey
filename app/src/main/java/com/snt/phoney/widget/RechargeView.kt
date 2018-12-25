@@ -32,6 +32,6 @@ class RechargeView : LinearLayout {
     }
 
     fun setOnRechargeClickListener(listener: ((view: View) -> Unit)) {
-        this.price.setOnClickListener { listener.invoke(it) }
+        this.price.setOnClickListener(listener)
     }
 }

@@ -2,10 +2,9 @@ package com.snt.phoney.ui.user
 
 import androidx.lifecycle.MutableLiveData
 import com.snt.phoney.R
-import com.snt.phoney.base.AppViewModel
 import com.snt.phoney.domain.model.User
-import com.snt.phoney.domain.usecase.GetUserInfoUseCase
 import com.snt.phoney.domain.usecase.PayOrderUseCase
+import com.snt.phoney.domain.usecase.UserInfoUseCase
 import com.snt.phoney.extensions.disposedBy
 import com.snt.phoney.ui.model.PayViewModel
 import io.reactivex.android.schedulers.AndroidSchedulers
@@ -13,7 +12,7 @@ import io.reactivex.rxkotlin.subscribeBy
 import io.reactivex.schedulers.Schedulers
 import javax.inject.Inject
 
-class UserInfoViewModel @Inject constructor(private val usecase: GetUserInfoUseCase,
+class UserInfoViewModel @Inject constructor(private val usecase: UserInfoUseCase,
                                             private val payOrderUseCase: PayOrderUseCase) : PayViewModel(payOrderUseCase) {
 
     val userInfo = MutableLiveData<User>()

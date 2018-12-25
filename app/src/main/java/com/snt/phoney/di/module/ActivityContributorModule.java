@@ -2,8 +2,8 @@ package com.snt.phoney.di.module;
 
 import com.snt.phoney.di.ActivityScope;
 import com.snt.phoney.ui.about.AboutActivity;
-import com.snt.phoney.ui.album.AlbumSettingActivity;
-import com.snt.phoney.ui.album.AlbumSettingActivityModule;
+import com.snt.phoney.ui.album.AlbumActivity;
+import com.snt.phoney.ui.album.AlbumActivityModule;
 import com.snt.phoney.ui.browser.BrowerActivityModule;
 import com.snt.phoney.ui.browser.BrowserActivity;
 import com.snt.phoney.ui.browser.WebBrowserActivity;
@@ -112,22 +112,19 @@ public abstract class ActivityContributorModule {
 
     @ActivityScope
     @ContributesAndroidInjector(modules = {
-            EmptyViewModelFactoryModule.class,
             PhotoViewerModule.class
     })
     public abstract PhotoViewerActivity contributePhotoViewerActivity();
 
     @ActivityScope
-    @ContributesAndroidInjector(modules = {
-            EmptyViewModelFactoryModule.class
-    })
+    @ContributesAndroidInjector
     public abstract AboutActivity contributeAboutActivity();
 
     @ActivityScope
     @ContributesAndroidInjector(modules = {
-            AlbumSettingActivityModule.class
+            AlbumActivityModule.class
     })
-    public abstract AlbumSettingActivity contributeAlbumSettingActivity();
+    public abstract AlbumActivity contributeAlbumActivity();
 
     @ActivityScope
     @ContributesAndroidInjector(modules = {

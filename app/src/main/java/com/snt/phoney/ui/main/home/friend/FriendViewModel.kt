@@ -9,6 +9,7 @@ import com.snt.phoney.domain.model.User
 import com.snt.phoney.domain.usecase.FriendListUseCase
 import com.snt.phoney.extensions.addList
 import com.snt.phoney.extensions.disposedBy
+import com.snt.phoney.extensions.empty
 import cust.widget.loadmore.LoadMoreAdapter
 import io.reactivex.Observable
 import io.reactivex.android.schedulers.AndroidSchedulers
@@ -32,11 +33,9 @@ open class FriendViewModel @Inject constructor(private val usecase: FriendListUs
                  cupStart: String,
                  cupEnd: String,
                  loadMore: LoadMoreAdapter.LoadMore? = null) {
-        Log.d("TTTT", "HHHHHHHHHHHHHHHHHHHHHHH$refresh")
         if (isLoading("user")) {
             return
         }
-        Log.d("TTTT", "RRRRRRRRRRRRRRRRRRRRRRR$refresh")
         if (refresh) {
             mPageIndex = 1
         }
@@ -66,12 +65,10 @@ open class FriendViewModel @Inject constructor(private val usecase: FriendListUs
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribeBy(
                         onNext = {
-                            Log.d("TTTT", "NNNNNNNNNNNNNNNNNNNNNNN")
                             setLoading("user", false)
                             if (it.success) {
                                 if (refresh) {
-                                    mUsers.clear()
-                                    users.value = mUsers
+                                    users.value = mUsers.empty()
                                 }
                                 if (it.isNotEmpty) {
                                     users.value = mUsers.addList(it.data)
@@ -84,11 +81,9 @@ open class FriendViewModel @Inject constructor(private val usecase: FriendListUs
                             }
                         },
                         onError = {
-                            Log.d("TTTT", "EEEEEEEEEEEEEEEEEEEEEEEE")
                             setLoading("user", false)
                         },
                         onComplete = {
-                            Log.d("TTTT", "CCCCCCCCCCCCCCCCCCCCCCCCC")
                             setLoading("user", false)
                         }
                 ).disposedBy(disposeBag)

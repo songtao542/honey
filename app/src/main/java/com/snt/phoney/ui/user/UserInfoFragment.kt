@@ -29,6 +29,7 @@ import com.snt.phoney.ui.dating.DatingActivity
 import com.snt.phoney.ui.report.ReportActivity
 import com.snt.phoney.ui.voicecall.VoiceCallActivity
 import com.snt.phoney.utils.Chat
+import com.snt.phoney.utils.DistanceFormat
 import com.snt.phoney.utils.data.Constants
 import com.snt.phoney.widget.PhotoFlowAdapter
 import kotlinx.android.synthetic.main.fragment_user_info.*
@@ -102,6 +103,10 @@ class UserInfoFragment : BaseFragment() {
             }
         })
 
+        viewModel.buySuccess.observe(this, Observer {
+            loadUser()
+        })
+
         follow.setOnClickListener {
             viewModel.follow(user.safeUuid)
         }
@@ -144,13 +149,17 @@ class UserInfoFragment : BaseFragment() {
         }
 
         if (checkPermission()) {
-            user.uuid?.let {
-                viewModel.getUserInfo(it)
-            }
+            loadUser()
         } else {
             checkAndRequestPermission(Manifest.permission.ACCESS_FINE_LOCATION, Manifest.permission.ACCESS_COARSE_LOCATION)
         }
 
+    }
+
+    private fun loadUser() {
+        user.uuid?.let {
+            viewModel.getUserInfo(it)
+        }
     }
 
     private fun setupUserInfo(user: User?) {
@@ -166,7 +175,7 @@ class UserInfoFragment : BaseFragment() {
         } else {
             authenticate.text = getString(R.string.not_authenticated)
         }
-        distance.text = getString(R.string.distance_of_template, "${user.distance}m")
+        distance.text = getString(R.string.distance_of_template, DistanceFormat.format(requireContext(), user.distance))
 
         height.text = "${user.height}"
         age.text = "${user.age}"
@@ -214,9 +223,9 @@ class UserInfoFragment : BaseFragment() {
                     .setTitle(R.string.buy_tip)
                     .setMessage(R.string.buy_warning)
                     .setCancelable(false)
-                    .setNegativeButton(R.string.cancel) { dialog, which ->
+                    .setNegativeButton(R.string.cancel) { dialog, _ ->
                         dialog.dismiss()
-                    }.setPositiveButton(R.string.confirm) { dialog, which ->
+                    }.setPositiveButton(R.string.confirm) { dialog, _ ->
                         dialog.dismiss()
                         viewModel.buyWithMibi(OrderType.USE_PHOTO_MIBI, photo.id.toString(), user.uuid)
                     }.show()

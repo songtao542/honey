@@ -7,10 +7,10 @@ import com.snt.phoney.domain.model.Response
 import com.snt.phoney.domain.usecase.SquareUseCase
 import com.snt.phoney.extensions.addList
 import com.snt.phoney.extensions.disposedBy
+import com.snt.phoney.extensions.empty
 import cust.widget.loadmore.LoadMoreAdapter
 import io.reactivex.Single
 import io.reactivex.android.schedulers.AndroidSchedulers
-import io.reactivex.disposables.Disposable
 import io.reactivex.rxkotlin.subscribeBy
 import io.reactivex.schedulers.Schedulers
 import javax.inject.Inject
@@ -29,28 +29,31 @@ class SquareViewModel @Inject constructor(private val usecase: SquareUseCase) : 
     /**
      * 推荐约会
      */
-    fun listRecommendDating(refresh: Boolean, dateType: Int, distanceType: Int, program: String, loadMore: LoadMoreAdapter.LoadMore? = null): Disposable? {
+    fun listRecommendDating(refresh: Boolean, dateType: String, distanceType: String, program: String, loadMore: LoadMoreAdapter.LoadMore? = null) {
+        if (isLoading("recommend")) {
+            return
+        }
         if (refresh) {
             mRecommendPageIndex = 1
         }
-        val token = usecase.getAccessToken() ?: return null
-        return usecase.location
+        val token = usecase.getAccessToken() ?: return
+        usecase.location
                 .flatMap {
                     usecase.listRecommendDating(token, mRecommendPageIndex, dateType, distanceType, program, it.latitude, it.longitude)
                             .toObservable()
                             .subscribeOn(Schedulers.io())
                             .observeOn(AndroidSchedulers.mainThread())
                 }
-                .singleOrError()
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribeBy(
-                        onSuccess = {
+                        onNext = {
                             if (it.success) {
+                                setLoading("recommend", false)
                                 if (refresh) {
-                                    mRecommendDating.clear()
+                                    recommendDating.value = mRecommendDating.empty()
                                 }
-                                if (!it.isEmpty) {
+                                if (it.isNotEmpty) {
                                     recommendDating.value = mRecommendDating.addList(it.data)
                                     mRecommendPageIndex++
                                 } else {
@@ -59,15 +62,21 @@ class SquareViewModel @Inject constructor(private val usecase: SquareUseCase) : 
                             }
                         },
                         onError = {
-
+                            setLoading("recommend", false)
+                        },
+                        onComplete = {
+                            setLoading("recommend", false)
                         }
-                )
+                ).disposedBy(disposeBag)
     }
 
     /**
      * 热门约会
      */
     fun listPopularDating(refresh: Boolean, loadMore: LoadMoreAdapter.LoadMore? = null) {
+        if (isLoading("popular")) {
+            return
+        }
         if (refresh) {
             mPopularPageIndex = 1
         }
@@ -78,8 +87,9 @@ class SquareViewModel @Inject constructor(private val usecase: SquareUseCase) : 
                 .subscribeBy(
                         onSuccess = {
                             if (it.success) {
+                                setLoading("popular", false)
                                 if (refresh) {
-                                    mPopularDating.clear()
+                                    popularDating.value = mPopularDating.empty()
                                 }
                                 if (!it.isEmpty) {
                                     popularDating.value = mPopularDating.addList(it.data)
@@ -90,7 +100,7 @@ class SquareViewModel @Inject constructor(private val usecase: SquareUseCase) : 
                             }
                         },
                         onError = {
-
+                            setLoading("popular", false)
                         }
                 ).disposedBy(disposeBag)
     }

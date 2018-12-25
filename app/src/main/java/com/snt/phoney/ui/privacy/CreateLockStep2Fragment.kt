@@ -8,7 +8,6 @@ import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
 import com.snt.phoney.R
 import com.snt.phoney.base.BaseFragment
-import com.snt.phoney.extensions.disposedBy
 import com.snt.phoney.extensions.snackbar
 import com.snt.phoney.utils.data.Constants
 import com.snt.phoney.utils.data.MD5
@@ -68,7 +67,7 @@ class CreateLockStep2Fragment : BaseFragment() {
                 snackbar(getString(R.string.password_validate_no_equal))
                 return@setOnClickListener
             }
-            viewModel.setPrivacyPassword(MD5.md5(pwd), MD5.md5(StringBuffer(pwd).reverse().toString()))?.disposedBy(disposeBag)
+            viewModel.setPrivacyPassword(MD5.md5(pwd), MD5.md5(StringBuffer(pwd).reverse().toString()))
         }
     }
 

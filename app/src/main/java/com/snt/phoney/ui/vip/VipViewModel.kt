@@ -2,7 +2,6 @@ package com.snt.phoney.ui.vip
 
 import androidx.lifecycle.MutableLiveData
 import com.snt.phoney.domain.model.OrderType
-import com.snt.phoney.domain.model.Response
 import com.snt.phoney.domain.model.VipCombo
 import com.snt.phoney.domain.usecase.GetVipInfoUseCase
 import com.snt.phoney.domain.usecase.PayOrderUseCase
@@ -18,15 +17,22 @@ class VipViewModel @Inject constructor(private val vipUsecase: GetVipInfoUseCase
     val vipCombos = MutableLiveData<List<VipCombo>>()
 
     fun listVipCombo() {
+        if (isLoading()) return
         val token = usecase.getAccessToken() ?: return
         vipUsecase.listVipCombo(token)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
-                .subscribeBy {
-                    if (it.code == Response.SUCCESS) {
-                        vipCombos.value = it.data
-                    }
-                }.disposedBy(disposeBag)
+                .subscribeBy(
+                        onSuccess = {
+                            setLoading(false)
+                            if (it.success) {
+                                vipCombos.value = it.data
+                            }
+                        },
+                        onError = {
+                            setLoading(false)
+                        }
+                ).disposedBy(disposeBag)
     }
 
     fun buyVipWithWechat(target: String, uid: String? = null) {

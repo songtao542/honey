@@ -28,7 +28,7 @@ import com.zhihu.matisse.internal.utils.PathUtils
 import kotlinx.android.synthetic.main.fragment_dating_create.*
 import java.io.File
 
-class CreateDatingFragment : BaseFragment(), PhotoViewerFragment.OnResultListener {
+class CreateDatingFragment : BaseFragment() {
 
     companion object {
         @JvmStatic
@@ -112,7 +112,10 @@ class CreateDatingFragment : BaseFragment(), PhotoViewerFragment.OnResultListene
                 putInt(Constants.Extra.INDEX, index)
                 putBoolean(Constants.Extra.DELETABLE, true)
             }).apply {
-                setOnResultListener(this@CreateDatingFragment)
+                setOnUriResultListener { deleted ->
+                    selectedPhotoUris.removeAll(deleted)
+                    photos.notifyAdapterSizeChanged()
+                }
             }
             activity?.addFragmentSafely(fragment, "photo_viewer", true)
         }
@@ -176,14 +179,6 @@ class CreateDatingFragment : BaseFragment(), PhotoViewerFragment.OnResultListene
                 selectedPhotoUris.addAll(uris)
                 photos.notifyAdapterSizeChanged()
             }
-        }
-    }
-
-    override fun onResult(deletedUris: List<Uri>?, deletedUrls: List<String>?, deletedPhotos: List<Photo>?) {
-        deletedUris?.let { deleted ->
-            selectedPhotoUris.removeAll(deleted)
-            photos.notifyAdapterSizeChanged()
-            return@let
         }
     }
 

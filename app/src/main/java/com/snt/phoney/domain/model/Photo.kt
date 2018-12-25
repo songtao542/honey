@@ -16,7 +16,7 @@ data class Photo(
 
     override fun equals(other: Any?): Boolean {
         if (other is Photo) {
-            return other.id == id && other.path.equals(path) && other.flag == flag
+            return other.id == id && other.path.equals(path) && other.flag == flag && other.price == price
         }
         return false
     }

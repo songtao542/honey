@@ -42,6 +42,7 @@ class OthersDatingFragment : BaseFragment() {
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
         viewModel = ViewModelProviders.of(this, viewModelFactory).get(DatingViewModel::class.java)
+        toolbar.setNavigationOnClickListener { activity?.onBackPressed() }
 
         list.layoutManager = LinearLayoutManager(context)
         adapter = OthersDatingRecyclerViewAdapter(this, viewModel)

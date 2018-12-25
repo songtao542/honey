@@ -1,73 +1,87 @@
 package com.snt.phoney.ui.privacy
 
-import android.text.TextUtils
-import androidx.lifecycle.MutableLiveData
+import android.util.Log
+import com.snt.phoney.R
 import com.snt.phoney.base.AppViewModel
-import com.snt.phoney.domain.usecase.CreatePrivacyLockUseCase
+import com.snt.phoney.domain.usecase.PrivacyLockUseCase
+import com.snt.phoney.extensions.TAG
+import com.snt.phoney.extensions.disposedBy
 import io.reactivex.android.schedulers.AndroidSchedulers
-import io.reactivex.disposables.Disposable
 import io.reactivex.rxkotlin.subscribeBy
 import io.reactivex.schedulers.Schedulers
 import javax.inject.Inject
 
-class CreateLockViewModel @Inject constructor(private val usecase: CreatePrivacyLockUseCase) : AppViewModel() {
-
-    val closeSuccess = MutableLiveData<String>()
-
-    val hasPrivacyPassword = MutableLiveData<Boolean>()
+class CreateLockViewModel @Inject constructor(private val usecase: PrivacyLockUseCase) : AppViewModel() {
 
     /**
      * @param password  MD5后的数字密码（32位）
      * @param privatePassword  倒叙密码后的MD5的数字密码（32位）
      */
-    fun setPrivacyPassword(password: String, privatePassword: String): Disposable? {
-        val token = usecase.getAccessToken() ?: return null
-        return usecase.setPrivacyPassword(token, password, privatePassword)
+    fun setPrivacyPassword(password: String, privatePassword: String) {
+        checkPrivacyPassword(password, privatePassword)
+    }
+
+    private fun trySetPrivacyPassword(password: String, privatePassword: String) {
+        val token = usecase.getAccessToken() ?: return
+        usecase.setPrivacyPassword(token, password, privatePassword)
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribeBy(
+                        onSuccess = {
+                            if (it.success) {
+                                success.value = context.getString(R.string.set_privacy_password_success)
+                            } else if (it.hasMessage) {
+                                error.value = it.message
+                            } else {
+                                error.value = context.getString(R.string.set_privacy_password_failed)
+                            }
+                        },
+                        onError = {
+                            error.value = context.getString(R.string.set_privacy_password_failed)
+                        }
+                )
+    }
+
+    private fun closePrivacyPassword(password: String, privatePassword: String) {
+        val token = usecase.getAccessToken() ?: return
+        usecase.closePrivacyPassword(token)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribeBy(
                         onSuccess = {
                             if (it.code == 200) {
-                                success.value = ""
-                            } else if (!TextUtils.isEmpty(it.message)) {
-                                error.value = it.message
+                                Log.d(TAG, "close privacy password success")
+                            } else if (it.hasMessage) {
+                                Log.d(TAG, "close privacy password failed:${it.message}")
+                            } else {
+                                Log.d(TAG, "close privacy password failed")
                             }
+                            trySetPrivacyPassword(password, privatePassword)
                         },
                         onError = {
-                            error.value = "出错了"
+                            Log.d(TAG, "close privacy password occur error")
+                            trySetPrivacyPassword(password, privatePassword)
                         }
-                )
+                ).disposedBy(disposeBag)
     }
 
-    fun closePrivacyPassword(): Disposable? {
-        val token = usecase.getAccessToken() ?: return null
-        return usecase.closePrivacyPassword(token)
+    private fun checkPrivacyPassword(password: String, privatePassword: String) {
+        val token = usecase.getAccessToken() ?: return
+        usecase.hasPrivacyPassword(token)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribeBy(
                         onSuccess = {
-                            if (it.code == 200) {
-                                closeSuccess.value = ""
-                            } else if (!TextUtils.isEmpty(it.message)) {
-                                error.value = it.message
+                            if (it.success) {
+                                closePrivacyPassword(password, privatePassword)
+                            } else {
+                                trySetPrivacyPassword(password, privatePassword)
                             }
                         },
                         onError = {
-                            error.value = "出错了"
+                            trySetPrivacyPassword(password, privatePassword)
                         }
-                )
-    }
-
-    fun hasPrivacyPassword(): Disposable? {
-        val token = usecase.getAccessToken() ?: return null
-        return usecase.hasPrivacyPassword(token)
-                .subscribeOn(Schedulers.io())
-                .observeOn(AndroidSchedulers.mainThread())
-                .subscribeBy {
-                    if (it.code == 200) {
-                        hasPrivacyPassword.value = it.data
-                    }
-                }
+                ).disposedBy(disposeBag)
     }
 
 

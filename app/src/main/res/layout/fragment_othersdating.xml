@@ -40,11 +40,11 @@
             android:id="@+id/name"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="8dp"
+            android:layout_marginTop="6dp"
             android:layout_toRightOf="@+id/head"
             android:text="西风吴琴"
             android:textColor="@android:color/black"
-            android:textSize="@dimen/textsize_small" />
+            android:textSize="@dimen/textsize_large" />
 
         <androidx.appcompat.widget.AppCompatTextView
             android:id="@+id/city"
@@ -52,7 +52,6 @@
             android:layout_height="wrap_content"
             android:layout_below="@+id/name"
             android:layout_toRightOf="@+id/head"
-            android:paddingLeft="5dp"
             android:paddingTop="2dp"
             android:paddingRight="5dp"
             android:paddingBottom="2dp"
@@ -188,11 +187,11 @@
             android:background="@drawable/button_primary_circle_corner_selector"
             android:minWidth="0dp"
             android:minHeight="30dp"
-            android:paddingLeft="15dp"
-            android:paddingRight="15dp"
+            android:paddingLeft="16dp"
+            android:paddingRight="16dp"
             android:text="@string/view_detail"
             android:textColor="@color/white"
-            android:textSize="@dimen/textsize_small" />
+            android:textSize="@dimen/textsize_smaller" />
 
     </LinearLayout>
 

@@ -3,16 +3,13 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:layout_marginBottom="4dp"
-    android:background="@android:color/white"
+    android:background="@drawable/underline_gray"
     android:orientation="vertical"
-    android:padding="8dp">
+    android:padding="12dp">
 
     <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:paddingLeft="10dp"
-        android:paddingRight="10dp">
+        android:layout_height="wrap_content">
 
         <androidx.appcompat.widget.AppCompatImageView
             android:id="@+id/head"
@@ -24,46 +21,71 @@
             app:srcCompat="@mipmap/head" />
 
 
-        <androidx.appcompat.widget.AppCompatTextView
-            android:id="@+id/name"
+        <LinearLayout
+            android:id="@+id/nameLayout"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="8dp"
+            android:layout_marginTop="5dp"
             android:layout_toRightOf="@+id/head"
-            android:text="西风吴琴"
-            android:textColor="@android:color/black"
-            android:textSize="@dimen/textsize_large" />
+            android:orientation="horizontal">
+
+            <androidx.appcompat.widget.AppCompatTextView
+                android:id="@+id/name"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_vertical"
+                android:text="西风吴琴"
+                android:textColor="@android:color/black"
+                android:textSize="@dimen/textsize_large" />
+
+            <androidx.appcompat.widget.AppCompatTextView
+                android:id="@+id/reliableValue"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_vertical"
+                android:layout_marginLeft="10dp"
+                android:background="@drawable/recommend_age_bg"
+                android:paddingLeft="5dp"
+                android:paddingTop="2dp"
+                android:paddingRight="5dp"
+                android:paddingBottom="2dp"
+                android:text="靠谱值4500"
+                android:textSize="@dimen/textsize_smallest"
+                android:visibility="gone" />
+
+        </LinearLayout>
+
+        <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/city"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/nameLayout"
+            android:layout_marginTop="5dp"
+            android:layout_marginRight="5dp"
+            android:layout_toRightOf="@+id/head"
+            android:text="30岁"
+            android:textSize="@dimen/textsize_smaller" />
 
         <androidx.appcompat.widget.AppCompatTextView
             android:id="@+id/age"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_below="@+id/name"
-            android:layout_toRightOf="@+id/head"
-            android:background="@drawable/recommend_age_bg"
-            android:paddingLeft="5dp"
-            android:paddingTop="2dp"
-            android:paddingRight="5dp"
+            android:layout_below="@+id/nameLayout"
             android:layout_marginTop="5dp"
-            android:paddingBottom="2dp"
+            android:layout_marginRight="5dp"
+            android:layout_toRightOf="@+id/city"
             android:text="30岁"
             android:textSize="@dimen/textsize_smaller" />
 
         <androidx.appcompat.widget.AppCompatTextView
-            android:id="@+id/reliableValue"
+            android:id="@+id/job"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_alignBaseline="@+id/name"
-            android:layout_marginLeft="10dp"
-            android:layout_toRightOf="@+id/name"
-            android:background="@drawable/recommend_age_bg"
-            android:paddingLeft="5dp"
-            android:paddingTop="2dp"
-            android:paddingRight="5dp"
-            android:paddingBottom="2dp"
-            android:text="靠谱值4500"
+            android:layout_below="@+id/nameLayout"
+            android:layout_marginTop="5dp"
+            android:layout_toRightOf="@+id/age"
+            android:text="30岁"
             android:textSize="@dimen/textsize_smaller" />
-
 
         <androidx.appcompat.widget.AppCompatTextView
             android:id="@+id/publishTime"
@@ -93,7 +115,8 @@
             android:paddingRight="5dp"
             android:paddingBottom="2dp"
             android:text="乐队地点"
-            android:textSize="@dimen/textsize_smaller" />
+            android:textSize="@dimen/textsize_smaller"
+            android:visibility="gone" />
 
 
         <androidx.appcompat.widget.AppCompatTextView
@@ -109,7 +132,8 @@
             android:paddingRight="5dp"
             android:paddingBottom="2dp"
             android:text="乐队时间"
-            android:textSize="@dimen/textsize_smaller" />
+            android:textSize="@dimen/textsize_smaller"
+            android:visibility="gone" />
 
     </RelativeLayout>
 
@@ -144,19 +168,32 @@
         android:layout_gravity="right"
         android:layout_marginTop="8dp">
 
-        <Button
+        <androidx.appcompat.widget.AppCompatTextView
             android:id="@+id/follow"
             android:layout_width="wrap_content"
-            android:layout_height="40dp"
+            android:layout_height="wrap_content"
+            android:background="@drawable/button_primary_circle_corner_selector"
+            android:paddingLeft="16dp"
+            android:paddingTop="5dp"
+            android:paddingRight="16dp"
+            android:paddingBottom="5dp"
             android:text="@string/add_attention"
-            android:textSize="@dimen/textsize_normal" />
+            android:textColor="@color/white"
+            android:textSize="@dimen/textsize_smaller" />
 
-        <Button
+        <androidx.appcompat.widget.AppCompatTextView
             android:id="@+id/attend"
             android:layout_width="wrap_content"
-            android:layout_height="40dp"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="10dp"
+            android:background="@drawable/button_primary_circle_corner_selector"
+            android:paddingLeft="16dp"
+            android:paddingTop="5dp"
+            android:paddingRight="16dp"
+            android:paddingBottom="5dp"
             android:text="@string/join_dating"
-            android:textSize="@dimen/textsize_normal" />
+            android:textColor="@color/white"
+            android:textSize="@dimen/textsize_smaller" />
 
     </LinearLayout>
 

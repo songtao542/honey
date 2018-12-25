@@ -126,9 +126,7 @@ class LocationPicker : BaseFragment() {
 
         }
 
-        if (!checkPermission()) {
-            checkAndRequestPermission(Manifest.permission.ACCESS_FINE_LOCATION, Manifest.permission.ACCESS_COARSE_LOCATION)
-        } else {
+        if (checkAndRequestPermission(Manifest.permission.ACCESS_FINE_LOCATION, Manifest.permission.ACCESS_COARSE_LOCATION)) {
             search()
         }
     }

@@ -27,21 +27,26 @@ open class PayViewModel constructor(private val usecase: PayOrderUseCase) : WXPa
         val token = usecase.getAccessToken() ?: return
         usecase.createOrder(token, type.value.toString(), target, uid ?: "")
                 .flatMap {
-                    return@flatMap if (it.code == Response.SUCCESS && !TextUtils.isEmpty(it.data)) {
+                    return@flatMap if (it.success && !TextUtils.isEmpty(it.data)) {
                         usecase.payInMibi(token, it.data!!)
                                 .subscribeOn(Schedulers.io())
                                 .observeOn(AndroidSchedulers.mainThread())
                     } else {
-                        Single.create<Response<String>> { Response<String>(code = 999, message = context.getString(R.string.create_order_failed)) }
+                        var errorMessage = context.getString(R.string.create_order_failed)
+                        if (it.hasMessage) {
+                            errorMessage = it.message
+                        }
+                        Single.create<Response<String>> { emitter -> emitter.onSuccess(Response(code = it.code, message = errorMessage)) }
                     }
                 }
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribeBy(
                         onSuccess = {
-                            if (it.code == Response.SUCCESS && it.data != null) {
+                            if (it.success) {
+                                buySuccess.value = true
                                 success.value = context.getString(R.string.buy_vip_success)
-                            } else if (!TextUtils.isEmpty(it.message)) {
+                            } else if (it.hasMessage) {
                                 error.value = it.message
                             } else {
                                 error.value = context.getString(R.string.buy_failed)
@@ -61,21 +66,25 @@ open class PayViewModel constructor(private val usecase: PayOrderUseCase) : WXPa
         val token = usecase.getAccessToken() ?: return
         usecase.createOrder(token, type.value.toString(), target, uid ?: "")
                 .flatMap {
-                    return@flatMap if (it.code == Response.SUCCESS && !TextUtils.isEmpty(it.data)) {
+                    return@flatMap if (it.success && !TextUtils.isEmpty(it.data)) {
                         usecase.alipay(token, it.data!!)
                                 .subscribeOn(Schedulers.io())
                                 .observeOn(AndroidSchedulers.mainThread())
                     } else {
-                        Single.create<Response<String>> { Response<String>(code = 999, message = context.getString(R.string.create_order_failed)) }
+                        var errorMessage = context.getString(R.string.create_order_failed)
+                        if (it.hasMessage) {
+                            errorMessage = it.message
+                        }
+                        Single.create<Response<String>> { emitter -> emitter.onSuccess(Response(code = it.code, message = errorMessage)) }
                     }
                 }
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribeBy(
                         onSuccess = {
-                            if (it.code == Response.SUCCESS && it.data != null) {
-                                payByAli(it.data)
-                            } else if (!TextUtils.isEmpty(it.message)) {
+                            if (it.success && !TextUtils.isEmpty(it.data)) {
+                                payByAli(it.data!!)
+                            } else if (it.hasMessage) {
                                 error.value = it.message
                             }
                         },
@@ -89,6 +98,7 @@ open class PayViewModel constructor(private val usecase: PayOrderUseCase) : WXPa
         activityRef?.get()?.let { activity ->
             AlipayApi.pay(activity, orderInfo) {
                 if (it == 9000) {
+                    buySuccess.value = true
                     success.value = context.getString(R.string.buy_success)
                 } else {
                     error.value = context.getString(R.string.buy_vip_failed)

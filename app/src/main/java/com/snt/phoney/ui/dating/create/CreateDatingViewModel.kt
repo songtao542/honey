@@ -6,7 +6,7 @@ import com.snt.phoney.R
 import com.snt.phoney.base.AppViewModel
 import com.snt.phoney.domain.model.DatingProgram
 import com.snt.phoney.domain.model.PoiAddress
-import com.snt.phoney.domain.usecase.CreateDatingUseCase
+import com.snt.phoney.domain.usecase.DatingUseCase
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.disposables.Disposable
 import io.reactivex.rxkotlin.subscribeBy
@@ -14,7 +14,7 @@ import io.reactivex.schedulers.Schedulers
 import java.io.File
 import javax.inject.Inject
 
-class CreateDatingViewModel @Inject constructor(private val usecase: CreateDatingUseCase) : AppViewModel() {
+class CreateDatingViewModel @Inject constructor(private val usecase: DatingUseCase) : AppViewModel() {
 
     val programs = object : LiveData<List<DatingProgram>>() {
         override fun onActive() {

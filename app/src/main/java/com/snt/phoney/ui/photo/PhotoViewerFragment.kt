@@ -4,7 +4,7 @@ import android.app.Activity
 import android.content.Intent
 import android.net.Uri
 import android.os.Bundle
-import android.util.Log
+import android.view.KeyEvent
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -12,11 +12,12 @@ import androidx.fragment.app.Fragment
 import com.snt.phoney.R
 import com.snt.phoney.domain.model.Photo
 import com.snt.phoney.extensions.getStatusBarHeight
+import com.snt.phoney.utils.KeyEventListener
 import com.snt.phoney.utils.data.Constants
 import kotlinx.android.synthetic.main.fragment_photo_viewer.*
 
-class PhotoViewerFragment : Fragment(), PhotoViewFragment.OnPhotoSingleTapListener {
-
+@Suppress("unused")
+open class PhotoViewerFragment : Fragment(), PhotoViewFragment.OnPhotoSingleTapListener, KeyEventListener {
 
     companion object {
         @JvmStatic
@@ -34,14 +35,7 @@ class PhotoViewerFragment : Fragment(), PhotoViewFragment.OnPhotoSingleTapListen
 
     private var deletedUrls: ArrayList<String>? = null
     private var deletedUris: ArrayList<Uri>? = null
-    private var deletedPhotos: ArrayList<Photo>? = null
-
-    private var onResultListener: OnResultListener? = null
-
-    private var onDeleteListener: OnDeleteListener? = null
-
-    private var backPressed: Boolean = true
-
+    protected var deletedPhotos: ArrayList<Photo>? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -79,10 +73,12 @@ class PhotoViewerFragment : Fragment(), PhotoViewFragment.OnPhotoSingleTapListen
             adapter.photos = photos
         }
 
-        Log.d("TTTT", "pppppppppppppppppppppp$photos")
-
         viewPager.adapter = adapter
         viewPager.currentItem = index
+    }
+
+    override fun onPhotoSingleTap() {
+        toggleActionBar()
     }
 
     private fun toggleActionBar() {
@@ -111,38 +107,17 @@ class PhotoViewerFragment : Fragment(), PhotoViewFragment.OnPhotoSingleTapListen
                 val index = viewPager.currentItem
                 val item = urls[index]
                 urls.remove(item)
-                if (onDeleteListener != null) {
-                    onDeleteListener!!.onDelete(index, deletedUrl = item)
-                    if (urls.size == 0) {
-                        backPressed = false
-                        if (activity is PhotoViewerActivity) {
-                            activity?.finish()
-                        } else {
-                            activity?.supportFragmentManager?.popBackStack()
-                        }
-                    } else {
-                        adapter.notifyDataSetChanged()
-                    }
+                if (deletedUrls == null) {
+                    deletedUrls = ArrayList()
+                }
+                deletedUrls!!.add(item)
+                if (mOnDeleteUrlListener != null) {
+                    mOnDeleteUrlListener!!.invoke(index, item)
+                }
+                if (urls.size == 0) {
+                    finish()
                 } else {
-                    if (deletedUrls == null) {
-                        deletedUrls = ArrayList()
-                    }
-                    deletedUrls!!.add(item)
-                    if (urls.size == 0) {
-                        backPressed = false
-                        if (activity is PhotoViewerActivity) {
-                            val result = Intent().apply {
-                                putStringArrayListExtra(Constants.Extra.LIST, deletedUrls)
-                            }
-                            activity?.setResult(Activity.RESULT_OK, result)
-                            activity?.finish()
-                        } else if (onResultListener != null) {
-                            onResultListener?.onResult(deletedUrls = deletedUrls)
-                            activity?.supportFragmentManager?.popBackStack()
-                        }
-                    } else {
-                        adapter.notifyDataSetChanged()
-                    }
+                    adapter.notifyDataSetChanged()
                 }
             }
             return true
@@ -158,38 +133,17 @@ class PhotoViewerFragment : Fragment(), PhotoViewFragment.OnPhotoSingleTapListen
                 val index = viewPager.currentItem
                 val item = uris[index]
                 uris.remove(item)
-                if (onDeleteListener != null) {
-                    onDeleteListener!!.onDelete(index, deletedUri = item)
-                    if (uris.size == 0) {
-                        backPressed = false
-                        if (activity is PhotoViewerActivity) {
-                            activity?.finish()
-                        } else {
-                            activity?.supportFragmentManager?.popBackStack()
-                        }
-                    } else {
-                        adapter.notifyDataSetChanged()
-                    }
+                if (deletedUris == null) {
+                    deletedUris = ArrayList()
+                }
+                deletedUris!!.add(item)
+                if (mOnDeleteUriListener != null) {
+                    mOnDeleteUriListener!!.invoke(index, item)
+                }
+                if (uris.size == 0) {
+                    finish()
                 } else {
-                    if (deletedUris == null) {
-                        deletedUris = ArrayList()
-                    }
-                    deletedUris!!.add(item)
-                    if (uris.size == 0) {
-                        backPressed = false
-                        if (activity is PhotoViewerActivity) {
-                            val result = Intent().apply {
-                                putParcelableArrayListExtra(Constants.Extra.LIST, deletedUris)
-                            }
-                            activity?.setResult(Activity.RESULT_OK, result)
-                            activity?.finish()
-                        } else if (onResultListener != null) {
-                            onResultListener?.onResult(deletedUris = deletedUris)
-                            activity?.supportFragmentManager?.popBackStack()
-                        }
-                    } else {
-                        adapter.notifyDataSetChanged()
-                    }
+                    adapter.notifyDataSetChanged()
                 }
             }
             return true
@@ -205,38 +159,18 @@ class PhotoViewerFragment : Fragment(), PhotoViewFragment.OnPhotoSingleTapListen
                 val index = viewPager.currentItem
                 val item = photos[index]
                 photos.remove(item)
-                if (onDeleteListener != null) {
-                    onDeleteListener!!.onDelete(index, deletePhoto = item)
-                    if (photos.size == 0) {
-                        backPressed = false
-                        if (activity is PhotoViewerActivity) {
-                            activity?.finish()
-                        } else {
-                            activity?.supportFragmentManager?.popBackStack()
-                        }
-                    } else {
-                        adapter.notifyDataSetChanged()
-                    }
+                if (deletedPhotos == null) {
+                    deletedPhotos = ArrayList()
+                }
+                deletedPhotos!!.add(item)
+                if (mOnDeletePhotoListener != null) {
+                    mOnDeletePhotoListener!!.invoke(index, item)
+
+                }
+                if (photos.size == 0) {
+                    finish()
                 } else {
-                    if (deletedPhotos == null) {
-                        deletedPhotos = ArrayList()
-                    }
-                    deletedPhotos!!.add(item)
-                    if (photos.size == 0) {
-                        backPressed = false
-                        if (activity is PhotoViewerActivity) {
-                            val result = Intent().apply {
-                                putParcelableArrayListExtra(Constants.Extra.LIST, deletedPhotos)
-                            }
-                            activity?.setResult(Activity.RESULT_OK, result)
-                            activity?.finish()
-                        } else if (onResultListener != null) {
-                            onResultListener?.onResult(deletedPhotos = deletedPhotos)
-                            activity?.supportFragmentManager?.popBackStack()
-                        }
-                    } else {
-                        adapter.notifyDataSetChanged()
-                    }
+                    adapter.notifyDataSetChanged()
                 }
             }
             return true
@@ -245,57 +179,82 @@ class PhotoViewerFragment : Fragment(), PhotoViewFragment.OnPhotoSingleTapListen
         }
     }
 
-    override fun onDestroyView() {
-        if (backPressed) {
-            if (urls != null && deletedUrls != null) {
-                if (activity is PhotoViewerActivity) {
-                    val result = Intent().apply {
-                        putStringArrayListExtra(Constants.Extra.LIST, deletedUrls)
-                    }
-                    activity?.setResult(Activity.RESULT_OK, result)
-                } else if (onResultListener != null) {
-                    onResultListener?.onResult(deletedUrls = deletedUrls)
+    override fun onKeyDown(keyCode: Int, event: KeyEvent): Boolean {
+        if (keyCode == KeyEvent.KEYCODE_BACK) {
+            setActivityResult()
+        }
+        return false
+    }
+
+    override fun onKeyUp(keyCode: Int, event: KeyEvent): Boolean {
+        return false
+    }
+
+    private fun finish() {
+        setActivityResult()
+        activity?.onBackPressed()
+    }
+
+    private fun setActivityResult() {
+        if (urls != null && deletedUrls != null) {
+            if (mOnUrlResultListener != null) {
+                mOnUrlResultListener?.invoke(deletedUrls!!)
+            } else {
+                val result = Intent().apply {
+                    putStringArrayListExtra(Constants.Extra.LIST, deletedUrls)
                 }
-            } else if (uris != null && deletedUris != null) {
-                if (activity is PhotoViewerActivity) {
-                    val result = Intent().apply {
-                        putParcelableArrayListExtra(Constants.Extra.LIST, deletedUris)
-                    }
-                    activity?.setResult(Activity.RESULT_OK, result)
-                } else if (onResultListener != null) {
-                    onResultListener?.onResult(deletedUris = deletedUris)
+                activity?.setResult(Activity.RESULT_OK, result)
+            }
+        } else if (uris != null && deletedUris != null) {
+            if (mOnUriResultListener != null) {
+                mOnUriResultListener?.invoke(deletedUris!!)
+            } else {
+                val result = Intent().apply {
+                    putParcelableArrayListExtra(Constants.Extra.LIST, deletedUris)
                 }
-            } else if (photos != null && deletedPhotos != null) {
-                if (activity is PhotoViewerActivity) {
-                    val result = Intent().apply {
-                        putParcelableArrayListExtra(Constants.Extra.LIST, deletedPhotos)
-                    }
-                    activity?.setResult(Activity.RESULT_OK, result)
-                } else if (onResultListener != null) {
-                    onResultListener?.onResult(deletedPhotos = deletedPhotos)
+                activity?.setResult(Activity.RESULT_OK, result)
+            }
+        } else if (photos != null && deletedPhotos != null) {
+            if (mOnPhotoResultListener != null) {
+                mOnPhotoResultListener?.invoke(deletedPhotos!!)
+            } else {
+                val result = Intent().apply {
+                    putParcelableArrayListExtra(Constants.Extra.LIST, deletedPhotos)
                 }
+                activity?.setResult(Activity.RESULT_OK, result)
             }
         }
-        super.onDestroyView()
     }
 
-    fun setOnResultListener(onResultListener: OnResultListener) {
-        this.onResultListener = onResultListener
+    private var mOnDeleteUrlListener: ((index: Int, url: String) -> Unit)? = null
+    fun setOnUrlDeleteListener(listener: ((index: Int, url: String) -> Unit)) {
+        this.mOnDeleteUrlListener = listener
     }
 
-    fun setOnDeleteListener(onDeleteListener: OnDeleteListener) {
-        this.onDeleteListener = onDeleteListener
+    private var mOnDeleteUriListener: ((index: Int, uri: Uri) -> Unit)? = null
+    fun setOnUriDeleteListener(listener: ((index: Int, uri: Uri) -> Unit)) {
+        this.mOnDeleteUriListener = listener
     }
 
-    override fun onPhotoSingleTap() {
-        toggleActionBar()
+    private var mOnDeletePhotoListener: ((index: Int, photo: Photo) -> Unit)? = null
+    fun setOnPhotoDeleteListener(listener: ((index: Int, photo: Photo) -> Unit)) {
+        this.mOnDeletePhotoListener = listener
     }
 
-    interface OnDeleteListener {
-        fun onDelete(index: Int, deletedUrl: String? = null, deletedUri: Uri? = null, deletePhoto: Photo? = null)
+
+    private var mOnUriResultListener: ((deletedUris: List<Uri>) -> Unit)? = null
+    fun setOnUriResultListener(listener: ((deletedUris: List<Uri>) -> Unit)) {
+        mOnUriResultListener = listener
     }
 
-    interface OnResultListener {
-        fun onResult(deletedUris: List<Uri>? = null, deletedUrls: List<String>? = null, deletedPhotos: List<Photo>? = null)
+    private var mOnUrlResultListener: ((deletedUrls: List<String>) -> Unit)? = null
+    fun setOnUrlResultListener(listener: ((deletedUrls: List<String>) -> Unit)) {
+        mOnUrlResultListener = listener
     }
+
+    private var mOnPhotoResultListener: ((deletedPhotos: List<Photo>) -> Unit)? = null
+    fun setOnPhotoResultListener(listener: ((deletedPhotos: List<Photo>) -> Unit)) {
+        mOnPhotoResultListener = listener
+    }
+
 }

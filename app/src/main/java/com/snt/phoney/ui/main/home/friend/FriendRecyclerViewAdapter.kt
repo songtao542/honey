@@ -12,7 +12,9 @@ import com.snt.phoney.base.CommonActivity
 import com.snt.phoney.base.Page
 import com.snt.phoney.domain.model.User
 import com.snt.phoney.ui.user.UserActivity
+import com.snt.phoney.utils.DistanceFormat
 import com.snt.phoney.utils.data.Constants
+import jiguang.chat.utils.TimeFormat
 import kotlinx.android.synthetic.main.fragment_friend.view.*
 import kotlinx.android.synthetic.main.fragment_friend_tag.view.*
 
@@ -64,6 +66,14 @@ class FriendRecyclerViewAdapter() : RecyclerView.Adapter<RecyclerView.ViewHolder
     inner class ViewHolder(val mView: View) : RecyclerView.ViewHolder(mView) {
         private var user: User? = null
 
+        private val context = mView.context
+        private val image = mView.image
+        private val label = mView.label
+        private val renQi = mView.renQi
+        private val lastOnLineTime = mView.lastOnLineTime
+        private val distanceView = mView.distance
+        private val name = mView.name
+
         init {
             mView.setOnClickListener {
                 mView.context.startActivity(CommonActivity.newIntent<UserActivity>(mView.context, Page.VIEW_USER_INFO, Bundle().apply {
@@ -74,21 +84,25 @@ class FriendRecyclerViewAdapter() : RecyclerView.Adapter<RecyclerView.ViewHolder
 
         fun setData(user: User) {
             this.user = user
-            Glide.with(mView).load(user.portrait).into(mView.image)
+            Glide.with(mView).load(user.portrait).into(image)
             //Glide.with(mView).load(user.portrait).apply(RequestOptions().circleCrop()).transition(DrawableTransitionOptions.withCrossFade()).into(mView.image)
-            mView.label.text = user.tag
-            mView.renQi.text = "${user.followedSize}"
-            mView.lastOnLineTime.text = getUpdateTime(user.updateTime)
-            mView.distance.text = getDistance()
-            mView.des.text = user.nickname
+            label.text = user.tag
+            renQi.text = "${user.followedSize}"
+            setUpdateTime(user.updateTime)
+            setDistance(user.distance)
+            name.text = user.nickname
         }
 
-        private fun getUpdateTime(time: Long): String {
-            return "刚刚在线"
+        private fun setUpdateTime(time: Long) {
+            lastOnLineTime.text = context.getString(R.string.online_time_template, TimeFormat(context, time).time)
         }
 
-        private fun getDistance(): String {
-            return mView.context.getString(R.string.distance_of_template, "23km")
+        private fun setDistance(distance: Double) {
+            if (distance > 0) {
+                distanceView.text = context.getString(R.string.distance_of_template, DistanceFormat.format(context, distance))
+            } else {
+                distanceView.visibility = View.GONE
+            }
         }
     }
 }

@@ -7,18 +7,18 @@ import com.snt.phoney.base.AppViewModel
 import com.snt.phoney.domain.model.Applicant
 import com.snt.phoney.domain.model.ApplyState
 import com.snt.phoney.domain.model.Dating
-import com.snt.phoney.domain.model.User
-import com.snt.phoney.domain.usecase.GetDatingUseCase
+import com.snt.phoney.domain.usecase.DatingUseCase
 import com.snt.phoney.domain.usecase.SquareUseCase
 import com.snt.phoney.extensions.addList
 import com.snt.phoney.extensions.disposedBy
+import com.snt.phoney.extensions.empty
 import cust.widget.loadmore.LoadMoreAdapter
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.rxkotlin.subscribeBy
 import io.reactivex.schedulers.Schedulers
 import javax.inject.Inject
 
-class DatingViewModel @Inject constructor(private val usecase: GetDatingUseCase, private val squareUseCase: SquareUseCase) : AppViewModel() {
+class DatingViewModel @Inject constructor(private val usecase: DatingUseCase, private val squareUseCase: SquareUseCase) : AppViewModel() {
 
 
     private val mOtherDatings by lazy { ArrayList<Dating>() }
@@ -60,6 +60,9 @@ class DatingViewModel @Inject constructor(private val usecase: GetDatingUseCase,
     }
 
     fun listJoinedDating(refresh: Boolean, loadMore: LoadMoreAdapter.LoadMore? = null) {
+        if (isLoading("joined_dating")) {
+            return
+        }
         if (refresh) {
             mJoinDatingPageIndex = 1
         }
@@ -69,9 +72,10 @@ class DatingViewModel @Inject constructor(private val usecase: GetDatingUseCase,
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribeBy(
                         onSuccess = {
+                            setLoading("joined_dating", false)
                             if (it.success) {
                                 if (refresh) {
-                                    mJoinedDatings.clear()
+                                    joinedDatings.value = mJoinedDatings.empty()
                                 }
                                 if (it.isNotEmpty) {
                                     joinedDatings.value = mJoinedDatings.addList(it.data)
@@ -84,12 +88,16 @@ class DatingViewModel @Inject constructor(private val usecase: GetDatingUseCase,
                             }
                         },
                         onError = {
+                            setLoading("joined_dating", false)
                             error.value = context.getString(R.string.load_failed)
                         }
                 ).disposedBy(disposeBag)
     }
 
     fun listMyDating(refresh: Boolean, loadMore: LoadMoreAdapter.LoadMore? = null) {
+        if (isLoading("my_dating")) {
+            return
+        }
         if (refresh) {
             mDatingPageIndex = 1
         }
@@ -99,9 +107,10 @@ class DatingViewModel @Inject constructor(private val usecase: GetDatingUseCase,
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribeBy(
                         onSuccess = {
+                            setLoading("my_dating", false)
                             if (it.success) {
                                 if (refresh) {
-                                    mPublishDatings.clear()
+                                    publishDatings.value = mPublishDatings.empty()
                                 }
                                 if (it.isNotEmpty) {
                                     publishDatings.value = mPublishDatings.addList(it.data)
@@ -115,6 +124,7 @@ class DatingViewModel @Inject constructor(private val usecase: GetDatingUseCase,
                             }
                         },
                         onError = {
+                            setLoading("my_dating", false)
                             error.value = context.getString(R.string.load_failed)
                         }
                 ).disposedBy(disposeBag)
@@ -122,6 +132,9 @@ class DatingViewModel @Inject constructor(private val usecase: GetDatingUseCase,
 
 
     fun listDating(refresh: Boolean, userId: String, loadMore: LoadMoreAdapter.LoadMore? = null) {
+        if (isLoading("user_dating")) {
+            return
+        }
         if (refresh) {
             mDatingPageIndex = 1
         }
@@ -131,9 +144,10 @@ class DatingViewModel @Inject constructor(private val usecase: GetDatingUseCase,
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribeBy(
                         onSuccess = {
+                            setLoading("user_dating", false)
                             if (it.success) {
                                 if (refresh) {
-                                    mOtherDatings.clear()
+                                    otherDatings.value = mOtherDatings.empty()
                                 }
                                 if (it.isNotEmpty) {
                                     otherDatings.value = mOtherDatings.addList(it.data)
@@ -146,12 +160,16 @@ class DatingViewModel @Inject constructor(private val usecase: GetDatingUseCase,
                             }
                         },
                         onError = {
+                            setLoading("user_dating", false)
                             error.value = context.getString(R.string.load_failed)
                         }
                 ).disposedBy(disposeBag)
     }
 
     fun listDatingApplicant(refresh: Boolean, uuid: String, loadMore: LoadMoreAdapter.LoadMore? = null) {
+        if (isLoading("dating_applicant")) {
+            return
+        }
         if (refresh) {
             mApplicantPageIndex = 1
         }
@@ -161,9 +179,10 @@ class DatingViewModel @Inject constructor(private val usecase: GetDatingUseCase,
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribeBy(
                         onSuccess = {
+                            setLoading("dating_applicant", false)
                             if (it.success) {
                                 if (refresh) {
-                                    mApplicants.clear()
+                                    applicants.value = mApplicants.empty()
                                 }
                                 if (it.isNotEmpty) {
                                     applicants.value = mApplicants.addList(it.data)
@@ -176,6 +195,7 @@ class DatingViewModel @Inject constructor(private val usecase: GetDatingUseCase,
                             }
                         },
                         onError = {
+                            setLoading("dating_applicant", false)
                             error.value = context.getString(R.string.load_failed)
                         }
                 )
@@ -183,6 +203,9 @@ class DatingViewModel @Inject constructor(private val usecase: GetDatingUseCase,
 
 
     fun listApplicant(refresh: Boolean, loadMore: LoadMoreAdapter.LoadMore? = null) {
+        if (isLoading("applicant")) {
+            return
+        }
         if (refresh) {
             mApplicantPageIndex = 1
         }
@@ -192,9 +215,10 @@ class DatingViewModel @Inject constructor(private val usecase: GetDatingUseCase,
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribeBy(
                         onSuccess = {
+                            setLoading("applicant", false)
                             if (it.code == 200) {
                                 if (refresh) {
-                                    mApplicants.clear()
+                                    applicants.value = mApplicants.empty()
                                 }
                                 if (it.isNotEmpty) {
                                     applicants.value = mApplicants.addList(it.data)
@@ -207,6 +231,7 @@ class DatingViewModel @Inject constructor(private val usecase: GetDatingUseCase,
                             }
                         },
                         onError = {
+                            setLoading("applicant", false)
                             error.value = context.getString(R.string.load_failed)
                         }
                 )
@@ -241,15 +266,16 @@ class DatingViewModel @Inject constructor(private val usecase: GetDatingUseCase,
     }
 
 
-    fun follow(user: User) {
+    fun follow(dating: Dating) {
         val token = usecase.getAccessToken() ?: return
-        squareUseCase.follow(token, user.safeUuid)
+        val userId = dating.user?.safeUuid ?: return
+        squareUseCase.follow(token, userId)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribeBy(
                         onSuccess = {
                             if (it.success) {
-                                user.care = it.data!!
+                                dating.care = it.data!!
                                 followSuccess.value = it.data
                             } else {
                                 error.value = context.getString(R.string.follow_failed)

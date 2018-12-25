@@ -7,9 +7,9 @@ import com.snt.phoney.domain.model.User
 import com.snt.phoney.domain.usecase.GetVisitorUseCase
 import com.snt.phoney.extensions.addList
 import com.snt.phoney.extensions.disposedBy
+import com.snt.phoney.extensions.empty
 import cust.widget.loadmore.LoadMoreAdapter
 import io.reactivex.android.schedulers.AndroidSchedulers
-import io.reactivex.disposables.Disposable
 import io.reactivex.rxkotlin.subscribeBy
 import io.reactivex.schedulers.Schedulers
 import javax.inject.Inject
@@ -24,7 +24,7 @@ class VisitorViewModel @Inject constructor(private val usecase: GetVisitorUseCas
     private var mPageIndex = 1
 
     fun listVisitor(refresh: Boolean, loadMore: LoadMoreAdapter.LoadMore? = null) {
-        if (isLoading("visitor")) {
+        if (isLoading()) {
             return
         }
         if (refresh) {
@@ -36,12 +36,11 @@ class VisitorViewModel @Inject constructor(private val usecase: GetVisitorUseCas
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribeBy(
                         onSuccess = {
-                            setLoading("visitor", false)
+                            setLoading(false)
                             Log.d("TTTT", "list follow==========>$it")
                             if (it.success) {
                                 if (refresh) {
-                                    mVisitors.clear()
-                                    visitors.value = mVisitors
+                                    visitors.value = mVisitors.empty()
                                 }
                                 if (it.isNotEmpty) {
                                     visitors.value = mVisitors.addList(it.data)
@@ -52,7 +51,7 @@ class VisitorViewModel @Inject constructor(private val usecase: GetVisitorUseCas
                             }
                         },
                         onError = {
-                            setLoading("visitor", false)
+                            setLoading(false)
                         }
                 ).disposedBy(disposeBag)
     }

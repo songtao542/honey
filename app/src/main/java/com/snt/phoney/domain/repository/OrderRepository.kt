@@ -1,9 +1,6 @@
 package com.snt.phoney.domain.repository
 
-import com.snt.phoney.domain.model.PreWithdraw
-import com.snt.phoney.domain.model.Response
-import com.snt.phoney.domain.model.WithdrawInfo
-import com.snt.phoney.domain.model.WxPrePayResult
+import com.snt.phoney.domain.model.*
 import io.reactivex.Single
 
 interface OrderRepository {
@@ -65,6 +62,6 @@ interface OrderRepository {
                   type: String,
                   page: String,
                   startTime: String,
-                  endTime: String): Single<Response<String>>
+                  endTime: String): Single<Response<List<OrderRecord>>>
 
 }

@@ -230,8 +230,8 @@ interface Api {
     @GET("appointment/listAppointment")
     fun listRecommendDating(@Query("token") token: String,
                             @Query("page") pageIndex: String,
-                            @Query("dateType") dateType: Int,
-                            @Query("distanceType") distanceType: Int,
+                            @Query("dateType") dateType: String,
+                            @Query("distanceType") distanceType: String,
                             @Query("grogram") program: String,
                             @Query("latitude") longitude: String,
                             @Query("longitude") latitude: String): Single<Response<List<Dating>>>
@@ -395,7 +395,7 @@ interface Api {
                   @Field("type") type: String,
                   @Field("page") page: String,
                   @Field("startTime") startTime: String,
-                  @Field("endTime") endTime: String): Single<Response<String>>
+                  @Field("endTime") endTime: String): Single<Response<List<OrderRecord>>>
 
     /**
      * @param photoPermission string 权限值(0 全部公开 1 红包（只有单张） 2 解锁相册(全部) 3 需要申请查看 4 不可查看)

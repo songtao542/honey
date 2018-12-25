@@ -53,7 +53,7 @@ class DatingRepositoryImpl @Inject constructor(private val api: Api) : DatingRep
         return api.listMyDating(token, pageIndex.toString())
     }
 
-    override fun listRecommendDating(token: String, pageIndex: Int, dateType: Int, distanceType: Int, program: String, latitude: Double, longitude: Double): Single<Response<List<Dating>>> {
+    override fun listRecommendDating(token: String, pageIndex: Int, dateType: String, distanceType: String, program: String, latitude: Double, longitude: Double): Single<Response<List<Dating>>> {
         return api.listRecommendDating(token, pageIndex.toString(), dateType, distanceType, program, latitude.toString(), longitude.toString())
     }
 

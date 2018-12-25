@@ -1,8 +1,8 @@
 package com.snt.phoney.ui.photo
 
-import com.snt.phoney.base.CommonActivity
+import com.snt.phoney.base.BaseNoViewModelActivity
 
 
-class PhotoViewerActivity : CommonActivity() {
+class PhotoViewerActivity : BaseNoViewModelActivity() {
 
 }

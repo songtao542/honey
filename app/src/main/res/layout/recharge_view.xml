@@ -13,7 +13,8 @@
         android:layout_height="30dp"
         android:layout_gravity="center_vertical"
         android:background="@drawable/wallet_recharge_shape_border_circle"
-        android:padding="4dp"
+        android:padding="8dp"
+        android:scaleType="centerInside"
         app:srcCompat="@drawable/ic_heart_solid_red" />
 
     <androidx.appcompat.widget.AppCompatTextView

@@ -8,18 +8,16 @@ import com.snt.phoney.base.AppViewModel
 import com.snt.phoney.domain.model.AmountInfo
 import com.snt.phoney.domain.model.Photo
 import com.snt.phoney.domain.model.PhotoPermission
-import com.snt.phoney.domain.usecase.GetUserInfoUseCase
+import com.snt.phoney.domain.usecase.UserInfoUseCase
 import com.snt.phoney.extensions.disposedBy
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.disposables.Disposable
 import io.reactivex.rxkotlin.subscribeBy
 import io.reactivex.schedulers.Schedulers
-import kotlinx.coroutines.channels.consumesAll
-import kotlinx.serialization.getSerialTag
 import java.io.File
 import javax.inject.Inject
 
-class MineViewModel @Inject constructor(private val usecase: GetUserInfoUseCase) : AppViewModel() {
+class MineViewModel @Inject constructor(private val usecase: UserInfoUseCase) : AppViewModel() {
 
     val user = usecase.getUser()
 
@@ -35,7 +33,7 @@ class MineViewModel @Inject constructor(private val usecase: GetUserInfoUseCase)
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribeBy {
                     Log.d("TTTT", "rrrrrrrrrrrrrrrr$it")
-                    if (it.code == 200) {
+                    if (it.success) {
                         amountInfo.value = it.data
                     }
                 }
@@ -48,7 +46,7 @@ class MineViewModel @Inject constructor(private val usecase: GetUserInfoUseCase)
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribeBy(
                         onSuccess = {
-                            if (it.code == 200) {
+                            if (it.success) {
                                 success.value = context.getString(R.string.set_photo_permission_success)
                             } else if (!TextUtils.isEmpty(it.message)) {
                                 error.value = context.getString(R.string.set_photo_permission_failed)
@@ -67,7 +65,7 @@ class MineViewModel @Inject constructor(private val usecase: GetUserInfoUseCase)
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribeBy(
                         onSuccess = {
-                            if (it.code == 200) {
+                            if (it.success) {
                                 photos.value = it.data
                                 success.value = context.getString(R.string.upload_photo_success)
                             } else if (!TextUtils.isEmpty(it.message)) {
@@ -86,7 +84,7 @@ class MineViewModel @Inject constructor(private val usecase: GetUserInfoUseCase)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribeBy {
-                    if (it.code == 200) {
+                    if (it.success) {
                         photos.value = it.data
                     }
                 }.disposedBy(disposeBag)
@@ -98,7 +96,7 @@ class MineViewModel @Inject constructor(private val usecase: GetUserInfoUseCase)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribeBy {
-                    if (it.code == 200) {
+                    if (it.success) {
                         //toast.value = context.getString(R.string.delete_photo_success)
                         Log.d("TTTT", "xxxxxxxxxxxxxxxxxxxxxxxxxxxxx${photoList[0]}")
                         photos.value = it.data

@@ -18,7 +18,10 @@ public abstract class WalletActivityModule {
     public abstract WalletFragment contributeWalletFragment();
 
     @ContributesAndroidInjector
-    public abstract DetailFragment contributeDetailFragment();
+    public abstract WalletDetailFragment contributeDetailFragment();
+
+    @ContributesAndroidInjector
+    public abstract DetailListFragment contributeDetailListFragment();
 
     @Binds
     @IntoMap

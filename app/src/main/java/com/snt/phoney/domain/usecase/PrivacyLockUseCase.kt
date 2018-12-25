@@ -3,7 +3,7 @@ package com.snt.phoney.domain.usecase
 import com.snt.phoney.domain.repository.UserRepository
 import javax.inject.Inject
 
-class CreatePrivacyLockUseCase @Inject constructor(val repository: UserRepository) : AccessUserUseCase(repository)  {
+class PrivacyLockUseCase @Inject constructor(val repository: UserRepository) : AccessUserUseCase(repository)  {
 
     fun setPrivacyPassword(token: String, password: String, privatePassword: String) = repository.setPrivacyPassword(token, password, privatePassword)
 

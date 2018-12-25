@@ -1,5 +1,6 @@
 package com.snt.phoney.ui.main.square.official
 
+import android.Manifest
 import android.os.Bundle
 import android.view.Gravity
 import android.view.LayoutInflater
@@ -10,6 +11,8 @@ import androidx.lifecycle.ViewModelProviders
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.snt.phoney.R
 import com.snt.phoney.base.BaseFragment
+import com.snt.phoney.extensions.checkAndRequestPermission
+import com.snt.phoney.extensions.checkAppPermission
 import com.snt.phoney.extensions.setLoadMoreEnable
 import com.snt.phoney.extensions.setLoadMoreListener
 import com.snt.phoney.ui.main.square.SquareViewModel
@@ -30,8 +33,8 @@ class OfficialRecommendFragment : BaseFragment() {
     lateinit var adapter: OfficialRecommendRecyclerViewAdapter
 
     private var filterTime: FilterTime = FilterTime.ALL
-    private var filterDistance: FilterDistance = FilterDistance.ALL
-    private var filterContent: FilterContent = FilterContent.ALL
+    private var filterDistance: FilterDistance = FilterDistance.NONE
+    private var filterContent: FilterContent = FilterContent.NONE
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         return inflater.inflate(R.layout.fragment_official_recommend_list, container, false)
@@ -42,7 +45,7 @@ class OfficialRecommendFragment : BaseFragment() {
         viewModel = ViewModelProviders.of(this, viewModelFactory).get(SquareViewModel::class.java)
 
         list.layoutManager = LinearLayoutManager(context)
-        adapter = OfficialRecommendRecyclerViewAdapter(viewModel, disposeBag)
+        adapter = OfficialRecommendRecyclerViewAdapter(this, viewModel, disposeBag)
         list.adapter = adapter
 
         list.setOnTouchListener { _, _ ->
@@ -55,6 +58,8 @@ class OfficialRecommendFragment : BaseFragment() {
         publishTime.setOnClickListener {
             //expandFilter(publishTime, R.array.filter_publish_time)
             popupMenu(publishTime, R.array.filter_publish_time) { position ->
+                filterDistance = FilterDistance.NONE
+                filterContent = FilterContent.NONE
                 filterTime = FilterTime.from(position)
                 loadDating(true)
             }
@@ -62,13 +67,19 @@ class OfficialRecommendFragment : BaseFragment() {
         distance.setOnClickListener {
             //expandFilter(distance, R.array.filter_distance)
             popupMenu(distance, R.array.filter_distance) { position ->
+                filterTime = FilterTime.NONE
+                filterContent = FilterContent.NONE
                 filterDistance = FilterDistance.from(position)
-                loadDating(true)
+                if (checkAndRequestPermission(Manifest.permission.ACCESS_FINE_LOCATION, Manifest.permission.ACCESS_COARSE_LOCATION)) {
+                    loadDating(true)
+                }
             }
         }
         datingContent.setOnClickListener {
             //expandFilter(datingContent, R.array.filter_dating_content)
             popupMenu(datingContent, R.array.filter_dating_content) { position ->
+                filterTime = FilterTime.NONE
+                filterDistance = FilterDistance.NONE
                 filterContent = FilterContent.from(position)
                 loadDating(true)
             }
@@ -82,15 +93,29 @@ class OfficialRecommendFragment : BaseFragment() {
             loadDating(false, it)
         }
 
-
         loadDating(true)
+    }
+
+    private fun checkPermission(): Boolean {
+        return context?.checkAppPermission(Manifest.permission.ACCESS_FINE_LOCATION, Manifest.permission.ACCESS_COARSE_LOCATION) == true
+    }
+
+    override fun onRequestPermissionsResult(requestCode: Int, permissions: Array<out String>, grantResults: IntArray) {
+        if (checkPermission()) {
+            loadDating(true)
+        } else {
+            filterDistance = FilterDistance.from(-1)
+        }
     }
 
     private fun loadDating(refresh: Boolean, loadMore: LoadMoreAdapter.LoadMore? = null) {
         if (refresh) {
             list.setLoadMoreEnable(true)
         }
-        viewModel.listRecommendDating(refresh, filterTime.value, filterDistance.value, filterContent.content, loadMore)
+        val timeFilter = filterTime.toString()
+        val distanceFilter = filterDistance.toString()
+        val contentFilter = filterContent.toString()
+        viewModel.listRecommendDating(refresh, timeFilter, distanceFilter, contentFilter, loadMore)
     }
 
     private fun expandFilter(dropdownLabel: DropdownLabelView, menus: Int) {

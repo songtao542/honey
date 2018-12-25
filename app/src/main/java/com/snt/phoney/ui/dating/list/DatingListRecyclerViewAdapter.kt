@@ -12,7 +12,6 @@ import androidx.recyclerview.widget.RecyclerView
 import com.snt.phoney.R
 import com.snt.phoney.base.addFragmentSafely
 import com.snt.phoney.domain.model.Dating
-import com.snt.phoney.domain.model.Photo
 import com.snt.phoney.extensions.colorOf
 import com.snt.phoney.extensions.dip
 import com.snt.phoney.ui.dating.detail.DatingDetailFragment
@@ -77,13 +76,13 @@ class DatingListRecyclerViewAdapter(private val fragment: DatingListFragment, pr
                     }), "applicants", true)
                 }
             } else if (type == DatingListFragment.TYPE_JOINED) {
+                datingJoiner.text = context.getString(R.string.dating_with_template, dating.nickname
+                        ?: "")
                 /**
                  * 0 未开始 1 进行中 2 过期 3 结束 5 取消
                  */
                 if (dating.state != 2) {
                     cancelDating.visibility = View.VISIBLE
-                    datingJoiner.text = context.getString(R.string.dating_with_template,
-                            dating.user?.safeNickname ?: "")
                     /**
                      * 0 审核中  1 通过  2 拒绝   3 取消
                      */

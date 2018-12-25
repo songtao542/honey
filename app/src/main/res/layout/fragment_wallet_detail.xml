@@ -4,9 +4,9 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@color/white"
     android:orientation="vertical"
-    tools:context=".ui.wallet.DetailFragment">
-
+    tools:context=".ui.wallet.WalletDetailFragment">
 
     <com.snt.phoney.widget.Toolbar
         android:id="@+id/toolbar"
@@ -15,14 +15,30 @@
         android:layout_height="?attr/actionBarSize"
         android:background="?attr/toolbarBackground"
         app:navigationIcon="@drawable/ic_back_black"
-        app:title="@string/my_wallet"
+        app:title="@string/view_records"
         app:titleTextColor="@color/black" />
 
-
-
-    <TextView
+    <View
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:text="@string/hello_blank_fragment" />
+        android:layout_height="1px"
+        android:background="@color/gray" />
+
+    <com.google.android.material.tabs.TabLayout
+        android:id="@+id/tabLayout"
+        android:layout_width="match_parent"
+        android:layout_height="40dp"
+        app:tabGravity="fill"
+        app:tabIndicatorFullWidth="true"
+        app:tabMaxWidth="0dp"
+        app:tabMode="fixed">
+
+
+    </com.google.android.material.tabs.TabLayout>
+
+    <androidx.viewpager.widget.ViewPager
+        android:id="@+id/viewPager"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent" />
+
 
 </LinearLayout>

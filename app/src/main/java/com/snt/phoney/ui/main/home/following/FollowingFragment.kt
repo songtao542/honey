@@ -37,6 +37,7 @@ class FollowingFragment : BaseFragment() {
         list.adapter = adapter
 
         viewModel.users.observe(this, Observer {
+            swipeRefresh.isRefreshing = false
             adapter.data = it
         })
 
@@ -48,6 +49,11 @@ class FollowingFragment : BaseFragment() {
         viewModel.error.observe(this, Observer {
             snackbar(it)
         })
+
+        swipeRefresh.setOnRefreshListener {
+            swipeRefresh.isRefreshing = true
+            load(true)
+        }
 
         list.setLoadMoreListener {
             load(false, it)

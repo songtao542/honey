@@ -88,7 +88,7 @@ class PhotoFlowAdapter(private val context: Context) : FlowLayout.ViewAdapter {
         view.addView(imageView)
 
         val textView = TextView(context)
-        textView.setTextSize(TypedValue.COMPLEX_UNIT_SP, 11f)
+        textView.setTextSize(TypedValue.COMPLEX_UNIT_SP, 10f)
         textView.setTextColor(context.colorOf(R.color.white))
         textView.text = context.getString(R.string.pay_mibi_template, price.toString())
         val dip5 = context.dip(5)

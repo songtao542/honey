@@ -5,14 +5,14 @@ import androidx.lifecycle.MutableLiveData
 import com.snt.phoney.R
 import com.snt.phoney.base.AppViewModel
 import com.snt.phoney.domain.model.Dating
-import com.snt.phoney.domain.usecase.GetDatingUseCase
+import com.snt.phoney.domain.usecase.DatingUseCase
 import com.snt.phoney.extensions.disposedBy
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.rxkotlin.subscribeBy
 import io.reactivex.schedulers.Schedulers
 import javax.inject.Inject
 
-class DatingDetailViewModel @Inject constructor(private val usecase: GetDatingUseCase) : AppViewModel() {
+class DatingDetailViewModel @Inject constructor(private val usecase: DatingUseCase) : AppViewModel() {
 
     val dating = MutableLiveData<Dating>()
     val joinSuccess = MutableLiveData<String>()

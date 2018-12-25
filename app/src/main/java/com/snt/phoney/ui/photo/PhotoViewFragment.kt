@@ -94,8 +94,6 @@ class PhotoViewFragment : Fragment() {
                             .fitCenter())
                     .into(imageView)
         }
-
-        Log.d("TTTT", "pathhhhhhhhhhhhhhhhhhhhhhhhhh$photo")
     }
 
     fun setOnPhotoSingleTapListener(listener: OnPhotoSingleTapListener?) {

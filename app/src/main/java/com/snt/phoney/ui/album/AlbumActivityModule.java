@@ -12,19 +12,28 @@ import dagger.Module;
 import dagger.android.ContributesAndroidInjector;
 import dagger.multibindings.IntoMap;
 
-@Module(includes = ViewModelFactoryModule.class)
-public abstract class AlbumSettingActivityModule {
-
+@Module(includes = {ViewModelFactoryModule.class})
+public abstract class AlbumActivityModule {
 
     @FragmentScope
     @ContributesAndroidInjector
     public abstract PaySettingFragment contributePaySettingFragment();
+
+    @FragmentScope
+    @ContributesAndroidInjector
+    public abstract AlbumViewerFragment contributeAlbumViewerFragment();
 
     @Binds
     @IntoMap
     @ActivityScope
     @ViewModelKey(PaySettingViewModel.class)
     public abstract ViewModel bindPaySettingViewModel(PaySettingViewModel viewModel);
+
+    @Binds
+    @IntoMap
+    @ActivityScope
+    @ViewModelKey(AlbumViewerViewModel.class)
+    public abstract ViewModel bindAlbumViewerViewModel(AlbumViewerViewModel viewModel);
 
 
 }

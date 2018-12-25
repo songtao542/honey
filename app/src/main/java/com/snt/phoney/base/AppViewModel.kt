@@ -29,6 +29,23 @@ open class AppViewModel : ViewModel(), CoroutineScope {
 
     private val mStateMap by lazy { HashMap<String, Boolean>() }
 
+    private var mState = false
+
+    fun setLoading(state: Boolean) {
+        mState = state
+    }
+
+    /**
+     * 如果 isLoading == false , 则自动设置为 true
+     */
+    fun isLoading(): Boolean {
+        val state = mState
+        if (!state) {
+            mState = true
+        }
+        return state
+    }
+
     fun setLoading(key: String, state: Boolean) {
         mStateMap[key] = state
     }

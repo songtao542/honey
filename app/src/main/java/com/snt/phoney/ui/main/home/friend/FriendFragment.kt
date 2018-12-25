@@ -1,7 +1,7 @@
 package com.snt.phoney.ui.main.home.friend
 
+import android.Manifest
 import android.os.Bundle
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -11,10 +11,7 @@ import androidx.lifecycle.ViewModelProviders
 import androidx.recyclerview.widget.GridLayoutManager
 import com.snt.phoney.R
 import com.snt.phoney.base.BaseFragment
-import com.snt.phoney.extensions.addFragmentSafely
-import com.snt.phoney.extensions.dip
-import com.snt.phoney.extensions.setLoadMoreEnable
-import com.snt.phoney.extensions.setLoadMoreListener
+import com.snt.phoney.extensions.*
 import com.snt.phoney.widget.itemdecoration.MonospacedItemDecoration
 import cust.widget.loadmore.LoadMoreAdapter
 import kotlinx.android.synthetic.main.fragment_friend_list.*
@@ -79,7 +76,6 @@ class FriendFragment : BaseFragment() {
                 ageEnd = result.endAge.toString()
                 cupStart = result.startCup
                 cupEnd = result.endCup
-                Log.d("TTTT", "result=================$result")
                 load(true)
             }
             activity?.addFragmentSafely(android.R.id.content, fragment, "filter", true,
@@ -93,22 +89,33 @@ class FriendFragment : BaseFragment() {
             filter(FilterType.POPULAR, popular)
         }
         nearest.setOnClickListener {
-            filter(FilterType.NEAREST, nearest)
+            if (checkAndRequestPermission(Manifest.permission.ACCESS_FINE_LOCATION, Manifest.permission.ACCESS_COARSE_LOCATION)) {
+                filter(FilterType.NEAREST, nearest)
+            }
         }
         hottest.setOnClickListener {
             filter(FilterType.HOTTEST, hottest)
         }
 
+        viewModel.users.observe(this, Observer {
+            adapter?.data = it
+        })
+
         list.setLoadMoreListener {
             load(false, it)
         }
 
-        viewModel.users.observe(this, Observer {
-            Log.d("TTTT","nnnnnnnnnnnnnnnnnnn")
-            adapter?.data = it
-        })
-
         load(true)
+    }
+
+    private fun checkPermission(): Boolean {
+        return context?.checkAppPermission(Manifest.permission.ACCESS_FINE_LOCATION, Manifest.permission.ACCESS_COARSE_LOCATION) == true
+    }
+
+    override fun onRequestPermissionsResult(requestCode: Int, permissions: Array<out String>, grantResults: IntArray) {
+        if (checkPermission()) {
+            filter(FilterType.NEAREST, nearest)
+        }
     }
 
     private fun filter(type: FilterType, view: TextView) {

@@ -102,22 +102,24 @@ class OthersDatingRecyclerViewAdapter(private val fragment: OthersDatingFragment
                 city.text = user.city
                 age.text = user.age.toString()
                 job.text = user.career
-                if (user.care) {
-                    val cd = context.getDrawable(R.drawable.ic_heart_solid_red)
-                    val size = context.dip(12)
-                    cd.setBounds(0, 0, size, size)
-                    follow.setCompoundDrawables(cd, null, null, null)
-                } else {
-                    val cd = context.getDrawable(R.drawable.ic_heart_border)
-                    val size = context.dip(12)
-                    cd.setBounds(0, 0, size, size)
-                    follow.setCompoundDrawables(cd, null, null, null)
-                }
 
                 follow.setOnClickListener {
-                    viewModel.follow(user)
+                    viewModel.follow(dating)
                 }
             }
+
+            if (dating.care) {
+                val cd = context.getDrawable(R.drawable.ic_heart_solid_red)
+                val size = context.dip(12)
+                cd.setBounds(0, 0, size, size)
+                follow.setCompoundDrawables(cd, null, null, null)
+            } else {
+                val cd = context.getDrawable(R.drawable.ic_heart_border)
+                val size = context.dip(12)
+                cd.setBounds(0, 0, size, size)
+                follow.setCompoundDrawables(cd, null, null, null)
+            }
+
             content.text = dating.content
 
             photoFlowAdapter.setUrls(dating.photoUrls())

@@ -1,5 +1,7 @@
 package com.snt.phoney.ui.picker
 
+import android.app.Dialog
+import android.graphics.drawable.ColorDrawable
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -23,6 +25,12 @@ class PayPickerFragment : NoInjectBaseDialogFragment() {
     private lateinit var selectView: View
 
     private var listener: ((which: Int) -> Unit)? = null
+
+    override fun onCreateDialog(savedInstanceState: Bundle?): Dialog {
+        val dialog = super.onCreateDialog(savedInstanceState)
+        dialog.window.setBackgroundDrawable(ColorDrawable(0x00000000)) // .setBackgroundDrawableResource(R.drawable.pay_picker_bg)
+        return dialog
+    }
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         return inflater.inflate(R.layout.fragment_pay_picker, container, false)

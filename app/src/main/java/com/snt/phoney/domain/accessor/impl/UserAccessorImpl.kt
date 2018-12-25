@@ -29,11 +29,13 @@ class UserAccessorImpl @Inject constructor(private val cache: CacheRepository) :
     }
 
     override fun setUser(user: User?) {
-        user?.let {
-            it.token?.let { token ->
+        if (user != null) {
+            user.token?.let { token ->
                 mAccessToken = token
             }
-            mUser = it
+            mUser = user
+        } else {
+            mUser = null
         }
         cache.set(Constants.Cache.USER, user)
     }

@@ -130,7 +130,7 @@
         <activity
             android:name=".ui.browser.WebBrowserActivity"
             android:theme="@style/AppTheme.Light" />
-        <activity android:name=".ui.album.AlbumSettingActivity" />
+        <activity android:name=".ui.album.AlbumActivity" />
 
         <provider
             android:name="androidx.core.content.FileProvider"

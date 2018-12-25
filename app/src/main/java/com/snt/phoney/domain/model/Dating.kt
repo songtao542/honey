@@ -1,7 +1,6 @@
 package com.snt.phoney.domain.model
 
 import android.os.Parcelable
-import com.google.android.material.internal.ParcelableSparseArray
 import com.google.gson.annotations.SerializedName
 import kotlinx.android.parcel.Parcelize
 import kotlinx.serialization.Serializable
@@ -34,7 +33,9 @@ data class Dating(
         var location: String? = null,//"location": "广东省,深圳市, 福田区, 港中旅大厦",
         var startTime: Long = 0,//"startTime": 1542470400000,
         var endTime: Long = 0,//"endTime": 1542556800000
-        @SerializedName(value = "attendNum") var attendNumber: Int = 0//"attendNum": 1542556800000
+        @SerializedName(value = "attendNum") var attendNumber: Int = 0,//"attendNum": 1542556800000
+
+        @SerializedName(value = "nickName") var nickname: String? = null// "nickName": "xxx",
 ) : Parcelable {
 
     @Transient

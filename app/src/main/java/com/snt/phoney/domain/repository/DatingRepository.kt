@@ -1,6 +1,9 @@
 package com.snt.phoney.domain.repository
 
-import com.snt.phoney.domain.model.*
+import com.snt.phoney.domain.model.Applicant
+import com.snt.phoney.domain.model.Dating
+import com.snt.phoney.domain.model.DatingProgram
+import com.snt.phoney.domain.model.Response
 import io.reactivex.Single
 import java.io.File
 
@@ -59,8 +62,8 @@ interface DatingRepository {
      */
     fun listRecommendDating(token: String,
                             pageIndex: Int,
-                            dateType: Int,
-                            distanceType: Int,
+                            dateType: String,
+                            distanceType: String,
                             program: String,
                             latitude: Double,
                             longitude: Double): Single<Response<List<Dating>>>

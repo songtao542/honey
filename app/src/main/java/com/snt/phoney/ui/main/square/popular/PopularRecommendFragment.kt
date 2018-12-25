@@ -38,8 +38,6 @@ class PopularRecommendFragment : BaseFragment() {
         adapter = PopularRecommendRecyclerViewAdapter(this, viewModel, disposeBag)
         list.adapter = adapter
 
-
-
         viewModel.popularDating.observe(this, Observer {
             adapter.data = it
         })

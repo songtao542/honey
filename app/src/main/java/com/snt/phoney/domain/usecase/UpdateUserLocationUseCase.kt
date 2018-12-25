@@ -1,9 +1,7 @@
 package com.snt.phoney.domain.usecase
 
-import com.snt.phoney.domain.repository.DatingRepository
 import com.snt.phoney.domain.repository.LocationRepository
 import com.snt.phoney.domain.repository.UserRepository
-import java.io.File
 import javax.inject.Inject
 
 class UpdateUserLocationUseCase @Inject constructor(private val repository: UserRepository, private val locationRepository: LocationRepository) : AccessUserUseCase(repository) {

@@ -1,11 +1,7 @@
 package com.snt.phoney.domain.usecase
 
-import com.snt.phoney.domain.model.ReportReason
-import com.snt.phoney.domain.model.Response
-import com.snt.phoney.domain.repository.DatingRepository
 import com.snt.phoney.domain.repository.ToolRepository
 import com.snt.phoney.domain.repository.UserRepository
-import io.reactivex.Single
 import java.io.File
 import javax.inject.Inject
 

@@ -14,8 +14,8 @@ class SquareUseCase @Inject constructor(private val repository: DatingRepository
      */
     fun listRecommendDating(token: String,
                             pageIndex: Int,
-                            dateType: Int,
-                            distanceType: Int,
+                            dateType: String,
+                            distanceType: String,
                             program: String,
                             latitude: Double,
                             longitude: Double) = repository.listRecommendDating(token, pageIndex, dateType, distanceType, program, latitude, longitude)

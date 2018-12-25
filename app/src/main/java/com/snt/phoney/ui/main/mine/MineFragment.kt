@@ -1,9 +1,8 @@
 package com.snt.phoney.ui.main.mine
 
 import android.app.Activity
-import android.content.Context
+import android.app.AlertDialog
 import android.content.Intent
-import android.net.Uri
 import android.os.Bundle
 import android.util.Log
 import android.view.LayoutInflater
@@ -17,16 +16,18 @@ import com.bumptech.glide.Glide
 import com.bumptech.glide.load.resource.drawable.DrawableTransitionOptions
 import com.bumptech.glide.request.RequestOptions
 import com.snt.phoney.R
-import com.snt.phoney.base.*
+import com.snt.phoney.base.BaseFragment
+import com.snt.phoney.base.CommonActivity
+import com.snt.phoney.base.Page
+import com.snt.phoney.base.ProgressDialog
 import com.snt.phoney.domain.model.Photo
 import com.snt.phoney.domain.model.PhotoPermission
 import com.snt.phoney.domain.model.User
-import com.snt.phoney.extensions.addFragmentSafely
+import com.snt.phoney.extensions.removeList
 import com.snt.phoney.extensions.snackbar
 import com.snt.phoney.ui.about.AboutActivity
-import com.snt.phoney.ui.album.AlbumSettingActivity
+import com.snt.phoney.ui.album.AlbumActivity
 import com.snt.phoney.ui.dating.DatingActivity
-import com.snt.phoney.ui.photo.PhotoViewerFragment
 import com.snt.phoney.ui.privacy.PrivacyActivity
 import com.snt.phoney.ui.report.ReportActivity
 import com.snt.phoney.ui.setup.BindPhoneFragment
@@ -38,7 +39,6 @@ import com.snt.phoney.ui.wallet.WalletActivity
 import com.snt.phoney.utils.Picker
 import com.snt.phoney.utils.data.Constants
 import com.zhihu.matisse.Matisse
-import kotlinx.android.synthetic.main.fragment_dating_create.*
 import kotlinx.android.synthetic.main.fragment_mine_header.*
 import kotlinx.android.synthetic.main.fragment_mine_list.*
 import java.io.File
@@ -48,8 +48,7 @@ import java.io.File
  */
 class MineFragment : BaseFragment(), OnSettingItemClickListener, OnSignOutClickListener,
         OnAddPhotoClickListener,
-        OnPhotoClickListener,
-        PhotoViewerFragment.OnDeleteListener {
+        OnPhotoClickListener {
 
     lateinit var viewModel: MineViewModel
 
@@ -122,7 +121,7 @@ class MineFragment : BaseFragment(), OnSettingItemClickListener, OnSignOutClickL
                                 when (permission) {
                                     PhotoPermission.NEED_CHARGE -> {
                                         activity?.let { activity ->
-                                            activity.startActivity(CommonActivity.newIntent<AlbumSettingActivity>(activity, Page.PAY_SETTING, Bundle().apply {
+                                            activity.startActivity(CommonActivity.newIntent<AlbumActivity>(activity, Page.PAY_SETTING, Bundle().apply {
                                                 putInt(Constants.Extra.PERMISSION, PhotoPermission.NEED_CHARGE.value)
                                                 putParcelableArrayList(Constants.Extra.PHOTO_LIST, ArrayList<Photo>(viewModel.photos.value))
                                             }))
@@ -157,7 +156,19 @@ class MineFragment : BaseFragment(), OnSettingItemClickListener, OnSignOutClickL
                 activity?.startActivity(CommonActivity.newIntent<WalletActivity>(requireContext(), Page.VIEW_MY_WALLET))
             }
             R.drawable.ic_privacy_setting -> {
-                activity?.startActivity(CommonActivity.newIntent<PrivacyActivity>(requireContext(), Page.CREATE_PRIVACY_PASS))
+                context?.let { context ->
+                    AlertDialog.Builder(context)
+                            .setTitle(R.string.modify_privacy_lock)
+                            .setMessage(R.string.modify_privacy_lock_message)
+                            .setNegativeButton(R.string.cancel) { dialog, _ ->
+                                dialog.dismiss()
+                            }
+                            .setPositiveButton(R.string.confirm) { dialog, _ ->
+                                dialog.dismiss()
+                                activity?.startActivity(CommonActivity.newIntent<PrivacyActivity>(requireContext(), Page.CREATE_PRIVACY_PASS))
+                            }.show()
+
+                }
             }
             R.drawable.ic_bind_phone -> {
                 BindPhoneFragment.newInstance().show(childFragmentManager, "bindPhone")
@@ -188,6 +199,7 @@ class MineFragment : BaseFragment(), OnSettingItemClickListener, OnSignOutClickL
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
         handlePhotoPick(requestCode, resultCode, data)
+        handleAlbumPhotoDelete(requestCode, resultCode, data)
     }
 
     private fun handlePhotoPick(requestCode: Int, resultCode: Int, data: Intent?) {
@@ -198,22 +210,40 @@ class MineFragment : BaseFragment(), OnSettingItemClickListener, OnSignOutClickL
         }
     }
 
-    override fun onPhotoClick(index: Int, photo: Photo) {
-        val fragment = PhotoViewerFragment.newInstance(Bundle().apply {
-            putParcelableArrayList(Constants.Extra.PHOTO_LIST, ArrayList<Photo>(viewModel.photos.value))
-            putInt(Constants.Extra.INDEX, index)
-            putBoolean(Constants.Extra.DELETABLE, true)
-        }).apply {
-            setOnDeleteListener(this@MineFragment)
+    private fun handleAlbumPhotoDelete(requestCode: Int, resultCode: Int, data: Intent?) {
+        Log.d("TTTT", "hhhhhhhhhhhhhhhhhh handleAlbumPhotoDelete data=$data")
+        if (requestCode == REQUEST_CODE_ALBUM && resultCode == Activity.RESULT_OK) {
+            data?.let { data ->
+                val delete = data.getParcelableArrayListExtra<Photo>(Constants.Extra.LIST)
+                Log.d("TTTT", "hhhhhhhhhhhhhhhhhh handleAlbumPhotoDelete delete=$delete")
+                val photos = viewModel.photos.value
+                photos?.let { photos ->
+                    if (delete != null && delete.isNotEmpty()) {
+                        viewModel.photos.value = ArrayList<Photo>(photos).removeList(delete)
+                    }
+                }
+                return@let
+            }
         }
-        activity?.addFragmentSafely(android.R.id.content, fragment, "photo_viewer", true)
     }
 
-    override fun onDelete(index: Int, deletedUrl: String?, deletedUri: Uri?, deletePhoto: Photo?) {
-        deletePhoto?.let { photo ->
-            viewModel.deletePhotos(ArrayList<Photo>().apply {
-                add(photo)
-            })
+    override fun onPhotoClick(index: Int, photo: Photo) {
+//        val fragment = PhotoViewerFragment.newInstance(Bundle().apply {
+//            putParcelableArrayList(Constants.Extra.PHOTO_LIST, ArrayList<Photo>(viewModel.photos.value))
+//            putInt(Constants.Extra.INDEX, index)
+//            putBoolean(Constants.Extra.DELETABLE, true)
+//        }).apply {
+//
+//        }
+//        activity?.addFragmentSafely(android.R.id.content, fragment, "photo_viewer", true,
+//                enterAnimation = R.anim.slide_in_up, popExitAnimation = R.anim.slide_out_down)
+        //enterAnimation = R.anim.slide_in_right, popExitAnimation = R.anim.slide_out_right
+        context?.let { context ->
+            startActivityForResult(CommonActivity.newIntent<AlbumActivity>(context, Page.VIEW_ALBUM, Bundle().apply {
+                putParcelableArrayList(Constants.Extra.PHOTO_LIST, ArrayList<Photo>(viewModel.photos.value))
+                putInt(Constants.Extra.INDEX, index)
+                putBoolean(Constants.Extra.DELETABLE, true)
+            }), REQUEST_CODE_ALBUM)
         }
     }
 
@@ -233,5 +263,8 @@ class MineFragment : BaseFragment(), OnSettingItemClickListener, OnSignOutClickL
     companion object {
         @JvmStatic
         fun newInstance() = MineFragment()
+
+        @JvmStatic
+        val REQUEST_CODE_ALBUM = 28
     }
 }

@@ -6,7 +6,7 @@ import java.io.File
 import javax.inject.Inject
 
 
-class GetUserInfoUseCase @Inject constructor(private val userRepository: UserRepository, private val locationRepository: LocationRepository) : AccessUserUseCase(userRepository) {
+class UserInfoUseCase @Inject constructor(private val userRepository: UserRepository, private val locationRepository: LocationRepository) : AccessUserUseCase(userRepository) {
 
     fun getUserAmountInfo(token: String) = userRepository.getUserAmountInfo(token)
 

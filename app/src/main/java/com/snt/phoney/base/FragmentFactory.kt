@@ -3,6 +3,7 @@ package com.snt.phoney.base
 import android.os.Bundle
 import androidx.fragment.app.Fragment
 import com.snt.phoney.ui.about.AboutFragment
+import com.snt.phoney.ui.album.AlbumViewerFragment
 import com.snt.phoney.ui.album.PaySettingFragment
 import com.snt.phoney.ui.browser.OfficialMessageFragment
 import com.snt.phoney.ui.dating.create.CreateDatingFragment
@@ -22,7 +23,9 @@ import com.snt.phoney.ui.user.FollowMeFragment
 import com.snt.phoney.ui.user.UserInfoFragment
 import com.snt.phoney.ui.user.VisitorFragment
 import com.snt.phoney.ui.vip.VipFragment
+import com.snt.phoney.ui.wallet.WalletDetailFragment
 import com.snt.phoney.ui.wallet.WalletFragment
+import com.snt.phoney.ui.wallet.WithdrawFragment
 
 
 enum class Page {
@@ -57,6 +60,11 @@ enum class Page {
     VIEW_DATING_APPLYING,
 
     VIEW_NEARBY_USER,
+
+    VIEW_ALBUM,
+
+    VIEW_WALLET_DETAIL,
+    WITHDRAW
 }
 
 class FragmentFactory {
@@ -78,7 +86,11 @@ class FragmentFactory {
                 Page.CREATE_REPORT.ordinal -> ReportFragment.newInstance(arguments)
 
                 Page.UPGRADE_VIP.ordinal -> VipFragment.newInstance(arguments)
+
                 Page.VIEW_MY_WALLET.ordinal -> WalletFragment.newInstance(arguments)
+                Page.VIEW_WALLET_DETAIL.ordinal -> WalletDetailFragment.newInstance(arguments)
+                Page.WITHDRAW.ordinal -> WithdrawFragment.newInstance(arguments)
+
                 Page.VIEW_ABOUT.ordinal -> AboutFragment.newInstance(arguments)
                 Page.SET_ALBUM_PERMISSION.ordinal -> AlbumPermissionSettingFragment.newInstance(arguments)
                 Page.CREATE_PRIVACY_PASS.ordinal -> CreateLockFragment.newInstance(arguments)
@@ -94,6 +106,8 @@ class FragmentFactory {
                 Page.VIEW_DATING_APPLYING.ordinal -> ApplicantListFragment.newInstance(arguments)
 
                 Page.VIEW_NEARBY_USER.ordinal -> NearbyFragment.newInstance(arguments)
+
+                Page.VIEW_ALBUM.ordinal -> AlbumViewerFragment.newInstance(arguments)
 
                 else -> Fragment()
             }

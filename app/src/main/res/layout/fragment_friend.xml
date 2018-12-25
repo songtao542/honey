@@ -44,12 +44,12 @@
             android:gravity="center"
             android:paddingLeft="5dp"
             android:paddingTop="5dp"
-            android:visibility="gone"
             android:paddingRight="5dp"
             android:paddingBottom="5dp"
             android:singleLine="true"
             android:text="靠谱度100"
-            android:textSize="@dimen/textsize_small" />
+            android:textSize="@dimen/textsize_small"
+            android:visibility="gone" />
 
         <LinearLayout
             android:layout_width="wrap_content"
@@ -117,12 +117,14 @@
     </com.snt.phoney.widget.SquareCardView>
 
     <androidx.appcompat.widget.AppCompatTextView
-        android:id="@+id/des"
+        android:id="@+id/name"
         android:layout_width="match_parent"
-        android:layout_height="40dp"
+        android:layout_height="wrap_content"
         android:layout_gravity="bottom"
         android:gravity="center_vertical"
+        android:paddingTop="5dp"
+        android:paddingBottom="10dp"
         android:singleLine="true"
         android:text="风吹干草堆"
-        android:textSize="@dimen/textsize_small" />
+        android:textSize="@dimen/textsize_normal" />
 </LinearLayout>

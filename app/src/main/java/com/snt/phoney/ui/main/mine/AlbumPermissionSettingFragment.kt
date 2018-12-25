@@ -7,10 +7,7 @@ import android.view.ViewGroup
 import androidx.lifecycle.ViewModelProviders
 import com.snt.phoney.R
 import com.snt.phoney.base.BottomDialogFragment
-import com.snt.phoney.base.CommonActivity
-import com.snt.phoney.base.Page
 import com.snt.phoney.domain.model.PhotoPermission
-import com.snt.phoney.ui.album.AlbumSettingActivity
 import com.snt.phoney.utils.data.Constants
 import kotlinx.android.synthetic.main.fragment_album_permission_setting.*
 

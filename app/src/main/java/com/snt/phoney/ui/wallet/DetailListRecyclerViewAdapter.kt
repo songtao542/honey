@@ -1,0 +1,77 @@
+package com.snt.phoney.ui.wallet
+
+
+import android.content.Context
+import android.view.LayoutInflater
+import android.view.View
+import android.view.ViewGroup
+import androidx.recyclerview.widget.RecyclerView
+import com.snt.phoney.R
+import com.snt.phoney.domain.model.OrderRecord
+import kotlinx.android.synthetic.main.fragment_wallet_detail_list_consume_item.view.*
+import kotlinx.android.synthetic.main.fragment_wallet_detail_list_recharge_item.view.*
+
+/**
+ */
+class DetailListRecyclerViewAdapter(private val type: Int) : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
+
+    var data: List<OrderRecord>? = null
+        set(value) {
+            value?.let {
+                field = it
+                notifyDataSetChanged()
+            }
+        }
+
+    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder {
+        return if (type == DetailListFragment.TYPE_RECHARGE) {
+            RechargeViewHolder(LayoutInflater.from(parent.context).inflate(R.layout.fragment_wallet_detail_list_recharge_item, parent, false))
+        } else {
+            ConsumeViewHolder(LayoutInflater.from(parent.context).inflate(R.layout.fragment_wallet_detail_list_consume_item, parent, false))
+        }
+    }
+
+    override fun onBindViewHolder(holder: RecyclerView.ViewHolder, position: Int) {
+        if (holder is RechargeViewHolder) {
+            holder.setData(data!![position])
+        } else if (holder is ConsumeViewHolder) {
+            holder.setData(data!![position])
+        }
+    }
+
+    override fun getItemCount(): Int = data?.size ?: 0
+
+    inner class ConsumeViewHolder(val mView: View) : RecyclerView.ViewHolder(mView) {
+        val context: Context = mView.context
+        private val consumeIcon = mView.consumeIcon
+        private val consumeName = mView.consumeName
+        private val consumeAmount = mView.consumeAmount
+
+        fun setData(record: OrderRecord) {
+            when (type) {
+                1 -> consumeIcon.setImageResource(R.mipmap.head)
+            }
+            consumeName.text = record.title
+            consumeAmount.text = record.price
+        }
+    }
+
+    inner class RechargeViewHolder(val mView: View) : RecyclerView.ViewHolder(mView) {
+        val context: Context = mView.context
+        private val rechargeIcon = mView.rechargeIcon
+        private val rechargeName = mView.rechargeName
+        private val rechargeAmount = mView.rechargeAmount
+        private val rechargeBalance = mView.rechargeBalance
+        private val rechargeType = mView.rechargeType
+
+        fun setData(record: OrderRecord) {
+            when (type) {
+                1 -> rechargeIcon.setImageResource(R.mipmap.head)
+            }
+            rechargeName.text = record.title
+            rechargeAmount.text = record.price
+            rechargeBalance.text = record.info
+            rechargeType.text = record.payType
+        }
+    }
+}

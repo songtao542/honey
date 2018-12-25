@@ -3,6 +3,7 @@ package com.snt.phoney.wxapi
 import android.content.Intent
 import android.text.TextUtils
 import android.util.Log
+import androidx.lifecycle.MutableLiveData
 import com.snt.phoney.R
 import com.snt.phoney.base.AppViewModel
 import com.snt.phoney.domain.model.OrderType
@@ -26,25 +27,31 @@ open class WXPayViewModel @Inject constructor(private val usecase: PayOrderUseCa
     private val wechatApi: WechatApi by lazy { WechatApi(application) }
     private var eventHandler: IWXAPIEventHandler? = null
 
+    val buySuccess = MutableLiveData<Boolean>()
+
     fun buy(type: OrderType, target: String, uid: String? = null) {
         val token = usecase.getAccessToken() ?: return
         usecase.createOrder(token, type.value.toString(), target, uid ?: "")
                 .flatMap {
-                    return@flatMap if (it.code == Response.SUCCESS && !TextUtils.isEmpty(it.data)) {
+                    return@flatMap if (it.success && !TextUtils.isEmpty(it.data)) {
                         usecase.wechatPay(token, it.data!!)
                                 .subscribeOn(Schedulers.io())
                                 .observeOn(AndroidSchedulers.mainThread())
                     } else {
-                        Single.create<Response<WxPrePayResult>> { Response<String>(code = 999, message = context.getString(R.string.create_order_failed)) }
+                        var errorMessage = context.getString(R.string.create_order_failed)
+                        if (it.hasMessage) {
+                            errorMessage = it.message
+                        }
+                        Single.create<Response<WxPrePayResult>> { emitter -> emitter.onSuccess(Response(code = it.code, message = errorMessage)) }
                     }
                 }
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribeBy(
                         onSuccess = {
-                            if (it.code == Response.SUCCESS && it.data != null) {
+                            if (it.success && it.data != null) {
                                 payByWechat(it.data)
-                            } else if (!TextUtils.isEmpty(it.message)) {
+                            } else if (it.hasMessage) {
                                 error.value = it.message
                             }
                         },
@@ -70,7 +77,7 @@ open class WXPayViewModel @Inject constructor(private val usecase: PayOrderUseCa
             eventHandler?.onResp(resp)
             Log.d("TTTT", "WXPayViewModel -------onResp")
             if (resp.type === ConstantsAPI.COMMAND_PAY_BY_WX) {
-
+                buySuccess.value = true
             }
         }
     }

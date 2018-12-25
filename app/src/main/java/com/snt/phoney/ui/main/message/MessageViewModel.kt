@@ -4,14 +4,14 @@ import androidx.lifecycle.MutableLiveData
 import com.snt.phoney.base.AppViewModel
 import com.snt.phoney.domain.model.Applicant
 import com.snt.phoney.domain.model.OfficialMessage
-import com.snt.phoney.domain.usecase.GetDatingUseCase
+import com.snt.phoney.domain.usecase.DatingUseCase
 import com.snt.phoney.domain.usecase.GetMessageUseCase
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.rxkotlin.subscribeBy
 import io.reactivex.schedulers.Schedulers
 import javax.inject.Inject
 
-class MessageViewModel @Inject constructor(private val usecase: GetMessageUseCase, private val datingUsecase: GetDatingUseCase) : AppViewModel() {
+class MessageViewModel @Inject constructor(private val usecase: GetMessageUseCase, private val datingUsecase: DatingUseCase) : AppViewModel() {
 
     val messages = MutableLiveData<List<OfficialMessage>>()
     val applicants = MutableLiveData<List<Applicant>>()

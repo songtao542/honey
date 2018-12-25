@@ -1,10 +1,7 @@
 package com.snt.phoney.domain.repository.impl
 
 import com.snt.phoney.api.Api
-import com.snt.phoney.domain.model.PreWithdraw
-import com.snt.phoney.domain.model.Response
-import com.snt.phoney.domain.model.WithdrawInfo
-import com.snt.phoney.domain.model.WxPrePayResult
+import com.snt.phoney.domain.model.*
 import com.snt.phoney.domain.repository.OrderRepository
 import io.reactivex.Single
 import javax.inject.Inject
@@ -38,7 +35,7 @@ class OrderRepositoryImpl @Inject constructor(private val api: Api) : OrderRepos
         return api.getWithdrawInfo(token, uuid)
     }
 
-    override fun listOrder(token: String, type: String, page: String, startTime: String, endTime: String): Single<Response<String>> {
+    override fun listOrder(token: String, type: String, page: String, startTime: String, endTime: String): Single<Response<List<OrderRecord>>> {
         return api.listOrder(token, type, page, startTime, endTime)
     }
 

@@ -1,20 +1,16 @@
 package com.snt.phoney.base
 
 import android.app.Activity
-import android.content.Context
-import android.content.Intent
 import android.os.Bundle
-import android.util.Log
-import android.view.MotionEvent
+import android.view.KeyEvent
 import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
-import androidx.lifecycle.ViewModelProvider
 import com.snt.phoney.R
 import com.snt.phoney.domain.accessor.UserAccessor
 import com.snt.phoney.domain.model.Sex
 import com.snt.phoney.extensions.ClearableCompositeDisposable
 import com.snt.phoney.extensions.autoCleared
-import com.snt.phoney.extensions.hideSoftKeyboard
+import com.snt.phoney.utils.KeyEventListener
 import dagger.android.DispatchingAndroidInjector
 import dagger.android.support.HasSupportFragmentInjector
 import io.reactivex.disposables.CompositeDisposable
@@ -58,6 +54,34 @@ abstract class BaseNoViewModelActivity : AppCompatActivity(), HasSupportFragment
     }
 
     open fun onConfigureTheme(): Boolean = true
+
+    override fun onKeyDown(keyCode: Int, event: KeyEvent): Boolean {
+        return if (dispatchKeyDownEvent(keyCode, event)) true else super.onKeyDown(keyCode, event)
+    }
+
+    override fun onKeyUp(keyCode: Int, event: KeyEvent): Boolean {
+        return if (dispatchKeyUpEvent(keyCode, event)) true else super.onKeyUp(keyCode, event)
+    }
+
+    private fun dispatchKeyDownEvent(keyCode: Int, event: KeyEvent): Boolean {
+        val fragmentList = supportFragmentManager.fragments
+        for (fragment in fragmentList) {
+            if (fragment.isVisible && fragment is KeyEventListener) {
+                return (fragment as KeyEventListener).onKeyDown(keyCode, event)
+            }
+        }
+        return false
+    }
+
+    private fun dispatchKeyUpEvent(keyCode: Int, event: KeyEvent): Boolean {
+        val fragmentList = supportFragmentManager.fragments
+        for (fragment in fragmentList) {
+            if (fragment.isVisible && fragment is KeyEventListener) {
+                return (fragment as KeyEventListener).onKeyUp(keyCode, event)
+            }
+        }
+        return false
+    }
 
 }
 
