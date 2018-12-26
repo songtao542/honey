@@ -9,10 +9,10 @@ import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.snt.phoney.R
-import com.snt.phoney.base.CommonActivity
 import com.snt.phoney.base.Page
 import com.snt.phoney.domain.model.Dating
 import com.snt.phoney.extensions.disposedBy
+import com.snt.phoney.extensions.startActivity
 import com.snt.phoney.ui.dating.DatingActivity
 import com.snt.phoney.ui.main.square.SquareViewModel
 import com.snt.phoney.ui.photo.PhotoViewerActivity
@@ -73,11 +73,11 @@ class PopularRecommendRecyclerViewAdapter(val fragment: Fragment, val viewModel:
             photoFlowAdapter = PhotoFlowAdapter(mView.context).setLastAsAdd(false)
             onPhotoItemClickListener = { _, index ->
                 dating?.let { dating ->
-                    fragment.startActivity(CommonActivity.newIntent<PhotoViewerActivity>(fragment.requireContext(), Page.PHOTO_VIEWER, Bundle().apply {
+                    fragment.startActivity<PhotoViewerActivity>(Page.PHOTO_VIEWER, Bundle().apply {
                         putStringArrayList(Constants.Extra.URL_LIST, ArrayList(dating.photoUrls()))
                         putInt(Constants.Extra.INDEX, index)
                         putBoolean(Constants.Extra.DELETABLE, false)
-                    }))
+                    })
                 }
             }
         }
@@ -124,15 +124,15 @@ class PopularRecommendRecyclerViewAdapter(val fragment: Fragment, val viewModel:
                 }
 
                 headView.setOnClickListener {
-                    context.startActivity(CommonActivity.newIntent<UserActivity>(mView.context, Page.VIEW_USER_INFO, Bundle().apply {
+                    context.startActivity<UserActivity>(Page.USER_INFO, Bundle().apply {
                         putParcelable(Constants.Extra.USER, data.user)
-                    }))
+                    })
                 }
 
                 contentView.setOnClickListener {
-                    context.startActivity(CommonActivity.newIntent<DatingActivity>(mView.context, Page.VIEW_DATING_DETAIL, Bundle().apply {
+                    context.startActivity<DatingActivity>(Page.DATING_DETAIL, Bundle().apply {
                         putString(Constants.Extra.UUID, data.uuid)
-                    }))
+                    })
                 }
             }
         }

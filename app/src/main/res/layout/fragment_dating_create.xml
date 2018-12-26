@@ -17,7 +17,7 @@
         android:background="?attr/toolbarBackground"
         android:theme="@style/AppTheme.PopupOverlay"
         app:navigationIcon="@drawable/ic_back"
-        app:title="发布约会信息"
+        app:title="@string/publish_dating_title"
         app:titleTextColor="@color/white" />
 
     <ScrollView

@@ -5,6 +5,7 @@ import androidx.fragment.app.Fragment
 import com.snt.phoney.ui.about.AboutFragment
 import com.snt.phoney.ui.album.AlbumViewerFragment
 import com.snt.phoney.ui.album.PaySettingFragment
+import com.snt.phoney.ui.auth.AuthModeFragment
 import com.snt.phoney.ui.browser.OfficialMessageFragment
 import com.snt.phoney.ui.dating.create.CreateDatingFragment
 import com.snt.phoney.ui.dating.detail.DatingDetailFragment
@@ -29,25 +30,25 @@ import com.snt.phoney.ui.wallet.WithdrawFragment
 
 
 enum class Page {
-    EDIT_USER_INFO,
-    VIEW_USER_INFO,
-    VIEW_RECENT_VISITOR,
-    VIEW_FOLLOW_ME,
+    EDIT_USER,
+    USER_INFO,
+    VISITOR,
+    FOLLOW_ME,
 
-    VIEW_DATING_LIST,
-    VIEW_MY_DATING,
-    VIEW_OTHERS_DATING,
-    VIEW_DATING_DETAIL,
+    DATING_LIST,
+    MY_DATING,
+    OTHERS_DATING,
+    DATING_DETAIL,
     CREATE_DATING,
 
-    CREATE_REPORT,
+    REPORT,
 
-    UPGRADE_VIP,
+    VIP,
 
-    VIEW_MY_WALLET,
-    VIEW_ABOUT,
-    SET_ALBUM_PERMISSION,
-    CREATE_PRIVACY_PASS,
+    WALLET,
+    ABOUT,
+    ALBUM_PERMISSION_SETTING,
+    CREATE_PRIVACY_LOCK,
 
     LOCATION_PICKER,
 
@@ -55,16 +56,18 @@ enum class Page {
 
     PAY_SETTING,
 
-    VIEW_OFFICIAL_MESSAGE,
+    OFFICIAL_MESSAGE,
 
-    VIEW_DATING_APPLYING,
+    DATING_APPLICANT_LIST,
 
-    VIEW_NEARBY_USER,
+    NEARBY,
 
-    VIEW_ALBUM,
+    ALBUM_VIEWER,
 
-    VIEW_WALLET_DETAIL,
-    WITHDRAW
+    WALLET_DETAIL,
+    WITHDRAW,
+
+    AUTHENTICATE
 }
 
 class FragmentFactory {
@@ -72,28 +75,28 @@ class FragmentFactory {
     companion object {
         fun create(page: Int, arguments: Bundle? = null): Fragment {
             return when (page) {
-                Page.EDIT_USER_INFO.ordinal -> EditUserFragment.newInstance(arguments)
-                Page.VIEW_USER_INFO.ordinal -> UserInfoFragment.newInstance(arguments)
-                Page.VIEW_RECENT_VISITOR.ordinal -> VisitorFragment.newInstance(arguments)
-                Page.VIEW_FOLLOW_ME.ordinal -> FollowMeFragment.newInstance(arguments)
+                Page.EDIT_USER.ordinal -> EditUserFragment.newInstance(arguments)
+                Page.USER_INFO.ordinal -> UserInfoFragment.newInstance(arguments)
+                Page.VISITOR.ordinal -> VisitorFragment.newInstance(arguments)
+                Page.FOLLOW_ME.ordinal -> FollowMeFragment.newInstance(arguments)
 
-                Page.VIEW_DATING_LIST.ordinal -> DatingListFragment.newInstance(arguments)
-                Page.VIEW_MY_DATING.ordinal -> MyDatingFragment.newInstance(arguments)
-                Page.VIEW_OTHERS_DATING.ordinal -> OthersDatingFragment.newInstance(arguments)
-                Page.VIEW_DATING_DETAIL.ordinal -> DatingDetailFragment.newInstance(arguments)
+                Page.DATING_LIST.ordinal -> DatingListFragment.newInstance(arguments)
+                Page.MY_DATING.ordinal -> MyDatingFragment.newInstance(arguments)
+                Page.OTHERS_DATING.ordinal -> OthersDatingFragment.newInstance(arguments)
+                Page.DATING_DETAIL.ordinal -> DatingDetailFragment.newInstance(arguments)
                 Page.CREATE_DATING.ordinal -> CreateDatingFragment.newInstance(arguments)
 
-                Page.CREATE_REPORT.ordinal -> ReportFragment.newInstance(arguments)
+                Page.REPORT.ordinal -> ReportFragment.newInstance(arguments)
 
-                Page.UPGRADE_VIP.ordinal -> VipFragment.newInstance(arguments)
+                Page.VIP.ordinal -> VipFragment.newInstance(arguments)
 
-                Page.VIEW_MY_WALLET.ordinal -> WalletFragment.newInstance(arguments)
-                Page.VIEW_WALLET_DETAIL.ordinal -> WalletDetailFragment.newInstance(arguments)
+                Page.WALLET.ordinal -> WalletFragment.newInstance(arguments)
+                Page.WALLET_DETAIL.ordinal -> WalletDetailFragment.newInstance(arguments)
                 Page.WITHDRAW.ordinal -> WithdrawFragment.newInstance(arguments)
 
-                Page.VIEW_ABOUT.ordinal -> AboutFragment.newInstance(arguments)
-                Page.SET_ALBUM_PERMISSION.ordinal -> AlbumPermissionSettingFragment.newInstance(arguments)
-                Page.CREATE_PRIVACY_PASS.ordinal -> CreateLockFragment.newInstance(arguments)
+                Page.ABOUT.ordinal -> AboutFragment.newInstance(arguments)
+                Page.ALBUM_PERMISSION_SETTING.ordinal -> AlbumPermissionSettingFragment.newInstance(arguments)
+                Page.CREATE_PRIVACY_LOCK.ordinal -> CreateLockFragment.newInstance(arguments)
 
                 Page.LOCATION_PICKER.ordinal -> LocationPickerFragment.newInstance(arguments)
 
@@ -101,13 +104,15 @@ class FragmentFactory {
 
                 Page.PAY_SETTING.ordinal -> PaySettingFragment.newInstance(arguments)
 
-                Page.VIEW_OFFICIAL_MESSAGE.ordinal -> OfficialMessageFragment.newInstance(arguments)
+                Page.OFFICIAL_MESSAGE.ordinal -> OfficialMessageFragment.newInstance(arguments)
 
-                Page.VIEW_DATING_APPLYING.ordinal -> ApplicantListFragment.newInstance(arguments)
+                Page.DATING_APPLICANT_LIST.ordinal -> ApplicantListFragment.newInstance(arguments)
 
-                Page.VIEW_NEARBY_USER.ordinal -> NearbyFragment.newInstance(arguments)
+                Page.NEARBY.ordinal -> NearbyFragment.newInstance(arguments)
 
-                Page.VIEW_ALBUM.ordinal -> AlbumViewerFragment.newInstance(arguments)
+                Page.ALBUM_VIEWER.ordinal -> AlbumViewerFragment.newInstance(arguments)
+
+                Page.AUTHENTICATE.ordinal -> AuthModeFragment.newInstance(arguments)
 
                 else -> Fragment()
             }

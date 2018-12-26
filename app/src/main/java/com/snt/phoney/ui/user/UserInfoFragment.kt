@@ -18,13 +18,9 @@ import com.bumptech.glide.load.resource.drawable.DrawableTransitionOptions
 import com.bumptech.glide.request.RequestOptions
 import com.snt.phoney.R
 import com.snt.phoney.base.BaseFragment
-import com.snt.phoney.base.CommonActivity
 import com.snt.phoney.base.Page
 import com.snt.phoney.domain.model.*
-import com.snt.phoney.extensions.checkAndRequestPermission
-import com.snt.phoney.extensions.checkAppPermission
-import com.snt.phoney.extensions.dip
-import com.snt.phoney.extensions.snackbar
+import com.snt.phoney.extensions.*
 import com.snt.phoney.ui.dating.DatingActivity
 import com.snt.phoney.ui.report.ReportActivity
 import com.snt.phoney.ui.voicecall.VoiceCallActivity
@@ -113,10 +109,10 @@ class UserInfoFragment : BaseFragment() {
 
         report.setOnClickListener {
             context?.let { context ->
-                context.startActivity(CommonActivity.newIntent<ReportActivity>(context, Page.CREATE_REPORT, Bundle().apply {
+                context.startActivity<ReportActivity>(Page.REPORT, Bundle().apply {
                     putString(Constants.Extra.UUID, user.safeUuid)
                     putInt(Constants.Extra.TYPE, ReportType.USER.value)
-                }))
+                })
             }
         }
 
@@ -131,9 +127,9 @@ class UserInfoFragment : BaseFragment() {
         viewDating.setOnClickListener {
             user?.let { user ->
                 context?.let { context ->
-                    context.startActivity(CommonActivity.newIntent<DatingActivity>(context, Page.VIEW_OTHERS_DATING, Bundle().apply {
+                    context.startActivity<DatingActivity>(Page.OTHERS_DATING, Bundle().apply {
                         putParcelable(Constants.Extra.USER, user)
-                    }))
+                    })
                 }
             }
         }

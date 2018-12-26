@@ -62,6 +62,7 @@
     <dimen name="progress_dialog_bar_size">50dp</dimen>
     <dimen name="pay_picker_button_round_corner_radius">2dp</dimen>
     <dimen name="pay_picker_round_corner_radius">3dp</dimen>
+    <dimen name="auth_gradient_corner_radius">10dp</dimen>
 
 
 </resources>

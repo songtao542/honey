@@ -41,10 +41,11 @@ object Constants {
     }
 
     object Api {
-        const val DOMAIN_NAME = "api.chunmi69.com"//"http://phoney.alance.pub"
-        const val BASE_URL = "https://$DOMAIN_NAME"//"http://phoney.alance.pub"
+        const val DOMAIN_NAME = "api.chunmi69.com"
+        const val BASE_URL = "https://$DOMAIN_NAME"
+        const val BIND_ALIPAY_URL = "https://openauth.alipaydev.com/oauth2/appToAppAuth.htm?app_id=2016092400585139&redirect_uri=https://api.chunmi69.com/auth/alipay/getUserInfo?state="
     }
-
+    //https://openauth.alipaydev.com/oauth2/appToAppAuth.htm?app_id=2016092400585139&redirect_uri=https://api.chunmi69.com/auth/alipay/getUserInfo?state=用户token
     object Tencent {
         const val APP_ID = "1107903594"
         const val APP_KEY = "Jzgzv5j0ro5RWVUP"

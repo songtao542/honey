@@ -442,6 +442,28 @@ interface Api {
                     @Field("latitude") longitude: String): Single<Response<User>>
 
     /**
+     *@param token    string	是	用户会话id
+     *@param type    string	是	0、随机数 1、随机一段话
+     */
+    @GET("users/authentication/getRandomWords")
+    fun getAuthRandomMessage(@Query("token") token: String,
+                             @Query("type") type: String): Single<Response<String>>
+
+    @GET("users/authentication/getAuthenticationState")
+    fun getAuthState(@Query("token") token: String): Single<Response<AuthState>>
+
+    /**
+     *@param token    string	是	用户会话id
+     *@param type    string	是	认证类型（0、照片 1、视频）
+     *@param pauthentication    string	是	上传文件名
+     */
+    @Multipart
+    @POST("users/authentication/addAuthentication")
+    fun auth(@Part("token") token: String,
+             @Part("type") type: String,
+             @Part pauthentication: MultipartBody.Part): Single<Response<String>>
+
+    /**
      *@param token    string	是	用户token
      *@param type    string	是	举报类型 id
      *@param targetUid    string	是	举报用户uid

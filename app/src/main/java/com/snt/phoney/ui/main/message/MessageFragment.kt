@@ -9,10 +9,10 @@ import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.ViewModelProviders
 import com.snt.phoney.R
-import com.snt.phoney.base.CommonActivity
 import com.snt.phoney.base.Page
 import com.snt.phoney.di.Injectable
 import com.snt.phoney.extensions.enableOptionsMenu
+import com.snt.phoney.extensions.startActivity
 import com.snt.phoney.ui.browser.BrowserActivity
 import com.snt.phoney.ui.dating.DatingActivity
 import com.snt.phoney.ui.nearby.NearbyActivity
@@ -43,9 +43,7 @@ class MessageFragment : ConversationListFragment(), Injectable {
         officialMessageView.title.text = getString(R.string.chunmi_official)
         officialMessageView.subTitle.text = getString(R.string.chunmi_official_no_message)
         officialMessageView.setOnClickListener {
-            context?.let { context ->
-                startActivity(CommonActivity.newIntent<BrowserActivity>(context, Page.VIEW_OFFICIAL_MESSAGE))
-            }
+            startActivity<BrowserActivity>(Page.OFFICIAL_MESSAGE)
         }
         listView.addHeaderView(officialMessageView)
 
@@ -54,9 +52,7 @@ class MessageFragment : ConversationListFragment(), Injectable {
         datingApplying.title.text = getString(R.string.dating_applying)
         datingApplying.subTitle.text = getString(R.string.chunmi_official_no_message)
         datingApplying.setOnClickListener {
-            context?.let { context ->
-                startActivity(CommonActivity.newIntent<DatingActivity>(context, Page.VIEW_DATING_APPLYING))
-            }
+            startActivity<DatingActivity>(Page.DATING_APPLICANT_LIST)
         }
         listView.addHeaderView(datingApplying)
 
@@ -89,9 +85,7 @@ class MessageFragment : ConversationListFragment(), Injectable {
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         return when (item?.itemId) {
             R.id.friendRecommend -> {
-                context?.let { context ->
-                    startActivity(CommonActivity.newIntent<NearbyActivity>(context, Page.VIEW_NEARBY_USER))
-                }
+                startActivity<NearbyActivity>(Page.NEARBY)
                 true
             }
             else -> super.onOptionsItemSelected(item)

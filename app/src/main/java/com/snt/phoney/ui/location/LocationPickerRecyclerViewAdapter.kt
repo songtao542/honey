@@ -18,9 +18,11 @@ class LocationPickerRecyclerViewAdapter : RecyclerView.Adapter<RecyclerView.View
         set(value) {
             value?.let {
                 field = it
+                checkAndSetSelected()
                 notifyDataSetChanged()
             }
         }
+
 
     fun setOnItemClickListener(onItemClickListener: ((item: PoiAddress) -> Unit)?) {
         this._onItemClickListener = onItemClickListener
@@ -30,6 +32,27 @@ class LocationPickerRecyclerViewAdapter : RecyclerView.Adapter<RecyclerView.View
 
     fun getSelected(): PoiAddress? {
         return lastSelected
+    }
+
+    /**
+     * 检查是否存在选中项，如果没有，则选中第一项
+     */
+    private fun checkAndSetSelected() {
+        data?.let { items ->
+            if (items.isNotEmpty()) {
+                var hasSelected = false
+                for (item in items) {
+                    if (item.selected) {
+                        hasSelected = true
+                        break
+                    }
+                }
+                if (!hasSelected) {
+                    lastSelected = items[0]
+                    lastSelected!!.selected = true
+                }
+            }
+        }
     }
 
     private fun setSelected(address: PoiAddress) {

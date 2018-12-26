@@ -123,7 +123,6 @@ class LocationPicker : BaseFragment() {
 
         myLocationButton.setOnClickListener {
             search()
-
         }
 
         if (checkAndRequestPermission(Manifest.permission.ACCESS_FINE_LOCATION, Manifest.permission.ACCESS_COARSE_LOCATION)) {
@@ -231,14 +230,9 @@ class LocationPicker : BaseFragment() {
         super.onDestroyView()
     }
 
-
-    private fun checkPermission(): Boolean {
-        return context?.checkAppPermission(Manifest.permission.ACCESS_FINE_LOCATION, Manifest.permission.ACCESS_COARSE_LOCATION) == true
-    }
-
     override fun onRequestPermissionsResult(requestCode: Int, permissions: Array<out String>, grantResults: IntArray) {
-        if (checkPermission()) {
-
+        if (checkAppPermission(Manifest.permission.ACCESS_FINE_LOCATION, Manifest.permission.ACCESS_COARSE_LOCATION)) {
+            search()
         }
     }
 

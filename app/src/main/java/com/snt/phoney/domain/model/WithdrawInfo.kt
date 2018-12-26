@@ -1,6 +1,7 @@
 package com.snt.phoney.domain.model
 
 import com.google.gson.annotations.SerializedName
+import java.text.SimpleDateFormat
 
 data class WithdrawInfo(
         var id: Int = 0,//"id": 1,
@@ -13,13 +14,31 @@ data class WithdrawInfo(
         var openid: String? = null,//"openid": "支付宝账号 208****2392",
         @SerializedName(value = "ctime") var createTime: Long = 0,//"ctime": 1544583177404,
         var items: List<WithDrawItem>? = null //"items": [
-)
+) {
+    fun formatCreateTime(): String {
+        return if (createTime > 0) {
+            val df = SimpleDateFormat("yyyy.MM.dd HH:mm")
+            df.format(createTime)
+        } else {
+            ""
+        }
+    }
+}
 
 data class WithDrawItem(
         var reason: String? = null,//  "reason": "系统触发",
         @SerializedName(value = "ctime") var createTime: Long = 0,//    "ctime": 1544583177404,
         var state: Int = 0,//    "state": 1,
         var title: String? = null//    "title": "发起提现申请"
-)
+) {
+    fun formatCreateTime(): String {
+        return if (createTime > 0) {
+            val df = SimpleDateFormat("yyyy.MM.dd HH:mm")
+            df.format(createTime)
+        } else {
+            ""
+        }
+    }
+}
 
 

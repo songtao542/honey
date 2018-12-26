@@ -8,9 +8,9 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.snt.phoney.R
-import com.snt.phoney.base.CommonActivity
 import com.snt.phoney.base.Page
 import com.snt.phoney.domain.model.User
+import com.snt.phoney.extensions.startActivity
 import com.snt.phoney.ui.user.UserActivity
 import com.snt.phoney.utils.DistanceFormat
 import com.snt.phoney.utils.data.Constants
@@ -76,9 +76,9 @@ class FriendRecyclerViewAdapter() : RecyclerView.Adapter<RecyclerView.ViewHolder
 
         init {
             mView.setOnClickListener {
-                mView.context.startActivity(CommonActivity.newIntent<UserActivity>(mView.context, Page.VIEW_USER_INFO, Bundle().apply {
+                mView.context.startActivity<UserActivity>(Page.USER_INFO, Bundle().apply {
                     putParcelable(Constants.Extra.USER, user)
-                }))
+                })
             }
         }
 

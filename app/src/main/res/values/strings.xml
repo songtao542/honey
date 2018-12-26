@@ -250,8 +250,8 @@
     <string name="set_photo_permission_failed">设置相册权限失败</string>
     <string name="set_photo_permission_success">设置相册权限成功</string>
     <string name="delete_photo_success">删除成功</string>
-    <string name="on_going_seting">正在设置...</string>
-    <string name="on_going_upload">正在上传...</string>
+    <string name="on_going_seting">设置...</string>
+    <string name="on_going_upload">上传...</string>
     <string name="upload_photo_success">上传相片成功</string>
     <string name="upload_photo_failed">上传相片失败</string>
     <string name="price_must_input">请填写金额</string>
@@ -313,6 +313,38 @@
     <string name="amount_can_withdraw_template">可提现金额 %1$s元</string>
     <string name="confirm_withdraw">确认提现</string>
     <string name="withdraw_to">我要提现到</string>
+    <string name="can_not_withdraw">暂时无法提现</string>
+    <string name="has_bind">已绑定</string>
+    <string name="not_bind">未绑定</string>
+    <string name="withdraw_success">提现成功</string>
+    <string name="withdraw_failed">提现失败</string>
+    <string name="bind_alipay">绑定支付宝</string>
+    <string name="has_not_bind_alipay">未绑定支付宝</string>
+    <string name="amount_out_of_range">可提现金额不足</string>
+    <string name="wallet_withdraw_detail_title">提现详情</string>
+    <string name="withdraw_amount_rmb">提现金额(元)</string>
+    <string name="withdraw_amount_progress">处理进度</string>
+    <string name="withdraw_amount_in_progress">处理中</string>
+    <string name="auth_title">认证</string>
+    <string name="publish_dating_title">发布约会信息</string>
+    <string name="auth_step1">步骤一</string>
+    <string name="auth_step1_tip">取一张纸，写上你的昵称和下面号码</string>
+    <string name="auth_step2">步骤二</string>
+    <string name="auth_step2_tip">拿着纸与你的头像所示部位合照一张</string>
+    <string name="auth_notice">温馨提示：更换头像后需要重新认证</string>
+    <string name="start_auth">开始认证</string>
+    <string name="auth_by_video">视频认证</string>
+    <string name="select_auth_mode">选择以下一种认证方式</string>
+    <string name="auth_by_image">图片认证</string>
+    <string name="auth_select_mode_title">选择认证类型</string>
+    <string name="has_no_right_to_camera">没有权限使用相机</string>
+    <string name="withdraw_to1">提现到</string>
+    <string name="create_time">创建时间</string>
+    <string name="get_random_message_failed">获取随机信息失败</string>
+    <string name="auth_wait_review">请耐心等待工作人员审核</string>
+    <string name="auth_upload_failed">上传认证文件失败</string>
+    <string name="auth_video_step1_tip">系统随机生成一段话</string>
+    <string name="auth_video_step2_tip">录制一段10秒钟的视频并说出步骤一中的话</string>
 
 
 </resources>

@@ -7,7 +7,7 @@ import android.view.ViewGroup
 import androidx.lifecycle.ViewModelProviders
 import com.snt.phoney.R
 import com.snt.phoney.base.BaseFragment
-import com.snt.phoney.base.addFragmentSafely
+import com.snt.phoney.extensions.addFragmentSafely
 import kotlinx.android.synthetic.main.fragment_create_lock.*
 
 class CreateLockFragment : BaseFragment() {

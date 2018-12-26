@@ -10,11 +10,11 @@ import androidx.lifecycle.ViewModelProviders
 import com.snt.phoney.R
 import com.snt.phoney.base.BaseFragment
 import com.snt.phoney.base.ProgressDialog
-import com.snt.phoney.base.addFragmentSafely
-import com.snt.phoney.base.replaceFragmentSafely
 import com.snt.phoney.domain.model.DatingProgram
 import com.snt.phoney.domain.model.Photo
 import com.snt.phoney.domain.model.PoiAddress
+import com.snt.phoney.extensions.addFragmentSafely
+import com.snt.phoney.extensions.replaceFragmentSafely
 import com.snt.phoney.extensions.setSoftInputMode
 import com.snt.phoney.extensions.snackbar
 import com.snt.phoney.ui.dating.detail.DatingDetailFragment

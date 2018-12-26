@@ -1,10 +1,8 @@
 package com.snt.phoney.ui.wallet
 
 import androidx.lifecycle.MutableLiveData
-import com.snt.phoney.domain.model.MibiWallet
-import com.snt.phoney.domain.model.OrderRecord
-import com.snt.phoney.domain.model.OrderType
-import com.snt.phoney.domain.model.VipInfo
+import com.snt.phoney.R
+import com.snt.phoney.domain.model.*
 import com.snt.phoney.domain.usecase.PayOrderUseCase
 import com.snt.phoney.domain.usecase.WalletUseCase
 import com.snt.phoney.extensions.addList
@@ -22,6 +20,7 @@ class WalletViewModel @Inject constructor(private val usecase: WalletUseCase, pr
     val vipInfo = MutableLiveData<VipInfo>()
     val mibiAmount = MutableLiveData<Int>()
     val mibiWallet = MutableLiveData<MibiWallet>()
+    val preWithdraw = MutableLiveData<PreWithdraw>()
 
     val consumeOrders by lazy { MutableLiveData<List<OrderRecord>>() }
     private val mConsumeOrders by lazy { ArrayList<OrderRecord>() }
@@ -29,8 +28,14 @@ class WalletViewModel @Inject constructor(private val usecase: WalletUseCase, pr
     val rechargeOrders by lazy { MutableLiveData<List<OrderRecord>>() }
     private val mRechargeOrders by lazy { ArrayList<OrderRecord>() }
 
+    val withdrawInfo by lazy { MutableLiveData<WithdrawInfo>() }
+
     private var mRechargePageIndex = 1
     private var mConsumePageIndex = 1
+
+    fun getAccessToken(): String {
+        return usecase.getAccessToken() ?: ""
+    }
 
     fun getMibiAmount() {
         val token = usecase.getAccessToken() ?: return
@@ -79,38 +84,68 @@ class WalletViewModel @Inject constructor(private val usecase: WalletUseCase, pr
         buyWithAlipay(OrderType.BUY_MIBI, target, uid)
     }
 
-    fun withdraw() {
+    fun getWithdrawInfo(uuid: String) {
         val token = usecase.getAccessToken() ?: return
-//        payUsecase.createOrder(token, OrderType.WITHDRAW_MIBI.value.toString(), "", "")
-//                .flatMap {
-//                    return@flatMap if (it.success && !TextUtils.isEmpty(it.data)) {
-//                        usecase.alipay(token, it.data!!)
-//                                .subscribeOn(Schedulers.io())
-//                                .observeOn(AndroidSchedulers.mainThread())
-//                    } else {
-//                        var errorMessage = context.getString(R.string.create_order_failed)
-//                        if (it.hasMessage) {
-//                            errorMessage = it.message
-//                        }
-//                        Single.create<Response<String>> { emitter -> emitter.onSuccess(Response(code = it.code, message = errorMessage)) }
-//                    }
-//                }
-//                .subscribeOn(Schedulers.io())
-//                .observeOn(AndroidSchedulers.mainThread())
-//                .subscribeBy(
-//                        onSuccess = {
-//                            if (it.success && !TextUtils.isEmpty(it.data)) {
-//                                payByAli(it.data!!)
-//                            } else if (it.hasMessage) {
-//                                error.value = it.message
-//                            }
-//                        },
-//                        onError = {
-//                            error.value = context.getString(R.string.buy_vip_failed)
-//                        }
-//                ).disposedBy(disposeBag)
+        usecase.getWithdrawInfo(token, uuid)
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribeBy(
+                        onSuccess = {
+                            if (it.success) {
+                                withdrawInfo.value = it.data
+                            } else if (it.hasMessage) {
+                                error.value = it.message
+                            } else {
+                                error.value = context.getString(R.string.load_failed)
+                            }
+                        },
+                        onError = {
+                            error.value = context.getString(R.string.load_failed)
+                        }
+                ).disposedBy(disposeBag)
     }
 
+    fun withdraw(money: Double) {
+        val token = usecase.getAccessToken() ?: return
+        usecase.withdraw(token, money)
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribeBy(
+                        onSuccess = {
+                            if (it.success) {
+                                success.value = context.getString(R.string.withdraw_success)
+                            } else if (it.hasMessage) {
+                                error.value = it.message
+                            } else {
+                                error.value = context.getString(R.string.withdraw_failed)
+                            }
+                        },
+                        onError = {
+                            error.value = context.getString(R.string.withdraw_failed)
+                        }
+                ).disposedBy(disposeBag)
+    }
+
+    fun preWithdraw() {
+        val token = usecase.getAccessToken() ?: return
+        usecase.preWithdraw(token)
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribeBy(
+                        onSuccess = {
+                            if (it.success) {
+                                preWithdraw.value = it.data
+                            } else if (it.hasMessage) {
+                                error.value = it.message
+                            } else {
+                                error.value = context.getString(R.string.can_not_withdraw)
+                            }
+                        },
+                        onError = {
+                            error.value = context.getString(R.string.can_not_withdraw)
+                        }
+                ).disposedBy(disposeBag)
+    }
 
     fun listRechargeOrder(refresh: Boolean, startTime: Long? = null, endTime: Long? = null, loadMore: LoadMoreAdapter.LoadMore? = null) {
         if (isLoading("recharge")) {

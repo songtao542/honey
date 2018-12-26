@@ -52,7 +52,7 @@ class DetailListFragment : BaseFragment() {
         viewModel = ViewModelProviders.of(this, viewModelFactory).get(WalletViewModel::class.java)
 
         list.layoutManager = LinearLayoutManager(requireContext())
-        adapter = DetailListRecyclerViewAdapter(type)
+        adapter = DetailListRecyclerViewAdapter(this,type)
         list.adapter = adapter
 
         if (type == TYPE_RECHARGE) {

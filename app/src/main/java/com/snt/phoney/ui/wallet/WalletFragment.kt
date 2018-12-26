@@ -1,7 +1,6 @@
 package com.snt.phoney.ui.wallet
 
 import android.os.Bundle
-import android.util.Log
 import android.view.*
 import android.widget.LinearLayout
 import androidx.lifecycle.Observer
@@ -9,8 +8,8 @@ import androidx.lifecycle.ViewModelProviders
 import com.snt.phoney.R
 import com.snt.phoney.base.BaseFragment
 import com.snt.phoney.base.Page
-import com.snt.phoney.base.addFragmentSafely
 import com.snt.phoney.domain.model.MibiRule
+import com.snt.phoney.extensions.addFragmentSafely
 import com.snt.phoney.ui.picker.PayPickerFragment
 import com.snt.phoney.widget.RechargeView
 import kotlinx.android.synthetic.main.fragment_wallet.*
@@ -93,7 +92,6 @@ class WalletFragment : BaseFragment() {
                 ruleView.setPrice(context.getString(R.string.money_template, df.format(rule.money)))
                 ruleView.setText(context.getString(R.string.wallet_mibi_combo_template, df.format(rule.money)))
                 ruleView.setOnRechargeClickListener {
-                    Log.d("TTTT", "xxxxxxxxxxxxxxxxxxxxxxxxxxx")
                     PayPickerFragment.newInstance().apply {
                         setOnResultListener { which ->
                             mNeedRefresh = true
@@ -117,7 +115,7 @@ class WalletFragment : BaseFragment() {
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         when (item.itemId) {
             R.id.view_records -> {
-                addFragmentSafely(Page.VIEW_WALLET_DETAIL, "wallet_detail", true,
+                addFragmentSafely(Page.WALLET_DETAIL, "wallet_detail", true,
                         enterAnimation = R.anim.slide_in_up, popExitAnimation = R.anim.slide_out_down)
             }
         }

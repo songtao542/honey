@@ -5,8 +5,6 @@ import com.snt.phoney.domain.model.*
 import com.snt.phoney.domain.repository.ToolRepository
 import com.snt.phoney.utils.media.MultipartUtil
 import io.reactivex.Single
-import okhttp3.MultipartBody
-import retrofit2.http.Part
 import java.io.File
 import javax.inject.Inject
 import javax.inject.Singleton
@@ -37,6 +35,19 @@ class ToolRepositoryImpl @Inject constructor(val api: Api) : ToolRepository {
                         file: File): Single<Response<String>> {
         val cover = MultipartUtil.getMultipart("cover", file)
         return api.report(token, reasonType, targetUid, content, type, cover)
+    }
+
+    override fun getAuthRandomMessage(token: String, type: Int): Single<Response<String>> {
+        return api.getAuthRandomMessage(token, type.toString())
+    }
+
+    override fun auth(token: String, type: Int, file: File): Single<Response<String>> {
+        val pauthentication = MultipartUtil.getMultipart("pauthentication", file)
+        return api.auth(token, type.toString(), pauthentication)
+    }
+
+    override fun getAuthState(token: String): Single<Response<AuthState>> {
+        return api.getAuthState(token)
     }
 
 }

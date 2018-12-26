@@ -12,10 +12,11 @@ import android.widget.TextView
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.RecyclerView
 import com.snt.phoney.R
-import com.snt.phoney.base.CommonActivity
 import com.snt.phoney.base.Page
 import com.snt.phoney.domain.model.AmountInfo
 import com.snt.phoney.domain.model.Photo
+import com.snt.phoney.extensions.startActivity
+import com.snt.phoney.ui.auth.AuthActivity
 import com.snt.phoney.ui.dating.DatingActivity
 import com.snt.phoney.ui.user.UserActivity
 import com.snt.phoney.widget.PhotoFlowAdapter
@@ -120,10 +121,10 @@ class MineRecyclerViewAdapter(val fragment: Fragment) : RecyclerView.Adapter<Rec
                 mFollowMe.text = "${it.countFollowed}"
                 mMyDating.text = "${it.countDating}"
             }
-            mFollowMeButton.setOnClickListener { context.startActivity(CommonActivity.newIntent<UserActivity>(context, Page.VIEW_FOLLOW_ME)) }
-            mRecentVisitorButton.setOnClickListener { context.startActivity(CommonActivity.newIntent<UserActivity>(context, Page.VIEW_RECENT_VISITOR)) }
-            mMyDatingButton.setOnClickListener { context.startActivity(CommonActivity.newIntent<DatingActivity>(context, Page.VIEW_MY_DATING)) }
-            mAuthenticate.setOnClickListener { }
+            mFollowMeButton.setOnClickListener { context.startActivity<UserActivity>(Page.FOLLOW_ME) }
+            mRecentVisitorButton.setOnClickListener { context.startActivity<UserActivity>(Page.VISITOR) }
+            mMyDatingButton.setOnClickListener { context.startActivity<DatingActivity>(Page.MY_DATING) }
+            mAuthenticate.setOnClickListener { context.startActivity<AuthActivity>(Page.AUTHENTICATE) }
 
         }
     }

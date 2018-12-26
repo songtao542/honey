@@ -14,4 +14,10 @@ class WalletUseCase @Inject constructor(private val repository: UserRepository, 
 
     fun listOrder(token: String, type: String, page: String, startTime: String, endTime: String) = orderRepository.listOrder(token, type, page, startTime, endTime)
 
+    fun preWithdraw(token: String) = orderRepository.preWithdraw(token)
+
+    fun withdraw(token: String, money: Double) = orderRepository.withdraw(token, money)
+
+    fun getWithdrawInfo(token: String, uuid: String) = orderRepository.getWithdrawInfo(token, uuid)
+
 }

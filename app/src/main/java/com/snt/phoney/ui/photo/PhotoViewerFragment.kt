@@ -55,7 +55,7 @@ open class PhotoViewerFragment : Fragment(), PhotoViewFragment.OnPhotoSingleTapL
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
         actionBar.setPadding(0, getStatusBarHeight(), 0, 0)
-        back.setOnClickListener { activity?.onBackPressed() }
+        back.setOnClickListener { finish() }
         if (deletable) {
             delete.setOnClickListener {
                 delete()

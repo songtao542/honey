@@ -20,7 +20,6 @@ import android.content.res.TypedArray;
 import android.database.Cursor;
 import android.graphics.PorterDuff;
 import android.graphics.drawable.Drawable;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -163,7 +162,6 @@ public class AlbumMediaAdapter extends
     @Override
     public void onThumbnailClicked(ImageView thumbnail, Item item, RecyclerView.ViewHolder holder) {
         if (mOnMediaClickListener != null) {
-            Log.d("TTTT", "onThumbnailClicked=====>");
             mOnMediaClickListener.onMediaClick(null, item, holder.getAdapterPosition());
         }
     }

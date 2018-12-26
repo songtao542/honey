@@ -6,7 +6,7 @@ import android.view.View
 import android.view.ViewGroup
 import com.snt.phoney.R
 import com.snt.phoney.base.BaseFragment
-import com.snt.phoney.base.addFragmentSafely
+import com.snt.phoney.extensions.addFragmentSafely
 import kotlinx.android.synthetic.main.fragment_create_lock_step1.*
 
 class CreateLockStep1Fragment : BaseFragment() {

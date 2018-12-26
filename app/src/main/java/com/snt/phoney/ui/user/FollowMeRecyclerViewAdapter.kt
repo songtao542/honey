@@ -12,8 +12,8 @@ import com.bumptech.glide.request.RequestOptions
 import com.snt.phoney.R
 import com.snt.phoney.base.CommonActivity
 import com.snt.phoney.base.Page
-import com.snt.phoney.base.addFragmentSafely
 import com.snt.phoney.domain.model.User
+import com.snt.phoney.extensions.addFragmentSafely
 import com.snt.phoney.utils.data.Constants
 import kotlinx.android.synthetic.main.fragment_followme.view.*
 
@@ -48,7 +48,7 @@ class FollowMeRecyclerViewAdapter(private val activity: CommonActivity) : Recycl
             mView.selfDescription.text = user.introduce
             mView.visitTime.text = "刚刚"
             mView.viewVisitor.setOnClickListener {
-                activity?.addFragmentSafely(Page.VIEW_USER_INFO, "view_user_info", true, argument = Bundle().apply {
+                activity?.addFragmentSafely(Page.USER_INFO, "view_user_info", true, argument = Bundle().apply {
                     putParcelable(Constants.Extra.USER, user)
                 })
             }

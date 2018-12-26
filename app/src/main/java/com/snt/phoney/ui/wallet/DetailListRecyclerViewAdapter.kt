@@ -2,18 +2,21 @@ package com.snt.phoney.ui.wallet
 
 
 import android.content.Context
+import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.snt.phoney.R
 import com.snt.phoney.domain.model.OrderRecord
+import com.snt.phoney.extensions.addFragmentSafely
+import com.snt.phoney.utils.data.Constants
 import kotlinx.android.synthetic.main.fragment_wallet_detail_list_consume_item.view.*
 import kotlinx.android.synthetic.main.fragment_wallet_detail_list_recharge_item.view.*
 
 /**
  */
-class DetailListRecyclerViewAdapter(private val type: Int) : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
+class DetailListRecyclerViewAdapter(private val fragment: DetailListFragment, private val type: Int) : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
 
     var data: List<OrderRecord>? = null
         set(value) {
@@ -66,7 +69,20 @@ class DetailListRecyclerViewAdapter(private val type: Int) : RecyclerView.Adapte
 
         fun setData(record: OrderRecord) {
             when (type) {
-                1 -> rechargeIcon.setImageResource(R.mipmap.head)
+                -1 -> {
+                    rechargeIcon.setImageResource(R.drawable.ic_order_withdraw)
+                    mView.setOnClickListener {
+                        fragment.addFragmentSafely(WithdrawDetailFragment.newInstance(Bundle().apply {
+                            putString(Constants.Extra.UUID, record.uuid)
+                        }), "withdraw_detail", true,
+                                enterAnimation = R.anim.slide_in_up, popExitAnimation = R.anim.slide_out_down)
+                    }
+                }
+                0 -> rechargeIcon.setImageResource(R.drawable.ic_order_cost)
+                1 -> rechargeIcon.setImageResource(R.drawable.ic_order_vip)
+                10 -> rechargeIcon.setImageResource(R.drawable.ic_order_mibi)
+                11 -> rechargeIcon.setImageResource(R.drawable.ic_order_mibi)
+                12 -> rechargeIcon.setImageResource(R.drawable.ic_order_mibi)
             }
             rechargeName.text = record.title
             rechargeAmount.text = record.price

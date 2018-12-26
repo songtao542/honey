@@ -10,11 +10,11 @@ import com.bumptech.glide.Glide
 import com.bumptech.glide.load.resource.drawable.DrawableTransitionOptions
 import com.bumptech.glide.request.RequestOptions
 import com.snt.phoney.R
-import com.snt.phoney.base.CommonActivity
 import com.snt.phoney.base.Page
 import com.snt.phoney.domain.model.Dating
 import com.snt.phoney.extensions.colorOf
 import com.snt.phoney.extensions.dip
+import com.snt.phoney.extensions.startActivity
 import com.snt.phoney.ui.dating.DatingActivity
 import com.snt.phoney.ui.photo.PhotoViewerActivity
 import com.snt.phoney.utils.data.Constants
@@ -70,11 +70,11 @@ class OthersDatingRecyclerViewAdapter(private val fragment: OthersDatingFragment
             photoFlowAdapter = PhotoFlowAdapter(mView.context).setLastAsAdd(false)
             onPhotoItemClickListener = { _, index ->
                 data?.let { data ->
-                    fragment.startActivity(CommonActivity.newIntent<PhotoViewerActivity>(fragment.requireContext(), Page.PHOTO_VIEWER, Bundle().apply {
+                    fragment.startActivity<PhotoViewerActivity>(Page.PHOTO_VIEWER, Bundle().apply {
                         putStringArrayList(Constants.Extra.URL_LIST, ArrayList(data.photoUrls()))
                         putInt(Constants.Extra.INDEX, index)
                         putBoolean(Constants.Extra.DELETABLE, false)
-                    }))
+                    })
                 }
             }
         }
@@ -129,9 +129,9 @@ class OthersDatingRecyclerViewAdapter(private val fragment: OthersDatingFragment
             publishTime.text = context.getString(R.string.publish_time_template, dating.formatCreateTime())
 
             viewDetail.setOnClickListener {
-                fragment.startActivity(CommonActivity.newIntent<DatingActivity>(mView.context, Page.VIEW_DATING_DETAIL, Bundle().apply {
+                fragment.startActivity<DatingActivity>(Page.DATING_DETAIL, Bundle().apply {
                     putString(Constants.Extra.UUID, dating.uuid)
-                }))
+                })
             }
         }
 

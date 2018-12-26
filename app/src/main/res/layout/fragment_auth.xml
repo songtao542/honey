@@ -1,0 +1,112 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/newdating"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/setting_bg_color"
+    android:orientation="vertical"
+    tools:context=".ui.dating.create.CreateDatingFragment">
+
+    <com.snt.phoney.widget.Toolbar
+        android:id="@+id/toolbar"
+        style="@style/AppTheme.Toolbar"
+        android:layout_width="match_parent"
+        android:layout_height="?attr/actionBarSize"
+        android:background="?attr/toolbarBackground"
+        android:theme="@style/AppTheme.PopupOverlay"
+        app:navigationIcon="@drawable/ic_back"
+        app:title="@string/auth_title"
+        app:titleTextColor="@color/white" />
+
+
+    <androidx.appcompat.widget.AppCompatTextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="40dp"
+        android:gravity="center"
+        android:text="@string/auth_step1"
+        android:textColor="@color/black"
+        android:textSize="@dimen/textsize_largest" />
+
+    <androidx.appcompat.widget.AppCompatTextView
+        android:id="@+id/stepOneTip"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="10dp"
+        android:gravity="center"
+        android:text="@string/auth_step1_tip"
+        android:textColor="@color/black"
+        android:textSize="@dimen/textsize_normal" />
+
+
+    <androidx.appcompat.widget.AppCompatTextView
+        android:id="@+id/authText"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:paddingTop="26dp"
+        android:paddingBottom="26dp"
+        android:textColor="@color/black"
+        android:textSize="30sp" />
+
+    <androidx.appcompat.widget.AppCompatTextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:text="@string/auth_step2"
+        android:textColor="@color/black"
+        android:textSize="@dimen/textsize_largest" />
+
+
+    <androidx.appcompat.widget.AppCompatTextView
+        android:id="@+id/stepTwoTip"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="10dp"
+        android:gravity="center"
+        android:text="@string/auth_step2_tip"
+        android:textColor="@color/black"
+        android:textSize="@dimen/textsize_normal" />
+
+
+    <androidx.appcompat.widget.AppCompatTextView
+        android:id="@+id/successText"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/button_height"
+        android:layout_marginTop="20dp"
+        android:gravity="center"
+        android:text="@string/auth_wait_review"
+        android:textColor="@color/black"
+        android:textSize="@dimen/textsize_larger"
+        android:visibility="invisible" />
+
+    <Button
+        android:id="@+id/startAuthButton"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/button_height"
+        android:layout_marginLeft="40dp"
+        android:layout_marginTop="20dp"
+        android:layout_marginRight="40dp"
+        android:layout_marginBottom="20dp"
+        android:background="@drawable/button_primary_circle_corner_selector"
+        android:enabled="false"
+        android:text="@string/start_auth"
+        android:textColor="@color/white" />
+
+
+    <Space
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:layout_weight="1" />
+
+    <androidx.appcompat.widget.AppCompatTextView
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:gravity="center"
+        android:text="@string/auth_notice"
+        android:textColor="@color/dark"
+        android:textSize="@dimen/textsize_smaller" />
+
+</LinearLayout>

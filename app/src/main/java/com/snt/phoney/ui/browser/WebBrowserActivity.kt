@@ -4,13 +4,11 @@ import android.graphics.drawable.ColorDrawable
 import android.os.Bundle
 import android.text.TextUtils
 import android.view.View
-import android.view.Window
-import android.view.WindowManager
 import android.webkit.*
 import android.widget.SeekBar
-import androidx.appcompat.app.AppCompatActivity
 import com.snt.phoney.R
 import com.snt.phoney.base.BaseNoViewModelActivity
+import com.snt.phoney.base.CommonNoViewModelActivity
 import com.snt.phoney.extensions.setLayoutFullscreen
 import com.snt.phoney.widget.PopupList
 import kotlinx.android.synthetic.main.activity_web_browser.*

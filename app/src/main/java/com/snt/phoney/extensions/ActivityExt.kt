@@ -67,6 +67,7 @@ fun Activity.isActionBarShowing(): Boolean {
     }
 }
 
+
 class AndroidBug5497Workaround private constructor(activity: Activity) {
 
     private val mChildOfContent: View

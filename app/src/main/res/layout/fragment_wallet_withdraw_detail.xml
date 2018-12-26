@@ -1,0 +1,168 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/white"
+    android:orientation="vertical"
+    tools:context=".ui.wallet.WithdrawFragment">
+
+    <com.snt.phoney.widget.Toolbar
+        android:id="@+id/toolbar"
+        style="@style/AppTheme.Toolbar"
+        android:layout_width="match_parent"
+        android:layout_height="?attr/actionBarSize"
+        android:background="?attr/toolbarBackground"
+        app:navigationIcon="@drawable/ic_back_black"
+        app:title="@string/wallet_withdraw_detail_title"
+        app:titleTextColor="@color/black" />
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1px"
+        android:background="@color/gray" />
+
+
+    <androidx.appcompat.widget.AppCompatTextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_gravity="left|center_vertical"
+        android:layout_marginTop="20dp"
+        android:gravity="left|center_vertical"
+        android:paddingLeft="20dp"
+        android:paddingRight="20dp"
+        android:text="@string/withdraw_amount_rmb"
+        android:textColor="@color/black"
+        android:textSize="@dimen/textsize_normal" />
+
+
+    <androidx.appcompat.widget.AppCompatTextView
+        android:id="@+id/withdrawAmount"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_vertical"
+        android:background="@color/white"
+        android:gravity="center"
+        android:inputType="numberDecimal"
+        android:paddingLeft="20dp"
+        android:paddingRight="20dp"
+        android:textColor="@color/black"
+        android:textSize="40sp" />
+
+    <androidx.appcompat.widget.AppCompatTextView
+        android:id="@+id/withdrawProgress"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_gravity="left|center_vertical"
+        android:gravity="center"
+        android:text="@string/withdraw_amount_in_progress"
+        android:textColor="@color/black"
+        android:textSize="@dimen/textsize_normal" />
+
+    <FrameLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="20dp"
+        android:background="@drawable/underline_gray"
+        android:paddingLeft="20dp"
+        android:paddingRight="20dp"
+        android:paddingBottom="10dp">
+
+        <androidx.appcompat.widget.AppCompatTextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="left|center_vertical"
+            android:gravity="left|center_vertical"
+            android:text="@string/withdraw_amount"
+            android:textColor="@color/black"
+            android:textSize="@dimen/textsize_normal" />
+
+        <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/withdrawType"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="right|center_vertical"
+            android:gravity="right|center_vertical"
+            android:text="支付宝提现"
+            android:textColor="@color/black"
+            android:textSize="@dimen/textsize_small" />
+    </FrameLayout>
+
+    <androidx.appcompat.widget.AppCompatTextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="left|center_vertical"
+        android:layout_marginTop="10dp"
+        android:gravity="left|center_vertical"
+        android:paddingLeft="20dp"
+        android:paddingRight="20dp"
+        android:text="@string/withdraw_amount_progress"
+        android:textColor="@color/black"
+        android:textSize="@dimen/textsize_normal" />
+
+
+    <LinearLayout
+        android:id="@+id/itemLayout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+    </LinearLayout>
+
+    <FrameLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="20dp"
+        android:background="@drawable/underline_gray"
+        android:paddingLeft="20dp"
+        android:paddingRight="20dp">
+
+        <androidx.appcompat.widget.AppCompatTextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="left|center_vertical"
+            android:gravity="left|center_vertical"
+            android:text="@string/withdraw_to1"
+            android:textColor="@color/black"
+            android:textSize="@dimen/textsize_normal" />
+
+        <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/withdrawTo"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="right|center_vertical"
+            android:gravity="right|center_vertical"
+            android:text="支付宝提现"
+            android:textColor="@color/dark_gray"
+            android:textSize="@dimen/textsize_small" />
+    </FrameLayout>
+
+    <FrameLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="10dp"
+        android:background="@drawable/underline_gray"
+        android:paddingLeft="20dp"
+        android:paddingRight="20dp">
+
+        <androidx.appcompat.widget.AppCompatTextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="left|center_vertical"
+            android:gravity="left|center_vertical"
+            android:text="@string/create_time"
+            android:textColor="@color/black"
+            android:textSize="@dimen/textsize_normal" />
+
+        <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/createTime"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="right|center_vertical"
+            android:gravity="right|center_vertical"
+            android:text="支付宝提现"
+            android:textColor="@color/dark_gray"
+            android:textSize="@dimen/textsize_small" />
+    </FrameLayout>
+
+</LinearLayout>

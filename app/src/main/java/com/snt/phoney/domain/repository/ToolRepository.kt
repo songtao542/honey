@@ -2,7 +2,6 @@ package com.snt.phoney.domain.repository
 
 import com.snt.phoney.domain.model.*
 import io.reactivex.Single
-import retrofit2.http.Field
 import java.io.File
 
 interface ToolRepository {
@@ -19,4 +18,10 @@ interface ToolRepository {
                content: String,
                type: String,
                file: File): Single<Response<String>>
+
+    fun getAuthRandomMessage(token: String, type: Int): Single<Response<String>>
+
+    fun auth(token: String, type: Int, file: File): Single<Response<String>>
+
+    fun getAuthState(token: String): Single<Response<AuthState>>
 }

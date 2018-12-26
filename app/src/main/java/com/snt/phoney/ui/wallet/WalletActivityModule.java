@@ -23,6 +23,9 @@ public abstract class WalletActivityModule {
     @ContributesAndroidInjector
     public abstract DetailListFragment contributeDetailListFragment();
 
+    @ContributesAndroidInjector
+    public abstract WithdrawFragment contributeWithdrawFragment();
+
     @Binds
     @IntoMap
     @ActivityScope

@@ -14,6 +14,6 @@ abstract class BaseActivity : BaseNoViewModelActivity() {
         hideSoftKeyboard()
         return super.dispatchTouchEvent(ev)
     }
-
 }
+
 

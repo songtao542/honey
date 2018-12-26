@@ -87,15 +87,18 @@
             android:layout_gravity="left|center_vertical"
             android:gravity="left|center_vertical"
             android:text="@string/withdraw_amount"
-            android:textColor="@color/black" />
+            android:textColor="@color/black"
+            android:textSize="@dimen/textsize_normal" />
 
         <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/moneyToMibi"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="right|center_vertical"
             android:gravity="right|center_vertical"
             android:text="@string/mibi_to_rmb"
-            android:textColor="@color/black" />
+            android:textColor="@color/black"
+            android:textSize="@dimen/textsize_small" />
     </FrameLayout>
 
     <LinearLayout
@@ -114,18 +117,20 @@
             android:textSize="46sp" />
 
         <androidx.appcompat.widget.AppCompatEditText
+            android:id="@+id/withdrawEdit"
             android:layout_width="match_parent"
             android:layout_height="80dp"
             android:layout_gravity="center_vertical"
             android:background="@color/white"
             android:gravity="center_vertical"
+            android:inputType="numberDecimal"
             android:paddingLeft="20dp"
             android:paddingRight="20dp"
-            android:text="100"
             android:textSize="40sp" />
     </LinearLayout>
 
     <androidx.appcompat.widget.AppCompatTextView
+        android:id="@+id/canWithdraw"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:background="@drawable/topline_gray"
@@ -133,7 +138,8 @@
         android:minHeight="30dp"
         android:paddingLeft="20dp"
         android:text="@string/amount_can_withdraw_template"
-        android:textColor="@color/dark_gray" />
+        android:textColor="@color/dark_gray"
+        android:textSize="@dimen/textsize_smaller" />
 
     <androidx.appcompat.widget.AppCompatTextView
         android:layout_width="match_parent"
@@ -143,11 +149,12 @@
         android:paddingLeft="20dp"
         android:paddingTop="10dp"
         android:paddingRight="20dp"
-        android:text="@string/withdraw_to" />
+        android:text="@string/withdraw_to"
+        android:textSize="@dimen/textsize_smaller" />
 
 
-    <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-        xmlns:app="http://schemas.android.com/apk/res-auto"
+    <LinearLayout
+        android:id="@+id/bindToAlipay"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:background="@drawable/underline_gray"
@@ -200,7 +207,7 @@
             android:orientation="horizontal">
 
             <androidx.appcompat.widget.AppCompatTextView
-                android:id="@+id/rechargeAmount"
+                android:id="@+id/bindAlipy"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:gravity="right|center_vertical"
@@ -209,7 +216,6 @@
                 android:textSize="@dimen/textsize_normal" />
 
             <androidx.appcompat.widget.AppCompatImageView
-                android:id="@+id/rechargeType"
                 android:layout_width="14dp"
                 android:layout_height="14dp"
                 android:layout_gravity="center_vertical"
@@ -223,13 +229,14 @@
         android:id="@+id/withdrawLimit"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:minHeight="30dp"
         android:background="@drawable/topline_gray"
         android:gravity="center_vertical"
+        android:minHeight="30dp"
         android:paddingLeft="20dp"
         android:paddingRight="20dp"
         android:text="每日限额5元"
-        android:textColor="@color/red" />
+        android:textColor="@color/red"
+        android:textSize="@dimen/textsize_smaller" />
 
     <Button
         android:id="@+id/confirmButton"

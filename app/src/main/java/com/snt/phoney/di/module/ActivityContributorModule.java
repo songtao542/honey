@@ -4,6 +4,8 @@ import com.snt.phoney.di.ActivityScope;
 import com.snt.phoney.ui.about.AboutActivity;
 import com.snt.phoney.ui.album.AlbumActivity;
 import com.snt.phoney.ui.album.AlbumActivityModule;
+import com.snt.phoney.ui.auth.AuthActivity;
+import com.snt.phoney.ui.auth.AuthActivityModule;
 import com.snt.phoney.ui.browser.BrowerActivityModule;
 import com.snt.phoney.ui.browser.BrowserActivity;
 import com.snt.phoney.ui.browser.WebBrowserActivity;
@@ -153,6 +155,12 @@ public abstract class ActivityContributorModule {
     @ActivityScope
     @ContributesAndroidInjector
     public abstract VoiceCallActivity contributeVoiceCallActivity();
+
+    @ActivityScope
+    @ContributesAndroidInjector(modules = {
+            AuthActivityModule.class
+    })
+    public abstract AuthActivity contributeAuthActivity();
 
 
 }

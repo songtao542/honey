@@ -10,8 +10,8 @@ import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentStatePagerAdapter
 import com.snt.phoney.R
 import com.snt.phoney.base.BaseFragment
-import com.snt.phoney.base.CommonActivity
 import com.snt.phoney.base.Page
+import com.snt.phoney.extensions.startActivity
 import com.snt.phoney.ui.dating.DatingActivity
 import com.snt.phoney.ui.main.square.official.OfficialRecommendFragment
 import com.snt.phoney.ui.main.square.popular.PopularRecommendFragment
@@ -78,7 +78,7 @@ class SquareFragment : BaseFragment() {
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         return when (item?.itemId) {
             R.id.publishDating -> {
-                context?.let { it.startActivity(CommonActivity.newIntent<DatingActivity>(it, Page.CREATE_DATING)) }
+                context?.let { it.startActivity<DatingActivity>(Page.CREATE_DATING) }
                 true
             }
             else -> super.onOptionsItemSelected(item)

@@ -10,8 +10,8 @@ import android.view.ViewGroup
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.snt.phoney.R
-import com.snt.phoney.base.addFragmentSafely
 import com.snt.phoney.domain.model.Dating
+import com.snt.phoney.extensions.addFragmentSafely
 import com.snt.phoney.extensions.colorOf
 import com.snt.phoney.extensions.dip
 import com.snt.phoney.ui.dating.detail.DatingDetailFragment

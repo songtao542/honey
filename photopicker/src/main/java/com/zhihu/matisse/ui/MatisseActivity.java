@@ -184,16 +184,48 @@ public class MatisseActivity extends AppCompatActivity implements
     @Override
     public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
         super.onRequestPermissionsResult(requestCode, permissions, grantResults);
-        if (checkPermission()) {
-            initAlbum(null);
-        } else {
-            Toast.makeText(this.getApplicationContext(), getString(R.string.read_external_storage_permission_denial), Toast.LENGTH_LONG).show();
-            finish();
+        boolean requestStorage = false;
+        boolean requestCamera = false;
+        for (String permission : permissions) {
+            if (permission.equals(Manifest.permission.READ_EXTERNAL_STORAGE)) {
+                requestStorage = true;
+                break;
+            } else if (permission.equals(Manifest.permission.CAMERA)) {
+                requestCamera = true;
+                break;
+            }
+        }
+        if (requestStorage) {
+            if (checkPermission()) {
+                initAlbum(null);
+            } else {
+                Toast.makeText(this.getApplicationContext(), getString(R.string.read_external_storage_permission_denial), Toast.LENGTH_LONG).show();
+                finish();
+            }
+        } else if (requestCamera) {
+            if (checkCameraPermission()) {
+                startCapture();
+            }
         }
     }
 
     private boolean checkPermission() {
         String permission = Manifest.permission.READ_EXTERNAL_STORAGE;
+        if (PackageManager.PERMISSION_GRANTED != ContextCompat.checkSelfPermission(this, permission)) {
+            return false;
+        }
+        return true;
+    }
+
+    private void requestCameraPermission() {
+        String[] permissions = new String[]{
+                Manifest.permission.CAMERA
+        };
+        ActivityCompat.requestPermissions(this, permissions, 123);
+    }
+
+    private boolean checkCameraPermission() {
+        String permission = Manifest.permission.CAMERA;
         if (PackageManager.PERMISSION_GRANTED != ContextCompat.checkSelfPermission(this, permission)) {
             return false;
         }
@@ -513,6 +545,14 @@ public class MatisseActivity extends AppCompatActivity implements
 
     @Override
     public void capture() {
+        if (checkCameraPermission()) {
+            startCapture();
+        } else {
+            requestCameraPermission();
+        }
+    }
+
+    private void startCapture() {
         if (mMediaStoreCompat != null) {
             mMediaStoreCompat.dispatchCaptureIntent(this, REQUEST_CODE_CAPTURE);
         }
