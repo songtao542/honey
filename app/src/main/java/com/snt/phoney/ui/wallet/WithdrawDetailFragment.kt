@@ -12,6 +12,7 @@ import com.snt.phoney.R
 import com.snt.phoney.base.BaseFragment
 import com.snt.phoney.domain.model.WithDrawItem
 import com.snt.phoney.domain.model.WithdrawInfo
+import com.snt.phoney.extensions.colorOf
 import com.snt.phoney.utils.data.Constants
 import kotlinx.android.synthetic.main.fragment_wallet_withdraw_detail.*
 import kotlinx.android.synthetic.main.fragment_wallet_withdraw_detail_item.view.*
@@ -101,6 +102,13 @@ class WithdrawStateItemView : RelativeLayout {
         if (last) {
             iconUnderLine.visibility = View.GONE
             textUnderLine.visibility = View.GONE
+        }
+        if (withdrawItem.state == 1) {
+            stepIcon.setImageResource(R.drawable.ic_state_complete)
+            iconUnderLine.setBackgroundColor(context.colorOf(R.color.colorPrimaryMale))
+        } else {
+            stepIcon.setImageResource(R.drawable.ic_state_wait)
+            iconUnderLine.setBackgroundColor(context.colorOf(R.color.ccc))
         }
         stepText.text = withdrawItem.title
         crateTimeText.text = withdrawItem.formatCreateTime()

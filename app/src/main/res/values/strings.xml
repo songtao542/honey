@@ -250,8 +250,8 @@
     <string name="set_photo_permission_failed">设置相册权限失败</string>
     <string name="set_photo_permission_success">设置相册权限成功</string>
     <string name="delete_photo_success">删除成功</string>
-    <string name="on_going_seting">设置...</string>
-    <string name="on_going_upload">上传...</string>
+    <string name="on_going_seting">正在设置...</string>
+    <string name="on_going_upload">正在上传...</string>
     <string name="upload_photo_success">上传相片成功</string>
     <string name="upload_photo_failed">上传相片失败</string>
     <string name="price_must_input">请填写金额</string>

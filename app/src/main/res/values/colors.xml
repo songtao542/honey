@@ -32,6 +32,8 @@
     <color name="buttonBorderPressedColor">#cccccc</color>
     <color name="buttonBorderColor">#ffffff</color>
 
+    <color name="ccc">#ffcccccc</color>
+
     <color name="buttonGetVerificationCodeBgColor">#8d8d8d</color>
     <color name="buttonGetVerificationCodePressedBgColor">#6d6d6d</color>
 

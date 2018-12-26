@@ -242,6 +242,7 @@ class MineFragment : BaseFragment(), OnSettingItemClickListener, OnSignOutClickL
         if (user == null) return
         Glide.with(this).load(user.portrait).apply(RequestOptions().circleCrop()).transition(DrawableTransitionOptions.withCrossFade()).into(head)
         username.text = user.nickname
+
     }
 
 

@@ -3,7 +3,6 @@ package com.snt.phoney.base
 import android.app.Activity
 import android.os.Bundle
 import android.view.KeyEvent
-import android.view.MotionEvent
 import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
 import com.snt.phoney.R
@@ -11,7 +10,6 @@ import com.snt.phoney.domain.accessor.UserAccessor
 import com.snt.phoney.domain.model.Sex
 import com.snt.phoney.extensions.ClearableCompositeDisposable
 import com.snt.phoney.extensions.autoCleared
-import com.snt.phoney.extensions.hideSoftKeyboard
 import com.snt.phoney.utils.KeyEventListener
 import dagger.android.DispatchingAndroidInjector
 import dagger.android.support.HasSupportFragmentInjector
@@ -83,11 +81,6 @@ abstract class BaseNoViewModelActivity : AppCompatActivity(), HasSupportFragment
             }
         }
         return false
-    }
-
-    override fun dispatchTouchEvent(ev: MotionEvent?): Boolean {
-        hideSoftKeyboard()
-        return super.dispatchTouchEvent(ev)
     }
 }
 

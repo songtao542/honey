@@ -110,7 +110,7 @@ class DatingDetailFragment : BaseFragment() {
         height.text = "${user.height}"
         age.text = "${user.age}"
 
-        if (user.verified) {
+        if (user.verified == 1) {
             authenticate.text = getString(R.string.official_authenticated)
         } else {
             authenticate.text = getString(R.string.not_authenticated)

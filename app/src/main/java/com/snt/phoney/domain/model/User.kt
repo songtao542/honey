@@ -40,7 +40,10 @@ data class User(
         @SerializedName(value = "isPhotoFree") var photoFree: Boolean = true,
         @SerializedName(value = "hasWX") var hasWechatAccount: Boolean = false,
         @SerializedName(value = "account_wx") var wechatAccount: String? = null,
-        @SerializedName(value = "pauthentication") var verified: Boolean = false,
+        /**
+         * pauthentication 认证状态
+         */
+        @SerializedName(value = "pauthentication") var verified: Int = 0,
         /**
          * 相册价格
          */

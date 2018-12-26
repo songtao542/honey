@@ -22,7 +22,7 @@
             android:layout_width="50dp"
             android:layout_height="50dp"
             android:scaleType="centerInside"
-            app:srcCompat="@drawable/ic_order_cost" />
+            app:srcCompat="@drawable/ic_state_complete" />
 
         <View
             android:id="@+id/iconUnderLine"

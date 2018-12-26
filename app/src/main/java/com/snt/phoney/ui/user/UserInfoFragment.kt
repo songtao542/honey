@@ -166,7 +166,7 @@ class UserInfoFragment : BaseFragment() {
         address.text = user.city
         userAge.text = getString(R.string.age_value_template, user.age)
         job.text = user.career
-        if (user.verified) {
+        if (user.verified == 1) {
             authenticate.text = getString(R.string.official_authenticated)
         } else {
             authenticate.text = getString(R.string.not_authenticated)
