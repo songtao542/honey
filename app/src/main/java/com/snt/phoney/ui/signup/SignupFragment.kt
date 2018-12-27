@@ -47,7 +47,7 @@ class SignupFragment : BaseFragment() {
         getVerificationCode.setOnClickListener {
             val phoneNumber = getPhone()
             if (!TextUtils.isEmpty(phoneNumber)) {
-                viewModel.requestVerificationCode(phoneNumber).disposedBy(disposeBag)
+                viewModel.requestVerificationCode(phoneNumber!!).disposedBy(disposeBag)
             }
         }
         forgetPassword.setOnClickListener { onForgetPasswordClicked() }
