@@ -44,7 +44,7 @@
             android:layout_marginTop="8dp"
             android:ellipsize="end"
             android:singleLine="true"
-            android:text="约瑟从此不在中国"
+            android:text="@string/chunmi_official_no_message"
             android:textColor="@color/gray"
             android:textSize="@dimen/textsize_small" />
     </LinearLayout>

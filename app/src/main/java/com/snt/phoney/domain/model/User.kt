@@ -37,17 +37,21 @@ data class User(
         var introduce: String? = null,
         @SerializedName(value = "photo") var photos: List<Photo>? = null,
         @SerializedName(value = "photoRight") var photoPermission: Int = 0,
-        @SerializedName(value = "isPhotoFree") var photoFree: Boolean = true,
+        /**
+         * 相册价格，当相册权限为 {@link PhotoPermission#LOCKED} 时，需要解锁相册的价格
+         */
+        @SerializedName(value = "photoAllPrice") var photoPrice: Int = 0,
+        @SerializedName(value = "photo_id") var photoId: Int = 0,
+        /**
+         * 标识是否已经支付了相册蜜币
+         */
+        @SerializedName(value = "isPhotoFree") var isPhotoFree: Boolean = true,
         @SerializedName(value = "hasWX") var hasWechatAccount: Boolean = false,
         @SerializedName(value = "account_wx") var wechatAccount: String? = null,
         /**
          * pauthentication 认证状态
          */
         @SerializedName(value = "pauthentication") var verified: Int = 0,
-        /**
-         * 相册价格
-         */
-        @SerializedName(value = "photoAllPrice") var photoPrice: Int = 0,
         var token: String? = null,
         @SerializedName(value = "isOpen") var open: Int = 0,
         var price: Double = 0.0,
@@ -97,7 +101,7 @@ data class User(
         }
 
     @Transient
-    val valid: Boolean
+    val validated: Boolean
         get() {
             return when (sex) {
                 1 -> height > 0 && age > 0 && cup != null && cities?.isNotEmpty() ?: false && career != null && purpose != null

@@ -113,6 +113,7 @@
     </LinearLayout>
 
     <LinearLayout
+        android:id="@+id/authenticateLayout"
         android:layout_width="match_parent"
         android:layout_height="@dimen/mine_authenticate_height"
         android:layout_marginLeft="10dp"
@@ -124,6 +125,7 @@
 
 
         <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/authenticateState"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_gravity="center_vertical"
@@ -131,7 +133,7 @@
             android:layout_weight="1"
             android:text="@string/mine_not_authenticate_tip"
             android:textColor="@color/white"
-            android:textSize="@dimen/textsize_normal" />
+            android:textSize="@dimen/textsize_small" />
 
         <androidx.appcompat.widget.AppCompatTextView
             android:id="@+id/authenticate"

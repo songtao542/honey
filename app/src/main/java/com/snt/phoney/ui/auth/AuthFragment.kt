@@ -4,7 +4,7 @@ import android.Manifest
 import android.app.Activity
 import android.content.Intent
 import android.os.Bundle
-import android.text.TextUtils
+import android.view.KeyEvent
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -17,16 +17,15 @@ import com.snt.phoney.extensions.addFragmentSafely
 import com.snt.phoney.extensions.checkAndRequestPermission
 import com.snt.phoney.extensions.checkAppPermission
 import com.snt.phoney.extensions.snackbar
+import com.snt.phoney.utils.KeyEventListener
 import com.snt.phoney.utils.data.Constants
-import com.zhihu.matisse.internal.entity.CaptureStrategy
-import com.zhihu.matisse.internal.utils.MediaStoreCompat
 import kotlinx.android.synthetic.main.fragment_auth.*
 import java.io.File
 
 /**
  *
  */
-class AuthFragment : BaseFragment() {
+class AuthFragment : BaseFragment(), KeyEventListener {
     companion object {
         @JvmStatic
         fun newInstance(arguments: Bundle? = null) = AuthFragment().apply {
@@ -36,11 +35,11 @@ class AuthFragment : BaseFragment() {
 
     private var type = TYPE_VIDEO
 
-    private var mMediaStoreCompat: MediaStoreCompat? = null
-
     private lateinit var viewModel: AuthViewModel
 
     private var progressDialog: ProgressDialog? = null
+
+    private var authSuccess: Boolean = false
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -57,7 +56,7 @@ class AuthFragment : BaseFragment() {
         super.onActivityCreated(savedInstanceState)
         viewModel = ViewModelProviders.of(this, viewModelFactory).get(AuthViewModel::class.java)
 
-        toolbar.setNavigationOnClickListener { activity?.onBackPressed() }
+        toolbar.setNavigationOnClickListener { finish() }
 
         viewModel.randomMessage.observe(this, Observer {
             authText.text = it
@@ -65,10 +64,11 @@ class AuthFragment : BaseFragment() {
         })
 
         viewModel.success.observe(this, Observer {
+            authSuccess = true
             dismissProgress()
             successText.visibility = View.VISIBLE
             startAuthButton.setText(R.string.back)
-            startAuthButton.setOnClickListener { activity?.finish() }
+            startAuthButton.setOnClickListener { finish() }
             snackbar(it)
         })
 
@@ -83,7 +83,7 @@ class AuthFragment : BaseFragment() {
         }
 
         startAuthButton.setOnClickListener {
-            if (checkAndRequestPermission(Manifest.permission.CAMERA, Manifest.permission.WRITE_EXTERNAL_STORAGE)) {
+            if (checkAndRequestPermission(*getPermissions())) {
                 startAuth()
             }
         }
@@ -91,46 +91,74 @@ class AuthFragment : BaseFragment() {
         viewModel.getAuthRandomMessage(type)
     }
 
+    private fun finish() {
+        if (authSuccess) {
+            val data = Intent()
+            data.putExtra(Constants.Extra.DATA, true)
+            activity?.setResult(Activity.RESULT_OK, data)
+            activity?.finish()
+        } else {
+            activity?.onBackPressed()
+        }
+    }
+
+
+    override fun onKeyDown(keyCode: Int, event: KeyEvent): Boolean {
+        return false
+    }
+
+    override fun onKeyUp(keyCode: Int, event: KeyEvent): Boolean {
+        if (keyCode == KeyEvent.KEYCODE_BACK) {
+            finish()
+        }
+        return true
+    }
+
     private fun startAuth() {
         if (type == TYPE_VIDEO) {
-            addFragmentSafely(VideoAuthFragment.newInstance(), "video_auth", true)
-        } else {
-            context?.let { context ->
-                if (mMediaStoreCompat == null) {
-                    mMediaStoreCompat = MediaStoreCompat(activity, this)
-                    mMediaStoreCompat?.setCaptureStrategy(CaptureStrategy(true, "com.snt.phoney.fileprovider"))
+            val recordVideoFragment = CaptureVideoFragment.newInstance()
+            recordVideoFragment.setOnResultListener {
+                it?.let { path ->
+                    startAuth(File(path))
                 }
-                mMediaStoreCompat?.dispatchCaptureIntent(context, CAPTURE_REQUEST_CODE)
-                return@let
             }
+            addFragmentSafely(recordVideoFragment, "video_auth", true)
+        } else {
+            val captureImageFragment = CaptureImageFragment.newInstance()
+            captureImageFragment.setOnResultListener {
+                it?.let { path ->
+                    startAuth(File(path))
+                }
+            }
+            addFragmentSafely(captureImageFragment, "image_auth", true)
         }
     }
 
     override fun onRequestPermissionsResult(requestCode: Int, permissions: Array<out String>, grantResults: IntArray) {
-        if (checkAppPermission(Manifest.permission.CAMERA, Manifest.permission.WRITE_EXTERNAL_STORAGE)) {
+        super.onRequestPermissionsResult(requestCode, permissions, grantResults)
+        if (checkAppPermission(*getPermissions())) {
             startAuth()
         } else {
             snackbar(getString(R.string.has_no_right_to_camera))
         }
     }
 
-    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
-        super.onActivityResult(requestCode, resultCode, data)
-        handCaptureImage(requestCode, resultCode, data)
+    private fun getPermissions(): Array<String> {
+        return if (type == TYPE_VIDEO) {
+            arrayOf(Manifest.permission.CAMERA, Manifest.permission.RECORD_AUDIO, Manifest.permission.WRITE_EXTERNAL_STORAGE)
+        } else {
+            arrayOf(Manifest.permission.CAMERA, Manifest.permission.WRITE_EXTERNAL_STORAGE)
+        }
     }
 
-    private fun handCaptureImage(requestCode: Int, resultCode: Int, data: Intent?) {
-        if (requestCode == CAPTURE_REQUEST_CODE && resultCode == Activity.RESULT_OK) {
-            val path = mMediaStoreCompat?.currentPhotoPath
-            if (!TextUtils.isEmpty(path)) {
-                showProgress(getString(R.string.on_going_upload))
-                viewModel.auth(type, File(path))
-            }
-        }
+    private fun startAuth(file: File) {
+        showProgress(getString(R.string.on_going_upload))
+        viewModel.auth(type, file)
     }
 
     private fun showProgress(tip: String) {
         progressDialog = ProgressDialog.newInstance(tip)
+        progressDialog!!.isCancelable = false
         progressDialog!!.show(childFragmentManager, "progress")
     }
 

@@ -112,7 +112,7 @@ class OfficialRecommendRecyclerViewAdapter(val fragment: OfficialRecommendFragme
                                 ?.disposedBy(disposeBag)
                     }
                 }
-                followView.text = if (data.care) context.getString(R.string.follow) else context.getString(R.string.followed)
+                followView.text = if (data.isCared) context.getString(R.string.follow) else context.getString(R.string.followed)
                 followView.setOnClickListener {
                     data.user?.uuid?.let { uuid ->
                         viewModel.follow(uuid)

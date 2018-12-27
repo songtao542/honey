@@ -4,7 +4,6 @@ import android.app.Activity
 import android.app.AlertDialog
 import android.content.Intent
 import android.os.Bundle
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -22,15 +21,16 @@ import com.snt.phoney.base.ProgressDialog
 import com.snt.phoney.domain.model.Photo
 import com.snt.phoney.domain.model.PhotoPermission
 import com.snt.phoney.domain.model.User
+import com.snt.phoney.domain.model.UserInfo
 import com.snt.phoney.extensions.removeList
 import com.snt.phoney.extensions.snackbar
 import com.snt.phoney.extensions.startActivity
 import com.snt.phoney.extensions.startActivityForResult
 import com.snt.phoney.ui.about.AboutActivity
 import com.snt.phoney.ui.album.AlbumActivity
+import com.snt.phoney.ui.browser.WebBrowserActivity
 import com.snt.phoney.ui.dating.DatingActivity
 import com.snt.phoney.ui.privacy.PrivacyActivity
-import com.snt.phoney.ui.report.ReportActivity
 import com.snt.phoney.ui.setup.BindPhoneFragment
 import com.snt.phoney.ui.share.ShareFragment
 import com.snt.phoney.ui.signup.SignupActivity
@@ -43,6 +43,10 @@ import com.zhihu.matisse.Matisse
 import kotlinx.android.synthetic.main.fragment_mine_header.*
 import kotlinx.android.synthetic.main.fragment_mine_list.*
 import java.io.File
+
+
+const val REQUEST_AUTH_CODE = 56
+const val REQUEST_ALBUM_CODE = 58
 
 /**
  * A fragment representing a list of Items.
@@ -76,8 +80,9 @@ class MineFragment : BaseFragment(), OnSettingItemClickListener, OnSignOutClickL
         editInfo.setOnClickListener { context?.let { context -> context.startActivity<UserActivity>(Page.EDIT_USER) } }
         upgradeVip.setOnClickListener { context?.let { context -> context.startActivity<VipActivity>(Page.VIP) } }
 
-        viewModel.amountInfo.observe(this, Observer {
-            adapter.amountInfo = it
+        viewModel.userInfo.observe(this, Observer {
+            adapter.userInfo = it
+            setUserInfo(it)
         })
 
         viewModel.success.observe(this, Observer {
@@ -99,7 +104,7 @@ class MineFragment : BaseFragment(), OnSettingItemClickListener, OnSignOutClickL
             adapter.notifyDataSetChanged()
         })
 
-        viewModel.getUserAmountInfo()
+        viewModel.getAllInfoOfUser()
         viewModel.getUserPhotos()
 
         setUser(viewModel.user)
@@ -125,9 +130,9 @@ class MineFragment : BaseFragment(), OnSettingItemClickListener, OnSignOutClickL
                                         showProgress(getString(R.string.on_going_seting))
                                         viewModel.setPhotoPermission(PhotoPermission.PUBLIC)
                                     }
-                                    PhotoPermission.UNLOCKED -> {
+                                    PhotoPermission.LOCKED -> {
                                         showProgress(getString(R.string.on_going_seting))
-                                        viewModel.setPhotoPermission(PhotoPermission.UNLOCKED)
+                                        viewModel.setPhotoPermission(PhotoPermission.LOCKED)
                                     }
                                     PhotoPermission.NEED_APPLY -> {
                                         showProgress(getString(R.string.on_going_seting))
@@ -144,9 +149,18 @@ class MineFragment : BaseFragment(), OnSettingItemClickListener, OnSignOutClickL
                 }
             }
             R.drawable.ic_my_dating -> {
+                if (setting.hasNewMessage) {
+                    setting.hasNewMessage = false
+                    adapter.notifyDataSetChanged()
+                }
                 activity?.startActivity<DatingActivity>(Page.MY_DATING)
             }
             R.drawable.ic_my_wallet -> {
+                if (setting.hasNewMessage) {
+                    viewModel.setWalletNewsToRead()
+                    setting.hasNewMessage = false
+                    adapter.notifyDataSetChanged()
+                }
                 activity?.startActivity<WalletActivity>(Page.WALLET)
             }
             R.drawable.ic_privacy_setting -> {
@@ -171,9 +185,13 @@ class MineFragment : BaseFragment(), OnSettingItemClickListener, OnSignOutClickL
                 ShareFragment.newInstance().show(childFragmentManager, "share")
             }
             R.drawable.ic_user_protocol -> {
+                startActivity<WebBrowserActivity>(Bundle().apply {
+                    putString(Constants.Extra.TITLE, getString(R.string.user_protocol))
+                    putString(Constants.Extra.URL, Constants.Api.USER_PROTOCOL_URL)
+                })
             }
             R.drawable.ic_clear_cache -> {
-                activity?.startActivity<ReportActivity>(Page.REPORT)
+                //activity?.startActivity<ReportActivity>(Page.REPORT)
             }
             R.drawable.ic_about -> {
                 activity?.startActivity<AboutActivity>(Page.ABOUT)
@@ -199,6 +217,7 @@ class MineFragment : BaseFragment(), OnSettingItemClickListener, OnSignOutClickL
         super.onActivityResult(requestCode, resultCode, data)
         handlePhotoPick(requestCode, resultCode, data)
         handleAlbumPhotoDelete(requestCode, resultCode, data)
+        handleAuthResult(requestCode, resultCode, data)
     }
 
     private fun handlePhotoPick(requestCode: Int, resultCode: Int, data: Intent?) {
@@ -210,7 +229,7 @@ class MineFragment : BaseFragment(), OnSettingItemClickListener, OnSignOutClickL
     }
 
     private fun handleAlbumPhotoDelete(requestCode: Int, resultCode: Int, data: Intent?) {
-        if (requestCode == REQUEST_CODE_ALBUM && resultCode == Activity.RESULT_OK) {
+        if (requestCode == REQUEST_ALBUM_CODE && resultCode == Activity.RESULT_OK) {
             data?.let { data ->
                 val delete = data.getParcelableArrayListExtra<Photo>(Constants.Extra.LIST)
                 val photos = viewModel.photos.value
@@ -224,8 +243,19 @@ class MineFragment : BaseFragment(), OnSettingItemClickListener, OnSignOutClickL
         }
     }
 
+    private fun handleAuthResult(requestCode: Int, resultCode: Int, data: Intent?) {
+        if (requestCode == REQUEST_AUTH_CODE && resultCode == Activity.RESULT_OK) {
+            data?.let {
+                val success = data.getBooleanExtra(Constants.Extra.DATA, false)
+                if (success) {
+                    viewModel.getAllInfoOfUser()
+                }
+            }
+        }
+    }
+
     override fun onPhotoClick(index: Int, photo: Photo) {
-        startActivityForResult<AlbumActivity>(Page.ALBUM_VIEWER, REQUEST_CODE_ALBUM, Bundle().apply {
+        startActivityForResult<AlbumActivity>(Page.ALBUM_VIEWER, REQUEST_ALBUM_CODE, Bundle().apply {
             putParcelableArrayList(Constants.Extra.PHOTO_LIST, ArrayList<Photo>(viewModel.photos.value))
             putInt(Constants.Extra.INDEX, index)
             putBoolean(Constants.Extra.DELETABLE, true)
@@ -242,15 +272,30 @@ class MineFragment : BaseFragment(), OnSettingItemClickListener, OnSignOutClickL
         if (user == null) return
         Glide.with(this).load(user.portrait).apply(RequestOptions().circleCrop()).transition(DrawableTransitionOptions.withCrossFade()).into(head)
         username.text = user.nickname
+    }
 
+    private fun setUserInfo(userInfo: UserInfo?) {
+        userInfo?.let { userInfo ->
+            userInfo.authState?.let { authState ->
+                when (authState.state) {
+                    2 -> authInfo.text = authState.score
+                    else -> authInfo.text = authState.message
+                }
+            }
+            userInfo.vipInfo?.let { vipInfo ->
+                if (vipInfo.isVip) {
+                    upgradeVip.setText(R.string.chunmi_vip)
+                } else {
+                    upgradeVip.setText(R.string.upgrade_vip_title)
+                }
+            }
+            return@let
+        }
     }
 
 
     companion object {
         @JvmStatic
         fun newInstance() = MineFragment()
-
-        @JvmStatic
-        val REQUEST_CODE_ALBUM = 28
     }
 }

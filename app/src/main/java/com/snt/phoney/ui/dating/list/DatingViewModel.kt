@@ -275,7 +275,7 @@ class DatingViewModel @Inject constructor(private val usecase: DatingUseCase, pr
                 .subscribeBy(
                         onSuccess = {
                             if (it.success) {
-                                dating.care = it.data!!
+                                dating.isCared = it.data!!
                                 followSuccess.value = it.data
                             } else {
                                 error.value = context.getString(R.string.follow_failed)

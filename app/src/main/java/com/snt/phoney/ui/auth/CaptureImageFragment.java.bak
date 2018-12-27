@@ -1,0 +1,292 @@
+/*
+ * Copyright (C) 2016 The Android Open Source Project
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *      http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
+
+package com.snt.phoney.ui.auth;
+
+import android.Manifest;
+import android.app.Activity;
+import android.content.Context;
+import android.content.pm.PackageManager;
+import android.os.Build;
+import android.os.Bundle;
+import android.os.Handler;
+import android.os.HandlerThread;
+import android.util.Log;
+import android.view.LayoutInflater;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
+import android.view.View;
+import android.view.ViewGroup;
+
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.Toolbar;
+import androidx.core.app.ActivityCompat;
+import androidx.core.content.ContextCompat;
+import androidx.fragment.app.Fragment;
+
+import com.google.android.cameraview.AspectRatio;
+import com.google.android.cameraview.CameraView;
+import com.google.android.material.floatingactionbutton.FloatingActionButton;
+import com.snt.phoney.R;
+
+import java.io.File;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.OutputStream;
+
+
+/**
+ * This demo app saves the taken picture to a constant file.
+ * $ adb pull /sdcard/Android/data/com.google.android.cameraview.demo/files/Pictures/picture.jpg
+ */
+public class CaptureImageFragment extends Fragment implements ActivityCompat.OnRequestPermissionsResultCallback {
+
+    public static CaptureImageFragment newInstance(){
+        return new CaptureImageFragment();
+    }
+
+    private static final String TAG = "CaptureImageFragment";
+
+    private static final int REQUEST_CAMERA_PERMISSION = 1;
+
+    private static final int[] FLASH_OPTIONS = {
+            CameraView.FLASH_AUTO,
+            CameraView.FLASH_OFF,
+            CameraView.FLASH_ON,
+    };
+
+    private static final int[] FLASH_ICONS = {
+            R.drawable.ic_capture_flash_auto,
+            R.drawable.ic_capture_flash_off,
+            R.drawable.ic_capture_flash_on,
+    };
+
+    private static final int[] FLASH_TITLES = {
+            R.string.flash_auto,
+            R.string.flash_off,
+            R.string.flash_on,
+    };
+
+    private int mCurrentFlash;
+
+    private CameraView mCameraView;
+
+    private Handler mBackgroundHandler;
+    private Handler mHandler = new Handler();
+
+    private String mImageSavePath;
+
+    private View.OnClickListener mOnClickListener = new View.OnClickListener() {
+        @Override
+        public void onClick(View v) {
+            switch (v.getId()) {
+                case R.id.take_picture:
+                    if (mCameraView != null) {
+                        mCameraView.takePicture();
+                    }
+                    break;
+            }
+        }
+    };
+
+    @Nullable
+    @Override
+    public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
+        return inflater.inflate(R.layout.fragment_capture_image, container, false);
+    }
+
+    @Override
+    public void onActivityCreated(@Nullable Bundle savedInstanceState) {
+        super.onActivityCreated(savedInstanceState);
+        setHasOptionsMenu(true);
+        mCameraView = getView().findViewById(R.id.camera);
+        if (mCameraView != null) {
+            mCameraView.addCallback(mCallback);
+            mCameraView.setFacing(CameraView.FACING_FRONT);
+        }
+        FloatingActionButton fab = getView().findViewById(R.id.take_picture);
+        if (fab != null) {
+            fab.setOnClickListener(mOnClickListener);
+        }
+        Toolbar toolbar = getView().findViewById(R.id.toolbar);
+        Activity activity = getActivity();
+        if (activity instanceof AppCompatActivity) {
+            ((AppCompatActivity) activity).setSupportActionBar(toolbar);
+            ((AppCompatActivity) activity).getSupportActionBar().setDisplayShowTitleEnabled(false);
+        }
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        if (checkPermission()) {
+            mCameraView.start();
+        } else if (ActivityCompat.shouldShowRequestPermissionRationale(requireActivity(), Manifest.permission.CAMERA)) {
+            ActivityCompat.requestPermissions(requireActivity(), new String[]{Manifest.permission.CAMERA}, REQUEST_CAMERA_PERMISSION);
+        } else {
+            ActivityCompat.requestPermissions(requireActivity(), new String[]{Manifest.permission.CAMERA}, REQUEST_CAMERA_PERMISSION);
+        }
+    }
+
+    private boolean checkPermission() {
+        return ContextCompat.checkSelfPermission(requireContext(), Manifest.permission.CAMERA) == PackageManager.PERMISSION_GRANTED;
+    }
+
+    @Override
+    public void onPause() {
+        mCameraView.stop();
+        super.onPause();
+    }
+
+    @Override
+    public void onDestroy() {
+        super.onDestroy();
+        if (mBackgroundHandler != null) {
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN_MR2) {
+                mBackgroundHandler.getLooper().quitSafely();
+            } else {
+                mBackgroundHandler.getLooper().quit();
+            }
+            mBackgroundHandler = null;
+        }
+    }
+
+    @Override
+    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
+        switch (requestCode) {
+            case REQUEST_CAMERA_PERMISSION:
+                if (checkPermission()) {
+                    mCameraView.start();
+                } else {
+                    if (getActivity() != null) {
+                        getActivity().onBackPressed();
+                    }
+                }
+                break;
+        }
+    }
+
+    @Override
+    public void onCreateOptionsMenu(@NonNull Menu menu, @NonNull MenuInflater inflater) {
+        inflater.inflate(R.menu.capture_image, menu);
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()) {
+            case R.id.switch_flash:
+                if (mCameraView != null) {
+                    mCurrentFlash = (mCurrentFlash + 1) % FLASH_OPTIONS.length;
+                    item.setTitle(FLASH_TITLES[mCurrentFlash]);
+                    item.setIcon(FLASH_ICONS[mCurrentFlash]);
+                    mCameraView.setFlash(FLASH_OPTIONS[mCurrentFlash]);
+                }
+                return true;
+            case R.id.switch_camera:
+                if (mCameraView != null) {
+                    int facing = mCameraView.getFacing();
+                    mCameraView.setFacing(facing == CameraView.FACING_FRONT ? CameraView.FACING_BACK : CameraView.FACING_FRONT);
+                }
+                return true;
+        }
+        return super.onOptionsItemSelected(item);
+    }
+
+    public void setAspectRatio(@NonNull AspectRatio ratio) {
+        if (mCameraView != null) {
+            mCameraView.setAspectRatio(ratio);
+        }
+    }
+
+    private Handler getBackgroundHandler() {
+        if (mBackgroundHandler == null) {
+            HandlerThread thread = new HandlerThread("background");
+            thread.start();
+            mBackgroundHandler = new Handler(thread.getLooper());
+        }
+        return mBackgroundHandler;
+    }
+
+    private CameraView.Callback mCallback = new CameraView.Callback() {
+
+        @Override
+        public void onCameraOpened(CameraView cameraView) {
+            Log.d(TAG, "onCameraOpened");
+        }
+
+        @Override
+        public void onCameraClosed(CameraView cameraView) {
+            Log.d(TAG, "onCameraClosed");
+        }
+
+        @Override
+        public void onPictureTaken(CameraView cameraView, final byte[] data) {
+            Log.d(TAG, "onPictureTaken " + data.length);
+            getBackgroundHandler().post(() -> {
+                mImageSavePath = getImageFilePath(requireContext());
+                File file = new File(mImageSavePath);
+                OutputStream os = null;
+                try {
+                    os = new FileOutputStream(file);
+                    os.write(data);
+                    os.close();
+                } catch (IOException e) {
+                    Log.w(TAG, "Cannot write to " + file, e);
+                } finally {
+                    if (os != null) {
+                        try {
+                            os.close();
+                        } catch (IOException e) {
+                            Log.e(TAG, "error:" + e.getMessage());
+                        }
+                    }
+                    mHandler.post(() -> finish());
+                }
+            });
+        }
+    };
+
+    private void finish() {
+        mOnResultListener.onResult(mImageSavePath);
+        if (getActivity() != null) {
+            getActivity().onBackPressed();
+        }
+    }
+
+    private OnResultListener mOnResultListener;
+
+    interface OnResultListener {
+        void onResult(String path);
+    }
+
+    public void setOnResultListener(OnResultListener listener) {
+        mOnResultListener = listener;
+    }
+
+    private String getImageFilePath(Context context) {
+        String filename = System.currentTimeMillis() + ".jpg";
+        File dir = context.getExternalFilesDir(null);
+
+        if (dir == null) {
+            return filename;
+        } else {
+            return dir.getAbsolutePath() + filename;
+        }
+    }
+}

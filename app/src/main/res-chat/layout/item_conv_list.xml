@@ -122,8 +122,8 @@
                         android:layout_height="wrap_content"
                         android:layout_weight="1"
                         android:singleLine="true"
-                        android:textColor="#2C2C2C"
-                        android:textSize="16sp" />
+                        android:textColor="@android:color/black"
+                        android:textSize="14sp" />
 
                     <TextView
                         android:id="@+id/msg_item_date"
@@ -144,8 +144,8 @@
                     android:layout_marginTop="1.33dp"
                     android:ems="10"
                     android:singleLine="true"
-                    android:textColor="#999999"
-                    android:textSize="14sp" />
+                    android:textColor="#aaaaaa"
+                    android:textSize="12sp" />
 
                 <ImageView
                     android:id="@+id/iv_groupBlocked"

@@ -6,7 +6,6 @@ import android.text.TextUtils
 import android.util.TypedValue
 import android.view.Gravity
 import android.view.View
-import android.view.ViewGroup
 import android.widget.*
 import android.widget.LinearLayout.LayoutParams
 import com.bumptech.glide.Glide
@@ -15,7 +14,6 @@ import com.snt.phoney.R
 import com.snt.phoney.domain.model.Photo
 import com.snt.phoney.extensions.colorOf
 import com.snt.phoney.extensions.dip
-import com.snt.phoney.extensions.forEach
 import java.util.*
 
 class PhotoFlowAdapter(private val context: Context) : FlowLayout.ViewAdapter {
@@ -79,30 +77,34 @@ class PhotoFlowAdapter(private val context: Context) : FlowLayout.ViewAdapter {
     private val cache = ArrayDeque<ImageView>()
     private var cachedAdd: View? = null
 
-    private fun createImageView(res: Int, price: Int): View {
+    private fun createImageView(price: Int): View {
         val view = FrameLayout(context)
         val imageView = ImageView(context)
-        imageView.scaleType = ImageView.ScaleType.CENTER_CROP
-        imageView.setBackgroundResource(R.drawable.ic_red_envelope_photo_border)
+        imageView.scaleType = ImageView.ScaleType.CENTER_INSIDE
         imageView.layoutParams = FrameLayout.LayoutParams(FrameLayout.LayoutParams.MATCH_PARENT, FrameLayout.LayoutParams.MATCH_PARENT)
         view.addView(imageView)
 
-        val textView = TextView(context)
-        textView.setTextSize(TypedValue.COMPLEX_UNIT_SP, 10f)
-        textView.setTextColor(context.colorOf(R.color.white))
-        textView.text = context.getString(R.string.pay_mibi_template, price.toString())
-        val dip5 = context.dip(5)
-        textView.layoutParams = FrameLayout.LayoutParams(FrameLayout.LayoutParams.WRAP_CONTENT, FrameLayout.LayoutParams.WRAP_CONTENT).apply {
-            gravity = Gravity.BOTTOM or Gravity.CENTER_HORIZONTAL
-            bottomMargin = dip5
-        }
-        val dip4 = context.dip(4)
-        textView.setPadding(dip5 * 2, dip4, dip5 * 2, dip4)
-        textView.setBackgroundResource(R.drawable.button_primary_circle_corner_selector)
-        view.addView(textView)
+        if (price > 0) {
+            val textView = TextView(context)
+            textView.setTextSize(TypedValue.COMPLEX_UNIT_SP, 10f)
+            textView.setTextColor(context.colorOf(R.color.white))
+            textView.text = context.getString(R.string.pay_mibi_template, price.toString())
+            val dip5 = context.dip(5)
+            textView.layoutParams = FrameLayout.LayoutParams(FrameLayout.LayoutParams.WRAP_CONTENT, FrameLayout.LayoutParams.WRAP_CONTENT).apply {
+                gravity = Gravity.BOTTOM or Gravity.CENTER_HORIZONTAL
+                bottomMargin = dip5
+            }
+            val dip4 = context.dip(4)
+            textView.setPadding(dip5 * 2, dip4, dip5 * 2, dip4)
+            textView.setBackgroundResource(R.drawable.button_primary_circle_corner_selector)
+            view.addView(textView)
 
-        imageView.scaleType = ImageView.ScaleType.CENTER_INSIDE
-        Glide.with(context).applyDefaultRequestOptions(RequestOptions().placeholder(R.drawable.ic_placeholder)).load(res).into(imageView)
+            imageView.setImageResource(R.drawable.ic_red_envelopes)
+            imageView.setBackgroundResource(R.drawable.ic_red_envelope_photo_border)
+        } else {
+            imageView.setImageResource(R.drawable.ic_placeholder)
+            imageView.setBackgroundResource(R.drawable.ic_red_envelope_photo_border)
+        }
         return view
     }
 
@@ -193,7 +195,7 @@ class PhotoFlowAdapter(private val context: Context) : FlowLayout.ViewAdapter {
             val photo = mPhotos!![index]
             val path = photo.path
             if (TextUtils.isEmpty(path)) {
-                createImageView(R.drawable.ic_red_envelopes, photo.price).apply { setTag(R.id.tag, photo) }
+                createImageView(photo.price).apply { setTag(R.id.tag, photo) }
             } else {
                 createImageView(photo.path!!).apply { setTag(R.id.tag, photo) }
             }

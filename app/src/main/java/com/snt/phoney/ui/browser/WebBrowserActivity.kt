@@ -8,7 +8,7 @@ import android.webkit.*
 import android.widget.SeekBar
 import com.snt.phoney.R
 import com.snt.phoney.base.BaseNoViewModelActivity
-import com.snt.phoney.base.CommonNoViewModelActivity
+import com.snt.phoney.extensions.EXTRA_ARGUMENT
 import com.snt.phoney.extensions.setLayoutFullscreen
 import com.snt.phoney.widget.PopupList
 import kotlinx.android.synthetic.main.activity_web_browser.*
@@ -69,8 +69,15 @@ class WebBrowserActivity : BaseNoViewModelActivity(), View.OnClickListener {
         }
 
 
-        val url = intent.extras?.getString("url")
-        val title = intent.extras?.getString("title")
+        var url = intent.extras?.getString("url")
+        var title = intent.extras?.getString("title")
+        var extras = intent?.getBundleExtra(EXTRA_ARGUMENT)
+        if (TextUtils.isEmpty(url) && extras != null) {
+            url = extras.getString("url")
+        }
+        if (TextUtils.isEmpty(title) && extras != null) {
+            title = extras.getString("title")
+        }
         if (!TextUtils.isEmpty(title)) {
             toolbar.title = title
         }

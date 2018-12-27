@@ -72,7 +72,7 @@
                         android:paddingRight="10dp"
                         android:text="@string/vip_privilege_text"
                         android:textColor="@color/dark_gray"
-                        android:textSize="@dimen/textsize_normal" />
+                        android:textSize="@dimen/textsize_small" />
                 </LinearLayout>
 
                 <com.snt.phoney.widget.FlowLayout

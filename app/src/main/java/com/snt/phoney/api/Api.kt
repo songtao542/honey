@@ -127,13 +127,25 @@ interface Api {
                      @Field("page") pageIndex: String): Single<Response<List<User>>>
 
     @FormUrlEncoded
-    @POST("users/other/care")
+    @POST("users/other/isCared")
     fun follow(@Field("token") token: String,
                @Field("uid") uuid: String): Single<Response<Boolean>>
 
     @FormUrlEncoded
-    @POST("users/other/amountInfoOfUsers")
-    fun getUserAmountInfo(@Field("token") token: String): Single<Response<AmountInfo>>
+    @POST("users/other/amountInfo")
+    fun getAllInfoOfUser(@Field("token") token: String): Single<Response<UserInfo>>
+
+    @FormUrlEncoded
+    @POST("users/homePage/home")
+    fun getUserInfo(@Field("token") token: String,
+                    @Field("uid") uid: String,    //	用户uuid
+                    @Field("longitude") latitude: String,
+                    @Field("latitude") longitude: String): Single<Response<User>>
+
+    @FormUrlEncoded
+    @POST("member/wallet/updateWalletChange2Read")
+    fun setWalletNewsToRead(@Field("token") token: String): Single<Response<String>>
+
 
     /**
      * 发布约会
@@ -433,13 +445,6 @@ interface Api {
 
     @POST("report/listReportItems")
     fun listReportReasons(): Single<Response<List<ReportReason>>>
-
-    @FormUrlEncoded
-    @POST("users/homePage/home")
-    fun getUserInfo(@Field("token") token: String,
-                    @Field("uid") uid: String,    //	用户uuid
-                    @Field("longitude") latitude: String,
-                    @Field("latitude") longitude: String): Single<Response<User>>
 
     /**
      *@param token    string	是	用户会话id

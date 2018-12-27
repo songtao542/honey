@@ -101,6 +101,8 @@ class VipFragment : BaseFragment() {
                 card.setOnClickListener {
                     clearCheck(it)
                     it.isSelected = !it.isSelected
+                    val combo = it.tag as VipCombo
+                    payAmount.text = getString(R.string.pay_amount_template, DecimalFormat.getInstance().format(combo.price))
                 }
             }
             recommend?.let {
@@ -108,6 +110,7 @@ class VipFragment : BaseFragment() {
                 val combo = it.tag as VipCombo
                 payAmount.text = getString(R.string.pay_amount_template, DecimalFormat.getInstance().format(combo.price))
             }
+            return@let
         }
     }
 

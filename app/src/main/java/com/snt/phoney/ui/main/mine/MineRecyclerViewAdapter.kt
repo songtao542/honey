@@ -13,9 +13,11 @@ import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.RecyclerView
 import com.snt.phoney.R
 import com.snt.phoney.base.Page
-import com.snt.phoney.domain.model.AmountInfo
 import com.snt.phoney.domain.model.Photo
+import com.snt.phoney.domain.model.UserInfo
+import com.snt.phoney.extensions.TAG
 import com.snt.phoney.extensions.startActivity
+import com.snt.phoney.extensions.startActivityForResult
 import com.snt.phoney.ui.auth.AuthActivity
 import com.snt.phoney.ui.dating.DatingActivity
 import com.snt.phoney.ui.user.UserActivity
@@ -33,6 +35,8 @@ class MineRecyclerViewAdapter(val fragment: Fragment) : RecyclerView.Adapter<Rec
 
 
     private val settings = ArrayList<Setting>()
+    private val walletSetting: Setting
+    private val datingSetting: Setting
     var photos: List<Photo>? = null
     private var onSettingItemClickListener: OnSettingItemClickListener? = null
     private var onSignOutClickListener: OnSignOutClickListener? = null
@@ -55,22 +59,30 @@ class MineRecyclerViewAdapter(val fragment: Fragment) : RecyclerView.Adapter<Rec
         this.onPhotoClickListener = onPhotoClickListener
     }
 
-    var amountInfo: AmountInfo? = null
+    var userInfo: UserInfo? = null
         set(value) {
             field = value
+            updateSettingInfo(value)
             notifyDataSetChanged()
         }
 
+    private fun updateSettingInfo(userInfo: UserInfo?) {
+        datingSetting.hasNewMessage = userInfo?.hasNewsOfDating == true
+        walletSetting.hasNewMessage = userInfo?.hasNewsOfWallet == true
+    }
+
     init {
-        settings.add(Setting(R.drawable.ic_photo_permission, "相册权限", ""))
-        settings.add(Setting(R.drawable.ic_my_dating, "我的约会", "新消息"))
-        settings.add(Setting(R.drawable.ic_my_wallet, "我的钱包", ""))
-        settings.add(Setting(R.drawable.ic_privacy_setting, "隐私设置", ""))
-        settings.add(Setting(R.drawable.ic_bind_phone, "绑定手机", ""))
-        settings.add(Setting(R.drawable.ic_share, "分享给好友", ""))
-        settings.add(Setting(R.drawable.ic_user_protocol, "用户协议", ""))
-        settings.add(Setting(R.drawable.ic_clear_cache, "清理缓存", ""))
-        settings.add(Setting(R.drawable.ic_about, "关于", ""))
+        settings.add(Setting(R.drawable.ic_photo_permission, "相册权限"))
+        datingSetting = Setting(R.drawable.ic_my_dating, "我的约会")
+        settings.add(datingSetting)
+        walletSetting = Setting(R.drawable.ic_my_wallet, "我的钱包")
+        settings.add(walletSetting)
+        settings.add(Setting(R.drawable.ic_privacy_setting, "隐私设置"))
+        settings.add(Setting(R.drawable.ic_bind_phone, "绑定手机"))
+        settings.add(Setting(R.drawable.ic_share, "分享给好友"))
+        settings.add(Setting(R.drawable.ic_user_protocol, "用户协议"))
+        settings.add(Setting(R.drawable.ic_clear_cache, "清理缓存"))
+        settings.add(Setting(R.drawable.ic_about, "关于"))
     }
 
 
@@ -94,7 +106,7 @@ class MineRecyclerViewAdapter(val fragment: Fragment) : RecyclerView.Adapter<Rec
 
     override fun onBindViewHolder(holder: RecyclerView.ViewHolder, position: Int) {
         when (holder) {
-            is HeadViewHolder -> holder.setData(amountInfo)
+            is HeadViewHolder -> holder.setData(userInfo)
             is SettingViewHolder -> holder.setData(setting = settings[position - 2])
             is PhotoViewHolder -> holder.setData(photos)
             is FooterViewHolder -> {
@@ -114,8 +126,10 @@ class MineRecyclerViewAdapter(val fragment: Fragment) : RecyclerView.Adapter<Rec
         private val mMyDating: TextView = mView.myDating
         private val mMyDatingButton: LinearLayout = mView.myDatingButton
         private val mAuthenticate = mView.authenticate
+        private val authenticateState = mView.authenticateState
+        private val mAuthenticateLayout = mView.authenticateLayout
 
-        fun setData(amountInfo: AmountInfo?) {
+        fun setData(amountInfo: UserInfo?) {
             amountInfo?.let {
                 mRecentVisitor.text = "${it.countVisitor}"
                 mFollowMe.text = "${it.countFollowed}"
@@ -124,8 +138,32 @@ class MineRecyclerViewAdapter(val fragment: Fragment) : RecyclerView.Adapter<Rec
             mFollowMeButton.setOnClickListener { context.startActivity<UserActivity>(Page.FOLLOW_ME) }
             mRecentVisitorButton.setOnClickListener { context.startActivity<UserActivity>(Page.VISITOR) }
             mMyDatingButton.setOnClickListener { context.startActivity<DatingActivity>(Page.MY_DATING) }
-            mAuthenticate.setOnClickListener { context.startActivity<AuthActivity>(Page.AUTHENTICATE) }
 
+            userInfo?.let { userInfo ->
+                userInfo.authState?.let { authState ->
+                    when (authState.state) {
+                        0 -> {//未认证
+                            authenticateState.setText(R.string.mine_not_authenticate_tip)
+                            mAuthenticate.setText(R.string.mine_authenticate)
+                            mAuthenticate.setOnClickListener { fragment.startActivityForResult<AuthActivity>(Page.AUTHENTICATE, REQUEST_AUTH_CODE) }
+                        }
+                        1 -> { //认证中
+                            authenticateState.setText(R.string.mine_under_authenticate_tip)
+                            mAuthenticate.setText(R.string.mine_under_authenticate)
+                            mAuthenticate.setOnClickListener { Log.d(TAG, "认证中，请等待工作人员审核") }
+                        }
+                        2 -> {//认证通过
+                            mAuthenticateLayout.visibility = View.GONE
+                        }
+                        3 -> {//认证未通过
+                            authenticateState.setText(R.string.mine_authenticate_not_pass_tip)
+                            mAuthenticate.setText(R.string.mine_authenticate)
+                            mAuthenticate.setOnClickListener { fragment.startActivityForResult<AuthActivity>(Page.AUTHENTICATE, REQUEST_AUTH_CODE) }
+                        }
+                    }
+                }
+            }
+            // mAuthenticateLayout.
         }
     }
 
@@ -148,16 +186,20 @@ class MineRecyclerViewAdapter(val fragment: Fragment) : RecyclerView.Adapter<Rec
                     if (noPhotoStubInflated) {
                         mView.noPhotosLayout.visibility = View.GONE
                     }
-                    val flexbox = mView.flexbox
-                    flexbox.viewAdapter = PhotoFlowAdapter(context).setUrls(photos.map { it.path!! }).setMaxShow(19).setLastAsAdd(true).setOnAddClickListener {
-                        onAddPhotoClickListener?.onAddPhotoClick()
-                    }
-                    flexbox.setOnItemClickListener { _, index ->
+                    val photoView = mView.flexbox
+                    photoView.viewAdapter = PhotoFlowAdapter(context)
+                            .setUrls(photos.map { it.path!! })
+                            .setMaxShow(19)
+                            .setShowAddWhenFull(false)
+                            .setLastAsAdd(true)
+                            .setOnAddClickListener {
+                                onAddPhotoClickListener?.onAddPhotoClick()
+                            }
+                    photoView.setOnItemClickListener { _, index ->
                         onPhotoClickListener?.onPhotoClick(index, photos[index])
                     }
                 }
             } else {
-                Log.d("TTTT", "mView.noPhotoStub===>${mView.noPhotoStub}")
                 if (!noPhotoStubInflated) {
                     noPhotoStubInflated = true
                     mView.noPhotoStub.inflate()
@@ -187,14 +229,12 @@ class MineRecyclerViewAdapter(val fragment: Fragment) : RecyclerView.Adapter<Rec
             mView.setOnClickListener(this)
             mIcon.setImageResource(setting.icon)
             mTitle.text = setting.title
-            when (setting.info) {
-                null -> {
-                    mNews.visibility = View.GONE
-                }
-                else -> {
-                    mInfo.text = setting.info
-                    mNews.visibility = View.VISIBLE
-                }
+            if (setting.hasNewMessage) {
+                mInfo.visibility = View.VISIBLE
+                mNews.visibility = View.VISIBLE
+            } else {
+                mInfo.visibility = View.GONE
+                mNews.visibility = View.GONE
             }
         }
 
@@ -229,4 +269,4 @@ interface OnSignOutClickListener {
 }
 
 
-data class Setting(val icon: Int, val title: String, var info: String?)
+data class Setting(val icon: Int, val title: String, var hasNewMessage: Boolean = false)

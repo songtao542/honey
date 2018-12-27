@@ -53,8 +53,8 @@ class AlbumPermissionSettingFragment : BottomDialogFragment() {
                 PhotoPermission.PUBLIC -> {
                     listener?.invoke(PhotoPermission.PUBLIC)
                 }
-                PhotoPermission.UNLOCKED -> {
-                    listener?.invoke(PhotoPermission.UNLOCKED)
+                PhotoPermission.LOCKED -> {
+                    listener?.invoke(PhotoPermission.LOCKED)
                 }
                 PhotoPermission.NEED_APPLY -> {
                     listener?.invoke(PhotoPermission.NEED_APPLY)

@@ -11,7 +11,7 @@ import java.text.SimpleDateFormat
 @Parcelize
 data class Dating(
         var cover: List<Photo>? = null,//  "cover": [
-        @SerializedName(value = "isCared") var care: Boolean = false,//  "isCared": false,
+        @SerializedName(value = "isCared") var isCared: Boolean = false,//  "isCared": false,
         @SerializedName(value = "userInfo") var user: User? = null,//   "user":
         @SerializedName(value = "ctime") var createTime: Long = 0,//  "ctime": 1542381337650,
         /**

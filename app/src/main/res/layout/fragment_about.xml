@@ -63,7 +63,8 @@
         android:paddingRight="20dp"
         android:text="@string/give_me_star"
         android:textColor="@color/black"
-        android:textSize="@dimen/textsize_normal" />
+        android:textSize="@dimen/textsize_normal"
+        android:visibility="gone" />
 
     <androidx.appcompat.widget.AppCompatTextView
         android:id="@+id/policy"

@@ -130,6 +130,7 @@ dependencies {
     implementation project(path: ':photopicker')
     implementation project(path: ':rangebar')
     implementation project(path: ':loadmore')
+    implementation project(path: ':cameraview')
 
     // A Map
     implementation(name: 'AMap', ext: 'aar')

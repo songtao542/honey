@@ -1,1 +1,1 @@
-include ':app', ':flexbox', ':playground', ':expandable_layout', ':citypicker', ':photopicker', ':zoomimage', ':rangebar', ':loadmore'
+include ':app', ':flexbox', ':playground', ':expandable_layout', ':citypicker', ':photopicker', ':zoomimage', ':rangebar', ':loadmore', ':cameraview'

@@ -17,10 +17,6 @@ public abstract class AuthActivityModule {
 
     @FragmentScope
     @ContributesAndroidInjector
-    public abstract VideoAuthFragment contributeVideoAuthFragment();
-
-    @FragmentScope
-    @ContributesAndroidInjector
     public abstract AuthFragment contributeAuthFragment();
 
     @FragmentScope

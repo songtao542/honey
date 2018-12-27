@@ -8,9 +8,11 @@ import javax.inject.Inject
 
 class UserInfoUseCase @Inject constructor(private val userRepository: UserRepository, private val locationRepository: LocationRepository) : AccessUserUseCase(userRepository) {
 
-    fun getUserAmountInfo(token: String) = userRepository.getUserAmountInfo(token)
+    fun getAllInfoOfUser(token: String) = userRepository.getAllInfoOfUser(token)
 
     fun getUserInfo(token: String, uid: String, latitude: Double, longitude: Double) = userRepository.getUserInfo(token, uid, latitude, longitude)
+
+    fun setWalletNewsToRead(token: String) = userRepository.setWalletNewsToRead(token)
 
     fun getLocation() = locationRepository.getLocation()
 

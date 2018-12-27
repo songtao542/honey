@@ -188,13 +188,27 @@ class UserInfoFragment : BaseFragment() {
 
         chatLimit.text = getString(R.string.chat_price_template, df.format(user.price))
 
-        user.photos?.let {
-            photos.viewAdapter = PhotoFlowAdapter(requireContext()).setPhotos(it).setMaxShow(12).setLastAsAdd(false)
-            photos.setOnItemClickListener { view, _ ->
+        user.photos?.let { photos ->
+
+            if (user.photoPermission == PhotoPermission.LOCKED.value) {
+                unlockPhotoLayout.visibility = View.VISIBLE
+                unlockPhoto.text = getString(R.string.unlock_photo_template, user.photoPrice.toString())
+
+                unlockPhoto.setOnClickListener {
+                    buy {
+                        viewModel.buyWithMibi(OrderType.USE_UNLOCK_ALBUM_MIBI, user.photoId.toString(), user.uuid)
+                    }
+                }
+            }
+
+            photosView.viewAdapter = PhotoFlowAdapter(requireContext()).setPhotos(photos).setMaxShow(12).setLastAsAdd(false)
+            photosView.setOnItemClickListener { view, _ ->
                 val photo = view.getTag(R.id.tag) as? Photo
                 photo?.let { photo ->
-                    if (TextUtils.isEmpty(photo.path)) {
-                        buy(photo)
+                    if (TextUtils.isEmpty(photo.path) && photo.price > 0) {
+                        buy {
+                            viewModel.buyWithMibi(OrderType.USE_RED_ENVELOPE_MIBI, photo.id.toString(), user.uuid)
+                        }
                     }
                 }
             }
@@ -213,7 +227,7 @@ class UserInfoFragment : BaseFragment() {
 
     }
 
-    private fun buy(photo: Photo) {
+    private fun buy(handler: (() -> Unit)) {
         context?.let { context ->
             AlertDialog.Builder(context)
                     .setTitle(R.string.buy_tip)
@@ -223,7 +237,7 @@ class UserInfoFragment : BaseFragment() {
                         dialog.dismiss()
                     }.setPositiveButton(R.string.confirm) { dialog, _ ->
                         dialog.dismiss()
-                        viewModel.buyWithMibi(OrderType.USE_PHOTO_MIBI, photo.id.toString(), user.uuid)
+                        handler.invoke()
                     }.show()
         }
     }

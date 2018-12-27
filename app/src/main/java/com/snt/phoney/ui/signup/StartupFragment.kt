@@ -111,7 +111,7 @@ class StartupFragment : BaseFragment() {
             it?.let { user ->
                 Log.d("TTTT", "success user---------===================>$user")
                 toast("注册成功")
-                if (user.valid) {
+                if (user.validated) {
                     context?.let { context -> startActivity(MainActivity.newIntent(context)) }
                 } else {
                     context?.let { context -> startActivity(SetupWizardActivity.newIntent(context, user)) }

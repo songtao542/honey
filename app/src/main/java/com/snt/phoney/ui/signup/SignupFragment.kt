@@ -1,6 +1,7 @@
 package com.snt.phoney.ui.signup
 
 import android.os.Bundle
+import android.os.CountDownTimer
 import android.text.TextUtils
 import android.view.LayoutInflater
 import android.view.View
@@ -44,11 +45,15 @@ class SignupFragment : BaseFragment() {
             viewModel.signup(phone.text.toString(), verificationCode.text.toString()).disposedBy(disposeBag)
         }
         getVerificationCode.setOnClickListener {
-            viewModel.requestVerificationCode(phone.text.toString()).disposedBy(disposeBag)
+            val phoneNumber = getPhone()
+            if (!TextUtils.isEmpty(phoneNumber)) {
+                viewModel.requestVerificationCode(phoneNumber).disposedBy(disposeBag)
+            }
         }
         forgetPassword.setOnClickListener { onForgetPasswordClicked() }
 
         viewModel.verificationCode.observe(this, Observer {
+            startCountdown()
             snackbar(getString(R.string.verification_code_has_send))
         })
 
@@ -63,8 +68,31 @@ class SignupFragment : BaseFragment() {
         })
     }
 
-    private fun isPhoneValid(): Boolean {
-        return !TextUtils.isEmpty(phone.text)
+    private fun startCountdown() {
+        getVerificationCode.isEnabled = false
+        getVerificationCode.text = "60"
+        val countDownTimer = object : CountDownTimer(60000, 1000) {
+            private var tick = 60
+            override fun onFinish() {
+                getVerificationCode.isEnabled = true
+            }
+
+            override fun onTick(millisUntilFinished: Long) {
+                if (tick > 0) {
+                    getVerificationCode.text = (tick--).toString()
+                }
+            }
+        }
+        countDownTimer.start()
+    }
+
+    private fun getPhone(): String? {
+        if (TextUtils.isEmpty(phone.text)) {
+            snackbar(getString(R.string.please_input_phone_number))
+            return null
+        } else {
+            return phone.text.toString()
+        }
     }
 
     private fun onForgetPasswordClicked() {

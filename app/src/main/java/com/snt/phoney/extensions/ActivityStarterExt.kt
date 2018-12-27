@@ -7,13 +7,26 @@ import android.os.Bundle
 import androidx.annotation.AnimRes
 import androidx.fragment.app.Fragment
 import com.snt.phoney.R
-import com.snt.phoney.base.*
+import com.snt.phoney.base.CommonNoViewModelActivity
+import com.snt.phoney.base.FragmentFactory
+import com.snt.phoney.base.Page
+
+const val EXTRA_ARGUMENT = "argument"
+const val EXTRA_PAGE = "page"
 
 inline fun <reified T : Activity> Context.newIntent(page: Page, argument: Bundle? = null): Intent {
     val intent = Intent(this, T::class.java)
     intent.putExtra(EXTRA_PAGE, page.ordinal)
     argument?.let {
-        intent.putExtra(EXTRA_ARGUMENT, argument)
+        intent.putExtra(EXTRA_ARGUMENT, it)
+    }
+    return intent
+}
+
+inline fun <reified T : Activity> Context.newIntent(argument: Bundle? = null): Intent {
+    val intent = Intent(this, T::class.java)
+    argument?.let {
+        intent.putExtra(EXTRA_ARGUMENT, it)
     }
     return intent
 }
@@ -35,6 +48,16 @@ inline fun <reified T : Activity> Fragment.startActivityForResult(page: Page, re
 inline fun <reified T : Activity> Fragment.startActivity(page: Page, argument: Bundle? = null) {
     context?.let { context ->
         startActivity(context.newIntent<T>(page, argument))
+    }
+}
+
+inline fun <reified T : Activity> Context.startActivity(argument: Bundle? = null) {
+    startActivity(newIntent<T>(argument))
+}
+
+inline fun <reified T : Activity> Fragment.startActivity(argument: Bundle? = null) {
+    context?.let { context ->
+        startActivity(context.newIntent<T>(argument))
     }
 }
 

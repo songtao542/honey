@@ -47,6 +47,10 @@ class WithdrawFragment : BaseFragment() {
             setWithdrawInfo(it)
         })
 
+        viewModel.error.observe(this, Observer {
+            snackbar(it)
+        })
+
         confirmButton.setOnClickListener {
             val amount = getAmount()
             if (amount > 0) {
@@ -95,7 +99,7 @@ class WithdrawFragment : BaseFragment() {
         if (!preWithdraw.isAlipayBind) {
             bindToAlipay.setOnClickListener {
                 context?.let { context ->
-//                    val uri = Uri.parse("${Constants.Api.BIND_ALIPAY_URL}${viewModel.getAccessToken()}")
+                    //                    val uri = Uri.parse("${Constants.Api.BIND_ALIPAY_URL}${viewModel.getAccessToken()}")
 //                    Log.d("TTTT", "UUUUURRRRLLLL=${Constants.Api.BIND_ALIPAY_URL}${viewModel.getAccessToken()}")
 //                    val intent = Intent(Intent.ACTION_VIEW, uri)
 //                    startActivity(intent)

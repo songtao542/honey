@@ -8,7 +8,7 @@
     <string name="title_home">首页</string>
     <string name="title_square">广场</string>
     <string name="title_message">信息</string>
-    <string name="title_mine">个人中心</string>
+    <string name="title_mine">我的</string>
 
     <string name="tab_home_friend">蜜友</string>
     <string name="tab_home_following">关注的人</string>
@@ -76,7 +76,7 @@
     <string name="self_introduction">自我介绍（可不填）</string>
     <string name="self_introduction_hint">用最简单的语句表达自己</string>
     <string name="edit_user_title">编辑个人信息</string>
-    <string name="has_authenticate">您已经通过纯蜜官方真人验证，靠谱值98</string>
+    <string name="has_not_authenticate">您还未通过纯蜜官方真人验证！</string>
     <string name="viewVisitor">查看对方</string>
     <string name="recent_visitor">最近访客</string>
     <string name="followme_title">关注我的</string>
@@ -84,9 +84,13 @@
     <string name="user_info_title">用户详情</string>
     <string name="add_image">添加图片</string>
     <string name="mine_not_authenticate_tip">你还未通过纯蜜官方认证！</string>
+    <string name="mine_under_authenticate_tip">认证中...请等待官方人员审核！</string>
+    <string name="mine_under_authenticate">认证中</string>
+    <string name="mine_authenticate_not_pass_tip">认证未通过，请重新认证！</string>
     <string name="mine_authenticate">立即认证</string>
     <string name="mine_max_photo_number_tip">最多可以上传19张图片</string>
     <string name="upgrade_vip_title">开通纯蜜会员</string>
+    <string name="chunmi_vip">纯蜜会员</string>
     <string name="pay_amount_template">支付金额：%1$s元</string>
     <string name="vip_privilege_text">【看的更多】   每天不限次数查看女士\n【看得看省】   每天10次免费机会查看付费相册或联系方式\n【看的更久】   查看阅后即焚照片的时间从2秒提升到6秒\n【约的更爽】   免费发布约会广播</string>
     <string name="vip_period">会员有效期</string>
@@ -346,5 +350,22 @@
     <string name="auth_video_step1_tip">系统随机生成一段话</string>
     <string name="auth_video_step2_tip">录制一段10秒钟的视频并说出步骤一中的话</string>
 
+    <string name="record">Record</string>
+    <string name="stop">Stop</string>
 
+    <string name="aspect_ratio">Aspect ratio</string>
+    <string name="switch_flash">Switch flash</string>
+    <string name="switch_camera">Switch camera</string>
+    <string name="flash_auto">Flash auto</string>
+    <string name="flash_off">Flash off</string>
+    <string name="flash_on">Flash on</string>
+    <string name="become_vip">成为会员</string>
+    <string name="normal_member">#普通会员</string>
+    <string name="edit_user_info">编辑信息</string>
+    <string name="has_new_message">新消息</string>
+    <string name="the_user_set_view_need_charge">对方设置了需要付费才可查看</string>
+    <string name="unlock_photo_template">解锁TA的相册%1$s蜜币</string>
+    <string name="user_protocol">用户协议</string>
+    <string name="detail_title">详情</string>
+    <string name="please_input_phone_number">请输入手机号码</string>
 </resources>

@@ -23,20 +23,20 @@ data class Photo(
 }
 
 
-//权限值(0 全部公开 1 红包（只有单张） 2 解锁相册(全部) 3 需要申请查看 4 不可查看)
+//权限值(0 全部公开 1 红包（只有单张） 2 需要解锁相册(全部) 3 需要申请查看 4 不可查看)
 enum class PhotoPermission(val value: Int) {
-    PUBLIC(0),
-    NEED_CHARGE(1),
-    UNLOCKED(2),
-    NEED_APPLY(3),
-    PRIVATE(4);
+    PUBLIC(0), //全部公开
+    NEED_CHARGE(1), //红包（只有单张）
+    LOCKED(2), //需要解锁相册(全部)
+    NEED_APPLY(3), // 需要申请查看
+    PRIVATE(4); //不可查看
 
     companion object {
         fun from(value: Int): PhotoPermission {
             return when (value) {
                 0 -> PUBLIC
                 1 -> NEED_CHARGE
-                2 -> UNLOCKED
+                2 -> LOCKED
                 3 -> NEED_APPLY
                 else -> PRIVATE
             }

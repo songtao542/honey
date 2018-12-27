@@ -224,9 +224,10 @@
                 android:layout_marginTop="10dp">
 
                 <com.snt.phoney.widget.FlowLayout
-                    android:id="@+id/photos"
+                    android:id="@+id/photosView"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:layout_gravity="center_vertical"
                     android:layout_marginLeft="10dp"
                     android:layout_marginRight="10dp"
                     app:alignContent="flex_start"
@@ -234,6 +235,50 @@
                     app:flexWrap="wrap"
                     app:justifyContent="flex_start"
                     app:square="true" />
+
+                <LinearLayout
+                    android:id="@+id/unlockPhotoLayout"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:background="#66000000"
+                    android:orientation="vertical"
+                    android:visibility="gone">
+
+                    <Space
+                        android:layout_width="0dp"
+                        android:layout_height="0dp"
+                        android:layout_weight="1" />
+
+                    <androidx.appcompat.widget.AppCompatTextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="20dp"
+                        android:gravity="center"
+                        android:text="@string/the_user_set_view_need_charge"
+                        android:textColor="@color/white"
+                        android:textSize="@dimen/textsize_small" />
+
+                    <Button
+                        android:id="@+id/unlockPhoto"
+                        style="@style/Widget.AppCompat.Button.Borderless"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center_horizontal"
+                        android:layout_marginTop="10dp"
+                        android:layout_marginBottom="20dp"
+                        android:background="@drawable/button_primary_circle_corner_selector"
+                        android:minHeight="40dp"
+                        android:paddingLeft="20dp"
+                        android:paddingRight="20dp"
+                        android:text="@string/unlock_photo_template"
+                        android:textColor="@android:color/white" />
+
+                    <Space
+                        android:layout_width="0dp"
+                        android:layout_height="0dp"
+                        android:layout_weight="1" />
+                </LinearLayout>
+
 
             </FrameLayout>
 
@@ -376,13 +421,13 @@
 
             <!-- 底部添加一个View 是为了解决 NestedScrollView 底部显示不全的bug -->
             <!--<View-->
-                <!--android:layout_width="match_parent"-->
-                <!--android:layout_height="20dp"-->
-                <!--android:layout_marginLeft="20dp"-->
-                <!--android:layout_marginTop="20dp"-->
-                <!--android:layout_marginRight="20dp"-->
-                <!--android:layout_marginBottom="20dp"-->
-                <!--android:background="@android:color/transparent" />-->
+            <!--android:layout_width="match_parent"-->
+            <!--android:layout_height="20dp"-->
+            <!--android:layout_marginLeft="20dp"-->
+            <!--android:layout_marginTop="20dp"-->
+            <!--android:layout_marginRight="20dp"-->
+            <!--android:layout_marginBottom="20dp"-->
+            <!--android:background="@android:color/transparent" />-->
 
         </LinearLayout>
     </androidx.core.widget.NestedScrollView>

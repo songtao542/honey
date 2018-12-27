@@ -108,7 +108,7 @@ class OthersDatingRecyclerViewAdapter(private val fragment: OthersDatingFragment
                 }
             }
 
-            if (dating.care) {
+            if (dating.isCared) {
                 val cd = context.getDrawable(R.drawable.ic_heart_solid_red)
                 val size = context.dip(12)
                 cd.setBounds(0, 0, size, size)

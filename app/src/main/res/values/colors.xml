@@ -99,5 +99,5 @@
     <color name="location_picker_my_location">#eeffffff</color>
     <color name="location_picker_my_location_pressed">#eedddddd</color>
 
-
+    <color name="camera_video_action_background">#4285f4</color>
 </resources>

@@ -4,8 +4,6 @@ package com.snt.phoney.domain.repository
 import com.snt.phoney.domain.accessor.UserAccessor
 import com.snt.phoney.domain.model.*
 import io.reactivex.Single
-import okhttp3.MultipartBody
-import retrofit2.http.Field
 import java.io.File
 
 interface UserRepository : UserAccessor {
@@ -88,6 +86,8 @@ interface UserRepository : UserAccessor {
                     latitude: Double,
                     longitude: Double): Single<Response<User>>
 
+    fun setWalletNewsToRead(token: String): Single<Response<String>>
+
     fun setPhotoPermission(token: String,
                            photoPermission: Int,
                            money: Double,
@@ -112,7 +112,7 @@ interface UserRepository : UserAccessor {
 
     fun getUserPhotos(token: String): Single<Response<List<Photo>>>
 
-    fun getUserAmountInfo(token: String): Single<Response<AmountInfo>>
+    fun getAllInfoOfUser(token: String): Single<Response<UserInfo>>
 
 
     fun listMyFollow(token: String, pageIndex: Int): Single<Response<List<User>>>

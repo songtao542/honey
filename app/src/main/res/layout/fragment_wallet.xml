@@ -35,7 +35,7 @@
                 android:layout_height="50dp"
                 android:layout_centerHorizontal="true"
                 android:layout_marginTop="15dp"
-                app:srcCompat="@mipmap/head" />
+                app:srcCompat="@drawable/ic_head_placeholder" />
 
             <LinearLayout
                 android:layout_width="wrap_content"
@@ -62,7 +62,7 @@
                     android:layout_height="wrap_content"
                     android:layout_gravity="center_vertical"
                     android:gravity="center_vertical"
-                    android:text="45673.46"
+                    android:text="0"
                     android:textColor="@color/white"
                     android:textSize="30sp" />
 

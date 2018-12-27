@@ -528,7 +528,7 @@ public class TabLayout extends HorizontalScrollView {
      * Add a {@link TabLayout.OnTabSelectedListener} that will be invoked when tab selection
      * changes.
      *
-     * <p>Components that add a listener should take care to remove it when finished via
+     * <p>Components that add a listener should take isCared to remove it when finished via
      * {@link #removeOnTabSelectedListener(OnTabSelectedListener)}.</p>
      *
      * @param listener listener to add
@@ -660,7 +660,7 @@ public class TabLayout extends HorizontalScrollView {
     }
 
     /**
-     * Set the behavior mode for the Tabs in this layout. The valid input options are:
+     * Set the behavior mode for the Tabs in this layout. The validated input options are:
      * <ul>
      * <li>{@link #MODE_FIXED}: Fixed tabs display all tabs concurrently and are best used
      * with content that benefits from quick pivots between tabs.</li>
@@ -1415,7 +1415,7 @@ public class TabLayout extends HorizontalScrollView {
         }
 
         /**
-         * Select this tab. Only valid if the tab has been added to the action bar.
+         * Select this tab. Only validated if the tab has been added to the action bar.
          */
         public void select() {
             if (mParent == null) {
@@ -2100,7 +2100,7 @@ public class TabLayout extends HorizontalScrollView {
 
     @Override
     public LayoutParams generateLayoutParams(AttributeSet attrs) {
-        // We don't care about the layout params of any views added to us, since we don't actually
+        // We don't isCared about the layout params of any views added to us, since we don't actually
         // add them. The only view we add is the SlidingTabStrip, which is done manually.
         // We return the default layout params so that we don't blow up if we're given a TabItem
         // without android:layout_* values.

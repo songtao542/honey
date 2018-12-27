@@ -67,8 +67,8 @@ class UserRepositoryImpl @Inject constructor(private val userAccessor: UserAcces
         return api.listVisitor(token)
     }
 
-    override fun getUserAmountInfo(token: String): Single<Response<AmountInfo>> {
-        return api.getUserAmountInfo(token)
+    override fun getAllInfoOfUser(token: String): Single<Response<UserInfo>> {
+        return api.getAllInfoOfUser(token)
     }
 
     override fun follow(token: String, uuid: String): Single<Response<Boolean>> {
@@ -89,6 +89,10 @@ class UserRepositoryImpl @Inject constructor(private val userAccessor: UserAcces
 
     override fun getUserInfo(token: String, uid: String, latitude: Double, longitude: Double): Single<Response<User>> {
         return api.getUserInfo(token, uid, latitude.toString(), longitude.toString())
+    }
+
+    override fun setWalletNewsToRead(token: String): Single<Response<String>> {
+        return api.setWalletNewsToRead(token)
     }
 
     override fun listUser(token: String, latitude: String, longitude: String, type: String, pageIndex: Int, city: String,

@@ -5,13 +5,13 @@ import android.util.Log
 import androidx.lifecycle.MutableLiveData
 import com.snt.phoney.R
 import com.snt.phoney.base.AppViewModel
-import com.snt.phoney.domain.model.AmountInfo
+import com.snt.phoney.domain.model.UserInfo
 import com.snt.phoney.domain.model.Photo
 import com.snt.phoney.domain.model.PhotoPermission
 import com.snt.phoney.domain.usecase.UserInfoUseCase
+import com.snt.phoney.extensions.TAG
 import com.snt.phoney.extensions.disposedBy
 import io.reactivex.android.schedulers.AndroidSchedulers
-import io.reactivex.disposables.Disposable
 import io.reactivex.rxkotlin.subscribeBy
 import io.reactivex.schedulers.Schedulers
 import java.io.File
@@ -24,24 +24,33 @@ class MineViewModel @Inject constructor(private val usecase: UserInfoUseCase) : 
     val toast = MutableLiveData<String>()
     val photos = MutableLiveData<List<Photo>>()
 
-    val amountInfo = MutableLiveData<AmountInfo>()
+    val userInfo = MutableLiveData<UserInfo>()
 
-    fun getUserAmountInfo(): Disposable? {
-        val token = usecase.getAccessToken() ?: return null
-        return usecase.getUserAmountInfo(token)
+    fun getAllInfoOfUser() {
+        val token = usecase.getAccessToken() ?: return
+        usecase.getAllInfoOfUser(token)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribeBy {
-                    Log.d("TTTT", "rrrrrrrrrrrrrrrr$it")
                     if (it.success) {
-                        amountInfo.value = it.data
+                        userInfo.value = it.data
                     }
-                }
+                }.disposedBy(disposeBag)
     }
 
-    fun setPhotoPermission(photoPermission: PhotoPermission, money: Double = 0.0, photoId: String = ""): Disposable? {
-        val token = usecase.getAccessToken() ?: return null
-        return usecase.setPhotoPermission(token, photoPermission.value, money, photoId)
+    fun setWalletNewsToRead() {
+        val token = usecase.getAccessToken() ?: return
+        usecase.setWalletNewsToRead(token)
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribeBy {
+                    Log.d(TAG, "setWalletNewsToRead $it")
+                }.disposedBy(disposeBag)
+    }
+
+    fun setPhotoPermission(photoPermission: PhotoPermission, money: Double = 0.0, photoId: String = "") {
+        val token = usecase.getAccessToken() ?: return
+        usecase.setPhotoPermission(token, photoPermission.value, money, photoId)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribeBy(
@@ -55,7 +64,7 @@ class MineViewModel @Inject constructor(private val usecase: UserInfoUseCase) : 
                         onError = {
                             error.value = context.getString(R.string.set_photo_permission_failed)
                         }
-                )
+                ).disposedBy(disposeBag)
     }
 
     fun uploadPhotos(photoPaths: List<File>) {

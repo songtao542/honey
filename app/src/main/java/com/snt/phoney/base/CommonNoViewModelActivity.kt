@@ -2,10 +2,7 @@ package com.snt.phoney.base
 
 import android.os.Bundle
 import com.snt.phoney.R
-import com.snt.phoney.extensions.addFragmentSafely
-import com.snt.phoney.extensions.colorOf
-import com.snt.phoney.extensions.setLayoutFullscreen
-import com.snt.phoney.extensions.setStatusBarColor
+import com.snt.phoney.extensions.*
 
 abstract class CommonNoViewModelActivity : BaseNoViewModelActivity() {
 

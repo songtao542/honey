@@ -22,7 +22,6 @@ import com.snt.phoney.utils.data.Constants
 import com.snt.phoney.widget.CompatRadioButton
 import com.snt.phoney.widget.itemdecoration.MonospacedItemDecoration
 import kotlinx.android.synthetic.main.fragment_pay_setting.*
-import java.lang.Exception
 
 class PaySettingFragment : BaseFragment() {
     companion object {
@@ -99,30 +98,20 @@ class PaySettingFragment : BaseFragment() {
         }
 
         confirm.setOnClickListener {
-            if (checked == needPay) {
-                val text = price.text?.toString()
-                var amount = 0.0
-                if (!TextUtils.isEmpty(text)) {
-                    try {
-                        amount = text?.toDouble() ?: 0.0
-                    } catch (e: Exception) {
-                        e.printStackTrace()
+            val amount = getAmount()
+            if (amount > 0.0) {
+                if (checked == needPay) {
+                    if (adapter.selectedPhoto != null) {
+                        val photoId = adapter.selectedPhoto?.id?.toString() ?: ""
+                        showProgress(getString(R.string.on_going_seting))
+                        viewModel.setPhotoPermission(PhotoPermission.NEED_CHARGE, amount, photoId)
+                    } else {
+                        snackbar(getString(R.string.must_select_photo))
                     }
-                }
-                if (amount == 0.0) {
-                    snackbar(getString(R.string.price_must_input))
-                    return@setOnClickListener
-                }
-                if (adapter.selectedPhoto != null) {
-                    val photoId = adapter.selectedPhoto?.id?.toString() ?: ""
-                    showProgress(getString(R.string.on_going_seting))
-                    viewModel.setPhotoPermission(PhotoPermission.NEED_CHARGE, amount, photoId)
                 } else {
-                    snackbar(getString(R.string.must_select_photo))
+                    showProgress(getString(R.string.on_going_seting))
+                    viewModel.setPhotoPermission(PhotoPermission.LOCKED, amount)
                 }
-            } else {
-                showProgress(getString(R.string.on_going_seting))
-                viewModel.setPhotoPermission(PhotoPermission.UNLOCKED)
             }
         }
 
@@ -130,6 +119,24 @@ class PaySettingFragment : BaseFragment() {
             viewModel.getUserPhotos()
         } else {
             adapter.data = photos
+        }
+    }
+
+    private fun getAmount(): Double {
+        val text = price.text?.toString()
+        var amount = 0.0
+        if (!TextUtils.isEmpty(text)) {
+            try {
+                amount = text?.toDouble() ?: 0.0
+            } catch (e: Exception) {
+                e.printStackTrace()
+            }
+        }
+        return if (amount <= 0.0) {
+            snackbar(getString(R.string.price_must_input))
+            -1.0
+        } else {
+            amount
         }
     }
 
@@ -144,13 +151,11 @@ class PaySettingFragment : BaseFragment() {
                 needPay.checked = true
                 unlockAll.checked = false
                 list.visibility = View.VISIBLE
-                inputPrice.visibility = View.VISIBLE
                 checked = needPay
             } else {
                 needPay.checked = false
                 unlockAll.checked = true
                 list.visibility = View.GONE
-                inputPrice.visibility = View.GONE
                 checked = unlockAll
             }
         }

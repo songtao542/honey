@@ -41,7 +41,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
-            android:text="最近有新的变动"
+            android:text="@string/has_new_message"
             android:textSize="@dimen/textsize_small" />
 
         <View
