@@ -71,7 +71,7 @@
                 android:layout_gravity="center"
                 android:scaleType="centerInside"
                 app:fabSize="normal"
-                app:srcCompat="@drawable/ic_camera"
+                app:srcCompat="@drawable/ic_phone_hangup"
                 app:useCompatPadding="false" />
 
             <androidx.appcompat.widget.AppCompatTextView

@@ -5,25 +5,27 @@ import android.content.ComponentName
 import android.content.Context
 import android.content.Intent
 import android.content.ServiceConnection
-import android.os.*
-import android.util.Log
+import android.os.Bundle
+import android.os.Handler
+import android.os.IBinder
 import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
 import com.bumptech.glide.Glide
 import com.bumptech.glide.load.resource.drawable.DrawableTransitionOptions
 import com.bumptech.glide.request.RequestOptions
+import com.snt.phoney.ICallStateListener
+import com.snt.phoney.IVoiceCallService
 import com.snt.phoney.R
 import com.snt.phoney.domain.model.ImUser
 import com.snt.phoney.extensions.checkAndRequestPermission
 import com.snt.phoney.extensions.checkAppPermission
 import com.snt.phoney.extensions.setLayoutFullscreen
-import com.snt.phoney.service.MessageEvent
 import com.snt.phoney.service.VoiceCallService
 import com.snt.phoney.utils.data.Constants
 import kotlinx.android.synthetic.main.activity_voice_call.*
 
 
-class VoiceCallActivity : AppCompatActivity(), ServiceConnection, Handler.Callback {
+class VoiceCallActivity : AppCompatActivity(), ServiceConnection {
 
     companion object {
         @JvmStatic
@@ -35,48 +37,9 @@ class VoiceCallActivity : AppCompatActivity(), ServiceConnection, Handler.Callba
         }
     }
 
-    private var mRemoteMessenger: Messenger? = null
+    private val mHandler = Handler()
+    private var mVoiceCallService: IVoiceCallService? = null
 
-    private val mMessenger = Messenger(Handler(this))
-
-    override fun handleMessage(msg: Message?): Boolean {
-        msg?.let { message ->
-            when (message.what) {
-                MessageEvent.EVENT_STATE -> {
-                    val state = message.obj as Int
-                    Log.d("TTTT", "sssssssssssssssssssssssssss state=$state")
-                    if (state == MessageEvent.STATE_NOT_CONNECTED) {
-                        hangupLabel.setText(R.string.cancel)
-                        user?.username?.let { username ->
-                            sendMessage(MessageEvent.CMD_CALL, username)
-                        }
-                    } else {
-                        hangupLabel.setText(R.string.hangup)
-                    }
-                    return true
-                }
-                MessageEvent.EVENT_CONNECTING -> {
-                    state.setText(R.string.connecting)
-                }
-                MessageEvent.EVENT_CONNECTED -> {
-                    state.setText(R.string.has_accept_phone)
-                    hangupLabel.setText(R.string.hangup)
-                }
-                MessageEvent.EVENT_DISCONNECTED -> {
-                    /**
-                     * 断开后直接关闭
-                     */
-                    finish()
-                    return true
-                }
-                else -> {
-                    return false
-                }
-            }
-        }
-        return false
-
-    }
 
     private var user: ImUser? = null
 
@@ -99,7 +62,7 @@ class VoiceCallActivity : AppCompatActivity(), ServiceConnection, Handler.Callba
         }
 
         hangup.setOnClickListener {
-            hangupIfConnected()
+            mVoiceCallService?.hangup()
             finish()
         }
     }
@@ -117,13 +80,13 @@ class VoiceCallActivity : AppCompatActivity(), ServiceConnection, Handler.Callba
     }
 
     override fun onBackPressed() {
-        if (mRemoteMessenger != null) {
+        if (mVoiceCallService != null) {
             AlertDialog.Builder(this)
                     .setTitle(R.string.cancel_voice_call_tip)
                     .setMessage(R.string.cancel_voice_call_warn)
                     .setPositiveButton(R.string.disconnect) { dialog, _ ->
                         dialog.dismiss()
-                        hangupIfConnected()
+                        mVoiceCallService?.hangup()
                         finish()
                     }.show()
         } else {
@@ -131,38 +94,56 @@ class VoiceCallActivity : AppCompatActivity(), ServiceConnection, Handler.Callba
         }
     }
 
-    private fun hangupIfConnected() {
-        mRemoteMessenger?.let { messenger ->
-            val message = Message.obtain()
-            message.what = MessageEvent.CMD_HANGUP
-            messenger.send(message)
-            return@let
-        }
-    }
-
-    private fun sendMessage(what: Int, obj: Any? = null) {
-        mRemoteMessenger?.let { messenger ->
-            val reply = Message.obtain()
-            reply.what = what
-            reply.replyTo = mMessenger
-            obj?.let { reply.obj = it }
-            messenger.send(reply)
-            return@let
-        }
-    }
-
-
     override fun onDestroy() {
         unbindService(this)
         super.onDestroy()
     }
 
     override fun onServiceDisconnected(name: ComponentName?) {
-        mRemoteMessenger = null
+        mVoiceCallService = null
     }
 
     override fun onServiceConnected(name: ComponentName?, service: IBinder?) {
-        mRemoteMessenger = Messenger(service)
-        sendMessage(MessageEvent.CMD_QUERY_STATE)
+        mVoiceCallService = IVoiceCallService.Stub.asInterface(service)
+    }
+
+
+    inner class ICallStateListenerImpl : ICallStateListener.Stub() {
+        override fun onCallOutgoing() {
+            mHandler.post {
+                state.setText(R.string.connecting)
+            }
+        }
+
+        override fun onCallInviteReceived() {
+        }
+
+        override fun onCallOtherUserInvited() {
+        }
+
+        override fun onCallConnected() {
+            mHandler.post {
+                state.setText(R.string.has_accept_phone)
+                hangupLabel.setText(R.string.hangup)
+            }
+        }
+
+        override fun onCallMemberJoin() {
+        }
+
+        override fun onCallMemberOffline() {
+        }
+
+        override fun onCallDisconnected() {
+            mHandler.post {
+                finish()
+            }
+        }
+
+        override fun onCallError() {
+            mHandler.post {
+                finish()
+            }
+        }
     }
 }

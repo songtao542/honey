@@ -2,9 +2,9 @@ package com.snt.phoney.service
 
 import android.app.Service
 import android.content.Intent
-import android.os.IBinder
-import android.os.RemoteCallbackList
-import android.os.RemoteException
+import android.database.ContentObserver
+import android.os.*
+import android.telephony.PhoneStateListener
 import android.util.Log
 import android.view.SurfaceView
 import cn.jiguang.jmrtc.api.JMRtcClient
@@ -19,6 +19,7 @@ import com.snt.phoney.BuildConfig
 import com.snt.phoney.ICallStateListener
 import com.snt.phoney.IVoiceCallService
 import com.snt.phoney.domain.accessor.UserAccessor
+import com.snt.phoney.extensions.TAG
 import com.snt.phoney.ui.voicecall.VoiceAnswerActivity
 import com.snt.phoney.utils.data.Constants
 import okhttp3.*
@@ -27,18 +28,26 @@ import okio.ByteString
 import java.util.concurrent.TimeUnit
 import javax.inject.Inject
 
-const val TAG = "VoiceCallService"
+object MessageEvent {
+    const val EVENT_CONNECTING = 11
+    const val EVENT_CONNECTED = 12
+    const val EVENT_DISCONNECTING = 13
+    const val EVENT_DISCONNECTED = 14
+    const val EVENT_OFFLINE = 15
+    const val EVENT_INVITED = 16
+    const val EVENT_ERROR = 17
+    const val EVENT_STATE = 18
 
-const val Method_onCallOutgoing = 1
-const val Method_onCallInviteReceived = 2
-const val Method_onCallOtherUserInvited = 3
-const val Method_onCallConnected = 4
-const val Method_onCallMemberJoin = 5
-const val Method_onCallMemberOffline = 6
-const val Method_onCallDisconnected = 7
-const val Method_onCallError = 8
+    const val CMD_CALL = 21
+    const val CMD_ACCEPT = 22
+    const val CMD_HANGUP = 23
+    const val CMD_QUERY_STATE = 24
 
-class VoiceCallService : Service() {
+    const val STATE_CONNECTED = 31
+    const val STATE_NOT_CONNECTED = 32
+}
+
+class VoiceCallService : Service(), Handler.Callback {
 
     companion object {
         @JvmStatic
@@ -48,11 +57,60 @@ class VoiceCallService : Service() {
     private var mWebSocket: WebSocket? = null
     private var mVoiceCallWebSocketListener: VoiceCallWebSocketListener? = VoiceCallWebSocketListener()
 
+//    private val mBinder: VoiceCallBinder = VoiceCallBinder()
+//    inner class VoiceCallBinder : Binder() {
+//        fun getService(): VoiceCallService {
+//            return this@VoiceCallService
+//        }
+//    }
+
     @Inject
     lateinit var mUserAccessor: UserAccessor
 
+    private val mHandler = Handler(this)
+
+    private var mReplyToMessenger: Messenger? = null
+
+    private var mConnected = false
+
     override fun onBind(intent: Intent): IBinder {
-        return VoiceCallServiceImpl()
+        return Messenger(mHandler).binder
+    }
+
+    override fun handleMessage(msg: Message?): Boolean {
+        msg?.let { message ->
+            when (message.what) {
+                MessageEvent.CMD_CALL -> {
+                    try {
+                        mReplyToMessenger = message.replyTo
+                        call(message.obj as String)
+                    } catch (e: Exception) {
+                        Log.e(TAG, "error:${e.message}")
+                    }
+                    return true
+                }
+                MessageEvent.CMD_ACCEPT -> {
+                    mReplyToMessenger = message.replyTo
+                    accept()
+                    return true
+                }
+                MessageEvent.CMD_HANGUP -> {
+                    mReplyToMessenger = message.replyTo
+                    hangupIfConnected()
+                    return true
+                }
+                MessageEvent.CMD_QUERY_STATE -> {
+                    mReplyToMessenger = message.replyTo
+                    val state = if (mConnected) MessageEvent.STATE_CONNECTED else MessageEvent.STATE_NOT_CONNECTED
+                    sendMessage(MessageEvent.EVENT_STATE, state)
+                    return true
+                }
+                else -> {
+                    return false
+                }
+            }
+        }
+        return false
     }
 
     override fun onStartCommand(intent: Intent?, flags: Int, startId: Int): Int {
@@ -64,12 +122,14 @@ class VoiceCallService : Service() {
         JMRtcClient.getInstance().initEngine(object : JMRtcListener() {
             override fun onCallOutgoing(session: JMRtcSession) {
                 Log.d("TTTT", "xxxxxxxxxxxx onCallOutgoing session=$session")
-                notifyListener(Method_onCallOutgoing)
+                mConnected = true
+                sendMessage(MessageEvent.EVENT_CONNECTING)
             }
 
             override fun onCallConnected(session: JMRtcSession, surfaceView: SurfaceView) {
                 Log.d("TTTT", "xxxxxxxxxxxx onCallConnected session=$session")
-                notifyListener(Method_onCallConnected)
+                mConnected = true
+                sendMessage(MessageEvent.EVENT_CONNECTED)
             }
 
             /**
@@ -77,47 +137,30 @@ class VoiceCallService : Service() {
              */
             override fun onCallMemberOffline(user: UserInfo, reason: JMRtcClient.DisconnectReason) {
                 Log.d("TTTT", "xxxxxxxxxxxx onCallMemberOffline user=$user  reason=$reason")
-                notifyListener(Method_onCallMemberOffline)
+                sendMessage(MessageEvent.EVENT_OFFLINE)
+                hangupIfConnected()
             }
 
             override fun onCallDisconnected(reason: JMRtcClient.DisconnectReason) {
                 Log.d("TTTT", "xxxxxxxxxxxx onCallDisconnected reason=$reason")
-                notifyListener(Method_onCallDisconnected)
+                mConnected = false
+                sendMessage(MessageEvent.EVENT_DISCONNECTED)
             }
 
             override fun onCallError(errorCode: Int, desc: String) {
                 Log.d("TTTT", "xxxxxxxxxxxx onCallError errorCode=$errorCode  desc=$desc")
-                notifyListener(Method_onCallError)
+                mConnected = false
+                sendMessage(MessageEvent.EVENT_ERROR)
             }
 
             override fun onCallInviteReceived(session: JMRtcSession) {
                 Log.d("TTTT", "xxxxxxxxxxxx onCallInviteReceived session=$session")
-                notifyListener(Method_onCallInviteReceived)
+                mConnected = false
                 startVoiceCallActivity()
             }
         })
     }
 
-    private fun notifyListener(methodId: Int) {
-        val size = mCallStateListeners.beginBroadcast()
-        for (i in 0 until size) {
-            try {
-                when (methodId) {
-                    Method_onCallOutgoing -> mCallStateListeners.getBroadcastItem(i).onCallOutgoing()
-                    Method_onCallInviteReceived -> mCallStateListeners.getBroadcastItem(i).onCallInviteReceived()
-                    Method_onCallOtherUserInvited -> mCallStateListeners.getBroadcastItem(i).onCallOtherUserInvited()
-                    Method_onCallConnected -> mCallStateListeners.getBroadcastItem(i).onCallConnected()
-                    Method_onCallMemberJoin -> mCallStateListeners.getBroadcastItem(i).onCallMemberJoin()
-                    Method_onCallMemberOffline -> mCallStateListeners.getBroadcastItem(i).onCallMemberOffline()
-                    Method_onCallDisconnected -> mCallStateListeners.getBroadcastItem(i).onCallDisconnected()
-                    Method_onCallError -> mCallStateListeners.getBroadcastItem(i).onCallError()
-                }
-            } catch (e: RemoteException) {
-                Log.e(TAG, "error:${e.message}")
-            }
-        }
-        mCallStateListeners.finishBroadcast()
-    }
 
     fun startVoiceCallActivity() {
         val intent = Intent(this, VoiceAnswerActivity::class.java).apply {
@@ -126,11 +169,31 @@ class VoiceCallService : Service() {
         startActivity(intent)
     }
 
+
+    private fun sendMessage(what: Int, obj: Any? = null) {
+        mReplyToMessenger?.let { messenger ->
+            val reply = Message.obtain()
+            reply.what = what
+            obj?.let { reply.obj = it }
+            messenger.send(reply)
+            return@let
+        }
+    }
+
     override fun onDestroy() {
         super.onDestroy()
+        hangupIfConnected()
         JMRtcClient.getInstance().releaseEngine()
     }
 
+    private fun hangupIfConnected() {
+        sendMessage(MessageEvent.EVENT_DISCONNECTING)
+        if (mConnected) {
+            hangup()
+        } else {
+            sendMessage(MessageEvent.EVENT_DISCONNECTED)
+        }
+    }
 
     private fun hangup() {
         JMRtcClient.getInstance().hangup(object : BasicCallback() {
@@ -166,45 +229,37 @@ class VoiceCallService : Service() {
         })
     }
 
-    private fun refuse() {
-        JMRtcClient.getInstance().refuse(object : BasicCallback() {
-            override fun gotResult(code: Int, message: String?) {
-                Log.d("TTTT", "xxxxxxxx accept code=$code  message=$message")
-            }
-        })
-    }
-
 
     private fun enableSpeaker(enable: Boolean) {
         JMRtcClient.getInstance().enableSpeakerphone(enable)
     }
 
 
-    val mCallStateListeners = RemoteCallbackList<ICallStateListener>()
+    val mICallStateListeners = RemoteCallbackList<ICallStateListener>()
 
     inner class VoiceCallServiceImpl : IVoiceCallService.Stub() {
         override fun hangup() {
-            this@VoiceCallService.hangup()
+            hangup()
         }
 
         override fun refuse() {
-            this@VoiceCallService.refuse()
+            refuse()
         }
 
         override fun accept() {
-            this@VoiceCallService.accept()
+            accept()
         }
 
         override fun enableSpeaker(enable: Boolean) {
-            this@VoiceCallService.enableSpeaker(enable)
+            enableSpeaker(enable)
         }
 
         override fun registerICallStateListener(listener: ICallStateListener?) {
-            mCallStateListeners.register(listener)
+            mICallStateListeners.register(listener)
         }
 
         override fun unregisterICallStateListener(listener: ICallStateListener?) {
-            mCallStateListeners.unregister(listener)
+            mICallStateListeners.unregister(listener)
         }
     }
 

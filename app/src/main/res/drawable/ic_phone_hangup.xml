@@ -1,7 +1,9 @@
-<?xml version="1.0" encoding="utf-8"?>
-<rotate xmlns:android="http://schemas.android.com/apk/res/android"
-    android:drawable="@drawable/ic_phone_accept"
-    android:drawablePadding="0dp"
-    android:fromDegrees="138"
-    android:toDegrees="0"
-    android:visible="true" />
+<vector xmlns:android="http://schemas.android.com/apk/res/android"
+    android:width="400dp"
+    android:height="160dp"
+    android:viewportWidth="400"
+    android:viewportHeight="160.22">
+    <path
+        android:fillColor="#FFFFFF"
+        android:pathData="M66.72,155.83c34.36,-7.46 39.41,-8.78 45.6,-17.27s6.76,-12.25 2.19,-37.8c-0.37,-3.34 -8.56,-39.67 92.41,-40.83 76.73,1.83 79.92,27 82.08,43.14 -0.3,11.92 -4.62,21.35 4.82,32.74 4.38,5.21 14.88,14.4 52.1,20.48 25.9,5 29.21,4.19 36.3,-2.57s14.66,-21.22 16.7,-41.78c3.55,-18.82 -2,-31.22 -11.38,-42.9C375.46,54.53 332.78,7.29 213.5,0.53S8,52.44 0.61,95.29c-3,18.65 5.6,44.87 16.49,56.43 6.42,9.06 15.26,11.57 49.63,4.1Z" />
+</vector>
