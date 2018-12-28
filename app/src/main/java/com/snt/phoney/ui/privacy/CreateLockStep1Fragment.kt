@@ -34,7 +34,8 @@ class CreateLockStep1Fragment : BaseFragment() {
 
         inputPassword.setOnInputOverListener {
             val pwd = inputPassword.password.toString()
-            addFragmentSafely(CreateLockStep2Fragment.newInstance(pwd), "step2", true)
+            addFragmentSafely(CreateLockStep2Fragment.newInstance(pwd), "step2", true,
+                    enterAnimation = R.anim.slide_in_right, popExitAnimation = R.anim.slide_out_right)
         }
     }
 

@@ -1,14 +1,18 @@
 package com.snt.phoney.domain.model
 
 import android.os.Parcelable
+import android.text.TextUtils
 import androidx.room.Entity
 import androidx.room.PrimaryKey
 import androidx.room.TypeConverter
 import androidx.room.TypeConverters
 import com.google.gson.annotations.SerializedName
 import kotlinx.android.parcel.Parcelize
-import kotlinx.serialization.*
+import kotlinx.serialization.Serializable
+import kotlinx.serialization.Transient
 import kotlinx.serialization.json.JSON
+import kotlinx.serialization.list
+import kotlinx.serialization.serializer
 
 
 @Entity(tableName = "User")
@@ -23,7 +27,6 @@ data class User(
         var email: String? = null,
         var phone: String? = null,
         var password: String? = null,
-        @Optional var avatar: String? = null,
         var sex: Int = -1,
         var height: Int = 0,
         var weight: Double = 0.0,
@@ -33,7 +36,7 @@ data class User(
         var city: String? = null,
         var cities: List<City>? = null,
         var career: String? = null,
-        var portrait: String? = null,//肖像
+        @SerializedName(value = "portrait") var avatar: String? = null,//肖像
         var introduce: String? = null,
         @SerializedName(value = "photo") var photos: List<Photo>? = null,
         @SerializedName(value = "photoRight") var photoPermission: Int = 0,
@@ -59,9 +62,9 @@ data class User(
         var tag: String? = null,
         var distance: Double = 0.0,
         var program: String? = null,
-        var im: ImInfo? = null,
-        @SerializedName(value = "isCare") var care: Boolean = false,
-        @SerializedName(value = "cares") var followedSize: Int = 0,
+        var im: ImUser? = null,
+        @SerializedName(value = "isCare") var isCared: Boolean = false,
+        @SerializedName(value = "cares") var caredSize: Int = 0,
         @SerializedName(value = "utime") var updateTime: Long = 0) : Parcelable {
 
     @Transient
@@ -109,6 +112,21 @@ data class User(
                 else -> false
             }
         }
+
+    @Transient
+    val freePhotos: List<Photo>?
+        get() {
+            photos?.let { photos ->
+                val result = ArrayList<Photo>()
+                for (photo in photos) {
+                    if (!TextUtils.isEmpty(photo.path)) {
+                        result.add(photo)
+                    }
+                }
+                return result
+            }
+            return null
+        }
 }
 
 enum class Sex(val value: Int) {
@@ -131,13 +149,13 @@ enum class Sex(val value: Int) {
 class Converter {
 
     @TypeConverter
-    fun toImInfo(value: String): ImInfo {
-        return JSON.nonstrict.parse(ImInfo.serializer(), value)
+    fun toImInfo(value: String): ImUser {
+        return JSON.nonstrict.parse(ImUser.serializer(), value)
     }
 
     @TypeConverter
-    fun imInfoToJson(info: ImInfo): String {
-        return JSON.nonstrict.stringify(ImInfo.serializer(), info)
+    fun imInfoToJson(info: ImUser): String {
+        return JSON.nonstrict.stringify(ImUser.serializer(), info)
     }
 
     @TypeConverter

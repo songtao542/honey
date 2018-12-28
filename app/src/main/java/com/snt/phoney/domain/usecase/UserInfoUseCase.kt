@@ -22,6 +22,7 @@ class UserInfoUseCase @Inject constructor(private val userRepository: UserReposi
                            photoId: String) = userRepository.setPhotoPermission(token, photoPermission, money, photoId)
 
     fun uploadPhotos(token: String, photos: List<File>) = userRepository.uploadPhotos(token, photos)
+    fun uploadHeadIcon(token: String, file: File) = userRepository.uploadHeadIcon(token, file)
 
     fun getUserPhotos(token: String) = userRepository.getUserPhotos(token)
 

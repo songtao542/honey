@@ -295,7 +295,8 @@
     <string name="buy_tip">购买提醒</string>
     <string name="buy_warning">你即将使用蜜币支付</string>
     <string name="pay_mibi_template">支付%1$s蜜币</string>
-    <string name="connecting">正在接通...</string>
+    <string name="connecting">正在等待对方接通...</string>
+    <string name="being_invited">邀请你进行语音通话</string>
     <string name="cancel_voice_call_tip">断开通话</string>
     <string name="cancel_voice_call_warn">你即将断开语音通话</string>
     <string name="disconnect">断开</string>
@@ -313,7 +314,6 @@
     <string name="consume_detail">消费明细</string>
     <string name="wallet_withdraw_title">提现</string>
     <string name="withdraw_amount">提现金额</string>
-    <string name="mibi_to_rmb">10蜜币等于1元人民币</string>
     <string name="amount_can_withdraw_template">可提现金额 %1$s元</string>
     <string name="confirm_withdraw">确认提现</string>
     <string name="withdraw_to">我要提现到</string>
@@ -361,6 +361,7 @@
     <string name="flash_on">Flash on</string>
     <string name="become_vip">成为会员</string>
     <string name="normal_member">#普通会员</string>
+    <string name="vip_member">#纯蜜会员</string>
     <string name="edit_user_info">编辑信息</string>
     <string name="has_new_message">新消息</string>
     <string name="the_user_set_view_need_charge">对方设置了需要付费才可查看</string>
@@ -368,4 +369,8 @@
     <string name="user_protocol">用户协议</string>
     <string name="detail_title">详情</string>
     <string name="please_input_phone_number">请输入手机号码</string>
+    <string name="unit_second">秒</string>
+    <string name="hangup">挂断</string>
+    <string name="accept_phone">接听</string>
+    <string name="has_accept_phone">已接通</string>
 </resources>

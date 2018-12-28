@@ -29,7 +29,6 @@ import com.snt.phoney.ui.user.UserActivity;
 import com.snt.phoney.ui.user.UserActivityModule;
 import com.snt.phoney.ui.vip.VipActivity;
 import com.snt.phoney.ui.vip.VipActivityModule;
-import com.snt.phoney.ui.voicecall.VoiceCallActivity;
 import com.snt.phoney.ui.wallet.WalletActivity;
 import com.snt.phoney.ui.wallet.WalletActivityModule;
 import com.snt.phoney.wxapi.WXEntryActivity;
@@ -152,9 +151,9 @@ public abstract class ActivityContributorModule {
     @ContributesAndroidInjector
     public abstract WebBrowserActivity contributeWebBrowserActivity();
 
-    @ActivityScope
-    @ContributesAndroidInjector
-    public abstract VoiceCallActivity contributeVoiceCallActivity();
+//    @ActivityScope
+//    @ContributesAndroidInjector
+//    public abstract VoiceCallActivity contributeVoiceCallActivity();
 
     @ActivityScope
     @ContributesAndroidInjector(modules = {

@@ -64,5 +64,5 @@
     <dimen name="pay_picker_round_corner_radius">3dp</dimen>
     <dimen name="auth_gradient_corner_radius">10dp</dimen>
 
-
+    <dimen name="design_fab_size_normal">80dp</dimen>
 </resources>

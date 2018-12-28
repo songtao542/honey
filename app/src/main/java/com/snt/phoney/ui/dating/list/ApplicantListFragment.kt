@@ -50,6 +50,8 @@ class ApplicantListFragment : BaseFragment() {
         super.onActivityCreated(savedInstanceState)
         viewModel = ViewModelProviders.of(this, viewModelFactory).get(DatingViewModel::class.java)
 
+        toolbar.setNavigationOnClickListener { activity?.onBackPressed() }
+
         list.layoutManager = LinearLayoutManager(requireContext())
         adapter = ApplicantListRecyclerViewAdapter(viewModel)
         list.adapter = adapter

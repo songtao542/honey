@@ -1,10 +1,14 @@
 package com.snt.phoney.ui.wallet
 
 import android.os.Bundle
+import android.text.TextUtils
 import android.view.*
 import android.widget.LinearLayout
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
+import com.bumptech.glide.Glide
+import com.bumptech.glide.load.resource.drawable.DrawableTransitionOptions
+import com.bumptech.glide.request.RequestOptions
 import com.snt.phoney.R
 import com.snt.phoney.base.BaseFragment
 import com.snt.phoney.base.Page
@@ -51,6 +55,11 @@ class WalletFragment : BaseFragment() {
                 return@let
             }
         })
+
+        val headIcon = viewModel.getUserHeadIcon()
+        if (!TextUtils.isEmpty(headIcon)) {
+            Glide.with(this).load(headIcon).apply(RequestOptions().circleCrop()).transition(DrawableTransitionOptions.withCrossFade()).into(icon)
+        }
 
         withdraw.setOnClickListener {
             addFragmentSafely(Page.WITHDRAW, "wallet_withdraw", true,

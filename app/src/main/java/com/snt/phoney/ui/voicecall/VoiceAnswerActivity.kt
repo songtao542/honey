@@ -7,36 +7,20 @@ import android.content.Intent
 import android.content.ServiceConnection
 import android.os.*
 import android.util.Log
+import android.view.View
 import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
-import com.bumptech.glide.Glide
-import com.bumptech.glide.load.resource.drawable.DrawableTransitionOptions
-import com.bumptech.glide.request.RequestOptions
 import com.snt.phoney.R
-import com.snt.phoney.domain.model.ImUser
 import com.snt.phoney.extensions.checkAndRequestPermission
 import com.snt.phoney.extensions.checkAppPermission
 import com.snt.phoney.extensions.setLayoutFullscreen
 import com.snt.phoney.service.MessageEvent
 import com.snt.phoney.service.VoiceCallService
-import com.snt.phoney.utils.data.Constants
-import kotlinx.android.synthetic.main.activity_voice_call.*
+import kotlinx.android.synthetic.main.activity_voice_answer.*
 
-
-class VoiceCallActivity : AppCompatActivity(), ServiceConnection, Handler.Callback {
-
-    companion object {
-        @JvmStatic
-        fun start(context: Context, im: ImUser) {
-            val intent = Intent(context, VoiceCallActivity::class.java).apply {
-                putExtra(Constants.Extra.USER, im)
-            }
-            context.startActivity(intent)
-        }
-    }
+class VoiceAnswerActivity : AppCompatActivity(), ServiceConnection, Handler.Callback {
 
     private var mRemoteMessenger: Messenger? = null
-
     private val mMessenger = Messenger(Handler(this))
 
     override fun handleMessage(msg: Message?): Boolean {
@@ -44,23 +28,20 @@ class VoiceCallActivity : AppCompatActivity(), ServiceConnection, Handler.Callba
             when (message.what) {
                 MessageEvent.EVENT_STATE -> {
                     val state = message.obj as Int
-                    Log.d("TTTT", "sssssssssssssssssssssssssss state=$state")
+                    Log.d("TTTT", "aaaaa sssssssss state=$state")
                     if (state == MessageEvent.STATE_NOT_CONNECTED) {
-                        hangupLabel.setText(R.string.cancel)
-                        user?.username?.let { username ->
-                            sendMessage(MessageEvent.CMD_CALL, username)
-                        }
+                        acceptLayout.visibility = View.VISIBLE
                     } else {
-                        hangupLabel.setText(R.string.hangup)
+                        acceptLayout.visibility = View.GONE
                     }
                     return true
                 }
                 MessageEvent.EVENT_CONNECTING -> {
-                    state.setText(R.string.connecting)
+                    state.setText(R.string.being_invited)
                 }
                 MessageEvent.EVENT_CONNECTED -> {
                     state.setText(R.string.has_accept_phone)
-                    hangupLabel.setText(R.string.hangup)
+                    acceptLayout.visibility = View.GONE
                 }
                 MessageEvent.EVENT_DISCONNECTED -> {
                     /**
@@ -75,25 +56,12 @@ class VoiceCallActivity : AppCompatActivity(), ServiceConnection, Handler.Callba
             }
         }
         return false
-
     }
-
-    private var user: ImUser? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setLayoutFullscreen()
-
-        user = intent?.getParcelableExtra(Constants.Extra.USER)
-        if (user == null) {
-            finish()
-        }
-
-        setContentView(R.layout.activity_voice_call)
-
-        name.text = user?.nickname
-        Glide.with(this).load(user?.avatar).apply(RequestOptions().circleCrop()).transition(DrawableTransitionOptions.withCrossFade()).into(head)
-
+        setContentView(R.layout.activity_voice_answer)
         if (checkAndRequestPermission(*getPermissions())) {
             bindService(Intent(this, VoiceCallService::class.java), this, Context.BIND_AUTO_CREATE)
         }
@@ -102,7 +70,13 @@ class VoiceCallActivity : AppCompatActivity(), ServiceConnection, Handler.Callba
             hangupIfConnected()
             finish()
         }
+
+        accept.setOnClickListener {
+            sendMessage(MessageEvent.CMD_ACCEPT)
+            acceptLayout.visibility = View.GONE
+        }
     }
+
 
     override fun onRequestPermissionsResult(requestCode: Int, permissions: Array<out String>, grantResults: IntArray) {
         if (checkAppPermission(*getPermissions())) {
@@ -115,6 +89,7 @@ class VoiceCallActivity : AppCompatActivity(), ServiceConnection, Handler.Callba
     private fun getPermissions(): Array<String> {
         return arrayOf(Manifest.permission.CAMERA, Manifest.permission.RECORD_AUDIO, Manifest.permission.MODIFY_AUDIO_SETTINGS)
     }
+
 
     override fun onBackPressed() {
         if (mRemoteMessenger != null) {
@@ -144,13 +119,12 @@ class VoiceCallActivity : AppCompatActivity(), ServiceConnection, Handler.Callba
         mRemoteMessenger?.let { messenger ->
             val reply = Message.obtain()
             reply.what = what
-            reply.replyTo = mMessenger
             obj?.let { reply.obj = it }
+            reply.replyTo = mMessenger
             messenger.send(reply)
             return@let
         }
     }
-
 
     override fun onDestroy() {
         unbindService(this)

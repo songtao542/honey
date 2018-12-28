@@ -220,8 +220,7 @@
             <FrameLayout
                 android:id="@+id/photoLayout"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="10dp">
+                android:layout_height="wrap_content">
 
                 <com.snt.phoney.widget.FlowLayout
                     android:id="@+id/photosView"
@@ -229,7 +228,9 @@
                     android:layout_height="wrap_content"
                     android:layout_gravity="center_vertical"
                     android:layout_marginLeft="10dp"
+                    android:layout_marginTop="10dp"
                     android:layout_marginRight="10dp"
+                    android:layout_marginBottom="10dp"
                     app:alignContent="flex_start"
                     app:alignItems="flex_start"
                     app:flexWrap="wrap"
@@ -285,7 +286,6 @@
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="10dp"
                 android:background="@drawable/underline_5dp_gray"
                 android:orientation="horizontal"
                 android:paddingLeft="10dp"

@@ -22,6 +22,7 @@ import com.snt.phoney.base.Page
 import com.snt.phoney.domain.model.*
 import com.snt.phoney.extensions.*
 import com.snt.phoney.ui.dating.DatingActivity
+import com.snt.phoney.ui.photo.PhotoViewerActivity
 import com.snt.phoney.ui.report.ReportActivity
 import com.snt.phoney.ui.voicecall.VoiceCallActivity
 import com.snt.phoney.utils.Chat
@@ -135,9 +136,10 @@ class UserInfoFragment : BaseFragment() {
         }
 
         chatWith.setOnClickListener {
-            user?.let {
-                context?.let { context ->
-                    context.startActivity(Intent(context, VoiceCallActivity::class.java))
+            context?.let { context ->
+                user?.im?.let { im ->
+                    im.avatar = user.avatar
+                    VoiceCallActivity.start(context, im)
                     activity?.finish()
                     return@setOnClickListener
                 }
@@ -162,7 +164,7 @@ class UserInfoFragment : BaseFragment() {
         if (user == null) {
             return
         }
-        Glide.with(this).load(user.portrait).apply(RequestOptions().circleCrop()).transition(DrawableTransitionOptions.withCrossFade()).into(head)
+        Glide.with(this).load(user.avatar).apply(RequestOptions().circleCrop()).transition(DrawableTransitionOptions.withCrossFade()).into(head)
         address.text = user.city
         userAge.text = getString(R.string.age_value_template, user.age)
         job.text = user.career
@@ -190,7 +192,7 @@ class UserInfoFragment : BaseFragment() {
 
         user.photos?.let { photos ->
 
-            if (user.photoPermission == PhotoPermission.LOCKED.value) {
+            if (user.photoPermission == PhotoPermission.LOCKED.value && !user.isPhotoFree) {
                 unlockPhotoLayout.visibility = View.VISIBLE
                 unlockPhoto.text = getString(R.string.unlock_photo_template, user.photoPrice.toString())
 
@@ -209,12 +211,22 @@ class UserInfoFragment : BaseFragment() {
                         buy {
                             viewModel.buyWithMibi(OrderType.USE_RED_ENVELOPE_MIBI, photo.id.toString(), user.uuid)
                         }
+                    } else {
+                        user.freePhotos?.let { freePhotos ->
+                            val i = freePhotos.indexOf(photo)
+                            startActivity<PhotoViewerActivity>(Page.PHOTO_VIEWER, Bundle().apply {
+                                putParcelableArrayList(Constants.Extra.PHOTO_LIST, ArrayList(freePhotos))
+                                putInt(Constants.Extra.INDEX, i)
+                                putBoolean(Constants.Extra.DELETABLE, false)
+                            })
+                        }
                     }
+                    return@let
                 }
             }
         }
 
-        if (user.care) {
+        if (user.isCared) {
             follow.setImageResource(R.drawable.ic_heart_solid_red)
         } else {
             follow.setImageResource(R.drawable.ic_heart_solid)

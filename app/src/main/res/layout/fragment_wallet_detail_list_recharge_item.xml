@@ -14,8 +14,7 @@
     <androidx.appcompat.widget.AppCompatImageView
         android:id="@+id/rechargeIcon"
         android:layout_width="60dp"
-        android:layout_height="60dp"
-        app:srcCompat="@drawable/ic_order_cost" />
+        android:layout_height="60dp" />
 
     <LinearLayout
         android:layout_width="0dp"

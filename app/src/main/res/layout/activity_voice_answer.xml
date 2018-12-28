@@ -14,11 +14,10 @@
 
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
+        android:layout_height="wrap_content"
         android:layout_gravity="center"
         android:gravity="center"
-        android:orientation="vertical"
-        tools:context=".ui.voicecall.VoiceCallActivity">
+        android:orientation="vertical">
 
         <androidx.appcompat.widget.AppCompatImageView
             android:id="@+id/head"
@@ -42,7 +41,7 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="10dp"
             android:gravity="center"
-            android:text="@string/connecting"
+            android:text="@string/being_invited"
             android:textColor="@color/white"
             android:textSize="@dimen/textsize_largest" />
 
@@ -61,30 +60,66 @@
         <LinearLayout
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_gravity="center_horizontal"
             android:layout_marginTop="100dp"
-            android:orientation="vertical">
+            android:orientation="horizontal">
 
-            <com.google.android.material.floatingactionbutton.FloatingActionButton
-                android:id="@+id/hangup"
+            <LinearLayout
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_gravity="center"
-                android:scaleType="centerInside"
-                app:fabSize="normal"
-                app:srcCompat="@drawable/ic_camera"
-                app:useCompatPadding="false" />
+                android:orientation="vertical">
 
-            <androidx.appcompat.widget.AppCompatTextView
-                android:id="@+id/hangupLabel"
+                <com.google.android.material.floatingactionbutton.FloatingActionButton
+                    android:id="@+id/hangup"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:scaleType="centerInside"
+                    app:backgroundTint="#ff5252"
+                    app:fabSize="normal"
+                    app:srcCompat="@drawable/ic_camera"
+                    app:useCompatPadding="false" />
+
+                <androidx.appcompat.widget.AppCompatTextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_horizontal"
+                    android:layout_marginTop="10dp"
+                    android:text="@string/hangup"
+                    android:textColor="@color/white"
+                    android:textSize="@dimen/textsize_large" />
+            </LinearLayout>
+
+
+            <LinearLayout
+                android:id="@+id/acceptLayout"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_gravity="center_horizontal"
-                android:layout_marginTop="10dp"
-                android:text="@string/cancel"
-                android:textColor="@color/white"
-                android:textSize="@dimen/textsize_large" />
+                android:layout_marginLeft="100dp"
+                android:orientation="vertical">
+
+                <com.google.android.material.floatingactionbutton.FloatingActionButton
+                    android:id="@+id/accept"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:scaleType="centerInside"
+                    app:backgroundTint="#00c853"
+                    app:fabSize="normal"
+                    app:srcCompat="@drawable/ic_phone_accept"
+                    app:useCompatPadding="false" />
+
+                <androidx.appcompat.widget.AppCompatTextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_horizontal"
+                    android:layout_marginTop="10dp"
+                    android:text="@string/accept_phone"
+                    android:textColor="@color/white"
+                    android:textSize="@dimen/textsize_large" />
+            </LinearLayout>
         </LinearLayout>
-
-
     </LinearLayout>
+
+
 </FrameLayout>

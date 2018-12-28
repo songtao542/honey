@@ -18,8 +18,8 @@
         <!-- 语音/文字切换-->
         <ImageView
             android:id="@+id/btn_voice_or_text"
-            android:layout_width="36dp"
-            android:layout_height="36dp"
+            android:layout_width="32dp"
+            android:layout_height="32dp"
             android:layout_centerVertical="true"
             android:layout_marginLeft="12dp"
             android:src="@drawable/btn_voice_or_text"
@@ -84,8 +84,8 @@
             <!--表情-->
             <androidx.appcompat.widget.AppCompatImageView
                 android:id="@+id/btn_face"
-                android:layout_width="36dp"
-                android:layout_height="36dp"
+                android:layout_width="32dp"
+                android:layout_height="32dp"
                 android:layout_centerVertical="true"
                 android:layout_marginLeft="5dp"
                 app:srcCompat="@drawable/icon_face_nomal" />
@@ -93,8 +93,8 @@
             <!--apps 功能-->
             <androidx.appcompat.widget.AppCompatImageView
                 android:id="@+id/btn_multimedia"
-                android:layout_width="36dp"
-                android:layout_height="36dp"
+                android:layout_width="32dp"
+                android:layout_height="32dp"
                 android:layout_alignParentRight="true"
                 android:layout_marginLeft="5dp"
                 android:layout_marginRight="10dp"

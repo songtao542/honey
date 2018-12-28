@@ -11,6 +11,7 @@ import com.snt.phoney.domain.model.Response
 import com.snt.phoney.domain.model.WxPrePayResult
 import com.snt.phoney.domain.usecase.PayOrderUseCase
 import com.snt.phoney.extensions.disposedBy
+import com.snt.phoney.extensions.sendBroadcast
 import com.snt.phoney.utils.WechatApi
 import com.tencent.mm.opensdk.constants.ConstantsAPI
 import com.tencent.mm.opensdk.modelbase.BaseReq
@@ -21,6 +22,7 @@ import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.rxkotlin.subscribeBy
 import io.reactivex.schedulers.Schedulers
 import javax.inject.Inject
+
 
 open class WXPayViewModel @Inject constructor(private val usecase: PayOrderUseCase) : AppViewModel(), IWXAPIEventHandler {
 
@@ -78,6 +80,7 @@ open class WXPayViewModel @Inject constructor(private val usecase: PayOrderUseCa
             Log.d("TTTT", "WXPayViewModel -------onResp")
             if (resp.type === ConstantsAPI.COMMAND_PAY_BY_WX) {
                 buySuccess.value = true
+                context.sendBroadcast("buy_success")
             }
         }
     }

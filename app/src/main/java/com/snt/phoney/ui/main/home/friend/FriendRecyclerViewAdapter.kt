@@ -84,10 +84,10 @@ class FriendRecyclerViewAdapter() : RecyclerView.Adapter<RecyclerView.ViewHolder
 
         fun setData(user: User) {
             this.user = user
-            Glide.with(mView).load(user.portrait).into(image)
-            //Glide.with(mView).load(user.portrait).apply(RequestOptions().circleCrop()).transition(DrawableTransitionOptions.withCrossFade()).into(mView.image)
+            Glide.with(mView).load(user.avatar).into(image)
+            //Glide.with(mView).load(user.avatar).apply(RequestOptions().circleCrop()).transition(DrawableTransitionOptions.withCrossFade()).into(mView.image)
             label.text = user.tag
-            renQi.text = "${user.followedSize}"
+            renQi.text = "${user.caredSize}"
             setUpdateTime(user.updateTime)
             setDistance(user.distance)
             name.text = user.nickname

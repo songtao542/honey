@@ -31,7 +31,8 @@ class CreateLockFragment : BaseFragment() {
         toolbar.setNavigationOnClickListener { activity?.finish() }
 
         setPassword.setOnClickListener {
-            addFragmentSafely(CreateLockStep1Fragment.newInstance(), "step1", true)
+            addFragmentSafely(CreateLockStep1Fragment.newInstance(), "step1", true,
+                    enterAnimation = R.anim.slide_in_right, popExitAnimation = R.anim.slide_out_right)
         }
     }
 

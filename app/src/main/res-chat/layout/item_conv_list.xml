@@ -105,15 +105,15 @@
             <RelativeLayout
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:layout_marginLeft="74dp"
-                android:layout_marginTop="2dp">
+                android:layout_marginLeft="74dp">
 
                 <LinearLayout
                     android:id="@+id/title_layout"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_alignParentTop="true"
-                    android:layout_marginTop="10.33dp"
+                    android:layout_marginTop="8dp"
+                    android:layout_marginBottom="8dp"
                     android:orientation="horizontal">
 
                     <TextView
@@ -132,7 +132,7 @@
                         android:layout_marginRight="12.67dp"
                         android:gravity="top"
                         android:textColor="#B3B3B3"
-                        android:textSize="11.33sp" />
+                        android:textSize="11sp" />
 
                 </LinearLayout>
 
@@ -141,7 +141,6 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_below="@+id/title_layout"
-                    android:layout_marginTop="1.33dp"
                     android:ems="10"
                     android:singleLine="true"
                     android:textColor="#aaaaaa"

@@ -22,7 +22,7 @@
         android:layout_height="wrap_content"
         android:layout_gravity="center"
         android:layout_marginTop="5dp"
-        android:text="AAAAAA"
+        android:maxLines="1"
         android:textAppearance="?attr/textAppearanceListItem" />
 
     <androidx.appcompat.widget.AppCompatTextView
@@ -31,7 +31,7 @@
         android:layout_height="wrap_content"
         android:layout_gravity="center"
         android:layout_marginTop="4dp"
-        android:text="AAAAAA"
+        android:maxLines="1"
         android:textSize="@dimen/textsize_smaller" />
 
     <androidx.appcompat.widget.AppCompatTextView

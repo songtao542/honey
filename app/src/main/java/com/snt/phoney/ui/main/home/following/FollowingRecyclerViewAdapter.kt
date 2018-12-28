@@ -50,8 +50,8 @@ class FollowingRecyclerViewAdapter(private val viewModel: FollowingViewModel, va
             if (user == null) {
                 return
             }
-            //Glide.with(mView).load(data.portrait).into(mView.head)
-            Glide.with(mView).load(user.portrait).apply(RequestOptions().circleCrop()).transition(DrawableTransitionOptions.withCrossFade()).into(head)
+            //Glide.with(mView).load(data.avatar).into(mView.head)
+            Glide.with(mView).load(user.avatar).apply(RequestOptions().circleCrop()).transition(DrawableTransitionOptions.withCrossFade()).into(head)
 
             name.text = user.nickname
             content.text = user.introduce

@@ -1,6 +1,8 @@
 package com.snt.phoney.ui.vip
 
 import android.Manifest
+import android.app.Activity
+import android.content.Intent
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -10,13 +12,12 @@ import androidx.lifecycle.ViewModelProviders
 import com.snt.phoney.R
 import com.snt.phoney.base.BaseFragment
 import com.snt.phoney.domain.model.VipCombo
-import com.snt.phoney.extensions.asSequence
-import com.snt.phoney.extensions.checkAndRequestPermission
-import com.snt.phoney.extensions.checkAppPermission
-import com.snt.phoney.extensions.snackbar
+import com.snt.phoney.extensions.*
+import com.snt.phoney.utils.data.Constants
 import com.snt.phoney.widget.VipCardView
 import kotlinx.android.synthetic.main.fragment_vip.*
 import java.text.DecimalFormat
+
 
 class VipFragment : BaseFragment() {
 
@@ -28,6 +29,10 @@ class VipFragment : BaseFragment() {
     }
 
     private lateinit var viewModel: VipViewModel
+
+    private var buySuccess: Boolean = false
+
+    private val broadcast by autoCleared(ClearableBroadcast())
 
     private val permissions = arrayOf(Manifest.permission.READ_PHONE_STATE, Manifest.permission.WRITE_EXTERNAL_STORAGE)
 
@@ -53,7 +58,7 @@ class VipFragment : BaseFragment() {
         })
 
         viewModel.success.observe(this, Observer {
-            activity?.finish()
+            finish()
         })
 
         payButton.setOnClickListener {
@@ -75,7 +80,23 @@ class VipFragment : BaseFragment() {
             }
         }
 
+        broadcast.registerReceiver(requireContext(), "buy_success") {
+            buySuccess = true
+            finish()
+        }
+
         checkAndRequestPermission(*permissions)
+    }
+
+    private fun finish() {
+        if (buySuccess) {
+            val data = Intent()
+            data.putExtra(Constants.Extra.DATA, true)
+            activity?.setResult(Activity.RESULT_OK, data)
+            activity?.finish()
+        } else {
+            activity?.onBackPressed()
+        }
     }
 
     override fun onRequestPermissionsResult(requestCode: Int, permissions: Array<out String>, grantResults: IntArray) {

@@ -12,13 +12,15 @@ import com.bumptech.glide.load.resource.drawable.DrawableTransitionOptions
 import com.bumptech.glide.request.RequestOptions
 import com.snt.phoney.R
 import com.snt.phoney.base.BaseFragment
-import com.snt.phoney.domain.model.Dating
-import com.snt.phoney.domain.model.DatingState
-import com.snt.phoney.domain.model.Sex
-import com.snt.phoney.domain.model.User
+import com.snt.phoney.base.Page
+import com.snt.phoney.domain.model.*
 import com.snt.phoney.extensions.checkAndRequestPermission
 import com.snt.phoney.extensions.checkAppPermission
 import com.snt.phoney.extensions.snackbar
+import com.snt.phoney.extensions.startActivity
+import com.snt.phoney.ui.photo.PhotoViewerActivity
+import com.snt.phoney.ui.report.ReportActivity
+import com.snt.phoney.utils.DistanceFormat
 import com.snt.phoney.utils.data.Constants
 import com.snt.phoney.widget.PhotoFlowAdapter
 import kotlinx.android.synthetic.main.fragment_dating_detail.*
@@ -70,9 +72,39 @@ class DatingDetailFragment : BaseFragment() {
             snackbar(it)
         })
 
+        viewModel.followSuccess.observe(this, Observer { isFollowed ->
+            isFollowed?.let { success ->
+                if (success) {
+                    snackbar(getString(R.string.has_follow))
+                    follow.setImageResource(R.drawable.ic_heart_solid_red)
+                } else {
+                    snackbar(getString(R.string.has_canceld_follow))
+                    follow.setImageResource(R.drawable.ic_heart_solid)
+                }
+                viewModel.followSuccess.value = null
+            }
+        })
+
         joinButton.setOnClickListener {
-            uuid?.let {
-                viewModel.joinDating(it)
+            uuid?.let { uuid ->
+                viewModel.joinDating(uuid)
+            }
+        }
+
+        follow.setOnClickListener {
+            viewModel.dating.value?.user?.uuid?.let { uuid ->
+                viewModel.follow(uuid)
+            }
+        }
+
+        report.setOnClickListener {
+            context?.let { context ->
+                uuid?.let { uuid ->
+                    context.startActivity<ReportActivity>(Page.REPORT, Bundle().apply {
+                        putString(Constants.Extra.UUID, uuid)
+                        putInt(Constants.Extra.TYPE, ReportType.DATING.value)
+                    })
+                }
             }
         }
 
@@ -100,12 +132,11 @@ class DatingDetailFragment : BaseFragment() {
     private fun setUser(user: User) {
         toolbarTitle.text = user.nickname
 
-        Glide.with(this).load(user.portrait).apply(RequestOptions().circleCrop()).transition(DrawableTransitionOptions.withCrossFade()).into(head)
+        Glide.with(this).load(user.avatar).apply(RequestOptions().circleCrop()).transition(DrawableTransitionOptions.withCrossFade()).into(head)
         val df = DecimalFormat.getInstance()
         //address.text = user.city
         userAge.text = getString(R.string.age_value_template, user.age)
         job.text = user.career
-        //distance.text = getString(R.string.distance_of_template, " ${df.format(user.distance)}")
 
         height.text = "${user.height}"
         age.text = "${user.age}"
@@ -123,6 +154,7 @@ class DatingDetailFragment : BaseFragment() {
             cupWeightLabel.text = getString(R.string.weight_label)
             cupWeight.text = "${df.format(user.weight)}"
         }
+
     }
 
     private fun setDating(dating: Dating) {
@@ -130,24 +162,50 @@ class DatingDetailFragment : BaseFragment() {
             setUser(it)
         }
 
-        photos.viewAdapter = PhotoFlowAdapter(requireContext()).setUrls(dating.cover?.map {
+        photosView.viewAdapter = PhotoFlowAdapter(requireContext()).setUrls(dating.cover?.map {
             it.path ?: ""
         } ?: emptyList()).setMaxShow(12).setLastAsAdd(false)
 
+        photosView.setOnItemClickListener { _, index ->
+            viewModel.dating.value?.let { dating ->
+                startActivity<PhotoViewerActivity>(Page.PHOTO_VIEWER, Bundle().apply {
+                    putStringArrayList(Constants.Extra.URL_LIST, ArrayList(dating.photoUrls()))
+                    putInt(Constants.Extra.INDEX, index)
+                    putBoolean(Constants.Extra.DELETABLE, false)
+                })
+            }
+        }
+
         address.text = dating.city
-        val df = DecimalFormat.getInstance()
-        distance.text = getString(R.string.distance_of_template, "${df.format(dating.distance)}m")
+
+        context?.let { context ->
+            distance.text = getString(R.string.distance_of_template, DistanceFormat.format(context, dating.distance))
+        }
         datingAddress.text = dating.location
         datingTime.text = dating.formatTime()
 
         if (dating.state == DatingState.ONGOING.value || dating.remaining() > 0) {
             remainingTime.text = dating.remainingTime()
+        } else if (dating.remaining() <= 0) {
+            remainingTime.setText(R.string.has_out_of_time)
         } else {
             when {
                 dating.state == DatingState.EXPIRED.value -> remainingTime.setText(R.string.has_out_of_time)
                 dating.state == DatingState.FINISHED.value -> remainingTime.setText(R.string.has_finish)
                 dating.state == DatingState.CANCELED.value -> remainingTime.setText(R.string.has_canceled)
             }
+        }
+
+        if (dating.isCared) {
+            follow.setImageResource(R.drawable.ic_heart_solid_red)
+        } else {
+            follow.setImageResource(R.drawable.ic_heart_solid)
+        }
+
+        if (dating.isAttend) {
+            joinButton.visibility = View.GONE
+        } else {
+            joinButton.visibility = View.VISIBLE
         }
 
     }

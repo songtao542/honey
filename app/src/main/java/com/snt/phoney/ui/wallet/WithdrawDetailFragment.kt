@@ -51,6 +51,8 @@ class WithdrawDetailFragment : BaseFragment() {
         super.onActivityCreated(savedInstanceState)
         viewModel = ViewModelProviders.of(this, viewModelFactory).get(WalletViewModel::class.java)
 
+        toolbar.setNavigationOnClickListener { activity?.onBackPressed() }
+
         viewModel.withdrawInfo.observe(this, Observer {
             it?.let { withdrawInfo ->
                 setWithdrawInfo(withdrawInfo)

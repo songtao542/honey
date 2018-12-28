@@ -47,6 +47,8 @@ import java.io.File
 
 const val REQUEST_AUTH_CODE = 56
 const val REQUEST_ALBUM_CODE = 58
+const val REQUEST_HEAD_ICON_CODE = 59
+const val REQUEST_VIP_CODE = 60
 
 /**
  * A fragment representing a list of Items.
@@ -77,9 +79,6 @@ class MineFragment : BaseFragment(), OnSettingItemClickListener, OnSignOutClickL
         adapter.setOnSignOutClickListener(this)
         list.adapter = adapter
 
-        editInfo.setOnClickListener { context?.let { context -> context.startActivity<UserActivity>(Page.EDIT_USER) } }
-        upgradeVip.setOnClickListener { context?.let { context -> context.startActivity<VipActivity>(Page.VIP) } }
-
         viewModel.userInfo.observe(this, Observer {
             adapter.userInfo = it
             setUserInfo(it)
@@ -104,18 +103,27 @@ class MineFragment : BaseFragment(), OnSettingItemClickListener, OnSignOutClickL
             adapter.notifyDataSetChanged()
         })
 
-        viewModel.getAllInfoOfUser()
+        editInfo.setOnClickListener { context?.let { context -> context.startActivity<UserActivity>(Page.EDIT_USER) } }
+
+        head.setOnClickListener {
+            Picker.showPhotoPicker(fragment = this, max = 1, crop = true, requestCode = REQUEST_HEAD_ICON_CODE)
+        }
+
         viewModel.getUserPhotos()
 
-        setUser(viewModel.user)
+        viewModel.user.observe(this, Observer {
+            setUser(it)
+            //用户信息变更之后重新网络加载用户信息
+            viewModel.getAllInfoOfUser()
+        })
     }
 
     override fun onSettingItemClick(setting: Setting) {
         when (setting.icon) {
             R.drawable.ic_photo_permission -> {
-                viewModel.user?.photoPermission?.let { permission ->
+                viewModel.user.value?.photoPermission?.let { initPermission ->
                     activity?.let {
-                        AlbumPermissionSettingFragment.newInstance(permission).apply {
+                        AlbumPermissionSettingFragment.newInstance(initPermission).apply {
                             setOnSelectListener { permission ->
                                 when (permission) {
                                     PhotoPermission.NEED_CHARGE -> {
@@ -151,6 +159,7 @@ class MineFragment : BaseFragment(), OnSettingItemClickListener, OnSignOutClickL
             R.drawable.ic_my_dating -> {
                 if (setting.hasNewMessage) {
                     setting.hasNewMessage = false
+                    viewModel.userInfo.value?.hasNewsOfDating = false
                     adapter.notifyDataSetChanged()
                 }
                 activity?.startActivity<DatingActivity>(Page.MY_DATING)
@@ -210,7 +219,22 @@ class MineFragment : BaseFragment(), OnSettingItemClickListener, OnSignOutClickL
     }
 
     override fun onAddPhotoClick() {
-        Picker.showPhotoPicker(fragment = this, max = 5)
+        val max = 19 - (viewModel.photos.value?.size ?: 0)
+        Picker.showPhotoPicker(fragment = this, max = Math.min(max, 5))
+    }
+
+    override fun onPhotoClick(index: Int, photo: Photo) {
+        startActivityForResult<AlbumActivity>(Page.ALBUM_VIEWER, REQUEST_ALBUM_CODE, Bundle().apply {
+            putParcelableArrayList(Constants.Extra.PHOTO_LIST, ArrayList<Photo>(viewModel.photos.value))
+            putInt(Constants.Extra.INDEX, index)
+            putBoolean(Constants.Extra.DELETABLE, true)
+        })
+    }
+
+    override fun onSignOutClick() {
+        viewModel.signOut()
+        activity?.startActivity(SignupActivity.newIntent(requireContext()))
+        activity?.finish()
     }
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
@@ -218,13 +242,28 @@ class MineFragment : BaseFragment(), OnSettingItemClickListener, OnSignOutClickL
         handlePhotoPick(requestCode, resultCode, data)
         handleAlbumPhotoDelete(requestCode, resultCode, data)
         handleAuthResult(requestCode, resultCode, data)
+        handleHeadIconResult(requestCode, resultCode, data)
+        handleVipResult(requestCode, resultCode, data)
     }
 
     private fun handlePhotoPick(requestCode: Int, resultCode: Int, data: Intent?) {
         if (requestCode == Picker.REQUEST_CODE_CHOOSE && resultCode == Activity.RESULT_OK) {
-            val paths = Matisse.obtainPathResult(data)
-            showProgress(getString(R.string.on_going_upload))
-            viewModel.uploadPhotos(paths.map { File(it) })
+            data?.let {
+                val paths = Matisse.obtainPathResult(data)
+                showProgress(getString(R.string.on_going_upload))
+                viewModel.uploadPhotos(paths.map { File(it) })
+            }
+        }
+    }
+
+    private fun handleHeadIconResult(requestCode: Int, resultCode: Int, data: Intent?) {
+        if (requestCode == REQUEST_HEAD_ICON_CODE && resultCode == Activity.RESULT_OK) {
+            data?.let {
+                val paths = Matisse.obtainPathResult(data)
+                if (paths.isNotEmpty()) {
+                    viewModel.uploadHeadIcon(File(paths[0]))
+                }
+            }
         }
     }
 
@@ -254,23 +293,20 @@ class MineFragment : BaseFragment(), OnSettingItemClickListener, OnSignOutClickL
         }
     }
 
-    override fun onPhotoClick(index: Int, photo: Photo) {
-        startActivityForResult<AlbumActivity>(Page.ALBUM_VIEWER, REQUEST_ALBUM_CODE, Bundle().apply {
-            putParcelableArrayList(Constants.Extra.PHOTO_LIST, ArrayList<Photo>(viewModel.photos.value))
-            putInt(Constants.Extra.INDEX, index)
-            putBoolean(Constants.Extra.DELETABLE, true)
-        })
-    }
-
-    override fun onSignOutClick() {
-        viewModel.signOut()
-        activity?.startActivity(SignupActivity.newIntent(requireContext()))
-        activity?.finish()
+    private fun handleVipResult(requestCode: Int, resultCode: Int, data: Intent?) {
+        if (requestCode == REQUEST_VIP_CODE && resultCode == Activity.RESULT_OK) {
+            data?.let {
+                val success = data.getBooleanExtra(Constants.Extra.DATA, false)
+                if (success) {
+                    viewModel.getAllInfoOfUser()
+                }
+            }
+        }
     }
 
     private fun setUser(user: User?) {
         if (user == null) return
-        Glide.with(this).load(user.portrait).apply(RequestOptions().circleCrop()).transition(DrawableTransitionOptions.withCrossFade()).into(head)
+        Glide.with(this).load(user.avatar).apply(RequestOptions().circleCrop()).transition(DrawableTransitionOptions.withCrossFade()).into(head)
         username.text = user.nickname
     }
 
@@ -284,9 +320,12 @@ class MineFragment : BaseFragment(), OnSettingItemClickListener, OnSignOutClickL
             }
             userInfo.vipInfo?.let { vipInfo ->
                 if (vipInfo.isVip) {
-                    upgradeVip.setText(R.string.chunmi_vip)
+                    vipType.setText(R.string.vip_member)
+                    upgradeVip.visibility = View.GONE
                 } else {
+                    vipType.setText(R.string.normal_member)
                     upgradeVip.setText(R.string.upgrade_vip_title)
+                    upgradeVip.setOnClickListener { startActivityForResult<VipActivity>(Page.VIP, REQUEST_VIP_CODE) }
                 }
             }
             return@let

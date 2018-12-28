@@ -2,22 +2,20 @@ package com.snt.phoney.utils
 
 import android.content.Context
 import android.content.Intent
-import android.nfc.Tag
 import android.text.TextUtils
 import android.util.Log
 import cn.jpush.im.android.api.JMessageClient
 import cn.jpush.im.android.api.model.Conversation
 import cn.jpush.im.android.eventbus.EventBus
-import com.snt.phoney.domain.model.ImInfo
+import com.snt.phoney.domain.model.ImUser
 import com.snt.phoney.extensions.TAG
 import com.snt.phoney.utils.data.Constants
 import jiguang.chat.activity.ChatActivity
 import jiguang.chat.model.Event
 import jiguang.chat.model.EventType
-import java.lang.Exception
 
 object Chat {
-    fun start(context: Context, im: ImInfo) {
+    fun start(context: Context, im: ImUser) {
         try {
             val intent = Intent()
             intent.setClass(context, ChatActivity::class.java)

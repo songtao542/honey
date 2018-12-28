@@ -6,16 +6,18 @@ import com.snt.phoney.R
 import com.snt.phoney.base.AppViewModel
 import com.snt.phoney.domain.model.Dating
 import com.snt.phoney.domain.usecase.DatingUseCase
+import com.snt.phoney.domain.usecase.UserInfoUseCase
 import com.snt.phoney.extensions.disposedBy
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.rxkotlin.subscribeBy
 import io.reactivex.schedulers.Schedulers
 import javax.inject.Inject
 
-class DatingDetailViewModel @Inject constructor(private val usecase: DatingUseCase) : AppViewModel() {
+class DatingDetailViewModel @Inject constructor(private val usecase: DatingUseCase, private val userUsecase: UserInfoUseCase) : AppViewModel() {
 
     val dating = MutableLiveData<Dating>()
     val joinSuccess = MutableLiveData<String>()
+    val followSuccess = MutableLiveData<Boolean>()
 
     fun getDatingDetail(uuid: String) {
         val token = usecase.getAccessToken() ?: return
@@ -61,6 +63,25 @@ class DatingDetailViewModel @Inject constructor(private val usecase: DatingUseCa
                         }
                 )
                 .disposedBy(disposeBag)
+    }
+
+    fun follow(userId: String) {
+        val token = userUsecase.getAccessToken() ?: return
+        userUsecase.follow(token, userId)
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribeBy(
+                        onSuccess = {
+                            if (it.code == 200) {
+                                followSuccess.value = it.data
+                            } else {
+                                error.value = context.getString(R.string.follow_failed)
+                            }
+                        },
+                        onError = {
+                            error.value = context.getString(R.string.follow_failed)
+                        }
+                ).disposedBy(disposeBag)
     }
 
 }

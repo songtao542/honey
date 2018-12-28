@@ -84,7 +84,6 @@
             android:layout_height="wrap_content"
             android:layout_gravity="right|center_vertical"
             android:gravity="right|center_vertical"
-            android:text="支付宝提现"
             android:textColor="@color/black"
             android:textSize="@dimen/textsize_small" />
     </FrameLayout>
@@ -106,8 +105,7 @@
         android:id="@+id/itemLayout"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="vertical">
-    </LinearLayout>
+        android:orientation="vertical"></LinearLayout>
 
     <FrameLayout
         android:layout_width="match_parent"
@@ -115,7 +113,9 @@
         android:layout_marginTop="20dp"
         android:background="@drawable/underline_gray"
         android:paddingLeft="20dp"
-        android:paddingRight="20dp">
+        android:paddingTop="10dp"
+        android:paddingRight="20dp"
+        android:paddingBottom="10dp">
 
         <androidx.appcompat.widget.AppCompatTextView
             android:layout_width="wrap_content"
@@ -132,7 +132,6 @@
             android:layout_height="wrap_content"
             android:layout_gravity="right|center_vertical"
             android:gravity="right|center_vertical"
-            android:text="支付宝提现"
             android:textColor="@color/dark_gray"
             android:textSize="@dimen/textsize_small" />
     </FrameLayout>
@@ -143,7 +142,9 @@
         android:layout_marginTop="10dp"
         android:background="@drawable/underline_gray"
         android:paddingLeft="20dp"
-        android:paddingRight="20dp">
+        android:paddingTop="10dp"
+        android:paddingRight="20dp"
+        android:paddingBottom="10dp">
 
         <androidx.appcompat.widget.AppCompatTextView
             android:layout_width="wrap_content"
@@ -160,7 +161,6 @@
             android:layout_height="wrap_content"
             android:layout_gravity="right|center_vertical"
             android:gravity="right|center_vertical"
-            android:text="支付宝提现"
             android:textColor="@color/dark_gray"
             android:textSize="@dimen/textsize_small" />
     </FrameLayout>

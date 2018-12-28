@@ -96,7 +96,6 @@
             android:layout_height="wrap_content"
             android:layout_gravity="right|center_vertical"
             android:gravity="right|center_vertical"
-            android:text="@string/mibi_to_rmb"
             android:textColor="@color/black"
             android:textSize="@dimen/textsize_small" />
     </FrameLayout>
@@ -194,7 +193,6 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="5dp"
                 android:gravity="center_vertical"
-                android:text="余额：2036"
                 android:textColor="@color/dark_gray"
                 android:textSize="@dimen/textsize_smaller" />
 
@@ -211,7 +209,6 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:gravity="right|center_vertical"
-                android:text="未绑定"
                 android:textColor="@color/black"
                 android:textSize="@dimen/textsize_normal" />
 
@@ -234,7 +231,6 @@
         android:minHeight="30dp"
         android:paddingLeft="20dp"
         android:paddingRight="20dp"
-        android:text="每日限额5元"
         android:textColor="@color/red"
         android:textSize="@dimen/textsize_smaller" />
 

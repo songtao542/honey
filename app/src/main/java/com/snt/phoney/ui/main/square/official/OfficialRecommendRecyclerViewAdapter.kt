@@ -85,7 +85,7 @@ class OfficialRecommendRecyclerViewAdapter(val fragment: OfficialRecommendFragme
         fun setData(data: Dating?) {
             data?.let { data ->
                 dating = data
-                Glide.with(mView).load(data.user?.portrait).into(headView)
+                Glide.with(mView).load(data.user?.avatar).into(headView)
                 flowImagesView.viewAdapter = PhotoFlowAdapter(mView.context).setUrls(data.photoUrls()).setLastAsAdd(false)
 
                 nameView.text = data.user?.nickname
@@ -102,24 +102,30 @@ class OfficialRecommendRecyclerViewAdapter(val fragment: OfficialRecommendFragme
                 flowImagesView.viewAdapter = photoFlowAdapter
 
                 attendView.setOnClickListener {
-                    data.uuid?.let { uuid ->
+                    dating?.uuid?.let { uuid ->
                         viewModel.joinDating(uuid)
-                                ?.subscribeBy { response ->
-                                    if (response.code == 200) {
-                                        attendView.text = context.getString(R.string.joined_dating)
-                                    }
-                                }
-                                ?.disposedBy(disposeBag)
+                                ?.subscribeBy(
+                                        onSuccess = { response ->
+                                            if (response.code == 200) {
+                                                attendView.text = context.getString(R.string.joined_dating)
+                                            }
+                                        },
+                                        onError = {
+
+                                        })?.disposedBy(disposeBag)
                     }
                 }
                 followView.text = if (data.isCared) context.getString(R.string.follow) else context.getString(R.string.followed)
                 followView.setOnClickListener {
-                    data.user?.uuid?.let { uuid ->
+                    dating?.user?.uuid?.let { uuid ->
                         viewModel.follow(uuid)
-                                ?.subscribeBy { response ->
-                                    followView.text = if (response.data == true) context.getString(R.string.follow) else context.getString(R.string.followed)
-                                }
-                                ?.disposedBy(disposeBag)
+                                ?.subscribeBy(
+                                        onSuccess = { response ->
+                                            followView.text = if (response.data == true) context.getString(R.string.follow) else context.getString(R.string.followed)
+                                        },
+                                        onError = {
+
+                                        })?.disposedBy(disposeBag)
                     }
                 }
 

@@ -7,6 +7,8 @@ import com.snt.phoney.domain.model.*
 import com.snt.phoney.domain.repository.UserRepository
 import com.snt.phoney.utils.media.MultipartUtil
 import io.reactivex.Single
+import okhttp3.MultipartBody
+import retrofit2.http.Part
 import java.io.File
 import javax.inject.Inject
 import javax.inject.Singleton
@@ -129,6 +131,11 @@ class UserRepositoryImpl @Inject constructor(private val userAccessor: UserAcces
 
     override fun setUserSex(token: String, sex: Int): Single<Response<String>> {
         return api.setUserSex(token, sex)
+    }
+
+    override fun uploadHeadIcon(token: String, file: File): Single<Response<String>> {
+        val portrait = MultipartUtil.getMultipart("portrait", file)
+        return api.uploadHeadIcon(token, portrait)
     }
 
     override fun setUserFeatures(token: String,

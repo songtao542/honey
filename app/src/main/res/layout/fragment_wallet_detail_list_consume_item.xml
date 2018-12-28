@@ -14,8 +14,7 @@
     <androidx.appcompat.widget.AppCompatImageView
         android:id="@+id/consumeIcon"
         android:layout_width="60dp"
-        android:layout_height="60dp"
-        app:srcCompat="@mipmap/head" />
+        android:layout_height="60dp" />
 
 
     <androidx.appcompat.widget.AppCompatTextView

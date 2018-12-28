@@ -95,7 +95,7 @@ class OthersDatingRecyclerViewAdapter(private val fragment: OthersDatingFragment
                 state.setText(R.string.has_canceled)
             }
             dating.user?.let { user ->
-                user?.portrait?.let { portrait ->
+                user?.avatar?.let { portrait ->
                     Glide.with(mView).load(portrait).apply(RequestOptions().circleCrop()).transition(DrawableTransitionOptions.withCrossFade()).into(head)
                 }
                 name.text = user.nickname

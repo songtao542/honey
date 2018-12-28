@@ -51,8 +51,21 @@ class DetailListRecyclerViewAdapter(private val fragment: DetailListFragment, pr
         private val consumeAmount = mView.consumeAmount
 
         fun setData(record: OrderRecord) {
-            when (type) {
-                1 -> consumeIcon.setImageResource(R.mipmap.head)
+            when (record.type) {
+                -1 -> {
+                    consumeIcon.setImageResource(R.drawable.ic_order_withdraw)
+                    mView.setOnClickListener {
+                        fragment.addFragmentSafely(WithdrawDetailFragment.newInstance(Bundle().apply {
+                            putString(Constants.Extra.UUID, record.uuid)
+                        }), "withdraw_detail", true,
+                                enterAnimation = R.anim.slide_in_up, popExitAnimation = R.anim.slide_out_down)
+                    }
+                }
+                0 -> consumeIcon.setImageResource(R.drawable.ic_order_cost)
+                1 -> consumeIcon.setImageResource(R.drawable.ic_order_vip)
+                10 -> consumeIcon.setImageResource(R.drawable.ic_order_mibi)
+                11 -> consumeIcon.setImageResource(R.drawable.ic_order_mibi)
+                12 -> consumeIcon.setImageResource(R.drawable.ic_order_mibi)
             }
             consumeName.text = record.title
             consumeAmount.text = record.price
@@ -68,7 +81,7 @@ class DetailListRecyclerViewAdapter(private val fragment: DetailListFragment, pr
         private val rechargeType = mView.rechargeType
 
         fun setData(record: OrderRecord) {
-            when (type) {
+            when (record.type) {
                 -1 -> {
                     rechargeIcon.setImageResource(R.drawable.ic_order_withdraw)
                     mView.setOnClickListener {

@@ -42,6 +42,11 @@ interface Api {
     fun setUserSex(@Field("token") token: String,
                    @Field("sex") sex: Int): Single<Response<String>>
 
+    @Multipart
+    @POST("users/setPortrait")
+    fun uploadHeadIcon(@Part("token") token: String,
+                       @Part portrait: MultipartBody.Part): Single<Response<String>>
+
     /**
      *@param token  string
      *@param lat    string		纬度
@@ -127,7 +132,7 @@ interface Api {
                      @Field("page") pageIndex: String): Single<Response<List<User>>>
 
     @FormUrlEncoded
-    @POST("users/other/isCared")
+    @POST("users/other/care")
     fun follow(@Field("token") token: String,
                @Field("uid") uuid: String): Single<Response<Boolean>>
 

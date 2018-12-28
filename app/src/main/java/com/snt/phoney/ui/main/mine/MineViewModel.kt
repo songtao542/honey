@@ -5,9 +5,10 @@ import android.util.Log
 import androidx.lifecycle.MutableLiveData
 import com.snt.phoney.R
 import com.snt.phoney.base.AppViewModel
-import com.snt.phoney.domain.model.UserInfo
 import com.snt.phoney.domain.model.Photo
 import com.snt.phoney.domain.model.PhotoPermission
+import com.snt.phoney.domain.model.User
+import com.snt.phoney.domain.model.UserInfo
 import com.snt.phoney.domain.usecase.UserInfoUseCase
 import com.snt.phoney.extensions.TAG
 import com.snt.phoney.extensions.disposedBy
@@ -19,7 +20,11 @@ import javax.inject.Inject
 
 class MineViewModel @Inject constructor(private val usecase: UserInfoUseCase) : AppViewModel() {
 
-    val user = usecase.getUser()
+    val user = object : MutableLiveData<User>() {
+        override fun onActive() {
+            postValue(usecase.getUser())
+        }
+    }
 
     val toast = MutableLiveData<String>()
     val photos = MutableLiveData<List<Photo>>()
@@ -99,18 +104,26 @@ class MineViewModel @Inject constructor(private val usecase: UserInfoUseCase) : 
                 }.disposedBy(disposeBag)
     }
 
-    fun deletePhotos(photoList: List<Photo>) {
+    fun uploadHeadIcon(file: File) {
         val token = usecase.getAccessToken() ?: return
-        usecase.deletePhotos(token, photoList.map { it.id.toString() })
+        usecase.uploadHeadIcon(token, file)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
-                .subscribeBy {
-                    if (it.success) {
-                        //toast.value = context.getString(R.string.delete_photo_success)
-                        Log.d("TTTT", "xxxxxxxxxxxxxxxxxxxxxxxxxxxxx${photoList[0]}")
-                        photos.value = it.data
-                    }
-                }.disposedBy(disposeBag)
+                .subscribeBy(
+                        onSuccess = {
+                            if (it.success) {
+                                val updatedUser = user.value
+                                updatedUser?.avatar = it.data
+                                updatedUser?.let { updated ->
+                                    user.value = updated
+                                    usecase.setUser(updated)
+                                }
+                            }
+                        },
+                        onError = {
+                            error.value = context.getString(R.string.upload_photo_failed)
+                        }
+                ).disposedBy(disposeBag)
     }
 
     fun signOut() {

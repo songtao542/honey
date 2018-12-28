@@ -43,7 +43,7 @@ class FollowMeRecyclerViewAdapter(private val activity: CommonActivity) : Recycl
     inner class ViewHolder(val mView: View) : RecyclerView.ViewHolder(mView) {
 
         fun setData(user: User) {
-            Glide.with(mView).load(user.portrait).apply(RequestOptions().circleCrop()).transition(DrawableTransitionOptions.withCrossFade()).into(mView.head)
+            Glide.with(mView).load(user.avatar).apply(RequestOptions().circleCrop()).transition(DrawableTransitionOptions.withCrossFade()).into(mView.head)
             mView.nickname.text = user.nickname
             mView.selfDescription.text = user.introduce
             mView.visitTime.text = "刚刚"

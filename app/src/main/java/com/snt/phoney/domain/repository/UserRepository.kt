@@ -33,6 +33,8 @@ interface UserRepository : UserAccessor {
 
     fun setUserSex(token: String, sex: Int): Single<Response<String>>
 
+    fun uploadHeadIcon(token: String, file: File): Single<Response<String>>
+
     fun setUserFeatures(token: String,
                         height: Int,
                         weight: Int,

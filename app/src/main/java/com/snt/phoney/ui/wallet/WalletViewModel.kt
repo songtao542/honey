@@ -37,6 +37,10 @@ class WalletViewModel @Inject constructor(private val usecase: WalletUseCase, pr
         return usecase.getAccessToken() ?: ""
     }
 
+    fun getUserHeadIcon(): String {
+        return usecase.getUser()?.avatar ?: ""
+    }
+
     fun getMibiAmount() {
         val token = usecase.getAccessToken() ?: return
         usecase.getMibiAmount(token)

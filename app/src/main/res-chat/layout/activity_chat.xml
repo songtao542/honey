@@ -28,6 +28,11 @@
                 app:title="聊天"
                 app:titleTextColor="@color/black" />
 
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="1px"
+                android:background="@color/gray_underline" />
+
             <FrameLayout
                 android:layout_width="match_parent"
                 android:layout_height="match_parent">

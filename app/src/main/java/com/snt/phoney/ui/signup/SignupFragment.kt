@@ -70,16 +70,17 @@ class SignupFragment : BaseFragment() {
 
     private fun startCountdown() {
         getVerificationCode.isEnabled = false
-        getVerificationCode.text = "60"
+        getVerificationCode.text = "60${getString(R.string.unit_second)}"
         val countDownTimer = object : CountDownTimer(60000, 1000) {
             private var tick = 60
             override fun onFinish() {
+                getVerificationCode.setText(R.string.get_verification_code)
                 getVerificationCode.isEnabled = true
             }
 
             override fun onTick(millisUntilFinished: Long) {
                 if (tick > 0) {
-                    getVerificationCode.text = (tick--).toString()
+                    getVerificationCode.text = "${(tick--)}${getString(R.string.unit_second)}"
                 }
             }
         }

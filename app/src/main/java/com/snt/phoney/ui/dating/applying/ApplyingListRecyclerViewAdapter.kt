@@ -48,7 +48,7 @@ class ApplyingListRecyclerViewAdapter() : RecyclerView.Adapter<ApplyingListRecyc
         private val rejectButton = mView.rejectButton
 
         fun setData(applicant: Applicant) {
-            applicant.user?.portrait?.let { portrait ->
+            applicant.user?.avatar?.let { portrait ->
                 Glide.with(mView).load(portrait).apply(RequestOptions().circleCrop()).transition(DrawableTransitionOptions.withCrossFade()).into(head)
             }
             name.text = applicant.user?.nickname

@@ -3,15 +3,18 @@ package com.snt.phoney.base
 import android.app.Activity
 import android.app.Application
 import android.content.Context
+import android.content.Intent
 import android.text.TextUtils
 import androidx.multidex.MultiDex
 import cn.jpush.im.android.api.JMessageClient
 import com.snt.phoney.BuildConfig
 import com.snt.phoney.di.AppInjector
+import com.snt.phoney.service.VoiceCallService
 import com.tencent.bugly.crashreport.CrashReport
 import com.tencent.bugly.crashreport.CrashReport.UserStrategy
 import dagger.android.DispatchingAndroidInjector
 import dagger.android.HasActivityInjector
+import jiguang.chat.utils.NotificationClickEventReceiver
 import timber.log.Timber
 import java.io.BufferedReader
 import java.io.FileReader
@@ -35,6 +38,8 @@ class App : Application(), HasActivityInjector {
         initJMessage()
 
         initBugly()
+
+        startVoiceCallService()
     }
 
     override fun activityInjector() = dispatchingAndroidInjector
@@ -52,6 +57,13 @@ class App : Application(), HasActivityInjector {
             JMessageClient.setDebugMode(false)
         }
         JMessageClient.init(this)
+        //设置Notification的模式
+        JMessageClient.setNotificationFlag(JMessageClient.FLAG_NOTIFY_WITH_SOUND or JMessageClient.FLAG_NOTIFY_WITH_LED or JMessageClient.FLAG_NOTIFY_WITH_VIBRATE)
+        JMessageClient.registerEventReceiver(NotificationClickEventReceiver(this))
+    }
+
+    private fun startVoiceCallService() {
+        startService(Intent(this, VoiceCallService::class.java))
     }
 
     private fun initBugly() {
