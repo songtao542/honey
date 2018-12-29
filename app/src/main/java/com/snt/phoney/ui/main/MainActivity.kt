@@ -9,7 +9,6 @@ import androidx.lifecycle.ViewModelProviders
 import com.google.android.material.bottomnavigation.BottomNavigationView
 import com.snt.phoney.R
 import com.snt.phoney.base.BaseActivity
-import com.snt.phoney.domain.repository.JMessageRepository
 import com.snt.phoney.extensions.disableShiftMode
 import com.snt.phoney.extensions.forEach
 import com.snt.phoney.extensions.hideIcon
@@ -19,7 +18,6 @@ import com.snt.phoney.ui.main.message.MessageFragment
 import com.snt.phoney.ui.main.mine.MineFragment
 import com.snt.phoney.ui.main.square.SquareFragment
 import kotlinx.android.synthetic.main.activity_main.*
-import javax.inject.Inject
 
 class MainActivity : BaseActivity() {
 
@@ -114,6 +112,5 @@ class MainActivity : BaseActivity() {
             else -> mineFragment
         }
     }
-
 
 }

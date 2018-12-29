@@ -13,14 +13,17 @@ import cn.jiguang.jmrtc.api.JMRtcSession
 import cn.jiguang.jmrtc.api.JMSignalingMessage
 import cn.jpush.im.android.api.JMessageClient
 import cn.jpush.im.android.api.callback.GetUserInfoCallback
+import cn.jpush.im.android.api.callback.RequestCallback
 import cn.jpush.im.android.api.model.UserInfo
 import cn.jpush.im.api.BasicCallback
 import com.snt.phoney.BuildConfig
 import com.snt.phoney.ICallStateListener
 import com.snt.phoney.IVoiceCallService
 import com.snt.phoney.domain.accessor.UserAccessor
+import com.snt.phoney.domain.model.JMUser
 import com.snt.phoney.ui.voicecall.VoiceAnswerActivity
 import com.snt.phoney.utils.data.Constants
+import dagger.android.AndroidInjection
 import okhttp3.*
 import okhttp3.logging.HttpLoggingInterceptor
 import okio.ByteString
@@ -38,6 +41,14 @@ const val Method_onCallMemberOffline = 6
 const val Method_onCallDisconnected = 7
 const val Method_onCallError = 8
 
+const val ERROR_TIMEOUT = 872002
+
+const val REASON_HANGUP = 11//JMRtcClient.DisconnectReason.hangup.ordinal
+const val REASON_REFUSE = 12//JMRtcClient.DisconnectReason.refuse.ordinal
+const val REASON_CANCEL = 13//JMRtcClient.DisconnectReason.cancel.ordinal
+const val REASON_BUSY = 14//JMRtcClient.DisconnectReason.busy.ordinal
+const val REASON_OFFLINE = 15//JMRtcClient.DisconnectReason.offline.ordinal
+
 class VoiceCallService : Service() {
 
     companion object {
@@ -48,8 +59,13 @@ class VoiceCallService : Service() {
     private var mWebSocket: WebSocket? = null
     private var mVoiceCallWebSocketListener: VoiceCallWebSocketListener? = VoiceCallWebSocketListener()
 
+    private val mJMRtcListenerImpl = JMRtcListenerImpl()
+
     @Inject
     lateinit var mUserAccessor: UserAccessor
+
+    private var isConnected = false
+    private var isConnecting = false
 
     override fun onBind(intent: Intent): IBinder {
         return VoiceCallServiceImpl()
@@ -61,56 +77,99 @@ class VoiceCallService : Service() {
 
     override fun onCreate() {
         super.onCreate()
-        JMRtcClient.getInstance().initEngine(object : JMRtcListener() {
-            override fun onCallOutgoing(session: JMRtcSession) {
-                Log.d("TTTT", "xxxxxxxxxxxx onCallOutgoing session=$session")
-                notifyListener(Method_onCallOutgoing)
-            }
-
-            override fun onCallConnected(session: JMRtcSession, surfaceView: SurfaceView) {
-                Log.d("TTTT", "xxxxxxxxxxxx onCallConnected session=$session")
-                notifyListener(Method_onCallConnected)
-            }
-
-            /**
-             * 通话过程中，有用户退出通话
-             */
-            override fun onCallMemberOffline(user: UserInfo, reason: JMRtcClient.DisconnectReason) {
-                Log.d("TTTT", "xxxxxxxxxxxx onCallMemberOffline user=$user  reason=$reason")
-                notifyListener(Method_onCallMemberOffline)
-            }
-
-            override fun onCallDisconnected(reason: JMRtcClient.DisconnectReason) {
-                Log.d("TTTT", "xxxxxxxxxxxx onCallDisconnected reason=$reason")
-                notifyListener(Method_onCallDisconnected)
-            }
-
-            override fun onCallError(errorCode: Int, desc: String) {
-                Log.d("TTTT", "xxxxxxxxxxxx onCallError errorCode=$errorCode  desc=$desc")
-                notifyListener(Method_onCallError)
-            }
-
-            override fun onCallInviteReceived(session: JMRtcSession) {
-                Log.d("TTTT", "xxxxxxxxxxxx onCallInviteReceived session=$session")
-                notifyListener(Method_onCallInviteReceived)
-                startVoiceCallActivity()
-            }
-        })
+        AndroidInjection.inject(this)
+        JMRtcClient.getInstance().initEngine(mJMRtcListenerImpl)
     }
 
-    private fun notifyListener(methodId: Int) {
+    inner class JMRtcListenerImpl : JMRtcListener() {
+        override fun onCallOutgoing(session: JMRtcSession) {
+            Log.d("TTTT", "xxxxxxxxxxxx onCallOutgoing session=$session")
+            isConnecting = true
+            notifyListener(Method_onCallOutgoing)
+        }
+
+        override fun onCallConnected(session: JMRtcSession, surfaceView: SurfaceView) {
+            Log.d("TTTT", "xxxxxxxxxxxx onCallConnected session=$session")
+            isConnected = true
+            isConnecting = false
+            notifyListener(Method_onCallConnected)
+        }
+
+        override fun onCallOtherUserInvited(userInfo: UserInfo?, userList: MutableList<UserInfo>?, session: JMRtcSession?) {
+            val user = if (userInfo != null) JMUser.from(userInfo) else null
+            notifyListener(Method_onCallOtherUserInvited, user = user)
+        }
+
+        /**
+         * 通话过程中，有用户退出通话
+         */
+        override fun onCallMemberOffline(userInfo: UserInfo, reason: JMRtcClient.DisconnectReason) {
+            Log.d("TTTT", "xxxxxxxxxxxx onCallMemberOffline user=$userInfo  reason=$reason")
+            val user = if (userInfo != null) JMUser.from(userInfo) else null
+            notifyListener(Method_onCallMemberOffline, user = user, reason = reasonToCode(reason))
+        }
+
+        override fun onCallMemberJoin(userInfo: UserInfo?, surfaceView: SurfaceView?) {
+            val user = if (userInfo != null) JMUser.from(userInfo) else null
+            notifyListener(Method_onCallMemberJoin, user = user)
+        }
+
+        override fun onCallDisconnected(reason: JMRtcClient.DisconnectReason) {
+            Log.d("TTTT", "xxxxxxxxxxxx onCallDisconnected reason=$reason")
+            isConnected = false
+            isConnecting = false
+            notifyListener(Method_onCallDisconnected, reason = reasonToCode(reason))
+        }
+
+        override fun onCallError(errorCode: Int, desc: String) {
+            Log.d("TTTT", "xxxxxxxxxxxx onCallError errorCode=$errorCode  desc=$desc")
+            isConnected = false
+            isConnecting = false
+            if (errorCode == 872004 || errorCode == 872106) {
+                JMRtcClient.getInstance().initEngine(mJMRtcListenerImpl)
+            }
+            if (errorCode == 872002) {//time out
+
+            }
+            notifyListener(Method_onCallError, errorCode = errorCode, errorDesc = desc)
+        }
+
+        override fun onCallInviteReceived(session: JMRtcSession) {
+            Log.d("TTTT", "xxxxxxxxxxxx onCallInviteReceived session=$session")
+            JMRtcClient.getInstance().session.getInviterUserInfo(object : RequestCallback<UserInfo>() {
+                override fun gotResult(responseCode: Int, responseMessage: String?, result: UserInfo?) {
+                    val user = if (result != null) JMUser.from(result) else null
+                    Log.d("TTTT", "ttttttttt user=$user")
+                    notifyListener(Method_onCallInviteReceived, user = user)
+                    startVoiceCallActivity(user)
+                }
+            })
+        }
+
+        private fun reasonToCode(reason: JMRtcClient.DisconnectReason): Int {
+            return when (reason) {
+                JMRtcClient.DisconnectReason.hangup -> REASON_HANGUP
+                JMRtcClient.DisconnectReason.refuse -> REASON_REFUSE
+                JMRtcClient.DisconnectReason.cancel -> REASON_CANCEL
+                JMRtcClient.DisconnectReason.busy -> REASON_BUSY
+                JMRtcClient.DisconnectReason.offline -> REASON_OFFLINE
+            }
+        }
+    }
+
+    private fun notifyListener(methodId: Int, user: JMUser? = null, reason: Int = 0, errorCode: Int = 0, errorDesc: String? = null) {
         val size = mCallStateListeners.beginBroadcast()
         for (i in 0 until size) {
             try {
                 when (methodId) {
                     Method_onCallOutgoing -> mCallStateListeners.getBroadcastItem(i).onCallOutgoing()
-                    Method_onCallInviteReceived -> mCallStateListeners.getBroadcastItem(i).onCallInviteReceived()
-                    Method_onCallOtherUserInvited -> mCallStateListeners.getBroadcastItem(i).onCallOtherUserInvited()
+                    Method_onCallInviteReceived -> mCallStateListeners.getBroadcastItem(i).onCallInviteReceived(user)
+                    Method_onCallOtherUserInvited -> mCallStateListeners.getBroadcastItem(i).onCallOtherUserInvited(user)
                     Method_onCallConnected -> mCallStateListeners.getBroadcastItem(i).onCallConnected()
-                    Method_onCallMemberJoin -> mCallStateListeners.getBroadcastItem(i).onCallMemberJoin()
-                    Method_onCallMemberOffline -> mCallStateListeners.getBroadcastItem(i).onCallMemberOffline()
-                    Method_onCallDisconnected -> mCallStateListeners.getBroadcastItem(i).onCallDisconnected()
-                    Method_onCallError -> mCallStateListeners.getBroadcastItem(i).onCallError()
+                    Method_onCallMemberJoin -> mCallStateListeners.getBroadcastItem(i).onCallMemberJoin(user)
+                    Method_onCallMemberOffline -> mCallStateListeners.getBroadcastItem(i).onCallMemberOffline(user, reason)
+                    Method_onCallDisconnected -> mCallStateListeners.getBroadcastItem(i).onCallDisconnected(reason)
+                    Method_onCallError -> mCallStateListeners.getBroadcastItem(i).onCallError(errorCode, errorDesc)
                 }
             } catch (e: RemoteException) {
                 Log.e(TAG, "error:${e.message}")
@@ -119,9 +178,10 @@ class VoiceCallService : Service() {
         mCallStateListeners.finishBroadcast()
     }
 
-    fun startVoiceCallActivity() {
+    fun startVoiceCallActivity(user: JMUser?) {
         val intent = Intent(this, VoiceAnswerActivity::class.java).apply {
             addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
+            user?.let { putExtra("user", it) }
         }
         startActivity(intent)
     }
@@ -135,21 +195,19 @@ class VoiceCallService : Service() {
     private fun hangup() {
         JMRtcClient.getInstance().hangup(object : BasicCallback() {
             override fun gotResult(code: Int, message: String?) {
-                Log.d("TTTT", "xxxxxxxx hangup code=$code  message=$message")
+                Log.d("TTTT", "xxxxxxxx hangup  hangup  hangup  code=$code  message=$message")
             }
         })
     }
 
-    fun call(username: String) {
-        JMessageClient.getUserInfo(username, object : GetUserInfoCallback() {
+    fun call(user: JMUser) {
+        connect()
+        JMessageClient.getUserInfo(user.username, object : GetUserInfoCallback() {
             override fun gotResult(responseCode: Int, responseMessage: String?, user: UserInfo?) {
                 user?.let { user ->
-                    val users = ArrayList<UserInfo>().apply {
-                        add(user)
-                    }
-                    JMRtcClient.getInstance().call(users, JMSignalingMessage.MediaType.AUDIO, object : BasicCallback() {
+                    JMRtcClient.getInstance().call(listOf(user), JMSignalingMessage.MediaType.AUDIO, object : BasicCallback() {
                         override fun gotResult(code: Int, message: String?) {
-                            Log.d("TTTT", "xxxxxxxx call code=$code  message=$message")
+                            Log.d("TTTT", "xxxxxxxx call  call  call  code=$code  message=$message")
 
                         }
                     })
@@ -161,7 +219,7 @@ class VoiceCallService : Service() {
     private fun accept() {
         JMRtcClient.getInstance().accept(object : BasicCallback() {
             override fun gotResult(code: Int, message: String?) {
-                Log.d("TTTT", "xxxxxxxx accept code=$code  message=$message")
+                Log.d("TTTT", "xxxxxxxx accept  accept  accept  code=$code  message=$message")
             }
         })
     }
@@ -169,7 +227,7 @@ class VoiceCallService : Service() {
     private fun refuse() {
         JMRtcClient.getInstance().refuse(object : BasicCallback() {
             override fun gotResult(code: Int, message: String?) {
-                Log.d("TTTT", "xxxxxxxx accept code=$code  message=$message")
+                Log.d("TTTT", "xxxxxxxx refuse  refuse  refuse  code=$code  message=$message")
             }
         })
     }
@@ -183,6 +241,19 @@ class VoiceCallService : Service() {
     val mCallStateListeners = RemoteCallbackList<ICallStateListener>()
 
     inner class VoiceCallServiceImpl : IVoiceCallService.Stub() {
+
+        override fun isConnected(): Boolean {
+            return this@VoiceCallService.isConnected
+        }
+
+        override fun isConnecting(): Boolean {
+            return this@VoiceCallService.isConnecting
+        }
+
+        override fun call(user: JMUser) {
+            this@VoiceCallService.call(user)
+        }
+
         override fun hangup() {
             this@VoiceCallService.hangup()
         }
@@ -232,8 +303,6 @@ class VoiceCallService : Service() {
         return "$URL/token=$token"
     }
 
-
-    data class State(val state: Int)
 
     inner class VoiceCallWebSocketListener : WebSocketListener() {
         /**

@@ -1,5 +1,6 @@
 package jiguang.chat.activity;
 
+import android.app.ActivityManager;
 import android.content.ClipData;
 import android.content.ClipboardManager;
 import android.content.Context;
@@ -23,7 +24,6 @@ import androidx.appcompat.widget.Toolbar;
 
 import com.sj.emoji.EmojiBean;
 import com.snt.phoney.R;
-import com.snt.phoney.extensions.StatusBarExtKt;
 
 import java.io.File;
 import java.lang.ref.WeakReference;
@@ -97,6 +97,7 @@ public class ChatActivity extends BaseActivity implements FuncLayout.OnFuncKeyBo
     private boolean mIsSingle = true;
     private Conversation mConv;
     private String mTargetId;
+    private boolean mFromNotification = false;
     private String mTargetAppKey;
     private ChattingListAdapter mChatAdapter;
     private List<UserInfo> mAtList;
@@ -150,6 +151,7 @@ public class ChatActivity extends BaseActivity implements FuncLayout.OnFuncKeyBo
     private void initData() {
         SimpleCommonUtils.initEmoticonsEditText(ekBar.getEtChat());
         Intent intent = getIntent();
+        mFromNotification = intent.getBooleanExtra("fromNotification", false);
         mTargetId = intent.getStringExtra(TARGET_ID);
         mTargetAppKey = intent.getStringExtra(TARGET_APP_KEY);
         mTitle = intent.getStringExtra(Constants.CONV_TITLE);
@@ -352,6 +354,7 @@ public class ChatActivity extends BaseActivity implements FuncLayout.OnFuncKeyBo
         super.onBackPressed();
         returnBtn();
     }
+
 
     private void returnBtn() {
         mConv.resetUnreadCount();

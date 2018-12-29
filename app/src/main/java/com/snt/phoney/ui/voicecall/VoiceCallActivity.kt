@@ -8,19 +8,20 @@ import android.content.ServiceConnection
 import android.os.Bundle
 import android.os.Handler
 import android.os.IBinder
+import android.view.View
 import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
 import com.bumptech.glide.Glide
 import com.bumptech.glide.load.resource.drawable.DrawableTransitionOptions
-import com.bumptech.glide.request.RequestOptions
 import com.snt.phoney.ICallStateListener
 import com.snt.phoney.IVoiceCallService
 import com.snt.phoney.R
 import com.snt.phoney.domain.model.ImUser
+import com.snt.phoney.domain.model.JMUser
 import com.snt.phoney.extensions.checkAndRequestPermission
 import com.snt.phoney.extensions.checkAppPermission
 import com.snt.phoney.extensions.setLayoutFullscreen
-import com.snt.phoney.service.VoiceCallService
+import com.snt.phoney.service.*
 import com.snt.phoney.utils.data.Constants
 import kotlinx.android.synthetic.main.activity_voice_call.*
 
@@ -31,7 +32,7 @@ class VoiceCallActivity : AppCompatActivity(), ServiceConnection {
         @JvmStatic
         fun start(context: Context, im: ImUser) {
             val intent = Intent(context, VoiceCallActivity::class.java).apply {
-                putExtra(Constants.Extra.USER, im)
+                putExtra(Constants.Extra.USER, JMUser.from(im))
             }
             context.startActivity(intent)
         }
@@ -39,31 +40,38 @@ class VoiceCallActivity : AppCompatActivity(), ServiceConnection {
 
     private val mHandler = Handler()
     private var mVoiceCallService: IVoiceCallService? = null
+    private var mICallStateListener: ICallStateListenerImpl? = null
 
 
-    private var user: ImUser? = null
+    private var mUser: JMUser? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setLayoutFullscreen()
 
-        user = intent?.getParcelableExtra(Constants.Extra.USER)
-        if (user == null) {
+        mUser = intent?.getParcelableExtra(Constants.Extra.USER)
+        if (mUser == null) {
             finish()
         }
 
         setContentView(R.layout.activity_voice_call)
 
-        name.text = user?.nickname
-        Glide.with(this).load(user?.avatar).apply(RequestOptions().circleCrop()).transition(DrawableTransitionOptions.withCrossFade()).into(head)
+        setupUser()
 
         if (checkAndRequestPermission(*getPermissions())) {
             bindService(Intent(this, VoiceCallService::class.java), this, Context.BIND_AUTO_CREATE)
         }
 
-        hangup.setOnClickListener {
+        cancelAndHangup.setOnClickListener {
             mVoiceCallService?.hangup()
             finish()
+        }
+
+        call.setOnClickListener {
+            state.text = getString(R.string.wait_accept_template, mUser?.nickname
+                    ?: getString(R.string.other_side))
+            setupCancelUI()
+            mVoiceCallService?.call(mUser)
         }
     }
 
@@ -80,7 +88,8 @@ class VoiceCallActivity : AppCompatActivity(), ServiceConnection {
     }
 
     override fun onBackPressed() {
-        if (mVoiceCallService != null) {
+        if (mVoiceCallService?.isConnected == true ||
+                mVoiceCallService?.isConnecting == true) {
             AlertDialog.Builder(this)
                     .setTitle(R.string.cancel_voice_call_tip)
                     .setMessage(R.string.cancel_voice_call_warn)
@@ -95,54 +104,111 @@ class VoiceCallActivity : AppCompatActivity(), ServiceConnection {
     }
 
     override fun onDestroy() {
+        mVoiceCallService?.unregisterICallStateListener(mICallStateListener)
         unbindService(this)
         super.onDestroy()
     }
 
     override fun onServiceDisconnected(name: ComponentName?) {
         mVoiceCallService = null
+        mICallStateListener = null
     }
 
     override fun onServiceConnected(name: ComponentName?, service: IBinder?) {
         mVoiceCallService = IVoiceCallService.Stub.asInterface(service)
+        mICallStateListener = ICallStateListenerImpl()
+        mVoiceCallService?.registerICallStateListener(mICallStateListener)
+        if (mVoiceCallService?.isConnected == false) {
+            mVoiceCallService?.call(mUser)
+        }
     }
 
+    private fun setupUser() {
+        name.text = mUser?.nickname
+        state.text = getString(R.string.wait_accept_template, mUser?.nickname
+                ?: getString(R.string.other_side))
+        Glide.with(this).load(mUser?.avatar)
+                //.apply(RequestOptions().circleCrop())
+                .transition(DrawableTransitionOptions.withCrossFade())
+                .into(head)
+    }
+
+    private fun setupCallUI() {
+        cancelAndHangupLayout.visibility = View.GONE
+        callLayout.visibility = View.VISIBLE
+    }
+
+    private fun setupCancelUI() {
+        cancelAndHangupLabel.setText(R.string.cancel)
+        cancelAndHangupLayout.visibility = View.VISIBLE
+        callLayout.visibility = View.GONE
+    }
+
+    private fun setupHangupUI() {
+        cancelAndHangupLabel.setText(R.string.hangup_phone)
+        cancelAndHangupLayout.visibility = View.VISIBLE
+        callLayout.visibility = View.GONE
+    }
 
     inner class ICallStateListenerImpl : ICallStateListener.Stub() {
         override fun onCallOutgoing() {
             mHandler.post {
-                state.setText(R.string.connecting)
+                state.text = getString(R.string.wait_accept_template, mUser?.nickname
+                        ?: getString(R.string.other_side))
             }
         }
 
-        override fun onCallInviteReceived() {
+        override fun onCallInviteReceived(user: JMUser) {
         }
 
-        override fun onCallOtherUserInvited() {
+        override fun onCallOtherUserInvited(user: JMUser) {
         }
 
         override fun onCallConnected() {
             mHandler.post {
                 state.setText(R.string.has_accept_phone)
-                hangupLabel.setText(R.string.hangup)
+                setupHangupUI()
             }
         }
 
-        override fun onCallMemberJoin() {
+        override fun onCallMemberJoin(user: JMUser) {
         }
 
-        override fun onCallMemberOffline() {
-        }
-
-        override fun onCallDisconnected() {
+        override fun onCallMemberOffline(user: JMUser, reason: Int) {
             mHandler.post {
-                finish()
+                if (user.username == mUser?.username) {
+                    if (reason == REASON_REFUSE) {
+                        state.setText(R.string.has_refuse_phone)
+                    } else if (reason == REASON_OFFLINE || reason == REASON_HANGUP) {
+                        state.setText(R.string.has_hangup_phone)
+                    }
+                    mVoiceCallService?.hangup()
+                    setupCallUI()
+                }
             }
         }
 
-        override fun onCallError() {
+        override fun onCallDisconnected(reason: Int) {
             mHandler.post {
-                finish()
+                if (reason == REASON_REFUSE) {
+                    state.setText(R.string.has_refuse_phone)
+                    setupCallUI()
+                } else if (reason == REASON_CANCEL) {
+                    //finish()
+                } else {
+
+                }
+            }
+        }
+
+        override fun onCallError(errorCode: Int, errorDesc: String?) {
+            mHandler.post {
+                if (errorCode == ERROR_TIMEOUT) {
+                    state.setText(R.string.has_timeout)
+                    setupCallUI()
+                } else {
+                    finish()
+                }
             }
         }
     }

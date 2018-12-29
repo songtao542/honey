@@ -61,28 +61,63 @@
         <LinearLayout
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_gravity="center_horizontal"
             android:layout_marginTop="100dp"
-            android:orientation="vertical">
+            android:orientation="horizontal">
 
-            <com.google.android.material.floatingactionbutton.FloatingActionButton
-                android:id="@+id/hangup"
+            <LinearLayout
+                android:id="@+id/cancelAndHangupLayout"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_gravity="center"
-                android:scaleType="centerInside"
-                app:fabSize="normal"
-                app:srcCompat="@drawable/ic_phone_hangup"
-                app:useCompatPadding="false" />
+                android:orientation="vertical">
 
-            <androidx.appcompat.widget.AppCompatTextView
-                android:id="@+id/hangupLabel"
+                <androidx.appcompat.widget.AppCompatImageView
+                    android:id="@+id/cancelAndHangup"
+                    android:layout_width="@dimen/voice_call_button_size"
+                    android:layout_height="@dimen/voice_call_button_size"
+                    android:layout_gravity="center"
+                    android:background="@drawable/voice_call_hangup_selector"
+                    android:scaleType="centerInside"
+                    android:foreground="@drawable/voice_call_foreground"
+                    app:srcCompat="@drawable/ic_voice_call_hangup" />
+
+                <androidx.appcompat.widget.AppCompatTextView
+                    android:id="@+id/cancelAndHangupLabel"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_horizontal"
+                    android:layout_marginTop="10dp"
+                    android:text="@string/cancel"
+                    android:textColor="@color/white"
+                    android:textSize="@dimen/textsize_large" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/callLayout"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_gravity="center_horizontal"
-                android:layout_marginTop="10dp"
-                android:text="@string/cancel"
-                android:textColor="@color/white"
-                android:textSize="@dimen/textsize_large" />
+                android:orientation="vertical"
+                android:visibility="gone">
+
+                <androidx.appcompat.widget.AppCompatImageView
+                    android:id="@+id/call"
+                    android:layout_width="@dimen/voice_call_button_size"
+                    android:layout_height="@dimen/voice_call_button_size"
+                    android:layout_gravity="center"
+                    android:background="@drawable/voice_call_out_selector"
+                    android:foreground="@drawable/voice_call_foreground"
+                    android:scaleType="centerInside"
+                    app:srcCompat="@drawable/ic_voice_call_accept" />
+
+                <androidx.appcompat.widget.AppCompatTextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_horizontal"
+                    android:layout_marginTop="10dp"
+                    android:text="@string/voice_call"
+                    android:textColor="@color/white"
+                    android:textSize="@dimen/textsize_large" />
+            </LinearLayout>
         </LinearLayout>
 
 

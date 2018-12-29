@@ -2,6 +2,7 @@
 package com.snt.phoney;
 
 // Declare any non-default types here with import statements
+import com.snt.phoney.domain.model.JMUser;
 
 interface ICallStateListener {
     /**
@@ -12,17 +13,18 @@ interface ICallStateListener {
 
     void onCallOutgoing();
 
-    void onCallInviteReceived();
+    void onCallInviteReceived(in JMUser user);
 
-    void onCallOtherUserInvited();
+    void onCallOtherUserInvited(in JMUser user);
 
     void onCallConnected();
 
-    void onCallMemberJoin();
+    void onCallMemberJoin(in JMUser user);
 
-    void onCallMemberOffline();
+    void onCallMemberOffline(in JMUser user,int reason);
 
-    void onCallDisconnected();
+    void onCallDisconnected(int reason);
 
-    void onCallError();
+    void onCallError(int errorCode, String desc);
+
 }

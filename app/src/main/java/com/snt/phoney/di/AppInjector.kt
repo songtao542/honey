@@ -34,6 +34,7 @@ object AppInjector {
 
             override fun onActivityDestroyed(activity: Activity) {}
         })
+
     }
 
     @JvmStatic

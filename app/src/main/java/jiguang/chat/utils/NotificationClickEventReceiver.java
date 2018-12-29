@@ -5,8 +5,12 @@ import android.content.Context;
 import android.content.Intent;
 import android.util.Log;
 
+import com.snt.phoney.ui.main.MainActivity;
+
 import cn.jpush.im.android.api.JMessageClient;
+import cn.jpush.im.android.api.callback.GetUserInfoCallback;
 import cn.jpush.im.android.api.enums.ConversationType;
+import cn.jpush.im.android.api.event.CommandNotificationEvent;
 import cn.jpush.im.android.api.event.NotificationClickEvent;
 import cn.jpush.im.android.api.model.Conversation;
 import cn.jpush.im.android.api.model.GroupInfo;
@@ -18,7 +22,29 @@ public class NotificationClickEventReceiver {
     private Context mContext;
 
     public NotificationClickEventReceiver(Context context) {
-        mContext = context;
+        mContext = context.getApplicationContext();
+    }
+
+    @SuppressWarnings("unused")
+    public void onEvent(CommandNotificationEvent event) {
+        Log.d("TTTT", "mmmmmmmmmmmmmmmmmm eeee =" + event);
+        Log.d("TTTT", "mmmmmmmmmmmmmmmmmm eeee getMsg==" + event.getMsg());
+        Log.d("TTTT", "mmmmmmmmmmmmmmmmmm eeee getType=" + event.getType());
+        event.getSenderUserInfo(new GetUserInfoCallback() {
+            @Override
+            public void gotResult(int i, String s, UserInfo userInfo) {
+                Log.d("TTTT", "mmmmmmmmmmmmmmmmmm eeee userInfo=" + userInfo);
+            }
+        });
+        event.getTargetInfo(new CommandNotificationEvent.GetTargetInfoCallback() {
+            @Override
+            public void gotResult(int i, String s, Object o, CommandNotificationEvent.Type type) {
+                Log.d("TTTT", "mmmmmmmmmmmmmmmmmm tttt iiii=" + i);
+                Log.d("TTTT", "mmmmmmmmmmmmmmmmmm tttt ssss=" + s);
+                Log.d("TTTT", "mmmmmmmmmmmmmmmmmm tttt oooo=" + o);
+                Log.d("TTTT", "mmmmmmmmmmmmmmmmmm tttt type=" + type);
+            }
+        });
     }
 
     /**
@@ -28,7 +54,6 @@ public class NotificationClickEventReceiver {
      */
     @SuppressWarnings("unused")
     public void onEvent(NotificationClickEvent notificationClickEvent) {
-        Log.d("TTTT", "xxxxxxxxxxxxxx new message coming");
         if (null == notificationClickEvent) {
             return;
         }
@@ -54,8 +79,11 @@ public class NotificationClickEventReceiver {
             conv.resetUnreadCount();
             //notificationIntent.setAction(Intent.ACTION_MAIN);
             notificationIntent.putExtra("fromGroup", false);
+            notificationIntent.putExtra("fromNotification", true);
             notificationIntent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TOP);
-            mContext.startActivity(notificationIntent);
+            Intent main = new Intent(mContext, MainActivity.class);
+            main.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_RESET_TASK_IF_NEEDED);
+            mContext.startActivities(new Intent[]{main, notificationIntent});
         }
     }
 

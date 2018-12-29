@@ -69,23 +69,23 @@
                 android:layout_height="wrap_content"
                 android:orientation="vertical">
 
-                <com.google.android.material.floatingactionbutton.FloatingActionButton
-                    android:id="@+id/hangup"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
+                <androidx.appcompat.widget.AppCompatImageView
+                    android:id="@+id/refuseAndHangup"
+                    android:layout_width="90dp"
+                    android:layout_height="90dp"
                     android:layout_gravity="center"
+                    android:background="@drawable/voice_call_hangup_selector"
+                    android:foreground="@drawable/voice_call_foreground"
                     android:scaleType="centerInside"
-                    app:backgroundTint="#ff5252"
-                    app:fabSize="normal"
-                    app:srcCompat="@drawable/ic_phone_hangup"
-                    app:useCompatPadding="false" />
+                    app:srcCompat="@drawable/ic_voice_call_hangup" />
 
                 <androidx.appcompat.widget.AppCompatTextView
+                    android:id="@+id/refuseAndHangupLabel"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center_horizontal"
                     android:layout_marginTop="10dp"
-                    android:text="@string/hangup"
+                    android:text="@string/hangup_phone"
                     android:textColor="@color/white"
                     android:textSize="@dimen/textsize_large" />
             </LinearLayout>
@@ -98,16 +98,15 @@
                 android:layout_marginLeft="100dp"
                 android:orientation="vertical">
 
-                <com.google.android.material.floatingactionbutton.FloatingActionButton
+                <androidx.appcompat.widget.AppCompatImageView
                     android:id="@+id/accept"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
+                    android:layout_width="90dp"
+                    android:layout_height="90dp"
                     android:layout_gravity="center"
+                    android:background="@drawable/voice_call_out_selector"
+                    android:foreground="@drawable/voice_call_foreground"
                     android:scaleType="centerInside"
-                    app:backgroundTint="#00c853"
-                    app:fabSize="normal"
-                    app:srcCompat="@drawable/ic_phone_accept"
-                    app:useCompatPadding="false" />
+                    app:srcCompat="@drawable/ic_voice_call_accept" />
 
                 <androidx.appcompat.widget.AppCompatTextView
                     android:layout_width="wrap_content"

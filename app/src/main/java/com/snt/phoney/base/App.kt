@@ -2,6 +2,7 @@ package com.snt.phoney.base
 
 import android.app.Activity
 import android.app.Application
+import android.app.Service
 import android.content.Context
 import android.content.Intent
 import android.text.TextUtils
@@ -14,6 +15,7 @@ import com.tencent.bugly.crashreport.CrashReport
 import com.tencent.bugly.crashreport.CrashReport.UserStrategy
 import dagger.android.DispatchingAndroidInjector
 import dagger.android.HasActivityInjector
+import dagger.android.HasServiceInjector
 import jiguang.chat.utils.NotificationClickEventReceiver
 import timber.log.Timber
 import java.io.BufferedReader
@@ -22,10 +24,13 @@ import java.io.IOException
 import javax.inject.Inject
 
 
-class App : Application(), HasActivityInjector {
+class App : Application(), HasActivityInjector, HasServiceInjector {
 
     @Inject
-    lateinit var dispatchingAndroidInjector: DispatchingAndroidInjector<Activity>
+    lateinit var dispatchingActivityInjector: DispatchingAndroidInjector<Activity>
+
+    @Inject
+    lateinit var dispatchingServiceInjector: DispatchingAndroidInjector<Service>
 
     override fun onCreate() {
         super.onCreate()
@@ -42,7 +47,9 @@ class App : Application(), HasActivityInjector {
         startVoiceCallService()
     }
 
-    override fun activityInjector() = dispatchingAndroidInjector
+    override fun activityInjector() = dispatchingActivityInjector
+
+    override fun serviceInjector() = dispatchingServiceInjector
 
 
     override fun attachBaseContext(base: Context) {
