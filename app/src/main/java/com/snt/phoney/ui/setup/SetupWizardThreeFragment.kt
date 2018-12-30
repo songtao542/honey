@@ -80,32 +80,32 @@ class SetupWizardThreeFragment : BaseFragment() {
             }
         }
         purposeButton.setOnClickListener {
-            Picker.showPicker(activity, getString(R.string.select_job), selectedPurposeIndex, "purpose", provider = { picker ->
+            Picker.showPicker(activity, getString(R.string.select_job), selectedPurposeIndex, provider = { picker ->
                 viewModel.purposes.observe(this, Observer { purposes ->
                     val purposeNames = Array(purposes.size) { index ->
                         purposes[index].name!!
                     }
                     picker.setColumn(purposeNames)
                 })
-            }) { value1, _ ->
+            }, handler = { value1, _ ->
                 selectedPurposeIndex = value1
                 selectedPurpose = viewModel.purposes.value?.get(value1)
                 purpose.text = selectedPurpose?.name
-            }
+            })
         }
         jobButton.setOnClickListener {
-            Picker.showPicker(activity, getString(R.string.select_job), selectedJobIndex, "career", provider = { picker ->
+            Picker.showPicker(activity, getString(R.string.select_job), selectedJobIndex, provider = { picker ->
                 viewModel.careers.observe(this, Observer { careers ->
                     val careerNames = Array(careers.size) { index ->
                         careers[index].name!!
                     }
                     picker.setColumn(careerNames)
                 })
-            }) { value1, _ ->
+            }, handler ={ value1, _ ->
                 selectedJobIndex = value1
                 selectedJob = viewModel.careers.value?.get(value1)
                 job.text = selectedJob?.name
-            }
+            })
         }
 
         viewModel.setupUserInfo.observe(this, Observer {

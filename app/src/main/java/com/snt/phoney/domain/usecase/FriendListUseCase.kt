@@ -7,6 +7,11 @@ import javax.inject.Inject
 class FriendListUseCase @Inject constructor(private val repository: UserRepository, private val locationRepository: LocationRepository) : AccessUserUseCase(repository) {
 
 
+    /**
+     * Note: 阻塞当前线程
+     */
+    fun getCities() = locationRepository.cities
+
     fun listUser(
             token: String,
             latitude: String,

@@ -1,12 +1,13 @@
 package com.snt.phoney.service
 
-import android.app.Service
+import android.app.*
+import android.content.Context
 import android.content.Intent
-import android.os.IBinder
-import android.os.RemoteCallbackList
-import android.os.RemoteException
+import android.graphics.BitmapFactory
+import android.os.*
 import android.util.Log
 import android.view.SurfaceView
+import androidx.core.app.NotificationCompat
 import cn.jiguang.jmrtc.api.JMRtcClient
 import cn.jiguang.jmrtc.api.JMRtcListener
 import cn.jiguang.jmrtc.api.JMRtcSession
@@ -19,8 +20,10 @@ import cn.jpush.im.api.BasicCallback
 import com.snt.phoney.BuildConfig
 import com.snt.phoney.ICallStateListener
 import com.snt.phoney.IVoiceCallService
+import com.snt.phoney.R
 import com.snt.phoney.domain.accessor.UserAccessor
 import com.snt.phoney.domain.model.JMUser
+import com.snt.phoney.ui.voicecall.NotificationHelper
 import com.snt.phoney.ui.voicecall.VoiceAnswerActivity
 import com.snt.phoney.utils.data.Constants
 import dagger.android.AndroidInjection
@@ -42,24 +45,51 @@ const val Method_onCallDisconnected = 7
 const val Method_onCallError = 8
 
 const val ERROR_TIMEOUT = 872002
+const val ERROR_REQUEST_FAIL = 648416
+const val ERROR_NO_BALANCE = 184555
 
-const val REASON_HANGUP = 11//JMRtcClient.DisconnectReason.hangup.ordinal
-const val REASON_REFUSE = 12//JMRtcClient.DisconnectReason.refuse.ordinal
-const val REASON_CANCEL = 13//JMRtcClient.DisconnectReason.cancel.ordinal
-const val REASON_BUSY = 14//JMRtcClient.DisconnectReason.busy.ordinal
-const val REASON_OFFLINE = 15//JMRtcClient.DisconnectReason.offline.ordinal
+const val REASON_HANGUP = 11   //JMRtcClient.DisconnectReason.hangup.ordinal
+const val REASON_REFUSE = 12   //JMRtcClient.DisconnectReason.refuse.ordinal
+const val REASON_CANCEL = 13   //JMRtcClient.DisconnectReason.cancel.ordinal
+const val REASON_BUSY = 14     //JMRtcClient.DisconnectReason.busy.ordinal
+const val REASON_OFFLINE = 15  //JMRtcClient.DisconnectReason.offline.ordinal
+
+
+const val STATE_ASK_CALL = 1
+const val STATE_START_CALL = 2
+const val STATE_CHECK_CALL = 3
+const val STATE_ENDING_CALL = 4
+const val STATE_ABORT_CALL = 5
+
+const val REQUEST_ASK_CALL_MSG = "94e25b988ae44bc88532ece1ef09ca41"
+const val REQUEST_START_CALL_MSG = "e0984b753bda40fafb244f42ed219981"
+const val REQUEST_CHECK_CALL_MSG = "344116ec8f12fb7fa1ef131adb2acb74"
+const val REQUEST_ENDING_CALL_MSG = "83b718ea1245fd7af052f60d408b0d94"
+const val REQUEST_ABORT_CALL_MSG = "c2a291532da49d810e5d63c9974c7385"
+const val REQUEST_HEART_MSG = "b5ddf4a366d03d0c8c0bc756fd6156de"
+
+const val RESPONSE_ASK_CALL_MSG = "f8e449c2aa83536f21e19dd173e17230"
+const val RESPONSE_START_CALL_MSG = "c66c549817ea26a4f0202a023841c490"
+const val RESPONSE_CHECK_CALL_OK_MSG = "92804ed1595e04be8cdd2c5706477e12"
+const val RESPONSE_NO_BALANCE_MSG = "c57a3f655901e8212c625e6c90bda8c6"
+const val RESPONSE_ENDING_CALL_MSG = "eb7a35d3d44d08afbb9d9feaac75e755"
+const val RESPONSE_ABORT_CALL_MSG = "22d71560e3f72f92ffc7b87a8bd639f2"
+const val RESPONSE_HEART_MSG = "79f595671ecfe67462bea6e312811b07"
+
 
 class VoiceCallService : Service() {
 
     companion object {
         @JvmStatic
-        private val URL = "ws://${Constants.Api.DOMAIN_NAME}/im/websocket"
+        private val URL = "wss://${Constants.Api.DOMAIN_NAME}/im/websocket"
     }
 
     private var mWebSocket: WebSocket? = null
-    private var mVoiceCallWebSocketListener: VoiceCallWebSocketListener? = VoiceCallWebSocketListener()
+    private var mVoiceCallWebSocketListener: VoiceCallWebSocketListener = VoiceCallWebSocketListener()
 
     private val mJMRtcListenerImpl = JMRtcListenerImpl()
+
+    private val mHandler = Handler()
 
     @Inject
     lateinit var mUserAccessor: UserAccessor
@@ -83,19 +113,21 @@ class VoiceCallService : Service() {
 
     inner class JMRtcListenerImpl : JMRtcListener() {
         override fun onCallOutgoing(session: JMRtcSession) {
-            Log.d("TTTT", "xxxxxxxxxxxx onCallOutgoing session=$session")
+            Log.d(TAG, "onCallOutgoing==session=$session")
             isConnecting = true
             notifyListener(Method_onCallOutgoing)
         }
 
         override fun onCallConnected(session: JMRtcSession, surfaceView: SurfaceView) {
-            Log.d("TTTT", "xxxxxxxxxxxx onCallConnected session=$session")
+            Log.d(TAG, "onCallConnected=session=$session")
             isConnected = true
             isConnecting = false
+            startCall()
             notifyListener(Method_onCallConnected)
         }
 
         override fun onCallOtherUserInvited(userInfo: UserInfo?, userList: MutableList<UserInfo>?, session: JMRtcSession?) {
+            Log.d(TAG, "onCallOtherUserInvited=>userInfo=$userInfo")
             val user = if (userInfo != null) JMUser.from(userInfo) else null
             notifyListener(Method_onCallOtherUserInvited, user = user)
         }
@@ -104,42 +136,44 @@ class VoiceCallService : Service() {
          * 通话过程中，有用户退出通话
          */
         override fun onCallMemberOffline(userInfo: UserInfo, reason: JMRtcClient.DisconnectReason) {
-            Log.d("TTTT", "xxxxxxxxxxxx onCallMemberOffline user=$userInfo  reason=$reason")
+            Log.d(TAG, "onCallMemberOffline user=$userInfo  reason=$reason")
             val user = if (userInfo != null) JMUser.from(userInfo) else null
             notifyListener(Method_onCallMemberOffline, user = user, reason = reasonToCode(reason))
         }
 
         override fun onCallMemberJoin(userInfo: UserInfo?, surfaceView: SurfaceView?) {
+            Log.d(TAG, "onCallMemberJoin user=$userInfo")
             val user = if (userInfo != null) JMUser.from(userInfo) else null
             notifyListener(Method_onCallMemberJoin, user = user)
         }
 
         override fun onCallDisconnected(reason: JMRtcClient.DisconnectReason) {
-            Log.d("TTTT", "xxxxxxxxxxxx onCallDisconnected reason=$reason")
+            Log.d(TAG, "onCallDisconnected reason=$reason")
             isConnected = false
             isConnecting = false
+            //向服务器发送结束通话请求
+            endCall()
             notifyListener(Method_onCallDisconnected, reason = reasonToCode(reason))
         }
 
         override fun onCallError(errorCode: Int, desc: String) {
-            Log.d("TTTT", "xxxxxxxxxxxx onCallError errorCode=$errorCode  desc=$desc")
+            Log.d(TAG, "onCallError errorCode=$errorCode  desc=$desc")
             isConnected = false
             isConnecting = false
             if (errorCode == 872004 || errorCode == 872106) {
                 JMRtcClient.getInstance().initEngine(mJMRtcListenerImpl)
             }
-            if (errorCode == 872002) {//time out
-
-            }
+            // 872002 time out
             notifyListener(Method_onCallError, errorCode = errorCode, errorDesc = desc)
         }
 
         override fun onCallInviteReceived(session: JMRtcSession) {
-            Log.d("TTTT", "xxxxxxxxxxxx onCallInviteReceived session=$session")
+            Log.d(TAG, "onCallInviteReceived session=$session")
+            isConnecting = true
             JMRtcClient.getInstance().session.getInviterUserInfo(object : RequestCallback<UserInfo>() {
                 override fun gotResult(responseCode: Int, responseMessage: String?, result: UserInfo?) {
                     val user = if (result != null) JMUser.from(result) else null
-                    Log.d("TTTT", "ttttttttt user=$user")
+                    Log.d(TAG, "onCallInviteReceived user=$user")
                     notifyListener(Method_onCallInviteReceived, user = user)
                     startVoiceCallActivity(user)
                 }
@@ -178,9 +212,23 @@ class VoiceCallService : Service() {
         mCallStateListeners.finishBroadcast()
     }
 
+    private fun wakeUp() {
+        // 获取电源管理器对象
+        val pm = getSystemService(Context.POWER_SERVICE) as PowerManager
+        val isInteractive = pm.isInteractive
+        if (!isInteractive) {
+            val wl = pm.newWakeLock(PowerManager.SCREEN_BRIGHT_WAKE_LOCK
+                    or PowerManager.ACQUIRE_CAUSES_WAKEUP, "Phoney:VOICE_CALL")
+            wl.acquire(10000)
+            wl.release()
+        }
+    }
+
     fun startVoiceCallActivity(user: JMUser?) {
+        wakeUp()
+        //NotificationHelper.showNotification(this)
         val intent = Intent(this, VoiceAnswerActivity::class.java).apply {
-            addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
+            addFlags(Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TOP)
             user?.let { putExtra("user", it) }
         }
         startActivity(intent)
@@ -195,31 +243,48 @@ class VoiceCallService : Service() {
     private fun hangup() {
         JMRtcClient.getInstance().hangup(object : BasicCallback() {
             override fun gotResult(code: Int, message: String?) {
-                Log.d("TTTT", "xxxxxxxx hangup  hangup  hangup  code=$code  message=$message")
+                Log.d(TAG, "hangup==========> code=$code  message=$message")
             }
         })
+        //mUser 不等于 null 说明是主叫方
+        if (mUser != null) {
+            if (isConnected) {
+                endCall()
+            } else {
+                closeWebSocket()
+            }
+            //挂断后 设置 mUser 为 null
+            mUser = null
+        }
     }
 
-    fun call(user: JMUser) {
-        connect()
-        JMessageClient.getUserInfo(user.username, object : GetUserInfoCallback() {
-            override fun gotResult(responseCode: Int, responseMessage: String?, user: UserInfo?) {
-                user?.let { user ->
-                    JMRtcClient.getInstance().call(listOf(user), JMSignalingMessage.MediaType.AUDIO, object : BasicCallback() {
-                        override fun gotResult(code: Int, message: String?) {
-                            Log.d("TTTT", "xxxxxxxx call  call  call  code=$code  message=$message")
+    private var mUser: JMUser? = null
 
-                        }
-                    })
+    fun call(user: JMUser) {
+        mUser = user
+        connect()
+    }
+
+    private fun startJMCall() {
+        mUser?.username?.let { username ->
+            JMessageClient.getUserInfo(username, object : GetUserInfoCallback() {
+                override fun gotResult(responseCode: Int, responseMessage: String?, user: UserInfo?) {
+                    user?.let { user ->
+                        JMRtcClient.getInstance().call(listOf(user), JMSignalingMessage.MediaType.AUDIO, object : BasicCallback() {
+                            override fun gotResult(code: Int, message: String?) {
+                                Log.d(TAG, "call============> code=$code  message=$message")
+                            }
+                        })
+                    }
                 }
-            }
-        })
+            })
+        }
     }
 
     private fun accept() {
         JMRtcClient.getInstance().accept(object : BasicCallback() {
             override fun gotResult(code: Int, message: String?) {
-                Log.d("TTTT", "xxxxxxxx accept  accept  accept  code=$code  message=$message")
+                Log.d(TAG, "accept==========> code=$code  message=$message")
             }
         })
     }
@@ -227,7 +292,7 @@ class VoiceCallService : Service() {
     private fun refuse() {
         JMRtcClient.getInstance().refuse(object : BasicCallback() {
             override fun gotResult(code: Int, message: String?) {
-                Log.d("TTTT", "xxxxxxxx refuse  refuse  refuse  code=$code  message=$message")
+                Log.d(TAG, "refuse==========> code=$code  message=$message")
             }
         })
     }
@@ -282,6 +347,8 @@ class VoiceCallService : Service() {
 
     private fun connect() {
         val token = mUserAccessor.getAccessToken() ?: return
+        Log.d("VOICE_CALL", "=====================================================")
+        Log.d("VOICE_CALL", "start connecting----------:")
         val clientBuilder = OkHttpClient.Builder()
                 .readTimeout(3, TimeUnit.SECONDS)//设置读取超时时间
                 .writeTimeout(3, TimeUnit.SECONDS)//设置写的超时时间
@@ -294,62 +361,184 @@ class VoiceCallService : Service() {
         }
 
         val client = clientBuilder.build()
-        val request = Request.Builder().url(buildUrl(token)).build()
+        val url = buildUrl(token)
+        val request = Request.Builder().url(url).build()
         client.newWebSocket(request, mVoiceCallWebSocketListener)
         client.dispatcher().executorService().shutdown()
     }
 
     private fun buildUrl(token: String): String {
-        return "$URL/token=$token"
+        return "$URL?token=$token"
     }
 
 
+    private var mState = 1
+    private var mCallUuid: String? = null
+
+    private fun checkSate(response: String) {
+        when (mState) {
+            STATE_ASK_CALL -> {
+                Log.d("VOICE_CALL", "check state-[ask call]----: $response")
+                var res = response.split(":")
+                if (res.size == 2) {
+                    if (RESPONSE_ASK_CALL_MSG == res[0]) {
+                        mCallUuid = res[1]
+                        //发起极光语音请求
+                        startJMCall()
+                        return
+                    }
+                }
+                notifyListener(Method_onCallError, errorCode = ERROR_REQUEST_FAIL)
+            }
+            STATE_START_CALL -> {
+                Log.d("VOICE_CALL", "check state-[start call]--: $response")
+                if (RESPONSE_START_CALL_MSG == response) {
+                    Log.d("VOICE_CALL", "开始检查状态")
+                    //正常开始通话
+                    checkCall()
+                    return
+                } else if (RESPONSE_NO_BALANCE_MSG == response) {
+                    //余额不足
+                    notifyListener(Method_onCallError, errorCode = ERROR_NO_BALANCE)
+                }
+            }
+            STATE_CHECK_CALL -> {
+                Log.d("VOICE_CALL", "check state-[check call]--: $response")
+                if (RESPONSE_CHECK_CALL_OK_MSG == response || "succ" == response) {
+                    Log.d("VOICE_CALL", "30秒后再次检查状态")
+                    mHandler.postDelayed({
+                        checkCall()
+                    }, 30000)
+                    return
+                } else if (RESPONSE_NO_BALANCE_MSG == response) {
+                    //余额不足
+                    mHandler.postDelayed({
+                        //余额不足时5秒后断开通话
+                        if (isConnected) {
+                            Log.d("VOICE_CALL", "余额不足，5秒后挂机")
+                            hangup()
+                        }
+                    }, 5000)
+                    notifyListener(Method_onCallError, errorCode = ERROR_NO_BALANCE)
+                }
+            }
+            STATE_ENDING_CALL -> {
+                Log.d("VOICE_CALL", "check state-[ending call]-: $response")
+                closeWebSocket()
+                if (RESPONSE_ENDING_CALL_MSG == response) {
+                    return
+                }
+            }
+            STATE_ABORT_CALL -> {
+                Log.d("VOICE_CALL", "check state-[abort call]--: $response")
+                closeWebSocket()
+                if (RESPONSE_ABORT_CALL_MSG == response) {
+                    return
+                }
+
+            }
+        }
+    }
+
+    private fun askCall() {
+        mHandler.removeCallbacksAndMessages(null)
+        val uid = mUserAccessor.getUser()?.uuid ?: return
+        mState = STATE_ASK_CALL
+        val msg = "$REQUEST_ASK_CALL_MSG:$uid"
+        Log.d("VOICE_CALL", "=====================================================")
+        Log.d("VOICE_CALL", "ask call send-------------: $msg")
+        mWebSocket?.send(msg)
+    }
+
+    private fun startCall() {
+        mHandler.removeCallbacksAndMessages(null)
+        mState = STATE_START_CALL
+        val msg = "$REQUEST_START_CALL_MSG:$mCallUuid"
+        Log.d("VOICE_CALL", "=====================================================")
+        Log.d("VOICE_CALL", "start call send-----------: $msg")
+        mWebSocket?.send(msg)
+    }
+
+    private fun checkCall() {
+        mState = STATE_CHECK_CALL
+        val msg = "$REQUEST_CHECK_CALL_MSG:$mCallUuid"
+        Log.d("VOICE_CALL", "=====================================================")
+        Log.d("VOICE_CALL", "check call send-----------: $msg")
+        mWebSocket?.send(msg)
+    }
+
+    private fun endCall() {
+        mHandler.removeCallbacksAndMessages(null)
+        mState = STATE_ENDING_CALL
+        val msg = "$REQUEST_ENDING_CALL_MSG:$mCallUuid"
+        Log.d("VOICE_CALL", "=====================================================")
+        Log.d("VOICE_CALL", "ending call send----------: $msg")
+        mWebSocket?.send(msg)
+    }
+
+    private fun abortCall() {
+        mHandler.removeCallbacksAndMessages(null)
+        mState = STATE_ABORT_CALL
+        val msg = "$REQUEST_ABORT_CALL_MSG:$mCallUuid"
+        Log.d("VOICE_CALL", "=====================================================")
+        Log.d("VOICE_CALL", "abort call send-----------: $msg")
+        mWebSocket?.send(msg)
+    }
+
+    private fun closeWebSocket() {
+        mWebSocket?.close(1000, "bye")
+    }
+
     inner class VoiceCallWebSocketListener : WebSocketListener() {
-        /**
-         * Invoked when a web socket has been accepted by the remote peer and may begin transmitting
-         * messages.
-         */
         override fun onOpen(webSocket: WebSocket, response: Response) {
-            Log.d("TTTT", "onOpen============>$response")
+            Log.d(TAG, "onOpen============>$response")
             mWebSocket = webSocket
-
+            Log.d("VOICE_CALL", "state-[socket opened]-----:")
+            askCall()
         }
 
-        /** Invoked when a text (type `0x1`) message has been received.  */
         override fun onMessage(webSocket: WebSocket, text: String) {
-            Log.d("TTTT", "onMessage 1============>$text")
+            Log.d(TAG, "onMessage 1=======>$text")
+            printLog(text)
+            checkSate(text)
         }
 
-        /** Invoked when a binary (type `0x2`) message has been received.  */
         override fun onMessage(webSocket: WebSocket, bytes: ByteString) {
-            Log.d("TTTT", "onMessage 2============>$bytes")
+            Log.d(TAG, "onMessage 2=======>$bytes")
         }
 
-        /**
-         * Invoked when the remote peer has indicated that no more incoming messages will be
-         * transmitted.
-         */
         override fun onClosing(webSocket: WebSocket, code: Int, reason: String) {
-            Log.d("TTTT", "onMessage 2============>code=$code   reason=$reason")
+            Log.d(TAG, "onClosing=========>code=$code   reason=$reason")
         }
 
-        /**
-         * Invoked when both peers have indicated that no more messages will be transmitted and the
-         * connection has been successfully released. No further calls to this listener will be made.
-         */
         override fun onClosed(webSocket: WebSocket, code: Int, reason: String) {
-            Log.d("TTTT", "onMessage 2============>code=$code   reason=$reason")
+            Log.d(TAG, "onClosed==========>code=$code   reason=$reason")
         }
 
-        /**
-         * Invoked when a web socket has been closed due to an error reading from or writing to the
-         * network. Both outgoing and incoming messages may have been lost. No further calls to this
-         * listener will be made.
-         */
         override fun onFailure(webSocket: WebSocket, t: Throwable, response: Response?) {
-            Log.d("TTTT", "onMessage 2============>t=$t   response=$response")
+            Log.d(TAG, "onFailure=========>t=$t   response=$response")
         }
 
+        private fun printLog(text: String) {
+            var eq: String? = null
+            when {
+                text.contains(RESPONSE_ASK_CALL_MSG) -> eq = "RESPONSE_ASK_CALL_MSG"
+                text.contains(RESPONSE_START_CALL_MSG) -> eq = "RESPONSE_START_CALL_MSG"
+                text.contains(RESPONSE_CHECK_CALL_OK_MSG) -> eq = "RESPONSE_CHECK_CALL_OK_MSG"
+                text.contains(RESPONSE_NO_BALANCE_MSG) -> eq = "RESPONSE_NO_BALANCE_MSG"
+                text.contains(RESPONSE_ENDING_CALL_MSG) -> eq = "RESPONSE_ENDING_CALL_MSG"
+                text.contains(RESPONSE_ABORT_CALL_MSG) -> eq = "RESPONSE_ABORT_CALL_MSG"
+                text.contains(RESPONSE_HEART_MSG) -> eq = "RESPONSE_HEART_MSG"
+            }
+            Log.d("VOICE_CALL", "response value------------: $text == $eq")
+            //Log.d("VOICE_CALL", "RESPONSE_ASK_CALL_MSG-----: $RESPONSE_ASK_CALL_MSG")
+            //Log.d("VOICE_CALL", "RESPONSE_START_CALL_MSG---: $RESPONSE_START_CALL_MSG")
+            //Log.d("VOICE_CALL", "RESPONSE_CHECK_CALL_OK_MSG: $RESPONSE_CHECK_CALL_OK_MSG")
+            //Log.d("VOICE_CALL", "RESPONSE_NO_BALANCE_MSG---: $RESPONSE_NO_BALANCE_MSG")
+            //Log.d("VOICE_CALL", "RESPONSE_ENDING_CALL_MSG--: $RESPONSE_ENDING_CALL_MSG")
+            //Log.d("VOICE_CALL", "RESPONSE_ABORT_CALL_MSG---: $RESPONSE_ABORT_CALL_MSG")
+            //Log.d("VOICE_CALL", "RESPONSE_HEART_MSG--------: $RESPONSE_HEART_MSG")
+        }
 
     }
 

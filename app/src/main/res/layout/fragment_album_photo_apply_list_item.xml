@@ -46,6 +46,16 @@
             android:textColor="@color/gray"
             android:textSize="@dimen/textsize_small" />
 
+        <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/createTime"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="10dp"
+            android:layout_marginTop="8dp"
+            android:ellipsize="end"
+            android:singleLine="true"
+            android:textColor="@color/gray"
+            android:textSize="@dimen/textsize_smallest" />
     </LinearLayout>
 
 

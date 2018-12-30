@@ -1,6 +1,8 @@
 package com.snt.phoney.ui.picker
 
 import android.os.Bundle
+import android.util.ArrayMap
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -11,6 +13,8 @@ import com.snt.phoney.extensions.colorOf
 import com.snt.phoney.extensions.setDividerColor
 import com.snt.phoney.extensions.setDividerHeight
 import kotlinx.android.synthetic.main.fragment_picker.*
+import java.lang.Exception
+import java.util.*
 
 const val EXTRA_TITLE = "title"
 const val EXTRA_MIN = "min_value"
@@ -30,15 +34,15 @@ class PickerFragment : NoInjectBottomDialogFragment() {
 
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
-        column1.descendantFocusability = NumberPicker.FOCUS_BLOCK_DESCENDANTS
-        column1.wrapSelectorWheel = false
-        column1.setDividerHeight(0.4f)
-        column1.setDividerColor(colorOf(R.color.picker_title))
+        column1View.descendantFocusability = NumberPicker.FOCUS_BLOCK_DESCENDANTS
+        column1View.wrapSelectorWheel = false
+        column1View.setDividerHeight(0.4f)
+        column1View.setDividerColor(colorOf(R.color.picker_title))
 
-        column2.descendantFocusability = NumberPicker.FOCUS_BLOCK_DESCENDANTS
-        column2.wrapSelectorWheel = false
-        column2.setDividerHeight(0.4f)
-        column2.setDividerColor(colorOf(R.color.picker_title))
+        column2View.descendantFocusability = NumberPicker.FOCUS_BLOCK_DESCENDANTS
+        column2View.wrapSelectorWheel = false
+        column2View.setDividerHeight(0.4f)
+        column2View.setDividerColor(colorOf(R.color.picker_title))
 
         arguments?.let {
             val title = it.getString(EXTRA_TITLE)
@@ -59,7 +63,10 @@ class PickerFragment : NoInjectBottomDialogFragment() {
 
         confirm.setOnClickListener {
             dismiss()
-            onResultListener?.invoke(column1.value, column2.value)
+            val index1 = column1View.value
+            val index2 = column2View.value
+            onResultListener?.invoke(index1, index2)
+            onValueListener?.invoke(column1View.displayedValues[index1], column2View.displayedValues[index2])
         }
     }
 
@@ -67,6 +74,12 @@ class PickerFragment : NoInjectBottomDialogFragment() {
 
     fun setOnResultListener(onResultListener: ((value: Int, value2: Int) -> Unit)) {
         this.onResultListener = onResultListener
+    }
+
+    private var onValueListener: ((value1: String, value2: String) -> Unit)? = null
+
+    fun setOnValueListener(onValueListener: ((value: String, value2: String) -> Unit)) {
+        this.onValueListener = onValueListener
     }
 
     var value1: Int = 0
@@ -78,6 +91,7 @@ class PickerFragment : NoInjectBottomDialogFragment() {
     var column1Values: Array<String>? = null
     var column2Values: Array<String>? = null
 
+    var columns: LinkedHashMap<String, out List<String>>? = null
 
     private fun showProgress(show: Boolean) {
         if (progress != null && pickers != null) {
@@ -98,11 +112,11 @@ class PickerFragment : NoInjectBottomDialogFragment() {
     }
 
     private fun setColumnInternal(minValue: Int, maxValue: Int) {
-        if (column1 != null && minValue >= 0 && maxValue >= 0) {
-            column1.minValue = minValue
-            column1.maxValue = maxValue
+        if (column1View != null && minValue >= 0 && maxValue >= 0) {
+            column1View.minValue = minValue
+            column1View.maxValue = maxValue
             if (value1 in minValue..maxValue) {
-                column1.value = value1
+                column1View.value = value1
             }
             showProgress(false)
         }
@@ -112,8 +126,10 @@ class PickerFragment : NoInjectBottomDialogFragment() {
         super.onResume()
         if (minValue != -1 && maxValue != -1) {
             setColumnInternal(minValue, maxValue)
-        } else {
+        } else if (column1Values != null || column2Values != null) {
             setColumnInternal(column1Values, column2Values)
+        } else if (columns != null) {
+            setColumnInternal(columns)
         }
     }
 
@@ -124,25 +140,58 @@ class PickerFragment : NoInjectBottomDialogFragment() {
     }
 
     private fun setColumnInternal(column1Values: Array<String>?, column2Values: Array<String>? = null) {
-        if (column1Values != null && column1 != null) {
-            column1.displayedValues = column1Values
-            column1.minValue = 0
-            column1.maxValue = column1Values.size - 1
-            if (value1 > 0 && value1 < column1Values.size) {
-                column1.value = value1
+        if (column1Values != null && column1View != null) {
+            //先置空，以免数组越界
+            column1View.displayedValues = null
+            column1View.minValue = 0
+            column1View.maxValue = column1Values.size - 1
+            column1View.displayedValues = column1Values
+            if (value1 >= 0 && value1 < column1Values.size) {
+                column1View.value = value1
+            } else {
+                column1View.value = 0
             }
         }
 
-        if (column2Values != null && column2 != null) {
-            column2.visibility = View.VISIBLE
-            column2.displayedValues = column2Values
-            column2.minValue = 0
-            column2.maxValue = column2Values.size - 1
-            if (value2 > 0 && value2 < column2Values.size) {
-                column2.value = value2
+        if (column2Values != null && column2View != null) {
+            column2View.visibility = View.VISIBLE
+            //先置空，以免数组越界
+            column2View.displayedValues = null
+            column2View.minValue = 0
+            column2View.maxValue = column2Values.size - 1
+            column2View.displayedValues = column2Values
+            if (value2 >= 0 && value2 < column2Values.size) {
+                column2View.value = value2
+            } else {
+                column2View.value = 0
             }
         }
         showProgress(false)
+    }
+
+    /**
+     * 使用 LinkedHashMap 是为了保持插入顺序
+     */
+    fun setColumn(columns: LinkedHashMap<String, out List<String>>) {
+        this.columns = columns
+        setColumnInternal(columns)
+    }
+
+    private fun setColumnInternal(columns: LinkedHashMap<String, out List<String>>?) {
+        if (columns != null && columns.isNotEmpty() && column1View != null && column2View != null) {
+            column1Values = columns.keys.toTypedArray()
+            setColumnInternal(column1Values, null)
+
+            val index = if (value1 >= 0 && value1 < column1Values!!.size) value1 else 0
+            val array: Array<String> = columns[column1Values!![index]]!!.toTypedArray()
+            setColumnInternal(null, array)
+
+            column1View.setOnValueChangedListener { _, _, newVal ->
+                val column1 = column1Values!![newVal]
+                val array: Array<String> = columns[column1]!!.toTypedArray()
+                setColumnInternal(null, array)
+            }
+        }
     }
 
     companion object {
@@ -180,5 +229,6 @@ class PickerFragment : NoInjectBottomDialogFragment() {
                 this.putStringArray(EXTRA_COLUMN_2_VALUES, column2)
             }
         }
+
     }
 }

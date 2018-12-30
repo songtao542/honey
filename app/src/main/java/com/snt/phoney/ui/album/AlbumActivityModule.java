@@ -23,6 +23,10 @@ public abstract class AlbumActivityModule {
     @ContributesAndroidInjector
     public abstract AlbumViewerFragment contributeAlbumViewerFragment();
 
+    @FragmentScope
+    @ContributesAndroidInjector
+    public abstract PhotoApplyListFragment contributePhotoApplyListFragment();
+
     @Binds
     @IntoMap
     @ActivityScope
@@ -32,8 +36,8 @@ public abstract class AlbumActivityModule {
     @Binds
     @IntoMap
     @ActivityScope
-    @ViewModelKey(AlbumViewerViewModel.class)
-    public abstract ViewModel bindAlbumViewerViewModel(AlbumViewerViewModel viewModel);
+    @ViewModelKey(AlbumViewModel.class)
+    public abstract ViewModel bindAlbumViewerViewModel(AlbumViewModel viewModel);
 
 
 }

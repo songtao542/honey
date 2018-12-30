@@ -1,17 +1,25 @@
 package com.snt.phoney.ui.voicecall
 
 import android.Manifest
+import android.app.KeyguardManager
+import android.app.NotificationChannel
+import android.app.NotificationManager
+import android.app.PendingIntent
 import android.content.ComponentName
 import android.content.Context
 import android.content.Intent
 import android.content.ServiceConnection
 import android.graphics.Bitmap
+import android.graphics.BitmapFactory
+import android.os.Build
 import android.os.Bundle
 import android.os.Handler
 import android.os.IBinder
 import android.view.View
+import android.view.WindowManager
 import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
+import androidx.core.app.NotificationCompat
 import cn.jpush.im.android.api.JMessageClient
 import cn.jpush.im.android.api.callback.GetAvatarBitmapCallback
 import cn.jpush.im.android.api.callback.GetUserInfoCallback
@@ -26,6 +34,7 @@ import com.snt.phoney.extensions.setLayoutFullscreen
 import com.snt.phoney.service.VoiceCallService
 import kotlinx.android.synthetic.main.activity_voice_answer.*
 
+
 class VoiceAnswerActivity : AppCompatActivity(), ServiceConnection {
 
     private var mVoiceCallService: IVoiceCallService? = null
@@ -37,7 +46,27 @@ class VoiceAnswerActivity : AppCompatActivity(), ServiceConnection {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setLayoutFullscreen()
+        //setLayoutFullscreen()
+
+        //Api26
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+            val keyGuardManager = getSystemService(Context.KEYGUARD_SERVICE) as KeyguardManager
+            keyGuardManager.requestDismissKeyguard(this, object : KeyguardManager.KeyguardDismissCallback() {
+                override fun onDismissError() {
+                }
+
+                override fun onDismissSucceeded() {
+                }
+
+                override fun onDismissCancelled() {
+                }
+            })
+        }
+        //api27
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O_MR1) {
+            setShowWhenLocked(true)
+            setTurnScreenOn(true)
+        }
         setContentView(R.layout.activity_voice_answer)
         if (checkAndRequestPermission(*getPermissions())) {
             bindService(Intent(this, VoiceCallService::class.java), this, Context.BIND_AUTO_CREATE)
@@ -76,6 +105,15 @@ class VoiceAnswerActivity : AppCompatActivity(), ServiceConnection {
                     .setPositiveButton(R.string.disconnect) { dialog, _ ->
                         dialog.dismiss()
                         mVoiceCallService?.hangup()
+                        finish()
+                    }.show()
+        } else if (mVoiceCallService?.isConnecting == true) {
+            AlertDialog.Builder(this)
+                    .setTitle(R.string.reject_voice_call_tip)
+                    .setMessage(R.string.reject_voice_call_warn)
+                    .setPositiveButton(R.string.disconnect) { dialog, _ ->
+                        dialog.dismiss()
+                        mVoiceCallService?.refuse()
                         finish()
                     }.show()
         } else {
@@ -182,4 +220,22 @@ class VoiceAnswerActivity : AppCompatActivity(), ServiceConnection {
         }
 
     }
+
+    override fun onPause() {
+        super.onPause()
+        //NotificationHelper.showNotification(this)
+    }
+
+    override fun onResume() {
+        super.onResume()
+        //NotificationHelper.cancelNotification(this)
+        window.addFlags(WindowManager.LayoutParams.FLAG_DISMISS_KEYGUARD
+                or WindowManager.LayoutParams.FLAG_SHOW_WHEN_LOCKED
+                or WindowManager.LayoutParams.FLAG_TURN_SCREEN_ON
+                or WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON
+        )
+
+    }
+
+
 }

@@ -5,6 +5,7 @@ import androidx.fragment.app.Fragment
 import com.snt.phoney.ui.about.AboutFragment
 import com.snt.phoney.ui.album.AlbumViewerFragment
 import com.snt.phoney.ui.album.PaySettingFragment
+import com.snt.phoney.ui.album.PhotoApplyListFragment
 import com.snt.phoney.ui.auth.AuthModeFragment
 import com.snt.phoney.ui.browser.OfficialMessageFragment
 import com.snt.phoney.ui.dating.create.CreateDatingFragment
@@ -63,6 +64,7 @@ enum class Page {
     NEARBY,
 
     ALBUM_VIEWER,
+    PHOTO_APPLY_LIST,
 
     WALLET_DETAIL,
     WITHDRAW,
@@ -111,6 +113,7 @@ class FragmentFactory {
                 Page.NEARBY.ordinal -> NearbyFragment.newInstance(arguments)
 
                 Page.ALBUM_VIEWER.ordinal -> AlbumViewerFragment.newInstance(arguments)
+                Page.PHOTO_APPLY_LIST.ordinal -> PhotoApplyListFragment.newInstance(arguments)
 
                 Page.AUTHENTICATE.ordinal -> AuthModeFragment.newInstance(arguments)
 

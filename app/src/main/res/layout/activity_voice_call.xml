@@ -25,6 +25,7 @@
             android:layout_width="90dp"
             android:layout_height="90dp"
             android:layout_gravity="center_horizontal"
+            android:scaleType="centerCrop"
             app:srcCompat="@drawable/ic_head_placeholder" />
 
         <androidx.appcompat.widget.AppCompatTextView
@@ -44,7 +45,7 @@
             android:gravity="center"
             android:text="@string/connecting"
             android:textColor="@color/white"
-            android:textSize="@dimen/textsize_largest" />
+            android:textSize="@dimen/textsize_large" />
 
         <androidx.appcompat.widget.AppCompatTextView
             android:id="@+id/time"
@@ -77,8 +78,8 @@
                     android:layout_height="@dimen/voice_call_button_size"
                     android:layout_gravity="center"
                     android:background="@drawable/voice_call_hangup_selector"
-                    android:scaleType="centerInside"
                     android:foreground="@drawable/voice_call_foreground"
+                    android:scaleType="centerInside"
                     app:srcCompat="@drawable/ic_voice_call_hangup" />
 
                 <androidx.appcompat.widget.AppCompatTextView

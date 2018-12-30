@@ -21,7 +21,7 @@ import kotlinx.serialization.Serializable
             onUpdate = ForeignKey.CASCADE,
             onDelete = ForeignKey.CASCADE
     )
-], tableName = "City", indices = [Index(value = ["provinceId"], unique = true)])
+], tableName = "City", indices = [Index(value = ["provinceId"], unique = false)])
 data class City(@PrimaryKey var id: Int = 0,
                 var provinceId: Int = 0,
                 var provinceName: String? = null,

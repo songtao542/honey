@@ -45,18 +45,18 @@ class FilterFragment : BaseFragment() {
         }
 
         programButton.setOnClickListener {
-            Picker.showPicker(activity, getString(R.string.select_dating_program), 0, "select_program", { picker ->
+            Picker.showPicker(activity, getString(R.string.select_dating_program), 0, { picker ->
                 viewModel.programs.observe(this, Observer { programs ->
                     val programNames = Array(programs.size) { index ->
                         programs[index].name!!
                     }
                     picker.setColumn(programNames)
                 })
-            }) { value1, _ ->
+            }, handler = { value1, _ ->
                 selectedProgramIndex = value1
                 selectedProgram = viewModel.programs.value?.get(value1)
                 datingProgram.text = selectedProgram?.name
-            }
+            })
         }
 
         confirmButton.setOnClickListener {

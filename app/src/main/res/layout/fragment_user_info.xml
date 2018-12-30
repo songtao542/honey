@@ -3,6 +3,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@color/white"
     android:fitsSystemWindows="false">
 
     <com.google.android.material.appbar.AppBarLayout
@@ -169,8 +170,8 @@
                 android:paddingTop="10dp"
                 android:paddingRight="10dp"
                 android:paddingBottom="10dp"
-                android:text="此用户靠谱值较高，村米认为信息较为真是！"
-                android:textSize="@dimen/textsize_normal" />
+                android:textSize="@dimen/textsize_normal"
+                android:visibility="gone" />
 
 
             <LinearLayout
@@ -220,9 +221,9 @@
             <FrameLayout
                 android:id="@+id/photoLayout"
                 android:layout_width="match_parent"
+                android:layout_height="wrap_content"
                 android:layout_marginTop="10dp"
-                android:layout_marginBottom="10dp"
-                android:layout_height="wrap_content">
+                android:layout_marginBottom="10dp">
 
                 <com.snt.phoney.widget.FlowLayout
                     android:id="@+id/photosView"
@@ -251,6 +252,7 @@
                         android:layout_weight="1" />
 
                     <androidx.appcompat.widget.AppCompatTextView
+                        android:id="@+id/needApplyOrCharge"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_marginTop="20dp"
@@ -260,7 +262,7 @@
                         android:textSize="@dimen/textsize_small" />
 
                     <Button
-                        android:id="@+id/unlockPhoto"
+                        android:id="@+id/unlockOrApplyPhoto"
                         style="@style/Widget.AppCompat.Button.Borderless"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
@@ -331,7 +333,6 @@
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="10dp"
                 android:orientation="vertical">
 
                 <androidx.appcompat.widget.AppCompatTextView
@@ -342,6 +343,7 @@
                     android:paddingRight="10dp"
                     android:paddingBottom="10dp"
                     android:text="@string/introduce_label"
+                    android:textColor="@color/black"
                     android:textSize="@dimen/textsize_normal" />
 
                 <androidx.appcompat.widget.AppCompatTextView
@@ -349,10 +351,10 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:paddingLeft="10dp"
-                    android:paddingTop="10dp"
                     android:paddingRight="10dp"
                     android:paddingBottom="10dp"
                     android:text="@string/unfill"
+                    android:textColor="@color/dark_gray"
                     android:textSize="@dimen/textsize_small" />
 
                 <View
@@ -367,23 +369,25 @@
                     android:paddingTop="10dp"
                     android:paddingRight="10dp"
                     android:paddingBottom="10dp"
-                    android:text="@string/frequent_city_label" />
+                    android:text="@string/frequent_city_label"
+                    android:textColor="@color/black" />
 
                 <androidx.appcompat.widget.AppCompatTextView
                     android:id="@+id/frequentCity"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:paddingLeft="10dp"
-                    android:paddingTop="10dp"
                     android:paddingRight="10dp"
                     android:paddingBottom="10dp"
                     android:text="@string/unknown"
+                    android:textColor="@color/dark_gray"
                     android:textSize="@dimen/textsize_small" />
 
                 <View
                     android:layout_width="match_parent"
                     android:layout_height="1px"
-                    android:background="@color/gray" />
+                    android:background="@color/gray"
+                    android:visibility="gone" />
 
                 <androidx.appcompat.widget.AppCompatTextView
                     android:layout_width="match_parent"
@@ -393,7 +397,8 @@
                     android:paddingRight="10dp"
                     android:paddingBottom="10dp"
                     android:text="@string/program_label"
-                    android:textSize="@dimen/textsize_normal" />
+                    android:textSize="@dimen/textsize_normal"
+                    android:visibility="gone" />
 
                 <LinearLayout
                     android:id="@+id/programContainer"
@@ -401,8 +406,45 @@
                     android:layout_height="wrap_content"
                     android:orientation="horizontal"
                     android:paddingRight="10dp"
-                    android:paddingBottom="10dp">
+                    android:paddingBottom="10dp"
+                    android:visibility="gone">
 
+                </LinearLayout>
+
+
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="1px"
+                    android:background="@color/gray" />
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal">
+
+                    <androidx.appcompat.widget.AppCompatTextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:paddingLeft="10dp"
+                        android:paddingTop="10dp"
+                        android:paddingRight="10dp"
+                        android:paddingBottom="10dp"
+                        android:text="@string/wechat_account"
+                        android:textColor="@color/black" />
+
+                    <androidx.appcompat.widget.AppCompatTextView
+                        android:id="@+id/wechatAccount"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:gravity="right"
+                        android:paddingLeft="10dp"
+                        android:paddingTop="10dp"
+                        android:paddingRight="10dp"
+                        android:paddingBottom="10dp"
+                        android:text="@string/unknown"
+                        android:textColor="@color/user_wechat_account_text_color_selector"
+                        android:textSize="@dimen/textsize_small" />
                 </LinearLayout>
             </LinearLayout>
 

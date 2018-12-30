@@ -85,7 +85,7 @@ interface Api {
 
 
     @FormUrlEncoded
-    @POST("users/setUser")
+    @POST("users/setUserInfo")
     fun setFullUserInfo(@Field("token") token: String,
                         @Field("height") height: String,// 	身高
                         @Field("weight") weight: String,//	体重
@@ -96,7 +96,8 @@ interface Api {
                         @Field("career") career: String,//	职业
                         @Field("program") program: String,//	约会节目
                         @Field("account_wx") wechatAccount: String,//	微信
-                        @Field("nickName") nickname: String  //	昵称
+                        @Field("nickName") nickname: String, //	昵称
+                        @Field("price") price: String //
     ): Single<Response<String>>
 
 
@@ -107,6 +108,31 @@ interface Api {
     @FormUrlEncoded
     @POST("users/getUsersPhoto")
     fun getUserPhotos(@Field("token") token: String): Single<Response<List<Photo>>>
+
+    @FormUrlEncoded
+    @POST("users/homePage/getWxInfo")
+    fun getUserWechatAccount(@Field("token") token: String,
+                             @Field("uid") uid: String): Single<Response<String>>
+
+    @FormUrlEncoded
+    @POST("users/homePage/photoApply")
+    fun applyToViewPhotos(@Field("token") token: String,
+                          @Field("target") target: String): Single<Response<String>>
+
+    @GET("users/homePage/listPhotoApplys")
+    fun listPhotoApply(@Query("token") token: String,
+                       @Query("page") page: String): Single<Response<List<PhotoApply>>>
+
+    /**
+     *@param token    string	是	用户token
+     *@param uuid    string	 是	申请uuid
+     *@param state    string	是	0 同意 1 拒绝
+     */
+    @FormUrlEncoded
+    @POST("users/homePage/photoApplyVerify")
+    fun reviewPhotoApply(@Field("token") token: String,
+                         @Field("uuid") uuid: String,
+                         @Field("state") state: String): Single<Response<String>>
 
     /**
      * 获取访客列表

@@ -65,6 +65,10 @@ public class LoadMoreAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolde
         mLoadMore = new LoadMore(mOnEnabledListener);
     }
 
+    public LoadMore getLoadMore() {
+        return mLoadMore;
+    }
+
     public RecyclerView.Adapter getOriginalAdapter() {
         return mAdapter;
     }

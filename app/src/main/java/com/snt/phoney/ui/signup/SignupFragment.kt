@@ -59,7 +59,6 @@ class SignupFragment : BaseFragment() {
 
         viewModel.user.observe(this, Observer { user ->
             snackbar("注册成功")
-            //context?.let { context -> startActivity(MainActivity.newIntent(context)) }
             context?.let { context -> startActivity(SetupWizardActivity.newIntent(context, user)) }
         })
 

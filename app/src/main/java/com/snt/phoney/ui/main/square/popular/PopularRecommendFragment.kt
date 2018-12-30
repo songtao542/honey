@@ -39,8 +39,14 @@ class PopularRecommendFragment : BaseFragment() {
         list.adapter = adapter
 
         viewModel.popularDating.observe(this, Observer {
+            swipeRefresh.isRefreshing = false
             adapter.data = it
         })
+
+        swipeRefresh.setOnRefreshListener {
+            swipeRefresh.isRefreshing = true
+            load(true)
+        }
 
         list.setLoadMoreListener {
             load(false, it)

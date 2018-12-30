@@ -1,0 +1,46 @@
+package com.snt.phoney.ui.voicecall
+
+import android.app.NotificationChannel
+import android.app.NotificationManager
+import android.app.PendingIntent
+import android.content.Context
+import android.content.Intent
+import android.graphics.BitmapFactory
+import android.os.Build
+import androidx.core.app.NotificationCompat
+import com.snt.phoney.R
+
+const val NOTIFICATION_ID = 78
+
+object NotificationHelper {
+    @JvmStatic
+    fun showNotification(context: Context) {
+        val ctx = context.applicationContext
+        val builder = NotificationCompat.Builder(ctx, "notice")
+        builder.setSmallIcon(R.drawable.ic_official)
+                .setLargeIcon(BitmapFactory.decodeResource(ctx.resources, R.drawable.ic_official))
+                .setContentTitle(ctx.getString(R.string.chunmi_voice_call))
+                .setContentText(ctx.getString(R.string.chunmi_voice_call))
+                .setShowWhen(false)
+                .setAutoCancel(false)
+
+        val notificationManager = ctx.getSystemService(Context.NOTIFICATION_SERVICE) as NotificationManager
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+            val channel = NotificationChannel("notice", "语音来电", NotificationManager.IMPORTANCE_DEFAULT)
+            notificationManager.createNotificationChannel(channel)
+        }
+
+        val intent = Intent(ctx, VoiceAnswerActivity::class.java)
+                .setFlags(Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_RESET_TASK_IF_NEEDED)
+        val pendingIntent = PendingIntent.getActivity(ctx, 123, intent, PendingIntent.FLAG_UPDATE_CURRENT)
+        builder.setContentIntent(pendingIntent)
+        notificationManager.notify(NOTIFICATION_ID, builder.build())
+    }
+
+    @JvmStatic
+    fun cancelNotification(context: Context) {
+        val ctx = context.applicationContext
+        val notificationManager = ctx.getSystemService(Context.NOTIFICATION_SERVICE) as NotificationManager
+        notificationManager.cancel(NOTIFICATION_ID)
+    }
+}

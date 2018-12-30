@@ -7,11 +7,18 @@
 
     <include layout="@layout/fragment_friend_tag" />
 
-    <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/list"
-        android:name="com.snt.phoney.ui.home.friend.FriendFragment"
+    <androidx.swiperefreshlayout.widget.SwipeRefreshLayout
+        android:id="@+id/swipeRefresh"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        tools:context=".ui.main.home.friend.FriendFragment"
-        tools:listitem="@layout/fragment_friend" />
+        android:layout_height="match_parent">
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/list"
+            android:name="com.snt.phoney.ui.home.friend.FriendFragment"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            tools:context=".ui.main.home.friend.FriendFragment"
+            tools:listitem="@layout/fragment_friend" />
+
+    </androidx.swiperefreshlayout.widget.SwipeRefreshLayout>
 </LinearLayout>

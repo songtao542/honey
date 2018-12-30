@@ -106,7 +106,7 @@ class MineFragment : BaseFragment(), OnSettingItemClickListener, OnSignOutClickL
         editInfo.setOnClickListener { context?.let { context -> context.startActivity<UserActivity>(Page.EDIT_USER) } }
 
         head.setOnClickListener {
-            Picker.showPhotoPicker(fragment = this, max = 1, crop = true, requestCode = REQUEST_HEAD_ICON_CODE)
+            Picker.showPhotoPicker(fragment = this, max = 1, requestCode = REQUEST_HEAD_ICON_CODE)
         }
 
         viewModel.getUserPhotos()

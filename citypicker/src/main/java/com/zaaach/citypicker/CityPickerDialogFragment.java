@@ -412,7 +412,10 @@ public class CityPickerDialogFragment extends AppCompatDialogFragment implements
     public void setCities(List<City> cities) {
         if (cities != null && cities.size() > 0) {
             mLoadingView.setVisibility(View.GONE);
-            this.mAllCities = cities;
+            mAllCities = cities;
+            for (City city : mAllCities) {
+                city.setSelected(false);
+            }
             mAdapter.setCities(this.mAllCities);
             ((SectionItemDecoration) (mRecyclerView.getItemDecorationAt(0))).setData(mAllCities);
             if (mEnableLocation) {

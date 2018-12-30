@@ -7,6 +7,7 @@ import androidx.lifecycle.MutableLiveData
 import com.snt.phoney.base.AppViewModel
 import com.snt.phoney.domain.model.QQUser
 import com.snt.phoney.utils.data.Constants
+import com.snt.phoney.utils.life.SingleLiveData
 import com.tencent.connect.UserInfo
 import com.tencent.tauth.IUiListener
 import com.tencent.tauth.Tencent
@@ -14,14 +15,13 @@ import com.tencent.tauth.UiError
 import org.json.JSONObject
 import javax.inject.Inject
 
-//@SignupScope
 class QQViewModel @Inject constructor() : AppViewModel(), IUiListener {
 
     private val mTencent: Tencent by lazy { Tencent.createInstance(Constants.Tencent.APP_ID, application) }
 
-    val token = MutableLiveData<String>()
+    var token: String? = null
     var openId: String = ""
-    val user = MutableLiveData<QQUser>()
+    val user = SingleLiveData<QQUser>()
 
 
     fun login(activity: Activity) {
@@ -37,7 +37,7 @@ class QQViewModel @Inject constructor() : AppViewModel(), IUiListener {
                 val expiresIn = it.getString("expires_in")
                 mTencent.setAccessToken(accessToken, expiresIn)
                 mTencent.openId = openId
-                token.value = accessToken
+                token = accessToken
                 getUserInfo()
             }
         } catch (e: Exception) {
@@ -57,7 +57,7 @@ class QQViewModel @Inject constructor() : AppViewModel(), IUiListener {
                 var json = info as? JSONObject
                 json?.let {
                     Log.d("TTTT", "Login by qq info==>$info")
-                    val thirdToken = token.value ?: ""
+                    val thirdToken = token ?: ""
                     val plate = "0" //0 qq 1 wx 3 wb
                     val nickName = it.getString("nickname")
                     val headPic = it.getString("figureurl_qq_2") ?: it.getString("figureurl_qq_1")
@@ -85,5 +85,6 @@ class QQViewModel @Inject constructor() : AppViewModel(), IUiListener {
     fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         Tencent.onActivityResultData(requestCode, resultCode, data, this)
     }
+
 }
 

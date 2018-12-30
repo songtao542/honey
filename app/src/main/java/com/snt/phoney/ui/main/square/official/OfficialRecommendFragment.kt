@@ -86,8 +86,14 @@ class OfficialRecommendFragment : BaseFragment() {
         }
 
         viewModel.recommendDating.observe(this, Observer {
+            swipeRefresh.isRefreshing = false
             adapter.data = it
         })
+
+        swipeRefresh.setOnRefreshListener {
+            swipeRefresh.isRefreshing = true
+            loadDating(true)
+        }
 
         list.setLoadMoreListener {
             loadDating(false, it)

@@ -1,9 +1,11 @@
 package com.snt.phoney.ui.user
 
 import android.Manifest
+import android.app.Activity
 import android.content.Intent
 import android.os.Bundle
 import android.text.TextUtils
+import android.util.Log
 import android.util.TypedValue
 import android.view.LayoutInflater
 import android.view.View
@@ -24,6 +26,7 @@ import com.snt.phoney.extensions.*
 import com.snt.phoney.ui.dating.DatingActivity
 import com.snt.phoney.ui.photo.PhotoViewerActivity
 import com.snt.phoney.ui.report.ReportActivity
+import com.snt.phoney.ui.vip.VipActivity
 import com.snt.phoney.ui.voicecall.VoiceCallActivity
 import com.snt.phoney.utils.Chat
 import com.snt.phoney.utils.DistanceFormat
@@ -32,6 +35,8 @@ import com.snt.phoney.widget.PhotoFlowAdapter
 import kotlinx.android.synthetic.main.fragment_user_info.*
 import kotlinx.android.synthetic.main.fragment_user_info_header.*
 import java.text.DecimalFormat
+
+const val REQUEST_VIP_CODE = 60
 
 class UserInfoFragment : BaseFragment() {
 
@@ -168,9 +173,11 @@ class UserInfoFragment : BaseFragment() {
         address.text = user.city
         userAge.text = getString(R.string.age_value_template, user.age)
         job.text = user.career
-        if (user.verified == 1) {
+        if (user.verified) {
+            authenticate.isSelected = true
             authenticate.text = getString(R.string.official_authenticated)
         } else {
+            authenticate.isSelected = false
             authenticate.text = getString(R.string.not_authenticated)
         }
         distance.text = getString(R.string.distance_of_template, DistanceFormat.format(requireContext(), user.distance))
@@ -188,19 +195,36 @@ class UserInfoFragment : BaseFragment() {
             cupWeight.text = "${df.format(user.weight)}"
         }
 
-        chatLimit.text = getString(R.string.chat_price_template, df.format(user.price))
+        if (user.price <= 0) {
+            chatWith.setOnClickListener { snackbar(R.string.voice_not_available) }
+            chatLimit.setText(R.string.voice_not_available)
+        } else {
+            chatLimit.text = getString(R.string.chat_price_template, df.format(user.price))
+        }
+
 
         user.photos?.let { photos ->
 
-            if (user.photoPermission == PhotoPermission.LOCKED.value && !user.isPhotoFree) {
+            if (user.isPhotoNeedUnlock && viewModel.buySuccess.value != true) {
                 unlockPhotoLayout.visibility = View.VISIBLE
-                unlockPhoto.text = getString(R.string.unlock_photo_template, user.photoPrice.toString())
+                needApplyOrCharge.setText(R.string.the_user_set_view_need_charge)
+                unlockOrApplyPhoto.text = getString(R.string.unlock_photo_template, user.photoPrice.toString())
 
-                unlockPhoto.setOnClickListener {
+                unlockOrApplyPhoto.setOnClickListener {
                     buy {
                         viewModel.buyWithMibi(OrderType.USE_UNLOCK_ALBUM_MIBI, user.photoId.toString(), user.uuid)
                     }
                 }
+            } else if (user.isPhotoNeedApply) {
+                unlockPhotoLayout.visibility = View.VISIBLE
+                needApplyOrCharge.setText(R.string.the_user_set_view_need_apply)
+                unlockOrApplyPhoto.setText(R.string.apply_view_photo)
+
+                unlockOrApplyPhoto.setOnClickListener {
+                    viewModel.applyToViewPhotos(user.safeUuid)
+                }
+            } else {
+                unlockPhotoLayout.visibility = View.GONE
             }
 
             photosView.viewAdapter = PhotoFlowAdapter(requireContext()).setPhotos(photos).setMaxShow(12).setLastAsAdd(false)
@@ -236,7 +260,27 @@ class UserInfoFragment : BaseFragment() {
         frequentCity.text = user.cities?.map { it.name }?.joinToString(separator = ",") ?: ""
         //TODO 服务器返回值，字段名错误，后期提醒修改
         setProgram(user.program)
+        if (user.hasWechatAccount && TextUtils.isEmpty(user.wechatAccount)) {
+            wechatAccount.isSelected = true
+            wechatAccount.setText(R.string.click_to_view_wechat_account)
+            if (user.isVip) {
+                wechatAccount.setOnClickListener { viewModel.getUserWechatAccount(user.safeUuid) }
+            } else {
+                wechatAccount.setOnClickListener { startActivityForResult<VipActivity>(Page.VIP, REQUEST_VIP_CODE) }
+            }
+        } else if (!TextUtils.isEmpty(user.wechatAccount)) {
+            wechatAccount.text = user.wechatAccount
+        } else {
+            wechatAccount.isSelected = false
+            wechatAccount.setText(R.string.no_wechat_account)
+        }
+    }
 
+    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+        super.onActivityResult(requestCode, resultCode, data)
+        if (requestCode == REQUEST_VIP_CODE && resultCode == Activity.RESULT_OK) {
+            loadUser()
+        }
     }
 
     private fun buy(handler: (() -> Unit)) {

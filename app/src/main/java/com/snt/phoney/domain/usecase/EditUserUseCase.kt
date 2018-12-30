@@ -21,5 +21,6 @@ class EditUserUseCase @Inject constructor(private val repository: UserRepository
                         career: String,
                         program: String,
                         wechatAccount: String,
-                        nickname: String) = repository.setFullUserInfo(token, height, weight, age, cup, cities, introduce, career, program, wechatAccount, nickname)
+                        nickname: String,
+                        price:Int) = repository.setFullUserInfo(token, height, weight, age, cup, cities, introduce, career, program, wechatAccount, nickname,price)
 }

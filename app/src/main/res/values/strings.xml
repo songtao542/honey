@@ -68,6 +68,7 @@
     <string name="wechat_number_label">微信号</string>
     <string name="height_label">身高</string>
     <string name="height_value_template">%1$dcm</string>
+    <string name="voice_price_template">%1$d蜜币</string>
     <string name="age_label">年龄</string>
     <string name="age_value_template">%1$d岁</string>
     <string name="weight_label">体重</string>
@@ -151,6 +152,7 @@
     <string name="input_password_again_title">再输入一次密码</string>
     <string name="set_lock_title">设置密码锁</string>
     <string name="please_select">请选择</string>
+    <string name="pick_voice_price">请选择语音通话价格(蜜币)</string>
     <string name="pick_height">请选择身高(cm)</string>
     <string name="pick_age">请选择年龄</string>
     <string name="pick_weight">请选择体重(kg)</string>
@@ -260,6 +262,7 @@
     <string name="upload_photo_failed">上传相片失败</string>
     <string name="price_must_input">请填写金额</string>
     <string name="has_agree_h_join">已同意对方加入</string>
+    <string name="has_agree_h_view">已同意对方查看</string>
     <string name="has_canceled">已取消</string>
     <string name="has_rejected">已拒绝</string>
     <string name="has_agree">已通过</string>
@@ -279,7 +282,11 @@
     <string name="chunmi_official">纯蜜官方</string>
     <string name="chunmi_official_no_message">暂无消息</string>
     <string name="dating_applying">约会申请</string>
+    <string name="dating_applying_content_m_template">身高:%1$s 年龄:%2$s 体重:%3$s</string>
+    <string name="dating_applying_content_f_template">身高:%1$s 年龄:%2$s 罩杯:%3$s</string>
+    <string name="photo_applying">相册申请</string>
     <string name="user_apply_your_dating_template">%1$s，刚刚申请参加您的约会</string>
+    <string name="user_apply_your_photo_template">%1$s，刚刚申请查看您的相册</string>
     <string name="dating_applying_title">约会申请</string>
     <string name="official_message_title">纯蜜官方</string>
     <string name="message_detail_title">消息详情</string>
@@ -300,6 +307,8 @@
     <string name="other_side">对方</string>
     <string name="being_invited">邀请你进行语音通话</string>
     <string name="cancel_voice_call_tip">断开通话</string>
+    <string name="reject_voice_call_tip">拒绝语音邀请</string>
+    <string name="reject_voice_call_warn">你即将拒绝语音通话邀请</string>
     <string name="cancel_voice_call_warn">你即将断开语音通话</string>
     <string name="disconnect">断开</string>
     <string name="unit_m">m</string>
@@ -367,7 +376,9 @@
     <string name="edit_user_info">编辑信息</string>
     <string name="has_new_message">新消息</string>
     <string name="the_user_set_view_need_charge">对方设置了需要付费才可查看</string>
+    <string name="the_user_set_view_need_apply">对方设置了需要申请才可查看</string>
     <string name="unlock_photo_template">解锁TA的相册%1$s蜜币</string>
+    <string name="apply_view_photo">    申请查看    </string>
     <string name="user_protocol">用户协议</string>
     <string name="detail_title">详情</string>
     <string name="please_input_phone_number">请输入手机号码</string>
@@ -380,4 +391,22 @@
     <string name="has_hangup_phone">对方已挂断</string>
     <string name="has_offline_phone">对方掉线了</string>
     <string name="has_timeout">已超时</string>
+    <string name="wechat_account">微信号</string>
+    <string name="no_wechat_account">暂无</string>
+    <string name="click_to_view_wechat_account">点此揭开</string>
+    <string name="voice_not_available">对方未开通</string>
+    <string name="has_applyed_to_view_photo">已申请访问，对方同意后即可查看</string>
+    <string name="has_applyed_to_view_photo_failed">申请失败</string>
+    <string name="get_wechat_account_failed">获取微信号失败</string>
+    <string name="has_invalid">已失效</string>
+    <string name="photo_applying_title">相册申请</string>
+    <string name="input_wechat_account">输入微信号</string>
+    <string name="voice_price_label">语音价格</string>
+    <string name="none_city">所有</string>
+    <string name="will_end_of_no_balance">余额不足，即将断开通话</string>
+    <string name="no_balance">余额不足</string>
+    <string name="no_balance_template">余额不足，%1$s秒后断开通话</string>
+    <string name="has_no_answer">对方未接听</string>
+    <string name="the_user_is_busy">对方正忙</string>
+    <string name="chunmi_voice_call">纯蜜语音来电</string>
 </resources>

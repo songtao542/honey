@@ -6,6 +6,7 @@ import android.content.Context
 import android.content.Intent
 import android.content.ServiceConnection
 import android.os.Bundle
+import android.os.CountDownTimer
 import android.os.Handler
 import android.os.IBinder
 import android.view.View
@@ -150,6 +151,22 @@ class VoiceCallActivity : AppCompatActivity(), ServiceConnection {
         callLayout.visibility = View.GONE
     }
 
+    private fun hangupCountDown() {
+        val countDownTimer = object : CountDownTimer(6000, 1000) {
+            var count = 5
+            override fun onFinish() {
+                finish()
+            }
+
+            override fun onTick(millisUntilFinished: Long) {
+                if (count >= 0) {
+                    state.text = getString(R.string.no_balance_template, (count--).toString())
+                }
+            }
+        }
+        countDownTimer.start()
+    }
+
     inner class ICallStateListenerImpl : ICallStateListener.Stub() {
         override fun onCallOutgoing() {
             mHandler.post {
@@ -181,6 +198,10 @@ class VoiceCallActivity : AppCompatActivity(), ServiceConnection {
                         state.setText(R.string.has_refuse_phone)
                     } else if (reason == REASON_OFFLINE || reason == REASON_HANGUP) {
                         state.setText(R.string.has_hangup_phone)
+                    } else if (reason == REASON_CANCEL) {
+                        state.setText(R.string.has_no_answer)
+                    } else if (reason == REASON_BUSY) {
+                        state.setText(R.string.the_user_is_busy)
                     }
                     mVoiceCallService?.hangup()
                     setupCallUI()
@@ -193,8 +214,8 @@ class VoiceCallActivity : AppCompatActivity(), ServiceConnection {
                 if (reason == REASON_REFUSE) {
                     state.setText(R.string.has_refuse_phone)
                     setupCallUI()
-                } else if (reason == REASON_CANCEL) {
-                    //finish()
+                } else if (reason == REASON_HANGUP) {
+                    setupCallUI()
                 } else {
 
                 }
@@ -206,6 +227,8 @@ class VoiceCallActivity : AppCompatActivity(), ServiceConnection {
                 if (errorCode == ERROR_TIMEOUT) {
                     state.setText(R.string.has_timeout)
                     setupCallUI()
+                } else if (errorCode == ERROR_NO_BALANCE) {
+                    hangupCountDown()
                 } else {
                     finish()
                 }

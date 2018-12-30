@@ -79,6 +79,10 @@ class MainActivity : BaseActivity() {
 
         viewModel.updateUserLocation()
         viewModel.loginJMessage()
+
+        //if (BuildConfig.DEBUG) {
+        //    SqlScoutServer.create(this, packageName)
+        //}
     }
 
     private fun showFragment(tag: String) {

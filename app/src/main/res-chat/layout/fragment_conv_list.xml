@@ -42,15 +42,20 @@
             android:textSize="16sp"
             android:visibility="gone" />
 
-        <ListView
-            android:id="@+id/conv_list_view"
+        <androidx.swiperefreshlayout.widget.SwipeRefreshLayout
+            android:id="@+id/swipeRefresh"
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:layout_marginTop="0dp"
-            android:divider="@drawable/main_list_divider_line"
-            android:dividerHeight="0.3dp"
-            android:headerDividersEnabled="true"
-            android:listSelector="?attr/selectableItemBackground" />
+            android:layout_height="match_parent">
 
+            <ListView
+                android:id="@+id/conv_list_view"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_marginTop="0dp"
+                android:divider="@drawable/main_list_divider_line"
+                android:dividerHeight="0.3dp"
+                android:headerDividersEnabled="true"
+                android:listSelector="?attr/selectableItemBackground" />
+        </androidx.swiperefreshlayout.widget.SwipeRefreshLayout>
     </FrameLayout>
 </LinearLayout>

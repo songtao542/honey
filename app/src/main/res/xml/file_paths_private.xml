@@ -17,4 +17,7 @@
     <external-path
         name="images"
         path="Android/data/com.snt.phoney/files/images" />
+    <external-path
+        name="Pictures"
+        path="Android/data/com.snt.phoney/files/Pictures" />
 </paths>

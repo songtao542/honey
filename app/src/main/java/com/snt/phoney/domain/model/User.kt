@@ -21,7 +21,7 @@ import kotlinx.serialization.serializer
 @TypeConverters(value = [Converter::class])
 data class User(
         @PrimaryKey var id: Int = 0,
-        var uuid: String? = null,
+        @SerializedName(value = "uuid", alternate = ["uid"]) var uuid: String? = null,
         @SerializedName(value = "userName") var username: String? = null,
         @SerializedName(value = "nickName") var nickname: String? = null,
         var email: String? = null,
@@ -51,13 +51,13 @@ data class User(
         @SerializedName(value = "isPhotoFree") var isPhotoFree: Boolean = true,
         @SerializedName(value = "hasWX") var hasWechatAccount: Boolean = false,
         @SerializedName(value = "account_wx") var wechatAccount: String? = null,
-        /**
-         * pauthentication 认证状态
-         */
-        @SerializedName(value = "pauthentication") var verified: Int = 0,
+        @SerializedName(value = "isMember") var isVip: Boolean = false,
         var token: String? = null,
         @SerializedName(value = "isOpen") var open: Int = 0,
         var price: Double = 0.0,
+        /**
+         * 0 未认证  2 已认证
+         */
         var state: Int = 0,
         var tag: String? = null,
         var distance: Double = 0.0,
@@ -114,6 +114,12 @@ data class User(
         }
 
     @Transient
+    val isSexValid: Boolean
+        get() {
+            return sex == 0 || sex == 1
+        }
+
+    @Transient
     val freePhotos: List<Photo>?
         get() {
             photos?.let { photos ->
@@ -126,6 +132,33 @@ data class User(
                 return result
             }
             return null
+        }
+
+    @Transient
+    val verified: Boolean
+        get() = state == 2
+
+    @Transient
+    val isPhotoNeedUnlock: Boolean
+        get() {
+            val needUnlock = photoPermission == PhotoPermission.LOCKED.value
+            return needUnlock && !isPhotoFree
+        }
+
+    @Transient
+    val isPhotoNeedApply: Boolean
+        get() {
+            val needApply = photoPermission == PhotoPermission.NEED_APPLY.value
+            if (needApply) {
+                photos?.let { ps ->
+                    for (photo in ps) {
+                        if (TextUtils.isEmpty(photo.path)) {
+                            return true
+                        }
+                    }
+                }
+            }
+            return false
         }
 }
 

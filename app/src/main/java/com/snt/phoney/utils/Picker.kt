@@ -1,6 +1,7 @@
 package com.snt.phoney.utils
 
 import android.app.DatePickerDialog
+import android.util.ArrayMap
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentActivity
 import com.snt.phoney.R
@@ -18,33 +19,44 @@ import java.util.*
 
 object Picker {
     @JvmStatic
-    fun showPicker(activity: FragmentActivity?, title: String, minValue: Int, maxValue: Int, value: Int = 0, tag: String, handler: ((value: Int, _: Int) -> Unit)) {
+    fun showPicker(activity: FragmentActivity?, title: String, minValue: Int, maxValue: Int, value: Int = 0, handler: ((value: Int, _: Int) -> Unit)) {
         activity?.supportFragmentManager?.let {
             val pickerFragment = PickerFragment.newInstance(title, minValue, maxValue)
             pickerFragment.setOnResultListener(handler)
             pickerFragment.value1 = value
-            pickerFragment.show(it, tag)
+            pickerFragment.show(it, "picker${System.currentTimeMillis()}")
         }
     }
 
     @JvmStatic
-    fun <T1, T2> showPicker(activity: FragmentActivity?, title: String, column1: Array<T1>, value1: Int, column2: Array<T2>, value2: Int, tag: String, handler: ((value1: Int, value2: Int) -> Unit)) {
+    fun <T1, T2> showPicker(activity: FragmentActivity?, title: String, column1: Array<T1>, value1: Int, column2: Array<T2>, value2: Int, handler: ((value1: Int, value2: Int) -> Unit)) {
         activity?.supportFragmentManager?.let {
             val pickerFragment = PickerFragment.newInstance(title, column1 = column1.toStringArray(), column2 = column2.toStringArray())
             pickerFragment.setOnResultListener(handler)
             pickerFragment.value1 = value1
             pickerFragment.value2 = value2
-            pickerFragment.show(it, tag)
+            pickerFragment.show(it, "picker${System.currentTimeMillis()}")
         }
     }
 
     @JvmStatic
-    fun showPicker(activity: FragmentActivity?, title: String, value: Int, tag: String, provider: ((picker: PickerFragment) -> Unit), handler: ((value1: Int, value2: Int) -> Unit)) {
-        activity?.supportFragmentManager?.let {
+    fun showPicker(activity: FragmentActivity?, title: String, value1: Int, provider: ((picker: PickerFragment) -> Unit),
+                   handler: ((value1: Int, value2: Int) -> Unit)? = null,
+                   valueHandler: ((value1: String, value2: String) -> Unit)? = null) {
+        showPicker(activity, title, value1, 0, provider, handler, valueHandler)
+    }
+
+    @JvmStatic
+    fun showPicker(activity: FragmentActivity?, title: String, value1: Int, value2: Int = 0, provider: ((picker: PickerFragment) -> Unit),
+                   handler: ((value1: Int, value2: Int) -> Unit)? = null,
+                   valueHandler: ((value1: String, value2: String) -> Unit)? = null) {
+        activity?.supportFragmentManager?.let { fragmentManager ->
             val pickerFragment = PickerFragment.newInstance(title)
-            pickerFragment.setOnResultListener(handler)
-            pickerFragment.value1 = value
-            pickerFragment.show(it, tag)
+            handler?.let { pickerFragment.setOnResultListener(it) }
+            valueHandler?.let { pickerFragment.setOnValueListener(it) }
+            pickerFragment.value1 = value1
+            pickerFragment.value2 = value2
+            pickerFragment.show(fragmentManager, "picker${System.currentTimeMillis()}")
             provider.invoke(pickerFragment)
         }
     }
@@ -71,7 +83,7 @@ object Picker {
     val REQUEST_CODE_CHOOSE = 23
 
     @JvmStatic
-    fun showPhotoPicker(activity: FragmentActivity? = null, fragment: Fragment? = null, max: Int = 1, crop: Boolean = false, requestCode: Int = REQUEST_CODE_CHOOSE) {
+    fun showPhotoPicker(activity: FragmentActivity? = null, fragment: Fragment? = null, max: Int = 1, requestCode: Int = REQUEST_CODE_CHOOSE) {
         if (activity == null && fragment == null) {
             return
         }
@@ -80,7 +92,7 @@ object Picker {
         matisse.choose(MimeType.ofImage())
                 .showSingleMediaType(true)
                 .theme(R.style.Matisse_Dracula)
-                .countable(countable) //如果crop，则 countable = false
+                .countable(countable) //max == 1，则 countable = false
                 .addFilter(GifSizeFilter(320, 320, 5 * Filter.K * Filter.K))
                 .maxSelectable(max)
                 .spanCount(4)
@@ -88,7 +100,7 @@ object Picker {
                 .originalEnable(true)
                 .maxOriginalSize(10)
                 .capture(true)
-                .captureStrategy(CaptureStrategy(true, "com.snt.phoney.fileprovider"))
+                .captureStrategy(CaptureStrategy(false, "com.snt.phoney.fileprovider"))
                 .imageEngine(GlideEngine())
                 .forResult(requestCode)
     }

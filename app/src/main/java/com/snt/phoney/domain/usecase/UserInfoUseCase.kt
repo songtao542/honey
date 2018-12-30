@@ -25,6 +25,13 @@ class UserInfoUseCase @Inject constructor(private val userRepository: UserReposi
     fun uploadHeadIcon(token: String, file: File) = userRepository.uploadHeadIcon(token, file)
 
     fun getUserPhotos(token: String) = userRepository.getUserPhotos(token)
+    fun getUserWechatAccount(token: String, uid: String) = userRepository.getUserWechatAccount(token, uid)
+
+    fun applyToViewPhotos(token: String, target: String) = userRepository.applyToViewPhotos(token, target)
+
+    fun reviewPhotoApply(token: String, uuid: String, state: Int) = userRepository.reviewPhotoApply(token, uuid, state)
+
+    fun listPhotoApply(token: String, page: Int) = userRepository.listPhotoApply(token, page)
 
     fun deletePhotos(token: String, photoIds: List<String>) = userRepository.deletePhotos(token, photoIds)
 

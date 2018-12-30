@@ -1,12 +1,22 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.recyclerview.widget.RecyclerView xmlns:android="http://schemas.android.com/apk/res/android"
+
+<androidx.swiperefreshlayout.widget.SwipeRefreshLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
-    android:id="@+id/list"
-    android:name="com.snt.phoney.ui.square.popular.PopularRecommendFragment"
+    android:id="@+id/swipeRefresh"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:layout_marginLeft="16dp"
-    android:layout_marginRight="16dp"
-    android:background="@color/white"
-    tools:context=".ui.main.square.popular.PopularRecommendFragment"
-    tools:listitem="@layout/fragment_popular_recommend" />
+    android:layout_height="match_parent">
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/list"
+        android:name="com.snt.phoney.ui.square.popular.PopularRecommendFragment"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_marginLeft="16dp"
+        android:layout_marginRight="16dp"
+        android:background="@color/white"
+        tools:context=".ui.main.square.popular.PopularRecommendFragment"
+        tools:listitem="@layout/fragment_popular_recommend" />
+
+
+</androidx.swiperefreshlayout.widget.SwipeRefreshLayout>
+

@@ -62,6 +62,8 @@ class MineViewModel @Inject constructor(private val usecase: UserInfoUseCase) : 
                         onSuccess = {
                             if (it.success) {
                                 success.value = context.getString(R.string.set_photo_permission_success)
+                                user.value?.photoPermission = photoPermission.value
+                                user.value?.let { user -> usecase.setUser(user) }
                             } else if (!TextUtils.isEmpty(it.message)) {
                                 error.value = context.getString(R.string.set_photo_permission_failed)
                             }

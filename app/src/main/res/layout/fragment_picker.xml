@@ -56,14 +56,14 @@
                 android:orientation="horizontal">
 
                 <NumberPicker
-                    android:id="@+id/column1"
+                    android:id="@+id/column1View"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
                     tools:targetApi="honeycomb" />
 
                 <NumberPicker
-                    android:id="@+id/column2"
+                    android:id="@+id/column2View"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"

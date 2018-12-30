@@ -13,6 +13,7 @@ import com.snt.phoney.base.Page
 import com.snt.phoney.di.Injectable
 import com.snt.phoney.extensions.enableOptionsMenu
 import com.snt.phoney.extensions.startActivity
+import com.snt.phoney.ui.album.AlbumActivity
 import com.snt.phoney.ui.browser.BrowserActivity
 import com.snt.phoney.ui.dating.DatingActivity
 import com.snt.phoney.ui.nearby.NearbyActivity
@@ -56,7 +57,17 @@ class MessageFragment : ConversationListFragment(), Injectable {
         }
         listView.addHeaderView(datingApplying)
 
+        val photoApplying = inflater.inflate(R.layout.fragment_message, null)
+        photoApplying.head.setImageResource(R.drawable.ic_applying)
+        photoApplying.title.text = getString(R.string.photo_applying)
+        photoApplying.subTitle.text = getString(R.string.chunmi_official_no_message)
+        photoApplying.setOnClickListener {
+            startActivity<AlbumActivity>(Page.PHOTO_APPLY_LIST)
+        }
+        listView.addHeaderView(photoApplying)
+
         viewModel.messages.observe(this, Observer {
+            swipeRefresh.isRefreshing = false
             it?.let { messages ->
                 if (messages.isNotEmpty()) {
                     val message = messages[0]
@@ -66,6 +77,7 @@ class MessageFragment : ConversationListFragment(), Injectable {
         })
 
         viewModel.applicants.observe(this, Observer {
+            swipeRefresh.isRefreshing = false
             it?.let { applicants ->
                 if (applicants.isNotEmpty()) {
                     val applicant = applicants[0]
@@ -74,8 +86,28 @@ class MessageFragment : ConversationListFragment(), Injectable {
             }
         })
 
+        viewModel.photoApplyList.observe(this, Observer {
+            swipeRefresh.isRefreshing = false
+            it?.let { photoApplyList ->
+                if (photoApplyList.isNotEmpty()) {
+                    val apply = photoApplyList[0]
+                    photoApplying.subTitle.text = getString(R.string.user_apply_your_photo_template, apply.nickname)
+                }
+            }
+        })
+
+        swipeRefresh.setOnRefreshListener {
+            swipeRefresh.isRefreshing = true
+            load()
+        }
+
+        load()
+    }
+
+    private fun load() {
         viewModel.listOfficialMessage()
         viewModel.listApplicant()
+        viewModel.listPhotoApply()
     }
 
     override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {

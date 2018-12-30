@@ -12,7 +12,6 @@ abstract class ProvinceCityDao {
     @Query("SELECT * FROM CITY WHERE provinceId=:provinceId")
     internal abstract fun getCities(provinceId: Int): List<City>?
 
-    @Transaction
     @Query("SELECT * FROM PROVINCE")
     internal abstract fun getProvinces(): List<Province>?
 

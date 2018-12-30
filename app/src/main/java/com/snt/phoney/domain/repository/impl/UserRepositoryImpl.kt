@@ -65,6 +65,22 @@ class UserRepositoryImpl @Inject constructor(private val userAccessor: UserAcces
         return api.getUserPhotos(token)
     }
 
+    override fun getUserWechatAccount(token: String, uid: String): Single<Response<String>> {
+        return api.getUserWechatAccount(token, uid)
+    }
+
+    override fun applyToViewPhotos(token: String, target: String): Single<Response<String>> {
+        return api.applyToViewPhotos(token, target)
+    }
+
+    override fun listPhotoApply(token: String, page: Int): Single<Response<List<PhotoApply>>> {
+        return api.listPhotoApply(token, page.toString())
+    }
+
+    override fun reviewPhotoApply(token: String, uuid: String, state: Int): Single<Response<String>> {
+        return api.reviewPhotoApply(token, uuid, state.toString())
+    }
+
     override fun listVisitor(token: String): Single<Response<List<User>>> {
         return api.listVisitor(token)
     }
@@ -85,8 +101,8 @@ class UserRepositoryImpl @Inject constructor(private val userAccessor: UserAcces
         return api.listFollowMe(token, pageIndex.toString())
     }
 
-    override fun setFullUserInfo(token: String, height: Int, weight: Double, age: Int, cup: String, cities: String, introduce: String, career: String, program: String, wechatAccount: String, nickname: String): Single<Response<String>> {
-        return api.setFullUserInfo(token, height.toString(), weight.toInt().toString(), age.toString(), cup, cities, introduce, career, program, wechatAccount, nickname)
+    override fun setFullUserInfo(token: String, height: Int, weight: Double, age: Int, cup: String, cities: String, introduce: String, career: String, program: String, wechatAccount: String, nickname: String, price: Int): Single<Response<String>> {
+        return api.setFullUserInfo(token, height.toString(), weight.toInt().toString(), age.toString(), cup, cities, introduce, career, program, wechatAccount, nickname, price.toString())
     }
 
     override fun getUserInfo(token: String, uid: String, latitude: Double, longitude: Double): Single<Response<User>> {

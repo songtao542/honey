@@ -78,19 +78,19 @@ class SetupWizardTwoFragment : BaseFragment() {
         }
 
         heightButton.setOnClickListener {
-            Picker.showPicker(activity, getString(R.string.pick_height), 150, 230, user.height, "height") { value, _ ->
+            Picker.showPicker(activity, getString(R.string.pick_height), 150, 230, user.height) { value, _ ->
                 height.text = getString(R.string.height_value_template, value)
                 user.height = value
             }
         }
         weightButton.setOnClickListener {
-            Picker.showPicker(activity, getString(R.string.pick_weight), 40, 150, user.weight.toInt(), "weight") { value, _ ->
+            Picker.showPicker(activity, getString(R.string.pick_weight), 40, 150, user.weight.toInt()) { value, _ ->
                 weight.text = getString(R.string.weight_value_template, value)
                 user.weight = value.toDouble()
             }
         }
         cupButton.setOnClickListener {
-            Picker.showPicker(activity, getString(R.string.pick_cup), cupNumberArray, cupNumber, cupSizeArray, cupSize, "cup") { value1, value2 ->
+            Picker.showPicker(activity, getString(R.string.pick_cup), cupNumberArray, cupNumber, cupSizeArray, cupSize) { value1, value2 ->
                 val cupValue = "${cupNumberArray[value1]}${cupSizeArray[value2]}"
                 cupNumber = value1
                 cupSize = value2
@@ -99,7 +99,7 @@ class SetupWizardTwoFragment : BaseFragment() {
             }
         }
         ageButton.setOnClickListener {
-            Picker.showPicker(activity, getString(R.string.pick_age), 16, 70, user.age, "age") { value, _ ->
+            Picker.showPicker(activity, getString(R.string.pick_age), 16, 70, user.age) { value, _ ->
                 age.text = getString(R.string.age_value_template, value)
                 user.age = value
             }

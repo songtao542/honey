@@ -54,15 +54,20 @@
         android:orientation="vertical"
         android:translationZ="1dp" />
 
-    <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/list"
-        android:name="com.snt.phoney.ui.square.official.OfficialRecommendFragment"
+    <androidx.swiperefreshlayout.widget.SwipeRefreshLayout
+        android:id="@+id/swipeRefresh"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:layout_marginTop="@dimen/filter_view_height"
-        android:background="@color/white"
-        tools:context=".ui.main.square.official.OfficialRecommendFragment"
-        tools:listitem="@layout/fragment_official_recommend" />
+        android:layout_height="match_parent">
 
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/list"
+            android:name="com.snt.phoney.ui.square.official.OfficialRecommendFragment"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_marginTop="@dimen/filter_view_height"
+            android:background="@color/white"
+            tools:context=".ui.main.square.official.OfficialRecommendFragment"
+            tools:listitem="@layout/fragment_official_recommend" />
+    </androidx.swiperefreshlayout.widget.SwipeRefreshLayout>
 
 </RelativeLayout>

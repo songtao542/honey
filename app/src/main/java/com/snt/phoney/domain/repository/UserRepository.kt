@@ -57,7 +57,8 @@ interface UserRepository : UserAccessor {
                         career: String,
                         program: String,
                         wechatAccount: String,
-                        nickname: String): Single<Response<String>>
+                        nickname: String,
+                        price: Int): Single<Response<String>>
 
     fun listUser(
             token: String,
@@ -113,6 +114,14 @@ interface UserRepository : UserAccessor {
                            city: String): Single<Response<String>>
 
     fun getUserPhotos(token: String): Single<Response<List<Photo>>>
+
+    fun getUserWechatAccount(token: String, uid: String): Single<Response<String>>
+
+    fun applyToViewPhotos(token: String, target: String): Single<Response<String>>
+
+    fun listPhotoApply(token: String, page: Int): Single<Response<List<PhotoApply>>>
+
+    fun reviewPhotoApply(token: String, uuid: String, state: Int): Single<Response<String>>
 
     fun getAllInfoOfUser(token: String): Single<Response<UserInfo>>
 

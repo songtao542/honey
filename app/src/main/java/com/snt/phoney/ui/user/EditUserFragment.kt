@@ -2,6 +2,7 @@ package com.snt.phoney.ui.user
 
 import android.os.Bundle
 import android.text.TextUtils
+import android.util.Log
 import android.view.*
 import androidx.databinding.DataBindingUtil
 import androidx.lifecycle.Observer
@@ -55,7 +56,6 @@ class EditUserFragment : BaseFragment() {
     }
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
-        //return inflater.inflate(R.layout.fragment_edit_user, container, false)
         binding = DataBindingUtil.inflate(inflater, R.layout.fragment_edit_user, container, false)
         return binding.root
     }
@@ -79,7 +79,7 @@ class EditUserFragment : BaseFragment() {
                     cityPicker.setCities(cities)
                 })
             }) { cities ->
-                if (cities.isNotEmpty()) {
+                if (cities != null && cities.isNotEmpty()) {
                     selectedCities = cities
                     var text = StringBuilder()
                     selectedCities!!.forEach { city ->
@@ -89,20 +89,29 @@ class EditUserFragment : BaseFragment() {
                 }
             }
         }
+        voicePriceButton.setOnClickListener {
+            Picker.showPicker(activity, getString(R.string.pick_voice_price), 1, 50,
+                    user.price.toInt()) { value, _ ->
+                voicePrice.text = getString(R.string.voice_price_template, value)
+                user.price = value.toDouble()
+            }
+        }
+
         heightButton.setOnClickListener {
-            Picker.showPicker(activity, getString(R.string.pick_height), 150, 230, user.height, "height") { value, _ ->
+            Picker.showPicker(activity, getString(R.string.pick_height), 150, 230,
+                    user.height) { value, _ ->
                 height.text = getString(R.string.height_value_template, value)
                 user.height = value
             }
         }
         weightCupButton.setOnClickListener {
             if (viewModel.user?.sex == Sex.MALE.value) {
-                Picker.showPicker(activity, getString(R.string.pick_weight), 40, 150, user.weight.toInt(), "weight") { value, _ ->
+                Picker.showPicker(activity, getString(R.string.pick_weight), 40, 150, user.weight.toInt()) { value, _ ->
                     weightCup.text = getString(R.string.weight_value_template, value)
                     user.weight = value.toDouble()
                 }
             } else if (viewModel.user?.sex == Sex.FEMALE.value) {
-                Picker.showPicker(activity, getString(R.string.pick_cup), cupNumberArray, cupNumber, cupSizeArray, cupSize, "cup") { value1, value2 ->
+                Picker.showPicker(activity, getString(R.string.pick_cup), cupNumberArray, cupNumber, cupSizeArray, cupSize) { value1, value2 ->
                     val cupValue = "${cupNumberArray[value1]}${cupSizeArray[value2]}"
                     cupNumber = value1
                     cupSize = value2
@@ -113,17 +122,17 @@ class EditUserFragment : BaseFragment() {
         }
 
         ageButton.setOnClickListener {
-            Picker.showPicker(activity, getString(R.string.pick_age), 16, 70, user.age, "age") { value, _ ->
+            Picker.showPicker(activity, getString(R.string.pick_age), 16, 70, user.age) { value, _ ->
                 age.text = getString(R.string.age_value_template, value)
                 user.age = value
             }
         }
 
         viewModel.success.observe(this, Observer {
-            snackbar(getString(R.string.modify_success))
+            snackbar(it)
         })
         viewModel.error.observe(this, Observer {
-            snackbar(getString(R.string.modify_failed))
+            snackbar(it)
         })
     }
 

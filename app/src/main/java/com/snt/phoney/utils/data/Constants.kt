@@ -63,7 +63,8 @@ object Constants {
         const val APP_KEY = "2202388875"
         const val APP_SECRET = "055a2833b9cc9d6f0c5de0550d861018"
         const val BASE_URL = "https://api.weibo.com"
-        const val REDIRECT_URL = "https://api.weibo.com/oauth2/default.html"
+        //const val REDIRECT_URL = "https://api.weibo.com/oauth2/default.html"
+        const val REDIRECT_URL = "http://www.weibo.com"
         const val SCOPE = "email,direct_messages_read,direct_messages_write,friendships_groups_read,friendships_groups_write,statuses_to_me_read,follow_app_official_microblog,invitation_write"
     }
 

@@ -8,4 +8,6 @@ class GetMessageUseCase @Inject constructor(private val repository: ToolReposito
 
     fun listOfficialMessage(token: String) = repository.listOfficialMessage(token)
 
+    fun listPhotoApply(token: String, page: Int) = userRepository.listPhotoApply(token, page)
+
 }

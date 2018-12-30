@@ -4,6 +4,7 @@ import androidx.lifecycle.MutableLiveData
 import com.snt.phoney.base.AppViewModel
 import com.snt.phoney.domain.model.Applicant
 import com.snt.phoney.domain.model.OfficialMessage
+import com.snt.phoney.domain.model.PhotoApply
 import com.snt.phoney.domain.usecase.DatingUseCase
 import com.snt.phoney.domain.usecase.GetMessageUseCase
 import io.reactivex.android.schedulers.AndroidSchedulers
@@ -15,7 +16,10 @@ class MessageViewModel @Inject constructor(private val usecase: GetMessageUseCas
 
     val messages = MutableLiveData<List<OfficialMessage>>()
     val applicants = MutableLiveData<List<Applicant>>()
-    var pageIndex: Int = 0
+    val photoApplyList = MutableLiveData<List<PhotoApply>>()
+
+    private var mApplicantPageIndex: Int = 1
+    private var mPhotoApplyPageIndex: Int = 1
 
     fun listOfficialMessage() {
         val token = usecase.getAccessToken() ?: return
@@ -24,7 +28,7 @@ class MessageViewModel @Inject constructor(private val usecase: GetMessageUseCas
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribeBy(
                         onSuccess = {
-                            if (it.code == 200) {
+                            if (it.success) {
                                 messages.value = it.data
                             }
                         },
@@ -36,13 +40,30 @@ class MessageViewModel @Inject constructor(private val usecase: GetMessageUseCas
 
     fun listApplicant() {
         val token = datingUsecase.getAccessToken() ?: return
-        datingUsecase.listApplicant(token, pageIndex)
+        datingUsecase.listApplicant(token, mApplicantPageIndex)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribeBy(
                         onSuccess = {
-                            if (it.code == 200) {
+                            if (it.success) {
                                 applicants.value = it.data
+                            }
+                        },
+                        onError = {
+
+                        }
+                )
+    }
+
+    fun listPhotoApply() {
+        val token = datingUsecase.getAccessToken() ?: return
+        usecase.listPhotoApply(token, mPhotoApplyPageIndex)
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribeBy(
+                        onSuccess = {
+                            if (it.success) {
+                                photoApplyList.value = it.data
                             }
                         },
                         onError = {

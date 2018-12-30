@@ -46,39 +46,54 @@ class StartupFragment : BaseFragment() {
 
         qq.setOnClickListener {
             activity?.let { activity ->
+                //清除其他授权时保存的用户，以免相互影响
+                weiboViewModel.clearWeiboUser()
+                wxViewModel.clearWxUser()
                 qqViewModel.login(activity)
             }
         }
 
         weibo.setOnClickListener {
             activity?.let { activity ->
+                //清除其他授权时保存的用户，以免相互影响
+                wxViewModel.clearWxUser()
                 weiboViewModel.login(activity)
             }
         }
 
         wechat.setOnClickListener {
             activity?.let {
+                //清除其他授权时保存的用户，以免相互影响
+                weiboViewModel.clearWeiboUser()
                 wxViewModel.login()
             }
         }
 
-        if (viewModel.user.value != null) {
-            root.postDelayed({
-                startActivity(MainActivity.newIntent(requireContext()))
-                activity?.finish()
-            }, 1500)
-            return
+        viewModel.user.value?.let { user ->
+            if (user.isSexValid) {
+                root.postDelayed({
+                    Log.d("TTTT", "user====>$user")
+                    context?.let { context -> startActivity(MainActivity.newIntent(context)) }
+                    activity?.finish()
+                }, 1500)
+                return
+            } else {
+                //清除无效的用户
+                viewModel.clearUser()
+            }
         }
 
         content.visibility = View.VISIBLE
 
         qqViewModel.user.observe(this, Observer { user ->
+            Log.d("TTTT", "user-----qq----===================>$user")
             user?.let {
                 viewModel.signupByThirdPlatform(it.openId, it.thirdToken, PLATFORM_QQ, it.nickName, it.headPic)?.disposedBy(disposeBag)
             }
         })
 
         weiboViewModel.user.observe(this, Observer { user ->
+            Log.d("TTTT", "user-----wb----===================>$user")
             user?.let {
                 viewModel.signupByThirdPlatform(it.uid ?: "",
                         it.token ?: "",
@@ -93,7 +108,7 @@ class StartupFragment : BaseFragment() {
         })
 
         wxViewModel.user.observe(this, Observer { user ->
-            Log.d("TTTT", "user---------===================>$user")
+            Log.d("TTTT", "user-----wx----===================>$user")
             user?.let {
                 viewModel.signupByThirdPlatform(it.openid ?: "",
                         it.accessToken ?: "",

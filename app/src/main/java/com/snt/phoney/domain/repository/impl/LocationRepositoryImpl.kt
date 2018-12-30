@@ -3,6 +3,7 @@ package com.snt.phoney.domain.repository.impl
 import android.app.Application
 import android.location.Location
 import android.util.Log
+import com.google.gson.Gson
 import com.snt.phoney.api.Api
 import com.snt.phoney.domain.model.City
 import com.snt.phoney.domain.model.Province
@@ -17,6 +18,8 @@ import io.reactivex.Observable
 import io.reactivex.Single
 import io.reactivex.rxkotlin.subscribeBy
 import kotlinx.coroutines.*
+import org.ehcache.core.internal.util.CollectionUtil
+import java.util.*
 import javax.inject.Inject
 import javax.inject.Singleton
 
@@ -62,7 +65,6 @@ class LocationRepositoryImpl @Inject constructor(private val application: Applic
                         if (_provinces.size == 0) {
                             getCities().subscribeBy {
                                 it.data?.let { provinces ->
-                                    Log.d("TTTT", "pppppppppppp from net===$provinces")
                                     _provinces.addAll(provinces)
                                     provinceCityDao.insertAllProvinces(_provinces)
                                 }
@@ -71,7 +73,6 @@ class LocationRepositoryImpl @Inject constructor(private val application: Applic
                     }
                 }
             }
-            Log.d("TTTT", "pppppppppppp return===$_provinces")
             return _provinces
         }
 
@@ -84,17 +85,16 @@ class LocationRepositoryImpl @Inject constructor(private val application: Applic
             runBlocking {
                 withContext(Dispatchers.Default) {
                     provinces.forEach { province ->
-                        val cities = provinceCityDao.getCities(province.id)
-                        cities?.forEach { city ->
-                            city.provinceId = province.id
-                            city.provinceName = province.name
-                            results.add(city)
+                        if (province.cities != null && province.cities!!.isNotEmpty()) {
+                            results.addAll(province.cities!!)
+                        } else {
+                            val cities = provinceCityDao.getCities(province.id)
+                            cities?.let { results.addAll(it) }
+                            province.cities = cities
                         }
-                        province.cities = cities
                     }
                 }
             }
-            Log.d("TTTT", "ccccccccccccccc return===$results")
             return results
         }
 

@@ -303,6 +303,9 @@ dependencies {
         exclude group: 'net.bytebuddy'
     }
     androidTestImplementation deps.mockito.android
+
+    //implementation 'com.idescout.sql:sqlscout-server:4.1'
+    debugImplementation 'com.amitshekhar.android:debug-db:1.0.4'
 }
 
 jacoco {

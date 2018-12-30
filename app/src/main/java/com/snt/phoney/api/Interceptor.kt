@@ -1,156 +1,126 @@
 package com.snt.phoney.api
 
+import android.util.Log
+import com.snt.phoney.BuildConfig
+import com.snt.phoney.extensions.TAG
+import com.snt.phoney.utils.data.MD5.md5
+import okhttp3.*
+import java.net.URLEncoder
 import java.nio.charset.Charset
+import java.util.*
 
 private val UTF8 = Charset.forName("UTF-8")
+const val APP_SECRET = ""
 
-//open class SignInterceptor : Interceptor {
-//    override fun intercept(chain: Interceptor.Chain): okhttp3.Response {
-//        var request = chain.request()
-//        var method = request.method()
-//        return when (method) {
-//            "GET" -> chain.proceed(interceptGet(request))
-//            "POST" -> chain.proceed(interceptPost(request))
-//            else -> chain.proceed(interceptDefault(request))
-//        }
-//    }
-//
-//    protected fun interceptDefault(request: Request): Request {
-//        var httpUrl = request.url()
-//        val format = SimpleDateFormat("yyyy-MM-dd HH:mm:ss")
-//        val requestdate = format.format(Date())
-//        val params = getQueryParameters(httpUrl)
-//        params["appid"] = APP_ID
-//        params["requestdate"] = requestdate
-//        val newUrlBuilder = httpUrl.newBuilder()
-//                .addQueryParameter("appid", APP_ID)
-//                .addQueryParameter("requestdate", requestdate)
-//                .addQueryParameter("sign", getSignString(params))
-//        return request.newBuilder().url(newUrlBuilder.build()).build()
-//    }
-//
-//    protected fun interceptGet(request: Request): Request {
-//        return interceptDefault(request)
-//    }
-//
-//    protected fun interceptPost(request: Request): Request {
-//        var body = request.body()
-//        when (body) {
-//            is FormBody -> {
-//                var bodyBuilder = FormBody.Builder()
-//                var params = getParameters(body)
-//                val format = SimpleDateFormat("yyyy-MM-dd HH:mm:ss")
-//                params["appid"] = APP_ID
-//                params["requestdate"] = format.format(Date())
-//                params["sign"] = getSignString(params)
-//                for ((name, value) in params) {
-//                    bodyBuilder.addEncoded(name, URLEncoder.encode(value, UTF8.name()))
-//                }
-//                return request.newBuilder().post(bodyBuilder.build()).build()
-//            }
-//            is MultipartBody -> {
-//                var bodyBuilder: MultipartBody.Builder = MultipartBody.Builder().setType(MultipartBody.FORM)
-//                var params = getParameters(body)
-//                var parts = body.parts()
-//                val format = SimpleDateFormat("yyyy-MM-dd HH:mm:ss")
-//                val requestdate = format.format(Date())
-//                params["appid"] = APP_ID
-//                params["requestdate"] = requestdate
-//                parts.add(MultipartBody.Part.createFormData("appid", APP_ID))
-//                parts.add(MultipartBody.Part.createFormData("requestdate", requestdate))
-//                parts.add(MultipartBody.Part.createFormData("sign", getSignString(params)))
-//                for (part in parts) {
-//                    bodyBuilder.addPart(part)
-//                }
-//                return request.newBuilder().post(bodyBuilder.build()).build();
-//            }
-//            else -> return interceptDefault(request)
-//        }
-//    }
-//
-//    private fun getSignString(params: TreeMap<String, String>): String {
-//        val paramString = StringBuilder()
-//        val sorted = params.toSortedMap(Comparator { o1, o2 -> o1.toUpperCase().compareTo(o2.toUpperCase()) })
-//        for ((name, value) in sorted) {
-//            if (BuildConfig.DEBUG) {
-//                Log.d(TAG, "to sign param:($name=$value)")
-//            }
-//            paramString.append(name).append("=").append(value).append("&")
-//        }
-//        paramString.append("KEY=$APP_KEY")
-//        return md5(paramString.toString().toUpperCase()).toUpperCase()
-//    }
-//
-//    private fun getQueryParameters(httpUrl: HttpUrl): TreeMap<String, String> {
-//        var nameSet = httpUrl.queryParameterNames()
-//        var params = TreeMap<String, String>()
-//        for (name in nameSet) {
-//            val value = httpUrl.queryParameter(name)
-//            value?.let {
-//                params[name] = it
-//            }
-//        }
-//        return params
-//    }
-//
-//    protected fun getParameters(requestBody: RequestBody?): TreeMap<String, String> {
-//        when (requestBody) {
-//            is FormBody -> {
-//                var formBody: FormBody = requestBody
-//                var params = TreeMap<String, String>()
-//                for (i in 0..(formBody.size() - 1)) {
-//                    params[formBody.encodedName(i)] = formBody.encodedValue(i)
-//                }
-//                return params
-//            }
-//            is MultipartBody -> {
-//                var multipartBody: MultipartBody = requestBody
-//                var parts = multipartBody.parts()
-//
-//                var params = TreeMap<String, String>()
-//                for (part in parts) {
-//                    params.putAll(getParameters(part.body()))
-//                }
-//                return params
-//            }
-//            else -> return TreeMap()
-//        }
-//    }
-//
-//
-//    private fun md5(string: String): String {
-//        if (BuildConfig.DEBUG) {
-//            Log.d(TAG, "to sign string: $string")
-//        }
-//        try {
-//            //获取md5加密对象
-//            val instance: MessageDigest = MessageDigest.getInstance("MD5")
-//            //对字符串加密，返回字节数组
-//            val digest: ByteArray = instance.digest(string.toByteArray())
-//            var sb = StringBuilder()
-//            for (b in digest) {
-//                //获取低八位有效值
-//                var i: Int = b.toInt() and 0xff
-//                //将整数转化为16进制
-//                var hexString = Integer.toHexString(i)
-//                if (hexString.length < 2) {
-//                    //如果是一位的话，补0
-//                    hexString = "0$hexString"
-//                }
-//                sb.append(hexString)
-//            }
-//            val sign = sb.toString()
-//            if (BuildConfig.DEBUG) {
-//                Log.d(TAG, "signed string : $sign")
-//            }
-//            return sign
-//        } catch (e: NoSuchAlgorithmException) {
-//            e.printStackTrace()
-//        }
-//        return ""
-//    }
-//
-//}
+@Suppress("unused")
+open class SignInterceptor : Interceptor {
+    override fun intercept(chain: Interceptor.Chain): okhttp3.Response {
+        val request = chain.request()
+        val method = request.method()
+        return when (method) {
+            "GET" -> chain.proceed(interceptGet(request))
+            "POST" -> chain.proceed(interceptPost(request))
+            else -> chain.proceed(interceptDefault(request))
+        }
+    }
+
+    private fun interceptDefault(request: Request): Request {
+        return request
+    }
+
+    private fun interceptGet(request: Request): Request {
+        val httpUrl = request.url()
+        val timestamp = System.currentTimeMillis().toString()
+        val params = getQueryParameters(httpUrl).apply {
+            put("appSecret", APP_SECRET)
+            put("timestamp", timestamp)
+        }
+        val newUrlBuilder = httpUrl.newBuilder()
+                .addQueryParameter("timestamp", timestamp)
+                .addQueryParameter("sign", getSignString(params))
+        return request.newBuilder().url(newUrlBuilder.build()).build()
+    }
+
+    private fun interceptPost(request: Request): Request {
+        val body = request.body()
+        when (body) {
+            is FormBody -> {
+                val bodyBuilder = FormBody.Builder()
+                val timestamp = System.currentTimeMillis().toString()
+                val params = getParameters(body).apply {
+                    put("appSecret", APP_SECRET)
+                    put("timestamp", timestamp)
+                }
+                params["sign"] = getSignString(params)
+                for ((name, value) in params) {
+                    bodyBuilder.addEncoded(name, URLEncoder.encode(value, UTF8.name()))
+                }
+                return request.newBuilder().post(bodyBuilder.build()).build()
+            }
+            is MultipartBody -> {
+                val bodyBuilder: MultipartBody.Builder = MultipartBody.Builder().setType(MultipartBody.FORM)
+                val parts = body.parts()
+                val timestamp = System.currentTimeMillis().toString()
+                val params = getParameters(body).apply {
+                    put("appSecret", APP_SECRET)
+                    put("timestamp", timestamp)
+                }
+                parts.add(MultipartBody.Part.createFormData("timestamp", timestamp))
+                parts.add(MultipartBody.Part.createFormData("sign", getSignString(params)))
+                for (part in parts) {
+                    bodyBuilder.addPart(part)
+                }
+                return request.newBuilder().post(bodyBuilder.build()).build()
+            }
+            else -> return interceptDefault(request)
+        }
+    }
+
+    private fun getSignString(params: TreeMap<String, String>): String {
+        val paramString = StringBuilder()
+        val sorted = params.toSortedMap(Comparator { o1, o2 -> o1.toUpperCase().compareTo(o2.toUpperCase()) })
+        for ((name, value) in sorted) {
+            if (BuildConfig.DEBUG) {
+                Log.d(TAG, "to sign param:($name=$value)")
+            }
+            paramString.append(value)
+        }
+        return md5(paramString.toString().toUpperCase()).toUpperCase()
+    }
+
+    private fun getQueryParameters(httpUrl: HttpUrl): TreeMap<String, String> {
+        val nameSet = httpUrl.queryParameterNames()
+        val params = TreeMap<String, String>()
+        for (name in nameSet) {
+            val value = httpUrl.queryParameter(name)
+            value?.let {
+                params[name] = it
+            }
+        }
+        return params
+    }
+
+    private fun getParameters(requestBody: RequestBody?): TreeMap<String, String> {
+        when (requestBody) {
+            is FormBody -> {
+                val params = TreeMap<String, String>()
+                for (i in 0..(requestBody.size() - 1)) {
+                    params[requestBody.encodedName(i)] = requestBody.encodedValue(i)
+                }
+                return params
+            }
+            is MultipartBody -> {
+                val parts = requestBody.parts()
+                val params = TreeMap<String, String>()
+                for (part in parts) {
+                    params.putAll(getParameters(part.body()))
+                }
+                return params
+            }
+            else -> return TreeMap()
+        }
+    }
+}
 //
 //class LoginStateInterceptor @Inject constructor(private val userRepository: UserRepository) : SignInterceptor() {
 //

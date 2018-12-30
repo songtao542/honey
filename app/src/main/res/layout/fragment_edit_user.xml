@@ -116,7 +116,42 @@
                 android:layout_weight="1"
                 android:background="@null"
                 android:gravity="center_vertical|right"
+                android:hint="@string/input_wechat_account"
                 android:text="@{user.wechatAccount}"
+                android:textColor="@color/edit_user_item_value"
+                android:textSize="@dimen/textsize_normal" />
+
+        </LinearLayout>
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="8dp"
+            android:background="@color/light_gray" />
+
+        <LinearLayout
+            android:id="@+id/voicePriceButton"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/edit_user_item_height"
+            android:background="@drawable/underline_gray"
+            android:orientation="horizontal"
+            android:paddingLeft="@dimen/edit_user_padding"
+            android:paddingRight="@dimen/edit_user_padding">
+
+            <androidx.appcompat.widget.AppCompatTextView
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:gravity="center"
+                android:text="@string/voice_price_label"
+                android:textColor="@color/edit_user_item_label"
+                android:textSize="@dimen/textsize_normal" />
+
+            <androidx.appcompat.widget.AppCompatTextView
+                android:id="@+id/voicePrice"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:gravity="center_vertical|right"
+                android:text="@{ConverterUtil.toString(user.price)+@string/unit_mibi}"
                 android:textColor="@color/edit_user_item_value"
                 android:textSize="@dimen/textsize_normal" />
 

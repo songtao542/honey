@@ -20,11 +20,11 @@ class AlbumViewerFragment : PhotoViewerFragment(), Injectable {
     @Inject
     lateinit var viewModelFactory: ViewModelProvider.Factory
 
-    private lateinit var viewModel: AlbumViewerViewModel
+    private lateinit var viewModel: AlbumViewModel
 
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
-        viewModel = ViewModelProviders.of(this, viewModelFactory).get(AlbumViewerViewModel::class.java)
+        viewModel = ViewModelProviders.of(this, viewModelFactory).get(AlbumViewModel::class.java)
 
         setOnPhotoDeleteListener { _, photo ->
             viewModel.deletePhotos(ArrayList<Photo>().apply { add(photo) })

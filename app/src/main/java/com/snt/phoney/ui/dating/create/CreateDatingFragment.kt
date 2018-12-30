@@ -75,25 +75,24 @@ class CreateDatingFragment : BaseFragment() {
             //            Picker.showDatePicker(activity) { year, monthOfYear, dayOfMonth ->
 //                datingTime.text = getString(R.string.dating_date_template, year, monthOfYear + 1, dayOfMonth)//"${year}年${monthOfYear}月${dayOfMonth}日"
 //            }
-            Picker.showPicker(activity, getString(R.string.select_dating_time), 1, 20, selectedDay,
-                    "days_picker") { value, _ ->
+            Picker.showPicker(activity, getString(R.string.select_dating_time), 1, 20, selectedDay) { value, _ ->
                 selectedDay = value
                 datingTime.text = getString(R.string.days_template, value)
             }
         }
         selectDatingProgram.setOnClickListener {
-            Picker.showPicker(activity, getString(R.string.select_dating_program), 0, "select_program", { picker ->
+            Picker.showPicker(activity, getString(R.string.select_dating_program), 0, { picker ->
                 viewModel.programs.observe(this, Observer { programs ->
                     val programNames = Array(programs.size) { index ->
                         programs[index].name!!
                     }
                     picker.setColumn(programNames)
                 })
-            }) { value1, _ ->
+            }, handler = { value1, _ ->
                 selectedProgramIndex = value1
                 selectedProgram = viewModel.programs.value?.get(value1)
                 datingProgram.text = selectedProgram?.name
-            }
+            })
         }
         photoAdapter = PhotoFlowAdapter(requireContext())
                 .setMaxShow(8)

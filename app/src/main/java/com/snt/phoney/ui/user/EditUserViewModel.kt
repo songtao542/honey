@@ -1,8 +1,7 @@
 package com.snt.phoney.ui.user
 
-import android.text.TextUtils
 import androidx.lifecycle.LiveData
-import androidx.lifecycle.MutableLiveData
+import com.snt.phoney.R
 import com.snt.phoney.base.AppViewModel
 import com.snt.phoney.domain.model.CityPickerConverter
 import com.snt.phoney.domain.model.User
@@ -36,27 +35,39 @@ class EditUserViewModel @Inject constructor(private val usecase: EditUserUseCase
         }
         isSetting = true
         val token = usecase.getAccessToken() ?: return null
-        return usecase.setFullUserInfo(token, userArg.height, userArg.weight, userArg.age, userArg.safeCup, userArg.cityCodesString, userArg.safeIntroduce, userArg.safeCareer, "", userArg.safeWechatAccount, userArg.safeNickname)
+        return usecase.setFullUserInfo(token, userArg.height, userArg.weight, userArg.age, userArg.safeCup,
+                userArg.cityCodesString, userArg.safeIntroduce, userArg.safeCareer, "",
+                userArg.safeWechatAccount, userArg.safeNickname, userArg.price.toInt())
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribeBy(
                         onSuccess = {
                             isSetting = false
-                            if (it.code == 200) {
-                                val user = user?.copy(height = userArg.height, weight = userArg.weight, age = userArg.age,
-                                        cup = userArg.cup, cities = userArg.cities, introduce = userArg.introduce, career = userArg.career,
-                                        wechatAccount = userArg.wechatAccount, nickname = userArg.nickname)
+                            if (it.success) {
+                                val user = user?.copy(height = userArg.height, weight = userArg.weight,
+                                        age = userArg.age, cup = userArg.cup, cities = userArg.cities,
+                                        introduce = userArg.introduce, career = userArg.career,
+                                        wechatAccount = userArg.wechatAccount, nickname = userArg.nickname,
+                                        price = userArg.price)
                                 if (userArg != null) {
                                     usecase.setUser(user)
                                 }
-                                success.value = it.data
-                            } else if (!TextUtils.isEmpty(it.message)) {
-                                error.value = it.message
+                                if (it.isNotEmpty) {
+                                    success.value = it.data
+                                } else {
+                                    success.value = context.getString(R.string.modify_success)
+                                }
+                            } else {
+                                if (it.isNotEmpty) {
+                                    error.value = it.message
+                                } else {
+                                    error.value = context.getString(R.string.modify_failed)
+                                }
                             }
                         },
                         onError = {
                             isSetting = false
-                            error.value = "修改失败"
+                            error.value = context.getString(R.string.modify_failed)
                         })
     }
 

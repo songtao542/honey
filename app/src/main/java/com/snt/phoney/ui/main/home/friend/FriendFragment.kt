@@ -2,6 +2,7 @@ package com.snt.phoney.ui.main.home.friend
 
 import android.Manifest
 import android.os.Bundle
+import android.text.TextUtils
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -35,7 +36,6 @@ class FriendFragment : BaseFragment() {
      */
     private var filterType: FilterType = FilterType.DEFAULT
 
-    private var city: String = ""
     private var heightStart: String = ""
     private var heightEnd: String = ""
     private var ageStart: String = ""
@@ -98,8 +98,22 @@ class FriendFragment : BaseFragment() {
         }
 
         viewModel.users.observe(this, Observer {
+            swipeRefresh.isRefreshing = false
             adapter?.data = it
         })
+
+        viewModel.cityFilter.observe(this, Observer {
+            if (!TextUtils.isEmpty(it)) {
+                filter(FilterType.BYCITY)
+            } else {
+                filter(FilterType.DEFAULT)
+            }
+        })
+
+        swipeRefresh.setOnRefreshListener {
+            swipeRefresh.isRefreshing = true
+            load(true)
+        }
 
         list.setLoadMoreListener {
             load(false, it)
@@ -118,13 +132,17 @@ class FriendFragment : BaseFragment() {
         }
     }
 
-    private fun filter(type: FilterType, view: TextView) {
+    private fun filter(type: FilterType, view: TextView? = null) {
         clearFilterSelector()
-        if (filterType == type) {
-            view.isSelected = false
-            filterType = FilterType.DEFAULT
+        if (view != null) {
+            if (filterType == type) {
+                view.isSelected = false
+                filterType = FilterType.DEFAULT
+            } else {
+                view.isSelected = true
+                filterType = type
+            }
         } else {
-            view.isSelected = true
             filterType = type
         }
         load(true)
@@ -141,7 +159,7 @@ class FriendFragment : BaseFragment() {
         if (refresh) {
             list.setLoadMoreEnable(true)
         }
-        viewModel.listUser(refresh, filterType, city, heightStart, heightEnd,
+        viewModel.listUser(refresh, filterType, heightStart, heightEnd,
                 ageStart, ageEnd, cupStart, cupEnd, loadMore)
     }
 

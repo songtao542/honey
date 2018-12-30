@@ -8,11 +8,20 @@ import kotlinx.android.synthetic.main.fragment_home.*
 import android.text.Spanned
 import android.text.style.RelativeSizeSpan
 import android.text.SpannableString
+import android.text.TextUtils
+import android.util.ArrayMap
+import android.util.Log
 import android.view.*
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentStatePagerAdapter
+import androidx.lifecycle.Observer
+import androidx.lifecycle.ViewModelProviders
 import com.snt.phoney.base.BaseFragment
+import com.snt.phoney.ui.main.home.friend.FriendViewModel
+import com.snt.phoney.utils.Picker
+import com.snt.phoney.utils.life.SingleLiveData
 import com.snt.phoney.widget.TabLayout
+import java.util.*
 
 
 class HomeFragment : BaseFragment() {
@@ -21,6 +30,11 @@ class HomeFragment : BaseFragment() {
         fun newInstance() = HomeFragment()
     }
 
+    private lateinit var viewModel: FriendViewModel
+
+    private var mPickerIndex1 = 0
+    private var mPickerIndex2 = 0
+
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,
                               savedInstanceState: Bundle?): View? {
         return inflater.inflate(R.layout.fragment_home, container, false)
@@ -28,6 +42,8 @@ class HomeFragment : BaseFragment() {
 
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
+        viewModel = ViewModelProviders.of(this, viewModelFactory).get(FriendViewModel::class.java)
+
         enableOptionsMenu(homeToolbar, false)
         homeTab.setupWithViewPager(homePager)
         homeTab.tabMode = TabLayout.MODE_SCROLLABLE
@@ -65,9 +81,34 @@ class HomeFragment : BaseFragment() {
     }
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
-        return when (item?.itemId) {
+        return when (item.itemId) {
             R.id.findCity -> {
-
+                Picker.showPicker(activity, getString(R.string.select_city), mPickerIndex1, mPickerIndex2, provider = { picker ->
+                    viewModel.cities.observe(this, Observer { cities ->
+                        val arrayMap = LinkedHashMap<String, ArrayList<String>>()
+                        //不选择的情况
+                        arrayMap[getString(R.string.none_city)] = ArrayList<String>().apply { add(" ") }
+                        for (city in cities) {
+                            var pList = arrayMap[city.province]
+                            if (pList == null) {
+                                pList = ArrayList()
+                                arrayMap[city.province] = pList
+                            }
+                            pList.add(city.name)
+                        }
+                        picker.setColumn(columns = arrayMap)
+                    })
+                }, handler = { index1, index2 ->
+                    mPickerIndex1 = index1
+                    mPickerIndex2 = index2
+                }) { _, value2 ->
+                    if (TextUtils.isEmpty(value2.trim())) {
+                        item.setTitle(R.string.find_city)
+                    } else {
+                        item.title = value2
+                    }
+                    viewModel.setFilterByCity(value2.trim())
+                }
                 true
             }
             else -> super.onOptionsItemSelected(item)

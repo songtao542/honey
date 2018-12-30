@@ -95,13 +95,11 @@ public class Cropper {
 
     private File createImageFile(CaptureStrategy captureStrategy) {
         // Create an image file name
-        String timeStamp =
-                new SimpleDateFormat("yyyyMMdd_HHmmss", Locale.getDefault()).format(new Date());
+        String timeStamp = new SimpleDateFormat("yyyyMMdd_HHmmss", Locale.getDefault()).format(new Date());
         String imageFileName = String.format("JPEG_%s.jpg", timeStamp);
         File storageDir;
         if (captureStrategy.isPublic) {
-            storageDir = Environment.getExternalStoragePublicDirectory(
-                    Environment.DIRECTORY_PICTURES);
+            storageDir = Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_PICTURES);
         } else {
             storageDir = mActivity.get().getExternalFilesDir(Environment.DIRECTORY_PICTURES);
         }

@@ -172,6 +172,8 @@ public class BitmapCropTask extends AsyncTask<Void, Void, Throwable> {
             outputStream = context.getContentResolver().openOutputStream(Uri.fromFile(new File(mImageOutputPath)));
             croppedBitmap.compress(mCompressFormat, mCompressQuality, outputStream);
             croppedBitmap.recycle();
+        } catch (Exception e) {
+            e.printStackTrace();
         } finally {
             BitmapLoadUtils.close(outputStream);
         }

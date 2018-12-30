@@ -312,6 +312,7 @@ def addRepos(RepositoryHandler handler) {
     handler.maven { url "https://dl.bintray.com/thelasterstar/maven/" }
     handler.maven { url "https://bintray.com/wechat-sdk-team/maven" }
     handler.maven { url "https://jitpack.io" }
+    handler.maven { url "http://www.idescout.com/maven/repo/" }
     handler.flatDir { dirs 'libs' }
 }
 
