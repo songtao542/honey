@@ -3,8 +3,9 @@ package com.snt.phoney.di.module;
 import com.google.gson.Gson;
 import com.snt.phoney.BuildConfig;
 import com.snt.phoney.api.Api;
-import com.snt.phoney.utils.adapter.LiveDataCallAdapterFactory;
+import com.snt.phoney.api.TimeoutInterceptor;
 import com.snt.phoney.utils.adapter.GsonResponseConverterFactory;
+import com.snt.phoney.utils.adapter.LiveDataCallAdapterFactory;
 import com.snt.phoney.utils.data.Constants;
 
 import javax.inject.Named;
@@ -51,13 +52,15 @@ public class RestApiServiceModule {
             okHttpBuilder.addInterceptor(httpLoggingInterceptor);
         }
 
-        okHttpBuilder.addInterceptor(chain -> {
-            Request request = chain.request();
-            HttpUrl url = request.url().newBuilder()
-                    //.addQueryParameter(Constants.Api.APP_ID, Constants.Api.APP_ID_VALUE)
-                    .build();
-            return chain.proceed(request.newBuilder().url(url).build());
-        });
+        okHttpBuilder
+                .addInterceptor(new TimeoutInterceptor())
+                .addInterceptor(chain -> {
+                    Request request = chain.request();
+                    HttpUrl url = request.url().newBuilder()
+                            //.addQueryParameter(Constants.Api.APP_ID, Constants.Api.APP_ID_VALUE)
+                            .build();
+                    return chain.proceed(request.newBuilder().url(url).build());
+                });
         return okHttpBuilder;
     }
 

@@ -50,12 +50,13 @@
                     android:layout_marginLeft="14dp"
                     android:gravity="center_vertical">
 
-                    <ImageView
+                    <androidx.appcompat.widget.AppCompatImageView
                         android:id="@+id/msg_item_head_icon"
                         android:layout_width="48dp"
                         android:layout_height="48dp"
-                        android:background="#000"
-                        android:scaleType="centerCrop" />
+                        android:foreground="@drawable/jmui_head_icon_mask"
+                        android:scaleType="centerCrop"
+                        app:srcCompat="@drawable/jmui_head_icon" />
                 </LinearLayout>
 
                 <TextView

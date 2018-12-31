@@ -114,12 +114,17 @@ class MineViewModel @Inject constructor(private val usecase: UserInfoUseCase) : 
                 .subscribeBy(
                         onSuccess = {
                             if (it.success) {
-                                val updatedUser = user.value
-                                updatedUser?.avatar = it.data
-                                updatedUser?.let { updated ->
-                                    user.value = updated
-                                    usecase.setUser(updated)
+                                if (!TextUtils.isEmpty(it.data)) {
+                                    val updatedUser = user.value
+                                    updatedUser?.avatar = it.data
+                                    updatedUser?.let { updated ->
+                                        user.value = updated
+                                        usecase.setUser(updated)
+                                    }
                                 }
+                                success.value = context.getString(R.string.upload_photo_success)
+                            } else {
+                                error.value = context.getString(R.string.upload_photo_failed)
                             }
                         },
                         onError = {

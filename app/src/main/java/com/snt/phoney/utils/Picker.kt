@@ -83,26 +83,30 @@ object Picker {
     val REQUEST_CODE_CHOOSE = 23
 
     @JvmStatic
-    fun showPhotoPicker(activity: FragmentActivity? = null, fragment: Fragment? = null, max: Int = 1, requestCode: Int = REQUEST_CODE_CHOOSE) {
+    fun showPhotoPicker(activity: FragmentActivity? = null, fragment: Fragment? = null, max: Int = 1, crop: Boolean = false, requestCode: Int = REQUEST_CODE_CHOOSE) {
         if (activity == null && fragment == null) {
             return
         }
         val matisse = if (activity != null) Matisse.from(activity) else Matisse.from(fragment)
         val countable = max > 1
-        matisse.choose(MimeType.ofImage())
+        val picker = matisse.choose(MimeType.ofImage())
                 .showSingleMediaType(true)
                 .theme(R.style.Matisse_Dracula)
                 .countable(countable) //max == 1，则 countable = false
                 .addFilter(GifSizeFilter(320, 320, 5 * Filter.K * Filter.K))
                 .maxSelectable(max)
                 .spanCount(4)
-                .crop(1f, 1f)
                 .originalEnable(true)
                 .maxOriginalSize(10)
                 .capture(true)
-                .captureStrategy(CaptureStrategy(false, "com.snt.phoney.fileprovider"))
+                .captureStrategy(CaptureStrategy(true, "com.snt.phoney.fileprovider"))
                 .imageEngine(GlideEngine())
-                .forResult(requestCode)
+        if (crop) {
+            picker.crop(1f, 1f)
+        } else {
+            picker.crop(false)
+        }
+        picker.forResult(requestCode)
     }
 
     @JvmStatic

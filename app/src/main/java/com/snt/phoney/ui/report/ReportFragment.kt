@@ -39,6 +39,7 @@ class ReportFragment : BaseFragment() {
     private lateinit var photoAdapter: PhotoFlowAdapter
 
     private var selectedPhotoUris = ArrayList<Uri>()
+    private var selectedPhotoPath = ""
 
     private lateinit var targetUuid: String
     /**
@@ -78,6 +79,9 @@ class ReportFragment : BaseFragment() {
 
         viewModel.reportSuccess.observe(this, Observer {
             snackbar(it)
+            view?.postDelayed({
+                activity?.onBackPressed()
+            }, 500)
         })
 
         photoAdapter = PhotoFlowAdapter(requireContext())
@@ -109,7 +113,6 @@ class ReportFragment : BaseFragment() {
             radio.setTextSize(TypedValue.COMPLEX_UNIT_SP, 14f)
             radio.tag = reason
             radio.setOnCheckedChangeListener { _, isChecked ->
-                Log.d("TTTT", "xxxxxxxxxxxxxxxxxxxxxxgggggggggggggggggggggg")
                 if (isChecked) {
                     checkedReason = radio.tag as ReportReason
                 }
@@ -127,7 +130,7 @@ class ReportFragment : BaseFragment() {
             R.id.report -> {
                 if (valid()) {
                     val content = contentView.text?.toString() ?: ""
-                    val file = File(PathUtils.getPath(requireContext(), selectedPhotoUris[0]))
+                    val file = File(selectedPhotoPath)
                     viewModel.report(checkedReason?.id.toString(), targetUuid, content, type, file)
                     true
                 }
@@ -163,8 +166,11 @@ class ReportFragment : BaseFragment() {
             val paths = Matisse.obtainPathResult(data)
             val uris = Matisse.obtainResult(data)
             paths?.let {
-                selectedPhotoUris.addAll(uris)
-                attachments.notifyAdapterSizeChanged()
+                if (it.isNotEmpty()) {
+                    selectedPhotoUris.addAll(uris)
+                    selectedPhotoPath = it[0]
+                    attachments.notifyAdapterSizeChanged()
+                }
             }
         }
     }

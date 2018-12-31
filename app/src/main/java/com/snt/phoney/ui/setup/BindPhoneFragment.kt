@@ -1,6 +1,7 @@
 package com.snt.phoney.ui.setup
 
 import android.os.Bundle
+import android.os.CountDownTimer
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -42,7 +43,8 @@ class BindPhoneFragment : BaseDialogFragment() {
                 Toast.makeText(context, message, Toast.LENGTH_LONG).show()
             }
         })
-        viewModel.verificationCodeId.observe(this, Observer { message ->
+        viewModel.verificationCodeId.observe(this, Observer {
+            startCountdown()
             context?.let { context ->
                 Toast.makeText(context, getString(R.string.verification_code_has_send), Toast.LENGTH_LONG).show()
             }
@@ -53,6 +55,25 @@ class BindPhoneFragment : BaseDialogFragment() {
                 dismiss()
             }
         })
+    }
+
+    private fun startCountdown() {
+        getVerificationCode.isEnabled = false
+        getVerificationCode.text = "60${getString(R.string.unit_second)}"
+        val countDownTimer = object : CountDownTimer(60000, 1000) {
+            private var tick = 60
+            override fun onFinish() {
+                getVerificationCode.setText(R.string.get_verification_code)
+                getVerificationCode.isEnabled = true
+            }
+
+            override fun onTick(millisUntilFinished: Long) {
+                if (tick > 0) {
+                    getVerificationCode.text = "${(tick--)}${getString(R.string.unit_second)}"
+                }
+            }
+        }
+        countDownTimer.start()
     }
 
 }

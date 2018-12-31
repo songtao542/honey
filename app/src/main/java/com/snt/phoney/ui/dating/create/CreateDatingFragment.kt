@@ -4,6 +4,7 @@ import android.app.Activity
 import android.content.Intent
 import android.net.Uri
 import android.os.Bundle
+import android.util.Log
 import android.view.*
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
@@ -174,6 +175,12 @@ class CreateDatingFragment : BaseFragment() {
         if (requestCode == Picker.REQUEST_CODE_CHOOSE && resultCode == Activity.RESULT_OK) {
             val paths = Matisse.obtainPathResult(data)
             val uris = Matisse.obtainResult(data)
+            for (p in paths) {
+                Log.d("Matisse", "handlePhotoPick path=$p")
+            }
+            for (u in uris) {
+                Log.d("Matisse", "handlePhotoPick path=$u")
+            }
             paths?.let {
                 selectedPhotoUris.addAll(uris)
                 photos.notifyAdapterSizeChanged()

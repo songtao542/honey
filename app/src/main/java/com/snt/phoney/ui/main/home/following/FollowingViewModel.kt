@@ -9,6 +9,7 @@ import com.snt.phoney.domain.model.User
 import com.snt.phoney.domain.usecase.FollowUseCase
 import com.snt.phoney.extensions.addList
 import com.snt.phoney.extensions.disposedBy
+import com.snt.phoney.extensions.empty
 import cust.widget.loadmore.LoadMoreAdapter
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.rxkotlin.subscribeBy
@@ -34,10 +35,9 @@ class FollowingViewModel @Inject constructor(private val usecase: FollowUseCase)
                 .subscribeBy(
                         onSuccess = {
                             setLoading("my_follow", false)
-                            Log.d("TTTT", "listMyFollow==>$it")
                             if (it.success) {
                                 if (refresh) {
-                                    mUsers.clear()
+                                    users.value = mUsers.empty()
                                 }
                                 if (it.isNotEmpty) {
                                     users.value = mUsers.addList(it.data)

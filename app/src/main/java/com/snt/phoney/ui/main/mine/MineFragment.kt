@@ -106,7 +106,7 @@ class MineFragment : BaseFragment(), OnSettingItemClickListener, OnSignOutClickL
         editInfo.setOnClickListener { context?.let { context -> context.startActivity<UserActivity>(Page.EDIT_USER) } }
 
         head.setOnClickListener {
-            Picker.showPhotoPicker(fragment = this, max = 1, requestCode = REQUEST_HEAD_ICON_CODE)
+            Picker.showPhotoPicker(fragment = this, max = 1, crop = true, requestCode = REQUEST_HEAD_ICON_CODE)
         }
 
         viewModel.getUserPhotos()
@@ -248,7 +248,7 @@ class MineFragment : BaseFragment(), OnSettingItemClickListener, OnSignOutClickL
 
     private fun handlePhotoPick(requestCode: Int, resultCode: Int, data: Intent?) {
         if (requestCode == Picker.REQUEST_CODE_CHOOSE && resultCode == Activity.RESULT_OK) {
-            data?.let {
+            data?.let { data ->
                 val paths = Matisse.obtainPathResult(data)
                 showProgress(getString(R.string.on_going_upload))
                 viewModel.uploadPhotos(paths.map { File(it) })
@@ -261,6 +261,7 @@ class MineFragment : BaseFragment(), OnSettingItemClickListener, OnSignOutClickL
             data?.let {
                 val paths = Matisse.obtainPathResult(data)
                 if (paths.isNotEmpty()) {
+                    showProgress(getString(R.string.on_going_upload))
                     viewModel.uploadHeadIcon(File(paths[0]))
                 }
             }

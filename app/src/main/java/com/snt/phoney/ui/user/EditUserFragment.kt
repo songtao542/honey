@@ -130,6 +130,9 @@ class EditUserFragment : BaseFragment() {
 
         viewModel.success.observe(this, Observer {
             snackbar(it)
+            view?.postDelayed({
+                activity?.onBackPressed()
+            }, 500)
         })
         viewModel.error.observe(this, Observer {
             snackbar(it)

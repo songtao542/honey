@@ -1,5 +1,6 @@
 package com.snt.phoney.api
 
+import android.text.TextUtils
 import android.util.Log
 import com.snt.phoney.BuildConfig
 import com.snt.phoney.extensions.TAG
@@ -8,6 +9,8 @@ import okhttp3.*
 import java.net.URLEncoder
 import java.nio.charset.Charset
 import java.util.*
+import java.util.concurrent.TimeUnit
+
 
 private val UTF8 = Charset.forName("UTF-8")
 const val APP_SECRET = ""
@@ -121,6 +124,57 @@ open class SignInterceptor : Interceptor {
         }
     }
 }
+
+class TimeoutInterceptor : Interceptor {
+    override fun intercept(chain: Interceptor.Chain): Response {
+        val request = chain.request()
+
+        var connectTimeout = chain.connectTimeoutMillis()
+        var readTimeout = chain.readTimeoutMillis()
+        var writeTimeout = chain.writeTimeoutMillis()
+
+        if (BuildConfig.DEBUG) {
+            Log.d("TimeoutInterceptor", "original connectTimeout=$connectTimeout")
+            Log.d("TimeoutInterceptor", "original readTimeout=$readTimeout")
+            Log.d("TimeoutInterceptor", "original writeTimeout=$writeTimeout")
+        }
+
+        //@Headers("Timeout: 60000")
+        val timeout = request.header("Timeout")
+        if (!TextUtils.isEmpty(timeout)) {
+            val time = Integer.valueOf(timeout)
+            connectTimeout = time
+            readTimeout = time
+            writeTimeout = time
+        } else {
+            // @Headers("Connect-Timeout: 60000", "Read-Timeout: 60000", "Write-Timeout: 60000")
+            val connectTime = request.header("Connect-Timeout")
+            val readTime = request.header("Read-Timeout")
+            val writeTime = request.header("Write-Timeout")
+            if (!TextUtils.isEmpty(connectTime)) {
+                connectTimeout = Integer.valueOf(connectTime)
+            }
+            if (!TextUtils.isEmpty(readTime)) {
+                readTimeout = Integer.valueOf(readTime)
+            }
+            if (!TextUtils.isEmpty(writeTime)) {
+                writeTimeout = Integer.valueOf(writeTime)
+            }
+        }
+        if (BuildConfig.DEBUG) {
+            Log.d("TimeoutInterceptor", "config connectTimeout=$connectTimeout")
+            Log.d("TimeoutInterceptor", "config readTimeout=$readTimeout")
+            Log.d("TimeoutInterceptor", "config writeTimeout=$writeTimeout")
+        }
+        return chain
+                .withConnectTimeout(connectTimeout, TimeUnit.MILLISECONDS)
+                .withReadTimeout(readTimeout, TimeUnit.MILLISECONDS)
+                .withWriteTimeout(writeTimeout, TimeUnit.MILLISECONDS)
+                .proceed(request)
+    }
+
+}
+
 //
 //class LoginStateInterceptor @Inject constructor(private val userRepository: UserRepository) : SignInterceptor() {
 //

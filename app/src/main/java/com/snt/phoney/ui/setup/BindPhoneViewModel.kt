@@ -25,7 +25,6 @@ class BindPhoneViewModel @Inject constructor(private val usecase: BindPhoneUseCa
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribeBy {
-                    Log.d("TTTT", "bindPhone==>$it")
                     if (it.code == 200) {
                         success.value = it.data
                     } else if (!TextUtils.isEmpty(it.message)) {
@@ -39,7 +38,6 @@ class BindPhoneViewModel @Inject constructor(private val usecase: BindPhoneUseCa
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribeBy {
-                    Log.d("TTTT", "requestVerificationCode success->$it")
                     if (it.code == 200) {
                         verificationCodeId.value = it.data
                     } else if (!TextUtils.isEmpty(it.message)) {

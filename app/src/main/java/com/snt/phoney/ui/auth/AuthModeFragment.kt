@@ -59,7 +59,7 @@ class AuthModeFragment : BaseFragment() {
     private fun startAuthMode(type: Int) {
         addFragmentSafely(AuthFragment.newInstance(Bundle().apply {
             putInt(Constants.Extra.TYPE, type)
-        }), "auth_mode", true)
+        }), "auth_mode", true, enterAnimation = R.anim.slide_in_right, popExitAnimation = R.anim.slide_out_right)
     }
 
 

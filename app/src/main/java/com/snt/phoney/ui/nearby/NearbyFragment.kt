@@ -17,10 +17,6 @@ import kotlinx.android.synthetic.main.fragment_nearby_list.*
  */
 class NearbyFragment : BaseFragment() {
 
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-    }
-
     private lateinit var viewModel: NearbyViewModel
 
     private lateinit var adapter: NearbyRecyclerViewAdapter

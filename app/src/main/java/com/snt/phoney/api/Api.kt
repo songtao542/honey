@@ -43,6 +43,7 @@ interface Api {
                    @Field("sex") sex: Int): Single<Response<String>>
 
     @Multipart
+    @Headers("Timeout: 20000")
     @POST("users/setPortrait")
     fun uploadHeadIcon(@Part("token") token: String,
                        @Part portrait: MultipartBody.Part): Single<Response<String>>
@@ -192,6 +193,7 @@ interface Api {
      */
     @Multipart
     //@Headers(value = ["Content-Type: application/x-www-form-urlencoded; charset=UTF-8"])
+    @Headers("Timeout: 30000")
     @POST("appointment/addAppointment")
     fun publishDating(@Part("token") token: String,
                       @Part("title") title: String,
@@ -453,6 +455,7 @@ interface Api {
                            @Field("id") photoId: String): Single<Response<String>>
 
     @Multipart
+    @Headers("Timeout: 30000")
     @POST("users/setPhotos")
     fun uploadPhotos(@Part("token") token: String,
                      @Part photos: List<MultipartBody.Part>): Single<Response<List<Photo>>>
@@ -494,6 +497,7 @@ interface Api {
      *@param pauthentication    string	是	上传文件名
      */
     @Multipart
+    @Headers("Timeout: 60000")
     @POST("users/authentication/addAuthentication")
     fun auth(@Part("token") token: String,
              @Part("type") type: String,
@@ -508,6 +512,7 @@ interface Api {
      *@param rtype    string	是	0 用户 1 约会
      */
     @Multipart
+    @Headers("Timeout: 20000")
     @POST("report/report")
     fun report(@Part("token") token: String,
                @Part("type") type: String,

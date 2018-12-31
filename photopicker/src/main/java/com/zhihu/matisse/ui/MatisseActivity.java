@@ -19,17 +19,20 @@ import android.Manifest;
 import android.annotation.SuppressLint;
 import android.annotation.TargetApi;
 import android.app.Activity;
+import android.content.ContentValues;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.content.res.TypedArray;
 import android.database.Cursor;
 import android.graphics.PorterDuff;
 import android.graphics.drawable.Drawable;
+import android.media.MediaScannerConnection;
 import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Looper;
+import android.provider.MediaStore;
 import android.util.Log;
 import android.util.TypedValue;
 import android.view.MenuItem;
@@ -71,6 +74,7 @@ import com.zhihu.matisse.internal.utils.MediaStoreCompat;
 import com.zhihu.matisse.internal.utils.PathUtils;
 import com.zhihu.matisse.internal.utils.PhotoMetadataUtils;
 
+import java.io.File;
 import java.util.ArrayList;
 
 /**
@@ -342,6 +346,7 @@ public class MatisseActivity extends AppCompatActivity implements
                 Intent result = new Intent();
                 result.putParcelableArrayListExtra(EXTRA_RESULT_SELECTION, selected);
                 result.putStringArrayListExtra(EXTRA_RESULT_SELECTION_PATH, selectedPath);
+
                 setResult(RESULT_OK, result);
                 if (Build.VERSION.SDK_INT < Build.VERSION_CODES.LOLLIPOP)
                     MatisseActivity.this.revokeUriPermission(contentUri, Intent.FLAG_GRANT_WRITE_URI_PERMISSION | Intent.FLAG_GRANT_READ_URI_PERMISSION);
@@ -357,6 +362,10 @@ public class MatisseActivity extends AppCompatActivity implements
             Intent result = new Intent();
             result.putParcelableArrayListExtra(EXTRA_RESULT_SELECTION, selected);
             result.putStringArrayListExtra(EXTRA_RESULT_SELECTION_PATH, selectedPath);
+
+            Log.d("Matisse", "onCropSuccess path=" + path + "   contentUri=" + contentUri);
+            updateMediaStore(path);
+
             setResult(RESULT_OK, result);
             if (Build.VERSION.SDK_INT < Build.VERSION_CODES.LOLLIPOP)
                 MatisseActivity.this.revokeUriPermission(contentUri, Intent.FLAG_GRANT_WRITE_URI_PERMISSION | Intent.FLAG_GRANT_READ_URI_PERMISSION);
@@ -364,9 +373,19 @@ public class MatisseActivity extends AppCompatActivity implements
         }
     }
 
+    private void updateMediaStore(String filePath) {
+        //File file = new File(filePath);
+        //ContentValues values = new ContentValues();
+        //values.put(MediaStore.Images.Media.DATA, filePath);
+        //values.put(MediaStore.Images.Media.DISPLAY_NAME, file.getName());
+        //getContentResolver().insert(MediaStore.Images.Media.EXTERNAL_CONTENT_URI, values);
+        //MediaStore.Images.Media.insertImage(getContentResolver(), file.getAbsolutePath(), file.getName(), null);
+        MediaScannerConnection.scanFile(this, new String[]{filePath}, null, (path, uri) -> {
+            Log.d("Matisse", "updateMediaStore path=" + path + "   uri=" + uri);
+        });
+    }
 
     private void updateBottomToolbar() {
-
         int selectedCount = mSelectedCollection.count();
         if (selectedCount == 0) {
             mButtonPreview.setEnabled(false);
@@ -382,17 +401,13 @@ public class MatisseActivity extends AppCompatActivity implements
             mButtonApply.setText(getString(R.string.button_sure, selectedCount));
         }
 
-
         if (mSpec.originalable) {
             mOriginalLayout.setVisibility(View.VISIBLE);
             updateOriginalState();
         } else {
             mOriginalLayout.setVisibility(View.INVISIBLE);
         }
-
-
     }
-
 
     private void updateOriginalState() {
         mOriginal.setChecked(mOriginalEnable);
@@ -401,15 +416,13 @@ public class MatisseActivity extends AppCompatActivity implements
             if (mOriginalEnable) {
                 IncapableDialog incapableDialog = IncapableDialog.newInstance("",
                         getString(R.string.error_over_original_size, mSpec.originalMaxSize));
-                incapableDialog.show(getSupportFragmentManager(),
-                        IncapableDialog.class.getName());
+                incapableDialog.show(getSupportFragmentManager(), IncapableDialog.class.getName());
 
                 mOriginal.setChecked(false);
                 mOriginalEnable = false;
             }
         }
     }
-
 
     private int countOverMaxSize() {
         int count = 0;
@@ -448,8 +461,7 @@ public class MatisseActivity extends AppCompatActivity implements
             if (count > 0) {
                 IncapableDialog incapableDialog = IncapableDialog.newInstance("",
                         getString(R.string.error_over_original_count, count, mSpec.originalMaxSize));
-                incapableDialog.show(getSupportFragmentManager(),
-                        IncapableDialog.class.getName());
+                incapableDialog.show(getSupportFragmentManager(), IncapableDialog.class.getName());
                 return;
             }
 
@@ -529,6 +541,17 @@ public class MatisseActivity extends AppCompatActivity implements
     public void onMediaClick(Album album, Item item, int adapterPosition) {
         if (mSpec.singleSelectionModeEnabled() && mSpec.crop) {
             mCropper.crop(PathUtils.getPath(this, item.getContentUri()));
+        } else if (mSpec.singleSelectionModeEnabled()) {
+            Intent result = new Intent();
+            ArrayList<Uri> selectedUris = new ArrayList<>();
+            selectedUris.add(item.getContentUri());
+            result.putParcelableArrayListExtra(EXTRA_RESULT_SELECTION, selectedUris);
+            ArrayList<String> selectedPaths = new ArrayList<>();
+            selectedPaths.add(PathUtils.getPath(this, item.getContentUri()));
+            result.putStringArrayListExtra(EXTRA_RESULT_SELECTION_PATH, selectedPaths);
+            result.putExtra(EXTRA_RESULT_ORIGINAL_ENABLE, mOriginalEnable);
+            setResult(RESULT_OK, result);
+            finish();
         } else {
             Intent intent = new Intent(this, AlbumPreviewActivity.class);
             intent.putExtra(AlbumPreviewActivity.EXTRA_ALBUM, album);

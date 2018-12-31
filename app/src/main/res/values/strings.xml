@@ -22,6 +22,7 @@
     <string name="btn_login">登录</string>
     <string name="btn_forget_password">忘记密码</string>
     <string name="get_verification_code">获取验证码</string>
+    <string name="please_input_verification_code">请输入验证码</string>
 
     <string name="btn_qq">QQ</string>
     <string name="btn_wx">微信</string>
