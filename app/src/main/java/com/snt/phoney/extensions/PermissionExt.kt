@@ -69,7 +69,30 @@ fun Activity.checkAndRequestPermission(vararg permissions: String): Boolean {
 }
 
 fun Fragment.checkAndRequestPermission(vararg permissions: String): Boolean {
-    return activity?.checkAndRequestPermission(*permissions) ?: false
+    //return activity?.checkAndRequestPermission(*permissions) ?: false
+    var requestList = ArrayList<String>()
+    if (permissions.isNotEmpty()) {
+        for (permission in permissions) {
+            if (PackageManager.PERMISSION_GRANTED != ContextCompat.checkSelfPermission(requireContext(), permission)) {
+                requestList.add(permission)
+            }
+        }
+    } else {
+        for (permission in com.snt.phoney.extensions.permissions) {
+            if (PackageManager.PERMISSION_GRANTED != ContextCompat.checkSelfPermission(requireContext(), permission)) {
+                requestList.add(permission)
+            }
+        }
+    }
+    return if (!requestList.isEmpty()) {
+        val array = Array(requestList.size) {
+            requestList[it]
+        }
+        requestPermissions(array, 123)
+        false
+    } else {
+        true
+    }
 }
 
 

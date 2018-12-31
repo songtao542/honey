@@ -45,29 +45,62 @@
 
     </LinearLayout>
 
-    <com.snt.phoney.widget.ExpandableFilterView
-        android:id="@+id/expandable"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="@dimen/filter_view_height"
-        android:background="@color/white"
-        android:orientation="vertical"
-        android:translationZ="1dp" />
+    <!--<com.snt.phoney.widget.ExpandableFilterView-->
+    <!--android:id="@+id/expandable"-->
+    <!--android:layout_width="match_parent"-->
+    <!--android:layout_height="wrap_content"-->
+    <!--android:layout_marginTop="@dimen/filter_view_height"-->
+    <!--android:background="@color/white"-->
+    <!--android:orientation="vertical"-->
+    <!--android:translationZ="1dp" />-->
 
     <androidx.swiperefreshlayout.widget.SwipeRefreshLayout
         android:id="@+id/swipeRefresh"
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="match_parent"
+        android:layout_marginTop="@dimen/filter_view_height">
 
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/list"
             android:name="com.snt.phoney.ui.square.official.OfficialRecommendFragment"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:layout_marginTop="@dimen/filter_view_height"
             android:background="@color/white"
             tools:context=".ui.main.square.official.OfficialRecommendFragment"
             tools:listitem="@layout/fragment_official_recommend" />
     </androidx.swiperefreshlayout.widget.SwipeRefreshLayout>
 
+    <FrameLayout
+        android:id="@+id/openLocationLayout"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@color/white">
+
+        <androidx.appcompat.widget.AppCompatTextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_marginBottom="40dp"
+            android:gravity="center"
+            android:lineSpacingExtra="5dp"
+            android:lineSpacingMultiplier="2"
+            android:text="@string/recommend_tip"
+            android:textSize="@dimen/textsize_large" />
+
+        <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/openLocation"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:background="?attr/selectableItemBackground"
+            android:gravity="center"
+            android:lineSpacingExtra="5dp"
+            android:lineSpacingMultiplier="2"
+            android:paddingLeft="20dp"
+            android:paddingTop="10dp"
+            android:paddingRight="20dp"
+            android:paddingBottom="10dp"
+            android:text="@string/click_to_open"
+            android:textSize="@dimen/textsize_large" />
+    </FrameLayout>
 </RelativeLayout>

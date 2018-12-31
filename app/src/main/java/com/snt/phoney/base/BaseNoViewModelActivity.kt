@@ -4,6 +4,7 @@ import android.app.Activity
 import android.os.Bundle
 import android.view.KeyEvent
 import androidx.appcompat.app.AppCompatActivity
+import androidx.core.app.ActivityCompat
 import androidx.fragment.app.Fragment
 import com.snt.phoney.R
 import com.snt.phoney.domain.accessor.UserAccessor
@@ -16,7 +17,7 @@ import dagger.android.support.HasSupportFragmentInjector
 import io.reactivex.disposables.CompositeDisposable
 import javax.inject.Inject
 
-abstract class BaseNoViewModelActivity : AppCompatActivity(), HasSupportFragmentInjector {
+abstract class BaseNoViewModelActivity : AppCompatActivity(), HasSupportFragmentInjector, ActivityCompat.OnRequestPermissionsResultCallback {
 
     @Inject
     lateinit var dispatchingAndroidInjector: DispatchingAndroidInjector<Fragment>

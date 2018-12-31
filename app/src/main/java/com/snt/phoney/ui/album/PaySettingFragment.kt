@@ -1,5 +1,7 @@
 package com.snt.phoney.ui.album
 
+import android.app.Activity
+import android.content.Intent
 import android.os.Bundle
 import android.text.TextUtils
 import android.view.LayoutInflater
@@ -78,7 +80,10 @@ class PaySettingFragment : BaseFragment() {
         viewModel.success.observe(this, Observer {
             progressDialog?.dismiss()
             progressDialog = null
-            activity?.finish()
+            snackbar(it)
+            view?.postDelayed({
+                finish()
+            }, 500)
         })
 
         viewModel.error.observe(this, Observer {
@@ -120,6 +125,15 @@ class PaySettingFragment : BaseFragment() {
         } else {
             adapter.data = photos
         }
+    }
+
+    fun finish() {
+        if (viewModel.permission != -1) {
+            val data = Intent()
+            data.putExtra(Constants.Extra.DATA, viewModel.permission)
+            activity?.setResult(Activity.RESULT_OK, data)
+        }
+        activity?.finish()
     }
 
     private fun getAmount(): Double {

@@ -48,12 +48,12 @@ class OfficialRecommendFragment : BaseFragment() {
         adapter = OfficialRecommendRecyclerViewAdapter(this, viewModel, disposeBag)
         list.adapter = adapter
 
-        list.setOnTouchListener { _, _ ->
-            if (expandable.isExpanded && !expandable.isAnimating) {
-                expandable.collapseWithAnimation()
-            }
-            return@setOnTouchListener false
-        }
+//        list.setOnTouchListener { _, _ ->
+//            if (expandable.isExpanded && !expandable.isAnimating) {
+//                expandable.collapseWithAnimation()
+//            }
+//            return@setOnTouchListener false
+//        }
 
         publishTime.setOnClickListener {
             //expandFilter(publishTime, R.array.filter_publish_time)
@@ -90,6 +90,10 @@ class OfficialRecommendFragment : BaseFragment() {
             adapter.data = it
         })
 
+        openLocation.setOnClickListener {
+            checkAndRequestPermission(*getPermissions())
+        }
+
         swipeRefresh.setOnRefreshListener {
             swipeRefresh.isRefreshing = true
             loadDating(true)
@@ -102,12 +106,13 @@ class OfficialRecommendFragment : BaseFragment() {
         loadDating(true)
     }
 
-    private fun checkPermission(): Boolean {
-        return context?.checkAppPermission(Manifest.permission.ACCESS_FINE_LOCATION, Manifest.permission.ACCESS_COARSE_LOCATION) == true
+    private fun getPermissions(): Array<String> {
+        return arrayOf(Manifest.permission.ACCESS_FINE_LOCATION, Manifest.permission.ACCESS_COARSE_LOCATION)
     }
 
     override fun onRequestPermissionsResult(requestCode: Int, permissions: Array<out String>, grantResults: IntArray) {
-        if (checkPermission()) {
+        if (checkAppPermission(*getPermissions())) {
+            openLocationLayout.visibility = View.GONE
             loadDating(true)
         } else {
             filterDistance = FilterDistance.from(-1)
@@ -115,6 +120,10 @@ class OfficialRecommendFragment : BaseFragment() {
     }
 
     private fun loadDating(refresh: Boolean, loadMore: LoadMoreAdapter.LoadMore? = null) {
+        if (!checkAppPermission(*getPermissions())) {
+            openLocationLayout.visibility = View.VISIBLE
+            return
+        }
         if (refresh) {
             list.setLoadMoreEnable(true)
         }
@@ -122,16 +131,17 @@ class OfficialRecommendFragment : BaseFragment() {
         val distanceFilter = filterDistance.toString()
         val contentFilter = filterContent.toString()
         viewModel.listRecommendDating(refresh, timeFilter, distanceFilter, contentFilter, loadMore)
+
     }
 
-    private fun expandFilter(dropdownLabel: DropdownLabelView, menus: Int) {
-        expandable.setIndicatorView(dropdownLabel.getIndicatorView())
-        if (expandable.isExpanded) {
-            expandable.collapseWithAnimation()
-        } else {
-            expandable.setFilter(context?.resources?.getStringArray(menus)?.asList())
-        }
-    }
+//    private fun expandFilter(dropdownLabel: DropdownLabelView, menus: Int) {
+//        expandable.setIndicatorView(dropdownLabel.getIndicatorView())
+//        if (expandable.isExpanded) {
+//            expandable.collapseWithAnimation()
+//        } else {
+//            expandable.setFilter(context?.resources?.getStringArray(menus)?.asList())
+//        }
+//    }
 
     private fun popupMenu(dropdownLabel: DropdownLabelView, menus: Int, handler: ((selectPosition: Int) -> Unit)) {
         val menuList = context!!.resources.getStringArray(menus).asList()

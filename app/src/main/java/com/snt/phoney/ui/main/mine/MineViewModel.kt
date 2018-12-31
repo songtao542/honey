@@ -12,6 +12,7 @@ import com.snt.phoney.domain.model.UserInfo
 import com.snt.phoney.domain.usecase.UserInfoUseCase
 import com.snt.phoney.extensions.TAG
 import com.snt.phoney.extensions.disposedBy
+import com.snt.phoney.utils.WechatApi
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.rxkotlin.subscribeBy
 import io.reactivex.schedulers.Schedulers
@@ -62,8 +63,7 @@ class MineViewModel @Inject constructor(private val usecase: UserInfoUseCase) : 
                         onSuccess = {
                             if (it.success) {
                                 success.value = context.getString(R.string.set_photo_permission_success)
-                                user.value?.photoPermission = photoPermission.value
-                                user.value?.let { user -> usecase.setUser(user) }
+                                updateUserPhotoPermission(photoPermission)
                             } else if (!TextUtils.isEmpty(it.message)) {
                                 error.value = context.getString(R.string.set_photo_permission_failed)
                             }
@@ -131,6 +131,13 @@ class MineViewModel @Inject constructor(private val usecase: UserInfoUseCase) : 
                             error.value = context.getString(R.string.upload_photo_failed)
                         }
                 ).disposedBy(disposeBag)
+    }
+
+    fun updateUserPhotoPermission(permission: PhotoPermission) {
+        user.value?.let { user ->
+            user.photoPermission = permission.value
+            usecase.setUser(user)
+        }
     }
 
     fun signOut() {

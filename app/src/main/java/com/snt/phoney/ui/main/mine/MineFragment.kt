@@ -4,6 +4,7 @@ import android.app.Activity
 import android.app.AlertDialog
 import android.content.Intent
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -49,6 +50,7 @@ const val REQUEST_AUTH_CODE = 56
 const val REQUEST_ALBUM_CODE = 58
 const val REQUEST_HEAD_ICON_CODE = 59
 const val REQUEST_VIP_CODE = 60
+const val REQUEST_PAY_SETTING_CODE = 64
 
 /**
  * A fragment representing a list of Items.
@@ -127,12 +129,10 @@ class MineFragment : BaseFragment(), OnSettingItemClickListener, OnSignOutClickL
                             setOnSelectListener { permission ->
                                 when (permission) {
                                     PhotoPermission.NEED_CHARGE -> {
-                                        activity?.let { activity ->
-                                            activity.startActivity<AlbumActivity>(Page.PAY_SETTING, Bundle().apply {
-                                                putInt(Constants.Extra.PERMISSION, PhotoPermission.NEED_CHARGE.value)
-                                                putParcelableArrayList(Constants.Extra.PHOTO_LIST, ArrayList<Photo>(viewModel.photos.value))
-                                            })
-                                        }
+                                        this@MineFragment.startActivityForResult<AlbumActivity>(Page.PAY_SETTING, REQUEST_PAY_SETTING_CODE, Bundle().apply {
+                                            putInt(Constants.Extra.PERMISSION, PhotoPermission.NEED_CHARGE.value)
+                                            putParcelableArrayList(Constants.Extra.PHOTO_LIST, ArrayList<Photo>(viewModel.photos.value))
+                                        })
                                     }
                                     PhotoPermission.PUBLIC -> {
                                         showProgress(getString(R.string.on_going_seting))
@@ -244,8 +244,12 @@ class MineFragment : BaseFragment(), OnSettingItemClickListener, OnSignOutClickL
         handleAuthResult(requestCode, resultCode, data)
         handleHeadIconResult(requestCode, resultCode, data)
         handleVipResult(requestCode, resultCode, data)
+        handlePermissionResult(requestCode, resultCode, data)
     }
 
+    /**
+     *上传相册
+     */
     private fun handlePhotoPick(requestCode: Int, resultCode: Int, data: Intent?) {
         if (requestCode == Picker.REQUEST_CODE_CHOOSE && resultCode == Activity.RESULT_OK) {
             data?.let { data ->
@@ -256,18 +260,9 @@ class MineFragment : BaseFragment(), OnSettingItemClickListener, OnSignOutClickL
         }
     }
 
-    private fun handleHeadIconResult(requestCode: Int, resultCode: Int, data: Intent?) {
-        if (requestCode == REQUEST_HEAD_ICON_CODE && resultCode == Activity.RESULT_OK) {
-            data?.let {
-                val paths = Matisse.obtainPathResult(data)
-                if (paths.isNotEmpty()) {
-                    showProgress(getString(R.string.on_going_upload))
-                    viewModel.uploadHeadIcon(File(paths[0]))
-                }
-            }
-        }
-    }
-
+    /**
+     * 删除相册
+     */
     private fun handleAlbumPhotoDelete(requestCode: Int, resultCode: Int, data: Intent?) {
         if (requestCode == REQUEST_ALBUM_CODE && resultCode == Activity.RESULT_OK) {
             data?.let { data ->
@@ -283,6 +278,24 @@ class MineFragment : BaseFragment(), OnSettingItemClickListener, OnSignOutClickL
         }
     }
 
+    /**
+     * 上传头像
+     */
+    private fun handleHeadIconResult(requestCode: Int, resultCode: Int, data: Intent?) {
+        if (requestCode == REQUEST_HEAD_ICON_CODE && resultCode == Activity.RESULT_OK) {
+            data?.let {
+                val paths = Matisse.obtainPathResult(data)
+                if (paths.isNotEmpty()) {
+                    showProgress(getString(R.string.on_going_upload))
+                    viewModel.uploadHeadIcon(File(paths[0]))
+                }
+            }
+        }
+    }
+
+    /**
+     * 认证结果
+     */
     private fun handleAuthResult(requestCode: Int, resultCode: Int, data: Intent?) {
         if (requestCode == REQUEST_AUTH_CODE && resultCode == Activity.RESULT_OK) {
             data?.let {
@@ -294,12 +307,29 @@ class MineFragment : BaseFragment(), OnSettingItemClickListener, OnSignOutClickL
         }
     }
 
+    /**
+     * 购买VIP结果
+     */
     private fun handleVipResult(requestCode: Int, resultCode: Int, data: Intent?) {
         if (requestCode == REQUEST_VIP_CODE && resultCode == Activity.RESULT_OK) {
             data?.let {
                 val success = data.getBooleanExtra(Constants.Extra.DATA, false)
                 if (success) {
                     viewModel.getAllInfoOfUser()
+                }
+            }
+        }
+    }
+
+    /**
+     *处理设置相册付费结果
+     */
+    private fun handlePermissionResult(requestCode: Int, resultCode: Int, data: Intent?) {
+        if (requestCode == REQUEST_PAY_SETTING_CODE && resultCode == Activity.RESULT_OK) {
+            data?.let {
+                val permission = data.getIntExtra(Constants.Extra.DATA, -1)
+                if (permission != -1) {
+                    viewModel.updateUserPhotoPermission(PhotoPermission.from(permission))
                 }
             }
         }

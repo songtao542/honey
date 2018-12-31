@@ -25,13 +25,14 @@ import com.snt.phoney.ui.main.square.popular.PopularRecommendFragment;
 import com.snt.phoney.ui.setup.BindPhoneFragment;
 import com.snt.phoney.ui.setup.BindPhoneViewModel;
 import com.snt.phoney.ui.share.ShareFragment;
+import com.snt.phoney.ui.share.ShareModule;
 
 import dagger.Binds;
 import dagger.Module;
 import dagger.android.ContributesAndroidInjector;
 import dagger.multibindings.IntoMap;
 
-@Module(includes = {ViewModelFactoryModule.class})
+@Module(includes = {ViewModelFactoryModule.class, ShareModule.class})
 public abstract class MainActivityModule {
 
     @FragmentScope
@@ -73,10 +74,6 @@ public abstract class MainActivityModule {
     @FragmentScope
     @ContributesAndroidInjector
     public abstract AlbumPermissionSettingFragment contributeAlbumPermissionSettingFragment();
-
-    @FragmentScope
-    @ContributesAndroidInjector
-    public abstract ShareFragment contributeShareFragment();
 
     @FragmentScope
     @ContributesAndroidInjector

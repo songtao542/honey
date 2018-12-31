@@ -15,6 +15,7 @@ import javax.inject.Inject
 class PaySettingViewModel @Inject constructor(private val usecase: AlbumSettingUseCase) : AppViewModel() {
 
     val photos = MutableLiveData<List<Photo>>()
+    var permission = -1
 
     fun setPhotoPermission(photoPermission: PhotoPermission, money: Double = 0.0, photoId: String = ""): Disposable? {
         val token = usecase.getAccessToken() ?: return null
@@ -23,8 +24,11 @@ class PaySettingViewModel @Inject constructor(private val usecase: AlbumSettingU
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribeBy(
                         onSuccess = {
-                            if (it.code == 200) {
+                            if (it.success) {
+                                permission = photoPermission.value
                                 success.value = context.getString(R.string.set_photo_permission_success)
+                            } else if (it.hasMessage) {
+                                error.value = it.message
                             } else {
                                 error.value = context.getString(R.string.set_photo_permission_failed)
                             }

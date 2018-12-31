@@ -13,6 +13,7 @@ import com.snt.phoney.base.AppViewModel
 import com.snt.phoney.domain.model.WeiboUser
 import com.snt.phoney.domain.usecase.WeiboSigninUseCase
 import com.snt.phoney.extensions.TAG
+import com.snt.phoney.utils.WeiboApi
 import com.snt.phoney.utils.data.Constants.Weibo
 import com.snt.phoney.utils.life.SingleLiveData
 import io.reactivex.android.schedulers.AndroidSchedulers
@@ -23,13 +24,14 @@ import javax.inject.Inject
 
 class WeiboViewModel @Inject constructor(private val usecase: WeiboSigninUseCase) : AppViewModel() {
 
-    private var ssoHandler: SsoHandler? = null
     private var accessToken: Oauth2AccessToken? = null
+
+    private var mWeiboApi: WeiboApi? = null
 
     val user = SingleLiveData<WeiboUser>()
 
     override fun initialize() {
-        WbSdk.install(application, AuthInfo(application, Weibo.APP_KEY, Weibo.REDIRECT_URL, Weibo.SCOPE))
+        mWeiboApi = WeiboApi(application)
     }
 
     fun login(activity: Activity) {
@@ -46,10 +48,7 @@ class WeiboViewModel @Inject constructor(private val usecase: WeiboSigninUseCase
     }
 
     private fun authorize(activity: Activity) {
-        if (ssoHandler == null) {
-            ssoHandler = SsoHandler(activity)
-        }
-        ssoHandler!!.authorize(object : WbAuthListener {
+        mWeiboApi?.authorize(activity, object : WbAuthListener {
             override fun onSuccess(token: Oauth2AccessToken?) {
                 if (token?.isSessionValid == true) {
                     accessToken = token
@@ -105,8 +104,7 @@ class WeiboViewModel @Inject constructor(private val usecase: WeiboSigninUseCase
     }
 
     fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
-        //SSO 授权回调 重要：发起 SSO 登陆的 Activity 必须重写 onActivityResults
-        ssoHandler?.authorizeCallBack(requestCode, resultCode, data)
+        mWeiboApi?.onActivityResult(requestCode, resultCode, data)
     }
 
     override fun onCleared() {
