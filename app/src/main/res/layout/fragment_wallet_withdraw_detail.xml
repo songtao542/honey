@@ -67,14 +67,14 @@
         android:background="@drawable/underline_gray"
         android:paddingLeft="20dp"
         android:paddingRight="20dp"
-        android:paddingBottom="10dp">
+        android:paddingBottom="15dp">
 
         <androidx.appcompat.widget.AppCompatTextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="left|center_vertical"
             android:gravity="left|center_vertical"
-            android:text="@string/withdraw_amount"
+            android:text="@string/withdraw_describe"
             android:textColor="@color/black"
             android:textSize="@dimen/textsize_normal" />
 
@@ -84,7 +84,7 @@
             android:layout_height="wrap_content"
             android:layout_gravity="right|center_vertical"
             android:gravity="right|center_vertical"
-            android:textColor="@color/black"
+            android:textColor="@color/dark_gray"
             android:textSize="@dimen/textsize_small" />
     </FrameLayout>
 
@@ -92,7 +92,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="left|center_vertical"
-        android:layout_marginTop="10dp"
+        android:layout_marginTop="15dp"
         android:gravity="left|center_vertical"
         android:paddingLeft="20dp"
         android:paddingRight="20dp"
@@ -105,17 +105,16 @@
         android:id="@+id/itemLayout"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:minHeight="30dp"
         android:orientation="vertical"></LinearLayout>
 
     <FrameLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="20dp"
         android:background="@drawable/underline_gray"
         android:paddingLeft="20dp"
-        android:paddingTop="10dp"
         android:paddingRight="20dp"
-        android:paddingBottom="10dp">
+        android:paddingBottom="15dp">
 
         <androidx.appcompat.widget.AppCompatTextView
             android:layout_width="wrap_content"
@@ -139,12 +138,11 @@
     <FrameLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="10dp"
         android:background="@drawable/underline_gray"
         android:paddingLeft="20dp"
-        android:paddingTop="10dp"
+        android:paddingTop="15dp"
         android:paddingRight="20dp"
-        android:paddingBottom="10dp">
+        android:paddingBottom="15dp">
 
         <androidx.appcompat.widget.AppCompatTextView
             android:layout_width="wrap_content"

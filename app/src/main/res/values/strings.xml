@@ -413,4 +413,5 @@
     <string name="weibo_not_install">您未安装微博应用</string>
     <string name="recommend_tip">获取官方推荐需要您开启“位置”权限</string>
     <string name="click_to_open">点击开启</string>
+    <string name="withdraw_describe">提现说明</string>
 </resources>

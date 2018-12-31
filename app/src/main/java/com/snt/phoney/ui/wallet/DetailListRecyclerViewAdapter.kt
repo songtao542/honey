@@ -91,7 +91,15 @@ class DetailListRecyclerViewAdapter(private val fragment: DetailListFragment, pr
                                 enterAnimation = R.anim.slide_in_up, popExitAnimation = R.anim.slide_out_down)
                     }
                 }
-                0 -> rechargeIcon.setImageResource(R.drawable.ic_order_cost)
+                0 -> {
+                    rechargeIcon.setImageResource(R.drawable.ic_order_cost)
+//                    mView.setOnClickListener {
+//                        fragment.addFragmentSafely(WithdrawDetailFragment.newInstance(Bundle().apply {
+//                            putString(Constants.Extra.UUID, record.uuid)
+//                        }), "withdraw_detail", true,
+//                                enterAnimation = R.anim.slide_in_up, popExitAnimation = R.anim.slide_out_down)
+//                    }
+                }
                 1 -> rechargeIcon.setImageResource(R.drawable.ic_order_vip)
                 10 -> rechargeIcon.setImageResource(R.drawable.ic_order_mibi)
                 11 -> rechargeIcon.setImageResource(R.drawable.ic_order_mibi)
