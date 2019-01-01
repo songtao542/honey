@@ -7,7 +7,7 @@ import kotlinx.serialization.Serializable
 data class WeiboUser(
         var token: String? = null,
         var uid: String? = null,
-        var id: Long  = 0,// "id": 1404376560,
+        var id: Long = 0,// "id": 1404376560,
         @SerializedName("screen_name") var screenName: String? = null,// "screen_name": "zaku",
         var name: String? = null,// "name": "zaku",
         var province: String? = null, // "province": "11",
@@ -18,10 +18,10 @@ data class WeiboUser(
         @SerializedName("profile_image_url") var profileImageUrl: String? = null,//"profile_image_url": "http://tp1.sinaimg.cn/1404376560/50/0/1",
         var domain: String? = null,// "domain": "zaku",
         var gender: String? = null,//"gender": "m",
-        @SerializedName("followers_count") var followersCount: Int = 0,// "followers_count": 1204,
-        @SerializedName("friends_count") var friendsCount: Int = 0,//"friends_count": 447,
-        @SerializedName("statuses_count") var statusesCount: Int = 0, //  "statuses_count": 2908,
-        @SerializedName("favourites_count") var favouritesCount: Int = 0,//  "favourites_count": 0,
+        @SerializedName("followers_count") var followersCount: Long = 0,// "followers_count": 1204,
+        @SerializedName("friends_count") var friendsCount: Long = 0,//"friends_count": 447,
+        @SerializedName("statuses_count") var statusesCount: Long = 0, //  "statuses_count": 2908,
+        @SerializedName("favourites_count") var favouritesCount: Long = 0,//  "favourites_count": 0,
         @SerializedName("created_at") var createdAt: String? = null,// "created_at": "Fri Aug 28 00:00:00 +0800 2009",
         var following: Boolean = false,//  "following": false,
         @SerializedName("allow_all_act_msg") var allowAllActMsg: Boolean = false,//  "allow_all_act_msg": false,
@@ -32,13 +32,13 @@ data class WeiboUser(
         @SerializedName("avatar_large") var avatarLarge: String? = null,// "avatar_large": "http://tp1.sinaimg.cn/1404376560/180/0/1",
         @SerializedName("verified_reason") var verifiedReason: String? = null,//"verified_reason": "",
         @SerializedName("follow_me") var followMe: Boolean = false,//  "follow_me": false,
-        @SerializedName("online_status") var onlineStatus: Int = 0,// "online_status": 0,
-        @SerializedName("bi_followers_count") var biFollowersCount: Int = 0// "bi_followers_count": 215
+        @SerializedName("online_status") var onlineStatus: Long = 0,// "online_status": 0,
+        @SerializedName("bi_followers_count") var biFollowersCount: Long = 0// "bi_followers_count": 215
 )
 
 data class WeiboStatus(
         @SerializedName("created_at") var created_at: String? = null,// "created_at": "Tue May 24 18:04:53 +0800 2011",
-        var id: Int = 0,// "id": 11142488790,
+        var id: Long = 0,// "id": 11142488790,
         var text: String? = null,//   "text": "我的相机到了。",
         var source: String? = null,//"source": "<a href="http://weibo.com" rel="nofollow">新浪微博</a>",
         var favorited: Boolean = false,//  "favorited": false,
@@ -49,6 +49,6 @@ data class WeiboStatus(
         var geo: String? = null,//    "geo": null,
         var mid: String? = null,//      "mid": "5610221544300749636",
         // "annotations": [],
-        @SerializedName("reposts_count") var repostsCount: Int = 0,//    "reposts_count": 5,
-        @SerializedName("comments_count") var commentsCount: Int = 0  // "comments_count": 8
+        @SerializedName("reposts_count") var repostsCount: Long = 0,//    "reposts_count": 5,
+        @SerializedName("comments_count") var commentsCount: Long = 0  // "comments_count": 8
 )
