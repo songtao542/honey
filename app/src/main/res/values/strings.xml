@@ -415,4 +415,6 @@
     <string name="click_to_open">点击开启</string>
     <string name="withdraw_describe">提现说明</string>
     <string name="bind_alipay_failed">绑定失败</string>
+    <string name="weibo_auth_failed">授权失败</string>
+    <string name="cancel_auth">取消授权</string>
 </resources>

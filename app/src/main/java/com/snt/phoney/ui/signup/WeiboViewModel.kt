@@ -9,6 +9,7 @@ import com.sina.weibo.sdk.auth.Oauth2AccessToken
 import com.sina.weibo.sdk.auth.WbAuthListener
 import com.sina.weibo.sdk.auth.WbConnectErrorMessage
 import com.sina.weibo.sdk.auth.sso.SsoHandler
+import com.snt.phoney.R
 import com.snt.phoney.base.AppViewModel
 import com.snt.phoney.domain.model.WeiboUser
 import com.snt.phoney.domain.usecase.WeiboSigninUseCase
@@ -59,11 +60,11 @@ class WeiboViewModel @Inject constructor(private val usecase: WeiboSigninUseCase
 
             override fun onFailure(errorMessage: WbConnectErrorMessage?) {
                 Log.d(TAG, "授权失败: ${errorMessage?.errorCode}  ${errorMessage?.errorMessage}")
-                error.postValue("授权失败")
+                error.postValue(context.getString(R.string.weibo_auth_failed))
             }
 
             override fun cancel() {
-                error.postValue("取消授权")
+                error.postValue(context.getString(R.string.cancel_auth))
             }
         })
     }
@@ -98,7 +99,8 @@ class WeiboViewModel @Inject constructor(private val usecase: WeiboSigninUseCase
                             user.value = it
                         },
                         onError = {
-                            error.postValue("授权失败")
+                            Log.e(TAG, "error=$it")
+                            error.postValue(context.getString(R.string.weibo_auth_failed))
                         }
                 )
     }

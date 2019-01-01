@@ -7,7 +7,7 @@ import kotlinx.serialization.Serializable
 data class WeiboUser(
         var token: String? = null,
         var uid: String? = null,
-        var id: Int = 0,// "id": 1404376560,
+        var id: Long  = 0,// "id": 1404376560,
         @SerializedName("screen_name") var screenName: String? = null,// "screen_name": "zaku",
         var name: String? = null,// "name": "zaku",
         var province: String? = null, // "province": "11",
