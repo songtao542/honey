@@ -15,6 +15,7 @@ import com.snt.phoney.domain.model.PreWithdraw
 import com.snt.phoney.extensions.TAG
 import com.snt.phoney.extensions.snackbar
 import com.snt.phoney.ui.browser.WebBrowserActivity
+import com.snt.phoney.utils.AlipayApi
 import com.snt.phoney.utils.data.Constants
 import kotlinx.android.synthetic.main.fragment_wallet_withdraw.*
 import java.text.DecimalFormat
@@ -41,6 +42,7 @@ class WithdrawFragment : BaseFragment() {
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
         viewModel = ViewModelProviders.of(this, viewModelFactory).get(WalletViewModel::class.java)
+
         toolbar.setNavigationOnClickListener { activity?.onBackPressed() }
 
         viewModel.preWithdraw.observe(this, Observer {
@@ -49,6 +51,10 @@ class WithdrawFragment : BaseFragment() {
 
         viewModel.error.observe(this, Observer {
             snackbar(it)
+        })
+
+        viewModel.alipaySign.observe(this, Observer { sign ->
+            bindAlipay(sign)
         })
 
         confirmButton.setOnClickListener {
@@ -104,11 +110,25 @@ class WithdrawFragment : BaseFragment() {
 //                    val intent = Intent(Intent.ACTION_VIEW, uri)
 //                    startActivity(intent)
 
-                    context.startActivity(Intent(context, WebBrowserActivity::class.java).apply {
-                        putExtra(Constants.Extra.TITLE, getString(R.string.bind_alipay))
-                        putExtra(Constants.Extra.URL, "${Constants.Api.BIND_ALIPAY_URL}${viewModel.getAccessToken()}")
-                    })
+//                    context.startActivity(Intent(context, WebBrowserActivity::class.java).apply {
+//                        putExtra(Constants.Extra.TITLE, getString(R.string.bind_alipay))
+//                        putExtra(Constants.Extra.URL, "${Constants.Api.BIND_ALIPAY_URL}${viewModel.getAccessToken()}")
+//                    })
+
+                    viewModel.bindAlipay()
+
                 }
+            }
+        }
+    }
+
+    private fun bindAlipay(sign: String) {
+        Log.d("TTTT", "yyyyyyyyyyyyyyyyyyyyyyyy sign=$sign")
+        AlipayApi.auth(requireActivity(), sign) { status, authCode ->
+            Log.d("TTTT", "yyyyyyyyyyyyyyyyyyyyyyyy statue=$status")
+            Log.d("TTTT", "yyyyyyyyyyyyyyyyyyyyyyyy authCode=$authCode")
+            authCode?.let {
+                viewModel.uploadAuthCode(authCode)
             }
         }
     }

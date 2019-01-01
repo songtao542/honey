@@ -37,6 +37,10 @@ interface OrderRepository {
      */
     fun alipay(token: String, orderId: String): Single<Response<String>>
 
+    fun bindAlipay(token: String): Single<Response<String>>
+
+    fun uploadAuthCode(token: String,authCode:String): Single<Response<String>>
+
     fun preWithdraw(token: String): Single<Response<PreWithdraw>>
 
     /**

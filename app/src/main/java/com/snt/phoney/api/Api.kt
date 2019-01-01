@@ -406,6 +406,15 @@ interface Api {
                @Field("unifiedOrder") unifiedOrder: String): Single<Response<String>>
 
     @FormUrlEncoded
+    @POST("auth/alipay/app/auth")
+    fun bindAlipay(@Field("token") token: String): Single<Response<String>>
+
+    @FormUrlEncoded
+    @POST("auth/alipay/app/getUserInfo")
+    fun uploadAuthCode(@Field("token") token: String,
+                       @Field("auth_code") authCode: String): Single<Response<String>>
+
+    @FormUrlEncoded
     @POST("payment/withdrawDeposit/preWithdraw")
     fun preWithdraw(@Field("token") token: String): Single<Response<PreWithdraw>>
 

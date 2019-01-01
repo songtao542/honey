@@ -22,6 +22,8 @@ class WalletViewModel @Inject constructor(private val usecase: WalletUseCase, pr
     val mibiWallet = MutableLiveData<MibiWallet>()
     val preWithdraw = MutableLiveData<PreWithdraw>()
 
+    val alipaySign = MutableLiveData<String>()
+
     val consumeOrders by lazy { MutableLiveData<List<OrderRecord>>() }
     private val mConsumeOrders by lazy { ArrayList<OrderRecord>() }
 
@@ -147,6 +149,49 @@ class WalletViewModel @Inject constructor(private val usecase: WalletUseCase, pr
                         },
                         onError = {
                             error.value = context.getString(R.string.can_not_withdraw)
+                        }
+                ).disposedBy(disposeBag)
+    }
+
+    fun bindAlipay() {
+        val token = usecase.getAccessToken() ?: return
+        usecase.bindAlipay(token)
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribeBy(
+                        onSuccess = {
+                            if (it.success) {
+                                alipaySign.value = it.data
+
+                            } else if (it.hasMessage) {
+                                error.value = it.message
+                            } else {
+                                error.value = context.getString(R.string.bind_alipay_failed)
+                            }
+                        },
+                        onError = {
+                            error.value = context.getString(R.string.bind_alipay_failed)
+                        }
+                ).disposedBy(disposeBag)
+    }
+
+    fun uploadAuthCode(authCode: String) {
+        val token = usecase.getAccessToken() ?: return
+        usecase.uploadAuthCode(token, authCode)
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribeBy(
+                        onSuccess = {
+                            //if (it.success) {
+                            //    alipaySign.value = it.data
+                            //} else if (it.hasMessage) {
+                            //    error.value = it.message
+                            //} else {
+                            //    error.value = context.getString(R.string.bind_alipay_failed)
+                            //}
+                        },
+                        onError = {
+                            error.value = context.getString(R.string.bind_alipay_failed)
                         }
                 ).disposedBy(disposeBag)
     }

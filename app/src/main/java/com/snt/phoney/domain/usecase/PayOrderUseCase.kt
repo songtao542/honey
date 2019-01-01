@@ -14,4 +14,6 @@ class PayOrderUseCase @Inject constructor(val repository: UserRepository, val or
 
     fun payInMibi(token: String, orderId: String) = orderRepository.payInMibi(token, orderId)
 
+    //fun bindAlipay(token: String) = orderRepository.bindAlipay(token)
+
 }

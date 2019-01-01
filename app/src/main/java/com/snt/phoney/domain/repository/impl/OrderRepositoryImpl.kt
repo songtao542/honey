@@ -23,6 +23,14 @@ class OrderRepositoryImpl @Inject constructor(private val api: Api) : OrderRepos
         return api.alipay(token, orderId)
     }
 
+    override fun bindAlipay(token: String): Single<Response<String>> {
+        return api.bindAlipay(token)
+    }
+
+    override fun uploadAuthCode(token: String,authCode:String): Single<Response<String>> {
+        return api.uploadAuthCode(token,authCode)
+    }
+
     override fun preWithdraw(token: String): Single<Response<PreWithdraw>> {
         return api.preWithdraw(token)
     }

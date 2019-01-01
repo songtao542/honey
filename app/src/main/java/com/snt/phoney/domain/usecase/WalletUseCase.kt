@@ -16,6 +16,11 @@ class WalletUseCase @Inject constructor(private val repository: UserRepository, 
 
     fun preWithdraw(token: String) = orderRepository.preWithdraw(token)
 
+    fun bindAlipay(token: String) = orderRepository.bindAlipay(token)
+
+    fun uploadAuthCode(token: String, authCode: String) = orderRepository.uploadAuthCode(token, authCode)
+
+
     fun withdraw(token: String, money: Double) = orderRepository.withdraw(token, money)
 
     fun getWithdrawInfo(token: String, uuid: String) = orderRepository.getWithdrawInfo(token, uuid)

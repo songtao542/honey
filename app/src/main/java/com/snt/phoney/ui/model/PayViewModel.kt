@@ -83,7 +83,7 @@ open class PayViewModel constructor(private val usecase: PayOrderUseCase) : WXPa
                 .subscribeBy(
                         onSuccess = {
                             if (it.success && !TextUtils.isEmpty(it.data)) {
-                                payByAli(it.data!!)
+                                payByAlipay(it.data!!)
                             } else if (it.hasMessage) {
                                 error.value = it.message
                             }
@@ -94,7 +94,7 @@ open class PayViewModel constructor(private val usecase: PayOrderUseCase) : WXPa
                 ).disposedBy(disposeBag)
     }
 
-    private fun payByAli(orderInfo: String) {
+    private fun payByAlipay(orderInfo: String) {
         activityRef?.get()?.let { activity ->
             AlipayApi.pay(activity, orderInfo) {
                 if (it == 9000) {

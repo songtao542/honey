@@ -39,10 +39,11 @@ object AlipayApi {
     }
 
     @JvmStatic
-    fun auth(activity: Activity, sign: String, callback: ((status: Int) -> Unit)) {
+    fun auth(activity: Activity, sign: String, callback: ((status: Int, authCode: String?) -> Unit)) {
 
         GlobalScope.launch(Dispatchers.Main) {
             var status = 0
+            var authCode: String? = null
             withContext(Dispatchers.Default) {
                 // 构造AuthTask 对象
                 val authTask = AuthTask(activity)
@@ -57,12 +58,12 @@ object AlipayApi {
                     // 获取alipay_open_id，调支付时作为参数extern_token 的value
                     // 传入，则支付账户为该授权账户
                     status = 9000
+                    authCode = authResult.authCode
                 } else {
                     // 其他状态值则为授权失败
-
                 }
             }
-            callback.invoke(status)
+            callback.invoke(status, authCode)
         }
     }
 
