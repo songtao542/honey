@@ -21,11 +21,21 @@ fun RecyclerView.setLoadMoreEnable(enable: Boolean) { //void onLoadMore(LoadMore
     }
 }
 
-fun RecyclerView.getLoadMore(): LoadMore? { //void onLoadMore(LoadMore enabled);
-    adapter?.let {
-        if (it is LoadMoreAdapter) {
-            return it.loadMore
+//fun RecyclerView.getLoadMore(): LoadMore? { //void onLoadMore(LoadMore enabled);
+//    adapter?.let {
+//        if (it is LoadMoreAdapter) {
+//            return it.loadMore
+//        }
+//    }
+//    return null
+//}
+
+val RecyclerView.loadMore: LoadMore?
+    get() {
+        adapter?.let {
+            if (it is LoadMoreAdapter) {
+                return it.loadMore
+            }
         }
+        return null
     }
-    return null
-}

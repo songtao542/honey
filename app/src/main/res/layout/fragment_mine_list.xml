@@ -5,6 +5,7 @@
     android:name="com.snt.phoney.ui.mine.MineFragment"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@color/white"
     tools:context=".ui.main.mine.MineFragment">
 
     <com.google.android.material.appbar.AppBarLayout
@@ -64,35 +65,3 @@
         tools:listitem="@layout/fragment_mine" />
 
 </androidx.coordinatorlayout.widget.CoordinatorLayout>
-
-<!--<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"-->
-    <!--xmlns:app="http://schemas.android.com/apk/res-auto"-->
-    <!--xmlns:tools="http://schemas.android.com/tools"-->
-    <!--android:name="com.snt.phoney.ui.main.mine.MineFragment"-->
-    <!--android:layout_width="match_parent"-->
-    <!--android:layout_height="match_parent"-->
-    <!--android:orientation="vertical"-->
-    <!--tools:context=".ui.mine.MineFragment">-->
-
-
-    <!--<com.snt.phoney.widget.Toolbar-->
-        <!--android:id="@+id/mineToolbar"-->
-        <!--style="@style/AppTheme.Toolbar"-->
-        <!--android:layout_width="match_parent"-->
-        <!--android:layout_height="?attr/actionBarSize"-->
-        <!--android:background="?attr/toolbarBackground"-->
-        <!--android:elevation="0dp"-->
-        <!--android:tag="mine"-->
-        <!--android:visibility="gone"-->
-        <!--app:titleTextColor="@color/white"-->
-        <!--app:title="@string/tab_mine" />-->
-
-
-    <!--<android.support.v7.widget.RecyclerView-->
-        <!--android:id="@+id/mineRecyclerView"-->
-        <!--android:layout_width="match_parent"-->
-        <!--android:layout_height="match_parent"-->
-        <!--android:clipToPadding="true"-->
-        <!--tools:listitem="@layout/fragment_mine" />-->
-
-<!--</LinearLayout>-->

@@ -9,7 +9,7 @@ import androidx.lifecycle.ViewModelProviders
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.snt.phoney.R
 import com.snt.phoney.base.BaseFragment
-import com.snt.phoney.extensions.getLoadMore
+import com.snt.phoney.extensions.loadMore
 import com.snt.phoney.extensions.setLoadMoreEnable
 import com.snt.phoney.extensions.setLoadMoreListener
 import com.snt.phoney.extensions.snackbar
@@ -53,14 +53,14 @@ class FollowingFragment : BaseFragment() {
 
         swipeRefresh.setOnRefreshListener {
             swipeRefresh.isRefreshing = true
-            load(true, list.getLoadMore())
+            load(true, list.loadMore)
         }
 
         list.setLoadMoreListener {
             load(false, it)
         }
 
-        load(true, list.getLoadMore())
+        load(true, list.loadMore)
     }
 
     private fun load(refresh: Boolean, loadMore: LoadMoreAdapter.LoadMore? = null) {

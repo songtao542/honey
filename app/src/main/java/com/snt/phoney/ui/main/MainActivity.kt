@@ -19,16 +19,19 @@ import com.snt.phoney.ui.main.mine.MineFragment
 import com.snt.phoney.ui.main.square.SquareFragment
 import kotlinx.android.synthetic.main.activity_main.*
 
+
+private const val TAG_HOME = "home"
+private const val TAG_SQUARE = "square"
+private const val TAG_MESSAGE = "message"
+private const val TAG_MINE = "mine"
+private const val EXTRA_TAG = "current_tag"
+
 class MainActivity : BaseActivity() {
 
     companion object {
+        @JvmStatic
         fun newIntent(context: Context): Intent = Intent(context, MainActivity::class.java)
     }
-
-    private val homeFragment = HomeFragment.newInstance()
-    private val squareFragment = SquareFragment.newInstance()
-    private val messageFragment = MessageFragment.newInstance()
-    private val mineFragment = MineFragment.newInstance()
 
     private var currentFragment: Fragment? = null
 
@@ -37,19 +40,19 @@ class MainActivity : BaseActivity() {
     private val mOnNavigationItemSelectedListener = BottomNavigationView.OnNavigationItemSelectedListener { item ->
         when (item.itemId) {
             R.id.navigation_home -> {
-                showFragment("home")
+                showFragment(TAG_HOME)
                 return@OnNavigationItemSelectedListener true
             }
             R.id.navigation_square -> {
-                showFragment("square")
+                showFragment(TAG_SQUARE)
                 return@OnNavigationItemSelectedListener true
             }
             R.id.navigation_message -> {
-                showFragment("message")
+                showFragment(TAG_MESSAGE)
                 return@OnNavigationItemSelectedListener true
             }
             R.id.navigation_mine -> {
-                showFragment("mine")
+                showFragment(TAG_MINE)
                 return@OnNavigationItemSelectedListener true
             }
         }
@@ -64,7 +67,13 @@ class MainActivity : BaseActivity() {
         viewModel = ViewModelProviders.of(this, viewModelFactory).get(MainViewModel::class.java)
         navigation.disableShiftMode()
         navigation.hideIcon()
-        showFragment("home")
+
+        if (savedInstanceState != null) {
+            restoreFragment(savedInstanceState.getString(EXTRA_TAG, TAG_HOME))
+        } else {
+            showFragment(TAG_HOME)
+        }
+
         navigation.setOnNavigationItemSelectedListener(mOnNavigationItemSelectedListener)
         fragmentContainer.setOnApplyWindowInsetsListener { view, insets ->
             var consumed = false
@@ -80,6 +89,7 @@ class MainActivity : BaseActivity() {
         viewModel.updateUserLocation()
         viewModel.loginJMessage()
 
+
         //if (BuildConfig.DEBUG) {
         //    SqlScoutServer.create(this, packageName)
         //}
@@ -88,33 +98,80 @@ class MainActivity : BaseActivity() {
     private fun showFragment(tag: String) {
         var willShow = getFragmentByTag(tag)
         if (willShow != currentFragment) {
-            var hasAdded = supportFragmentManager.findFragmentByTag(tag) != null
             var fragmentManager = supportFragmentManager
             var transaction = fragmentManager.beginTransaction()
-            currentFragment?.let {
-                transaction.hide(it)
-            }
-            when {
-                hasAdded -> {
-                    transaction.show(willShow)
-                    transaction.commit()
-                }
-                else -> {
-                    transaction.add(R.id.fragmentContainer, willShow, tag)
-                    transaction.commit()
-                }
-            }
+            currentFragment?.let { transaction.hide(it) }
+
+            fragmentManager.findFragmentByTag(tag)?.apply {
+                transaction.show(this)
+            } ?: transaction.add(R.id.fragmentContainer, willShow, tag)
+
+            transaction.commit()
             currentFragment = willShow
         }
     }
 
-    private fun getFragmentByTag(tag: String): Fragment {
-        return when (tag) {
-            "home" -> homeFragment
-            "square" -> squareFragment
-            "message" -> messageFragment
-            else -> mineFragment
+    private fun restoreFragment(tag: String) {
+        var fragmentManager = supportFragmentManager
+        var transaction = fragmentManager.beginTransaction()
+        when (tag) {
+            TAG_HOME -> {
+                currentFragment = fragmentManager.findFragmentByTag(TAG_HOME)?.apply { transaction.show(this) }
+                fragmentManager.findFragmentByTag(TAG_SQUARE)?.apply { transaction.hide(this) }
+                fragmentManager.findFragmentByTag(TAG_MESSAGE)?.apply { transaction.hide(this) }
+                fragmentManager.findFragmentByTag(TAG_MINE)?.apply { transaction.hide(this) }
+            }
+            TAG_SQUARE -> {
+                fragmentManager.findFragmentByTag(TAG_HOME)?.apply { transaction.hide(this) }
+                currentFragment = fragmentManager.findFragmentByTag(TAG_SQUARE)?.apply { transaction.show(this) }
+                fragmentManager.findFragmentByTag(TAG_MESSAGE)?.apply { transaction.hide(this) }
+                fragmentManager.findFragmentByTag(TAG_MINE)?.apply { transaction.hide(this) }
+            }
+            TAG_MESSAGE -> {
+                fragmentManager.findFragmentByTag(TAG_HOME)?.apply { transaction.hide(this) }
+                fragmentManager.findFragmentByTag(TAG_SQUARE)?.apply { transaction.hide(this) }
+                currentFragment = fragmentManager.findFragmentByTag(TAG_MESSAGE)?.apply { transaction.show(this) }
+                fragmentManager.findFragmentByTag(TAG_MINE)?.apply { transaction.hide(this) }
+            }
+            TAG_MINE -> {
+                fragmentManager.findFragmentByTag(TAG_HOME)?.apply { transaction.hide(this) }
+                fragmentManager.findFragmentByTag(TAG_SQUARE)?.apply { transaction.hide(this) }
+                fragmentManager.findFragmentByTag(TAG_MESSAGE)?.apply { transaction.hide(this) }
+                currentFragment = fragmentManager.findFragmentByTag(TAG_MINE)?.apply { transaction.show(this) }
+            }
         }
+        if (currentFragment == null) {
+            currentFragment = getFragmentByTag(tag).apply { transaction.add(R.id.fragmentContainer, this, tag) }
+        }
+        transaction.commit()
+    }
+
+    @Suppress("IfThenToElvis")
+    private fun getFragmentByTag(tag: String): Fragment {
+        var fragment = supportFragmentManager.findFragmentByTag(tag)
+        return if (fragment != null) fragment else {
+            when (tag) {
+                TAG_HOME -> HomeFragment.newInstance()
+                TAG_SQUARE -> SquareFragment.newInstance()
+                TAG_MESSAGE -> MessageFragment.newInstance()
+                else -> MineFragment.newInstance()
+            }
+        }
+    }
+
+    private fun getCurrentFragmentIndex(): String {
+        return when (currentFragment) {
+            is HomeFragment -> TAG_HOME
+            is SquareFragment -> TAG_SQUARE
+            is MessageFragment -> TAG_MESSAGE
+            is MineFragment -> TAG_MINE
+            else -> TAG_HOME
+        }
+    }
+
+    override fun onSaveInstanceState(outState: Bundle) {
+        super.onSaveInstanceState(outState)
+        outState.putString(EXTRA_TAG, getCurrentFragmentIndex())
     }
 
 }

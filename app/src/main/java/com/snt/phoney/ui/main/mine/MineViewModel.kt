@@ -142,7 +142,7 @@ class MineViewModel @Inject constructor(private val usecase: UserInfoUseCase) : 
 
     fun signOut() {
         /***********test**************/
-        usecase.getAccessToken()?.let { usecase.deleteUser(it) }
+        //usecase.getAccessToken()?.let { usecase.deleteUser(it) }
         /***********test**************/
         usecase.setUser(null)
     }
