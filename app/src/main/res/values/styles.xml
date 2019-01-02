@@ -124,7 +124,7 @@
     <style name="TextAppearance.UnSelectedTab" parent="TextAppearance.Toolbar">
         <item name="android:gravity">center</item>
         <item name="android:textColor">@color/white</item>
-        <item name="android:textSize">11sp</item>
+        <item name="android:textSize">14sp</item>
     </style>
 
     <style name="AppTheme.Tab">
@@ -132,8 +132,11 @@
         <item name="tabIndicatorBottomOffset">0dp</item>
         <item name="tabIndicatorHeight">2dp</item>
         <item name="tabIndicatorWidth">20dp</item>
-        <item name="tabPaddingStart">@dimen/actionbar_padding_start</item>
+        <item name="tabPaddingStart">0dp</item>
+        <item name="tabPaddingEnd">0dp</item>
+        <item name="tabContentStart">@dimen/actionbar_padding_start</item>
         <item name="tabPaddingTop">0dp</item>
+        <item name="tabMinWidth">0dp</item>
         <item name="tabTextColor">@color/white</item>
         <item name="tabSelectedTextColor">@color/white</item>
         <item name="tabTextAppearance">@style/TextAppearance.UnSelectedTab</item>

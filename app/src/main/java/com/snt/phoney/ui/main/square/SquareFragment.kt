@@ -56,18 +56,24 @@ class SquareFragment : BaseFragment() {
                 return 2
             }
 
+            override fun getPageTitle(position: Int): CharSequence? {
+                return when {
+                    position <= 0 -> getString(R.string.tab_square_official)
+                    else -> getString(R.string.tab_square_popular)
+                }
+            }
         }
 
-        val tabOfficialTitle = SpannableString(getString(R.string.tab_square_official))
-        tabOfficialTitle.setSpan(RelativeSizeSpan(1f), 0, 2, Spanned.SPAN_INCLUSIVE_EXCLUSIVE)
-        tabOfficialTitle.setSpan(RelativeSizeSpan(0.64f), 2, 4, Spanned.SPAN_INCLUSIVE_EXCLUSIVE)
-
-        val tabPopularTitle = SpannableString(getString(R.string.tab_square_popular))
-        tabPopularTitle.setSpan(RelativeSizeSpan(1f), 0, 2, Spanned.SPAN_INCLUSIVE_EXCLUSIVE)
-        tabPopularTitle.setSpan(RelativeSizeSpan(0.64f), 2, 4, Spanned.SPAN_INCLUSIVE_EXCLUSIVE)
-
-        squareTab.getTabAt(0)?.text = tabOfficialTitle
-        squareTab.getTabAt(1)?.text = tabPopularTitle
+//        val tabOfficialTitle = SpannableString(getString(R.string.tab_square_official))
+//        tabOfficialTitle.setSpan(RelativeSizeSpan(1f), 0, 2, Spanned.SPAN_INCLUSIVE_EXCLUSIVE)
+//        tabOfficialTitle.setSpan(RelativeSizeSpan(0.64f), 2, 4, Spanned.SPAN_INCLUSIVE_EXCLUSIVE)
+//
+//        val tabPopularTitle = SpannableString(getString(R.string.tab_square_popular))
+//        tabPopularTitle.setSpan(RelativeSizeSpan(1f), 0, 2, Spanned.SPAN_INCLUSIVE_EXCLUSIVE)
+//        tabPopularTitle.setSpan(RelativeSizeSpan(0.64f), 2, 4, Spanned.SPAN_INCLUSIVE_EXCLUSIVE)
+//
+//        squareTab.getTabAt(0)?.text = tabOfficialTitle
+//        squareTab.getTabAt(1)?.text = tabPopularTitle
     }
 
 

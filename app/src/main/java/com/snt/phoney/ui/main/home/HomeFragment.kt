@@ -49,10 +49,14 @@ class HomeFragment : BaseFragment() {
         homePager.adapter = object : FragmentStatePagerAdapter(this.childFragmentManager) {
             val friendFragment: FriendFragment = FriendFragment.newInstance()
             val followingFragment: FollowingFragment = FollowingFragment.newInstance()
+            val test: Fragment = Fragment()
+            val test1: Fragment = Fragment()
 
             override fun getItem(position: Int): Fragment {
                 return when {
                     position <= 0 -> friendFragment
+                    //position <= 1 -> test
+                    //position <= 2 -> test1
                     else -> followingFragment
                 }
             }
@@ -64,6 +68,8 @@ class HomeFragment : BaseFragment() {
             override fun getPageTitle(position: Int): CharSequence? {
                 return when {
                     position <= 0 -> getString(R.string.tab_home_friend)
+                    //position <= 1 -> getString(R.string.friend_tag_hottest)
+                    //position <= 2 -> getString(R.string.friend_tag_more_filter)
                     else -> getString(R.string.tab_home_following)
                 }
             }
