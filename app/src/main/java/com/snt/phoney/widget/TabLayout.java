@@ -31,6 +31,7 @@ import android.os.Build;
 import android.text.Layout;
 import android.text.TextUtils;
 import android.util.AttributeSet;
+import android.util.Log;
 import android.util.TypedValue;
 import android.view.Gravity;
 import android.view.LayoutInflater;
@@ -44,14 +45,6 @@ import android.widget.HorizontalScrollView;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
-
-import com.snt.phoney.R;
-
-import java.lang.annotation.Retention;
-import java.lang.annotation.RetentionPolicy;
-import java.lang.ref.WeakReference;
-import java.util.ArrayList;
-import java.util.Iterator;
 
 import androidx.annotation.ColorInt;
 import androidx.annotation.DrawableRes;
@@ -71,6 +64,14 @@ import androidx.core.view.ViewCompat;
 import androidx.core.widget.TextViewCompat;
 import androidx.viewpager.widget.PagerAdapter;
 import androidx.viewpager.widget.ViewPager;
+
+import com.snt.phoney.R;
+
+import java.lang.annotation.Retention;
+import java.lang.annotation.RetentionPolicy;
+import java.lang.ref.WeakReference;
+import java.util.ArrayList;
+import java.util.Iterator;
 
 import static androidx.annotation.RestrictTo.Scope.LIBRARY_GROUP;
 import static androidx.viewpager.widget.ViewPager.SCROLL_STATE_DRAGGING;
@@ -255,8 +256,10 @@ public class TabLayout extends HorizontalScrollView {
     int mTabPaddingBottom;
 
     int mTabTextAppearance;
+    int mTabSelectedTextAppearance;
     ColorStateList mTabTextColors;
     float mTabTextSize;
+    float mTabSelectedTextSize;
     float mTabTextMultiLineSize;
 
     final int mTabBackgroundResId;
@@ -305,43 +308,42 @@ public class TabLayout extends HorizontalScrollView {
 
         // Add the TabStrip
         mTabStrip = new SlidingTabStrip(context);
-        super.addView(mTabStrip, 0, new LayoutParams(
-                LayoutParams.WRAP_CONTENT, LayoutParams.MATCH_PARENT));
+        super.addView(mTabStrip, 0, new LayoutParams(LayoutParams.WRAP_CONTENT, LayoutParams.MATCH_PARENT));
 
         TypedArray a = context.obtainStyledAttributes(attrs, R.styleable.TabLayout,
                 defStyleAttr, R.style.Widget_Design_TabLayout);
 
-        mTabStrip.setSelectedIndicatorHeight(
-                a.getDimensionPixelSize(R.styleable.TabLayout_tabIndicatorHeight, 0));
+        mTabStrip.setSelectedIndicatorHeight(a.getDimensionPixelSize(R.styleable.TabLayout_tabIndicatorHeight, 0));
         mTabStrip.setSelectedIndicatorColor(a.getColor(R.styleable.TabLayout_tabIndicatorColor, 0));
         mTabStrip.setIndicatorOffset(a.getDimensionPixelSize(R.styleable.TabLayout_tabIndicatorOffset, 0));
         mTabStrip.setIndicatorWidth(a.getDimensionPixelSize(R.styleable.TabLayout_tabIndicatorWidth, -1));
         mTabStrip.setIndicatorBottomOffset(a.getDimensionPixelSize(R.styleable.TabLayout_tabIndicatorBottomOffset, -1));
 
-        mTabPaddingStart = mTabPaddingTop = mTabPaddingEnd = mTabPaddingBottom = a
-                .getDimensionPixelSize(R.styleable.TabLayout_tabPadding, 0);
-        mTabPaddingStart = a.getDimensionPixelSize(R.styleable.TabLayout_tabPaddingStart,
-                mTabPaddingStart);
-        mTabPaddingTop = a.getDimensionPixelSize(R.styleable.TabLayout_tabPaddingTop,
-                mTabPaddingTop);
-        mTabPaddingEnd = a.getDimensionPixelSize(R.styleable.TabLayout_tabPaddingEnd,
-                mTabPaddingEnd);
-        mTabPaddingBottom = a.getDimensionPixelSize(R.styleable.TabLayout_tabPaddingBottom,
-                mTabPaddingBottom);
+        mTabPaddingStart = mTabPaddingTop = mTabPaddingEnd = mTabPaddingBottom = a.getDimensionPixelSize(R.styleable.TabLayout_tabPadding, 0);
+        mTabPaddingStart = a.getDimensionPixelSize(R.styleable.TabLayout_tabPaddingStart, mTabPaddingStart);
+        mTabPaddingTop = a.getDimensionPixelSize(R.styleable.TabLayout_tabPaddingTop, mTabPaddingTop);
+        mTabPaddingEnd = a.getDimensionPixelSize(R.styleable.TabLayout_tabPaddingEnd, mTabPaddingEnd);
+        mTabPaddingBottom = a.getDimensionPixelSize(R.styleable.TabLayout_tabPaddingBottom, mTabPaddingBottom);
 
-        mTabTextAppearance = a.getResourceId(R.styleable.TabLayout_tabTextAppearance,
-                R.style.TextAppearance_Design_Tab);
+        mTabTextAppearance = a.getResourceId(R.styleable.TabLayout_tabTextAppearance, R.style.TextAppearance_Design_Tab);
 
         // Text colors/sizes come from the text appearance first
-        final TypedArray ta = context.obtainStyledAttributes(mTabTextAppearance,
-                androidx.appcompat.R.styleable.TextAppearance);
+        final TypedArray ta = context.obtainStyledAttributes(mTabTextAppearance, androidx.appcompat.R.styleable.TextAppearance);
         try {
-            mTabTextSize = ta.getDimensionPixelSize(
-                    androidx.appcompat.R.styleable.TextAppearance_android_textSize, 0);
-            mTabTextColors = ta.getColorStateList(
-                    androidx.appcompat.R.styleable.TextAppearance_android_textColor);
+            mTabTextSize = ta.getDimensionPixelSize(androidx.appcompat.R.styleable.TextAppearance_android_textSize, 0);
+            mTabTextColors = ta.getColorStateList(androidx.appcompat.R.styleable.TextAppearance_android_textColor);
         } finally {
             ta.recycle();
+        }
+
+        mTabSelectedTextAppearance = a.getResourceId(R.styleable.TabLayout_tabSelectedTextAppearance, R.style.TextAppearance_Design_Tab);
+        final TypedArray tas = context.obtainStyledAttributes(mTabSelectedTextAppearance, androidx.appcompat.R.styleable.TextAppearance);
+        try {
+            mTabSelectedTextSize = tas.getDimensionPixelSize(androidx.appcompat.R.styleable.TextAppearance_android_textSize, 0);
+            final int selected = tas.getColor(androidx.appcompat.R.styleable.TextAppearance_android_textColor, 0);
+            mTabTextColors = createColorStateList(mTabTextColors.getDefaultColor(), selected);
+        } finally {
+            tas.recycle();
         }
 
         if (a.hasValue(R.styleable.TabLayout_tabTextColor)) {
@@ -357,10 +359,15 @@ public class TabLayout extends HorizontalScrollView {
             mTabTextColors = createColorStateList(mTabTextColors.getDefaultColor(), selected);
         }
 
-        mRequestedTabMinWidth = a.getDimensionPixelSize(R.styleable.TabLayout_tabMinWidth,
-                INVALID_WIDTH);
-        mRequestedTabMaxWidth = a.getDimensionPixelSize(R.styleable.TabLayout_tabMaxWidth,
-                INVALID_WIDTH);
+        if (a.hasValue(R.styleable.TabLayout_tabTextSize)) {
+            mTabTextSize = a.getDimensionPixelSize(R.styleable.TabLayout_tabTextSize, 0);
+        }
+        if (a.hasValue(R.styleable.TabLayout_tabSelectedTextSize)) {
+            mTabSelectedTextSize = a.getDimensionPixelSize(R.styleable.TabLayout_tabSelectedTextSize, 0);
+        }
+
+        mRequestedTabMinWidth = a.getDimensionPixelSize(R.styleable.TabLayout_tabMinWidth, INVALID_WIDTH);
+        mRequestedTabMaxWidth = a.getDimensionPixelSize(R.styleable.TabLayout_tabMaxWidth, INVALID_WIDTH);
         mTabBackgroundResId = a.getResourceId(R.styleable.TabLayout_tabBackground, 0);
         mContentInsetStart = a.getDimensionPixelSize(R.styleable.TabLayout_tabContentStart, 0);
         mMode = a.getInt(R.styleable.TabLayout_tabMode, MODE_FIXED);
@@ -777,8 +784,7 @@ public class TabLayout extends HorizontalScrollView {
         setupWithViewPager(viewPager, autoRefresh, false);
     }
 
-    private void setupWithViewPager(@Nullable final ViewPager viewPager, boolean autoRefresh,
-                                    boolean implicitSetup) {
+    private void setupWithViewPager(@Nullable final ViewPager viewPager, boolean autoRefresh, boolean implicitSetup) {
         if (mViewPager != null) {
             // If we've already been setup with a ViewPager, remove us from it
             if (mPageChangeListener != null) {
@@ -1511,18 +1517,13 @@ public class TabLayout extends HorizontalScrollView {
         public TabView(Context context) {
             super(context);
             if (mTabBackgroundResId != 0) {
-                ViewCompat.setBackground(
-                        this, AppCompatResources.getDrawable(context, mTabBackgroundResId));
+                ViewCompat.setBackground(this, AppCompatResources.getDrawable(context, mTabBackgroundResId));
             }
-            ViewCompat.setPaddingRelative(this, mTabPaddingStart, mTabPaddingTop,
-                    mTabPaddingEnd, mTabPaddingBottom);
+            ViewCompat.setPaddingRelative(this, mTabPaddingStart, mTabPaddingTop, mTabPaddingEnd, mTabPaddingBottom);
             setGravity(Gravity.CENTER);
             setOrientation(VERTICAL);
             setClickable(true);
-            ViewCompat.setPointerIcon(this,
-                    PointerIconCompat.getSystemIcon(getContext(), PointerIconCompat.TYPE_HAND));
-
-            //canvas.drawColor(0xff00ff00);
+            ViewCompat.setPointerIcon(this, PointerIconCompat.getSystemIcon(getContext(), PointerIconCompat.TYPE_HAND));
         }
 
         @Override
@@ -1636,7 +1637,15 @@ public class TabLayout extends HorizontalScrollView {
                     }
 
                     if (updateTextView) {
-                        mTextView.setTextSize(TypedValue.COMPLEX_UNIT_PX, textSize);
+                        if (mTabSelectedTextSize > 0) {
+                            if (mTextView.isSelected()) {
+                                mTextView.setTextSize(TypedValue.COMPLEX_UNIT_PX, mTabSelectedTextSize);
+                            } else {
+                                mTextView.setTextSize(TypedValue.COMPLEX_UNIT_PX, textSize);
+                            }
+                        } else {
+                            mTextView.setTextSize(TypedValue.COMPLEX_UNIT_PX, textSize);
+                        }
                         mTextView.setMaxLines(maxLines);
                         super.onMeasure(widthMeasureSpec, heightMeasureSpec);
                     }
@@ -1676,12 +1685,12 @@ public class TabLayout extends HorizontalScrollView {
                     mIconView.setImageDrawable(null);
                 }
 
-                mCustomTextView = (TextView) custom.findViewById(android.R.id.text1);
+                mCustomTextView = custom.findViewById(android.R.id.text1);
                 mCustomTextView.setGravity(Gravity.BOTTOM);
                 if (mCustomTextView != null) {
                     mDefaultMaxLines = TextViewCompat.getMaxLines(mCustomTextView);
                 }
-                mCustomIconView = (ImageView) custom.findViewById(android.R.id.icon);
+                mCustomIconView = custom.findViewById(android.R.id.icon);
             } else {
                 // We do not have a custom view. Remove one if it already exists
                 if (mCustomView != null) {
@@ -1724,8 +1733,7 @@ public class TabLayout extends HorizontalScrollView {
             setSelected(tab != null && tab.isSelected());
         }
 
-        private void updateTextAndIcon(@Nullable final TextView textView,
-                                       @Nullable final ImageView iconView) {
+        private void updateTextAndIcon(@Nullable final TextView textView, @Nullable final ImageView iconView) {
             final Drawable icon = mTab != null ? mTab.getIcon() : null;
             final CharSequence text = mTab != null ? mTab.getText() : null;
             final CharSequence contentDesc = mTab != null ? mTab.getContentDescription() : null;
@@ -1747,6 +1755,13 @@ public class TabLayout extends HorizontalScrollView {
                 if (hasText) {
                     textView.setText(text);
                     textView.setVisibility(VISIBLE);
+                    if (mTabSelectedTextSize > 0) {
+                        if (textView.isSelected()) {
+                            textView.setTextSize(TypedValue.COMPLEX_UNIT_PX, mTabSelectedTextSize);
+                        } else {
+                            textView.setTextSize(TypedValue.COMPLEX_UNIT_PX, mTabTextSize);
+                        }
+                    }
                     setVisibility(VISIBLE);
                 } else {
                     textView.setVisibility(GONE);
@@ -1956,15 +1971,14 @@ public class TabLayout extends HorizontalScrollView {
                 if (mSelectionOffset > 0f && mSelectedPosition < getChildCount() - 1) {
                     // Draw the selection partway between the tabs
                     View nextTitle = getChildAt(mSelectedPosition + 1);
-                    left = (int) (mSelectionOffset * nextTitle.getLeft() +
-                            (1.0f - mSelectionOffset) * left);
-                    right = (int) (mSelectionOffset * nextTitle.getRight() +
-                            (1.0f - mSelectionOffset) * right);
+                    left = (int) (mSelectionOffset * nextTitle.getLeft() + (1.0f - mSelectionOffset) * left);
+                    right = (int) (mSelectionOffset * nextTitle.getRight() + (1.0f - mSelectionOffset) * right);
+
                 }
             } else {
                 left = right = -1;
             }
-
+            Log.d("TTTT", "mSelectionOffse=====================" + mSelectionOffset);
             setIndicatorPosition(left, right);
         }
 
@@ -2045,6 +2059,7 @@ public class TabLayout extends HorizontalScrollView {
 
         @Override
         public void draw(Canvas canvas) {
+            canvas.drawColor(0xffff0000);
             super.draw(canvas);
             // Thick colored underline below the current selection
             if (mIndicatorLeft >= 0 && mIndicatorRight > mIndicatorLeft) {

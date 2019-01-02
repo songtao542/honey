@@ -35,8 +35,7 @@ class HomeFragment : BaseFragment() {
     private var mPickerIndex1 = 0
     private var mPickerIndex2 = 0
 
-    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,
-                              savedInstanceState: Bundle?): View? {
+    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         return inflater.inflate(R.layout.fragment_home, container, false)
     }
 
@@ -62,15 +61,22 @@ class HomeFragment : BaseFragment() {
                 return 2
             }
 
+            override fun getPageTitle(position: Int): CharSequence? {
+                return when {
+                    position <= 0 -> getString(R.string.tab_home_friend)
+                    else -> getString(R.string.tab_home_following)
+                }
+            }
+
         }
 
-        val tabFriendTitle = getString(R.string.tab_home_friend)
-        val tabFollowingTitle = SpannableString(getString(R.string.tab_home_following))
-        tabFollowingTitle.setSpan(RelativeSizeSpan(1f), 0, 2, Spanned.SPAN_INCLUSIVE_EXCLUSIVE)
-        tabFollowingTitle.setSpan(RelativeSizeSpan(0.64f), 2, 4, Spanned.SPAN_INCLUSIVE_EXCLUSIVE)
-
-        homeTab.getTabAt(0)?.text = tabFriendTitle
-        homeTab.getTabAt(1)?.text = tabFollowingTitle
+//        val tabFriendTitle = getString(R.string.tab_home_friend)
+//        val tabFollowingTitle = SpannableString(getString(R.string.tab_home_following))
+//        tabFollowingTitle.setSpan(RelativeSizeSpan(1f), 0, 2, Spanned.SPAN_INCLUSIVE_EXCLUSIVE)
+//        tabFollowingTitle.setSpan(RelativeSizeSpan(0.64f), 2, 4, Spanned.SPAN_INCLUSIVE_EXCLUSIVE)
+//
+//        homeTab.getTabAt(0)?.text = tabFriendTitle
+//        homeTab.getTabAt(1)?.text = tabFollowingTitle
 
 //        homeTab.getTabAt(0)?.text = getString(R.string.tab_home_friend)
 //        homeTab.getTabAt(1)?.text = getString(R.string.tab_home_following)
