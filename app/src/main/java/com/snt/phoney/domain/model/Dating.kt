@@ -54,7 +54,7 @@ data class Dating(
     }
 
     fun formatTime(): String {
-        val df = SimpleDateFormat("yyyy.MM.dd HH:mm")
+        val df = SimpleDateFormat("yyyy.MM.dd")
         return if (startTime > 0 && endTime > 0) {
             "${df.format(startTime)} ~ ${df.format(endTime)}"
         } else {

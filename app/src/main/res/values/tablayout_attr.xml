@@ -9,6 +9,7 @@
         <attr name="tabIndicatorWidth" format="dimension" />
         <attr name="tabContentStart" format="dimension" />
         <attr name="tabBackground" format="reference" />
+        <attr name="tabSelectedBackground" format="reference" />
         <attr name="tabMode">
             <enum name="scrollable" value="0" />
             <enum name="fixed" value="1" />

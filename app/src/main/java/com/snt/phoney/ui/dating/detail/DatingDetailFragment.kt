@@ -2,6 +2,7 @@ package com.snt.phoney.ui.dating.detail
 
 import android.Manifest
 import android.os.Bundle
+import android.os.Handler
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -39,6 +40,9 @@ class DatingDetailFragment : BaseFragment() {
 
     private lateinit var viewModel: DatingDetailViewModel
     private var uuid: String? = null
+
+    private var mHandler = Handler()
+    private var df = DecimalFormat.getInstance()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -187,7 +191,7 @@ class DatingDetailFragment : BaseFragment() {
         datingTime.text = dating.formatTime()
 
         if (dating.state == DatingState.ONGOING.value || dating.remaining() > 0) {
-            remainingTime.text = dating.remainingTime()
+            remainingCountDown(dating.endTime)
         } else if (dating.remaining() <= 0) {
             remainingTime.setText(R.string.has_out_of_time)
         } else {
@@ -210,6 +214,39 @@ class DatingDetailFragment : BaseFragment() {
             joinButton.visibility = View.VISIBLE
         }
 
+        program.text = dating.program
+    }
+
+    private fun remainingCountDown(time: Long) {
+        if (time == null) {
+            return
+        }
+        val diff = time - System.currentTimeMillis()
+        if (diff <= 0) {
+            remainingTime.setText(R.string.has_out_of_time)
+        }
+        var second = diff / 1000
+        val days = second / 86400            //转换天数
+        second %= 86400            //剩余秒数
+        val hours = second / 3600            //转换小时
+        second %= 3600                //剩余秒数
+        val minutes = second / 60            //转换分钟
+        second %= 60                //剩余秒数
+        if (days > 0) {
+            remainingTime.text = getString(R.string.day_hour_minute_second_template, df.format(days), df.format(hours), df.format(minutes), df.format(second))
+        } else if (hours > 0) {
+            remainingTime.text = getString(R.string.hour_minute_second_template, df.format(hours), df.format(minutes), df.format(second))
+        } else {
+            remainingTime.text = getString(R.string.minute_second_template, df.format(minutes), df.format(second))
+        }
+        mHandler.postDelayed({
+            remainingCountDown(time - 1000)
+        }, 1000)
+    }
+
+    override fun onDestroyView() {
+        mHandler.removeCallbacksAndMessages(null)
+        super.onDestroyView()
     }
 
 }

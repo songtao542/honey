@@ -2,6 +2,7 @@ package com.snt.phoney.ui.main.mine
 
 
 import android.content.Context
+import android.os.Bundle
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
@@ -21,6 +22,7 @@ import com.snt.phoney.extensions.startActivityForResult
 import com.snt.phoney.ui.auth.AuthActivity
 import com.snt.phoney.ui.dating.DatingActivity
 import com.snt.phoney.ui.user.UserActivity
+import com.snt.phoney.utils.data.Constants
 import com.snt.phoney.widget.PhotoFlowAdapter
 import kotlinx.android.synthetic.main.fragment_mine_footer.view.*
 import kotlinx.android.synthetic.main.fragment_mine_list_header.view.*
@@ -81,7 +83,7 @@ class MineRecyclerViewAdapter(val fragment: Fragment) : RecyclerView.Adapter<Rec
         settings.add(Setting(R.drawable.ic_bind_phone, "绑定手机"))
         settings.add(Setting(R.drawable.ic_share, "分享给好友"))
         settings.add(Setting(R.drawable.ic_user_protocol, "用户协议"))
-        settings.add(Setting(R.drawable.ic_clear_cache, "清理缓存"))
+        //settings.add(Setting(R.drawable.ic_clear_cache, "清理缓存"))
         settings.add(Setting(R.drawable.ic_about, "关于"))
     }
 
@@ -110,7 +112,6 @@ class MineRecyclerViewAdapter(val fragment: Fragment) : RecyclerView.Adapter<Rec
             is SettingViewHolder -> holder.setData(setting = settings[position - 2])
             is PhotoViewHolder -> holder.setData(photos)
             is FooterViewHolder -> {
-
             }
         }
     }
@@ -137,7 +138,11 @@ class MineRecyclerViewAdapter(val fragment: Fragment) : RecyclerView.Adapter<Rec
             }
             mFollowMeButton.setOnClickListener { context.startActivity<UserActivity>(Page.FOLLOW_ME) }
             mRecentVisitorButton.setOnClickListener { context.startActivity<UserActivity>(Page.VISITOR) }
-            mMyDatingButton.setOnClickListener { context.startActivity<DatingActivity>(Page.MY_DATING) }
+            mMyDatingButton.setOnClickListener {
+                context.startActivity<DatingActivity>(Page.MY_DATING, Bundle().apply {
+                    putInt(Constants.Extra.THEME, R.style.AppTheme_Light)
+                })
+            }
 
             userInfo?.let { userInfo ->
                 userInfo.authState?.let { authState ->

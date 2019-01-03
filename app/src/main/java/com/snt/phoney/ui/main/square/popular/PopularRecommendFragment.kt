@@ -4,6 +4,7 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -35,8 +36,17 @@ class PopularRecommendFragment : BaseFragment() {
 
         // Set the adapter
         list.layoutManager = LinearLayoutManager(context)
-        adapter = PopularRecommendRecyclerViewAdapter(this, viewModel, disposeBag)
+        adapter = PopularRecommendRecyclerViewAdapter(this, viewModel)
         list.adapter = adapter
+
+        viewModel.popularSuccess.observe(this, Observer {
+            Toast.makeText(requireContext(), it, Toast.LENGTH_SHORT).show()
+            adapter.notifyDataSetChanged()
+        })
+
+        viewModel.popularError.observe(this, Observer {
+            Toast.makeText(requireContext(), it, Toast.LENGTH_SHORT).show()
+        })
 
         viewModel.popularDating.observe(this, Observer {
             swipeRefresh.isRefreshing = false

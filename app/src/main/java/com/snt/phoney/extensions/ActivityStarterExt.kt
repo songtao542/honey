@@ -13,12 +13,15 @@ import com.snt.phoney.base.Page
 
 const val EXTRA_ARGUMENT = "argument"
 const val EXTRA_PAGE = "page"
+const val EXTRA_THEME = "theme"
 
 inline fun <reified T : Activity> Context.newIntent(page: Page, argument: Bundle? = null): Intent {
     val intent = Intent(this, T::class.java)
     intent.putExtra(EXTRA_PAGE, page.ordinal)
     argument?.let {
+        intent.putExtra(EXTRA_THEME, it.getInt(EXTRA_THEME, 0))
         intent.putExtra(EXTRA_ARGUMENT, it)
+        return@let
     }
     return intent
 }
@@ -26,7 +29,9 @@ inline fun <reified T : Activity> Context.newIntent(page: Page, argument: Bundle
 inline fun <reified T : Activity> Context.newIntent(argument: Bundle? = null): Intent {
     val intent = Intent(this, T::class.java)
     argument?.let {
+        intent.putExtra(EXTRA_THEME, it.getInt(EXTRA_THEME, 0))
         intent.putExtra(EXTRA_ARGUMENT, it)
+        return@let
     }
     return intent
 }
@@ -35,6 +40,7 @@ inline fun <reified T : Activity> Context.startActivity(page: Page, argument: Bu
     startActivity(newIntent<T>(page, argument))
 }
 
+@Suppress("unused")
 inline fun <reified T : Activity> Activity.startActivityForResult(page: Page, requestCode: Int, argument: Bundle? = null) {
     startActivityForResult(newIntent<T>(page, argument), requestCode)
 }
@@ -101,6 +107,7 @@ inline fun Activity.addFragmentSafely(fragment: Fragment,
             enterAnimation, exitAnimation, popEnterAnimation, popExitAnimation)
 }
 
+@Suppress("unused")
 inline fun Activity.replaceFragmentSafely(page: Page,
                                           tag: String,
                                           addToBackStack: Boolean = false,
@@ -171,7 +178,7 @@ inline fun Fragment.addFragmentSafely(fragment: Fragment,
             enterAnimation, exitAnimation, popEnterAnimation, popExitAnimation) ?: fragment
 }
 
-
+@Suppress("unused")
 inline fun Fragment.replaceFragmentSafely(page: Page,
                                           tag: String,
                                           addToBackStack: Boolean = false,
@@ -188,6 +195,7 @@ inline fun Fragment.replaceFragmentSafely(page: Page,
             enterAnimation, exitAnimation, popEnterAnimation, popExitAnimation) ?: fragment
 }
 
+@Suppress("unused")
 inline fun <T : Fragment> Fragment.replaceFragmentSafely(
         fragment: T,
         tag: String,

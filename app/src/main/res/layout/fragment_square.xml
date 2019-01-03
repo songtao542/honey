@@ -11,14 +11,8 @@
     <com.snt.phoney.widget.Toolbar
         android:id="@+id/squareToolbar"
         style="@style/AppTheme.ToolbarWithTab"
-        android:layout_width="match_parent"
-        android:layout_height="?attr/actionBarSize"
-        android:background="?attr/toolbarBackground"
-        android:fitsSystemWindows="false"
         android:tag="square"
-        android:theme="@style/AppTheme.PopupOverlay"
-        app:popupTheme="@style/AppTheme.PopupOverlay"
-        app:titleTextColor="@color/white">
+        app:navigationIcon="@null">
 
         <com.snt.phoney.widget.TabLayout
             android:id="@+id/squareTab"

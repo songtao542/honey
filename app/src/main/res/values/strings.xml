@@ -299,7 +299,7 @@
     <string name="quit_dating_failed">取消失败</string>
     <string name="under_review">审核中</string>
     <string name="has_canceld_follow">已取消关注</string>
-    <string name="it_published_title">TA发布的</string>
+    <string name="it_published_title">TA的发布</string>
     <string name="buy_tip">购买提醒</string>
     <string name="buy_warning">你即将使用蜜币支付</string>
     <string name="pay_mibi_template">支付%1$s蜜币</string>
@@ -321,7 +321,6 @@
     <string name="close_privacy_password_failed">关闭密码锁失败</string>
     <string name="set_privacy_password_failed">设置密码锁失败</string>
     <string name="set_privacy_password_success">设置密码锁成功</string>
-    <string name="online_time_template">%1$s 在线</string>
     <string name="recharge_detail">充值明细</string>
     <string name="consume_detail">消费明细</string>
     <string name="wallet_withdraw_title">提现</string>
@@ -417,4 +416,11 @@
     <string name="bind_alipay_failed">绑定失败</string>
     <string name="weibo_auth_failed">授权失败</string>
     <string name="cancel_auth">取消授权</string>
+    <string name="time_second_template">%1$s秒前</string>
+    <string name="time_minute_template">%1$s分钟前</string>
+    <string name="time_hour_template">%1$s小时前</string>
+    <string name="time_day_template">%1$s天前</string>
+    <string name="day_hour_minute_second_template">%1$s天%2$s小时%3$s分钟%4$s秒</string>
+    <string name="hour_minute_second_template">%1$s小时%2$s分钟%3$s秒</string>
+    <string name="minute_second_template">%1$s分钟%2$s秒</string>
 </resources>

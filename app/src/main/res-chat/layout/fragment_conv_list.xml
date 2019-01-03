@@ -10,13 +10,7 @@
     <com.snt.phoney.widget.Toolbar
         android:id="@+id/toolbar"
         style="@style/AppTheme.Toolbar"
-        android:layout_width="match_parent"
-        android:layout_height="?attr/actionBarSize"
-        android:background="?attr/toolbarBackground"
-        android:tag="message"
-        android:theme="@style/AppTheme.PopupOverlay"
-        app:popupTheme="@style/AppTheme.PopupOverlay"
-        app:titleTextColor="@color/white">
+        app:navigationIcon="@null">
 
         <androidx.appcompat.widget.AppCompatTextView
             android:layout_width="wrap_content"

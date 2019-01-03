@@ -4,7 +4,6 @@ import android.app.Activity
 import android.app.AlertDialog
 import android.content.Intent
 import android.os.Bundle
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -162,7 +161,9 @@ class MineFragment : BaseFragment(), OnSettingItemClickListener, OnSignOutClickL
                     viewModel.userInfo.value?.hasNewsOfDating = false
                     adapter.notifyDataSetChanged()
                 }
-                activity?.startActivity<DatingActivity>(Page.MY_DATING)
+                activity?.startActivity<DatingActivity>(Page.MY_DATING, Bundle().apply {
+                    putInt(Constants.Extra.THEME, R.style.AppTheme_Light)
+                })
             }
             R.drawable.ic_my_wallet -> {
                 if (setting.hasNewMessage) {

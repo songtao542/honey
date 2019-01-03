@@ -16,6 +16,8 @@ class SignupActivity : BaseActivity() {
         fun newIntent(context: Context): Intent = Intent(context, SignupActivity::class.java)
     }
 
+    override fun onConfigureTheme(): Int? = null
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_signin)
@@ -31,10 +33,6 @@ class SignupActivity : BaseActivity() {
     }
 
     private fun handleIntent(intent: Intent) {
-    }
-
-    override fun onConfigureTheme(): Boolean {
-        return false
     }
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {

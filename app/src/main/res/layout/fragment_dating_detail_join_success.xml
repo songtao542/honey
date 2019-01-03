@@ -6,17 +6,10 @@
     android:layout_height="match_parent"
     android:orientation="vertical">
 
-
     <com.snt.phoney.widget.Toolbar
         android:id="@+id/successToolbar"
         style="@style/AppTheme.Toolbar"
-        android:layout_width="match_parent"
-        android:layout_height="?attr/actionBarSize"
-        android:background="?attr/toolbarBackground"
-        android:theme="@style/AppTheme.PopupOverlay"
-        app:navigationIcon="@drawable/ic_back"
-        app:title="@string/join_dating_success_title"
-        app:titleTextColor="@color/white" />
+        app:title="@string/join_dating_success_title" />
 
     <androidx.appcompat.widget.AppCompatImageView
         android:layout_width="60dp"

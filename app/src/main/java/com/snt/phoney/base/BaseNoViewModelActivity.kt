@@ -32,29 +32,39 @@ abstract class BaseNoViewModelActivity : AppCompatActivity(), HasSupportFragment
 
     override fun supportFragmentInjector() = dispatchingAndroidInjector
 
-    var themeId = -1
+    var themeId = 0
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        if (onConfigureTheme()) {
-            when (Sex.from(userAccessor.getUser()?.sex ?: Sex.UNKNOWN.value)) {
-                Sex.MALE -> {
-                    themeId = R.style.AppTheme_Male
-                    setTheme(themeId)
+        val theme = onConfigureTheme()
+        if (theme != null) {
+            if (theme == 0) {
+                when (Sex.from(userAccessor.getUser()?.sex ?: Sex.UNKNOWN.value)) {
+                    Sex.MALE -> {
+                        themeId = R.style.AppTheme_Male
+                        setTheme(themeId)
+                    }
+                    Sex.FEMALE -> {
+                        themeId = R.style.AppTheme_Female
+                        setTheme(R.style.AppTheme_Female)
+                    }
+                    else -> {
+                        themeId = R.style.AppTheme_SexUnknown
+                        setTheme(R.style.AppTheme_SexUnknown)
+                    }
                 }
-                Sex.FEMALE -> {
-                    themeId = R.style.AppTheme_Female
-                    setTheme(R.style.AppTheme_Female)
-                }
-                else -> {
-                    themeId = R.style.AppTheme_SexUnknown
-                    setTheme(R.style.AppTheme_SexUnknown)
-                }
+            } else {
+                themeId = theme
+                setTheme(theme)
             }
         }
     }
 
-    open fun onConfigureTheme(): Boolean = true
+    /**
+     * Subclasses override this method,
+     * if you don't want subclasses change the theme config in AndroidManifest.xml, you can return null
+     */
+    open fun onConfigureTheme(): Int? = 0
 
     override fun onKeyDown(keyCode: Int, event: KeyEvent): Boolean {
         return if (dispatchKeyDownEvent(keyCode, event)) true else super.onKeyDown(keyCode, event)

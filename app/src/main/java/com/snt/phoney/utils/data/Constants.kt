@@ -19,6 +19,7 @@ object Constants {
         const val UUID = "uuid"
         const val DATA = "data"
         const val TYPE = "type"
+        const val THEME = "theme"
     }
 
     object Preference {

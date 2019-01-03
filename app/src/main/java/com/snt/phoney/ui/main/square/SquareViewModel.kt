@@ -1,15 +1,15 @@
 package com.snt.phoney.ui.main.square
 
 import androidx.lifecycle.MutableLiveData
+import com.snt.phoney.R
 import com.snt.phoney.base.AppViewModel
 import com.snt.phoney.domain.model.Dating
-import com.snt.phoney.domain.model.Response
 import com.snt.phoney.domain.usecase.SquareUseCase
 import com.snt.phoney.extensions.addList
 import com.snt.phoney.extensions.disposedBy
 import com.snt.phoney.extensions.empty
+import com.snt.phoney.utils.life.SingleLiveData
 import cust.widget.loadmore.LoadMoreAdapter
-import io.reactivex.Single
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.rxkotlin.subscribeBy
 import io.reactivex.schedulers.Schedulers
@@ -26,6 +26,8 @@ class SquareViewModel @Inject constructor(private val usecase: SquareUseCase) : 
     val recommendDating = MutableLiveData<List<Dating>>()
     val popularDating = MutableLiveData<List<Dating>>()
 
+    val popularSuccess = SingleLiveData<String>()
+    val popularError = SingleLiveData<String>()
     /**
      * 推荐约会
      */
@@ -106,18 +108,80 @@ class SquareViewModel @Inject constructor(private val usecase: SquareUseCase) : 
     }
 
 
-    fun joinDating(uuid: String): Single<Response<String>>? {
-        val token = usecase.getAccessToken() ?: return null
-        return usecase.joinDating(token, uuid)
+    fun joinDating(dating: Dating, official: Boolean) {
+        val token = usecase.getAccessToken() ?: return
+        usecase.joinDating(token, dating.safeUuid)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
+                .subscribeBy(
+                        onSuccess = {
+                            if (it.success) {
+                                dating.isAttend = true
+                                if (official) {
+                                    success.value = context.getString(R.string.join_dating_success)
+                                } else {
+                                    popularSuccess.value = context.getString(R.string.join_dating_success)
+                                }
+                            } else if (it.hasMessage) {
+                                if (official) {
+                                    error.value = it.message
+                                } else {
+                                    popularError.value = it.message
+                                }
+                            } else {
+                                if (official) {
+                                    error.value = context.getString(R.string.join_dating_failed)
+                                } else {
+                                    popularError.value = context.getString(R.string.join_dating_failed)
+                                }
+                            }
+                        },
+                        onError = {
+                            if (official) {
+                                error.value = context.getString(R.string.join_dating_failed)
+                            } else {
+                                popularError.value = context.getString(R.string.join_dating_failed)
+                            }
+                        }
+                )?.disposedBy(disposeBag)
     }
 
-    fun follow(uuid: String): Single<Response<Boolean>>? {
-        val token = usecase.getAccessToken() ?: return null
-        return usecase.follow(token, uuid)
+    fun follow(dating: Dating, official: Boolean) {
+        val token = usecase.getAccessToken() ?: return
+        usecase.follow(token, dating.safeUuid)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
+                .subscribeBy(
+                        onSuccess = {
+                            if (it.success) {
+                                dating.isCared = it.data ?: false
+                                if (official) {
+                                    success.value = context.getString(R.string.has_follow)
+                                } else {
+                                    popularSuccess.value = context.getString(R.string.has_follow)
+                                }
+                            } else if (it.hasMessage) {
+                                if (official) {
+                                    error.value = it.message
+                                } else {
+                                    popularError.value = it.message
+                                }
+                            } else {
+                                if (official) {
+                                    error.value = context.getString(R.string.follow_failed)
+                                } else {
+                                    popularError.value = context.getString(R.string.follow_failed)
+                                }
+                            }
+                        },
+                        onError = {
+                            if (official) {
+                                error.value = context.getString(R.string.follow_failed)
+                            } else {
+                                popularError.value = context.getString(R.string.follow_failed)
+                            }
+                        }
+                ).disposedBy(disposeBag)
     }
 
 }

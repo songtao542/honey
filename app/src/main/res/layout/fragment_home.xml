@@ -10,21 +10,14 @@
     <com.snt.phoney.widget.Toolbar
         android:id="@+id/homeToolbar"
         style="@style/AppTheme.ToolbarWithTab"
-        android:layout_width="match_parent"
-        android:layout_height="?attr/actionBarSize"
-        android:background="?attr/toolbarBackground"
-        android:fitsSystemWindows="false"
         android:tag="home"
-        android:theme="@style/AppTheme.PopupOverlay"
-        app:popupTheme="@style/AppTheme.PopupOverlay"
-        app:titleTextColor="@color/white">
+        app:navigationIcon="@null">
 
         <com.snt.phoney.widget.TabLayout
             android:id="@+id/homeTab"
             style="@style/AppTheme.Tab"
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            />
+            android:layout_height="wrap_content" />
     </com.snt.phoney.widget.Toolbar>
 
     <androidx.viewpager.widget.ViewPager

@@ -14,6 +14,8 @@ import com.snt.phoney.base.BaseNoViewModelActivity;
 import com.snt.phoney.ui.main.MainActivity;
 import com.snt.phoney.ui.signup.SignupActivity;
 
+import org.jetbrains.annotations.Nullable;
+
 import java.io.File;
 
 import cn.jpush.im.android.api.JMessageClient;
@@ -28,6 +30,12 @@ public abstract class BaseActivity extends BaseNoViewModelActivity {
 
     protected int screenWidth;
     protected int screenHeight;
+
+    @Nullable
+    @Override
+    public Integer onConfigureTheme() {
+        return null;
+    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

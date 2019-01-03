@@ -10,13 +10,7 @@
     <com.snt.phoney.widget.Toolbar
         android:id="@+id/toolbar"
         style="@style/AppTheme.Toolbar"
-        android:layout_width="match_parent"
-        android:layout_height="?attr/actionBarSize"
-        android:background="?attr/toolbarBackground"
-        android:theme="@style/AppTheme.PopupOverlay"
-        app:navigationIcon="@drawable/ic_back"
-        app:title="@string/report_title"
-        app:titleTextColor="@color/white" />
+        app:title="@string/report_title" />
 
     <androidx.appcompat.widget.AppCompatTextView
         android:layout_width="match_parent"

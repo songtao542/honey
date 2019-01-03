@@ -36,11 +36,8 @@
             <com.snt.phoney.widget.Toolbar
                 android:id="@+id/toolbar"
                 style="@style/AppTheme.Toolbar"
-                android:layout_width="match_parent"
-                android:layout_height="?attr/actionBarSize"
                 android:elevation="0dp"
                 app:layout_collapseMode="pin"
-                app:navigationIcon="@drawable/ic_back"
                 app:titleMargin="0dp">
 
                 <androidx.appcompat.widget.AppCompatTextView

@@ -6,6 +6,7 @@ import android.view.Gravity
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -45,7 +46,7 @@ class OfficialRecommendFragment : BaseFragment() {
         viewModel = ViewModelProviders.of(this, viewModelFactory).get(SquareViewModel::class.java)
 
         list.layoutManager = LinearLayoutManager(context)
-        adapter = OfficialRecommendRecyclerViewAdapter(this, viewModel, disposeBag)
+        adapter = OfficialRecommendRecyclerViewAdapter(this, viewModel)
         list.adapter = adapter
 
 //        list.setOnTouchListener { _, _ ->
@@ -84,6 +85,15 @@ class OfficialRecommendFragment : BaseFragment() {
                 loadDating(true)
             }
         }
+
+        viewModel.success.observe(this, Observer {
+            Toast.makeText(requireContext(), it, Toast.LENGTH_SHORT).show()
+            adapter.notifyDataSetChanged()
+        })
+
+        viewModel.error.observe(this, Observer {
+            Toast.makeText(requireContext(), it, Toast.LENGTH_SHORT).show()
+        })
 
         viewModel.recommendDating.observe(this, Observer {
             swipeRefresh.isRefreshing = false

@@ -7,6 +7,8 @@
     <attr name="colorThemePressed" format="reference|color" />
     <attr name="statusBarBackground" format="reference|color" />
     <attr name="toolbarBackground" format="reference|color" />
+    <attr name="toolbarTextColor" format="color" />
+    <attr name="toolbarNavigationIcon" format="reference" />
     <attr name="mainNavigationTextColor" format="reference|color" />
     <attr name="colorPrimaryTranslucent" format="reference|color" />
 

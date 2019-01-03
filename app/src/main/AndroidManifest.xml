@@ -81,7 +81,9 @@
         <activity
             android:name="jiguang.chat.activity.ChatActivity"
             android:theme="@style/AppTheme.Light" />
-        <activity android:name="jiguang.chat.activity.BrowserViewPagerActivity" />
+        <activity
+            android:name="jiguang.chat.activity.BrowserViewPagerActivity"
+            android:theme="@style/AppTheme.Light" />
 
         <provider
             android:name=".provider.SettingsProvider"

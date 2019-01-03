@@ -40,7 +40,7 @@ class WebBrowserActivity : BaseNoViewModelActivity(), View.OnClickListener {
         }
     }
 
-    override fun onConfigureTheme() = false
+    override fun onConfigureTheme() = R.style.AppTheme_Light
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)

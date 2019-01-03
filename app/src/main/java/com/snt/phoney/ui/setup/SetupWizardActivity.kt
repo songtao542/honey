@@ -15,6 +15,8 @@ const val EXTRA_USER = "user"
 
 class SetupWizardActivity : BaseActivity() {
 
+    override fun onConfigureTheme(): Int? = null
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_signup)
@@ -35,10 +37,6 @@ class SetupWizardActivity : BaseActivity() {
         } else {
             if (user.height == 0 || user.age == 0 || user.weight == 0.0) 2 else 3
         }
-    }
-
-    override fun onConfigureTheme(): Boolean {
-        return false
     }
 
     companion object {

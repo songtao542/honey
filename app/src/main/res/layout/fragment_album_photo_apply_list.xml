@@ -12,12 +12,7 @@
     <com.snt.phoney.widget.Toolbar
         android:id="@+id/toolbar"
         style="@style/AppTheme.Toolbar"
-        android:layout_width="match_parent"
-        android:layout_height="?attr/actionBarSize"
-        android:background="?attr/toolbarBackground"
-        app:navigationIcon="@drawable/ic_back"
-        app:title="@string/photo_applying_title"
-        app:titleTextColor="@color/white" />
+        app:title="@string/photo_applying_title" />
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/list"

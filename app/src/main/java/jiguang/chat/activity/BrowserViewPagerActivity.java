@@ -3,7 +3,6 @@ package jiguang.chat.activity;
 import android.app.Dialog;
 import android.app.ProgressDialog;
 import android.content.ContentValues;
-import android.content.Context;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.os.Bundle;
@@ -104,11 +103,6 @@ public class BrowserViewPagerActivity extends BaseActivity {
      * 用来存储图片的选中情况
      */
     private SparseBooleanArray mSelectMap = new SparseBooleanArray();
-
-    @Override
-    public boolean onConfigureTheme() {
-        return false;
-    }
 
     @Override
     public void onCreate(Bundle savedInstanceState) {

@@ -126,61 +126,72 @@
         android:orientation="horizontal">
 
         <androidx.appcompat.widget.AppCompatTextView
-            android:id="@+id/eat"
+            android:id="@+id/program"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="@string/program_eating"
             android:textColor="@color/white"
             android:textSize="@dimen/textsize_smaller" />
 
-        <View
-            android:layout_width="1px"
-            android:layout_height="12dp"
-            android:layout_gravity="center_vertical"
-            android:layout_marginLeft="15dp"
-            android:layout_marginRight="15dp"
-            android:background="@color/white" />
+        <!--<androidx.appcompat.widget.AppCompatTextView-->
+        <!--android:id="@+id/eat"-->
+        <!--android:layout_width="wrap_content"-->
+        <!--android:layout_height="wrap_content"-->
+        <!--android:text="@string/program_eating"-->
+        <!--android:textColor="@color/white"-->
+        <!--android:textSize="@dimen/textsize_smaller" />-->
 
-        <androidx.appcompat.widget.AppCompatTextView
-            android:id="@+id/seeFilm"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:gravity="center"
-            android:text="@string/program_see_film"
-            android:textColor="@color/white"
-            android:textSize="@dimen/textsize_smaller" />
+        <!--<View-->
+        <!--android:id="@+id/divider1"-->
+        <!--android:layout_width="1px"-->
+        <!--android:layout_height="12dp"-->
+        <!--android:layout_gravity="center_vertical"-->
+        <!--android:layout_marginLeft="15dp"-->
+        <!--android:layout_marginRight="15dp"-->
+        <!--android:background="@color/white" />-->
 
-        <View
-            android:layout_width="1px"
-            android:layout_height="12dp"
-            android:layout_gravity="center_vertical"
-            android:layout_marginLeft="15dp"
-            android:layout_marginRight="15dp"
-            android:background="@color/white" />
+        <!--<androidx.appcompat.widget.AppCompatTextView-->
+        <!--android:id="@+id/seeFilm"-->
+        <!--android:layout_width="wrap_content"-->
+        <!--android:layout_height="wrap_content"-->
+        <!--android:gravity="center"-->
+        <!--android:text="@string/program_see_film"-->
+        <!--android:textColor="@color/white"-->
+        <!--android:textSize="@dimen/textsize_smaller" />-->
 
-        <androidx.appcompat.widget.AppCompatTextView
-            android:id="@+id/shopping"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="@string/program_shopping"
-            android:textColor="@color/white"
-            android:textSize="@dimen/textsize_smaller" />
+        <!--<View-->
+        <!--android:id="@+id/divider2"-->
+        <!--android:layout_width="1px"-->
+        <!--android:layout_height="12dp"-->
+        <!--android:layout_gravity="center_vertical"-->
+        <!--android:layout_marginLeft="15dp"-->
+        <!--android:layout_marginRight="15dp"-->
+        <!--android:background="@color/white" />-->
 
-        <View
-            android:layout_width="1px"
-            android:layout_height="12dp"
-            android:layout_gravity="center_vertical"
-            android:layout_marginLeft="15dp"
-            android:layout_marginRight="15dp"
-            android:background="@color/white" />
+        <!--<androidx.appcompat.widget.AppCompatTextView-->
+        <!--android:id="@+id/shopping"-->
+        <!--android:layout_width="wrap_content"-->
+        <!--android:layout_height="wrap_content"-->
+        <!--android:text="@string/program_shopping"-->
+        <!--android:textColor="@color/white"-->
+        <!--android:textSize="@dimen/textsize_smaller" />-->
 
-        <androidx.appcompat.widget.AppCompatTextView
-            android:id="@+id/other"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="@string/program_other"
-            android:textColor="@color/white"
-            android:textSize="@dimen/textsize_smaller" />
+        <!--<View-->
+        <!--android:id="@+id/divider3"-->
+        <!--android:layout_width="1px"-->
+        <!--android:layout_height="12dp"-->
+        <!--android:layout_gravity="center_vertical"-->
+        <!--android:layout_marginLeft="15dp"-->
+        <!--android:layout_marginRight="15dp"-->
+        <!--android:background="@color/white" />-->
+
+        <!--<androidx.appcompat.widget.AppCompatTextView-->
+        <!--android:id="@+id/other"-->
+        <!--android:layout_width="wrap_content"-->
+        <!--android:layout_height="wrap_content"-->
+        <!--android:text="@string/program_other"-->
+        <!--android:textColor="@color/white"-->
+        <!--android:textSize="@dimen/textsize_smaller" />-->
 
     </LinearLayout>
 

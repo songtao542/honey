@@ -1,6 +1,5 @@
 package jiguang.chat.activity;
 
-import android.app.ActivityManager;
 import android.content.ClipData;
 import android.content.ClipboardManager;
 import android.content.Context;
@@ -123,11 +122,6 @@ public class ChatActivity extends BaseActivity implements FuncLayout.OnFuncKeyBo
     private Toolbar mToolbar;
 
     @Override
-    public boolean onConfigureTheme() {
-        return false;
-    }
-
-    @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         //StatusBarExtKt.setLayoutFullscreen(this);
@@ -138,6 +132,11 @@ public class ChatActivity extends BaseActivity implements FuncLayout.OnFuncKeyBo
 
         mToolbar.setNavigationOnClickListener(v -> finish());
         lvChat = findViewById(R.id.lv_chat);
+
+        lvChat.setOnTouchListener((v, event) -> {
+            EmoticonsKeyboardUtils.closeSoftKeyboard(ChatActivity.this);
+            return false;
+        });
 
         mChatView.initModule();
 

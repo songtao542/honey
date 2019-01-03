@@ -13,8 +13,8 @@ import com.snt.phoney.domain.model.User
 import com.snt.phoney.extensions.startActivity
 import com.snt.phoney.ui.user.UserActivity
 import com.snt.phoney.utils.DistanceFormat
+import com.snt.phoney.utils.TimeFormat
 import com.snt.phoney.utils.data.Constants
-import jiguang.chat.utils.TimeFormat
 import kotlinx.android.synthetic.main.fragment_friend.view.*
 import kotlinx.android.synthetic.main.fragment_friend_tag.view.*
 
@@ -94,7 +94,7 @@ class FriendRecyclerViewAdapter() : RecyclerView.Adapter<RecyclerView.ViewHolder
         }
 
         private fun setUpdateTime(time: Long) {
-            lastOnLineTime.text = context.getString(R.string.online_time_template, TimeFormat(context, time).time)
+            lastOnLineTime.text = TimeFormat.format(context, time)
         }
 
         private fun setDistance(distance: Double) {
