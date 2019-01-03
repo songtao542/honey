@@ -56,8 +56,8 @@ class PickerFragment : NoInjectBottomDialogFragment() {
                 setColumnInternal(minValue, maxValue)
             }
 
-            val column1Values = it.getStringArray(EXTRA_COLUMN_1_VALUES)
-            val column2Values = it.getStringArray(EXTRA_COLUMN_2_VALUES)
+            column1Values = it.getStringArray(EXTRA_COLUMN_1_VALUES)
+            column2Values = it.getStringArray(EXTRA_COLUMN_2_VALUES)
             setColumnInternal(column1Values, column2Values)
         }
 
@@ -85,13 +85,13 @@ class PickerFragment : NoInjectBottomDialogFragment() {
     var value1: Int = 0
     var value2: Int = 0
 
-    var minValue: Int = -1
-    var maxValue: Int = -1
+    private var minValue: Int = -1
+    private var maxValue: Int = -1
 
-    var column1Values: Array<String>? = null
-    var column2Values: Array<String>? = null
+    private var column1Values: Array<String>? = null
+    private var column2Values: Array<String>? = null
 
-    var columns: LinkedHashMap<String, out List<String>>? = null
+    private var columns: LinkedHashMap<String, out List<String>>? = null
 
     private fun showProgress(show: Boolean) {
         if (progress != null && pickers != null) {
@@ -131,6 +131,9 @@ class PickerFragment : NoInjectBottomDialogFragment() {
         } else if (columns != null) {
             setColumnInternal(columns)
         }
+        if (mIsColumn2SubOfColumn1) {
+            setColumn2SubOfColumn1Internal(mIsColumn2SubOfColumn1)
+        }
     }
 
     fun setColumn(column1Values: Array<String>?, column2Values: Array<String>? = null) {
@@ -167,6 +170,26 @@ class PickerFragment : NoInjectBottomDialogFragment() {
             }
         }
         showProgress(false)
+    }
+
+    private var mIsColumn2SubOfColumn1 = false
+
+    fun setColumn2SubOfColumn1(isColumn2SubOfColumn1: Boolean) {
+        this.mIsColumn2SubOfColumn1 = isColumn2SubOfColumn1
+        setColumn2SubOfColumn1Internal(mIsColumn2SubOfColumn1)
+    }
+
+    private fun setColumn2SubOfColumn1Internal(isColumn2SubOfColumn1: Boolean) {
+        if (column1View != null && isColumn2SubOfColumn1 && column1Values != null) {
+            val array: Array<String> = column1Values?.copyOfRange(0, 1) ?: emptyArray()
+            setColumnInternal(null, array)
+
+            column1View.setOnValueChangedListener { _, _, newVal ->
+                val array: Array<String> = column1Values?.copyOfRange(0, if (newVal == 0) 1 else newVal)
+                        ?: emptyArray()
+                setColumnInternal(null, array)
+            }
+        }
     }
 
     /**

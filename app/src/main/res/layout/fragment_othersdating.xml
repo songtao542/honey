@@ -130,33 +130,41 @@
         android:id="@+id/photos"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_marginLeft="10dp"
+        android:layout_marginTop="10dp"
+        android:layout_marginRight="10dp"
+        android:layout_marginBottom="10dp"
         android:orientation="horizontal"
-        android:padding="10dp"
+        app:alignContent="flex_start"
+        app:alignItems="flex_start"
         app:column="3"
-        app:space="5dp">
+        app:flexWrap="wrap"
+        app:justifyContent="flex_start"
+        app:space="5dp"
+        app:square="true">
 
-        <com.snt.phoney.widget.SquareImageView
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:scaleType="centerCrop"
-            app:srcCompat="@mipmap/tem" />
-
-
-        <com.snt.phoney.widget.SquareImageView
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:scaleType="centerCrop"
-            app:srcCompat="@mipmap/tem" />
+        <!--<com.snt.phoney.widget.SquareImageView-->
+        <!--android:layout_width="0dp"-->
+        <!--android:layout_height="wrap_content"-->
+        <!--android:layout_weight="1"-->
+        <!--android:scaleType="centerCrop"-->
+        <!--app:srcCompat="@mipmap/tem" />-->
 
 
-        <com.snt.phoney.widget.SquareImageView
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:scaleType="centerCrop"
-            app:srcCompat="@mipmap/tem" />
+        <!--<com.snt.phoney.widget.SquareImageView-->
+        <!--android:layout_width="0dp"-->
+        <!--android:layout_height="wrap_content"-->
+        <!--android:layout_weight="1"-->
+        <!--android:scaleType="centerCrop"-->
+        <!--app:srcCompat="@mipmap/tem" />-->
+
+
+        <!--<com.snt.phoney.widget.SquareImageView-->
+        <!--android:layout_width="0dp"-->
+        <!--android:layout_height="wrap_content"-->
+        <!--android:layout_weight="1"-->
+        <!--android:scaleType="centerCrop"-->
+        <!--app:srcCompat="@mipmap/tem" />-->
 
 
     </com.snt.phoney.widget.FlowLayout>

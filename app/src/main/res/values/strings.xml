@@ -184,6 +184,7 @@
     <string name="select_dating_address">选择地点</string>
     <string name="dating_time">约会天数</string>
     <string name="select_dating_time">选择天数</string>
+    <string name="select_daytime">选择日期</string>
     <string name="dating_program">约会节目</string>
     <string name="select_dating_program">选择标签</string>
     <string name="query_location">搜索</string>
@@ -248,6 +249,7 @@
     <string name="unit_mibi">蜜币</string>
     <string name="wallet_unit_mibi">/蜜币</string>
     <string name="view_records">明细查询</string>
+    <string name="query_detail">明细</string>
     <string name="money_template">%1$s元</string>
     <string name="wallet_mibi_combo_template">%1$s个蜜币</string>
     <string name="pay_picker_title">选择支付方式</string>

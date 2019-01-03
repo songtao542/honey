@@ -35,7 +35,8 @@ class MessageFragment : ConversationListFragment(), Injectable {
 
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
-        enableOptionsMenu(toolbar, false)
+        enableOptionsMenu(toolbar, false, R.menu.message)
+
         viewModel = ViewModelProviders.of(this, viewModelFactory).get(MessageViewModel::class.java)
 
         val inflater = LayoutInflater.from(requireContext())

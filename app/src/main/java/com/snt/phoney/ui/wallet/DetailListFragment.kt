@@ -9,6 +9,7 @@ import androidx.lifecycle.ViewModelProviders
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.snt.phoney.R
 import com.snt.phoney.base.BaseFragment
+import com.snt.phoney.extensions.loadMore
 import com.snt.phoney.extensions.setLoadMoreEnable
 import com.snt.phoney.extensions.setLoadMoreListener
 import com.snt.phoney.utils.data.Constants
@@ -35,6 +36,8 @@ class DetailListFragment : BaseFragment() {
     private lateinit var viewModel: WalletViewModel
     private lateinit var adapter: DetailListRecyclerViewAdapter
     private var type: Int = TYPE_RECHARGE
+    private var startTime: String? = null
+    private var endTime: String? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -52,7 +55,7 @@ class DetailListFragment : BaseFragment() {
         viewModel = ViewModelProviders.of(this, viewModelFactory).get(WalletViewModel::class.java)
 
         list.layoutManager = LinearLayoutManager(requireContext())
-        adapter = DetailListRecyclerViewAdapter(this,type)
+        adapter = DetailListRecyclerViewAdapter(this, type)
         list.adapter = adapter
 
         if (type == TYPE_RECHARGE) {
@@ -69,7 +72,7 @@ class DetailListFragment : BaseFragment() {
             load(false, it)
         }
 
-        load(true)
+        load(true, list.loadMore)
     }
 
 
@@ -78,10 +81,19 @@ class DetailListFragment : BaseFragment() {
             list.setLoadMoreEnable(true)
         }
         if (type == TYPE_RECHARGE) {
-            viewModel.listRechargeOrder(refresh, loadMore = loadMore)
+            viewModel.listRechargeOrder(refresh, startTime, endTime, loadMore = loadMore)
         } else {
-            viewModel.listConsumeOrder(refresh, loadMore = loadMore)
+            viewModel.listConsumeOrder(refresh, startTime, endTime, loadMore = loadMore)
         }
+    }
+
+    /**
+     * yyyy-MM-dd
+     */
+    fun filter(startTime: String, endTime: String) {
+        this.startTime = startTime
+        this.endTime = endTime
+        load(true, list.loadMore)
     }
 
 }

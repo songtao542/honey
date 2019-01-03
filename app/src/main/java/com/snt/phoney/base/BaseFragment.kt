@@ -32,12 +32,15 @@ abstract class BaseFragment : Fragment(), Injectable, CoroutineScope {
 //        //ViewCompat.requestApplyInsets(view)
 //    }
 
-    fun enableOptionsMenu(toolbar: Toolbar, showTitle: Boolean = true) {
+    fun enableOptionsMenu(toolbar: Toolbar, showTitle: Boolean = true, menu: Int = 0) {
         toolbar?.let { toolbar ->
             activity?.let { activity ->
                 setHasOptionsMenu(true)
                 if (activity is AppCompatActivity) {
                     activity.setSupportActionBar(toolbar)
+                    if (menu != 0) {
+                        toolbar.inflateMenu(menu)
+                    }
                     activity.supportActionBar?.setDisplayShowTitleEnabled(showTitle)
                 }
             }

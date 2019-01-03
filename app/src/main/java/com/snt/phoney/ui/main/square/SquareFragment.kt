@@ -38,7 +38,7 @@ class SquareFragment : BaseFragment() {
 
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
-        enableOptionsMenu(squareToolbar, false)
+        enableOptionsMenu(squareToolbar, false, R.menu.square)
         squareTab.setupWithViewPager(squarePager)
         squareTab.tabMode = TabLayout.MODE_SCROLLABLE
         squarePager.adapter = object : FragmentStatePagerAdapter(this.childFragmentManager) {

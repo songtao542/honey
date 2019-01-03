@@ -41,6 +41,7 @@
                 <com.snt.phoney.widget.Toolbar
                     android:id="@+id/toolbar"
                     style="@style/AppTheme.Toolbar"
+                    android:background="@null"
                     android:elevation="0dp"
                     app:layout_collapseMode="pin"
                     app:titleMargin="0dp">

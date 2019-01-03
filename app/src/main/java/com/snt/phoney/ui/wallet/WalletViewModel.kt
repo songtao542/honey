@@ -196,7 +196,7 @@ class WalletViewModel @Inject constructor(private val usecase: WalletUseCase, pr
                 ).disposedBy(disposeBag)
     }
 
-    fun listRechargeOrder(refresh: Boolean, startTime: Long? = null, endTime: Long? = null, loadMore: LoadMoreAdapter.LoadMore? = null) {
+    fun listRechargeOrder(refresh: Boolean, startTime: String? = null, endTime: String? = null, loadMore: LoadMoreAdapter.LoadMore? = null) {
         if (isLoading("recharge")) {
             return
         }
@@ -204,8 +204,8 @@ class WalletViewModel @Inject constructor(private val usecase: WalletUseCase, pr
             mRechargePageIndex = 1
         }
         val token = usecase.getAccessToken() ?: return
-        val start = startTime?.toString() ?: ""
-        val end = endTime?.toString() ?: ""
+        val start = startTime ?: ""
+        val end = endTime ?: ""
         usecase.listOrder(token, "0", mRechargePageIndex.toString(), start, end)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
@@ -231,7 +231,7 @@ class WalletViewModel @Inject constructor(private val usecase: WalletUseCase, pr
     }
 
 
-    fun listConsumeOrder(refresh: Boolean, startTime: Long? = null, endTime: Long? = null, loadMore: LoadMoreAdapter.LoadMore? = null) {
+    fun listConsumeOrder(refresh: Boolean, startTime: String? = null, endTime: String? = null, loadMore: LoadMoreAdapter.LoadMore? = null) {
         if (isLoading("consume")) {
             return
         }
@@ -239,8 +239,8 @@ class WalletViewModel @Inject constructor(private val usecase: WalletUseCase, pr
             mConsumePageIndex = 1
         }
         val token = usecase.getAccessToken() ?: return
-        val start = startTime?.toString() ?: ""
-        val end = endTime?.toString() ?: ""
+        val start = startTime ?: ""
+        val end = endTime ?: ""
         usecase.listOrder(token, "1", mConsumePageIndex.toString(), start, end)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())

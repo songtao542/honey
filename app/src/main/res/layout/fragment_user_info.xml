@@ -36,11 +36,13 @@
             <com.snt.phoney.widget.Toolbar
                 android:id="@+id/toolbar"
                 style="@style/AppTheme.Toolbar"
+                android:background="@null"
                 android:elevation="0dp"
                 app:layout_collapseMode="pin"
                 app:titleMargin="0dp">
 
                 <androidx.appcompat.widget.AppCompatTextView
+                    android:id="@+id/titleView"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="@string/user_info_title"

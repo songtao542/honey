@@ -43,7 +43,8 @@ class HomeFragment : BaseFragment() {
         super.onActivityCreated(savedInstanceState)
         viewModel = ViewModelProviders.of(this, viewModelFactory).get(FriendViewModel::class.java)
 
-        enableOptionsMenu(homeToolbar, false)
+        enableOptionsMenu(homeToolbar, false, R.menu.home)
+
         homeTab.setupWithViewPager(homePager)
         homeTab.tabMode = TabLayout.MODE_SCROLLABLE
         homePager.adapter = object : FragmentStatePagerAdapter(this.childFragmentManager) {

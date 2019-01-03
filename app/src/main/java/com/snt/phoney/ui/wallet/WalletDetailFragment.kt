@@ -1,14 +1,17 @@
 package com.snt.phoney.ui.wallet
 
 import android.os.Bundle
-import android.view.LayoutInflater
-import android.view.View
-import android.view.ViewGroup
+import android.util.Log
+import android.view.*
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentStatePagerAdapter
 import com.snt.phoney.R
+import com.snt.phoney.extensions.enableOptionsMenu
+import com.snt.phoney.utils.Picker
 import com.snt.phoney.utils.data.Constants
 import kotlinx.android.synthetic.main.fragment_wallet_detail.*
+import java.text.SimpleDateFormat
+import java.util.*
 
 
 /**
@@ -23,6 +26,17 @@ class WalletDetailFragment : Fragment() {
         }
     }
 
+    private val df = SimpleDateFormat("yyyy-MM-dd")
+
+    private val today = Date()
+    private val calendar = Calendar.getInstance()
+
+    private val filterColumn = Array<String>(90) { i ->
+        calendar.time = today
+        calendar.add(Calendar.DATE, -i)
+        return@Array df.format(calendar.time)
+    }
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         arguments?.let {
@@ -35,6 +49,7 @@ class WalletDetailFragment : Fragment() {
 
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
+        enableOptionsMenu(toolbar, true, R.menu.wallet_detail)
         toolbar.setNavigationOnClickListener { activity?.onBackPressed() }
         tabLayout.setupWithViewPager(viewPager)
         viewPager.adapter = object : FragmentStatePagerAdapter(this.childFragmentManager) {
@@ -72,5 +87,23 @@ class WalletDetailFragment : Fragment() {
         }
     }
 
+    override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
+        menu.clear()
+        inflater.inflate(R.menu.wallet_detail, menu)
+    }
+
+    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+        when (item.itemId) {
+            R.id.query -> {
+                Picker.showPicker(activity, getString(R.string.select_daytime),
+                        filterColumn, 0,
+                        isColumn2SubOfColumn1 = true) { value1, value2 ->
+                    ((viewPager.adapter as FragmentStatePagerAdapter).getItem(viewPager.currentItem)
+                            as DetailListFragment).filter(filterColumn[value1], filterColumn[value2])
+                }
+            }
+        }
+        return super.onOptionsItemSelected(item)
+    }
 
 }

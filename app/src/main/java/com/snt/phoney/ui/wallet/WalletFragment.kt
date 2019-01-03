@@ -30,7 +30,7 @@ class WalletFragment : BaseFragment() {
 
     private lateinit var viewModel: WalletViewModel
 
-    private val df = DecimalFormat(",###.##")
+    private val df = DecimalFormat("###.##")
 
     private var mNeedRefresh = true
 
@@ -40,7 +40,7 @@ class WalletFragment : BaseFragment() {
 
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
-        enableOptionsMenu(toolbar, true)
+        enableOptionsMenu(toolbar, true, R.menu.wallet)
         viewModel = ViewModelProviders.of(this, viewModelFactory).get(WalletViewModel::class.java)
 
         toolbar.setNavigationOnClickListener { activity?.finish() }
@@ -99,7 +99,7 @@ class WalletFragment : BaseFragment() {
                 val ruleView = RechargeView(context)
                 ruleView.setBackgroundResource(R.drawable.underline_gray)
                 ruleView.setPrice(context.getString(R.string.money_template, df.format(rule.money)))
-                ruleView.setText(context.getString(R.string.wallet_mibi_combo_template, df.format(rule.money)))
+                ruleView.setText(context.getString(R.string.wallet_mibi_combo_template, df.format(rule.mibi)))
                 ruleView.setOnRechargeClickListener {
                     PayPickerFragment.newInstance().apply {
                         setOnResultListener { which ->

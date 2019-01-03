@@ -170,6 +170,7 @@ class UserInfoFragment : BaseFragment() {
             return
         }
         Glide.with(this).load(user.avatar).apply(RequestOptions().circleCrop()).transition(DrawableTransitionOptions.withCrossFade()).into(head)
+        titleView.text = user.nickname
         address.text = user.city
         userAge.text = getString(R.string.age_value_template, user.age)
         job.text = user.career
@@ -181,6 +182,8 @@ class UserInfoFragment : BaseFragment() {
             authenticate.text = getString(R.string.not_authenticated)
         }
         distance.text = getString(R.string.distance_of_template, DistanceFormat.format(requireContext(), user.distance))
+
+        program.text = user.program
 
         height.text = "${user.height}"
         age.text = "${user.age}"
@@ -258,8 +261,10 @@ class UserInfoFragment : BaseFragment() {
 
         introduce.text = user.introduce
         frequentCity.text = user.cities?.map { it.name }?.joinToString(separator = ",") ?: ""
+
         //TODO 服务器返回值，字段名错误，后期提醒修改
-        setProgram(user.program)
+        //setProgram(user.program)
+
         if (user.hasWechatAccount && TextUtils.isEmpty(user.wechatAccount)) {
             wechatAccount.isSelected = true
             wechatAccount.setText(R.string.click_to_view_wechat_account)
