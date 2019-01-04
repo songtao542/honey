@@ -15,9 +15,9 @@ import android.graphics.Rect;
 import android.graphics.RectF;
 import android.graphics.drawable.Animatable;
 import android.graphics.drawable.Drawable;
-import android.os.Build;
 import android.util.AttributeSet;
 import android.util.DisplayMetrics;
+import android.util.TypedValue;
 import android.view.View;
 import android.view.animation.AccelerateDecelerateInterpolator;
 import android.view.animation.Animation;
@@ -60,11 +60,9 @@ public class ProgressBar extends AppCompatImageView {
         if (a.hasValue(R.styleable.ProgressBar_progressColor)) {
             color = a.getColor(R.styleable.ProgressBar_progressColor, 0);
         } else {
-            if (Build.VERSION.SDK_INT < Build.VERSION_CODES.M) {
-                color = context.getResources().getColor(R.color.colorAccent);
-            } else {
-                color = context.getResources().getColor(R.color.colorAccent, context.getTheme());
-            }
+            TypedValue typedValue = new TypedValue();
+            context.getTheme().resolveAttribute(android.R.attr.colorAccent, typedValue, true);
+            color = typedValue.data;
         }
         a.recycle();
         mProgressDrawable = new MaterialProgressDrawable(context, this);

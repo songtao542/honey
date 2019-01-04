@@ -6,9 +6,6 @@ import androidx.appcompat.widget.Toolbar
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import com.snt.phoney.di.Injectable
-import com.snt.phoney.extensions.ClearableCompositeDisposable
-import com.snt.phoney.extensions.autoCleared
-import io.reactivex.disposables.CompositeDisposable
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.Job
@@ -20,12 +17,6 @@ abstract class BaseFragment : Fragment(), Injectable, CoroutineScope {
 
     @Inject
     lateinit var viewModelFactory: ViewModelProvider.Factory
-
-    private var clearableDisposeBag: ClearableCompositeDisposable by autoCleared(ClearableCompositeDisposable(CompositeDisposable()))
-
-    protected val disposeBag: CompositeDisposable
-        get() = clearableDisposeBag.compositeDisposable
-
 
 //    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
 //        super.onViewCreated(view, savedInstanceState)

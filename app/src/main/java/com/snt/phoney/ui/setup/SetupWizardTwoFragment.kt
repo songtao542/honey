@@ -65,7 +65,7 @@ class SetupWizardTwoFragment : BaseFragment() {
         super.onActivityCreated(savedInstanceState)
         viewModel = ViewModelProviders.of(this, viewModelFactory).get(SetupWizardViewModel::class.java)
         Log.d("TTTT", "vm=======2==========================$viewModel")
-        back2.setNavigationOnClickListener {
+        toolbar.setNavigationOnClickListener {
              activity?.onBackPressed()
         }
         confirmStep2.setOnClickListener {

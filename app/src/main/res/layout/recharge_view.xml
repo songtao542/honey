@@ -41,7 +41,7 @@
         android:paddingRight="15dp"
         android:paddingBottom="6dp"
         android:text="8元"
-        android:textColor="@color/recharge_btn_border"
+        android:textColor="?attr/colorPrimary"
         android:textSize="@dimen/textsize_normal" />
 
 </LinearLayout>

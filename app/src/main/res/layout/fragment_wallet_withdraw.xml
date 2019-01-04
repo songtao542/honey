@@ -235,7 +235,7 @@
         android:layout_height="@dimen/button_height"
         android:layout_gravity="center_horizontal"
         android:layout_marginTop="40dp"
-        android:background="@drawable/button_mail_circle_corner_selector"
+        android:background="@drawable/button_primary_circle_corner_selector"
         android:text="@string/confirm_withdraw"
         android:textColor="@color/white" />
 

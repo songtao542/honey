@@ -1,28 +1,21 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <color name="colorPrimary">#444444</color>
-    <color name="colorPrimaryTranslucent">#99444444</color>
-    <color name="colorPrimaryDark">#444444</color>
-    <color name="colorAccent">#444444</color>
-    <color name="colorPrimaryPressed">#444444</color>
-
-    <color name="colorPrimaryLight">#ffffff</color>
-    <color name="colorPrimaryTranslucentLight">#99ffffff</color>
-    <color name="colorPrimaryDarkLight">#ffffff</color>
-    <color name="colorAccentLight">#03A9F4</color>
-    <color name="colorPrimaryPressedLight">#ffffff</color>
 
     <color name="colorPrimaryFemale">#fe4b7a</color>
     <color name="colorPrimaryTranslucentFemale">#99fe4b7a</color>
     <color name="colorPrimaryDarkFemale">#fe4b7a</color>
     <color name="colorAccentFemale">#fe4b7a</color>
     <color name="colorPrimaryPressedFemale">#e1446d</color>
+    <color name="colorGradientStartColorFemale">#fe4b7a</color>
+    <color name="colorGradientEndColorFemale">#e13399</color>
 
     <color name="colorPrimaryMale">#9013fe</color>
     <color name="colorPrimaryTranslucentMale">#999013fe</color>
     <color name="colorPrimaryDarkMale">#9013fe</color>
     <color name="colorAccentMale">#9013fe</color>
     <color name="colorPrimaryPressedMale">#9530ef</color>
+    <color name="colorGradientStartColorMale">#c46bd6</color>
+    <color name="colorGradientEndColorMale">#3324ae</color>
 
     <color name="edittextBorderColor">#94cbd4</color>
     <color name="edittextBorderFocusColor">#7bcfdd</color>
@@ -72,8 +65,8 @@
     <color name="bind_phone_get_vcode_pressed">#393939</color>
     <color name="bind_phone_confirm">#f8e71c</color>
     <color name="bind_phone_confirm_pressed">#dccd16</color>
-    <color name="edit_user_item_label" >#000000</color>
-    <color name="edit_user_item_divider_label" >#444444</color>
+    <color name="edit_user_item_label">#000000</color>
+    <color name="edit_user_item_divider_label">#444444</color>
     <color name="edit_user_item_value">#4a4a4a</color>
     <color name="photo_wall_add">#dddddd</color>
     <color name="photo_wall_add_text">#ffffff</color>

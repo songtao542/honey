@@ -10,8 +10,8 @@ import com.snt.phoney.domain.model.City
 import com.snt.phoney.domain.model.CityPickerConverter
 import com.snt.phoney.domain.model.Purpose
 import com.snt.phoney.domain.usecase.SetupWizardUseCase
+import com.snt.phoney.extensions.disposedBy
 import io.reactivex.android.schedulers.AndroidSchedulers
-import io.reactivex.disposables.Disposable
 import io.reactivex.rxkotlin.subscribeBy
 import io.reactivex.schedulers.Schedulers
 import kotlinx.coroutines.Dispatchers
@@ -60,9 +60,9 @@ class SetupWizardViewModel @Inject constructor(private val setupWizardUseCase: S
     }
 
 
-    fun setSex(sex: Int): Disposable? {
-        val token = setupWizardUseCase.getAccessToken() ?: return null
-        return setupWizardUseCase.setUserSex(token, sex)
+    fun setSex(sex: Int) {
+        val token = setupWizardUseCase.getAccessToken() ?: return
+        setupWizardUseCase.setUserSex(token, sex)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribeBy {
@@ -73,13 +73,13 @@ class SetupWizardViewModel @Inject constructor(private val setupWizardUseCase: S
                     } else if (!TextUtils.isEmpty(it.message)) {
                         error.value = it.message
                     }
-                }
+                }.disposedBy(disposeBag)
     }
 
 
-    fun setUserFeatures(height: Int, weight: Int, age: Int, cup: String): Disposable? {
-        val token = setupWizardUseCase.getAccessToken() ?: return null
-        return setupWizardUseCase.setUserFeatures(token, height, weight, age, cup)
+    fun setUserFeatures(height: Int, weight: Int, age: Int, cup: String) {
+        val token = setupWizardUseCase.getAccessToken() ?: return
+        setupWizardUseCase.setUserFeatures(token, height, weight, age, cup)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribeBy {
@@ -93,7 +93,7 @@ class SetupWizardViewModel @Inject constructor(private val setupWizardUseCase: S
                     } else if (!TextUtils.isEmpty(it.message)) {
                         error.value = it.message
                     }
-                }
+                }.disposedBy(disposeBag)
     }
 
     /**
@@ -101,10 +101,10 @@ class SetupWizardViewModel @Inject constructor(private val setupWizardUseCase: S
      * @param career,职业 对于文字，接口返回
      * @param program,宣言 对应为文字 接口返回
      */
-    fun setUserInfo(cities: List<City>, career: String, program: String): Disposable? {
-        val token = setupWizardUseCase.getAccessToken() ?: return null
+    fun setUserInfo(cities: List<City>, career: String, program: String) {
+        val token = setupWizardUseCase.getAccessToken() ?: return
         val cityCodesString = cities.map { it.id }.joinToString(separator = ",")
-        return setupWizardUseCase.setUserInfo(token, cityCodesString, career, program)
+        setupWizardUseCase.setUserInfo(token, cityCodesString, career, program)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribeBy {
@@ -118,7 +118,7 @@ class SetupWizardViewModel @Inject constructor(private val setupWizardUseCase: S
                     } else if (!TextUtils.isEmpty(it.message)) {
                         error.value = it.message
                     }
-                }
+                }.disposedBy(disposeBag)
     }
 
 

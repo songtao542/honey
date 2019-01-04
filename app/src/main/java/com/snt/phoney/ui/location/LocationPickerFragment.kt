@@ -17,7 +17,6 @@ import com.snt.phoney.base.BaseFragment
 import com.snt.phoney.domain.model.PoiAddress
 import com.snt.phoney.extensions.checkAndRequestPermission
 import com.snt.phoney.extensions.checkAppPermission
-import com.snt.phoney.extensions.disposedBy
 import com.snt.phoney.utils.data.Constants
 import kotlinx.android.synthetic.main.fragment_location_picker.*
 import javax.inject.Inject
@@ -127,7 +126,7 @@ class LocationPickerFragment : BaseFragment() {
     }
 
     private fun getMyLocation() {
-        viewModel.getMyLocation()?.disposedBy(disposeBag)
+        viewModel.getMyLocation()
     }
 
     private fun setMyLocation(location: Location, zoomLevel: Float?) {

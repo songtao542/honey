@@ -88,7 +88,7 @@ class StartupFragment : BaseFragment() {
         qqViewModel.user.observe(this, Observer { user ->
             Log.d("TTTT", "user-----qq----===================>$user")
             user?.let {
-                viewModel.signupByThirdPlatform(it.openId, it.thirdToken, PLATFORM_QQ, it.nickName, it.headPic)?.disposedBy(disposeBag)
+                viewModel.signupByThirdPlatform(it.openId, it.thirdToken, PLATFORM_QQ, it.nickName, it.headPic)
             }
         })
 
@@ -99,7 +99,7 @@ class StartupFragment : BaseFragment() {
                         it.token ?: "",
                         PLATFORM_WEIBO,
                         it.name ?: "",
-                        it.avatarLarge ?: "")?.disposedBy(disposeBag)
+                        it.avatarLarge ?: "")
             }
         })
 
@@ -114,7 +114,7 @@ class StartupFragment : BaseFragment() {
                         it.accessToken ?: "",
                         PLATFORM_WECHAT,
                         it.nickname ?: "",
-                        it.headimgurl ?: "")?.disposedBy(disposeBag)
+                        it.headimgurl ?: "")
             }
         })
 

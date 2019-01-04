@@ -3,16 +3,16 @@
 
 
     <attr name="colorPrimaryPressed" format="reference|color" />
-    <attr name="colorTheme" format="reference|color" />
-    <attr name="colorThemePressed" format="reference|color" />
+    <attr name="colorPrimaryTranslucent" format="reference|color" />
+
     <attr name="statusBarBackground" format="reference|color" />
     <attr name="toolbarBackground" format="reference|color" />
     <attr name="toolbarTextColor" format="color" />
     <attr name="toolbarNavigationIcon" format="reference" />
-    <attr name="mainNavigationTextColor" format="reference|color" />
-    <attr name="colorPrimaryTranslucent" format="reference|color" />
 
-    <attr name="advanced_options_style" format="reference" />
-    <attr name="marginTopContent" format="dimension" />
+    <attr name="mainNavigationTextColor" format="reference|color" />
+
+    <attr name="gradientStartColor" format="reference|color" />
+    <attr name="gradientEndColor" format="reference|color" />
 
 </resources>

@@ -5,8 +5,8 @@ import androidx.lifecycle.MutableLiveData
 import com.snt.phoney.R
 import com.snt.phoney.base.AppViewModel
 import com.snt.phoney.domain.usecase.GetLocationUseCase
+import com.snt.phoney.extensions.disposedBy
 import io.reactivex.android.schedulers.AndroidSchedulers
-import io.reactivex.disposables.Disposable
 import io.reactivex.rxkotlin.subscribeBy
 import io.reactivex.schedulers.Schedulers
 import javax.inject.Inject
@@ -17,12 +17,12 @@ class LocationViewModel @Inject constructor(private var usecase: GetLocationUseC
 
     private var locating = false
 
-    fun getMyLocation(handler: ((Location) -> Unit)? = null): Disposable? {
+    fun getMyLocation(handler: ((Location) -> Unit)? = null) {
         if (locating) {
-            return null
+            return
         }
         locating = true
-        return usecase.getLocation()
+        usecase.getLocation()
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribeBy(
@@ -37,9 +37,9 @@ class LocationViewModel @Inject constructor(private var usecase: GetLocationUseC
                         onError = {
                             locating = false
                             error.value = context.getString(R.string.cannot_get_location)
-                        })
+                        }
+                ).disposedBy(disposeBag)
     }
-
 
 
 }

@@ -20,7 +20,7 @@
         app:tabIndicatorFullWidth="true"
         app:tabMaxWidth="0dp"
         app:tabMode="fixed"
-        app:tabSelectedBackground="@color/colorPrimaryMale"
+        app:tabSelectedBackground="?attr/colorPrimary"
         app:tabSelectedTextColor="@color/white" />
 
     <androidx.viewpager.widget.ViewPager

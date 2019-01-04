@@ -11,12 +11,11 @@ import com.bumptech.glide.request.RequestOptions
 import com.snt.phoney.R
 import com.snt.phoney.domain.model.User
 import com.snt.phoney.utils.Chat
-import io.reactivex.disposables.CompositeDisposable
 import kotlinx.android.synthetic.main.fragment_following.view.*
 
 /**
  */
-class FollowingRecyclerViewAdapter(private val viewModel: FollowingViewModel, val disposeBag: CompositeDisposable) : RecyclerView.Adapter<FollowingRecyclerViewAdapter.ViewHolder>() {
+class FollowingRecyclerViewAdapter(private val viewModel: FollowingViewModel) : RecyclerView.Adapter<FollowingRecyclerViewAdapter.ViewHolder>() {
 
     var data: List<User>? = null
         set(value) {

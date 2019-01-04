@@ -1,9 +1,12 @@
 package com.snt.phoney.api
 
-import android.text.TextUtils
+import android.app.Application
 import android.util.Log
+import com.google.gson.Gson
+import com.google.gson.JsonObject
 import com.snt.phoney.BuildConfig
 import com.snt.phoney.extensions.TAG
+import com.snt.phoney.extensions.sendBroadcast
 import com.snt.phoney.utils.data.MD5.md5
 import okhttp3.*
 import java.net.URLEncoder
@@ -14,6 +17,51 @@ import java.util.concurrent.TimeUnit
 
 private val UTF8 = Charset.forName("UTF-8")
 const val APP_SECRET = ""
+const val ACTION_LOGIN_STATE_INVALID = "login_state_invalid"
+
+@Suppress("unused")
+fun Interceptor.isNotEmpty(param: CharSequence?): Boolean {
+    return param != null && param.trim().isNotEmpty()
+}
+
+@Suppress("unused")
+fun Interceptor.getQueryParameters(httpUrl: HttpUrl): TreeMap<String, String> {
+    val names = httpUrl.queryParameterNames()
+    val params = TreeMap<String, String>()
+    val iterator = names.iterator()
+    while (iterator.hasNext()) {
+        val name = iterator.next()
+        val value = httpUrl.queryParameter(name)
+        if (isNotEmpty(value)) {
+            params[name] = value!!
+        }
+    }
+    return params
+}
+
+fun Interceptor.getParameters(requestBody: RequestBody?): TreeMap<String, String> {
+    when (requestBody) {
+        is FormBody -> {
+            val params = TreeMap<String, String>()
+            for (i in 0..(requestBody.size() - 1)) {
+                val value = requestBody.encodedValue(i)
+                if (isNotEmpty(value)) {
+                    params[requestBody.encodedName(i)] = value
+                }
+            }
+            return params
+        }
+        is MultipartBody -> {
+            val parts = requestBody.parts()
+            val params = TreeMap<String, String>()
+            for (part in parts) {
+                params.putAll(getParameters(part.body()))
+            }
+            return params
+        }
+        else -> return TreeMap()
+    }
+}
 
 @Suppress("unused")
 open class SignInterceptor : Interceptor {
@@ -23,12 +71,8 @@ open class SignInterceptor : Interceptor {
         return when (method) {
             "GET" -> chain.proceed(interceptGet(request))
             "POST" -> chain.proceed(interceptPost(request))
-            else -> chain.proceed(interceptDefault(request))
+            else -> chain.proceed(request)
         }
-    }
-
-    private fun interceptDefault(request: Request): Request {
-        return request
     }
 
     private fun interceptGet(request: Request): Request {
@@ -61,7 +105,7 @@ open class SignInterceptor : Interceptor {
                 return request.newBuilder().post(bodyBuilder.build()).build()
             }
             is MultipartBody -> {
-                val bodyBuilder: MultipartBody.Builder = MultipartBody.Builder().setType(MultipartBody.FORM)
+                val bodyBuilder = MultipartBody.Builder().setType(MultipartBody.FORM)
                 val parts = body.parts()
                 val timestamp = System.currentTimeMillis().toString()
                 val params = getParameters(body).apply {
@@ -75,7 +119,7 @@ open class SignInterceptor : Interceptor {
                 }
                 return request.newBuilder().post(bodyBuilder.build()).build()
             }
-            else -> return interceptDefault(request)
+            else -> return request
         }
     }
 
@@ -90,42 +134,72 @@ open class SignInterceptor : Interceptor {
         }
         return md5(paramString.toString().toUpperCase()).toUpperCase()
     }
+}
 
-    private fun getQueryParameters(httpUrl: HttpUrl): TreeMap<String, String> {
-        val nameSet = httpUrl.queryParameterNames()
-        val params = TreeMap<String, String>()
-        for (name in nameSet) {
-            val value = httpUrl.queryParameter(name)
-            value?.let {
-                params[name] = it
-            }
+class NullOrEmptyInterceptor : Interceptor {
+    override fun intercept(chain: Interceptor.Chain): okhttp3.Response {
+        val request = chain.request()
+        val method = request.method()
+        return when (method) {
+            "GET" -> chain.proceed(interceptGet(request))
+            "POST" -> chain.proceed(interceptPost(request))
+            else -> chain.proceed(request)
         }
-        return params
     }
 
-    private fun getParameters(requestBody: RequestBody?): TreeMap<String, String> {
-        when (requestBody) {
+
+    private fun interceptGet(request: Request): Request {
+        val httpUrl = request.url()
+        val params = getQueryParameters(httpUrl)
+        val urlBuilder = httpUrl.newBuilder()
+        for (param in params) {
+            Log.d("TTTT", "pppppppppppppp ${param.key}    ${param.value}")
+            urlBuilder.addQueryParameter(param.key, param.value)
+        }
+        return request.newBuilder().url(urlBuilder.build()).build()
+    }
+
+    private fun interceptPost(request: Request): Request {
+        val body = request.body()
+        when (body) {
             is FormBody -> {
-                val params = TreeMap<String, String>()
-                for (i in 0..(requestBody.size() - 1)) {
-                    params[requestBody.encodedName(i)] = requestBody.encodedValue(i)
+                val bodyBuilder = FormBody.Builder()
+                val params = getParameters(body)
+                for ((name, value) in params) {
+                    bodyBuilder.addEncoded(name, URLEncoder.encode(value, UTF8.name()))
                 }
-                return params
+                return request.newBuilder().post(bodyBuilder.build()).build()
             }
             is MultipartBody -> {
-                val parts = requestBody.parts()
-                val params = TreeMap<String, String>()
-                for (part in parts) {
-                    params.putAll(getParameters(part.body()))
+                val bodyBuilder = MultipartBody.Builder().setType(MultipartBody.FORM)
+                val parts = body.parts()
+                val iterator = parts.iterator()
+                //移除掉 FormBody，保留其他类型 Body，比如文件类型
+                while (iterator.hasNext()) {
+                    val part = iterator.next()
+                    if (part.body() !is FormBody) {
+                        bodyBuilder.addPart(part)
+                    }
                 }
-                return params
+                //取出 FormBody 中的参数，过滤掉空值，然后重新加入
+                val params = getParameters(body)
+                for ((name, value) in params) {
+                    if (isNotEmpty(value)) {
+                        bodyBuilder.addPart(MultipartBody.Part.createFormData(name, value))
+                    }
+                }
+                return request.newBuilder().post(bodyBuilder.build()).build()
             }
-            else -> return TreeMap()
+            else -> return request
         }
     }
+
+
 }
 
 class TimeoutInterceptor : Interceptor {
+
+    @Suppress("NULLABILITY_MISMATCH_BASED_ON_JAVA_ANNOTATIONS")
     override fun intercept(chain: Interceptor.Chain): Response {
         val request = chain.request()
 
@@ -141,7 +215,8 @@ class TimeoutInterceptor : Interceptor {
 
         //@Headers("Timeout: 60000")
         val timeout = request.header("Timeout")
-        if (!TextUtils.isEmpty(timeout)) {
+        if (isNotEmpty(timeout)) {
+
             val time = Integer.valueOf(timeout)
             connectTimeout = time
             readTimeout = time
@@ -151,13 +226,13 @@ class TimeoutInterceptor : Interceptor {
             val connectTime = request.header("Connect-Timeout")
             val readTime = request.header("Read-Timeout")
             val writeTime = request.header("Write-Timeout")
-            if (!TextUtils.isEmpty(connectTime)) {
+            if (isNotEmpty(connectTime)) {
                 connectTimeout = Integer.valueOf(connectTime)
             }
-            if (!TextUtils.isEmpty(readTime)) {
+            if (isNotEmpty(readTime)) {
                 readTimeout = Integer.valueOf(readTime)
             }
-            if (!TextUtils.isEmpty(writeTime)) {
+            if (isNotEmpty(writeTime)) {
                 writeTimeout = Integer.valueOf(writeTime)
             }
         }
@@ -175,122 +250,22 @@ class TimeoutInterceptor : Interceptor {
 
 }
 
-//
-//class LoginStateInterceptor @Inject constructor(private val userRepository: UserRepository) : SignInterceptor() {
-//
-//    override fun intercept(chain: Interceptor.Chain): okhttp3.Response {
-//        val originRequest = chain.request()
-//        val response = chain.proceed(originRequest)
-//        val source = response.body()?.source()
-//        source?.request(Long.MAX_VALUE)
-//        val buffer = source?.buffer()
-//        val res = buffer?.clone()?.readString(UTF8)
-//        res?.let { res ->
-//            val result = Gson().fromJson<com.snt.phoney.domain.model.Response<Any>>(res, com.snt.phoney.domain.model.Response::class.java)
-//            if (result?.code == 202) {
-//                val user = userRepository?.user
-//                user?.let {
-//                    val builder = Request.Builder()
-//                    builder.url("${Constants.Api.BASE_URL}/OpenApi/UserLogin.aspx")
-//                    var bodyBuilder = FormBody.Builder()
-//                    bodyBuilder.addEncoded("username", URLEncoder.encode(it.phone, UTF8.name()))
-//                    bodyBuilder.addEncoded("userpwd", URLEncoder.encode(it.password, UTF8.name()))
-//                    bodyBuilder.addEncoded("RegistrationId", URLEncoder.encode(it.registrationId, UTF8.name()))
-//                    //bodyBuilder.addEncoded("RegistrationId", URLEncoder.encode("e7412ef50b78985bc4352975606c05d4",  UTF8.name()))
-//                    builder.post(bodyBuilder.build())
-//                    //val loginResponse = Api.getOkHttpClient().newCall(builder.build()).execute()
-//                    val loginResponse = chain.proceed(interceptPost(builder.build()))
-//                    val loginRes = loginResponse?.body()?.source()?.readString(UTF8)
-//                    if (loginRes != null) {
-//                        val loginResult =
-//                                Gson().fromJson<com.snt.phoney.domain.model.Response<User>>(loginRes, object : TypeToken<com.snt.phoney.domain.model.Response<User>>() {}.type)
-//
-//                        if (loginResult?.code == 1) {
-//                            loginResult?.data?.id?.let { key ->
-//                                user.id = key
-//                                userRepository?.user = user
-//                                Log.d(TAG, "retry origin request with new user: $user")
-//                                return chain.proceed(interceptPost(newRequest(key, originRequest)))
-//                                //return Api.getOkHttpClient().newCall(newRequest(originRequest)).execute()
-//                            }
-//                        }
-//                    }
-//                }
-//            }
-//        }
-//        return response
-//    }
-//
-//    private fun updateRequest(key: String, request: Request): Request {
-//        var method = request.method()
-//        val builder = Request.Builder()
-//        return when (method) {
-//            "GET" -> {
-//                val urlBuilder = request.url().newBuilder()
-//                if (request.url().queryParameter("UserKey") != null) {
-//                    urlBuilder.removeAllQueryParameters("UserKey")
-//                            .addQueryParameter("UserKey", key)
-//                }
-//                builder.url(urlBuilder.build()).build()
-//            }
-//            "POST" -> {
-//                val params = getParameters(request?.body())
-//                builder.url(request.url())
-//                var bodyBuilder = FormBody.Builder()
-//                for ((name, _) in params) {
-//                    if (name == "UserKey") {
-//                        bodyBuilder.addEncoded(name, URLEncoder.encode(key, UTF8.name()))
-//                        break
-//                    }
-//                }
-//                builder.post(bodyBuilder.build())
-//                builder.build()
-//            }
-//            else -> request
-//        }
-//    }
-//
-//    private fun newRequest(key: Int, request: Request): Request {
-//        var method = request.method()
-//        val builder = Request.Builder()
-//        return when (method) {
-//            "GET" -> {
-//                val urlBuilder = request.url().newBuilder()
-//                        .removeAllQueryParameters("sign")
-//                        .removeAllQueryParameters("appid")
-//                        .removeAllQueryParameters("requestdate")
-//
-//                if (request.url().queryParameter("UserKey") != null) {
-//                    urlBuilder.removeAllQueryParameters("UserKey")
-//                            .addQueryParameter("UserKey", key.toString())
-//                }
-//                builder.url(urlBuilder.build()).build()
-//            }
-//            "POST" -> {
-//                val params = getParameters(request?.body())
-//                builder.url(request.url())
-//                var bodyBuilder = FormBody.Builder()
-//                for ((name, value) in params) {
-//                    if (name == "sign" || name == "appid" || name == "requestdate") {
-//                        continue
-//                    }
-//                    if (name == "UserKey") {
-//                        bodyBuilder.addEncoded(name, URLEncoder.encode(key, UTF8.name()))
-//                    } else {
-//                        bodyBuilder.addEncoded(name, URLEncoder.encode(value, UTF8.name()))
-//                    }
-//                }
-//                builder.post(bodyBuilder.build())
-//                builder.build()
-//            }
-//            else -> request
-//        }
-//
-//    }
-//
-//
-//}
+class LoginStateInterceptor(private val application: Application, private val gson: Gson) : Interceptor {
+    override fun intercept(chain: Interceptor.Chain): Response {
+        val originRequest = chain.request()
+        val response = chain.proceed(originRequest)
+        val source = response.body()?.source()
+        source?.request(Long.MAX_VALUE)
+        val buffer = source?.buffer()
+        val result = buffer?.clone()?.readString(UTF8)
+        result?.let { result ->
+            val jsonObject = gson.fromJson<JsonObject>(result, JsonObject::class.java)
+            val code = jsonObject.getAsJsonObject("header").get("code").asInt
+            if (code == 201) {
+                application.sendBroadcast(ACTION_LOGIN_STATE_INVALID)
+            }
+        }
+        return response
+    }
 
-
-
-
+}

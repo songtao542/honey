@@ -34,7 +34,7 @@ class FollowingFragment : BaseFragment() {
         viewModel = ViewModelProviders.of(this, viewModelFactory).get(FollowingViewModel::class.java)
 
         list.layoutManager = LinearLayoutManager(context)
-        adapter = FollowingRecyclerViewAdapter(viewModel, disposeBag)
+        adapter = FollowingRecyclerViewAdapter(viewModel)
         list.adapter = adapter
 
         viewModel.users.observe(this, Observer {

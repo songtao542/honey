@@ -6,15 +6,31 @@
     </style>
 
     <!-- 针对不同API的差异性属性在 AppTheme和AppLightTheme中定义 -->
+    <!-- 主题 start -->
+    <style name="Male">
+        <item name="colorPrimary">@color/colorPrimaryMale</item>
+        <item name="colorPrimaryPressed">@color/colorPrimaryPressedMale</item>
+        <item name="colorPrimaryTranslucent">@color/colorPrimaryTranslucentMale</item>
+        <item name="colorPrimaryDark">@color/colorPrimaryDarkMale</item>
+        <item name="colorAccent">@color/colorAccentMale</item>
 
+        <item name="gradientStartColor">@color/colorGradientStartColorMale</item>
+        <item name="gradientEndColor">@color/colorGradientEndColorMale</item>
+    </style>
+
+    <style name="Female">
+        <item name="colorPrimary">@color/colorPrimaryFemale</item>
+        <item name="colorPrimaryPressed">@color/colorPrimaryPressedFemale</item>
+        <item name="colorPrimaryTranslucent">@color/colorPrimaryTranslucentFemale</item>
+        <item name="colorPrimaryDark">@color/colorPrimaryDarkFemale</item>
+        <item name="colorAccent">@color/colorAccentFemale</item>
+
+        <item name="gradientStartColor">@color/colorGradientStartColorFemale</item>
+        <item name="gradientEndColor">@color/colorGradientEndColorFemale</item>
+    </style>
+
+    <!-- 浅色模式 -->
     <style name="AppTheme.Light" parent="AppLightTheme">
-        <item name="colorPrimary">@color/colorPrimaryLight</item>
-        <item name="colorPrimaryPressed">@color/colorPrimaryPressedLight</item>
-        <item name="colorPrimaryTranslucent">@color/colorPrimaryTranslucentLight</item>
-        <item name="colorPrimaryDark">@color/colorPrimaryDarkLight</item>
-        <item name="colorAccent">@color/colorAccentLight</item>
-        <item name="colorTheme">@color/colorPrimaryLight</item>
-        <item name="colorThemePressed">@color/colorPrimaryPressedLight</item>
         <item name="mainNavigationTextColor">@color/navigation_text_color_male_selector</item>
 
         <item name="statusBarBackground">@color/white</item>
@@ -24,13 +40,6 @@
     </style>
 
     <style name="AppTheme.Male" parent="AppTheme">
-        <item name="colorPrimary">@color/colorPrimaryMale</item>
-        <item name="colorPrimaryPressed">@color/colorPrimaryPressedMale</item>
-        <item name="colorPrimaryTranslucent">@color/colorPrimaryTranslucentMale</item>
-        <item name="colorPrimaryDark">@color/colorPrimaryDarkMale</item>
-        <item name="colorAccent">@color/colorAccentMale</item>
-        <item name="colorTheme">@color/colorPrimaryMale</item>
-        <item name="colorThemePressed">@color/colorPrimaryPressedMale</item>
         <item name="mainNavigationTextColor">@color/navigation_text_color_male_selector</item>
 
         <item name="statusBarBackground">@drawable/gradient_bg</item>
@@ -40,13 +49,6 @@
     </style>
 
     <style name="AppTheme.Female" parent="AppTheme">
-        <item name="colorPrimary">@color/colorPrimaryFemale</item>
-        <item name="colorPrimaryPressed">@color/colorPrimaryPressedFemale</item>
-        <item name="colorPrimaryTranslucent">@color/colorPrimaryTranslucentFemale</item>
-        <item name="colorPrimaryDark">@color/colorPrimaryDarkFemale</item>
-        <item name="colorAccent">@color/colorAccentFemale</item>
-        <item name="colorTheme">@color/colorPrimaryFemale</item>
-        <item name="colorThemePressed">@color/colorPrimaryPressedFemale</item>
         <item name="mainNavigationTextColor">@color/navigation_text_color_female_selector</item>
 
         <item name="statusBarBackground">@color/colorPrimaryFemale</item>
@@ -54,22 +56,8 @@
         <item name="toolbarTextColor">@color/white</item>
         <item name="toolbarNavigationIcon">@drawable/ic_back</item>
     </style>
+    <!-- 主题 end -->
 
-    <style name="AppTheme.SexUnknown" parent="AppTheme">
-        <item name="colorPrimary">@color/colorPrimary</item>
-        <item name="colorPrimaryPressed">@color/colorPrimaryPressed</item>
-        <item name="colorPrimaryTranslucent">@color/colorPrimaryTranslucent</item>
-        <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
-        <item name="colorAccent">@color/colorAccent</item>
-        <item name="colorTheme">@color/colorPrimary</item>
-        <item name="colorThemePressed">@color/colorPrimaryPressed</item>
-        <item name="mainNavigationTextColor">@color/navigation_text_color_selector</item>
-
-        <item name="statusBarBackground">@color/colorPrimary</item>
-        <item name="toolbarBackground">@color/colorPrimary</item>
-        <item name="toolbarTextColor">@color/white</item>
-        <item name="toolbarNavigationIcon">@drawable/ic_back</item>
-    </style>
 
     <style name="AppTheme.NoActionBar">
         <item name="windowActionBar">false</item>
@@ -101,15 +89,16 @@
         <item name="elevation">0dp</item>
     </style>
 
+    <!-- toolbar start -->
+    <style name="TextAppearance"></style>
+
+    <style name="TextAppearance.Toolbar" parent="TextAppearance.Widget.AppCompat.Toolbar.Title"></style>
+
     <style name="AppTheme.PopupOverlay" parent="ThemeOverlay.AppCompat.Light">
         <item name="android:textColor">?attr/toolbarTextColor</item>
         <item name="android:actionMenuTextColor">?attr/toolbarTextColor</item>
         <item name="actionMenuTextColor">?attr/toolbarTextColor</item>
     </style>
-
-    <style name="TextAppearance"></style>
-
-    <style name="TextAppearance.Toolbar" parent="TextAppearance.Widget.AppCompat.Toolbar.Title"></style>
 
     <style name="AppTheme.Toolbar" parent="Widget.AppCompat.Toolbar">
         <item name="android:theme">@style/AppTheme.PopupOverlay</item>
@@ -156,6 +145,7 @@
         <item name="tabSelectedTextAppearance">@style/TextAppearance.Tab</item>
     </style>
 
+    <!-- 可展开的 AppBarLayout -> CollapsingToolbarLayout -->
     <style name="TextAppearance.ExpandedTitle" parent="TextAppearance.Tab">
         <item name="android:textColor">@android:color/transparent</item>
     </style>
@@ -163,12 +153,80 @@
     <style name="TextAppearance.CollapsedTitle">
         <item name="android:textColor">@android:color/white</item>
     </style>
+    <!-- toolbar end -->
+
+    <!-- light toolbar start -->
+    <!--<style name="AppTheme.Light.PopupOverlay" parent="ThemeOverlay.AppCompat.Light">-->
+    <!--<item name="android:textColor">@color/black</item>-->
+    <!--<item name="android:actionMenuTextColor">@color/black</item>-->
+    <!--<item name="actionMenuTextColor">@color/black</item>-->
+    <!--</style>-->
+
+    <!--<style name="AppTheme.Light.Toolbar" parent="AppTheme.Toolbar">-->
+    <!--<item name="android:theme">@style/AppTheme.Light.PopupOverlay</item>-->
+    <!--<item name="popupTheme">@style/AppTheme.Light.PopupOverlay</item>-->
+    <!--<item name="android:background">@color/white</item>-->
+    <!--<item name="navigationIcon">@drawable/ic_back_black</item>-->
+    <!--<item name="titleTextColor">@color/black</item>-->
+    <!--<item name="android:textColor">@color/black</item>-->
+    <!--</style>-->
+    <!-- light toolbar end -->
+
 
     <style name="AppTheme.FullScreen" parent="AppTheme">
         <item name="windowNoTitle">true</item>
         <item name="android:windowFullscreen">true</item>
         <item name="android:windowContentOverlay">@null</item>
     </style>
+
+    <style name="AppTheme.Signup" parent="AppTheme.Light">
+        <item name="windowNoTitle">true</item>
+        <item name="android:windowFullscreen">false</item>
+        <item name="android:windowContentOverlay">@null</item>
+
+        <item name="statusBarBackground">@color/white</item>
+        <item name="toolbarBackground">@color/white</item>
+        <item name="toolbarTextColor">@color/black</item>
+        <item name="toolbarNavigationIcon">@drawable/ic_back_black</item>
+    </style>
+
+    <style name="AppTheme.FullscreenDialog" parent="AppTheme.FullScreen">
+        <item name="android:windowIsFloating">true</item>
+    </style>
+
+    <style name="Widget"></style>
+
+    <style name="Widget.FlowLayout">
+        <item name="column">4</item>
+        <item name="space">10dp</item>
+    </style>
+
+    <style name="AppTheme.ShareBottomSheetDialog" parent="Theme.Design.Light.BottomSheetDialog">
+        <item name="bottomSheetStyle">@style/ShareBottomSheet</item>
+    </style>
+
+    <style name="ShareBottomSheet" parent="Widget.Design.BottomSheet.Modal">
+        <item name="android:background">@android:color/transparent</item>
+    </style>
+
+
+    <style name="PopupAnimation">
+        <item name="android:windowEnterAnimation">@anim/popu_slide_in</item>
+        <item name="android:windowExitAnimation">@anim/popu_slide_out</item>
+    </style>
+
+    <style name="PopupMenu" parent="Base.Widget.AppCompat.PopupMenu">
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:windowFullscreen">true</item>
+    </style>
+
+    <style name="TextShadow">
+        <item name="android:shadowColor">@color/black</item>
+        <item name="android:shadowDx">0</item>
+        <item name="android:shadowDy">2</item>
+        <item name="android:shadowRadius">10</item>
+    </style>
+
 
     <style name="AppTheme.CityPicker" parent="AppTheme">
         <item name="cpConfirmTextSize">@dimen/cp_cancel_text_size</item>
@@ -220,48 +278,4 @@
         <item name="cpBackIconColor">@color/cp_back_color</item>
 
     </style>
-
-    <style name="AppTheme.Signup" parent="AppTheme.CityPicker">
-        <item name="windowNoTitle">true</item>
-        <item name="android:windowFullscreen">true</item>
-        <item name="android:windowContentOverlay">@null</item>
-    </style>
-
-    <style name="AppTheme.FullscreenDialog" parent="AppTheme.FullScreen">
-        <item name="android:windowIsFloating">true</item>
-    </style>
-
-    <style name="Widget"></style>
-
-    <style name="Widget.FlowLayout">
-        <item name="column">4</item>
-        <item name="space">10dp</item>
-    </style>
-
-    <style name="AppTheme.ShareBottomSheetDialog" parent="Theme.Design.Light.BottomSheetDialog">
-        <item name="bottomSheetStyle">@style/ShareBottomSheet</item>
-    </style>
-
-    <style name="ShareBottomSheet" parent="Widget.Design.BottomSheet.Modal">
-        <item name="android:background">@android:color/transparent</item>
-    </style>
-
-
-    <style name="PopupAnimation">
-        <item name="android:windowEnterAnimation">@anim/popu_slide_in</item>
-        <item name="android:windowExitAnimation">@anim/popu_slide_out</item>
-    </style>
-
-    <style name="PopupMenu" parent="Base.Widget.AppCompat.PopupMenu">
-        <item name="android:layout_width">match_parent</item>
-        <item name="android:windowFullscreen">true</item>
-    </style>
-
-    <style name="TextShadow">
-        <item name="android:shadowColor">@color/black</item>
-        <item name="android:shadowDx">0</item>
-        <item name="android:shadowDy">2</item>
-        <item name="android:shadowRadius">10</item>
-    </style>
-
 </resources>

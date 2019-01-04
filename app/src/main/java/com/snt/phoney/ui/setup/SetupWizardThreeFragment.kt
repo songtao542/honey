@@ -1,7 +1,6 @@
 package com.snt.phoney.ui.setup
 
 import android.os.Bundle
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -15,8 +14,6 @@ import com.snt.phoney.utils.Picker
 import com.zaaach.citypicker.model.City
 import kotlinx.android.synthetic.main.fragment_signup_3.*
 import kotlinx.android.synthetic.main.fragment_signup_3.view.*
-import kotlinx.coroutines.GlobalScope
-import kotlinx.coroutines.launch
 
 private const val ARG_USER = "user"
 
@@ -55,8 +52,7 @@ class SetupWizardThreeFragment : BaseFragment() {
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
         viewModel = ViewModelProviders.of(this, viewModelFactory).get(SetupWizardViewModel::class.java)
-        Log.d("TTTT", "vm=======3==========================$viewModel")
-        back3.setNavigationOnClickListener { activity?.supportFragmentManager?.popBackStack() }
+        toolbar.setNavigationOnClickListener { activity?.onBackPressed() }
         confirmStep3.setOnClickListener {
             if (isValid()) {
                 viewModel.setUserInfo(CityPickerConverter.reverseConvert(selectedCities!!), selectedJob!!.safeName, selectedPurpose!!.safeName)
@@ -101,7 +97,7 @@ class SetupWizardThreeFragment : BaseFragment() {
                     }
                     picker.setColumn(careerNames)
                 })
-            }, handler ={ value1, _ ->
+            }, handler = { value1, _ ->
                 selectedJobIndex = value1
                 selectedJob = viewModel.careers.value?.get(value1)
                 job.text = selectedJob?.name

@@ -1,7 +1,6 @@
 package com.snt.phoney.ui.setup
 
 import android.os.Bundle
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -12,7 +11,6 @@ import com.snt.phoney.base.BaseFragment
 import com.snt.phoney.domain.model.Sex
 import com.snt.phoney.domain.model.User
 import com.snt.phoney.extensions.addFragmentSafely
-import com.snt.phoney.extensions.disposedBy
 import com.snt.phoney.extensions.snackbar
 import kotlinx.android.synthetic.main.fragment_signup_1.*
 
@@ -39,8 +37,6 @@ class SetupWizardOneFragment : BaseFragment() {
         super.onActivityCreated(savedInstanceState)
         viewModel = ViewModelProviders.of(this, viewModelFactory).get(SetupWizardViewModel::class.java)
 
-        Log.d("TTTT", "vm=======1==========================$viewModel")
-
         female.setOnClickListener { setSex(Sex.FEMALE) }
         male.setOnClickListener { setSex(Sex.MALE) }
 
@@ -55,7 +51,7 @@ class SetupWizardOneFragment : BaseFragment() {
 
     private fun setSex(sex: Sex) {
         user.sex = sex.value
-        viewModel.setSex(sex.value)?.disposedBy(disposeBag)
+        viewModel.setSex(sex.value)
     }
 
     companion object {

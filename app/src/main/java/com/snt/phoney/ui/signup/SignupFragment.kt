@@ -42,12 +42,12 @@ class SignupFragment : BaseFragment() {
         binding.viewModel = viewModel
 
         login.setOnClickListener {
-            viewModel.signup(phone.text.toString(), verificationCode.text.toString()).disposedBy(disposeBag)
+            viewModel.signup(phone.text.toString(), verificationCode.text.toString())
         }
         getVerificationCode.setOnClickListener {
             val phoneNumber = getPhone()
             if (!TextUtils.isEmpty(phoneNumber)) {
-                viewModel.requestVerificationCode(phoneNumber!!).disposedBy(disposeBag)
+                viewModel.requestVerificationCode(phoneNumber!!)
             }
         }
         forgetPassword.setOnClickListener { onForgetPasswordClicked() }

@@ -3,7 +3,6 @@ package com.snt.phoney.ui.setup
 import android.content.Context
 import android.content.Intent
 import android.os.Bundle
-import android.util.Log
 import com.snt.phoney.R
 import com.snt.phoney.base.BaseActivity
 import com.snt.phoney.domain.model.User
@@ -19,6 +18,7 @@ class SetupWizardActivity : BaseActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        //setLayoutFullscreen()
         setContentView(R.layout.activity_signup)
         setStatusBarColor(colorOf(android.R.color.white))
         val user = intent?.getParcelableExtra<User>(EXTRA_USER)
@@ -31,7 +31,6 @@ class SetupWizardActivity : BaseActivity() {
     }
 
     private fun computeStep(user: User): Int {
-        Log.d("TTTT", "set up wizard sex=${user.sex}")
         return if (user.sex == -1) 1 else if (user.sex == 1) {
             if (user.height == 0 || user.age == 0 || user.cup == null) 2 else 3
         } else {

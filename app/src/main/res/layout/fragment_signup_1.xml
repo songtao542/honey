@@ -7,17 +7,12 @@
     android:layout_height="match_parent"
     android:background="@android:color/white"
     android:orientation="vertical"
-    tools:context=".ui.setup.SetupWizardFragment">
+    tools:context=".ui.setup.SetupWizardOneFragment">
 
     <androidx.appcompat.widget.Toolbar
-        android:id="@+id/back"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:visibility="gone"
-        app:navigationIcon="@drawable/ic_back">
-
-    </androidx.appcompat.widget.Toolbar>
-
+        android:id="@+id/toolbar"
+        style="@style/AppTheme.Toolbar"
+        android:visibility="invisible" />
 
     <androidx.appcompat.widget.AppCompatTextView
         android:layout_width="match_parent"

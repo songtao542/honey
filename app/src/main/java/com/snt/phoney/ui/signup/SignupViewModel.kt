@@ -6,11 +6,11 @@ import androidx.lifecycle.MutableLiveData
 import com.snt.phoney.base.AppViewModel
 import com.snt.phoney.domain.model.User
 import com.snt.phoney.domain.usecase.SigninUseCase
+import com.snt.phoney.extensions.disposedBy
 import com.snt.phoney.extensions.getAndroidVersion
 import com.snt.phoney.extensions.getInstanceId
 import com.snt.phoney.extensions.getVersionName
 import io.reactivex.android.schedulers.AndroidSchedulers
-import io.reactivex.disposables.Disposable
 import io.reactivex.rxkotlin.subscribeBy
 import io.reactivex.schedulers.Schedulers
 import javax.inject.Inject
@@ -21,8 +21,8 @@ class SignupViewModel @Inject constructor(private val usecase: SigninUseCase) : 
 
     val user = MutableLiveData<User>()
 
-    fun requestVerificationCode(phone: String): Disposable {
-        return usecase.requestVerificationCode(phone)
+    fun requestVerificationCode(phone: String) {
+        usecase.requestVerificationCode(phone)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribeBy {
@@ -32,16 +32,16 @@ class SignupViewModel @Inject constructor(private val usecase: SigninUseCase) : 
                     } else if (!TextUtils.isEmpty(it.message)) {
                         error.value = it.message
                     }
-                }
+                }.disposedBy(disposeBag)
     }
 
-    fun signup(phone: String, code: String): Disposable {
+    fun signup(phone: String, code: String) {
         val msgId = verificationCode.value ?: ""
         val mobilePlate = "android"
         val osVersion = application.getAndroidVersion()
         val deviceToken = application.getInstanceId()
         val appVersion = application.getVersionName()
-        return usecase.signup(phone, msgId, code, deviceToken, osVersion, appVersion, mobilePlate)
+        usecase.signup(phone, msgId, code, deviceToken, osVersion, appVersion, mobilePlate)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribeBy {
@@ -52,7 +52,7 @@ class SignupViewModel @Inject constructor(private val usecase: SigninUseCase) : 
                     } else if (!TextUtils.isEmpty(it.message)) {
                         error.value = it.message
                     }
-                }
+                }.disposedBy(disposeBag)
     }
 
 }

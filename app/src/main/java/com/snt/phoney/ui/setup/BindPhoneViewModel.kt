@@ -5,6 +5,7 @@ import android.util.Log
 import androidx.lifecycle.MutableLiveData
 import com.snt.phoney.base.AppViewModel
 import com.snt.phoney.domain.usecase.BindPhoneUseCase
+import com.snt.phoney.extensions.disposedBy
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.disposables.Disposable
 import io.reactivex.rxkotlin.subscribeBy
@@ -15,13 +16,13 @@ class BindPhoneViewModel @Inject constructor(private val usecase: BindPhoneUseCa
 
     var verificationCodeId = MutableLiveData<String>()
 
-    fun bindPhone(phone: String, code: String): Disposable? {
+    fun bindPhone(phone: String, code: String) {
         val uuid = usecase.getUser()?.uuid
         val token = usecase.getAccessToken()
         if (uuid == null || token == null || verificationCodeId.value == null) {
-            return null
+            return
         }
-        return usecase.bindPhone(verificationCodeId.value!!, code, phone, uuid, token)
+        usecase.bindPhone(verificationCodeId.value!!, code, phone, uuid, token)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribeBy {
@@ -30,11 +31,11 @@ class BindPhoneViewModel @Inject constructor(private val usecase: BindPhoneUseCa
                     } else if (!TextUtils.isEmpty(it.message)) {
                         error.value = it.message
                     }
-                }
+                }.disposedBy(disposeBag)
     }
 
-    fun requestVerificationCode(phone: String): Disposable {
-        return usecase.requestVerificationCode(phone)
+    fun requestVerificationCode(phone: String) {
+        usecase.requestVerificationCode(phone)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribeBy {
@@ -43,6 +44,6 @@ class BindPhoneViewModel @Inject constructor(private val usecase: BindPhoneUseCa
                     } else if (!TextUtils.isEmpty(it.message)) {
                         error.value = it.message
                     }
-                }
+                }.disposedBy(disposeBag)
     }
 }

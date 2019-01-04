@@ -22,10 +22,6 @@ public abstract class SetupWizardActivityModule {
 
     @FragmentScope
     @ContributesAndroidInjector
-    public abstract SetupWizardFragment contributeSetupWizardFragment();
-
-    @FragmentScope
-    @ContributesAndroidInjector
     public abstract SetupWizardOneFragment contributeSetupWizardOneFragment();
 
     @FragmentScope

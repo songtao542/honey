@@ -1,5 +1,6 @@
 package jiguang.chat.activity;
 
+import android.annotation.SuppressLint;
 import android.content.ClipData;
 import android.content.ClipboardManager;
 import android.content.Context;
@@ -121,6 +122,7 @@ public class ChatActivity extends BaseActivity implements FuncLayout.OnFuncKeyBo
 
     private Toolbar mToolbar;
 
+    @SuppressLint("ClickableViewAccessibility")
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
