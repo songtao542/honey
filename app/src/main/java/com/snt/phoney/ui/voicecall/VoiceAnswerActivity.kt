@@ -27,6 +27,7 @@ import cn.jpush.im.android.api.model.UserInfo
 import com.snt.phoney.ICallStateListener
 import com.snt.phoney.IVoiceCallService
 import com.snt.phoney.R
+import com.snt.phoney.base.BaseNoViewModelActivity
 import com.snt.phoney.domain.model.JMUser
 import com.snt.phoney.extensions.checkAndRequestPermission
 import com.snt.phoney.extensions.checkAppPermission
@@ -35,7 +36,7 @@ import com.snt.phoney.service.VoiceCallService
 import kotlinx.android.synthetic.main.activity_voice_answer.*
 
 
-class VoiceAnswerActivity : AppCompatActivity(), ServiceConnection {
+class VoiceAnswerActivity : BaseNoViewModelActivity(), ServiceConnection {
 
     private var mVoiceCallService: IVoiceCallService? = null
     private var mICallStateListener: ICallStateListenerImpl? = null

@@ -72,8 +72,11 @@ class StartupFragment : BaseFragment() {
         viewModel.user.value?.let { user ->
             if (user.isSexValid) {
                 root.postDelayed({
-                    Log.d("TTTT", "user====>$user")
-                    context?.let { context -> startActivity(MainActivity.newIntent(context)) }
+                    if (user.validated) {
+                        context?.let { context -> startActivity(MainActivity.newIntent(context)) }
+                    } else {
+                        context?.let { context -> startActivity(SetupWizardActivity.newIntent(context, user)) }
+                    }
                     activity?.finish()
                 }, 1500)
                 return
@@ -86,14 +89,12 @@ class StartupFragment : BaseFragment() {
         content.visibility = View.VISIBLE
 
         qqViewModel.user.observe(this, Observer { user ->
-            Log.d("TTTT", "user-----qq----===================>$user")
             user?.let {
                 viewModel.signupByThirdPlatform(it.openId, it.thirdToken, PLATFORM_QQ, it.nickName, it.headPic)
             }
         })
 
         weiboViewModel.user.observe(this, Observer { user ->
-            Log.d("TTTT", "user-----wb----===================>$user")
             user?.let {
                 viewModel.signupByThirdPlatform(it.uid ?: "",
                         it.token ?: "",
@@ -108,7 +109,6 @@ class StartupFragment : BaseFragment() {
         })
 
         wxViewModel.user.observe(this, Observer { user ->
-            Log.d("TTTT", "user-----wx----===================>$user")
             user?.let {
                 viewModel.signupByThirdPlatform(it.openid ?: "",
                         it.accessToken ?: "",
@@ -124,7 +124,6 @@ class StartupFragment : BaseFragment() {
 
         viewModel.user.observe(this, Observer { it ->
             it?.let { user ->
-                Log.d("TTTT", "success user---------===================>$user")
                 toast("注册成功")
                 if (user.validated) {
                     context?.let { context -> startActivity(MainActivity.newIntent(context)) }

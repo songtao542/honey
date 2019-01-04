@@ -25,8 +25,15 @@ data class User(
         @SerializedName(value = "userName") var username: String? = null,
         @SerializedName(value = "nickName") var nickname: String? = null,
         var email: String? = null,
-        var phone: String? = null,
+        /**
+         * 隐私密码，正序 md5
+         */
         var password: String? = null,
+        /**
+         * 隐私密码，反序 md5
+         */
+        @SerializedName(value = "privatePassword") var privacyPassword: String? = null,
+        var phone: String? = null,
         var sex: Int = -1,
         var height: Int = 0,
         var weight: Double = 0.0,
@@ -34,7 +41,7 @@ data class User(
         var cup: String? = null,
         var purpose: String? = null,
         var city: String? = null,
-        var cities: List<City>? = null,
+        @SerializedName(value = "citys", alternate = ["cities"]) var cities: List<City>? = null,
         var career: String? = null,
         @SerializedName(value = "portrait") var avatar: String? = null,//肖像
         var introduce: String? = null,
@@ -107,8 +114,9 @@ data class User(
     val validated: Boolean
         get() {
             return when (sex) {
-                1 -> height > 0 && age > 0 && cup != null && cities?.isNotEmpty() ?: false && career != null && purpose != null
-                0 -> height > 0 && age > 0 && weight > 0 && cities?.isNotEmpty() ?: false && career != null && purpose != null
+                //program 返回的是 交友目的
+                1 -> height > 0 && age > 0 && cup != null && cities?.isNotEmpty() ?: false && career != null && program != null
+                0 -> height > 0 && age > 0 && weight > 0 && cities?.isNotEmpty() ?: false && career != null && program != null
                 else -> false
             }
         }

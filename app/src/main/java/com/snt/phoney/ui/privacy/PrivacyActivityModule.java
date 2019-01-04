@@ -27,6 +27,10 @@ public abstract class PrivacyActivityModule {
     @ContributesAndroidInjector
     public abstract CreateLockFragment contributeCreateLockFragment();
 
+    @FragmentScope
+    @ContributesAndroidInjector
+    public abstract LockFragment contributeLockFragment();
+
     @Binds
     @IntoMap
     @ActivityScope

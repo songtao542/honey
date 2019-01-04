@@ -17,8 +17,10 @@ import com.snt.phoney.ui.dating.list.OthersDatingFragment
 import com.snt.phoney.ui.location.LocationPickerFragment
 import com.snt.phoney.ui.main.mine.AlbumPermissionSettingFragment
 import com.snt.phoney.ui.nearby.NearbyFragment
+import com.snt.phoney.ui.news.NewsFragment
 import com.snt.phoney.ui.photo.PhotoViewerFragment
 import com.snt.phoney.ui.privacy.CreateLockFragment
+import com.snt.phoney.ui.privacy.LockFragment
 import com.snt.phoney.ui.report.ReportFragment
 import com.snt.phoney.ui.user.EditUserFragment
 import com.snt.phoney.ui.user.FollowMeFragment
@@ -69,7 +71,11 @@ enum class Page {
     WALLET_DETAIL,
     WITHDRAW,
 
-    AUTHENTICATE
+    AUTHENTICATE,
+
+    LOCK,
+
+    NEWS
 }
 
 class FragmentFactory {
@@ -116,6 +122,10 @@ class FragmentFactory {
                 Page.PHOTO_APPLY_LIST.ordinal -> PhotoApplyListFragment.newInstance(arguments)
 
                 Page.AUTHENTICATE.ordinal -> AuthModeFragment.newInstance(arguments)
+
+                Page.LOCK.ordinal -> LockFragment.newInstance(arguments)
+
+                Page.NEWS.ordinal -> NewsFragment.newInstance(arguments)
 
                 else -> Fragment()
             }

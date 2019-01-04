@@ -17,6 +17,7 @@ import com.bumptech.glide.load.resource.drawable.DrawableTransitionOptions
 import com.snt.phoney.ICallStateListener
 import com.snt.phoney.IVoiceCallService
 import com.snt.phoney.R
+import com.snt.phoney.base.BaseNoViewModelActivity
 import com.snt.phoney.domain.model.ImUser
 import com.snt.phoney.domain.model.JMUser
 import com.snt.phoney.extensions.checkAndRequestPermission
@@ -27,7 +28,7 @@ import com.snt.phoney.utils.data.Constants
 import kotlinx.android.synthetic.main.activity_voice_call.*
 
 
-class VoiceCallActivity : AppCompatActivity(), ServiceConnection {
+class VoiceCallActivity : BaseNoViewModelActivity(), ServiceConnection {
 
     companion object {
         @JvmStatic

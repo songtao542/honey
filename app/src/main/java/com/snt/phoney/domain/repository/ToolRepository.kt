@@ -24,4 +24,6 @@ interface ToolRepository {
     fun auth(token: String, type: Int, file: File): Single<Response<String>>
 
     fun getAuthState(token: String): Single<Response<AuthState>>
+
+    fun listNews(page: Int): Single<Response<List<News>>>
 }

@@ -30,6 +30,7 @@ public class CityPickerFragment extends CityPickerDialogFragment {
         private boolean mEnableHotCities;
         private boolean mEnableLocation;
         private boolean mUserDefaultCities = true;
+        private boolean mSingleMode = false;
         private OnResultListener mOnResultListener;
         private OnRequestLocationListener mOnRequestLocationListener;
         private OnRequestCitiesListener mOnRequestCitiesListener;

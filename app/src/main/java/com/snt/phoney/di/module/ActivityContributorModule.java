@@ -15,6 +15,8 @@ import com.snt.phoney.ui.main.MainActivity;
 import com.snt.phoney.ui.main.MainActivityModule;
 import com.snt.phoney.ui.nearby.NearbyActivity;
 import com.snt.phoney.ui.nearby.NearbyActivityModule;
+import com.snt.phoney.ui.news.NewsActivity;
+import com.snt.phoney.ui.news.NewsActivityModule;
 import com.snt.phoney.ui.photo.PhotoViewerActivity;
 import com.snt.phoney.ui.photo.PhotoViewerModule;
 import com.snt.phoney.ui.privacy.PrivacyActivity;
@@ -29,6 +31,8 @@ import com.snt.phoney.ui.user.UserActivity;
 import com.snt.phoney.ui.user.UserActivityModule;
 import com.snt.phoney.ui.vip.VipActivity;
 import com.snt.phoney.ui.vip.VipActivityModule;
+import com.snt.phoney.ui.voicecall.VoiceAnswerActivity;
+import com.snt.phoney.ui.voicecall.VoiceCallActivity;
 import com.snt.phoney.ui.wallet.WalletActivity;
 import com.snt.phoney.ui.wallet.WalletActivityModule;
 import com.snt.phoney.wxapi.WXEntryActivity;
@@ -151,15 +155,25 @@ public abstract class ActivityContributorModule {
     @ContributesAndroidInjector
     public abstract WebBrowserActivity contributeWebBrowserActivity();
 
-//    @ActivityScope
-//    @ContributesAndroidInjector
-//    public abstract VoiceCallActivity contributeVoiceCallActivity();
+    @ActivityScope
+    @ContributesAndroidInjector
+    public abstract VoiceCallActivity contributeVoiceCallActivity();
+
+    @ActivityScope
+    @ContributesAndroidInjector
+    public abstract VoiceAnswerActivity contributeVoiceAnswerActivity();
 
     @ActivityScope
     @ContributesAndroidInjector(modules = {
             AuthActivityModule.class
     })
     public abstract AuthActivity contributeAuthActivity();
+
+    @ActivityScope
+    @ContributesAndroidInjector(modules = {
+            NewsActivityModule.class
+    })
+    public abstract NewsActivity contributeNewsActivity();
 
 
 }

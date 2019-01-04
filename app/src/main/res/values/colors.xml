@@ -6,8 +6,8 @@
     <color name="colorPrimaryDarkFemale">#fe4b7a</color>
     <color name="colorAccentFemale">#fe4b7a</color>
     <color name="colorPrimaryPressedFemale">#e1446d</color>
-    <color name="colorGradientStartColorFemale">#fe4b7a</color>
-    <color name="colorGradientEndColorFemale">#e13399</color>
+    <color name="colorGradientStartColorFemale">#e13399</color>
+    <color name="colorGradientEndColorFemale">#fe4b7a</color>
 
     <color name="colorPrimaryMale">#9013fe</color>
     <color name="colorPrimaryTranslucentMale">#999013fe</color>

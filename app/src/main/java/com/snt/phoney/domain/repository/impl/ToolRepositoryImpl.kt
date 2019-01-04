@@ -50,4 +50,7 @@ class ToolRepositoryImpl @Inject constructor(val api: Api) : ToolRepository {
         return api.getAuthState(token)
     }
 
+    override fun listNews(page: Int): Single<Response<List<News>>> {
+        return api.listNews(page.toString())
+    }
 }

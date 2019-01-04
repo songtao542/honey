@@ -76,7 +76,7 @@ class SetupWizardThreeFragment : BaseFragment() {
             }
         }
         purposeButton.setOnClickListener {
-            Picker.showPicker(activity, getString(R.string.select_job), selectedPurposeIndex, provider = { picker ->
+            Picker.showPicker(activity, getString(R.string.select_purpose), selectedPurposeIndex, provider = { picker ->
                 viewModel.purposes.observe(this, Observer { purposes ->
                     val purposeNames = Array(purposes.size) { index ->
                         purposes[index].name!!

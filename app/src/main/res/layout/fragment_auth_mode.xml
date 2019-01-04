@@ -32,9 +32,8 @@
         android:layout_gravity="center_horizontal"
         android:layout_marginLeft="50dp"
         android:layout_marginRight="50dp"
-        android:background="@drawable/auth_gradient_bg"
+        android:background="@drawable/auth_mode_button_gradient_bg"
         android:clickable="true"
-        android:foreground="?attr/selectableItemBackground"
         android:orientation="vertical">
 
         <androidx.appcompat.widget.AppCompatImageView
@@ -65,9 +64,8 @@
         android:layout_marginLeft="50dp"
         android:layout_marginTop="50dp"
         android:layout_marginRight="50dp"
-        android:background="@drawable/auth_gradient_bg"
+        android:background="@drawable/auth_mode_button_gradient_bg"
         android:clickable="true"
-        android:foreground="?attr/selectableItemBackground"
         android:orientation="vertical">
 
         <androidx.appcompat.widget.AppCompatImageView

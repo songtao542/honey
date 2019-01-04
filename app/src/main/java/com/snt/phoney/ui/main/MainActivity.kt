@@ -3,20 +3,20 @@ package com.snt.phoney.ui.main
 import android.content.Context
 import android.content.Intent
 import android.os.Bundle
+import android.text.TextUtils
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProviders
 import com.google.android.material.bottomnavigation.BottomNavigationView
 import com.snt.phoney.R
 import com.snt.phoney.base.BaseActivity
-import com.snt.phoney.extensions.disableShiftMode
-import com.snt.phoney.extensions.forEach
-import com.snt.phoney.extensions.hideIcon
-import com.snt.phoney.extensions.setLayoutFullscreen
+import com.snt.phoney.base.Page
+import com.snt.phoney.extensions.*
 import com.snt.phoney.ui.main.home.HomeFragment
 import com.snt.phoney.ui.main.message.MessageFragment
 import com.snt.phoney.ui.main.mine.MineFragment
 import com.snt.phoney.ui.main.square.SquareFragment
+import com.snt.phoney.ui.privacy.PrivacyActivity
 import kotlinx.android.synthetic.main.activity_main.*
 
 
@@ -25,6 +25,8 @@ private const val TAG_SQUARE = "square"
 private const val TAG_MESSAGE = "message"
 private const val TAG_MINE = "mine"
 private const val EXTRA_TAG = "current_tag"
+
+const val REQUEST_PRIVACY_PASSWORD_CODE = 45
 
 class MainActivity : BaseActivity() {
 
@@ -61,6 +63,8 @@ class MainActivity : BaseActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        //先检查是否设置了密码
+        //checkPrivacyLock()
         setContentView(R.layout.activity_main)
         setLayoutFullscreen()
         //setStatusBarColor(colorOf(R.color.colorPrimaryFemale))
@@ -93,6 +97,11 @@ class MainActivity : BaseActivity() {
         //if (BuildConfig.DEBUG) {
         //    SqlScoutServer.create(this, packageName)
         //}
+    }
+
+    override fun onResume() {
+        super.onResume()
+        checkPrivacyLock()
     }
 
     private fun showFragment(tag: String) {
@@ -172,6 +181,13 @@ class MainActivity : BaseActivity() {
     override fun onSaveInstanceState(outState: Bundle) {
         super.onSaveInstanceState(outState)
         outState.putString(EXTRA_TAG, getCurrentFragmentIndex())
+    }
+
+    private fun checkPrivacyLock() {
+        if (userAccessor.isLocked()) {
+            startActivity<PrivacyActivity>(Page.LOCK)
+            finish()
+        }
     }
 
 }

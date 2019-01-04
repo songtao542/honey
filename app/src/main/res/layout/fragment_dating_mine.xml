@@ -12,6 +12,11 @@
         style="@style/AppTheme.Toolbar"
         app:title="@string/dating_list_title" />
 
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1px"
+        android:background="@color/gray" />
+
     <com.snt.phoney.widget.TabLayout
         android:id="@+id/tabLayout"
         android:layout_width="match_parent"

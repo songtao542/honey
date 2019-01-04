@@ -69,7 +69,11 @@ class SetupWizardViewModel @Inject constructor(private val setupWizardUseCase: S
                     Log.d("TTTT", "getCities==>$it")
                     if (it.code == 200) {
                         setupSex.value = it.data
-                        setupWizardUseCase.getUser()?.sex = sex
+                        val user = setupWizardUseCase.getUser()
+                        if (user != null) {
+                            user.sex = sex
+                            setupWizardUseCase.setUser(user)
+                        }
                     } else if (!TextUtils.isEmpty(it.message)) {
                         error.value = it.message
                     }
@@ -104,6 +108,7 @@ class SetupWizardViewModel @Inject constructor(private val setupWizardUseCase: S
     fun setUserInfo(cities: List<City>, career: String, program: String) {
         val token = setupWizardUseCase.getAccessToken() ?: return
         val cityCodesString = cities.map { it.id }.joinToString(separator = ",")
+        Log.d("TTTT", "99999999999 cityCodesString=$cityCodesString")
         setupWizardUseCase.setUserInfo(token, cityCodesString, career, program)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())

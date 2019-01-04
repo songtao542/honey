@@ -25,6 +25,11 @@ fun Interceptor.isNotEmpty(param: CharSequence?): Boolean {
 }
 
 @Suppress("unused")
+fun Interceptor.isEmpty(param: CharSequence?): Boolean {
+    return param == null || param.trim().isEmpty()
+}
+
+@Suppress("unused")
 fun Interceptor.getQueryParameters(httpUrl: HttpUrl): TreeMap<String, String> {
     val names = httpUrl.queryParameterNames()
     val params = TreeMap<String, String>()
@@ -92,7 +97,7 @@ open class SignInterceptor : Interceptor {
         val body = request.body()
         when (body) {
             is FormBody -> {
-                val bodyBuilder = FormBody.Builder()
+                val bodyBuilder = FormBody.Builder(UTF8)
                 val timestamp = System.currentTimeMillis().toString()
                 val params = getParameters(body).apply {
                     put("appSecret", APP_SECRET)
@@ -100,7 +105,7 @@ open class SignInterceptor : Interceptor {
                 }
                 params["sign"] = getSignString(params)
                 for ((name, value) in params) {
-                    bodyBuilder.addEncoded(name, URLEncoder.encode(value, UTF8.name()))
+                    bodyBuilder.addEncoded(name, value)
                 }
                 return request.newBuilder().post(bodyBuilder.build()).build()
             }
@@ -150,11 +155,13 @@ class NullOrEmptyInterceptor : Interceptor {
 
     private fun interceptGet(request: Request): Request {
         val httpUrl = request.url()
-        val params = getQueryParameters(httpUrl)
+        val names = httpUrl.queryParameterNames()
         val urlBuilder = httpUrl.newBuilder()
-        for (param in params) {
-            Log.d("TTTT", "pppppppppppppp ${param.key}    ${param.value}")
-            urlBuilder.addQueryParameter(param.key, param.value)
+        for (name in names) {
+            val value = httpUrl.queryParameter(name)
+            if (isEmpty(value)) {
+                urlBuilder.removeAllQueryParameters(name)
+            }
         }
         return request.newBuilder().url(urlBuilder.build()).build()
     }
@@ -163,10 +170,10 @@ class NullOrEmptyInterceptor : Interceptor {
         val body = request.body()
         when (body) {
             is FormBody -> {
-                val bodyBuilder = FormBody.Builder()
+                val bodyBuilder = FormBody.Builder(UTF8)
                 val params = getParameters(body)
                 for ((name, value) in params) {
-                    bodyBuilder.addEncoded(name, URLEncoder.encode(value, UTF8.name()))
+                    bodyBuilder.addEncoded(name, value)
                 }
                 return request.newBuilder().post(bodyBuilder.build()).build()
             }
@@ -185,7 +192,7 @@ class NullOrEmptyInterceptor : Interceptor {
                 val params = getParameters(body)
                 for ((name, value) in params) {
                     if (isNotEmpty(value)) {
-                        bodyBuilder.addPart(MultipartBody.Part.createFormData(name, value))
+                        bodyBuilder.addPart(MultipartBody.Part.createFormData(URLEncoder.encode(name, UTF8.name()), URLEncoder.encode(value, UTF8.name())))
                     }
                 }
                 return request.newBuilder().post(bodyBuilder.build()).build()

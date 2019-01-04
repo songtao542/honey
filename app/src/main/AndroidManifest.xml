@@ -126,6 +126,9 @@
         <activity android:name=".ui.user.UserActivity" />
         <activity android:name=".ui.report.ReportActivity" />
         <activity android:name=".ui.privacy.PrivacyActivity" />
+        <activity
+            android:name=".ui.news.NewsActivity"
+            android:theme="@style/AppTheme.Light" />
         <activity android:name=".ui.auth.AuthActivity" />
         <activity
             android:name=".ui.wallet.WalletActivity"

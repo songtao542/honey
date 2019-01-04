@@ -377,6 +377,7 @@ public class CityPickerDialogFragment extends AppCompatDialogFragment implements
         dismiss();
         if (mOnResultListener != null) {
             ArrayList<City> result = new ArrayList<>();
+            result.add(data);
             mOnResultListener.onResult(result);
         }
     }

@@ -17,7 +17,6 @@ class CreateLockStep1Fragment : BaseFragment() {
         }
     }
 
-    //private lateinit var viewModel: CreateLockViewModel
     private val PASSWORD_LENGTH = 4
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {

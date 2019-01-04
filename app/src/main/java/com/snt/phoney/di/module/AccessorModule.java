@@ -7,6 +7,8 @@ import com.snt.phoney.domain.accessor.impl.UserAccessorImpl;
 import com.snt.phoney.domain.accessor.impl.WeiboUserAccessorImpl;
 import com.snt.phoney.domain.accessor.impl.WxUserAccessorImpl;
 
+import javax.inject.Singleton;
+
 import dagger.Binds;
 import dagger.Module;
 
@@ -14,12 +16,15 @@ import dagger.Module;
 public abstract class AccessorModule {
 
     @Binds
+    @Singleton
     public abstract UserAccessor bindUserAccessor(UserAccessorImpl userAccessor);
 
     @Binds
+    @Singleton
     public abstract WeiboUserAccessor bindWeiboUserAccessor(WeiboUserAccessorImpl weiboUserAccessor);
 
     @Binds
+    @Singleton
     public abstract WxUserAccessor bindWxUserAccessor(WxUserAccessorImpl wxUserAccessor);
 
 }

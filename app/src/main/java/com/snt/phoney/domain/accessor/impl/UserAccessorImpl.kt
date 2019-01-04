@@ -1,5 +1,7 @@
 package com.snt.phoney.domain.accessor.impl
 
+import android.text.TextUtils
+import android.util.Log
 import com.snt.phoney.domain.accessor.UserAccessor
 import com.snt.phoney.domain.model.User
 import com.snt.phoney.domain.repository.CacheRepository
@@ -8,9 +10,9 @@ import kotlinx.coroutines.runBlocking
 import javax.inject.Inject
 
 class UserAccessorImpl @Inject constructor(private val cache: CacheRepository) : UserAccessor {
-
     private var mAccessToken: String? = null
     private var mUser: User? = null
+    private var mLocked: Boolean = false
 
     override fun getAccessToken(): String? {
         if (mAccessToken == null) {
@@ -23,6 +25,7 @@ class UserAccessorImpl @Inject constructor(private val cache: CacheRepository) :
         if (mUser == null) {
             runBlocking {
                 mUser = cache.get(Constants.Cache.USER)
+                mLocked = !TextUtils.isEmpty(mUser?.privacyPassword)
             }
         }
         return mUser
@@ -33,11 +36,38 @@ class UserAccessorImpl @Inject constructor(private val cache: CacheRepository) :
             user.token?.let { token ->
                 mAccessToken = token
             }
+            //当原来没有密码，新的user 有密码之后，设置锁定状态
+            if (TextUtils.isEmpty(mUser?.privacyPassword) && !TextUtils.isEmpty(user.privacyPassword)) {
+                mLocked = true
+            }
             mUser = user
         } else {
             mUser = null
         }
         cache.set(Constants.Cache.USER, user)
+    }
+
+    override fun tryUnlock(password: String): Boolean {
+        if (mLocked) {
+            if (TextUtils.equals(getUser()?.privacyPassword, password)) {
+                //密码相等，则将锁定状态修改为 false
+                mLocked = false
+                Log.d("TTTT", "mmmmmmm mLocked=$mLocked  this=${this@UserAccessorImpl}")
+                return true
+            }
+            return false
+        }
+        //没有锁定时，不需要解锁，直接返回 true
+        return true
+    }
+
+    override fun lock() {
+        mLocked = !TextUtils.isEmpty(getUser()?.privacyPassword)
+    }
+
+    override fun isLocked(): Boolean {
+        Log.d("TTTT", "ggggggggggg mLocked=$mLocked      this=${this@UserAccessorImpl}")
+        return mLocked
     }
 
 }

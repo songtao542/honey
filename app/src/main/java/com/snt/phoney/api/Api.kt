@@ -604,5 +604,7 @@ interface Api {
                         @Field("version") version: String,
                         @Field("mobilePlate") mobilePlate: String): Single<Response<User>>
 
+    @GET("news/listNews")
+    fun listNews(@Query("page") page: String): Single<Response<List<News>>>
 
 }
