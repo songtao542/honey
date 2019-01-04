@@ -1,13 +1,14 @@
 package com.snt.phoney.utils
 
 import android.content.Context
+import android.util.Log
 import com.snt.phoney.R
 import java.text.DecimalFormat
 
 object TimeFormat {
     fun format(context: Context, time: Long): String {
         val df = DecimalFormat.getInstance()
-        val second = time / 1000
+        val second = (System.currentTimeMillis() - time) / 1000
         if (second < 60) {
             return context.getString(R.string.time_second_template, df.format(second))
         }

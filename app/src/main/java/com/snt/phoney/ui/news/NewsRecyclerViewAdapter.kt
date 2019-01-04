@@ -3,6 +3,7 @@ package com.snt.phoney.ui.news
 
 import android.content.Intent
 import android.text.TextUtils
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -40,7 +41,6 @@ class NewsRecyclerViewAdapter(private val fragment: NewsFragment) : RecyclerView
 
     override fun getItemCount(): Int = data?.size ?: 0
 
-    @Suppress("JoinDeclarationAndAssignment")
     inner class ViewHolder(val mView: View) : RecyclerView.ViewHolder(mView) {
 
         private val context = mView.context
