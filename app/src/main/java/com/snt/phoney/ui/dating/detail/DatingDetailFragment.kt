@@ -28,6 +28,7 @@ import kotlinx.android.synthetic.main.fragment_dating_detail.*
 import kotlinx.android.synthetic.main.fragment_dating_detail_header.*
 import kotlinx.android.synthetic.main.fragment_dating_detail_join_success.*
 import java.text.DecimalFormat
+import java.util.*
 
 class DatingDetailFragment : BaseFragment() {
 
@@ -217,6 +218,13 @@ class DatingDetailFragment : BaseFragment() {
         program.text = dating.program
     }
 
+    //private var calendar: Calendar = Calendar.getInstance()
+    private var days: Long = -1
+    private var hours: Long = -1
+    private var minutes: Long = -1
+    private var second: Long = -1
+
+    @Suppress("CascadeIf")
     private fun remainingCountDown(time: Long) {
         if (time == null) {
             return
@@ -225,13 +233,40 @@ class DatingDetailFragment : BaseFragment() {
         if (diff <= 0) {
             remainingTime.setText(R.string.has_out_of_time)
         }
-        var second = diff / 1000
-        val days = second / 86400            //转换天数
-        second %= 86400            //剩余秒数
-        val hours = second / 3600            //转换小时
-        second %= 3600                //剩余秒数
-        val minutes = second / 60            //转换分钟
-        second %= 60                //剩余秒数
+        //calendar.timeInMillis = time
+
+        if (second == -1L) {
+            second = diff / 1000
+            days = second / 86400            //转换天数
+            second %= 86400            //剩余秒数
+            hours = second / 3600            //转换小时
+            second %= 3600                //剩余秒数
+            minutes = second / 60            //转换分钟
+            second %= 60                //剩余秒数
+        } else {
+            second -= 1
+            if (second == 0L) {
+                minutes -= 1
+                if (minutes == 0L) {
+                    hours -= 1
+                    if (hours == 0L) {
+                        days -= 1
+                        if (days == -1L) {
+                            days = 0
+                        }
+                    }
+                    if (hours == -1L) {
+                        hours = 23
+                    }
+                }
+                if (minutes == -1L) {
+                    minutes = 59
+                }
+            }
+            if (second == -1L) {
+                second = 59
+            }
+        }
         if (days > 0) {
             remainingTime.text = getString(R.string.day_hour_minute_second_template, df.format(days), df.format(hours), df.format(minutes), df.format(second))
         } else if (hours > 0) {

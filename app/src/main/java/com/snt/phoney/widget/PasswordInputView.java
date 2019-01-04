@@ -173,6 +173,11 @@ public class PasswordInputView extends AppCompatEditText {
         this.boxNormalColor = boxNormalColor;
     }
 
+    public void clear() {
+        this.text = "";
+        invalidate();
+    }
+
     @Override
     public void setTextColor(int textColor) {
         this.textColor = textColor;

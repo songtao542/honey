@@ -3,6 +3,7 @@ package com.snt.phoney.ui.privacy
 import android.animation.AnimatorSet
 import android.animation.ObjectAnimator
 import android.os.Bundle
+import android.text.Editable
 import android.text.TextUtils
 import android.util.Log
 import android.view.LayoutInflater
@@ -65,6 +66,7 @@ class LockFragment : BaseFragment() {
                     startActivity(MainActivity.newIntent(requireContext()))
                     activity?.finish()
                 } else {
+                    inputPassword.clear()
                     playJumpAnimation()
                     stateView.setText(R.string.input_password_error)
                     startActivity<NewsActivity>(Page.NEWS)
