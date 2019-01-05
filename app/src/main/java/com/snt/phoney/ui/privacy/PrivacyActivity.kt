@@ -7,12 +7,12 @@ import com.snt.phoney.utils.data.Constants
 
 class PrivacyActivity : CommonActivity() {
 
-    private var mThemeId: Int? = null
+    private var mThemeId: Int = 0
 
-    override fun onConfigureTheme(): Int? = if (-1 == mThemeId) null else mThemeId
+    override fun onConfigureTheme(): Int? = mThemeId
 
     override fun onCreate(savedInstanceState: Bundle?) {
-        mThemeId = intent?.getIntExtra(Constants.Extra.THEME, -1)
+        mThemeId = intent?.getIntExtra(Constants.Extra.THEME, 0) ?: 0
         super.onCreate(savedInstanceState)
     }
 
