@@ -17,6 +17,7 @@ import com.snt.phoney.ui.main.message.MessageFragment
 import com.snt.phoney.ui.main.mine.MineFragment
 import com.snt.phoney.ui.main.square.SquareFragment
 import com.snt.phoney.ui.privacy.PrivacyActivity
+import com.snt.phoney.utils.data.Constants
 import kotlinx.android.synthetic.main.activity_main.*
 
 
@@ -183,7 +184,9 @@ class MainActivity : BaseActivity() {
 
     private fun checkPrivacyLock() {
         if (userAccessor.isLocked()) {
-            startActivity<PrivacyActivity>(Page.LOCK)
+            startActivity<PrivacyActivity>(Page.LOCK, Bundle().apply {
+                putInt(Constants.Extra.THEME, R.style.AppTheme_Light)
+            })
             finish()
         }
     }

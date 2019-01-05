@@ -1,6 +1,7 @@
 package com.snt.phoney.domain.model
 
 import com.google.gson.annotations.SerializedName
+import java.text.SimpleDateFormat
 
 data class OrderRecord(
         var uuid: String? = null,//"uuid": "uo20181201163756f5b309a2699d6928",
@@ -10,4 +11,9 @@ data class OrderRecord(
         var price: String? = null,//"price": "-158.0元",
         var info: String? = null,//"info": "余额：10000",
         @SerializedName(value = "ctime") var createTime: Long = 0//"ctime": 1543653476374,
-)
+) {
+    fun formatCreateTime(): String {
+        val df = SimpleDateFormat("yyyy.MM.dd HH:mm:ss")
+        return df.format(createTime)
+    }
+}

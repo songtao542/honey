@@ -36,21 +36,28 @@ class DetailListRecyclerViewAdapter(private val fragment: DetailListFragment, pr
 
     override fun onBindViewHolder(holder: RecyclerView.ViewHolder, position: Int) {
         if (holder is RechargeViewHolder) {
-            holder.setData(data!![position])
+            holder.setData(position, data!![position])
         } else if (holder is ConsumeViewHolder) {
-            holder.setData(data!![position])
+            holder.setData(position, data!![position])
         }
     }
 
     override fun getItemCount(): Int = data?.size ?: 0
 
     inner class ConsumeViewHolder(val mView: View) : RecyclerView.ViewHolder(mView) {
-        val context: Context = mView.context
+        //private val context: Context = mView.context
+        private val createTime = mView.consumeCreateTime
         private val consumeIcon = mView.consumeIcon
         private val consumeName = mView.consumeName
         private val consumeAmount = mView.consumeAmount
 
-        fun setData(record: OrderRecord) {
+        fun setData(position: Int, record: OrderRecord) {
+            if (position == 0) {
+                createTime.visibility = View.VISIBLE
+                createTime.text = record.formatCreateTime()
+            } else {
+                createTime.visibility = View.GONE
+            }
             when (record.type) {
                 -1 -> {
                     consumeIcon.setImageResource(R.drawable.ic_order_withdraw)
@@ -73,14 +80,21 @@ class DetailListRecyclerViewAdapter(private val fragment: DetailListFragment, pr
     }
 
     inner class RechargeViewHolder(val mView: View) : RecyclerView.ViewHolder(mView) {
-        val context: Context = mView.context
+        //private val context: Context = mView.context
+        private val createTime = mView.rechargeCreateTime
         private val rechargeIcon = mView.rechargeIcon
         private val rechargeName = mView.rechargeName
         private val rechargeAmount = mView.rechargeAmount
         private val rechargeBalance = mView.rechargeBalance
         private val rechargeType = mView.rechargeType
 
-        fun setData(record: OrderRecord) {
+        fun setData(position: Int, record: OrderRecord) {
+            if (position == 0) {
+                createTime.visibility = View.VISIBLE
+                createTime.text = record.formatCreateTime()
+            } else {
+                createTime.visibility = View.GONE
+            }
             when (record.type) {
                 -1 -> {
                     rechargeIcon.setImageResource(R.drawable.ic_order_withdraw)

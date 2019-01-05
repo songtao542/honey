@@ -129,6 +129,7 @@ class LocationPickerFragment : BaseFragment() {
         viewModel.getMyLocation()
     }
 
+    @Suppress("SENSELESS_COMPARISON")
     private fun setMyLocation(location: Location, zoomLevel: Float?) {
         if (location.latitude != null && location.longitude != null) {
             //var latLng = convertGpsToGCJ02(location.latitude!!, location.longitude!!)

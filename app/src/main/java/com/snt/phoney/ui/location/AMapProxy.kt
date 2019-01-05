@@ -77,7 +77,7 @@ class AMapProxy @Inject constructor(val context: Context) : MapProxy {
                 }
                 val markerOption = MarkerOptions().icon(bitmapDescriptor)
                         //.position(convertGpsToGCJ02(marker.location.latitude!!, marker.location.longitude!!))
-                        .position(LatLng(marker.location.latitude!!, marker.location.longitude!!))
+                        .position(LatLng(marker.location.latitude, marker.location.longitude))
                         .draggable(false)
                 markers[marker] = it.addMarker(markerOption)
                 if (marker.center) {
@@ -89,7 +89,7 @@ class AMapProxy @Inject constructor(val context: Context) : MapProxy {
         }
     }
 
-    @SuppressWarnings("unused")
+    @Suppress("unused")
     private fun convertGpsToGCJ02(latitude: Double, longitude: Double): LatLng {
         var converter = CoordinateConverter(context)
         converter = converter.from(CoordinateConverter.CoordType.GPS)
@@ -114,11 +114,12 @@ class AMapProxy @Inject constructor(val context: Context) : MapProxy {
         }
     }
 
+    @Suppress("SENSELESS_COMPARISON")
     override fun setCenter(location: Position, zoomLevel: Float?) {
         if (location.latitude != null && location.longitude != null) {
             //var latLng = convertGpsToGCJ02(location.latitude!!, location.longitude!!)
             //使用高德定位之后，国内默认是GCJ02
-            val latLng = LatLng(location.latitude!!, location.longitude!!)
+            val latLng = LatLng(location.latitude, location.longitude)
             if (zoomLevel != null) {
                 mapView?.map?.animateCamera(CameraUpdateFactory.newLatLngZoom(latLng, zoomLevel))
             } else {
@@ -131,6 +132,7 @@ class AMapProxy @Inject constructor(val context: Context) : MapProxy {
         mapView?.map?.animateCamera(CameraUpdateFactory.scrollBy(xPixel, yPixel))
     }
 
+    @Suppress("SENSELESS_COMPARISON")
     override fun reverseGeocode(location: Position): LiveData<PoiAddress> {
         val result = MutableLiveData<PoiAddress>()
         if (location.latitude != null && location.longitude != null) {
@@ -151,7 +153,7 @@ class AMapProxy @Inject constructor(val context: Context) : MapProxy {
 
             //var latLng = convertGpsToGCJ02(location.latitude!!, location.longitude!!)
             //使用高德定位之后，国内默认是GCJ02
-            val latLng = LatLng(location.latitude!!, location.longitude!!)
+            val latLng = LatLng(location.latitude, location.longitude)
             val query = RegeocodeQuery(LatLonPoint(latLng.latitude, latLng.longitude), 200f, GeocodeSearch.AMAP)
             geocoderSearch.getFromLocationAsyn(query)
         }
@@ -180,7 +182,7 @@ class AMapProxy @Inject constructor(val context: Context) : MapProxy {
         })
         location?.let {
             //var latLng = convertGpsToGCJ02(location.latitude!!, location.longitude!!)
-            val latLng = LatLng(location.latitude!!, location.longitude!!)
+            val latLng = LatLng(location.latitude, location.longitude)
             poiSearch.bound = PoiSearch.SearchBound(LatLonPoint(latLng.latitude, latLng.longitude), 5000)
         }
         poiSearch.searchPOIAsyn()
