@@ -4,22 +4,23 @@ import android.content.Intent
 import android.os.Bundle
 import android.util.Log
 import androidx.lifecycle.Observer
-import com.snt.phoney.base.BaseOriginalActivity
-import com.snt.phoney.utils.life.ViewModelProviders
+import androidx.lifecycle.ViewModelProviders
+import com.snt.phoney.base.BaseActivity
+import com.snt.phoney.extensions.TAG
 import com.tencent.mm.opensdk.modelbase.BaseReq
 import com.tencent.mm.opensdk.modelbase.BaseResp
 import com.tencent.mm.opensdk.openapi.IWXAPIEventHandler
 
 
-class WXPayEntryActivity : BaseOriginalActivity(), IWXAPIEventHandler {
+class WXPayEntryActivity : BaseActivity(), IWXAPIEventHandler {
 
     private lateinit var viewModel: WXPayViewModel
 
+    override fun onConfigureTheme(): Int? = null
+
     public override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        viewModel = ViewModelProviders.of(this, viewModelFactory, WXPayViewModel::class.java)
-
-        Log.d("TTTT", "WXPayEntryActivity---->onCreate")
+        viewModel = ViewModelProviders.of(this, viewModelFactory).get(WXPayViewModel::class.java)
 
         try {
             if (!viewModel.handleIntent(intent, this)) {
@@ -41,31 +42,32 @@ class WXPayEntryActivity : BaseOriginalActivity(), IWXAPIEventHandler {
     override fun onNewIntent(intent: Intent) {
         super.onNewIntent(intent)
         setIntent(intent)
-        Log.d("TTTT", "WXPayEntryActivity---->onNewIntent")
         if (!viewModel.handleIntent(intent, this)) {
             finish()
         }
     }
 
-    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent) {
+    override fun onStart() {
+        super.onStart()
+        setVisible(true)
+    }
+
+    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
-        Log.d("TTTT", "WXPayEntryActivity---->onActivityResult")
         if (!viewModel.handleIntent(intent, this)) {
             finish()
         }
     }
 
     override fun onReq(req: BaseReq?) {
-        Log.d("TTTT", "WXPayEntryActivity---->onReq")
         req?.let {
 
         }
     }
 
     override fun onResp(resp: BaseResp?) {
-        Log.d("TTTT", "WXPayEntryActivity---->onResp")
         resp?.let {
-            Log.d("TTTT", "onPayFinish, errCode = " + resp.errCode)
+            Log.d(TAG, "pay complete, errCode=${resp.errCode}")
         }
         finish()
     }

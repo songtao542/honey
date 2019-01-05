@@ -1,6 +1,8 @@
 package com.snt.phoney.ui.privacy
 
+import android.text.TextUtils
 import android.util.Log
+import androidx.lifecycle.MutableLiveData
 import com.snt.phoney.R
 import com.snt.phoney.base.AppViewModel
 import com.snt.phoney.domain.usecase.PrivacyLockUseCase
@@ -12,6 +14,17 @@ import io.reactivex.schedulers.Schedulers
 import javax.inject.Inject
 
 class CreateLockViewModel @Inject constructor(private val usecase: PrivacyLockUseCase) : AppViewModel() {
+
+    val closeSuccess = MutableLiveData<String>()
+
+    private fun updateUserPrivacyPassword(password: String?, privatePassword: String?) {
+        val user = usecase.getUser()
+        user?.let { user ->
+            user.password = password
+            user.privacyPassword = privatePassword
+            usecase.setUser(user)
+        }
+    }
 
     /**
      * @param password  MD5后的数字密码（32位）
@@ -30,6 +43,7 @@ class CreateLockViewModel @Inject constructor(private val usecase: PrivacyLockUs
                         onSuccess = {
                             if (it.success) {
                                 success.value = context.getString(R.string.set_privacy_password_success)
+                                updateUserPrivacyPassword(password, privatePassword)
                             } else if (it.hasMessage) {
                                 error.value = it.message
                             } else {
@@ -51,6 +65,7 @@ class CreateLockViewModel @Inject constructor(private val usecase: PrivacyLockUs
                         onSuccess = {
                             if (it.code == 200) {
                                 Log.d(TAG, "close privacy password success")
+                                updateUserPrivacyPassword(null, null)
                             } else if (it.hasMessage) {
                                 Log.d(TAG, "close privacy password failed:${it.message}")
                             } else {
@@ -61,6 +76,32 @@ class CreateLockViewModel @Inject constructor(private val usecase: PrivacyLockUs
                         onError = {
                             Log.d(TAG, "close privacy password occur error")
                             trySetPrivacyPassword(password, privatePassword)
+                        }
+                ).disposedBy(disposeBag)
+    }
+
+    fun closePrivacyPassword() {
+        val token = usecase.getAccessToken() ?: return
+        usecase.closePrivacyPassword(token)
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribeBy(
+                        onSuccess = {
+                            if (it.code == 200) {
+                                closeSuccess.value = context.getString(R.string.close_privacy_password_success)
+                                Log.d(TAG, "close privacy password success")
+                                updateUserPrivacyPassword(null, null)
+                            } else if (it.hasMessage) {
+                                error.value = it.message
+                                Log.d(TAG, "close privacy password failed:${it.message}")
+                            } else {
+                                error.value = context.getString(R.string.close_privacy_password_failed)
+                                Log.d(TAG, "close privacy password failed")
+                            }
+                        },
+                        onError = {
+                            error.value = context.getString(R.string.close_privacy_password_failed)
+                            Log.d(TAG, "close privacy password occur error")
                         }
                 ).disposedBy(disposeBag)
     }
@@ -84,5 +125,8 @@ class CreateLockViewModel @Inject constructor(private val usecase: PrivacyLockUs
                 ).disposedBy(disposeBag)
     }
 
+    fun hasPrivacyPassword(): Boolean {
+        return !TextUtils.isEmpty(usecase.getUser()?.privacyPassword)
+    }
 
 }

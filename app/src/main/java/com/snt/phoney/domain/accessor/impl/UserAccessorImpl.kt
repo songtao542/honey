@@ -37,7 +37,7 @@ class UserAccessorImpl @Inject constructor(private val cache: CacheRepository) :
                 mAccessToken = token
             }
             //当原来没有密码，新的user 有密码之后，设置锁定状态
-            if (TextUtils.isEmpty(mUser?.privacyPassword) && !TextUtils.isEmpty(user.privacyPassword)) {
+            if (!TextUtils.isEmpty(user.privacyPassword) && !TextUtils.equals(mUser?.privacyPassword, user.privacyPassword)) {
                 mLocked = true
             }
             mUser = user

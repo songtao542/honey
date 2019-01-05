@@ -73,6 +73,7 @@ class StartupFragment : BaseFragment() {
             if (user.isSexValid) {
                 root.postDelayed({
                     if (user.validated) {
+                        viewModel.lock()
                         context?.let { context -> startActivity(MainActivity.newIntent(context)) }
                     } else {
                         context?.let { context -> startActivity(SetupWizardActivity.newIntent(context, user)) }
@@ -124,7 +125,8 @@ class StartupFragment : BaseFragment() {
 
         viewModel.user.observe(this, Observer { it ->
             it?.let { user ->
-                toast("注册成功")
+                toast("登录成功")
+                clearThirdPlatformUser()
                 if (user.validated) {
                     context?.let { context -> startActivity(MainActivity.newIntent(context)) }
                 } else {
@@ -134,6 +136,11 @@ class StartupFragment : BaseFragment() {
                 return@let
             }
         })
+    }
+
+    private fun clearThirdPlatformUser() {
+        wxViewModel.clearWxUser()
+        weiboViewModel.clearWeiboUser()
     }
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {

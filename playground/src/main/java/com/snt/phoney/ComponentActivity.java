@@ -1,4 +1,4 @@
-package com.snt.phoney.base;
+package com.snt.phoney;
 
 import android.annotation.SuppressLint;
 import android.app.Activity;

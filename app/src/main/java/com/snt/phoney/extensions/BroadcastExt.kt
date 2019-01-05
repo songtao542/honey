@@ -25,8 +25,17 @@ inline fun Context.sendBroadcast(action: String, event: Event? = null) {
     LocalBroadcastManager.getInstance(this).sendBroadcast(intent)
 }
 
+@Suppress("unused")
 inline fun Fragment.sendBroadcast(action: String, event: Event? = null) {
     context?.sendBroadcast(action, event)
+}
+
+inline fun Context.registerReceiver(receiver: BroadcastReceiver, action: String) {
+    LocalBroadcastManager.getInstance(this).registerReceiver(receiver, IntentFilter(buildAction(action)))
+}
+
+inline fun Context.unregisterLocalBroadcastReceiver(receiver: BroadcastReceiver) {
+    LocalBroadcastManager.getInstance(this).unregisterReceiver(receiver)
 }
 
 @Parcelize
@@ -54,9 +63,10 @@ class ClearableBroadcast : AutoClearedValue.Clearable {
             }
         }
         receivers[context] = realReceiver
-        LocalBroadcastManager.getInstance(context).registerReceiver(realReceiver, IntentFilter("$ACTION$action"))
+        LocalBroadcastManager.getInstance(context).registerReceiver(realReceiver, IntentFilter(buildAction(action)))
     }
 
+    @Suppress("unused")
     fun registerReceiver(context: Context, actions: List<String>, receiver: ((event: Event?) -> Unit)) {
         val realReceiver = object : BroadcastReceiver() {
             override fun onReceive(context: Context?, intent: Intent?) {

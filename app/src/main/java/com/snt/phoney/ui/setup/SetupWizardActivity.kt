@@ -16,6 +16,8 @@ class SetupWizardActivity : BaseActivity() {
 
     override fun onConfigureTheme(): Int? = null
 
+    override fun shouldObserveLoginState(): Boolean = false
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         //setLayoutFullscreen()

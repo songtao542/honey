@@ -47,4 +47,8 @@ class StartupViewModel @Inject constructor(private val usecase: SigninUseCase) :
     }
 
 
+    fun lock() {
+        usecase.lock()
+    }
+
 }

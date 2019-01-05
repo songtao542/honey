@@ -3,19 +3,26 @@ package com.snt.phoney.wxapi
 import android.content.Intent
 import android.os.Bundle
 import androidx.lifecycle.Observer
-import com.snt.phoney.base.BaseOriginalActivity
-import com.snt.phoney.utils.life.ViewModelProviders
+import androidx.lifecycle.ViewModelProviders
+import com.snt.phoney.base.BaseActivity
 import com.tencent.mm.opensdk.modelbase.BaseReq
 import com.tencent.mm.opensdk.modelbase.BaseResp
 import com.tencent.mm.opensdk.openapi.IWXAPIEventHandler
 
-class WXEntryActivity : BaseOriginalActivity(), IWXAPIEventHandler {
+class WXEntryActivity : BaseActivity(), IWXAPIEventHandler {
 
     private lateinit var viewModel: WXAuthViewModel
 
+    override fun onConfigureTheme(): Int? = null
+
     public override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        viewModel = ViewModelProviders.of(this, viewModelFactory, WXAuthViewModel::class.java)
+        //val contentView = FrameLayout(this)
+        //contentView.layoutParams = ViewGroup.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT)
+        //contentView.setBackgroundColor(0x00ffffff)
+        //setContentView(contentView)
+
+        viewModel = ViewModelProviders.of(this, viewModelFactory).get(WXAuthViewModel::class.java)
 
         try {
             if (!viewModel.handleIntent(intent, this)) {
@@ -42,7 +49,12 @@ class WXEntryActivity : BaseOriginalActivity(), IWXAPIEventHandler {
         }
     }
 
-    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent) {
+    override fun onStart() {
+        super.onStart()
+        setVisible(true)
+    }
+
+    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
         if (!viewModel.handleIntent(intent, this)) {
             finish()

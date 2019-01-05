@@ -113,11 +113,21 @@ class OfficialRecommendFragment : BaseFragment() {
             loadDating(false, it)
         }
 
-        loadDating(true)
+        //loadDating(true)
     }
 
     private fun getPermissions(): Array<String> {
         return arrayOf(Manifest.permission.ACCESS_FINE_LOCATION, Manifest.permission.ACCESS_COARSE_LOCATION)
+    }
+
+    override fun onResume() {
+        super.onResume()
+        if (checkAppPermission(*getPermissions())) {
+            openLocationLayout.visibility = View.GONE
+            if (viewModel.isRecommendListEmpty()) {
+                loadDating(true)
+            }
+        }
     }
 
     override fun onRequestPermissionsResult(requestCode: Int, permissions: Array<out String>, grantResults: IntArray) {

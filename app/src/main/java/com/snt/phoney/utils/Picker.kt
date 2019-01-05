@@ -123,7 +123,7 @@ object Picker {
                 .originalEnable(true)
                 .maxOriginalSize(10)
                 .capture(true)
-                .captureStrategy(CaptureStrategy(true, "com.snt.phoney.fileprovider"))
+                .captureStrategy(CaptureStrategy(false, "com.snt.phoney.fileprovider"))
                 .imageEngine(GlideEngine())
         if (crop) {
             picker.crop(1f, 1f)

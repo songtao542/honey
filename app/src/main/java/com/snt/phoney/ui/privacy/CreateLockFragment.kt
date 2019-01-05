@@ -4,10 +4,12 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
 import com.snt.phoney.R
 import com.snt.phoney.base.BaseFragment
 import com.snt.phoney.extensions.addFragmentSafely
+import com.snt.phoney.extensions.snackbar
 import kotlinx.android.synthetic.main.fragment_create_lock.*
 
 class CreateLockFragment : BaseFragment() {
@@ -30,9 +32,27 @@ class CreateLockFragment : BaseFragment() {
         viewModel = ViewModelProviders.of(this, viewModelFactory).get(CreateLockViewModel::class.java)
         toolbar.setNavigationOnClickListener { activity?.finish() }
 
+        viewModel.closeSuccess.observe(this, Observer {
+            closePassword.visibility = View.GONE
+            snackbar(it)
+        })
+
+        viewModel.error.observe(this, Observer {
+            snackbar(it)
+        })
+
         setPassword.setOnClickListener {
             addFragmentSafely(CreateLockStep1Fragment.newInstance(), "step1", true,
                     enterAnimation = R.anim.slide_in_right, popExitAnimation = R.anim.slide_out_right)
+        }
+
+        if (!viewModel.hasPrivacyPassword()) {
+            closePassword.visibility = View.GONE
+        } else {
+            closePassword.visibility = View.VISIBLE
+            closePassword.setOnClickListener {
+                viewModel.closePrivacyPassword()
+            }
         }
     }
 

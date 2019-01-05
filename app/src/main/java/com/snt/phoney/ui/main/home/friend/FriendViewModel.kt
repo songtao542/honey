@@ -63,8 +63,8 @@ open class FriendViewModel @Inject constructor(private val usecase: FriendListUs
         if (type == FilterType.BYCITY) {
             city = cityFilter.value ?: ""
         }
-        Log.d("TTTT","xxxxbbbbbbbbb city=$city")
         val token = usecase.getAccessToken() ?: return
+        //val token = "" // test
         var latitude = ""
         var longitude = ""
         var observable: Observable<Response<List<User>>> =

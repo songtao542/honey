@@ -28,6 +28,11 @@ class SquareViewModel @Inject constructor(private val usecase: SquareUseCase) : 
 
     val popularSuccess = SingleLiveData<String>()
     val popularError = SingleLiveData<String>()
+
+    fun isRecommendListEmpty(): Boolean {
+        return mRecommendDating.isEmpty()
+    }
+
     /**
      * 推荐约会
      */

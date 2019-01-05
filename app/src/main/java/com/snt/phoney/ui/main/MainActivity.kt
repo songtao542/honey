@@ -26,8 +26,6 @@ private const val TAG_MESSAGE = "message"
 private const val TAG_MINE = "mine"
 private const val EXTRA_TAG = "current_tag"
 
-const val REQUEST_PRIVACY_PASSWORD_CODE = 45
-
 class MainActivity : BaseActivity() {
 
     companion object {

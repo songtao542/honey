@@ -26,11 +26,10 @@ abstract class BaseNoViewModelActivity : AppCompatActivity(), HasSupportFragment
 
     var themeId = 0
 
-    private lateinit var mLoginStateHandler: LoginStateHandler
+    private var mLoginStateHandler: LoginStateHandler? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        mLoginStateHandler = LoginStateHandler(this)
         val theme = onConfigureTheme()
         if (theme != null) {
             if (theme == 0) {
@@ -102,9 +101,18 @@ abstract class BaseNoViewModelActivity : AppCompatActivity(), HasSupportFragment
         return false
     }
 
+    open fun shouldObserveLoginState(): Boolean = true
+
+    override fun onPostCreate(savedInstanceState: Bundle?) {
+        super.onPostCreate(savedInstanceState)
+        if (shouldObserveLoginState()) {
+            mLoginStateHandler = LoginStateHandler(this)
+        }
+    }
+
     override fun onDestroy() {
+        mLoginStateHandler?.unregisterReceiver()
         super.onDestroy()
-        mLoginStateHandler.unregisterReceiver()
     }
 }
 
@@ -115,7 +123,6 @@ abstract class BaseNoViewModelActivity : AppCompatActivity(), HasSupportFragment
 @Suppress("unused")
 fun Activity.getThemeId(): Int {
     return when {
-        this is BaseOriginalActivity -> this.themeId
         this is BaseNoViewModelActivity -> this.themeId
         else -> -1
     }

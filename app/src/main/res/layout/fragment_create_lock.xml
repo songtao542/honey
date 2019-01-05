@@ -13,8 +13,8 @@
         app:title="@string/privacy_lock_title" />
 
     <androidx.appcompat.widget.AppCompatImageView
-        android:layout_width="280dp"
-        android:layout_height="280dp"
+        android:layout_width="260dp"
+        android:layout_height="260dp"
         android:layout_gravity="center_horizontal"
         android:layout_marginTop="30dp"
         android:scaleType="centerInside"
@@ -34,22 +34,11 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="20dp"
         android:gravity="center"
+        android:paddingLeft="40dp"
+        android:paddingRight="40dp"
         android:text="@string/privacy_lock_des"
         android:textColor="@color/gray"
         android:textSize="@dimen/textsize_small" />
-
-    <Button
-        android:id="@+id/closePassword"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginLeft="40dp"
-        android:layout_marginTop="30dp"
-        android:layout_marginRight="40dp"
-        android:background="@drawable/button_primary_circle_corner_selector"
-        android:text="@string/close_privacy_password"
-        android:textColor="@color/white"
-        android:textSize="@dimen/textsize_normal"
-        android:visibility="gone" />
 
     <Button
         android:id="@+id/setPassword"
@@ -63,4 +52,18 @@
         android:textColor="@color/white"
         android:textSize="@dimen/textsize_normal" />
 
+    <androidx.appcompat.widget.AppCompatTextView
+        android:id="@+id/closePassword"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="40dp"
+        android:layout_marginTop="10dp"
+        android:layout_marginRight="40dp"
+        android:background="?attr/selectableItemBackground"
+        android:gravity="center"
+        android:paddingTop="16dp"
+        android:paddingBottom="16dp"
+        android:text="@string/close_privacy_password"
+        android:textColor="@color/dark_gray"
+        android:textSize="@dimen/textsize_small" />
 </LinearLayout>

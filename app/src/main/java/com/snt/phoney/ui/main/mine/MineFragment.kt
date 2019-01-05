@@ -4,6 +4,7 @@ import android.app.Activity
 import android.app.AlertDialog
 import android.content.Intent
 import android.os.Bundle
+import android.text.TextUtils
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -121,7 +122,7 @@ class MineFragment : BaseFragment(), OnSettingItemClickListener, OnSignOutClickL
 
     override fun onSettingItemClick(setting: Setting) {
         when (setting.icon) {
-            R.drawable.ic_photo_permission -> {
+            R.drawable.ic_setting_photo_permission -> {
                 viewModel.user.value?.photoPermission?.let { initPermission ->
                     activity?.let {
                         AlbumPermissionSettingFragment.newInstance(initPermission).apply {
@@ -155,7 +156,7 @@ class MineFragment : BaseFragment(), OnSettingItemClickListener, OnSignOutClickL
                     }
                 }
             }
-            R.drawable.ic_my_dating -> {
+            R.drawable.ic_setting_my_dating -> {
                 if (setting.hasNewMessage) {
                     setting.hasNewMessage = false
                     viewModel.userInfo.value?.hasNewsOfDating = false
@@ -165,7 +166,7 @@ class MineFragment : BaseFragment(), OnSettingItemClickListener, OnSignOutClickL
                     putInt(Constants.Extra.THEME, R.style.AppTheme_Light)
                 })
             }
-            R.drawable.ic_my_wallet -> {
+            R.drawable.ic_setting_my_wallet -> {
                 if (setting.hasNewMessage) {
                     viewModel.setWalletNewsToRead()
                     setting.hasNewMessage = false
@@ -173,37 +174,41 @@ class MineFragment : BaseFragment(), OnSettingItemClickListener, OnSignOutClickL
                 }
                 activity?.startActivity<WalletActivity>(Page.WALLET)
             }
-            R.drawable.ic_privacy_setting -> {
-                context?.let { context ->
-                    AlertDialog.Builder(context)
-                            .setTitle(R.string.modify_privacy_lock)
-                            .setMessage(R.string.modify_privacy_lock_message)
-                            .setNegativeButton(R.string.cancel) { dialog, _ ->
-                                dialog.dismiss()
-                            }
-                            .setPositiveButton(R.string.confirm) { dialog, _ ->
-                                dialog.dismiss()
-                                activity?.startActivity<PrivacyActivity>(Page.CREATE_PRIVACY_LOCK)
-                            }.show()
+            R.drawable.ic_setting_privacy_setting -> {
+                if (!TextUtils.isEmpty(viewModel.user.value?.privacyPassword)) {
+                    context?.let { context ->
+                        AlertDialog.Builder(context)
+                                .setTitle(R.string.modify_privacy_lock)
+                                .setMessage(R.string.modify_privacy_lock_message)
+                                .setNegativeButton(R.string.cancel) { dialog, _ ->
+                                    dialog.dismiss()
+                                }
+                                .setPositiveButton(R.string.confirm) { dialog, _ ->
+                                    dialog.dismiss()
+                                    activity?.startActivity<PrivacyActivity>(Page.CREATE_PRIVACY_LOCK)
+                                }.show()
 
+                    }
+                } else {
+                    activity?.startActivity<PrivacyActivity>(Page.CREATE_PRIVACY_LOCK)
                 }
             }
-            R.drawable.ic_bind_phone -> {
+            R.drawable.ic_setting_bind_phone -> {
                 BindPhoneFragment.newInstance().show(childFragmentManager, "bindPhone")
             }
-            R.drawable.ic_share -> {
+            R.drawable.ic_setting_share -> {
                 ShareFragment.newInstance().show(childFragmentManager, "share")
             }
-            R.drawable.ic_user_protocol -> {
+            R.drawable.ic_setting_protocol -> {
                 startActivity<WebBrowserActivity>(Bundle().apply {
                     putString(Constants.Extra.TITLE, getString(R.string.user_protocol))
                     putString(Constants.Extra.URL, Constants.Api.USER_PROTOCOL_URL)
                 })
             }
-            R.drawable.ic_clear_cache -> {
+            R.drawable.ic_setting_clear_cache -> {
                 //activity?.startActivity<ReportActivity>(Page.REPORT)
             }
-            R.drawable.ic_about -> {
+            R.drawable.ic_setting_about -> {
                 activity?.startActivity<AboutActivity>(Page.ABOUT)
             }
         }

@@ -67,6 +67,7 @@ class CreateLockStep2Fragment : BaseFragment() {
         confirmAgain.setOnClickListener {
             val pwd = inputPassword.password.toString()
             if (password != pwd) {
+                inputPassword.clear()
                 snackbar(getString(R.string.password_validate_no_equal))
                 return@setOnClickListener
             }

@@ -265,10 +265,13 @@ class LoginStateInterceptor(private val application: Application, private val gs
         source?.request(Long.MAX_VALUE)
         val buffer = source?.buffer()
         val result = buffer?.clone()?.readString(UTF8)
+        Log.d("TTTT", "8888888888888888888888 res=$result")
         result?.let { result ->
             val jsonObject = gson.fromJson<JsonObject>(result, JsonObject::class.java)
             val code = jsonObject.getAsJsonObject("header").get("code").asInt
-            if (code == 201) {
+            Log.d("TTTT", "cccccccccccccccccccccccccc code=$code")
+            if (code == 201 || code == 202) {
+                Log.d("TTTT", "xxxxxxxxxxxxxxxxxxxxxxxxx code=$code")
                 application.sendBroadcast(ACTION_LOGIN_STATE_INVALID)
             }
         }
