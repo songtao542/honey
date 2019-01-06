@@ -30,4 +30,6 @@ class SquareUseCase @Inject constructor(private val repository: DatingRepository
 
     var location: Observable<Location> = locationRepository.getLocation()
 
+    fun listDatingProgram(token: String, uuid: String) = repository.listDatingProgram(token, uuid)
+
 }

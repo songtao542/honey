@@ -21,24 +21,24 @@ class VipCardView : RelativeLayout {
         LayoutInflater.from(context).inflate(R.layout.vip_card_view, this, true)
     }
 
-    public fun setTitle(title: CharSequence) {
+    fun setTitle(title: CharSequence) {
         this.title.text = title
     }
 
-    public fun setDuration(duration: CharSequence) {
+    fun setDuration(duration: CharSequence) {
         this.duration.text = duration
     }
 
-    public fun setDurationPrice(length: Double, price: Double) {
+    fun setDurationPrice(length: Double, price: Double) {
         this.duration.text = context.getString(R.string.vip_duration_template, DecimalFormat.getInstance().format(length))
-        this.price.text = context.getString(R.string.vip_price_template, DecimalFormat.getInstance().format(price / length))
+        this.price.text = context.getString(R.string.vip_price_template, DecimalFormat.getInstance().format(price))
     }
 
-    public fun setPrice(price: CharSequence) {
+    fun setPrice(price: CharSequence) {
         this.price.text = price
     }
 
-    public fun setRecommend(recommend: Boolean) {
+    fun setRecommend(recommend: Boolean) {
         this.recommend.visibility = if (recommend) View.VISIBLE else View.GONE
     }
 

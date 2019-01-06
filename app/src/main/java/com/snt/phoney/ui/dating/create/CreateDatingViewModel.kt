@@ -7,6 +7,7 @@ import com.snt.phoney.base.AppViewModel
 import com.snt.phoney.domain.model.DatingProgram
 import com.snt.phoney.domain.model.PoiAddress
 import com.snt.phoney.domain.usecase.DatingUseCase
+import com.snt.phoney.extensions.disposedBy
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.disposables.Disposable
 import io.reactivex.rxkotlin.subscribeBy
@@ -24,7 +25,7 @@ class CreateDatingViewModel @Inject constructor(private val usecase: DatingUseCa
                         .observeOn(AndroidSchedulers.mainThread())
                         .subscribeBy {
                             value = it.data
-                        }
+                        }.disposedBy(disposeBag)
             }
         }
     }

@@ -57,10 +57,17 @@ class BindPhoneFragment : BaseDialogFragment() {
         })
     }
 
+    override fun onDestroyView() {
+        countDownTimer?.cancel()
+        super.onDestroyView()
+    }
+
+    var countDownTimer: CountDownTimer? = null
+
     private fun startCountdown() {
         getVerificationCode.isEnabled = false
         getVerificationCode.text = "60${getString(R.string.unit_second)}"
-        val countDownTimer = object : CountDownTimer(60000, 1000) {
+        countDownTimer = object : CountDownTimer(60000, 1000) {
             private var tick = 60
             override fun onFinish() {
                 getVerificationCode.setText(R.string.get_verification_code)
@@ -73,7 +80,7 @@ class BindPhoneFragment : BaseDialogFragment() {
                 }
             }
         }
-        countDownTimer.start()
+        countDownTimer?.start()
     }
 
 }

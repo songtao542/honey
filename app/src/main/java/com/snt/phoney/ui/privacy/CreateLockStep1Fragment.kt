@@ -18,6 +18,7 @@ class CreateLockStep1Fragment : BaseFragment() {
         }
     }
 
+    @Suppress("PrivatePropertyName")
     private val PASSWORD_LENGTH = 4
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
@@ -31,7 +32,17 @@ class CreateLockStep1Fragment : BaseFragment() {
         titleTextView.setText(R.string.set_lock_title)
 
         inputPassword.setOnInputOverListener {
-            val pwd = inputPassword.password.toString()
+            toNextStep()
+        }
+
+        confirmAgain.setOnClickListener {
+            toNextStep()
+        }
+    }
+
+    private fun toNextStep() {
+        val pwd = inputPassword.password.toString()
+        if (pwd.length >= PASSWORD_LENGTH) {
             addFragmentSafely(CreateLockStep2Fragment.newInstance(pwd), "step2", true,
                     enterAnimation = R.anim.slide_in_right, popExitAnimation = R.anim.slide_out_right)
         }

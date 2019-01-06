@@ -460,7 +460,7 @@ interface Api {
     @POST("users/setPhotoRight")
     fun setPhotoPermission(@Field("token") token: String,
                            @Field("photoRight") photoPermission: Int,
-                           @Field("money") money: Int,
+                           @Field("money") money: String,
                            @Field("id") photoId: String): Single<Response<String>>
 
     @Multipart

@@ -12,6 +12,7 @@ import androidx.lifecycle.ViewModelProviders
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.snt.phoney.R
 import com.snt.phoney.base.BaseFragment
+import com.snt.phoney.domain.model.DatingProgram
 import com.snt.phoney.extensions.*
 import com.snt.phoney.ui.main.square.SquareViewModel
 import com.snt.phoney.widget.DropdownLabelView
@@ -32,7 +33,8 @@ class OfficialRecommendFragment : BaseFragment() {
 
     private var filterTime: FilterTime = FilterTime.ALL
     private var filterDistance: FilterDistance = FilterDistance.NONE
-    private var filterContent: FilterContent = FilterContent.NONE
+    //private var filterContent: FilterContent = FilterContent.NONE
+    private var filterContent: Int = -1
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         return inflater.inflate(R.layout.fragment_official_recommend_list, container, false)
@@ -56,8 +58,8 @@ class OfficialRecommendFragment : BaseFragment() {
         publishTime.setOnClickListener {
             //expandFilter(publishTime, R.array.filter_publish_time)
             popupMenu(publishTime, R.array.filter_publish_time) { position ->
-                filterDistance = FilterDistance.NONE
-                filterContent = FilterContent.NONE
+                //filterDistance = FilterDistance.NONE
+                //filterContent = FilterContent.NONE.value
                 filterTime = FilterTime.from(position)
                 loadDating(true)
             }
@@ -65,8 +67,8 @@ class OfficialRecommendFragment : BaseFragment() {
         distance.setOnClickListener {
             //expandFilter(distance, R.array.filter_distance)
             popupMenu(distance, R.array.filter_distance) { position ->
-                filterTime = FilterTime.NONE
-                filterContent = FilterContent.NONE
+                //filterTime = FilterTime.NONE
+                //filterContent = FilterContent.NONE.value
                 filterDistance = FilterDistance.from(position)
                 if (checkAndRequestPermission(Manifest.permission.ACCESS_FINE_LOCATION, Manifest.permission.ACCESS_COARSE_LOCATION)) {
                     loadDating(true)
@@ -75,11 +77,12 @@ class OfficialRecommendFragment : BaseFragment() {
         }
         datingContent.setOnClickListener {
             //expandFilter(datingContent, R.array.filter_dating_content)
-            popupMenu(datingContent, R.array.filter_dating_content) { position ->
-                filterTime = FilterTime.NONE
-                filterDistance = FilterDistance.NONE
-                filterContent = FilterContent.from(position)
-                loadDating(true)
+            if (viewModel.programs.value != null) {
+                popupContentFilter(viewModel.programs.value!!)
+            } else {
+                viewModel.programs.observe(this, Observer { list ->
+                    popupContentFilter(list)
+                })
             }
         }
 
@@ -112,6 +115,15 @@ class OfficialRecommendFragment : BaseFragment() {
         }
 
         //loadDating(true)
+    }
+
+    private fun popupContentFilter(menusList: List<DatingProgram>) {
+        popupMenu(datingContent, menusList.map { it.name!! }) { position ->
+            //filterTime = FilterTime.NONE
+            //filterDistance = FilterDistance.NONE
+            filterContent = menusList[position].id
+            loadDating(true)
+        }
     }
 
     private fun getPermissions(): Array<String> {
@@ -147,7 +159,7 @@ class OfficialRecommendFragment : BaseFragment() {
         }
         val timeFilter = filterTime.toString()
         val distanceFilter = filterDistance.toString()
-        val contentFilter = filterContent.toString()
+        val contentFilter = if (filterContent == -1) "" else filterContent.toString()
         viewModel.listRecommendDating(refresh, timeFilter, distanceFilter, contentFilter, loadMore)
 
     }
@@ -161,8 +173,13 @@ class OfficialRecommendFragment : BaseFragment() {
 //        }
 //    }
 
+
     private fun popupMenu(dropdownLabel: DropdownLabelView, menus: Int, handler: ((selectPosition: Int) -> Unit)) {
-        val menuList = context!!.resources.getStringArray(menus).asList()
+        val menuList = requireContext().resources.getStringArray(menus).asList()
+        popupMenu(dropdownLabel, menuList, handler)
+    }
+
+    private fun popupMenu(dropdownLabel: DropdownLabelView, menuList: List<String>, handler: ((selectPosition: Int) -> Unit)) {
         val list = PopupList(context, menuList)
         list.setWidth(false, anchor.width)
         list.setPosition(0)

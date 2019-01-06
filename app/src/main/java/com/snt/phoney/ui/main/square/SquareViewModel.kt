@@ -1,9 +1,11 @@
 package com.snt.phoney.ui.main.square
 
+import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import com.snt.phoney.R
 import com.snt.phoney.base.AppViewModel
 import com.snt.phoney.domain.model.Dating
+import com.snt.phoney.domain.model.DatingProgram
 import com.snt.phoney.domain.usecase.SquareUseCase
 import com.snt.phoney.extensions.addList
 import com.snt.phoney.extensions.disposedBy
@@ -31,6 +33,19 @@ class SquareViewModel @Inject constructor(private val usecase: SquareUseCase) : 
 
     fun isRecommendListEmpty(): Boolean {
         return mRecommendDating.isEmpty()
+    }
+
+    val programs = object : LiveData<List<DatingProgram>>() {
+        override fun onActive() {
+            usecase.getAccessToken()?.let { token ->
+                usecase.listDatingProgram(token, usecase.getUser()!!.uuid ?: "")
+                        .subscribeOn(Schedulers.io())
+                        .observeOn(AndroidSchedulers.mainThread())
+                        .subscribeBy {
+                            value = it.data
+                        }.disposedBy(disposeBag)
+            }
+        }
     }
 
     /**
@@ -153,7 +168,7 @@ class SquareViewModel @Inject constructor(private val usecase: SquareUseCase) : 
 
     fun follow(dating: Dating, official: Boolean) {
         val token = usecase.getAccessToken() ?: return
-        usecase.follow(token, dating.safeUuid)
+        usecase.follow(token, dating.user?.safeUuid ?: "")
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribeBy(
@@ -161,9 +176,17 @@ class SquareViewModel @Inject constructor(private val usecase: SquareUseCase) : 
                             if (it.success) {
                                 dating.isCared = it.data ?: false
                                 if (official) {
-                                    success.value = context.getString(R.string.has_follow)
+                                    if (it.data == true) {
+                                        success.value = context.getString(R.string.has_follow)
+                                    } else {
+                                        success.value = context.getString(R.string.has_canceld_follow)
+                                    }
                                 } else {
-                                    popularSuccess.value = context.getString(R.string.has_follow)
+                                    if (it.data == true) {
+                                        popularSuccess.value = context.getString(R.string.has_follow)
+                                    } else {
+                                        popularSuccess.value = context.getString(R.string.has_canceld_follow)
+                                    }
                                 }
                             } else if (it.hasMessage) {
                                 if (official) {

@@ -6,6 +6,7 @@ import androidx.lifecycle.MutableLiveData
 import com.snt.phoney.base.AppViewModel
 import com.snt.phoney.domain.usecase.BindPhoneUseCase
 import com.snt.phoney.extensions.disposedBy
+import com.snt.phoney.utils.life.SingleLiveData
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.disposables.Disposable
 import io.reactivex.rxkotlin.subscribeBy
@@ -14,7 +15,7 @@ import javax.inject.Inject
 
 class BindPhoneViewModel @Inject constructor(private val usecase: BindPhoneUseCase) : AppViewModel() {
 
-    var verificationCodeId = MutableLiveData<String>()
+    var verificationCodeId = SingleLiveData<String>()
 
     fun bindPhone(phone: String, code: String) {
         val uuid = usecase.getUser()?.uuid

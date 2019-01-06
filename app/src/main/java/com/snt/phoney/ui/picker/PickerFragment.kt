@@ -56,9 +56,18 @@ class PickerFragment : NoInjectBottomDialogFragment() {
                 setColumnInternal(minValue, maxValue)
             }
 
-            column1Values = it.getStringArray(EXTRA_COLUMN_1_VALUES)
-            column2Values = it.getStringArray(EXTRA_COLUMN_2_VALUES)
-            setColumnInternal(column1Values, column2Values)
+
+            val column1Values = it.getStringArray(EXTRA_COLUMN_1_VALUES)
+            val column2Values = it.getStringArray(EXTRA_COLUMN_2_VALUES)
+            if (column1Values != null) {
+                this.column1Values = column1Values
+            }
+            if (column2Values != null) {
+                this.column2Values = column2Values
+            }
+            if (column1Values != null || column2Values != null) {
+                setColumnInternal(column1Values, column2Values)
+            }
         }
 
         confirm.setOnClickListener {

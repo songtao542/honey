@@ -195,7 +195,9 @@ class DatingDetailFragment : BaseFragment() {
             remainingCountDown(dating.endTime)
         } else if (dating.remaining() <= 0) {
             remainingTime.setText(R.string.has_out_of_time)
+            joinButton.isEnabled = false
         } else {
+            joinButton.isEnabled = false
             when {
                 dating.state == DatingState.EXPIRED.value -> remainingTime.setText(R.string.has_out_of_time)
                 dating.state == DatingState.FINISHED.value -> remainingTime.setText(R.string.has_finish)
@@ -231,6 +233,7 @@ class DatingDetailFragment : BaseFragment() {
         }
         val diff = time - System.currentTimeMillis()
         if (diff <= 0) {
+            joinButton.isEnabled = false
             remainingTime.setText(R.string.has_out_of_time)
         }
         //calendar.timeInMillis = time

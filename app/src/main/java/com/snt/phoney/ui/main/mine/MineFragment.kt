@@ -131,7 +131,9 @@ class MineFragment : BaseFragment(), OnSettingItemClickListener, OnSignOutClickL
                                     PhotoPermission.NEED_CHARGE -> {
                                         this@MineFragment.startActivityForResult<AlbumActivity>(Page.PAY_SETTING, REQUEST_PAY_SETTING_CODE, Bundle().apply {
                                             putInt(Constants.Extra.PERMISSION, PhotoPermission.NEED_CHARGE.value)
-                                            putParcelableArrayList(Constants.Extra.PHOTO_LIST, ArrayList<Photo>(viewModel.photos.value))
+                                            if (viewModel.photos.value != null) {
+                                                putParcelableArrayList(Constants.Extra.PHOTO_LIST, ArrayList<Photo>(viewModel.photos.value))
+                                            }
                                         })
                                     }
                                     PhotoPermission.PUBLIC -> {

@@ -106,9 +106,9 @@ class PaySettingFragment : BaseFragment() {
         }
 
         confirm.setOnClickListener {
-            val amount = getAmount()
-            if (amount > 0.0) {
-                if (checked == needPay) {
+            if (checked == needPay) {
+                val amount = getAmount()
+                if (amount > 0.0) {
                     if (adapter.selectedPhoto != null) {
                         val photoId = adapter.selectedPhoto?.id?.toString() ?: ""
                         showProgress(getString(R.string.on_going_seting))
@@ -116,11 +116,12 @@ class PaySettingFragment : BaseFragment() {
                     } else {
                         snackbar(getString(R.string.must_select_photo))
                     }
-                } else {
-                    showProgress(getString(R.string.on_going_seting))
-                    viewModel.setPhotoPermission(PhotoPermission.LOCKED, amount)
                 }
+            } else {
+                showProgress(getString(R.string.on_going_seting))
+                viewModel.setPhotoPermission(PhotoPermission.LOCKED)
             }
+
         }
 
         if (photos == null) {
@@ -167,11 +168,13 @@ class PaySettingFragment : BaseFragment() {
             if (view == needPay) {
                 needPay.checked = true
                 unlockAll.checked = false
+                inputPrice.visibility = View.VISIBLE
                 list.visibility = View.VISIBLE
                 checked = needPay
             } else {
                 needPay.checked = false
                 unlockAll.checked = true
+                inputPrice.visibility = View.GONE
                 list.visibility = View.GONE
                 checked = unlockAll
             }

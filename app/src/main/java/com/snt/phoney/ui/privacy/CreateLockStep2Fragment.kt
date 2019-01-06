@@ -49,9 +49,8 @@ class CreateLockStep2Fragment : BaseFragment() {
         super.onActivityCreated(savedInstanceState)
         viewModel = ViewModelProviders.of(this, viewModelFactory).get(CreateLockViewModel::class.java)
         toolbar.setNavigationOnClickListener { activity?.onBackPressed() }
-        titleTextView.setText(R.string.set_lock_title)
+        titleTextView.setText(R.string.input_password_again_title)
 
-        toolbar.setTitle(R.string.input_password_again_title)
         confirmAgain.setText(R.string.confirm)
 
         viewModel.success.observe(this, Observer {

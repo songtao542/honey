@@ -45,7 +45,8 @@ class UserRepositoryImpl @Inject constructor(private val userAccessor: UserAcces
     }
 
     override fun setPhotoPermission(token: String, photoPermission: Int, money: Double, photoId: String): Single<Response<String>> {
-        return api.setPhotoPermission(token, photoPermission, money.toInt(), photoId)
+        val price = money.toInt()
+        return api.setPhotoPermission(token, photoPermission, if (price > 0) price.toString() else "", photoId)
     }
 
     override fun uploadPhotos(token: String, photos: List<File>): Single<Response<List<Photo>>> {
