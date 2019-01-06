@@ -115,7 +115,7 @@ class QQApi constructor(private val application: Application) : IUiListener {
         var out: OutputStream? = null
         try {
             out = FileOutputStream(file)
-            val bitmap = BitmapFactory.decodeResource(context.resources, R.drawable.ic_launcher_for_share)
+            val bitmap = BitmapFactory.decodeResource(context.resources, R.mipmap.ic_launcher_for_share)
             bitmap.compress(Bitmap.CompressFormat.PNG, 90, out)
             out.flush()
             out.close()

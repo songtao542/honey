@@ -12,8 +12,7 @@
         android:layout_height="match_parent"
         android:layout_margin="0dp"
         android:padding="0dp"
-        android:scaleType="centerCrop"
-        app:srcCompat="@mipmap/tem" />
+        android:scaleType="centerCrop" />
 
 
     <com.snt.phoney.widget.CompatRadioButton

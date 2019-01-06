@@ -4,11 +4,16 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="#FAFAFA"
+    android:background="#F9F9F9"
     android:orientation="vertical"
     tools:context=".ui.about.AboutFragment">
 
-    <include layout="@layout/app_toolbar"/>
+    <include layout="@layout/app_toolbar" />
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1px"
+        android:background="@color/gray" />
 
     <androidx.appcompat.widget.AppCompatImageView
         android:layout_width="90dp"
@@ -23,8 +28,7 @@
         android:layout_width="match_parent"
         android:layout_height="50dp"
         android:layout_marginBottom="20dp"
-        android:gravity="center"
-        android:text="@string/hello_blank_fragment" />
+        android:gravity="center" />
 
 
     <androidx.appcompat.widget.AppCompatTextView

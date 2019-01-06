@@ -70,7 +70,7 @@ class WechatApi(private val application: Application) {
         msg.title = title
         msg.description = description
         //这块需要注意，图片的像素千万不要太大，不然的话会调不起来微信分享，或者直接参考下文的sharePicture
-        val thumb = BitmapFactory.decodeResource(application.resources, R.drawable.ic_launcher_for_share)
+        val thumb = BitmapFactory.decodeResource(application.resources, R.mipmap.ic_launcher_for_share)
         msg.setThumbImage(thumb)
         val req = SendMessageToWX.Req()
         req.transaction = System.currentTimeMillis().toString()

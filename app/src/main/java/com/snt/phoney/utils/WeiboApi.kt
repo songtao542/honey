@@ -48,7 +48,7 @@ class WeiboApi constructor(private val application: Application) {
             setProgressColor(0xffffff)
         }
 
-        val bitmap = BitmapFactory.decodeResource(activity.resources, com.snt.phoney.R.drawable.ic_launcher_for_share)
+        val bitmap = BitmapFactory.decodeResource(activity.resources, com.snt.phoney.R.mipmap.ic_launcher_for_share)
         val weiboMessage = WeiboMultiMessage()
         weiboMessage.mediaObject = WebpageObject().apply {
             this.identify = Utility.generateGUID()

@@ -37,8 +37,7 @@
                 android:id="@+id/imageView"
                 android:layout_width="match_parent"
                 android:layout_height="160dp"
-                android:scaleType="centerCrop"
-                app:srcCompat="@mipmap/tem" />
+                android:scaleType="centerCrop" />
 
 
             <TextView
