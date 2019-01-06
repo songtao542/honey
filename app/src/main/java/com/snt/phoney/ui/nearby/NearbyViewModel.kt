@@ -34,7 +34,6 @@ class NearbyViewModel @Inject constructor(private val usecase: GetRecommendUserU
         observable.subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribeBy {
-                    Log.d("TTTT", "getCities==>$it")
                     if (it.success) {
                         if (it.isEmpty) {
                             mPageIndex = 1

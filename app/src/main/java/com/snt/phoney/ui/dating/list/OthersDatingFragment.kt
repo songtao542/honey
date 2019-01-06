@@ -15,7 +15,9 @@ import com.snt.phoney.extensions.setLoadMoreListener
 import com.snt.phoney.extensions.snackbar
 import com.snt.phoney.utils.data.Constants
 import cust.widget.loadmore.LoadMoreAdapter
+import kotlinx.android.synthetic.main.app_toolbar.*
 import kotlinx.android.synthetic.main.fragment_othersdating_list.*
+import kotlinx.android.synthetic.main.vip_card_view.*
 
 /**
  * A fragment representing a list of Items.
@@ -43,6 +45,7 @@ class OthersDatingFragment : BaseFragment() {
         super.onActivityCreated(savedInstanceState)
         viewModel = ViewModelProviders.of(this, viewModelFactory).get(DatingViewModel::class.java)
         toolbar.setNavigationOnClickListener { activity?.onBackPressed() }
+        titleTextView.setText(R.string.it_published_title)
 
         list.layoutManager = LinearLayoutManager(context)
         adapter = OthersDatingRecyclerViewAdapter(this, viewModel)

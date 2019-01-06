@@ -22,6 +22,7 @@ import com.snt.phoney.extensions.checkAndRequestPermission
 import com.snt.phoney.extensions.checkAppPermission
 import com.snt.phoney.extensions.dip
 import com.snt.phoney.extensions.hideSoftKeyboard
+import kotlinx.android.synthetic.main.app_toolbar.*
 import kotlinx.android.synthetic.main.fragment_location_picker1.*
 
 /**
@@ -56,8 +57,10 @@ class LocationPicker : BaseFragment() {
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
         viewModel = ViewModelProviders.of(this, viewModelFactory).get(LocationViewModel::class.java)
-        enableOptionsMenu(toolbar)
+        enableOptionsMenu(toolbar, false, R.menu.location_picker)
         toolbar.setNavigationOnClickListener { activity?.onBackPressed() }
+        titleTextView.setText(R.string.location_picker_title)
+
         mapProxy = MapLocationFactory.create(requireContext(), mapView = mapView)
 
         mapProxy.onCreate(savedInstanceState)

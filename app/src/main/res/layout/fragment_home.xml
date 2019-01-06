@@ -16,6 +16,8 @@
         <com.snt.phoney.widget.TabLayout
             android:id="@+id/homeTab"
             style="@style/AppTheme.Tab"
+            android:gravity="center_vertical"
+            android:minHeight="30dp"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content" />
     </com.snt.phoney.widget.Toolbar>

@@ -119,7 +119,6 @@ public class NestedLinearLayout extends LinearLayout {
     @Override
     public boolean onNestedFling(View target, float velocityX, float velocityY, boolean consumed) {
         //往上滑动时，velocityY>0
-        //Log.d("TTTT", "onNestedFling velocityY=" + velocityY + "  consumed=" + consumed);
         if (!consumed) {
             if (mScroller.isFinished()) {
                 int scrollY = getScrollY();

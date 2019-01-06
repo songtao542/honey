@@ -64,7 +64,6 @@ class SetupWizardTwoFragment : BaseFragment() {
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
         viewModel = ViewModelProviders.of(this, viewModelFactory).get(SetupWizardViewModel::class.java)
-        Log.d("TTTT", "vm=======2==========================$viewModel")
         toolbar.setNavigationOnClickListener {
              activity?.onBackPressed()
         }

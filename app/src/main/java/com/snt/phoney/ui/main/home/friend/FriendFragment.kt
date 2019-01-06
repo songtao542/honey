@@ -109,7 +109,8 @@ class FriendFragment : BaseFragment() {
                 filter(FilterType.DEFAULT)
             }
         })
-
+        swipeRefresh.setProgressViewOffset(false, -dip(40), dip(8))
+        swipeRefresh.setSlingshotDistance(dip(64))
         swipeRefresh.setOnRefreshListener {
             swipeRefresh.isRefreshing = true
             load(true)

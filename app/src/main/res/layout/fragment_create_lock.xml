@@ -7,10 +7,7 @@
     android:orientation="vertical"
     tools:context=".ui.privacy.CreateLockFragment">
 
-    <com.snt.phoney.widget.Toolbar
-        android:id="@+id/toolbar"
-        style="@style/AppTheme.Toolbar"
-        app:title="@string/privacy_lock_title" />
+    <include layout="@layout/app_toolbar"/>
 
     <androidx.appcompat.widget.AppCompatImageView
         android:layout_width="260dp"

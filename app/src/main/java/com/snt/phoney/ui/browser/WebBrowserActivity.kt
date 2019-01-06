@@ -12,6 +12,7 @@ import com.snt.phoney.extensions.EXTRA_ARGUMENT
 import com.snt.phoney.extensions.setLayoutFullscreen
 import com.snt.phoney.widget.PopupList
 import kotlinx.android.synthetic.main.activity_web_browser.*
+import kotlinx.android.synthetic.main.app_toolbar.*
 import java.util.regex.Pattern
 
 /**
@@ -79,7 +80,7 @@ class WebBrowserActivity : BaseNoViewModelActivity(), View.OnClickListener {
             title = extras.getString("title")
         }
         if (!TextUtils.isEmpty(title)) {
-            toolbar.title = title
+            titleTextView.text = title
         }
         if (url != null) {
             this.url = url
@@ -121,6 +122,7 @@ class WebBrowserActivity : BaseNoViewModelActivity(), View.OnClickListener {
 
     private fun init() {
         toolbar.setNavigationOnClickListener { onBackPressed() }
+        titleTextView.setText(R.string.detail_title)
         textZoomLabel.text = "120"
         cancel.setOnClickListener { fontsizeLayout.visibility = View.INVISIBLE }
 

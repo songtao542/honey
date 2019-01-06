@@ -27,22 +27,14 @@ public class NotificationClickEventReceiver {
 
     @SuppressWarnings("unused")
     public void onEvent(CommandNotificationEvent event) {
-        Log.d("TTTT", "mmmmmmmmmmmmmmmmmm eeee =" + event);
-        Log.d("TTTT", "mmmmmmmmmmmmmmmmmm eeee getMsg==" + event.getMsg());
-        Log.d("TTTT", "mmmmmmmmmmmmmmmmmm eeee getType=" + event.getType());
         event.getSenderUserInfo(new GetUserInfoCallback() {
             @Override
             public void gotResult(int i, String s, UserInfo userInfo) {
-                Log.d("TTTT", "mmmmmmmmmmmmmmmmmm eeee userInfo=" + userInfo);
             }
         });
         event.getTargetInfo(new CommandNotificationEvent.GetTargetInfoCallback() {
             @Override
             public void gotResult(int i, String s, Object o, CommandNotificationEvent.Type type) {
-                Log.d("TTTT", "mmmmmmmmmmmmmmmmmm tttt iiii=" + i);
-                Log.d("TTTT", "mmmmmmmmmmmmmmmmmm tttt ssss=" + s);
-                Log.d("TTTT", "mmmmmmmmmmmmmmmmmm tttt oooo=" + o);
-                Log.d("TTTT", "mmmmmmmmmmmmmmmmmm tttt type=" + type);
             }
         });
     }

@@ -11,8 +11,11 @@ import cn.jpush.im.android.api.JMessageClient
 import com.snt.phoney.BuildConfig
 import com.snt.phoney.di.AppInjector
 import com.snt.phoney.service.VoiceCallService
+import com.snt.phoney.utils.data.Constants
 import com.tencent.bugly.crashreport.CrashReport
 import com.tencent.bugly.crashreport.CrashReport.UserStrategy
+import com.umeng.analytics.MobclickAgent
+import com.umeng.commonsdk.UMConfigure
 import dagger.android.DispatchingAndroidInjector
 import dagger.android.HasActivityInjector
 import dagger.android.HasServiceInjector
@@ -37,13 +40,10 @@ class App : Application(), HasActivityInjector, HasServiceInjector {
         if (BuildConfig.DEBUG) {
             Timber.plant(Timber.DebugTree())
         }
-
         AppInjector.init(this)
-
         initJMessage()
-
         initBugly()
-
+        initUM()
         startVoiceCallService()
     }
 
@@ -55,6 +55,14 @@ class App : Application(), HasActivityInjector, HasServiceInjector {
     override fun attachBaseContext(base: Context) {
         super.attachBaseContext(base)
         MultiDex.install(this)
+    }
+
+    private fun initUM() {
+        if (BuildConfig.DEBUG) {
+            UMConfigure.setLogEnabled(true)
+        }
+        UMConfigure.init(this, UMConfigure.DEVICE_TYPE_PHONE, null)
+        MobclickAgent.openActivityDurationTrack(false)
     }
 
     private fun initJMessage() {
@@ -84,9 +92,9 @@ class App : Application(), HasActivityInjector, HasServiceInjector {
         strategy.isUploadProcess = processName == null || processName == packageName
         // 初始化Bugly, 测试阶段建议设置成true，发布时设置为false
         if (BuildConfig.DEBUG) {
-            CrashReport.initCrashReport(context, "注册时申请的APPID", true, strategy)
+            CrashReport.initCrashReport(context, Constants.Bugly.APP_ID, true, strategy)
         } else {
-            CrashReport.initCrashReport(context, "注册时申请的APPID", false, strategy)
+            CrashReport.initCrashReport(context, Constants.Bugly.APP_ID, false, strategy)
         }
 
     }

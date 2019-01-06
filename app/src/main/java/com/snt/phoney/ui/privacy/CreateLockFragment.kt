@@ -10,6 +10,7 @@ import com.snt.phoney.R
 import com.snt.phoney.base.BaseFragment
 import com.snt.phoney.extensions.addFragmentSafely
 import com.snt.phoney.extensions.snackbar
+import kotlinx.android.synthetic.main.app_toolbar.*
 import kotlinx.android.synthetic.main.fragment_create_lock.*
 
 class CreateLockFragment : BaseFragment() {
@@ -31,6 +32,7 @@ class CreateLockFragment : BaseFragment() {
         super.onActivityCreated(savedInstanceState)
         viewModel = ViewModelProviders.of(this, viewModelFactory).get(CreateLockViewModel::class.java)
         toolbar.setNavigationOnClickListener { activity?.finish() }
+        titleTextView.setText(R.string.privacy_lock_title)
 
         viewModel.closeSuccess.observe(this, Observer {
             closePassword.visibility = View.GONE

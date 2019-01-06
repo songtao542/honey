@@ -15,6 +15,7 @@ import com.snt.phoney.domain.model.VipCombo
 import com.snt.phoney.extensions.*
 import com.snt.phoney.utils.data.Constants
 import com.snt.phoney.widget.VipCardView
+import kotlinx.android.synthetic.main.app_toolbar.*
 import kotlinx.android.synthetic.main.fragment_vip.*
 import java.text.DecimalFormat
 
@@ -46,6 +47,7 @@ class VipFragment : BaseFragment() {
         viewModel.setActivity(requireActivity())
 
         toolbar.setNavigationOnClickListener { activity?.finish() }
+        titleTextView.setText(R.string.upgrade_vip_title)
 
         viewModel.vipCombos.observe(this, Observer {
             setVipCombos(it)

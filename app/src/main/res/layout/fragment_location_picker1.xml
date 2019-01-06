@@ -6,13 +6,9 @@
     android:layout_height="match_parent"
     android:background="@color/white"
     android:orientation="vertical"
-    tools:context=".ui.location.LocationPickerFragment">
+    tools:context=".ui.location.LocationPicker">
 
-
-    <com.snt.phoney.widget.Toolbar
-        android:id="@+id/toolbar"
-        style="@style/AppTheme.Toolbar"
-        app:title="@string/location_picker_title" />
+    <include layout="@layout/app_toolbar" />
 
     <FrameLayout
         android:layout_width="match_parent"

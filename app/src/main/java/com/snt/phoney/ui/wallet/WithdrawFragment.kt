@@ -17,6 +17,7 @@ import com.snt.phoney.extensions.snackbar
 import com.snt.phoney.ui.browser.WebBrowserActivity
 import com.snt.phoney.utils.AlipayApi
 import com.snt.phoney.utils.data.Constants
+import kotlinx.android.synthetic.main.app_toolbar.*
 import kotlinx.android.synthetic.main.fragment_wallet_withdraw.*
 import java.text.DecimalFormat
 
@@ -44,6 +45,7 @@ class WithdrawFragment : BaseFragment() {
         viewModel = ViewModelProviders.of(this, viewModelFactory).get(WalletViewModel::class.java)
 
         toolbar.setNavigationOnClickListener { activity?.onBackPressed() }
+        titleTextView.setText(R.string.wallet_withdraw_title)
 
         viewModel.preWithdraw.observe(this, Observer {
             setWithdrawInfo(it)
@@ -106,7 +108,6 @@ class WithdrawFragment : BaseFragment() {
             bindToAlipay.setOnClickListener {
                 context?.let { context ->
                     //                    val uri = Uri.parse("${Constants.Api.BIND_ALIPAY_URL}${viewModel.getAccessToken()}")
-//                    Log.d("TTTT", "UUUUURRRRLLLL=${Constants.Api.BIND_ALIPAY_URL}${viewModel.getAccessToken()}")
 //                    val intent = Intent(Intent.ACTION_VIEW, uri)
 //                    startActivity(intent)
 
@@ -123,10 +124,7 @@ class WithdrawFragment : BaseFragment() {
     }
 
     private fun bindAlipay(sign: String) {
-        Log.d("TTTT", "yyyyyyyyyyyyyyyyyyyyyyyy sign=$sign")
         AlipayApi.auth(requireActivity(), sign) { status, authCode ->
-            Log.d("TTTT", "yyyyyyyyyyyyyyyyyyyyyyyy statue=$status")
-            Log.d("TTTT", "yyyyyyyyyyyyyyyyyyyyyyyy authCode=$authCode")
             authCode?.let {
                 viewModel.uploadAuthCode(authCode)
             }

@@ -54,7 +54,6 @@ class QQViewModel @Inject constructor() : AppViewModel(), IUiListener {
             override fun onComplete(info: Any?) {
                 var json = info as? JSONObject
                 json?.let {
-                    Log.d("TTTT", "Login by qq info==>$info")
                     val thirdToken = token ?: ""
                     val plate = "0" //0 qq 1 wx 3 wb
                     val nickName = it.getString("nickname")

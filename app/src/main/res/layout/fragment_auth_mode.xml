@@ -7,12 +7,9 @@
     android:layout_height="match_parent"
     android:background="@color/setting_bg_color"
     android:orientation="vertical"
-    tools:context=".ui.dating.create.CreateDatingFragment">
+    tools:context=".ui.auth.AuthModeFragment">
 
-    <com.snt.phoney.widget.Toolbar
-        android:id="@+id/toolbar"
-        style="@style/AppTheme.Toolbar"
-        app:title="@string/auth_select_mode_title" />
+    <include layout="@layout/app_toolbar"/>
 
     <androidx.appcompat.widget.AppCompatTextView
         android:layout_width="match_parent"

@@ -17,6 +17,7 @@ import com.snt.phoney.extensions.autoCleared
 import com.snt.phoney.extensions.snackbar
 import com.snt.phoney.utils.Picker
 import com.zaaach.citypicker.model.City
+import kotlinx.android.synthetic.main.app_toolbar.*
 import kotlinx.android.synthetic.main.fragment_edit_user.*
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.GlobalScope
@@ -62,16 +63,16 @@ class EditUserFragment : BaseFragment() {
 
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
-        enableOptionsMenu(toolbar, true)
+        enableOptionsMenu(toolbar, false, R.menu.edit_user)
         viewModel = ViewModelProviders.of(this, viewModelFactory).get(EditUserViewModel::class.java)
         binding.user = viewModel.user
+
+        toolbar.setNavigationOnClickListener { activity?.finish() }
+        titleTextView.setText(R.string.edit_user_title)
 
         viewModel.user?.let {
             user = it.copy()
         }
-
-        toolbar.setNavigationOnClickListener { activity?.finish() }
-
 
         cityButton.setOnClickListener {
             Picker.showCityPicker(activity, { cityPicker ->

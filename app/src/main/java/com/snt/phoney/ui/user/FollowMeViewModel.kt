@@ -34,7 +34,6 @@ class FollowMeViewModel @Inject constructor(private val usecase: FollowUseCase) 
                 .subscribeBy(
                         onSuccess = {
                             setLoading("follow", false)
-                            Log.d("TTTT", "list follow==========>$it  refresh=$refresh")
                             if (it.success) {
                                 if (refresh) {
                                     mFollower.clear()

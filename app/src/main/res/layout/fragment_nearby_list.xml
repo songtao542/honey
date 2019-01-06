@@ -8,10 +8,7 @@
     android:orientation="vertical"
     tools:context=".ui.nearby.NearbyFragment">
 
-    <com.snt.phoney.widget.Toolbar
-        android:id="@+id/toolbar"
-        style="@style/AppTheme.Toolbar"
-        app:title="@string/recommend_people" />
+    <include layout="@layout/app_toolbar"/>
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/list"

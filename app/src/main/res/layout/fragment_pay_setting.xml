@@ -7,12 +7,7 @@
     android:orientation="vertical"
     tools:context=".ui.album.PaySettingFragment">
 
-
-    <com.snt.phoney.widget.Toolbar
-        android:id="@+id/toolbar"
-        style="@style/AppTheme.Toolbar"
-        app:title="@string/album_permission_setting" />
-
+    <include layout="@layout/app_toolbar" />
 
     <LinearLayout
         android:layout_width="match_parent"

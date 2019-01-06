@@ -12,10 +12,7 @@ import androidx.lifecycle.ViewModelProviders
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.snt.phoney.R
 import com.snt.phoney.base.BaseFragment
-import com.snt.phoney.extensions.checkAndRequestPermission
-import com.snt.phoney.extensions.checkAppPermission
-import com.snt.phoney.extensions.setLoadMoreEnable
-import com.snt.phoney.extensions.setLoadMoreListener
+import com.snt.phoney.extensions.*
 import com.snt.phoney.ui.main.square.SquareViewModel
 import com.snt.phoney.widget.DropdownLabelView
 import com.snt.phoney.widget.PopupList
@@ -103,7 +100,8 @@ class OfficialRecommendFragment : BaseFragment() {
         openLocation.setOnClickListener {
             checkAndRequestPermission(*getPermissions())
         }
-
+        swipeRefresh.setProgressViewOffset(false, -dip(40), dip(8))
+        swipeRefresh.setSlingshotDistance(dip(64))
         swipeRefresh.setOnRefreshListener {
             swipeRefresh.isRefreshing = true
             loadDating(true)

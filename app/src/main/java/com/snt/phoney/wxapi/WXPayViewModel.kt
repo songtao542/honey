@@ -77,7 +77,6 @@ open class WXPayViewModel @Inject constructor(private val usecase: PayOrderUseCa
     override fun onResp(resp: BaseResp) {
         resp?.let { resp ->
             eventHandler?.onResp(resp)
-            Log.d("TTTT", "WXPayViewModel -------onResp")
             if (resp.type === ConstantsAPI.COMMAND_PAY_BY_WX) {
                 buySuccess.value = true
                 context.sendBroadcast("buy_success")

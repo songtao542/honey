@@ -10,6 +10,7 @@ import com.snt.phoney.R
 import com.snt.phoney.domain.accessor.UserAccessor
 import com.snt.phoney.domain.model.Sex
 import com.snt.phoney.utils.KeyEventListener
+import com.umeng.analytics.MobclickAgent
 import dagger.android.DispatchingAndroidInjector
 import dagger.android.support.HasSupportFragmentInjector
 import javax.inject.Inject
@@ -65,6 +66,16 @@ abstract class BaseNoViewModelActivity : AppCompatActivity(), HasSupportFragment
     override fun setTheme(resid: Int) {
         super.setTheme(resid)
         themeId = resid
+    }
+
+    override fun onResume() {
+        super.onResume()
+        MobclickAgent.onResume(this)
+    }
+
+    override fun onPause() {
+        super.onPause()
+        MobclickAgent.onPause(this)
     }
 
     /**

@@ -10,6 +10,7 @@ import com.snt.phoney.R
 import com.snt.phoney.base.BaseFragment
 import com.snt.phoney.domain.model.DatingProgram
 import com.snt.phoney.utils.Picker
+import kotlinx.android.synthetic.main.app_toolbar.*
 import kotlinx.android.synthetic.main.fragment_friend_more_filter.*
 
 class FilterFragment : BaseFragment() {
@@ -32,8 +33,9 @@ class FilterFragment : BaseFragment() {
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
         viewModel = ViewModelProviders.of(this, viewModelFactory).get(FilterViewModel::class.java)
-
         toolbar.setNavigationOnClickListener { activity?.onBackPressed() }
+        titleTextView.setText(R.string.friend_more_filter)
+
         heightBar.setFormatter {
             "${it}cm"
         }

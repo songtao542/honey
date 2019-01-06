@@ -41,6 +41,8 @@ class FollowingViewModel @Inject constructor(private val usecase: FollowUseCase)
                                 }
                                 if (it.isNotEmpty) {
                                     users.value = mUsers.addList(it.data)
+                                    //服务器没有返回 isCared 字段，所以手动处理一下
+                                    fixCareState(mUsers)
                                     mPageIndex++
                                 } else {
                                     loadMore?.isEnable = false
@@ -55,6 +57,12 @@ class FollowingViewModel @Inject constructor(private val usecase: FollowUseCase)
                 ).disposedBy(disposeBag)
     }
 
+    private fun fixCareState(users: List<User>) {
+        for (user in users) {
+            user.isCared = true
+        }
+    }
+
     fun follow(user: User) {
         val token = usecase.getAccessToken() ?: return
         usecase.follow(token, user.safeUuid)
@@ -62,9 +70,13 @@ class FollowingViewModel @Inject constructor(private val usecase: FollowUseCase)
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribeBy(
                         onSuccess = {
-                            Log.d("TTTT", "listMyFollow==>$it")
                             if (it.success) {
-                                success.value = context.getString(R.string.has_follow)
+                                user.isCared = it.data ?: false
+                                if (it.data == true) {
+                                    success.value = context.getString(R.string.has_follow)
+                                } else {
+                                    success.value = context.getString(R.string.has_canceld_follow)
+                                }
                             } else if (it.hasMessage) {
                                 error.value = it.message
                             } else {

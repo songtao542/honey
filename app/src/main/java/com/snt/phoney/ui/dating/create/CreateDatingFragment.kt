@@ -23,9 +23,11 @@ import com.snt.phoney.ui.location.LocationPicker
 import com.snt.phoney.ui.photo.PhotoViewerFragment
 import com.snt.phoney.utils.Picker
 import com.snt.phoney.utils.data.Constants
+import com.snt.phoney.widget.FlowLayout
 import com.snt.phoney.widget.PhotoFlowAdapter
 import com.zhihu.matisse.Matisse
 import com.zhihu.matisse.internal.utils.PathUtils
+import kotlinx.android.synthetic.main.app_toolbar.*
 import kotlinx.android.synthetic.main.fragment_dating_create.*
 import java.io.File
 
@@ -49,6 +51,8 @@ class CreateDatingFragment : BaseFragment() {
     private var selectedDay: Int = 0
     private var progressDialog: ProgressDialog? = null
 
+    private lateinit var photoView: FlowLayout
+
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View {
         return inflater.inflate(R.layout.fragment_dating_create, container, false)
@@ -56,11 +60,13 @@ class CreateDatingFragment : BaseFragment() {
 
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
-        enableOptionsMenu(toolbar)
+        enableOptionsMenu(toolbar, false, R.menu.create_dating)
         setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_ADJUST_RESIZE)
         viewModel = ViewModelProviders.of(this, viewModelFactory).get(CreateDatingViewModel::class.java)
         toolbar.setNavigationOnClickListener { activity?.onBackPressed() }
+        titleTextView.setText(R.string.publish_dating_title)
 
+        photoView = photos
         selectDatingAddress.setOnClickListener {
             activity?.let { activity ->
                 val locationPicker = LocationPicker.newInstance()
@@ -114,7 +120,7 @@ class CreateDatingFragment : BaseFragment() {
             }).apply {
                 setOnUriResultListener { deleted ->
                     selectedPhotoUris.removeAll(deleted)
-                    photos.notifyAdapterSizeChanged()
+                    photoView?.notifyAdapterSizeChanged()
                 }
             }
             activity?.addFragmentSafely(fragment, "photo_viewer", true)
@@ -183,7 +189,8 @@ class CreateDatingFragment : BaseFragment() {
             }
             paths?.let {
                 selectedPhotoUris.addAll(uris)
-                photos.notifyAdapterSizeChanged()
+                photos?.notifyAdapterSizeChanged()
+                return@let
             }
         }
     }

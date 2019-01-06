@@ -15,6 +15,7 @@ import com.snt.phoney.extensions.setLoadMoreListener
 import com.snt.phoney.extensions.snackbar
 import com.snt.phoney.utils.data.Constants
 import cust.widget.loadmore.LoadMoreAdapter
+import kotlinx.android.synthetic.main.app_toolbar.*
 import kotlinx.android.synthetic.main.fragment_dating_list.*
 
 class DatingListFragment : BaseFragment() {
@@ -70,6 +71,7 @@ class DatingListFragment : BaseFragment() {
 
         toolbar.visibility = toolbarVisibility
         toolbar.setNavigationOnClickListener { activity?.onBackPressed() }
+        titleTextView.setText(R.string.dating_list_title)
 
         viewModel.error.observe(this, Observer {
             it?.let { message ->

@@ -88,6 +88,36 @@ android {
             signingConfig signingConfigs.release
         }
     }
+
+    flavorDimensions "channel"
+
+    productFlavors {
+        xiaomi {
+            dimension "channel"
+            manifestPlaceholders = ["CHANNEL_NAME": "xiaomi"]
+        }
+        tencent {
+            dimension "channel"
+            manifestPlaceholders = ["CHANNEL_NAME": "tencent"]
+        }
+        aliapp {
+            dimension "channel"
+            manifestPlaceholders = ["CHANNEL_NAME": "aliapp"]
+        }
+        huawei {
+            dimension "channel"
+            manifestPlaceholders = ["CHANNEL_NAME": "huawei"]
+        }
+        qihoo360 {
+            dimension "channel"
+            manifestPlaceholders = ["CHANNEL_NAME": "qihoo360"]
+        }
+    }
+
+    productFlavors.all {
+        flavor -> flavor.manifestPlaceholders = ["CHANNEL_NAME": name]
+    }
+
     dataBinding {
         enabled = true
     }
@@ -105,6 +135,7 @@ android {
     lintOptions {
         lintConfig rootProject.file('lint.xml')
     }
+
 
     sourceSets {
         main {
@@ -271,6 +302,11 @@ dependencies {
     //implementation 'com.github.w446108264:XhsEmoticonsKeyboard:2.0.4'
     implementation 'com.sina.weibo.sdk:core:4.3.4:openDefaultRelease@aar'
     implementation 'com.tencent.mm.opensdk:wechat-sdk-android-with-mta:+'
+
+    //implementation 'com.umeng.umsdk:common:1.5.4'
+    //implementation 'com.umeng.umsdk:utdid:1.1.5.3'
+    implementation 'com.umeng.sdk:common:latest.integration'
+    implementation 'com.umeng.sdk:analytics:latest.integration'
 
 
     //    androidTestImplementation deps.android_support_test.runner

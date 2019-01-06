@@ -285,3 +285,4 @@
 #========================Agora================================
 -dontwarn io.agora.rtc.**
 -keep class io.agora.rtc.** {*;}
+-keep class com.umeng.** {*;}

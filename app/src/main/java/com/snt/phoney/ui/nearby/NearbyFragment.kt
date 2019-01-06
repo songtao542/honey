@@ -9,6 +9,7 @@ import androidx.lifecycle.ViewModelProviders
 import androidx.recyclerview.widget.GridLayoutManager
 import com.snt.phoney.R
 import com.snt.phoney.base.BaseFragment
+import kotlinx.android.synthetic.main.app_toolbar.*
 import kotlinx.android.synthetic.main.fragment_nearby_list.*
 
 /**
@@ -28,8 +29,8 @@ class NearbyFragment : BaseFragment() {
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
         viewModel = ViewModelProviders.of(this, viewModelFactory).get(NearbyViewModel::class.java)
-
         toolbar.setNavigationOnClickListener { activity?.onBackPressed() }
+        titleTextView.setText(R.string.recommend_people)
 
         list.layoutManager = GridLayoutManager(context, 3)
         adapter = NearbyRecyclerViewAdapter()

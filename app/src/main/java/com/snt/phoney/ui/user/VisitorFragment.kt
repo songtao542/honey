@@ -13,6 +13,7 @@ import com.snt.phoney.base.CommonActivity
 import com.snt.phoney.extensions.setLoadMoreEnable
 import com.snt.phoney.extensions.setLoadMoreListener
 import cust.widget.loadmore.LoadMoreAdapter
+import kotlinx.android.synthetic.main.app_toolbar.*
 import kotlinx.android.synthetic.main.fragment_visitor_list.*
 
 /**
@@ -24,12 +25,6 @@ class VisitorFragment : BaseFragment() {
     lateinit var viewModel: VisitorViewModel
     lateinit var adapter: VisitorRecyclerViewAdapter
 
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-
-
-    }
-
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         return inflater.inflate(R.layout.fragment_visitor_list, container, false)
     }
@@ -37,12 +32,12 @@ class VisitorFragment : BaseFragment() {
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
         viewModel = ViewModelProviders.of(this, viewModelFactory).get(VisitorViewModel::class.java)
+        toolbar.setNavigationOnClickListener { activity?.finish() }
+        titleTextView.setText(R.string.recent_visitor)
 
         list.layoutManager = LinearLayoutManager(context)
         adapter = VisitorRecyclerViewAdapter(activity as CommonActivity)
         list.adapter = adapter
-
-        toolbar.setNavigationOnClickListener { activity?.finish() }
 
         viewModel.visitors.observe(this, Observer {
             adapter.data = it

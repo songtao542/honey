@@ -11,6 +11,7 @@ import androidx.lifecycle.ViewModelProviders
 import com.snt.phoney.R
 import com.snt.phoney.base.Page
 import com.snt.phoney.di.Injectable
+import com.snt.phoney.extensions.dip
 import com.snt.phoney.extensions.enableOptionsMenu
 import com.snt.phoney.extensions.startActivity
 import com.snt.phoney.ui.album.AlbumActivity
@@ -96,7 +97,8 @@ class MessageFragment : ConversationListFragment(), Injectable {
                 }
             }
         })
-
+        swipeRefresh.setProgressViewOffset(false, -dip(40), dip(8))
+        swipeRefresh.setSlingshotDistance(dip(64))
         swipeRefresh.setOnRefreshListener {
             swipeRefresh.isRefreshing = true
             load()

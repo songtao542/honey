@@ -12,6 +12,7 @@ import com.snt.phoney.base.BaseFragment
 import com.snt.phoney.extensions.snackbar
 import com.snt.phoney.utils.data.Constants
 import com.snt.phoney.utils.data.MD5
+import kotlinx.android.synthetic.main.app_toolbar.*
 import kotlinx.android.synthetic.main.fragment_create_lock_step1.*
 
 class CreateLockStep2Fragment : BaseFragment() {
@@ -47,9 +48,9 @@ class CreateLockStep2Fragment : BaseFragment() {
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
         viewModel = ViewModelProviders.of(this, viewModelFactory).get(CreateLockViewModel::class.java)
-        toolbar.setNavigationOnClickListener {
-            activity?.supportFragmentManager?.popBackStack()
-        }
+        toolbar.setNavigationOnClickListener { activity?.onBackPressed() }
+        titleTextView.setText(R.string.set_lock_title)
+
         toolbar.setTitle(R.string.input_password_again_title)
         confirmAgain.setText(R.string.confirm)
 

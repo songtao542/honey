@@ -22,6 +22,7 @@ import com.snt.phoney.utils.data.Constants
 import com.snt.phoney.widget.PhotoFlowAdapter
 import com.zhihu.matisse.Matisse
 import com.zhihu.matisse.internal.utils.PathUtils
+import kotlinx.android.synthetic.main.app_toolbar.*
 import kotlinx.android.synthetic.main.fragment_report.*
 import java.io.File
 
@@ -63,9 +64,10 @@ class ReportFragment : BaseFragment() {
 
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
-        enableOptionsMenu(toolbar, true)
+        enableOptionsMenu(toolbar, false, R.menu.report)
         viewModel = ViewModelProviders.of(this, viewModelFactory).get(ReportViewModel::class.java)
         toolbar.setNavigationOnClickListener { activity?.onBackPressed() }
+        titleTextView.setText(R.string.report_title)
 
         viewModel.reportReasons.observe(this, Observer {
             it?.let { reasons ->

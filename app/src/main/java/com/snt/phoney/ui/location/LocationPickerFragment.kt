@@ -18,6 +18,7 @@ import com.snt.phoney.domain.model.PoiAddress
 import com.snt.phoney.extensions.checkAndRequestPermission
 import com.snt.phoney.extensions.checkAppPermission
 import com.snt.phoney.utils.data.Constants
+import kotlinx.android.synthetic.main.app_toolbar.*
 import kotlinx.android.synthetic.main.fragment_location_picker.*
 import javax.inject.Inject
 
@@ -48,8 +49,9 @@ class LocationPickerFragment : BaseFragment() {
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
         viewModel = ViewModelProviders.of(this, viewModelFactory).get(LocationViewModel::class.java)
-
         toolbar.setNavigationOnClickListener { activity?.onBackPressed() }
+        titleTextView.setText(R.string.location_picker_title)
+
         mapView.onCreate(savedInstanceState)
         if (!checkPermission()) {
             checkAndRequestPermission(Manifest.permission.ACCESS_FINE_LOCATION, Manifest.permission.ACCESS_COARSE_LOCATION)

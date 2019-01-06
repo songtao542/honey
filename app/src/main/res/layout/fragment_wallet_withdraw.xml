@@ -8,10 +8,7 @@
     android:orientation="vertical"
     tools:context=".ui.wallet.WithdrawFragment">
 
-    <com.snt.phoney.widget.Toolbar
-        android:id="@+id/toolbar"
-        style="@style/AppTheme.Toolbar"
-        app:title="@string/wallet_withdraw_title" />
+    <include layout="@layout/app_toolbar" />
 
     <View
         android:layout_width="match_parent"

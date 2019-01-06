@@ -26,7 +26,6 @@ class SignupViewModel @Inject constructor(private val usecase: SigninUseCase) : 
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribeBy {
-                    Log.d("TTTT", "requestVerificationCode success->$it")
                     if (it.code == 200) {
                         verificationCode.value = it.data
                     } else if (!TextUtils.isEmpty(it.message)) {
@@ -45,7 +44,6 @@ class SignupViewModel @Inject constructor(private val usecase: SigninUseCase) : 
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribeBy {
-                    Log.d("TTTT", "signup success->$it")
                     if (it.code == 200) {
                         user.value = it.data
                         usecase.setUser(it.data)

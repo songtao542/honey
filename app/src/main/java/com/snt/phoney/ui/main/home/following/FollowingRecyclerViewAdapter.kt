@@ -10,6 +10,7 @@ import com.bumptech.glide.load.resource.drawable.DrawableTransitionOptions
 import com.bumptech.glide.request.RequestOptions
 import com.snt.phoney.R
 import com.snt.phoney.domain.model.User
+import com.snt.phoney.extensions.dip
 import com.snt.phoney.utils.Chat
 import kotlinx.android.synthetic.main.fragment_following.view.*
 
@@ -54,6 +55,11 @@ class FollowingRecyclerViewAdapter(private val viewModel: FollowingViewModel) : 
 
             name.text = user.nickname
             content.text = user.introduce
+            if (user.isCared) {
+                follow.setImageResource(R.drawable.ic_heart_solid_red)
+            } else {
+                follow.setImageResource(R.drawable.ic_heart_border)
+            }
             chat.setOnClickListener {
                 user.im?.let { im ->
                     Chat.start(context, im)

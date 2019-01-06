@@ -9,6 +9,7 @@ import androidx.fragment.app.FragmentStatePagerAdapter
 
 import com.snt.phoney.R
 import com.snt.phoney.utils.data.Constants
+import kotlinx.android.synthetic.main.app_toolbar.*
 import kotlinx.android.synthetic.main.fragment_dating_mine.*
 
 /**
@@ -23,6 +24,8 @@ class MyDatingFragment : Fragment() {
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
         toolbar.setNavigationOnClickListener { activity?.onBackPressed() }
+        titleTextView.setText(R.string.dating_list_title)
+
         tabLayout.setupWithViewPager(viewPager)
         viewPager.adapter = object : FragmentStatePagerAdapter(this.childFragmentManager) {
             val myPublishFragment: DatingListFragment = DatingListFragment.newInstance(Bundle().apply {

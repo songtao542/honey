@@ -2110,13 +2110,9 @@ public class TabLayout extends HorizontalScrollView {
 
         @Override
         public void draw(Canvas canvas) {
-            //canvas.drawColor(0xffff0000);
             if (mTabSelectedBackground != null && mIndicatorLeft >= 0 && mIndicatorRight > mIndicatorLeft) {
-//                canvas.save();
-//                canvas.translate(mIndicatorLeft, 0);
                 mTabSelectedBackground.setBounds(mIndicatorLeft, 0, mIndicatorRight, getHeight());
                 mTabSelectedBackground.draw(canvas);
-//                canvas.restore();
             }
             super.draw(canvas);
             // Thick colored underline below the current selection

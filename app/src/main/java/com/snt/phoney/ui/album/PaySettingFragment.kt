@@ -23,6 +23,7 @@ import com.snt.phoney.ui.main.mine.AlbumPermissionSettingFragment
 import com.snt.phoney.utils.data.Constants
 import com.snt.phoney.widget.CompatRadioButton
 import com.snt.phoney.widget.itemdecoration.MonospacedItemDecoration
+import kotlinx.android.synthetic.main.app_toolbar.*
 import kotlinx.android.synthetic.main.fragment_pay_setting.*
 
 class PaySettingFragment : BaseFragment() {
@@ -68,6 +69,8 @@ class PaySettingFragment : BaseFragment() {
         setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_ADJUST_RESIZE)
         viewModel = ViewModelProviders.of(this, viewModelFactory).get(PaySettingViewModel::class.java)
         toolbar.setNavigationOnClickListener { activity?.onBackPressed() }
+        titleTextView.setText(R.string.album_permission_setting)
+
         adapter = PaySettingRecyclerViewAdapter(this)
         list.adapter = adapter
         list.addItemDecoration(MonospacedItemDecoration(dip(8)))//VerticalDividerItemDecoration.Builder(requireContext()).size(dip(8)).build())//MonospacedItemDecoration(dip(8))

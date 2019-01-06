@@ -9,10 +9,7 @@
     android:orientation="vertical"
     tools:context=".ui.dating.create.CreateDatingFragment">
 
-    <com.snt.phoney.widget.Toolbar
-        android:id="@+id/toolbar"
-        style="@style/AppTheme.Toolbar"
-        app:title="@string/publish_dating_title" />
+    <include layout="@layout/app_toolbar"/>
 
     <ScrollView
         android:id="@+id/publishLayout"

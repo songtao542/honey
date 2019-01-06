@@ -62,17 +62,41 @@ class FlowLayout : FlexboxLayout {
             val childHeight = if (square) childWidth else MarginLayoutParams.WRAP_CONTENT
             val lp = child.layoutParams as? MarginLayoutParams
                     ?: MarginLayoutParams(childWidth, childHeight)
-            lp.width = childWidth
-            lp.height = childHeight
-            lp.rightMargin = 0
-            lp.topMargin = 0
+            var shouldResize = false
+            if (lp.width != childWidth) {
+                shouldResize = true
+                lp.width = childWidth
+            }
+            if (lp.height != childHeight) {
+                shouldResize = true
+                lp.height = childHeight
+            }
+
             if ((index % column) != column - 1) {
-                lp.rightMargin = space
+                if (lp.rightMargin != space) {
+                    shouldResize = true
+                    lp.rightMargin = space
+                }
+            } else {
+                if (lp.rightMargin != 0) {
+                    shouldResize = true
+                    lp.rightMargin = 0
+                }
             }
             if (index > column - 1) {//第一行不要设置topMargin
-                lp.topMargin = space
+                if (lp.topMargin != space) {
+                    shouldResize = true
+                    lp.topMargin = space
+                }
+            } else {
+                if (lp.topMargin != 0) {
+                    shouldResize = true
+                    lp.topMargin = 0
+                }
             }
-            child.layoutParams = lp
+            if (shouldResize) {
+                child.layoutParams = lp
+            }
         }
     }
 

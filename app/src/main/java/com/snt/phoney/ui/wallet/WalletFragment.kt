@@ -16,6 +16,7 @@ import com.snt.phoney.domain.model.MibiRule
 import com.snt.phoney.extensions.addFragmentSafely
 import com.snt.phoney.ui.picker.PayPickerFragment
 import com.snt.phoney.widget.RechargeView
+import kotlinx.android.synthetic.main.app_toolbar.*
 import kotlinx.android.synthetic.main.fragment_wallet.*
 import java.text.DecimalFormat
 
@@ -40,10 +41,11 @@ class WalletFragment : BaseFragment() {
 
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
-        enableOptionsMenu(toolbar, true, R.menu.wallet)
+        enableOptionsMenu(toolbar, false, R.menu.wallet)
         viewModel = ViewModelProviders.of(this, viewModelFactory).get(WalletViewModel::class.java)
 
         toolbar.setNavigationOnClickListener { activity?.finish() }
+        titleTextView.setText(R.string.my_wallet)
 
         viewModel.setActivity(requireActivity())
         viewModel.mibiWallet.observe(this, Observer {
@@ -95,6 +97,7 @@ class WalletFragment : BaseFragment() {
 
     private fun setMibiCombos(rules: List<MibiRule>) {
         context?.let { context ->
+            rechargeContainer.removeAllViews()
             for (rule in rules) {
                 val ruleView = RechargeView(context)
                 ruleView.setBackgroundResource(R.drawable.underline_gray)

@@ -5,12 +5,9 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    tools:context=".ui.dating.list.DatingListFragment">
+    tools:context=".ui.dating.list.MyDatingFragment">
 
-    <com.snt.phoney.widget.Toolbar
-        android:id="@+id/toolbar"
-        style="@style/AppTheme.Toolbar"
-        app:title="@string/dating_list_title" />
+    <include layout="@layout/app_toolbar"/>
 
     <View
         android:layout_width="match_parent"

@@ -8,11 +8,7 @@
     android:orientation="vertical"
     tools:context=".ui.about.AboutFragment">
 
-    <com.snt.phoney.widget.Toolbar
-        android:id="@+id/toolbar"
-        style="@style/AppTheme.Toolbar"
-        app:title="@string/about_title" />
-
+    <include layout="@layout/app_toolbar"/>
 
     <androidx.appcompat.widget.AppCompatImageView
         android:layout_width="90dp"

@@ -19,6 +19,7 @@ import com.snt.phoney.extensions.checkAppPermission
 import com.snt.phoney.extensions.snackbar
 import com.snt.phoney.utils.KeyEventListener
 import com.snt.phoney.utils.data.Constants
+import kotlinx.android.synthetic.main.app_toolbar.*
 import kotlinx.android.synthetic.main.fragment_auth.*
 import java.io.File
 
@@ -57,6 +58,7 @@ class AuthFragment : BaseFragment(), KeyEventListener {
         viewModel = ViewModelProviders.of(this, viewModelFactory).get(AuthViewModel::class.java)
 
         toolbar.setNavigationOnClickListener { finish() }
+        titleTextView.setText(R.string.auth_title)
 
         viewModel.randomMessage.observe(this, Observer {
             authText.text = it

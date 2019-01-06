@@ -10,6 +10,7 @@ import com.snt.phoney.extensions.getVersionName
 import com.snt.phoney.extensions.startActivity
 import com.snt.phoney.ui.browser.WebBrowserActivity
 import com.snt.phoney.utils.data.Constants
+import kotlinx.android.synthetic.main.app_toolbar.*
 import kotlinx.android.synthetic.main.fragment_about.*
 
 /**
@@ -30,6 +31,7 @@ class AboutFragment : NoInjectBaseFragment() {
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
         toolbar.setNavigationOnClickListener { activity?.onBackPressed() }
+        titleTextView.setText(R.string.about_title)
 
         version.text = getString(R.string.about_version_template, requireContext().getVersionName())
 

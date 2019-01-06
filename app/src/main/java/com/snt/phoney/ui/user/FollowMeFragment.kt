@@ -14,6 +14,7 @@ import com.snt.phoney.extensions.loadMore
 import com.snt.phoney.extensions.setLoadMoreEnable
 import com.snt.phoney.extensions.setLoadMoreListener
 import cust.widget.loadmore.LoadMoreAdapter
+import kotlinx.android.synthetic.main.app_toolbar.*
 import kotlinx.android.synthetic.main.fragment_followme_list.*
 
 /**
@@ -24,10 +25,6 @@ class FollowMeFragment : BaseFragment() {
     lateinit var viewModel: FollowMeViewModel
     lateinit var adapter: FollowMeRecyclerViewAdapter
 
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-    }
-
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         return inflater.inflate(R.layout.fragment_followme_list, container, false)
     }
@@ -35,13 +32,13 @@ class FollowMeFragment : BaseFragment() {
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
         viewModel = ViewModelProviders.of(this, viewModelFactory).get(FollowMeViewModel::class.java)
-        // Set the adapter
+        toolbar.setNavigationOnClickListener { activity?.finish() }
+        titleTextView.setText(R.string.followme_title)
 
         list.layoutManager = LinearLayoutManager(context)
         adapter = FollowMeRecyclerViewAdapter(activity as CommonActivity)
         list.adapter = adapter
 
-        toolbar.setNavigationOnClickListener { activity?.finish() }
 
         viewModel.follower.observe(this, Observer {
             adapter.data = it

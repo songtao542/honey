@@ -15,6 +15,7 @@ import com.snt.phoney.domain.model.WithDrawItem
 import com.snt.phoney.domain.model.WithdrawInfo
 import com.snt.phoney.extensions.colorOf
 import com.snt.phoney.utils.data.Constants
+import kotlinx.android.synthetic.main.app_toolbar.*
 import kotlinx.android.synthetic.main.fragment_wallet_withdraw_detail.*
 import kotlinx.android.synthetic.main.fragment_wallet_withdraw_detail_item.view.*
 import java.text.DecimalFormat
@@ -51,8 +52,8 @@ class WithdrawDetailFragment : BaseFragment() {
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
         viewModel = ViewModelProviders.of(this, viewModelFactory).get(WalletViewModel::class.java)
-
         toolbar.setNavigationOnClickListener { activity?.onBackPressed() }
+        titleTextView.setText(R.string.wallet_withdraw_detail_title)
 
         viewModel.withdrawInfo.observe(this, Observer {
             it?.let { withdrawInfo ->

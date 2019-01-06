@@ -5,10 +5,7 @@ import android.content.Intent
 import android.os.Bundle
 import com.snt.phoney.R
 import com.snt.phoney.base.BaseActivity
-import com.snt.phoney.extensions.addFragmentSafely
-import com.snt.phoney.extensions.colorOf
-import com.snt.phoney.extensions.forwardOnActivityResult
-import com.snt.phoney.extensions.setStatusBarColor
+import com.snt.phoney.extensions.*
 
 class SignupActivity : BaseActivity() {
 
@@ -22,6 +19,7 @@ class SignupActivity : BaseActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        setLayoutFullscreen()
         setContentView(R.layout.activity_signin)
 
         setStatusBarColor(colorOf(android.R.color.white))

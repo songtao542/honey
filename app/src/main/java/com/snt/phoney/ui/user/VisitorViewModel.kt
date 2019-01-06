@@ -37,7 +37,6 @@ class VisitorViewModel @Inject constructor(private val usecase: GetVisitorUseCas
                 .subscribeBy(
                         onSuccess = {
                             setLoading(false)
-                            Log.d("TTTT", "list follow==========>$it")
                             if (it.success) {
                                 if (refresh) {
                                     visitors.value = mVisitors.empty()

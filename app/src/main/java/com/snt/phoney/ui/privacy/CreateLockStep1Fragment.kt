@@ -7,6 +7,7 @@ import android.view.ViewGroup
 import com.snt.phoney.R
 import com.snt.phoney.base.BaseFragment
 import com.snt.phoney.extensions.addFragmentSafely
+import kotlinx.android.synthetic.main.app_toolbar.*
 import kotlinx.android.synthetic.main.fragment_create_lock_step1.*
 
 class CreateLockStep1Fragment : BaseFragment() {
@@ -26,10 +27,8 @@ class CreateLockStep1Fragment : BaseFragment() {
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
         //viewModel = ViewModelProviders.of(this,viewModelFactory).get(CreateLockViewModel::class.java)
-
-        toolbar.setNavigationOnClickListener {
-            activity?.supportFragmentManager?.popBackStack()
-        }
+        toolbar.setNavigationOnClickListener { activity?.onBackPressed() }
+        titleTextView.setText(R.string.set_lock_title)
 
         inputPassword.setOnInputOverListener {
             val pwd = inputPassword.password.toString()

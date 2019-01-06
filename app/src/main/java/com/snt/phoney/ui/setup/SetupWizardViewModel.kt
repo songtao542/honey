@@ -66,7 +66,6 @@ class SetupWizardViewModel @Inject constructor(private val setupWizardUseCase: S
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribeBy {
-                    Log.d("TTTT", "getCities==>$it")
                     if (it.code == 200) {
                         setupSex.value = it.data
                         val user = setupWizardUseCase.getUser()
@@ -87,7 +86,6 @@ class SetupWizardViewModel @Inject constructor(private val setupWizardUseCase: S
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribeBy {
-                    Log.d("TTTT", "setUserFeatures==>$it")
                     if (it.code == 200) {
                         val user = setupWizardUseCase.getUser()?.copy(height = height, weight = weight.toDouble(), age = age, cup = cup)
                         if (user != null) {
@@ -108,12 +106,10 @@ class SetupWizardViewModel @Inject constructor(private val setupWizardUseCase: S
     fun setUserInfo(cities: List<City>, career: String, program: String) {
         val token = setupWizardUseCase.getAccessToken() ?: return
         val cityCodesString = cities.map { it.id }.joinToString(separator = ",")
-        Log.d("TTTT", "99999999999 cityCodesString=$cityCodesString")
         setupWizardUseCase.setUserInfo(token, cityCodesString, career, program)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribeBy {
-                    Log.d("TTTT", "setUser==>$it")
                     if (it.code == 200) {
                         val user = setupWizardUseCase.getUser()?.copy(cities = cities)
                         if (user != null) {

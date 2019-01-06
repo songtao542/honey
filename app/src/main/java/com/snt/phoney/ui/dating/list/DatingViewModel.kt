@@ -116,7 +116,6 @@ class DatingViewModel @Inject constructor(private val usecase: DatingUseCase, pr
                                     publishDatings.value = mPublishDatings.addList(it.data)
                                     mDatingPageIndex++
                                 } else {
-                                    Log.d("TTTT", "bbbbbbbbbbbbbbbbb loadMore=$loadMore")
                                     loadMore?.isEnable = false
                                 }
                             } else {

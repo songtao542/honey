@@ -36,7 +36,6 @@ class AlbumViewModel @Inject constructor(private val usecase: UserInfoUseCase) :
                 .subscribeBy {
                     if (it.success) {
                         //toast.value = context.getString(R.string.delete_photo_success)
-                        Log.d("TTTT", "xxxxxxxxxxxxxxxxxxxxxxxxxxxxx${photoList[0]}")
                         photos.value = it.data
                     }
                 }.disposedBy(disposeBag)

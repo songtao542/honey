@@ -5,11 +5,9 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.databinding.DataBindingUtil
 import com.snt.phoney.R
 import com.snt.phoney.base.BaseFragment
-import com.snt.phoney.databinding.ForgetPasswordFragmentBinding
-import com.snt.phoney.extensions.autoCleared
+import kotlinx.android.synthetic.main.app_toolbar.*
 import kotlinx.android.synthetic.main.fragment_forget_password.*
 
 /**
@@ -17,24 +15,14 @@ import kotlinx.android.synthetic.main.fragment_forget_password.*
  */
 class ForgetPasswordFragment : BaseFragment() {
 
-    var binding by autoCleared<ForgetPasswordFragmentBinding>()
-
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-    }
-
-    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,
-                              savedInstanceState: Bundle?): View? {
-        // Inflate the layout for this fragment
-        binding = DataBindingUtil.inflate(inflater, R.layout.fragment_forget_password, container, false)
-        return binding.root
+    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
+        return inflater.inflate(R.layout.fragment_forget_password, container, false)
     }
 
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
-        toolbar.setNavigationOnClickListener {
-            activity?.let { it.supportFragmentManager.popBackStack() }
-        }
+        toolbar.setNavigationOnClickListener { activity?.onBackPressed() }
+        titleTextView.setText(R.string.forget_password_title)
 
         uploadConfirm.setOnClickListener {
             uploadLayout.visibility = View.GONE

@@ -9,6 +9,7 @@ import com.snt.phoney.R
 import com.snt.phoney.extensions.enableOptionsMenu
 import com.snt.phoney.utils.Picker
 import com.snt.phoney.utils.data.Constants
+import kotlinx.android.synthetic.main.app_toolbar.*
 import kotlinx.android.synthetic.main.fragment_wallet_detail.*
 import java.text.SimpleDateFormat
 import java.util.*
@@ -49,8 +50,10 @@ class WalletDetailFragment : Fragment() {
 
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
-        enableOptionsMenu(toolbar, true, R.menu.wallet_detail)
+        enableOptionsMenu(toolbar, false, R.menu.wallet_detail)
         toolbar.setNavigationOnClickListener { activity?.onBackPressed() }
+        titleTextView.setText(R.string.view_records)
+
         tabLayout.setupWithViewPager(viewPager)
         viewPager.adapter = object : FragmentStatePagerAdapter(this.childFragmentManager) {
             val rechargeFragment: DetailListFragment = DetailListFragment.newInstance(Bundle().apply {

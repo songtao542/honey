@@ -52,7 +52,6 @@ class UserAccessorImpl @Inject constructor(private val cache: CacheRepository) :
             if (TextUtils.equals(getUser()?.privacyPassword, password)) {
                 //密码相等，则将锁定状态修改为 false
                 mLocked = false
-                Log.d("TTTT", "mmmmmmm mLocked=$mLocked  this=${this@UserAccessorImpl}")
                 return true
             }
             return false
@@ -66,7 +65,6 @@ class UserAccessorImpl @Inject constructor(private val cache: CacheRepository) :
     }
 
     override fun isLocked(): Boolean {
-        Log.d("TTTT", "ggggggggggg mLocked=$mLocked      this=${this@UserAccessorImpl}")
         return mLocked
     }
 

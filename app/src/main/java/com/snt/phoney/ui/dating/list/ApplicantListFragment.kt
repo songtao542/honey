@@ -15,6 +15,7 @@ import com.snt.phoney.extensions.setLoadMoreListener
 import com.snt.phoney.extensions.snackbar
 import com.snt.phoney.utils.data.Constants
 import cust.widget.loadmore.LoadMoreAdapter
+import kotlinx.android.synthetic.main.app_toolbar.*
 import kotlinx.android.synthetic.main.fragment_applicant_list.*
 
 
@@ -51,6 +52,7 @@ class ApplicantListFragment : BaseFragment() {
         viewModel = ViewModelProviders.of(this, viewModelFactory).get(DatingViewModel::class.java)
 
         toolbar.setNavigationOnClickListener { activity?.onBackPressed() }
+        titleTextView.setText(R.string.dating_applying_title)
 
         list.layoutManager = LinearLayoutManager(requireContext())
         adapter = ApplicantListRecyclerViewAdapter(viewModel)

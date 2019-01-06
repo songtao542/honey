@@ -6,6 +6,7 @@ import androidx.appcompat.widget.Toolbar
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import com.snt.phoney.di.Injectable
+import com.umeng.analytics.MobclickAgent
 import javax.inject.Inject
 
 abstract class BaseFragment : Fragment(), Injectable {
@@ -31,6 +32,16 @@ abstract class BaseFragment : Fragment(), Injectable {
                 }
             }
         }
+    }
+
+    override fun onResume() {
+        super.onResume()
+        MobclickAgent.onPageStart(javaClass.simpleName)
+    }
+
+    override fun onPause() {
+        super.onPause()
+        MobclickAgent.onPageEnd(javaClass.simpleName)
     }
 
     companion object {

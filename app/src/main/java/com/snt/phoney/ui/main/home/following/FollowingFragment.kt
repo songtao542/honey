@@ -9,10 +9,7 @@ import androidx.lifecycle.ViewModelProviders
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.snt.phoney.R
 import com.snt.phoney.base.BaseFragment
-import com.snt.phoney.extensions.loadMore
-import com.snt.phoney.extensions.setLoadMoreEnable
-import com.snt.phoney.extensions.setLoadMoreListener
-import com.snt.phoney.extensions.snackbar
+import com.snt.phoney.extensions.*
 import cust.widget.loadmore.LoadMoreAdapter
 import kotlinx.android.synthetic.main.fragment_following_list.*
 
@@ -50,7 +47,8 @@ class FollowingFragment : BaseFragment() {
         viewModel.error.observe(this, Observer {
             snackbar(it)
         })
-
+        swipeRefresh.setProgressViewOffset(false, -dip(40), dip(8))
+        swipeRefresh.setSlingshotDistance(dip(64))
         swipeRefresh.setOnRefreshListener {
             swipeRefresh.isRefreshing = true
             load(true, list.loadMore)

@@ -7,10 +7,7 @@
     android:orientation="vertical"
     tools:context=".ui.report.ReportFragment">
 
-    <com.snt.phoney.widget.Toolbar
-        android:id="@+id/toolbar"
-        style="@style/AppTheme.Toolbar"
-        app:title="@string/report_title" />
+    <include layout="@layout/app_toolbar"/>
 
     <androidx.appcompat.widget.AppCompatTextView
         android:layout_width="match_parent"

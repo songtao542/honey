@@ -878,7 +878,6 @@ public class ChatActivity extends BaseActivity implements FuncLayout.OnFuncKeyBo
 
     public void onEventMainThread(ImageEvent event) {
         Intent intent;
-        Log.d("TTTT", "onEventMainThread ImageEvent");
 //        switch (event.getFlag()) {
 //            case Constants.IMAGE_MESSAGE:
 //                int from = PickImageActivity.FROM_LOCAL;

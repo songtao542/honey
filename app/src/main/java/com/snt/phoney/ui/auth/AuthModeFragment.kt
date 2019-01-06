@@ -10,6 +10,7 @@ import com.snt.phoney.base.BaseFragment
 import com.snt.phoney.extensions.addFragmentSafely
 import com.snt.phoney.extensions.replaceFragmentSafely
 import com.snt.phoney.utils.data.Constants
+import kotlinx.android.synthetic.main.app_toolbar.*
 import kotlinx.android.synthetic.main.fragment_auth_mode.*
 
 const val CAPTURE_REQUEST_CODE = 67
@@ -46,6 +47,7 @@ class AuthModeFragment : BaseFragment() {
         viewModel = ViewModelProviders.of(this, viewModelFactory).get(AuthViewModel::class.java)
 
         toolbar.setNavigationOnClickListener { activity?.onBackPressed() }
+        titleTextView.setText(R.string.auth_select_mode_title)
 
         authByVideo.setOnClickListener {
             startAuthMode(TYPE_VIDEO)

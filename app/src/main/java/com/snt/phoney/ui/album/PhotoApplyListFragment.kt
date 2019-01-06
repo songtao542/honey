@@ -13,6 +13,7 @@ import com.snt.phoney.extensions.setLoadMoreEnable
 import com.snt.phoney.extensions.setLoadMoreListener
 import com.snt.phoney.extensions.snackbar
 import cust.widget.loadmore.LoadMoreAdapter
+import kotlinx.android.synthetic.main.app_toolbar.*
 import kotlinx.android.synthetic.main.fragment_album_photo_apply_list.*
 
 
@@ -37,8 +38,8 @@ class PhotoApplyListFragment : BaseFragment() {
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
         viewModel = ViewModelProviders.of(this, viewModelFactory).get(AlbumViewModel::class.java)
-
         toolbar.setNavigationOnClickListener { activity?.onBackPressed() }
+        titleTextView.setText(R.string.photo_applying_title)
 
         list.layoutManager = LinearLayoutManager(requireContext())
         adapter = PhotoApplyListRecyclerViewAdapter(viewModel)

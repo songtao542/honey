@@ -7,12 +7,9 @@
     android:layout_height="match_parent"
     android:background="@color/light_gray"
     android:orientation="vertical"
-    tools:context=".ui.vip.VipActivity">
+    tools:context=".ui.vip.VipFragment">
 
-    <com.snt.phoney.widget.Toolbar
-        android:id="@+id/toolbar"
-        style="@style/AppTheme.Toolbar"
-        app:title="@string/upgrade_vip_title" />
+    <include layout="@layout/app_toolbar"/>
 
     <ScrollView
         android:layout_width="match_parent"

@@ -48,6 +48,12 @@ object Constants {
         const val USER_PROTOCOL_URL = "$BASE_URL/message/agreement"
         const val HELP_URL = "$BASE_URL/message/help"
     }
+
+    object Bugly{
+        const val APP_ID = "f2ff7f1586"
+        const val APP_KEY = "78f0631f-81b8-4bc1-94be-983ecb43c0d6"
+    }
+
     //https://openauth.alipaydev.com/oauth2/appToAppAuth.htm?app_id=2016092400585139&redirect_uri=https://api.chunmi69.com/auth/alipay/getUserInfo?state=用户token
     object Tencent {
         const val APP_ID = "1107903594"

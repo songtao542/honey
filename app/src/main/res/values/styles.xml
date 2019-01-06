@@ -130,17 +130,18 @@
     <style name="TextAppearance.Tab" parent="TextAppearance.Toolbar">
         <item name="android:gravity">center</item>
         <item name="android:textColor">@color/white</item>
+        <item name="android:textSize">18sp</item>
     </style>
 
     <style name="TextAppearance.UnSelectedTab" parent="TextAppearance.Toolbar">
         <item name="android:gravity">center</item>
         <item name="android:textColor">@color/white</item>
-        <item name="android:textSize">14sp</item>
+        <item name="android:textSize">12sp</item>
     </style>
 
     <style name="AppTheme.Tab">
         <item name="tabIndicatorColor">@android:color/white</item>
-        <item name="tabIndicatorBottomOffset">0dp</item>
+        <item name="tabIndicatorBottomOffset">8dp</item>
         <item name="tabIndicatorHeight">2dp</item>
         <item name="tabIndicatorWidth">20dp</item>
         <item name="tabPaddingStart">0dp</item>
