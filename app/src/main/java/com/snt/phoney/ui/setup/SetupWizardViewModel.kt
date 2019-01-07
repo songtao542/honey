@@ -1,7 +1,6 @@
 package com.snt.phoney.ui.setup
 
 import android.text.TextUtils
-import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import com.snt.phoney.base.AppViewModel
@@ -111,7 +110,7 @@ class SetupWizardViewModel @Inject constructor(private val setupWizardUseCase: S
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribeBy {
                     if (it.code == 200) {
-                        val user = setupWizardUseCase.getUser()?.copy(cities = cities)
+                        val user = setupWizardUseCase.getUser()?.copy(cities = cities, career = career, program = program)
                         if (user != null) {
                             setupWizardUseCase.setUser(user)
                         }

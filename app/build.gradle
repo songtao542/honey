@@ -42,11 +42,11 @@ android {
         manifestPlaceholders = [
                 JPUSH_PKGNAME: applicationId,
                 JPUSH_APPKEY : "eacade5d281c93bfb55b59d3",
-                JPUSH_CHANNEL: "developer-default"
+                JPUSH_CHANNEL: "official"
         ]
         ndk {
             //选择要添加的对应cpu类型的.so库。
-            abiFilters 'armeabi', 'armeabi-v7a', 'armeabi-v8a', 'x86'
+            abiFilters 'armeabi', 'armeabi-v7a', 'armeabi-v8a'
             // 还可以添加 'x86', 'x86_64', 'mips', 'mips64'
         }
     }
@@ -78,6 +78,9 @@ android {
             defaultConfig {
                 minSdkVersion 21
                 multiDexEnabled true
+                ndk {
+                    abiFilters 'armeabi', 'armeabi-v7a', 'armeabi-v8a'
+                }
             }
             //shrinkResources true
             //minifyEnabled true
@@ -92,30 +95,34 @@ android {
     flavorDimensions "channel"
 
     productFlavors {
+        official {
+            dimension "channel"
+            manifestPlaceholders = ["CHANNEL_NAME": "official", "JPUSH_CHANNEL": "official"]
+        }
         xiaomi {
             dimension "channel"
-            manifestPlaceholders = ["CHANNEL_NAME": "xiaomi"]
+            manifestPlaceholders = ["CHANNEL_NAME": "xiaomi", "JPUSH_CHANNEL": "xiaomi"]
         }
         tencent {
             dimension "channel"
-            manifestPlaceholders = ["CHANNEL_NAME": "tencent"]
+            manifestPlaceholders = ["CHANNEL_NAME": "tencent", "JPUSH_CHANNEL": "tencent"]
         }
         aliapp {
             dimension "channel"
-            manifestPlaceholders = ["CHANNEL_NAME": "aliapp"]
+            manifestPlaceholders = ["CHANNEL_NAME": "aliapp", "JPUSH_CHANNEL": "aliapp"]
         }
         huawei {
             dimension "channel"
-            manifestPlaceholders = ["CHANNEL_NAME": "huawei"]
+            manifestPlaceholders = ["CHANNEL_NAME": "huawei", "JPUSH_CHANNEL": "huawei"]
         }
         qihoo360 {
             dimension "channel"
-            manifestPlaceholders = ["CHANNEL_NAME": "qihoo360"]
+            manifestPlaceholders = ["CHANNEL_NAME": "qihoo360", "JPUSH_CHANNEL": "qihoo360"]
         }
     }
 
     productFlavors.all {
-        flavor -> flavor.manifestPlaceholders = ["CHANNEL_NAME": name]
+        flavor -> flavor.manifestPlaceholders = ["CHANNEL_NAME": name, "JPUSH_CHANNEL": name]
     }
 
     dataBinding {

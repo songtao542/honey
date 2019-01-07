@@ -4,6 +4,7 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
 import com.snt.phoney.R
@@ -61,11 +62,11 @@ class SetupWizardThreeFragment : BaseFragment() {
 
         cityButton.setOnClickListener {
             Picker.showCityPicker(activity, { cityPicker ->
-                if (viewModel.cities.value != null) {
+                if (viewModel.cities.value != null && viewModel.cities.value!!.isNotEmpty()) {
                     val cities = viewModel.cities.value!!
                     cityPicker.setCities(cities)
                 } else {
-                    viewModel.cities.observe(this@SetupWizardThreeFragment, Observer { cities ->
+                    viewModel.cities.observe(cityPicker as Fragment, Observer { cities ->
                         cityPicker.setCities(cities)
                     })
                 }

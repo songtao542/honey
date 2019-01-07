@@ -7,6 +7,7 @@ import android.content.Context
 import android.content.Intent
 import android.text.TextUtils
 import androidx.multidex.MultiDex
+import cn.jpush.android.api.JPushInterface
 import cn.jpush.im.android.api.JMessageClient
 import com.snt.phoney.BuildConfig
 import com.snt.phoney.di.AppInjector
@@ -41,6 +42,7 @@ class App : Application(), HasActivityInjector, HasServiceInjector {
             Timber.plant(Timber.DebugTree())
         }
         AppInjector.init(this)
+        initJPush()
         initJMessage()
         initBugly()
         initUM()
@@ -75,6 +77,15 @@ class App : Application(), HasActivityInjector, HasServiceInjector {
         //设置Notification的模式
         JMessageClient.setNotificationFlag(JMessageClient.FLAG_NOTIFY_WITH_SOUND or JMessageClient.FLAG_NOTIFY_WITH_LED or JMessageClient.FLAG_NOTIFY_WITH_VIBRATE)
         JMessageClient.registerEventReceiver(NotificationClickEventReceiver(this))
+    }
+
+    private fun initJPush() {
+        if (BuildConfig.DEBUG) {
+            JPushInterface.setDebugMode(true)
+        } else {
+            JPushInterface.setDebugMode(false)
+        }
+        JPushInterface.init(this)
     }
 
     private fun startVoiceCallService() {

@@ -1,6 +1,7 @@
 package cn.lolii.playground
 
 import android.content.Intent
+import android.os.Build
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
 import city.picker.SampleCityPickerActivity
@@ -23,7 +24,9 @@ class MainActivity : AppCompatActivity() {
             startActivity(Intent(this@MainActivity, SampleExpandableActivity::class.java))
         }
         expandableSample.setOnClickListener {
-            startActivity(Intent(this@MainActivity,   ExpansionPanelMainActivity::class.java))
+            startActivity(Intent(this@MainActivity, ExpansionPanelMainActivity::class.java))
         }
+
+        apiLevel.text = "API:${Build.VERSION.SDK_INT}"
     }
 }

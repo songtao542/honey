@@ -8,7 +8,7 @@ import io.reactivex.Observable
 import io.reactivex.Single
 
 interface LocationRepository {
-    fun getCities(): Single<Response<List<Province>>>
+    fun getCitiesFromNetwork(): Single<Response<List<Province>>>
 
     fun getLocation(): Observable<Location>
 

@@ -14,8 +14,8 @@ import com.snt.phoney.base.BaseFragment
 import com.snt.phoney.databinding.SigninFragmentBinding
 import com.snt.phoney.extensions.addFragmentSafely
 import com.snt.phoney.extensions.autoCleared
-import com.snt.phoney.extensions.disposedBy
 import com.snt.phoney.extensions.snackbar
+import com.snt.phoney.ui.main.MainActivity
 import com.snt.phoney.ui.password.ForgetPasswordFragment
 import com.snt.phoney.ui.setup.SetupWizardActivity
 import kotlinx.android.synthetic.main.fragment_signin.*
@@ -58,8 +58,14 @@ class SignupFragment : BaseFragment() {
         })
 
         viewModel.user.observe(this, Observer { user ->
-            snackbar("注册成功")
-            context?.let { context -> startActivity(SetupWizardActivity.newIntent(context, user)) }
+            snackbar("登录成功")
+            //context?.let { context -> startActivity(SetupWizardActivity.newIntent(context, user)) }
+            if (user.validated) {
+                context?.let { context -> startActivity(MainActivity.newIntent(context)) }
+            } else {
+                context?.let { context -> startActivity(SetupWizardActivity.newIntent(context, user)) }
+            }
+            activity?.finish()
         })
 
         viewModel.error.observe(this, Observer {
@@ -67,10 +73,17 @@ class SignupFragment : BaseFragment() {
         })
     }
 
+    override fun onDestroyView() {
+        countDownTimer?.cancel()
+        super.onDestroyView()
+    }
+
+    private var countDownTimer: CountDownTimer? = null
+
     private fun startCountdown() {
         getVerificationCode.isEnabled = false
         getVerificationCode.text = "60${getString(R.string.unit_second)}"
-        val countDownTimer = object : CountDownTimer(60000, 1000) {
+        countDownTimer = object : CountDownTimer(60000, 1000) {
             private var tick = 60
             override fun onFinish() {
                 getVerificationCode.setText(R.string.get_verification_code)
@@ -83,7 +96,7 @@ class SignupFragment : BaseFragment() {
                 }
             }
         }
-        countDownTimer.start()
+        countDownTimer?.start()
     }
 
     private fun getPhone(): String? {

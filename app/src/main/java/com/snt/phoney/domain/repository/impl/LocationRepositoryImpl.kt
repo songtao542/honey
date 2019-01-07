@@ -2,8 +2,6 @@ package com.snt.phoney.domain.repository.impl
 
 import android.app.Application
 import android.location.Location
-import android.util.Log
-import com.google.gson.Gson
 import com.snt.phoney.api.Api
 import com.snt.phoney.domain.model.City
 import com.snt.phoney.domain.model.Province
@@ -17,8 +15,10 @@ import io.nlopez.smartlocation.rx.ObservableFactory
 import io.reactivex.Observable
 import io.reactivex.Single
 import io.reactivex.rxkotlin.subscribeBy
-import kotlinx.coroutines.*
-import org.ehcache.core.internal.util.CollectionUtil
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.GlobalScope
+import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
 import java.util.*
 import javax.inject.Inject
 import javax.inject.Singleton
@@ -55,20 +55,16 @@ class LocationRepositoryImpl @Inject constructor(private val application: Applic
         }
         get() {
             if (_provinces.size == 0) {
-                runBlocking {
-                    withContext(Dispatchers.Default) {
-                        //先尝试从本地数据库加载
-                        provinceCityDao.getProvinces()?.let {
-                            _provinces.addAll(it)
-                        }
-                        //如果数据库中没有，则从服务器加载
-                        if (_provinces.size == 0) {
-                            getCities().subscribeBy {
-                                it.data?.let { provinces ->
-                                    _provinces.addAll(provinces)
-                                    provinceCityDao.insertAllProvinces(_provinces)
-                                }
-                            }
+                //先尝试从本地数据库加载
+                provinceCityDao.getProvinces()?.let {
+                    _provinces.addAll(it)
+                }
+                //如果数据库中没有，则从服务器加载
+                if (_provinces.size == 0) {
+                    getCitiesFromNetwork().subscribeBy {
+                        it.data?.let { provinces ->
+                            _provinces.addAll(provinces)
+                            provinceCityDao.insertAllProvinces(_provinces)
                         }
                     }
                 }
@@ -82,24 +78,20 @@ class LocationRepositoryImpl @Inject constructor(private val application: Applic
     override val cities: List<City>
         get() {
             val results = ArrayList<City>()
-            runBlocking {
-                withContext(Dispatchers.Default) {
-                    provinces.forEach { province ->
-                        if (province.cities != null && province.cities!!.isNotEmpty()) {
-                            results.addAll(province.cities!!)
-                        } else {
-                            val cities = provinceCityDao.getCities(province.id)
-                            cities?.let { results.addAll(it) }
-                            province.cities = cities
-                        }
-                    }
+            provinces.forEach { province ->
+                if (province.cities != null && province.cities!!.isNotEmpty()) {
+                    results.addAll(province.cities!!)
+                } else {
+                    val cities = provinceCityDao.getCities(province.id)
+                    cities?.let { results.addAll(it) }
+                    province.cities = cities
                 }
             }
             return results
         }
 
 
-    override fun getCities(): Single<Response<List<Province>>> {
+    override fun getCitiesFromNetwork(): Single<Response<List<Province>>> {
         return api.listCities()
     }
 }

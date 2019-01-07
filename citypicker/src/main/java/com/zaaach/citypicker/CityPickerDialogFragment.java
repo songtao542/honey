@@ -41,7 +41,6 @@ import com.zaaach.citypicker.model.LocateState;
 import com.zaaach.citypicker.model.LocatedCity;
 import com.zaaach.citypicker.view.SideIndexBar;
 
-import java.lang.ref.WeakReference;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -246,7 +245,7 @@ public class CityPickerDialogFragment extends AppCompatDialogFragment implements
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
         if ((mAllCities == null || mAllCities.size() == 0) && mOnRequestCitiesListener != null) {
-            mOnRequestCitiesListener.onRequestCities(new MyCityPicker(this));
+            mOnRequestCitiesListener.onRequestCities(this);
         }
     }
 
@@ -386,7 +385,7 @@ public class CityPickerDialogFragment extends AppCompatDialogFragment implements
     @Override
     public void requestLocation() {
         if (mOnRequestLocationListener != null) {
-            mOnRequestLocationListener.onRequestLocation(new MyCityPicker(this));
+            mOnRequestLocationListener.onRequestLocation(this);
         }
     }
 
@@ -437,30 +436,6 @@ public class CityPickerDialogFragment extends AppCompatDialogFragment implements
     public void updateLocation(LocatedCity location, @LocateState.State int state) {
         if (mAdapter != null) {
             mAdapter.updateLocateState(location, state);
-        }
-    }
-
-    public static class MyCityPicker implements CityPicker {
-        private WeakReference<CityPickerDialogFragment> weakFragment;
-
-        public MyCityPicker(CityPickerDialogFragment fragment) {
-            this.weakFragment = new WeakReference<>(fragment);
-        }
-
-        @Override
-        public void updateLocation(LocatedCity location, int state) {
-            CityPickerDialogFragment fragment = weakFragment.get();
-            if (fragment != null) {
-                fragment.updateLocation(location, state);
-            }
-        }
-
-        @Override
-        public void setCities(List<City> cities) {
-            CityPickerDialogFragment fragment = weakFragment.get();
-            if (fragment != null) {
-                fragment.setCities(cities);
-            }
         }
     }
 

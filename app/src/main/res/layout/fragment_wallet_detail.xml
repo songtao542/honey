@@ -25,7 +25,8 @@
         app:tabMaxWidth="0dp"
         app:tabMode="fixed"
         app:tabSelectedBackground="?attr/colorPrimary"
-        app:tabSelectedTextColor="@color/white" />
+        app:tabSelectedTextColor="@color/white"
+        app:tabTextColor="@color/darker" />
 
     <androidx.viewpager.widget.ViewPager
         android:id="@+id/viewPager"
