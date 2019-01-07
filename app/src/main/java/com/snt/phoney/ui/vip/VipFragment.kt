@@ -131,7 +131,7 @@ class VipFragment : BaseFragment() {
             recommend?.let {
                 it.isSelected = true
                 val combo = it.tag as VipCombo
-                payAmount.text = getString(R.string.pay_amount_template, DecimalFormat.getInstance().format(combo.price))
+                payAmount.text = getString(R.string.pay_amount_template, DecimalFormat.getInstance().format(combo.price * combo.number))
             }
             return@let
         }

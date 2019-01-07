@@ -59,7 +59,7 @@ class NewsRecyclerViewAdapter(private val fragment: NewsFragment) : RecyclerView
 
             mView.setOnClickListener {
                 context.startActivity(Intent(context, WebBrowserActivity::class.java).apply {
-                    putExtra(Constants.Extra.TITLE, news.title)
+                    putExtra(Constants.Extra.TITLE, context.getString(R.string.news_detail))
                     putExtra(Constants.Extra.URL, news.url)
                 })
             }

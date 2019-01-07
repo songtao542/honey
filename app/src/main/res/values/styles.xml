@@ -109,7 +109,11 @@
         <item name="actionMenuTextColor">?attr/toolbarTextColor</item>
     </style>
 
-    <style name="AppTheme.Toolbar" parent="Widget.AppCompat.Toolbar">
+    <style name="AppTheme.Toolbar" parent="AppTheme.ToolbarNoNavigation">
+        <item name="navigationIcon">?attr/toolbarNavigationIcon</item>
+    </style>
+
+    <style name="AppTheme.ToolbarNoNavigation" parent="Widget.AppCompat.Toolbar">
         <item name="android:theme">@style/AppTheme.PopupOverlay</item>
         <item name="popupTheme">@style/AppTheme.PopupOverlay</item>
         <item name="android:layout_width">match_parent</item>
@@ -118,8 +122,8 @@
         <item name="titleTextAppearance">@style/TextAppearance.Tab</item>
         <item name="contentInsetLeft">@dimen/actionbar_padding_start</item>
         <item name="contentInsetStart">@dimen/actionbar_padding_start</item>
-        <item name="navigationIcon">?attr/toolbarNavigationIcon</item>
         <item name="titleTextColor">?attr/toolbarTextColor</item>
+        <item name="navigationIcon">@null</item>
     </style>
 
     <style name="AppTheme.ToolbarWithTab" parent="AppTheme.Toolbar">

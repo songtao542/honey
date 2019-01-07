@@ -182,10 +182,6 @@ dependencies {
     implementation deps.androidx.lifecycle_viewmodel_ktx
     implementation deps.androidx.lifecycle_livedata
     implementation deps.androidx.lifecycle_runtime
-    implementation 'androidx.legacy:legacy-support-v4:1.0.0'
-    implementation 'androidx.recyclerview:recyclerview:1.0.0'
-    implementation 'androidx.appcompat:appcompat:1.0.2'
-    implementation 'androidx.constraintlayout:constraintlayout:1.1.3'
     kapt deps.androidx.lifecycle_compiler
     implementation deps.androidx.lifecycle_common_java8
     implementation deps.androidx.lifecycle_reactivestreams
@@ -222,7 +218,7 @@ dependencies {
     implementation deps.androidx.cardview
     implementation deps.androidx.support_v4
     implementation deps.androidx.coordinatorlayout
-    //implementation deps.androidx.recyclerview
+    implementation deps.androidx.recyclerview
     //implementation deps.androidx.recyclerview_selection
     implementation deps.androidx.annotation
     implementation deps.androidx.vectordrawable

@@ -8,8 +8,17 @@
 
     <com.snt.phoney.widget.Toolbar
         android:id="@+id/successToolbar"
-        style="@style/AppTheme.Toolbar"
-        app:title="@string/join_dating_success_title" />
+        style="@style/AppTheme.Toolbar">
+
+        <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/titleTextView"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:gravity="center_vertical"
+            android:minHeight="30dp"
+            android:text="@string/join_dating_success_title"
+            android:textAppearance="@style/TextAppearance.Tab" />
+    </com.snt.phoney.widget.Toolbar>
 
     <androidx.appcompat.widget.AppCompatImageView
         android:layout_width="60dp"

@@ -300,8 +300,7 @@
                     android:background="@drawable/button_primary_circle_corner_selector"
                     android:minHeight="40dp"
                     android:text="@string/join_dating"
-                    android:textColor="@android:color/white"
-                    android:visibility="gone" />
+                    android:textColor="@android:color/white" />
 
                 <!-- 底部添加一个View 是为了解决 NestedScrollView 底部显示不全的bug -->
                 <!--<View-->

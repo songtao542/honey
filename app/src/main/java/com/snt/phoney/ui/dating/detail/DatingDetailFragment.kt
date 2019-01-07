@@ -3,6 +3,7 @@ package com.snt.phoney.ui.dating.detail
 import android.Manifest
 import android.os.Bundle
 import android.os.Handler
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -131,6 +132,8 @@ class DatingDetailFragment : BaseFragment() {
             uuid?.let {
                 viewModel.getDatingDetail(it)
             }
+        } else {
+            activity?.onBackPressed()
         }
     }
 
@@ -160,6 +163,10 @@ class DatingDetailFragment : BaseFragment() {
         } else {
             cupWeightLabel.text = getString(R.string.weight_label)
             cupWeight.text = "${df.format(user.weight)}"
+        }
+
+        if (user.uuid == viewModel.getCurrentUserId()) {
+            joinButton.visibility = View.GONE
         }
 
     }
@@ -213,8 +220,6 @@ class DatingDetailFragment : BaseFragment() {
 
         if (dating.isAttend) {
             joinButton.visibility = View.GONE
-        } else {
-            joinButton.visibility = View.VISIBLE
         }
 
         program.text = dating.program

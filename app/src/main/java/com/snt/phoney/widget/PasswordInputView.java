@@ -226,6 +226,7 @@ public class PasswordInputView extends AppCompatEditText {
     private void init(AttributeSet attrs, int defStyleAttr) {
 
         boxPaint = new Paint();
+        boxPaint.setAntiAlias(true);
         textPaint = new Paint();
         textRect = new Rect();
 
@@ -294,8 +295,9 @@ public class PasswordInputView extends AppCompatEditText {
     @Override
     protected void onDraw(Canvas canvas) {
         super.onDraw(canvas);
-        int width = Math.min(canvas.getHeight(), canvas.getWidth() / length);
+        int width = Math.min(canvas.getHeight() - heightSpace * 2, (canvas.getWidth() - widthSpace * (length + 1)) / length);
 
+        int paddingLeft = (getWidth() - (width * length + widthSpace * (length + 1))) / 2;
         for (int i = 0; i < length; i++) {
             if (i <= text.length() && isFocus) {
                 boxPaint.setColor(boxSelectColor);
@@ -303,7 +305,8 @@ public class PasswordInputView extends AppCompatEditText {
                 boxPaint.setColor(boxNormalColor);
             }
             if (list.size() < length) {
-                RectF rect = new RectF(i * width + widthSpace, heightSpace, i * width + width - widthSpace, width - heightSpace);
+                int left = paddingLeft + widthSpace * (i + 1) + i * width;
+                RectF rect = new RectF(left, heightSpace, left + width, getHeight() - heightSpace);
                 list.add(rect);
                 canvas.drawRoundRect(rect, boxRadius, boxRadius, boxPaint);
             } else {

@@ -30,10 +30,10 @@
     <LinearLayout
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_gravity="center_horizontal"
+        android:layout_gravity="center"
         android:layout_marginTop="50dp"
         android:layout_marginBottom="10dp"
-        android:orientation="horizontal">
+        android:orientation="vertical">
 
         <com.snt.phoney.widget.PasswordInputView
             android:id="@+id/inputPassword"
@@ -41,6 +41,7 @@
             android:layout_height="70dp"
             android:layout_gravity="center"
             android:inputType="number"
+            app:autoCloseKeyBoard="false"
             app:boxSelectColor="?attr/colorPrimary"
             app:length="4" />
 

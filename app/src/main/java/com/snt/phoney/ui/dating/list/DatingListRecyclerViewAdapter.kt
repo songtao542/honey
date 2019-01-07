@@ -10,10 +10,13 @@ import android.view.ViewGroup
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.snt.phoney.R
+import com.snt.phoney.base.Page
 import com.snt.phoney.domain.model.Dating
 import com.snt.phoney.extensions.addFragmentSafely
 import com.snt.phoney.extensions.colorOf
 import com.snt.phoney.extensions.dip
+import com.snt.phoney.extensions.startActivity
+import com.snt.phoney.ui.dating.DatingActivity
 import com.snt.phoney.ui.dating.detail.DatingDetailFragment
 import com.snt.phoney.utils.data.Constants
 import kotlinx.android.synthetic.main.fragment_dating_item.view.*
@@ -102,9 +105,9 @@ class DatingListRecyclerViewAdapter(private val fragment: DatingListFragment, pr
 
                 viewApply.setText(R.string.view_the_dating)
                 viewApply.setOnClickListener {
-                    fragment.addFragmentSafely(DatingDetailFragment.newInstance(Bundle().apply {
+                    fragment.startActivity<DatingActivity>(Page.DATING_DETAIL, Bundle().apply {
                         putString(Constants.Extra.UUID, dating.safeUuid)
-                    }), "dating_detail", true)
+                    })
                 }
             }
 

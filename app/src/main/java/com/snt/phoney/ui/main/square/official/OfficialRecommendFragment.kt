@@ -82,6 +82,7 @@ class OfficialRecommendFragment : BaseFragment() {
             } else {
                 datingContent.showProgress()
                 viewModel.programs.observe(this, Observer { list ->
+                    viewModel.programs.removeObservers(this)
                     datingContent.hideProgress()
                     popupContentFilter(list)
                 })
@@ -120,13 +121,15 @@ class OfficialRecommendFragment : BaseFragment() {
     }
 
     private fun popupContentFilter(menusList: List<DatingProgram>) {
-        val menus = ArrayList<String>(menusList.map { it.name!! })
-        menus.add(0, getString(R.string.all))
-        popupMenu(datingContent, menus) { position ->
-            //filterTime = FilterTime.NONE
-            //filterDistance = FilterDistance.NONE
-            filterContent = if (position == 0) "" else menusList[position].name!!
-            loadDating(true)
+        if (!isHidden) {
+            val menus = ArrayList<String>(menusList.map { it.name!! })
+            menus.add(0, getString(R.string.all))
+            popupMenu(datingContent, menus) { position ->
+                //filterTime = FilterTime.NONE
+                //filterDistance = FilterDistance.NONE
+                filterContent = if (position == 0) "" else menusList[position].name!!
+                loadDating(true)
+            }
         }
     }
 

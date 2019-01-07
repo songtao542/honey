@@ -38,6 +38,7 @@
             <com.snt.phoney.widget.Toolbar
                 android:id="@+id/mineToolbar"
                 style="@style/AppTheme.Toolbar"
+                android:background="@null"
                 android:elevation="0dp"
                 android:padding="0dp"
                 android:tag="mine"

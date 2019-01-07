@@ -212,6 +212,7 @@ class VoiceCallActivity : BaseNoViewModelActivity(), ServiceConnection {
 
         override fun onCallDisconnected(reason: Int) {
             mHandler.post {
+                @Suppress("CascadeIf")
                 if (reason == REASON_REFUSE) {
                     state.setText(R.string.has_refuse_phone)
                     setupCallUI()
@@ -225,6 +226,7 @@ class VoiceCallActivity : BaseNoViewModelActivity(), ServiceConnection {
 
         override fun onCallError(errorCode: Int, errorDesc: String?) {
             mHandler.post {
+                @Suppress("CascadeIf")
                 if (errorCode == ERROR_TIMEOUT) {
                     state.setText(R.string.has_timeout)
                     setupCallUI()

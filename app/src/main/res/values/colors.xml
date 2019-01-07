@@ -17,8 +17,8 @@
     <color name="colorGradientStartColorMale">#c46bd6</color>
     <color name="colorGradientEndColorMale">#3324ae</color>
 
-    <color name="v21_status_bar_color">#33000000</color>
-    <color name="v19_status_bar_color">#33000000</color>
+    <color name="v21_status_bar_color">#38000000</color>
+    <color name="v19_status_bar_color">#38000000</color>
 
     <color name="edittextBorderColor">#94cbd4</color>
     <color name="edittextBorderFocusColor">#7bcfdd</color>

@@ -267,6 +267,7 @@ class VoiceCallService : Service() {
 
     private fun startJMCall() {
         mUser?.username?.let { username ->
+            JMRtcClient.getInstance().initEngine(mJMRtcListenerImpl)
             JMessageClient.getUserInfo(username, object : GetUserInfoCallback() {
                 override fun gotResult(responseCode: Int, responseMessage: String?, user: UserInfo?) {
                     user?.let { user ->
@@ -297,11 +298,9 @@ class VoiceCallService : Service() {
         })
     }
 
-
     private fun enableSpeaker(enable: Boolean) {
         JMRtcClient.getInstance().enableSpeakerphone(enable)
     }
-
 
     val mCallStateListeners = RemoteCallbackList<ICallStateListener>()
 

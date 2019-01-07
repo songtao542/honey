@@ -19,6 +19,10 @@ class DatingDetailViewModel @Inject constructor(private val usecase: DatingUseCa
     val joinSuccess = MutableLiveData<String>()
     val followSuccess = MutableLiveData<Boolean>()
 
+    fun getCurrentUserId(): String {
+        return usecase.getUser()?.safeUuid ?: ""
+    }
+
     fun getDatingDetail(uuid: String) {
         val token = usecase.getAccessToken() ?: return
         usecase.getLocation()

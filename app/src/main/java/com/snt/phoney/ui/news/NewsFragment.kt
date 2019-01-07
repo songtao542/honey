@@ -39,7 +39,7 @@ class NewsFragment : BaseFragment() {
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
         viewModel = ViewModelProviders.of(this, viewModelFactory).get(NewsViewModel::class.java)
-        toolbar.setNavigationOnClickListener { activity?.onBackPressed() }
+        //toolbar.setNavigationOnClickListener { activity?.onBackPressed() }
         titleTextView.setText(R.string.news_title)
 
         list.layoutManager = LinearLayoutManager(requireContext())

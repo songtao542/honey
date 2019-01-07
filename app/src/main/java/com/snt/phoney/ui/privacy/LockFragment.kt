@@ -2,6 +2,7 @@ package com.snt.phoney.ui.privacy
 
 import android.animation.AnimatorSet
 import android.animation.ObjectAnimator
+import android.content.Context
 import android.os.Bundle
 import android.text.Editable
 import android.text.TextUtils
@@ -10,6 +11,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.view.animation.CycleInterpolator
+import android.view.inputmethod.InputMethodManager
 import com.bumptech.glide.Glide
 import com.bumptech.glide.load.resource.drawable.DrawableTransitionOptions
 import com.bumptech.glide.request.RequestOptions
@@ -62,18 +64,38 @@ class LockFragment : BaseFragment() {
             val pwd = inputPassword.password.toString()
             if (!TextUtils.isEmpty(pwd)) {
                 //if (userAccessor.tryUnlock(MD5.md5(pwd))) {
-                if (userAccessor.tryUnlock(MD5.md5(StringBuffer(pwd).reverse().toString()))) {
+                @Suppress("CascadeIf")
+                if (userAccessor.tryUnlock(MD5.md5(pwd))) {
+                    hideSoftInput()
                     startActivity(MainActivity.newIntent(requireContext()))
+                    activity?.finish()
+                } else if (MD5.md5(StringBuffer(pwd).reverse().toString()) == userAccessor.getUser()?.privacyPassword) {
+                    hideSoftInput()
+                    inputPassword.clear()
+                    startActivity<NewsActivity>(Page.NEWS)
                     activity?.finish()
                 } else {
                     inputPassword.clear()
                     playJumpAnimation()
                     stateView.setText(R.string.input_password_error)
-                    startActivity<NewsActivity>(Page.NEWS)
                 }
             }
         }
+        view?.post {
+            showSoftInput()
+        }
+    }
 
+    private fun showSoftInput() {
+        inputPassword.requestFocus()
+        val imm = requireContext().getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
+        imm.toggleSoftInput(InputMethodManager.SHOW_FORCED, InputMethodManager.RESULT_UNCHANGED_SHOWN)
+    }
+
+    private fun hideSoftInput() {
+        inputPassword.requestFocus()
+        val imm = requireContext().getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
+        imm.toggleSoftInput(InputMethodManager.RESULT_UNCHANGED_SHOWN, InputMethodManager.RESULT_UNCHANGED_SHOWN)
     }
 
     private fun playJumpAnimation() {

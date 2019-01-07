@@ -47,7 +47,7 @@ class VoiceAnswerActivity : BaseNoViewModelActivity(), ServiceConnection {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        //setLayoutFullscreen()
+        setLayoutFullscreen()
 
         //Api26
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
