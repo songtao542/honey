@@ -1,8 +1,6 @@
 package com.snt.phoney.ui.picker
 
 import android.os.Bundle
-import android.util.ArrayMap
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -13,7 +11,6 @@ import com.snt.phoney.extensions.colorOf
 import com.snt.phoney.extensions.setDividerColor
 import com.snt.phoney.extensions.setDividerHeight
 import kotlinx.android.synthetic.main.fragment_picker.*
-import java.lang.Exception
 import java.util.*
 
 const val EXTRA_TITLE = "title"
@@ -163,6 +160,7 @@ class PickerFragment : NoInjectBottomDialogFragment() {
             } else {
                 column1View.value = 0
             }
+            showProgress(false)
         }
 
         if (column2Values != null && column2View != null) {
@@ -177,8 +175,8 @@ class PickerFragment : NoInjectBottomDialogFragment() {
             } else {
                 column2View.value = 0
             }
+            showProgress(false)
         }
-        showProgress(false)
     }
 
     private var mIsColumn2SubOfColumn1 = false

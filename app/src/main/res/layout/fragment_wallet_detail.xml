@@ -8,7 +8,7 @@
     android:orientation="vertical"
     tools:context=".ui.wallet.WalletDetailFragment">
 
-    <include layout="@layout/app_toolbar"/>
+    <include layout="@layout/app_toolbar" />
 
     <View
         android:layout_width="match_parent"
@@ -19,6 +19,7 @@
         android:id="@+id/tabLayout"
         android:layout_width="match_parent"
         android:layout_height="40dp"
+        android:background="@color/white"
         app:tabGravity="fill"
         app:tabIndicatorFullWidth="true"
         app:tabMaxWidth="0dp"

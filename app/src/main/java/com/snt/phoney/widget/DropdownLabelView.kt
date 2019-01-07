@@ -4,6 +4,7 @@ import android.animation.ObjectAnimator
 import android.content.Context
 import android.util.AttributeSet
 import android.view.LayoutInflater
+import android.view.View
 import android.widget.ImageView
 import android.widget.LinearLayout
 import com.snt.phoney.R
@@ -68,6 +69,16 @@ class DropdownLabelView : LinearLayout {
     fun collapseIndicator() {
         val rotationAnimator = ObjectAnimator.ofFloat(indicator, "rotation", 180f, 0f)
         rotationAnimator.start()
+    }
+
+    fun showProgress() {
+        indicator.visibility = View.GONE
+        progress.visibility = View.VISIBLE
+    }
+
+    fun hideProgress() {
+        indicator.visibility = View.VISIBLE
+        progress.visibility = View.GONE
     }
 
 }

@@ -34,8 +34,8 @@
             android:layout_height="80dp"
             android:background="@drawable/user_info_circle_border"
             android:padding="4dp"
-            android:scaleType="centerInside"
-            app:srcCompat="@drawable/ic_head_placeholder_black" />
+            android:scaleType="centerCrop"
+            app:srcCompat="@drawable/ic_head_placeholder" />
 
         <com.snt.phoney.widget.SquareImageView
             android:id="@+id/follow"

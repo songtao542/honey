@@ -9,5 +9,14 @@
         <item name="android:windowTranslucentStatus">true</item>
     </style>
 
+    <!-- 浅色模式 -->
+    <style name="AppTheme.Light" parent="AppLightTheme">
+        <item name="mainNavigationTextColor">@color/navigation_text_color_male_selector</item>
+
+        <item name="statusBarBackground">@color/v19_status_bar_color</item>
+        <item name="toolbarBackground">@drawable/v19_status_bar_bg</item>
+        <item name="toolbarTextColor">@color/black</item>
+        <item name="toolbarNavigationIcon">@drawable/ic_back_black</item>
+    </style>
 
 </resources>

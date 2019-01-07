@@ -19,9 +19,6 @@ import com.snt.phoney.utils.Picker
 import com.zaaach.citypicker.model.City
 import kotlinx.android.synthetic.main.app_toolbar.*
 import kotlinx.android.synthetic.main.fragment_edit_user.*
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.GlobalScope
-import kotlinx.coroutines.launch
 
 class EditUserFragment : BaseFragment() {
 
@@ -76,9 +73,14 @@ class EditUserFragment : BaseFragment() {
 
         cityButton.setOnClickListener {
             Picker.showCityPicker(activity, { cityPicker ->
-                viewModel.cities.observe(this@EditUserFragment, Observer { cities ->
+                if (viewModel.cities.value != null) {
+                    val cities = viewModel.cities.value
                     cityPicker.setCities(cities)
-                })
+                } else {
+                    viewModel.cities.observe(this@EditUserFragment, Observer { cities ->
+                        cityPicker.setCities(cities)
+                    })
+                }
             }) { cities ->
                 if (cities != null && cities.isNotEmpty()) {
                     selectedCities = cities

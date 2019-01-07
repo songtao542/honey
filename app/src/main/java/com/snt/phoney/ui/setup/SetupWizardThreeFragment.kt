@@ -61,9 +61,14 @@ class SetupWizardThreeFragment : BaseFragment() {
 
         cityButton.setOnClickListener {
             Picker.showCityPicker(activity, { cityPicker ->
-                viewModel.cities.observe(this@SetupWizardThreeFragment, Observer { cities ->
+                if (viewModel.cities.value != null) {
+                    val cities = viewModel.cities.value!!
                     cityPicker.setCities(cities)
-                })
+                } else {
+                    viewModel.cities.observe(this@SetupWizardThreeFragment, Observer { cities ->
+                        cityPicker.setCities(cities)
+                    })
+                }
             }) { cities ->
                 if (cities.isNotEmpty()) {
                     selectedCities = cities
@@ -77,12 +82,20 @@ class SetupWizardThreeFragment : BaseFragment() {
         }
         purposeButton.setOnClickListener {
             Picker.showPicker(activity, getString(R.string.select_purpose), selectedPurposeIndex, provider = { picker ->
-                viewModel.purposes.observe(this, Observer { purposes ->
+                if (viewModel.purposes.value != null) {
+                    val purposes = viewModel.purposes.value!!
                     val purposeNames = Array(purposes.size) { index ->
                         purposes[index].name!!
                     }
                     picker.setColumn(purposeNames)
-                })
+                } else {
+                    viewModel.purposes.observe(this, Observer { purposes ->
+                        val purposeNames = Array(purposes.size) { index ->
+                            purposes[index].name!!
+                        }
+                        picker.setColumn(purposeNames)
+                    })
+                }
             }, handler = { value1, _ ->
                 selectedPurposeIndex = value1
                 selectedPurpose = viewModel.purposes.value?.get(value1)
@@ -91,12 +104,20 @@ class SetupWizardThreeFragment : BaseFragment() {
         }
         jobButton.setOnClickListener {
             Picker.showPicker(activity, getString(R.string.select_job), selectedJobIndex, provider = { picker ->
-                viewModel.careers.observe(this, Observer { careers ->
+                if (viewModel.careers.value != null) {
+                    val careers = viewModel.careers.value!!
                     val careerNames = Array(careers.size) { index ->
                         careers[index].name!!
                     }
                     picker.setColumn(careerNames)
-                })
+                } else {
+                    viewModel.careers.observe(this, Observer { careers ->
+                        val careerNames = Array(careers.size) { index ->
+                            careers[index].name!!
+                        }
+                        picker.setColumn(careerNames)
+                    })
+                }
             }, handler = { value1, _ ->
                 selectedJobIndex = value1
                 selectedJob = viewModel.careers.value?.get(value1)

@@ -35,7 +35,7 @@
             android:background="@drawable/user_info_circle_border"
             android:padding="4dp"
             android:scaleType="centerInside"
-            app:srcCompat="@drawable/ic_head_placeholder_black" />
+            app:srcCompat="@drawable/ic_head_placeholder" />
 
         <com.snt.phoney.widget.SquareImageView
             android:id="@+id/follow"

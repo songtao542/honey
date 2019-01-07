@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layer-list xmlns:android="http://schemas.android.com/apk/res/android">
+    <item android:height="24dp">
+        <shape android:shape="rectangle">
+            <gradient
+                android:angle="270"
+                android:centerX="0.5"
+                android:centerY="0.01"
+                android:endColor="#ffffffff"
+                android:startColor="@color/v21_status_bar_color"></gradient>
+        </shape>
+    </item>
+
+    <item android:top="24dp">
+        <shape>
+            <solid android:color="@color/white" />
+        </shape>
+    </item>
+
+
+</layer-list>
+
+

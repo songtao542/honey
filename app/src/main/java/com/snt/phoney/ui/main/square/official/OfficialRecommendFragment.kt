@@ -34,7 +34,7 @@ class OfficialRecommendFragment : BaseFragment() {
     private var filterTime: FilterTime = FilterTime.ALL
     private var filterDistance: FilterDistance = FilterDistance.NONE
     //private var filterContent: FilterContent = FilterContent.NONE
-    private var filterContent: Int = -1
+    private var filterContent: String = ""
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         return inflater.inflate(R.layout.fragment_official_recommend_list, container, false)
@@ -80,7 +80,9 @@ class OfficialRecommendFragment : BaseFragment() {
             if (viewModel.programs.value != null) {
                 popupContentFilter(viewModel.programs.value!!)
             } else {
+                datingContent.showProgress()
                 viewModel.programs.observe(this, Observer { list ->
+                    datingContent.hideProgress()
                     popupContentFilter(list)
                 })
             }
@@ -118,10 +120,12 @@ class OfficialRecommendFragment : BaseFragment() {
     }
 
     private fun popupContentFilter(menusList: List<DatingProgram>) {
-        popupMenu(datingContent, menusList.map { it.name!! }) { position ->
+        val menus = ArrayList<String>(menusList.map { it.name!! })
+        menus.add(0, getString(R.string.all))
+        popupMenu(datingContent, menus) { position ->
             //filterTime = FilterTime.NONE
             //filterDistance = FilterDistance.NONE
-            filterContent = menusList[position].id
+            filterContent = if (position == 0) "" else menusList[position].name!!
             loadDating(true)
         }
     }
@@ -159,9 +163,8 @@ class OfficialRecommendFragment : BaseFragment() {
         }
         val timeFilter = filterTime.toString()
         val distanceFilter = filterDistance.toString()
-        val contentFilter = if (filterContent == -1) "" else filterContent.toString()
+        val contentFilter = filterContent
         viewModel.listRecommendDating(refresh, timeFilter, distanceFilter, contentFilter, loadMore)
-
     }
 
 //    private fun expandFilter(dropdownLabel: DropdownLabelView, menus: Int) {

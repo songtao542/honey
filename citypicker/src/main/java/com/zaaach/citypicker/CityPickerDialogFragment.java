@@ -10,7 +10,6 @@ import android.text.Editable;
 import android.text.TextUtils;
 import android.text.TextWatcher;
 import android.util.DisplayMetrics;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -377,7 +376,9 @@ public class CityPickerDialogFragment extends AppCompatDialogFragment implements
         dismiss();
         if (mOnResultListener != null) {
             ArrayList<City> result = new ArrayList<>();
-            result.add(data);
+            if (data != null) {
+                result.add(data);
+            }
             mOnResultListener.onResult(result);
         }
     }
