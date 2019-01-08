@@ -8,6 +8,7 @@ import com.snt.phoney.base.BaseActivity
 import com.snt.phoney.domain.model.User
 import com.snt.phoney.extensions.addFragmentSafely
 import com.snt.phoney.extensions.colorOf
+import com.snt.phoney.extensions.setLayoutFullscreen
 import com.snt.phoney.extensions.setStatusBarColor
 
 const val EXTRA_USER = "user"
@@ -20,7 +21,7 @@ class SetupWizardActivity : BaseActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        //setLayoutFullscreen()
+        setLayoutFullscreen()
         setContentView(R.layout.activity_signup)
         setStatusBarColor(colorOf(android.R.color.white))
         val user = intent?.getParcelableExtra<User>(EXTRA_USER)

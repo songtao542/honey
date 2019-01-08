@@ -345,7 +345,10 @@ class MineFragment : BaseFragment(), OnSettingItemClickListener, OnSignOutClickL
 
     private fun setUser(user: User?) {
         if (user == null) return
-        Glide.with(this).load(user.avatar).apply(RequestOptions().circleCrop()).transition(DrawableTransitionOptions.withCrossFade()).into(head)
+        Glide.with(this).load(user.avatar)
+                .apply(RequestOptions().circleCrop().placeholder(R.drawable.ic_head_placeholder))
+                .transition(DrawableTransitionOptions.withCrossFade())
+                .into(head)
         username.text = user.nickname
     }
 

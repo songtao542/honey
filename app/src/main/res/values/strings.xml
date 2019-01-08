@@ -430,4 +430,5 @@
     <string name="news_title">新闻资讯</string>
     <string name="all">所有</string>
     <string name="news_detail">资讯详情</string>
+    <string name="click_to_change">点击更换</string>
 </resources>

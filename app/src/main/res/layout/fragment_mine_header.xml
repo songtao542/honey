@@ -16,12 +16,27 @@
         android:paddingRight="20dp"
         android:paddingBottom="30dp">
 
-        <androidx.appcompat.widget.AppCompatImageView
-            android:id="@+id/head"
-            android:layout_width="90dp"
-            android:layout_height="90dp"
-            android:scaleType="centerCrop"
-            app:srcCompat="@drawable/ic_head_placeholder" />
+        <FrameLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content">
+
+            <androidx.appcompat.widget.AppCompatImageView
+                android:id="@+id/head"
+                android:layout_width="90dp"
+                android:layout_height="90dp"
+                android:scaleType="centerCrop"
+                app:srcCompat="@drawable/ic_head_placeholder" />
+
+            <androidx.appcompat.widget.AppCompatTextView
+                android:layout_width="wrap_content"
+                android:layout_height="30dp"
+                android:layout_gravity="bottom|center_horizontal"
+                android:gravity="center"
+                android:text="@string/click_to_change"
+                android:textColor="@color/dark_gray"
+                android:textSize="@dimen/textsize_smallest"
+                android:textStyle="bold" />
+        </FrameLayout>
 
         <RelativeLayout
             android:layout_width="0dp"

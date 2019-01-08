@@ -5,7 +5,6 @@ import android.app.Activity
 import android.content.Intent
 import android.os.Bundle
 import android.text.TextUtils
-import android.util.Log
 import android.util.TypedValue
 import android.view.LayoutInflater
 import android.view.View
@@ -169,7 +168,10 @@ class UserInfoFragment : BaseFragment() {
         if (user == null) {
             return
         }
-        Glide.with(this).load(user.avatar).apply(RequestOptions().circleCrop()).transition(DrawableTransitionOptions.withCrossFade()).into(head)
+        Glide.with(this).load(user.avatar)
+                .apply(RequestOptions().circleCrop().placeholder(R.drawable.ic_head_placeholder).error(R.drawable.ic_head_placeholder))
+                .transition(DrawableTransitionOptions.withCrossFade())
+                .into(head)
         titleView.text = user.nickname
         address.text = user.city
         userAge.text = getString(R.string.age_value_template, user.age)

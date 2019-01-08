@@ -3,7 +3,6 @@ package com.snt.phoney.ui.dating.detail
 import android.Manifest
 import android.os.Bundle
 import android.os.Handler
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -140,7 +139,10 @@ class DatingDetailFragment : BaseFragment() {
     private fun setUser(user: User) {
         toolbarTitle.text = user.nickname
 
-        Glide.with(this).load(user.avatar).apply(RequestOptions().circleCrop()).transition(DrawableTransitionOptions.withCrossFade()).into(head)
+        Glide.with(this).load(user.avatar)
+                .apply(RequestOptions().circleCrop().placeholder(R.drawable.ic_head_placeholder).error(R.drawable.ic_head_placeholder))
+                .transition(DrawableTransitionOptions.withCrossFade())
+                .into(head)
         val df = DecimalFormat.getInstance()
         //address.text = user.city
         userAge.text = getString(R.string.age_value_template, user.age)

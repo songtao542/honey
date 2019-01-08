@@ -85,8 +85,8 @@ android {
             //shrinkResources true
             //minifyEnabled true
             //runProguard true
-            multiDexKeepFile file('multidex-config.txt')
-            multiDexKeepProguard file('multidex-config.pro')
+            //multiDexKeepFile file('multidex-config.txt')
+            //multiDexKeepProguard file('multidex-config.pro')
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
             signingConfig signingConfigs.release
         }

@@ -53,8 +53,6 @@ class VipFragment : BaseFragment() {
             setVipCombos(it)
         })
 
-        viewModel.listVipCombo()
-
         viewModel.error.observe(this, Observer {
             snackbar(it)
         })
@@ -87,6 +85,8 @@ class VipFragment : BaseFragment() {
             finish()
         }
 
+        viewModel.listVipCombo()
+
         checkAndRequestPermission(*permissions)
     }
 
@@ -103,8 +103,8 @@ class VipFragment : BaseFragment() {
 
     override fun onRequestPermissionsResult(requestCode: Int, permissions: Array<out String>, grantResults: IntArray) {
         super.onRequestPermissionsResult(requestCode, permissions, grantResults)
-        if (requireContext().checkAppPermission(*permissions)) {
-
+        if (!requireContext().checkAppPermission(*permissions)) {
+            activity?.onBackPressed()
         }
     }
 
@@ -125,7 +125,7 @@ class VipFragment : BaseFragment() {
                     clearCheck(it)
                     it.isSelected = !it.isSelected
                     val combo = it.tag as VipCombo
-                    payAmount.text = getString(R.string.pay_amount_template, DecimalFormat.getInstance().format(combo.price))
+                    payAmount.text = getString(R.string.pay_amount_template, DecimalFormat.getInstance().format(combo.price * combo.number))
                 }
             }
             recommend?.let {

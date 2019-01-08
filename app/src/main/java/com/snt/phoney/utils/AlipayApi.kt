@@ -2,6 +2,7 @@ package com.snt.phoney.utils
 
 import android.app.Activity
 import android.text.TextUtils
+import android.util.Log
 import com.alipay.sdk.app.AuthTask
 import com.alipay.sdk.app.PayTask
 import kotlinx.coroutines.*
@@ -19,7 +20,7 @@ object AlipayApi {
                 delay(2000)
                 val alipay = PayTask(activity)
                 val result = alipay.payV2(orderInfo, true)
-
+                Log.d("TTTT", "rrrrrrrrrrr result=$result")
                 val payResult = PayResult(result)
                 /**
                  * 对于支付结果，请商户依赖服务端的异步通知结果。同步通知结果，仅作为支付结束的通知。

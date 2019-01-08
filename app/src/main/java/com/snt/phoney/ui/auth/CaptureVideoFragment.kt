@@ -34,11 +34,13 @@ import android.media.MediaRecorder
 import android.os.Bundle
 import android.os.Handler
 import android.os.HandlerThread
+import android.os.Message
 import android.text.TextUtils
 import android.util.Log
 import android.util.Size
 import android.util.SparseIntArray
 import android.view.*
+import android.widget.TextView
 import android.widget.Toast
 import android.widget.Toast.LENGTH_SHORT
 import androidx.core.app.ActivityCompat
@@ -47,7 +49,6 @@ import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentActivity
 import com.google.android.material.floatingactionbutton.FloatingActionButton
 import com.snt.phoney.R
-import kotlinx.android.synthetic.main.fragment_capture_video.*
 import java.io.IOException
 import java.util.Collections
 import java.util.concurrent.Semaphore
@@ -55,7 +56,7 @@ import java.util.concurrent.TimeUnit
 import kotlin.collections.ArrayList
 
 @Suppress("PrivatePropertyName")
-class CaptureVideoFragment : Fragment(), ActivityCompat.OnRequestPermissionsResultCallback {
+class CaptureVideoFragment : Fragment(), ActivityCompat.OnRequestPermissionsResultCallback, Handler.Callback {
 
     companion object {
         fun newInstance(): CaptureVideoFragment = CaptureVideoFragment()
@@ -193,17 +194,48 @@ class CaptureVideoFragment : Fragment(), ActivityCompat.OnRequestPermissionsResu
 
     private var mediaRecorder: MediaRecorder? = null
 
+    private lateinit var startRecord: FloatingActionButton
+    private lateinit var recordTime: TextView
+
+    private var handler = Handler(this)
+    private var time = 10
+
+    private val MESSAGE_UPDATE_DURATION = 1
+
+    override fun handleMessage(msg: Message?): Boolean {
+        when (msg?.what) {
+            MESSAGE_UPDATE_DURATION -> {
+                if (time >= 0) {
+                    recordTime.text = String.format("%02d", time)
+                }
+                time--
+                handler.sendEmptyMessageDelayed(MESSAGE_UPDATE_DURATION, 800)
+            }
+        }
+        return true
+    }
+
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         return inflater.inflate(R.layout.fragment_capture_video, container, false)
     }
 
+    @SuppressLint("RestrictedApi")
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        startRecord = view.findViewById(R.id.startRecord)
+        recordTime = view.findViewById(R.id.recordTime)
         textureView = view.findViewById(R.id.textureView)
         startRecord.setOnClickListener {
             if (checkAndRequestPermission()) {
+                startRecord.visibility = View.GONE
+                recordTime.visibility = View.VISIBLE
                 startRecordingVideo()
             }
         }
+    }
+
+    override fun onDestroyView() {
+        handler.removeCallbacksAndMessages(null)
+        super.onDestroyView()
     }
 
     override fun onActivityCreated(savedInstanceState: Bundle?) {
@@ -490,7 +522,7 @@ class CaptureVideoFragment : Fragment(), ActivityCompat.OnRequestPermissionsResu
             //setAudioEncoder(MediaRecorder.AudioEncoder.AAC)
             //setVideoSize(videoSize.width, videoSize.height)
             setOutputFile(videoSavePath)
-            setMaxDuration(10000)
+            setMaxDuration(8000)
             setOnInfoListener { _, what, _ ->
                 when (what) {
                     MediaRecorder.MEDIA_RECORDER_INFO_MAX_DURATION_REACHED -> {
@@ -499,6 +531,7 @@ class CaptureVideoFragment : Fragment(), ActivityCompat.OnRequestPermissionsResu
                     }
                 }
             }
+
             setProfile(CamcorderProfile.get(CamcorderProfile.QUALITY_480P))
             prepare()
         }
@@ -559,6 +592,7 @@ class CaptureVideoFragment : Fragment(), ActivityCompat.OnRequestPermissionsResu
                             updatePreview()
                             activity?.runOnUiThread {
                                 isRecordingVideo = true
+                                handler.sendEmptyMessage(MESSAGE_UPDATE_DURATION)
                                 mediaRecorder?.start()
                             }
                         }
