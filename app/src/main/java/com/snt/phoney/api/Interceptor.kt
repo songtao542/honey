@@ -9,7 +9,6 @@ import com.snt.phoney.extensions.TAG
 import com.snt.phoney.extensions.sendBroadcast
 import com.snt.phoney.utils.data.MD5.md5
 import okhttp3.*
-import java.lang.Exception
 import java.net.URLEncoder
 import java.nio.charset.Charset
 import java.util.*
@@ -72,12 +71,17 @@ fun Interceptor.getParameters(requestBody: RequestBody?): TreeMap<String, String
 @Suppress("unused")
 open class SignInterceptor : Interceptor {
     override fun intercept(chain: Interceptor.Chain): okhttp3.Response {
-        val request = chain.request()
-        val method = request.method()
-        return when (method) {
-            "GET" -> chain.proceed(interceptGet(request))
-            "POST" -> chain.proceed(interceptPost(request))
-            else -> chain.proceed(request)
+        return try {
+            val request = chain.request()
+            val method = request.method()
+            when (method) {
+                "GET" -> chain.proceed(interceptGet(request))
+                "POST" -> chain.proceed(interceptPost(request))
+                else -> chain.proceed(request)
+            }
+        } catch (e: Exception) {
+            Log.e("SignInterceptor", "error:${e.message}", e)
+            chain.proceed(chain.request())
         }
     }
 
@@ -144,12 +148,17 @@ open class SignInterceptor : Interceptor {
 
 class NullOrEmptyInterceptor : Interceptor {
     override fun intercept(chain: Interceptor.Chain): okhttp3.Response {
-        val request = chain.request()
-        val method = request.method()
-        return when (method) {
-            "GET" -> chain.proceed(interceptGet(request))
-            "POST" -> chain.proceed(interceptPost(request))
-            else -> chain.proceed(request)
+        return try {
+            val request = chain.request()
+            val method = request.method()
+            when (method) {
+                "GET" -> chain.proceed(interceptGet(request))
+                "POST" -> chain.proceed(interceptPost(request))
+                else -> chain.proceed(request)
+            }
+        } catch (e: Exception) {
+            Log.e("NullOrEmptyInterceptor", "error:${e.message}", e)
+            chain.proceed(chain.request())
         }
     }
 
@@ -209,76 +218,86 @@ class TimeoutInterceptor : Interceptor {
 
     @Suppress("NULLABILITY_MISMATCH_BASED_ON_JAVA_ANNOTATIONS")
     override fun intercept(chain: Interceptor.Chain): Response {
-        val request = chain.request()
+        try {
+            val request = chain.request()
 
-        var connectTimeout = chain.connectTimeoutMillis()
-        var readTimeout = chain.readTimeoutMillis()
-        var writeTimeout = chain.writeTimeoutMillis()
+            var connectTimeout = chain.connectTimeoutMillis()
+            var readTimeout = chain.readTimeoutMillis()
+            var writeTimeout = chain.writeTimeoutMillis()
 
-        if (BuildConfig.DEBUG) {
-            Log.d("TimeoutInterceptor", "original connectTimeout=$connectTimeout")
-            Log.d("TimeoutInterceptor", "original readTimeout=$readTimeout")
-            Log.d("TimeoutInterceptor", "original writeTimeout=$writeTimeout")
-        }
-
-        //@Headers("Timeout: 60000")
-        val timeout = request.header("Timeout")
-        if (isNotEmpty(timeout)) {
-
-            val time = Integer.valueOf(timeout)
-            connectTimeout = time
-            readTimeout = time
-            writeTimeout = time
-        } else {
-            // @Headers("Connect-Timeout: 60000", "Read-Timeout: 60000", "Write-Timeout: 60000")
-            val connectTime = request.header("Connect-Timeout")
-            val readTime = request.header("Read-Timeout")
-            val writeTime = request.header("Write-Timeout")
-            if (isNotEmpty(connectTime)) {
-                connectTimeout = Integer.valueOf(connectTime)
+            if (BuildConfig.DEBUG) {
+                Log.d("TimeoutInterceptor", "original connectTimeout=$connectTimeout")
+                Log.d("TimeoutInterceptor", "original readTimeout=$readTimeout")
+                Log.d("TimeoutInterceptor", "original writeTimeout=$writeTimeout")
             }
-            if (isNotEmpty(readTime)) {
-                readTimeout = Integer.valueOf(readTime)
+
+            //@Headers("Timeout: 60000")
+            val timeout = request.header("Timeout")
+            if (isNotEmpty(timeout)) {
+
+                val time = Integer.valueOf(timeout)
+                connectTimeout = time
+                readTimeout = time
+                writeTimeout = time
+            } else {
+                // @Headers("Connect-Timeout: 60000", "Read-Timeout: 60000", "Write-Timeout: 60000")
+                val connectTime = request.header("Connect-Timeout")
+                val readTime = request.header("Read-Timeout")
+                val writeTime = request.header("Write-Timeout")
+                if (isNotEmpty(connectTime)) {
+                    connectTimeout = Integer.valueOf(connectTime)
+                }
+                if (isNotEmpty(readTime)) {
+                    readTimeout = Integer.valueOf(readTime)
+                }
+                if (isNotEmpty(writeTime)) {
+                    writeTimeout = Integer.valueOf(writeTime)
+                }
             }
-            if (isNotEmpty(writeTime)) {
-                writeTimeout = Integer.valueOf(writeTime)
+            if (BuildConfig.DEBUG) {
+                Log.d("TimeoutInterceptor", "config connectTimeout=$connectTimeout")
+                Log.d("TimeoutInterceptor", "config readTimeout=$readTimeout")
+                Log.d("TimeoutInterceptor", "config writeTimeout=$writeTimeout")
             }
+            return chain
+                    .withConnectTimeout(connectTimeout, TimeUnit.MILLISECONDS)
+                    .withReadTimeout(readTimeout, TimeUnit.MILLISECONDS)
+                    .withWriteTimeout(writeTimeout, TimeUnit.MILLISECONDS)
+                    .proceed(request)
+        } catch (e: Exception) {
+            Log.e("TimeoutInterceptor", "error:${e.message}", e)
+            return chain.proceed(chain.request())
         }
-        if (BuildConfig.DEBUG) {
-            Log.d("TimeoutInterceptor", "config connectTimeout=$connectTimeout")
-            Log.d("TimeoutInterceptor", "config readTimeout=$readTimeout")
-            Log.d("TimeoutInterceptor", "config writeTimeout=$writeTimeout")
-        }
-        return chain
-                .withConnectTimeout(connectTimeout, TimeUnit.MILLISECONDS)
-                .withReadTimeout(readTimeout, TimeUnit.MILLISECONDS)
-                .withWriteTimeout(writeTimeout, TimeUnit.MILLISECONDS)
-                .proceed(request)
     }
 
 }
 
 class LoginStateInterceptor(private val application: Application, private val gson: Gson) : Interceptor {
     override fun intercept(chain: Interceptor.Chain): Response {
-        val originRequest = chain.request()
-        val response = chain.proceed(originRequest)
-        val source = response.body()?.source()
-        source?.request(Long.MAX_VALUE)
-        val buffer = source?.buffer()
-        val result = buffer?.clone()?.readString(UTF8)
-        result?.let { result ->
-            try {
-                val jsonObject = gson.fromJson<JsonObject>(result, JsonObject::class.java)
-                val code = jsonObject.getAsJsonObject("header").get("code").asInt
-                if (code == 202) {
-                    application.sendBroadcast(ACTION_LOGIN_STATE_INVALID)
+        try {
+            val originRequest = chain.request()
+            val response = chain.proceed(originRequest)
+            val source = response.body()?.source()
+            source?.request(Long.MAX_VALUE)
+            val buffer = source?.buffer()
+            val result = buffer?.clone()?.readString(UTF8)
+            result?.let { result ->
+                try {
+                    val jsonObject = gson.fromJson<JsonObject>(result, JsonObject::class.java)
+                    val code = jsonObject.getAsJsonObject("header").get("code").asInt
+                    if (code == 202) {
+                        application.sendBroadcast(ACTION_LOGIN_STATE_INVALID)
+                    }
+                } catch (e: Exception) {
+                    Log.d("LoginStateInterceptor", "error:${e.message}", e)
                 }
-            } catch (e: Exception) {
-                Log.d("LoginStateInterceptor", "error:${e.message}", e)
+                return@let
             }
-            return@let
+            return response
+        } catch (e: Exception) {
+            Log.e("LoginStateInterceptor", "error:${e.message}", e)
+            return chain.proceed(chain.request())
         }
-        return response
     }
 
 }

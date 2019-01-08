@@ -2,7 +2,6 @@ package com.snt.phoney.ui.user
 
 import android.os.Bundle
 import android.text.TextUtils
-import android.util.Log
 import android.view.*
 import androidx.databinding.DataBindingUtil
 import androidx.lifecycle.Observer
@@ -14,6 +13,7 @@ import com.snt.phoney.domain.model.CityPickerConverter
 import com.snt.phoney.domain.model.Sex
 import com.snt.phoney.domain.model.User
 import com.snt.phoney.extensions.autoCleared
+import com.snt.phoney.extensions.setSoftInputMode
 import com.snt.phoney.extensions.snackbar
 import com.snt.phoney.utils.Picker
 import com.zaaach.citypicker.model.City
@@ -61,6 +61,7 @@ class EditUserFragment : BaseFragment() {
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
         enableOptionsMenu(toolbar, false, R.menu.edit_user)
+        setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_ADJUST_RESIZE)
         viewModel = ViewModelProviders.of(this, viewModelFactory).get(EditUserViewModel::class.java)
         binding.user = viewModel.user
 

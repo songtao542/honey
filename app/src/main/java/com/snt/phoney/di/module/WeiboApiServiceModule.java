@@ -3,7 +3,6 @@ package com.snt.phoney.di.module;
 import com.google.gson.Gson;
 import com.snt.phoney.BuildConfig;
 import com.snt.phoney.api.WeiboApi;
-import com.snt.phoney.utils.adapter.LiveDataCallAdapterFactory;
 import com.snt.phoney.utils.data.Constants;
 
 import javax.inject.Named;
@@ -11,9 +10,7 @@ import javax.inject.Singleton;
 
 import dagger.Module;
 import dagger.Provides;
-import okhttp3.HttpUrl;
 import okhttp3.OkHttpClient;
-import okhttp3.Request;
 import okhttp3.logging.HttpLoggingInterceptor;
 import retrofit2.Retrofit;
 import retrofit2.adapter.rxjava2.RxJava2CallAdapterFactory;
@@ -30,7 +27,7 @@ public class WeiboApiServiceModule {
                 .baseUrl(Constants.Weibo.BASE_URL)
                 .addConverterFactory(GsonConverterFactory.create(gson))
                 .addCallAdapterFactory(RxJava2CallAdapterFactory.create())
-                .addCallAdapterFactory(new LiveDataCallAdapterFactory())
+                //.addCallAdapterFactory(new LiveDataCallAdapterFactory())
                 .client(getOkHttpClientBuilder().build())
                 .build();
     }
@@ -43,14 +40,6 @@ public class WeiboApiServiceModule {
             httpLoggingInterceptor.setLevel(HttpLoggingInterceptor.Level.BODY);
             okHttpBuilder.addInterceptor(httpLoggingInterceptor);
         }
-
-        okHttpBuilder.addInterceptor(chain -> {
-            Request request = chain.request();
-            HttpUrl url = request.url().newBuilder()
-                    //.addQueryParameter(Constants.Api.APP_ID, Constants.Api.APP_ID_VALUE)
-                    .build();
-            return chain.proceed(request.newBuilder().url(url).build());
-        });
         return okHttpBuilder;
     }
 

@@ -9,14 +9,13 @@
     android:paddingTop="?attr/actionBarSize"
     tools:context=".ui.privacy.CreateLockFragment">
 
-
     <androidx.appcompat.widget.AppCompatImageView
         android:id="@+id/icon"
         android:layout_width="80dp"
         android:layout_height="80dp"
         android:layout_gravity="center_horizontal"
         android:layout_marginTop="50dp"
-        app:srcCompat="@drawable/ic_head_placeholder_black" />
+        app:srcCompat="@drawable/ic_head_placeholder" />
 
     <androidx.appcompat.widget.AppCompatTextView
         android:id="@+id/name"

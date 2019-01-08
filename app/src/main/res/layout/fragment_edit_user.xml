@@ -22,260 +22,270 @@
 
         <include layout="@layout/app_toolbar" />
 
-        <LinearLayout
+        <ScrollView
             android:layout_width="match_parent"
-            android:layout_height="@dimen/edit_user_item_height"
-            android:background="@drawable/underline_gray"
-            android:orientation="horizontal"
-            android:paddingLeft="@dimen/edit_user_padding"
-            android:paddingRight="@dimen/edit_user_padding">
+            android:layout_height="wrap_content">
 
-            <androidx.appcompat.widget.AppCompatTextView
-                android:layout_width="wrap_content"
-                android:layout_height="match_parent"
-                android:gravity="center"
-                android:text="@string/nickname"
-                android:textColor="@color/edit_user_item_label"
-                android:textSize="@dimen/textsize_normal" />
-
-            <EditText
-                android:id="@+id/nickname"
-                android:layout_width="wrap_content"
-                android:layout_height="match_parent"
-                android:layout_weight="1"
-                android:background="@null"
-                android:gravity="center_vertical|right"
-                android:text="@{user.nickname}"
-                android:textColor="@color/edit_user_item_value"
-                android:textSize="@dimen/textsize_normal" />
-
-        </LinearLayout>
-
-
-        <LinearLayout
-            android:id="@+id/cityButton"
-            android:layout_width="match_parent"
-            android:layout_height="@dimen/edit_user_item_height"
-            android:background="@drawable/underline_gray"
-            android:orientation="horizontal"
-            android:paddingLeft="@dimen/edit_user_padding"
-            android:paddingRight="@dimen/edit_user_padding">
-
-            <androidx.appcompat.widget.AppCompatTextView
-                android:layout_width="wrap_content"
-                android:layout_height="match_parent"
-                android:gravity="center"
-                android:text="@string/always_stay_city_label"
-                android:textColor="@color/edit_user_item_label"
-                android:textSize="@dimen/textsize_normal" />
-
-            <androidx.appcompat.widget.AppCompatTextView
-                android:id="@+id/city"
-                android:layout_width="wrap_content"
-                android:layout_height="match_parent"
-                android:layout_weight="1"
-                android:gravity="center_vertical|right"
-                android:text="@{user.cityNamesString}"
-                android:textColor="@color/edit_user_item_value"
-                android:textSize="@dimen/textsize_normal" />
-
-        </LinearLayout>
-
-
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="@dimen/edit_user_item_height"
-            android:background="@drawable/underline_gray"
-            android:orientation="horizontal"
-            android:paddingLeft="@dimen/edit_user_padding"
-            android:paddingRight="@dimen/edit_user_padding">
-
-            <androidx.appcompat.widget.AppCompatTextView
-                android:layout_width="wrap_content"
-                android:layout_height="match_parent"
-                android:gravity="center"
-                android:text="@string/wechat_number_label"
-                android:textColor="@color/edit_user_item_label"
-                android:textSize="@dimen/textsize_normal" />
-
-            <EditText
-                android:id="@+id/wechatAccount"
-                android:layout_width="wrap_content"
-                android:layout_height="match_parent"
-                android:layout_weight="1"
-                android:background="@null"
-                android:gravity="center_vertical|right"
-                android:hint="@string/input_wechat_account"
-                android:text="@{user.wechatAccount}"
-                android:textColor="@color/edit_user_item_value"
-                android:textSize="@dimen/textsize_normal" />
-
-        </LinearLayout>
-
-        <View
-            android:layout_width="match_parent"
-            android:layout_height="8dp"
-            android:background="@color/light_gray" />
-
-        <LinearLayout
-            android:id="@+id/voicePriceButton"
-            android:layout_width="match_parent"
-            android:layout_height="@dimen/edit_user_item_height"
-            android:background="@drawable/underline_gray"
-            android:orientation="horizontal"
-            android:paddingLeft="@dimen/edit_user_padding"
-            android:paddingRight="@dimen/edit_user_padding">
-
-            <androidx.appcompat.widget.AppCompatTextView
-                android:layout_width="wrap_content"
-                android:layout_height="match_parent"
-                android:gravity="center"
-                android:text="@string/voice_price_label"
-                android:textColor="@color/edit_user_item_label"
-                android:textSize="@dimen/textsize_normal" />
-
-            <androidx.appcompat.widget.AppCompatTextView
-                android:id="@+id/voicePrice"
-                android:layout_width="wrap_content"
-                android:layout_height="match_parent"
-                android:layout_weight="1"
-                android:gravity="center_vertical|right"
-                android:text="@{ConverterUtil.toString(user.price)+@string/unit_mibi}"
-                android:textColor="@color/edit_user_item_value"
-                android:textSize="@dimen/textsize_normal" />
-
-        </LinearLayout>
-
-        <View
-            android:layout_width="match_parent"
-            android:layout_height="8dp"
-            android:background="@color/light_gray" />
-
-        <LinearLayout
-            android:id="@+id/heightButton"
-            android:layout_width="match_parent"
-            android:layout_height="@dimen/edit_user_item_height"
-            android:background="@drawable/underline_gray"
-            android:orientation="horizontal"
-            android:paddingLeft="@dimen/edit_user_padding"
-            android:paddingRight="@dimen/edit_user_padding">
-
-            <androidx.appcompat.widget.AppCompatTextView
-                android:layout_width="wrap_content"
-                android:layout_height="match_parent"
-                android:gravity="center"
-                android:text="@string/height_label"
-                android:textColor="@color/edit_user_item_label"
-                android:textSize="@dimen/textsize_normal" />
-
-            <androidx.appcompat.widget.AppCompatTextView
-                android:id="@+id/height"
-                android:layout_width="wrap_content"
-                android:layout_height="match_parent"
-                android:layout_weight="1"
-                android:gravity="center_vertical|right"
-                android:text="@{ConverterUtil.toString(user.height)+@string/unit_cm}"
-                android:textColor="@color/edit_user_item_value"
-                android:textSize="@dimen/textsize_normal" />
-
-        </LinearLayout>
-
-
-        <LinearLayout
-            android:id="@+id/ageButton"
-            android:layout_width="match_parent"
-            android:layout_height="@dimen/edit_user_item_height"
-            android:background="@drawable/underline_gray"
-            android:orientation="horizontal"
-            android:paddingLeft="@dimen/edit_user_padding"
-            android:paddingRight="@dimen/edit_user_padding">
-
-            <androidx.appcompat.widget.AppCompatTextView
-                android:layout_width="wrap_content"
-                android:layout_height="match_parent"
-                android:gravity="center"
-                android:text="@string/age_label"
-                android:textColor="@color/edit_user_item_label"
-                android:textSize="@dimen/textsize_normal" />
-
-            <androidx.appcompat.widget.AppCompatTextView
-                android:id="@+id/age"
-                android:layout_width="wrap_content"
-                android:layout_height="match_parent"
-                android:layout_weight="1"
-                android:gravity="center_vertical|right"
-                android:text="@{ConverterUtil.toString(user.age)+@string/unit_age}"
-                android:textColor="@color/edit_user_item_value"
-                android:textSize="@dimen/textsize_normal" />
-
-        </LinearLayout>
-
-
-        <LinearLayout
-            android:id="@+id/weightCupButton"
-            android:layout_width="match_parent"
-            android:layout_height="@dimen/edit_user_item_height"
-            android:background="@drawable/underline_gray"
-            android:orientation="horizontal"
-            android:paddingLeft="@dimen/edit_user_padding"
-            android:paddingRight="@dimen/edit_user_padding">
-
-            <androidx.appcompat.widget.AppCompatTextView
-                android:layout_width="wrap_content"
-                android:layout_height="match_parent"
-                android:gravity="center"
-                android:text="@{user.sex == Sex.MALE.value ? @string/weight_label : @string/cup_label}"
-                android:textColor="@color/edit_user_item_label"
-                android:textSize="@dimen/textsize_normal" />
-
-            <androidx.appcompat.widget.AppCompatTextView
-                android:id="@+id/weightCup"
-                android:layout_width="wrap_content"
-                android:layout_height="match_parent"
-                android:layout_weight="1"
-                android:gravity="center_vertical|right"
-                android:text="@{user.sex == Sex.MALE.value ? ConverterUtil.toString(user.weight)+@string/unit_kg : user.cup}"
-                android:textColor="@color/edit_user_item_value"
-                android:textSize="@dimen/textsize_normal" />
-
-        </LinearLayout>
-
-        <androidx.appcompat.widget.AppCompatTextView
-            android:layout_width="match_parent"
-            android:layout_height="@dimen/edit_user_item_height"
-            android:background="@color/light_gray"
-            android:gravity="center_vertical"
-            android:paddingLeft="@dimen/edit_user_padding"
-            android:paddingRight="@dimen/edit_user_padding"
-            android:text="@string/self_introduction"
-            android:textColor="@color/edit_user_item_divider_label" />
-
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:background="@drawable/underline_gray"
-            android:orientation="horizontal">
-
-            <EditText
-                android:id="@+id/introduce"
+            <LinearLayout
                 android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:background="@color/white"
-                android:gravity="left"
-                android:hint="@string/self_introduction_hint"
-                android:maxLines="6"
-                android:minHeight="120dp"
-                android:paddingLeft="@dimen/edit_user_padding"
-                android:paddingTop="10dp"
-                android:paddingRight="@dimen/edit_user_padding"
-                android:paddingBottom="10dp"
-                android:text="@{user.introduce}"
-                android:textColor="@color/edit_user_item_label"
-                android:textSize="@dimen/textsize_normal" />
+                android:layout_height="wrap_content"
+                android:orientation="vertical">
 
-        </LinearLayout>
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/edit_user_item_height"
+                    android:background="@drawable/underline_gray"
+                    android:orientation="horizontal"
+                    android:paddingLeft="@dimen/edit_user_padding"
+                    android:paddingRight="@dimen/edit_user_padding">
+
+                    <androidx.appcompat.widget.AppCompatTextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="match_parent"
+                        android:gravity="center"
+                        android:text="@string/nickname"
+                        android:textColor="@color/edit_user_item_label"
+                        android:textSize="@dimen/textsize_normal" />
+
+                    <EditText
+                        android:id="@+id/nickname"
+                        android:layout_width="wrap_content"
+                        android:layout_height="match_parent"
+                        android:layout_weight="1"
+                        android:background="@null"
+                        android:gravity="center_vertical|right"
+                        android:text="@{user.nickname}"
+                        android:textColor="@color/edit_user_item_value"
+                        android:textSize="@dimen/textsize_normal" />
+
+                </LinearLayout>
 
 
+                <LinearLayout
+                    android:id="@+id/cityButton"
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/edit_user_item_height"
+                    android:background="@drawable/underline_gray"
+                    android:orientation="horizontal"
+                    android:paddingLeft="@dimen/edit_user_padding"
+                    android:paddingRight="@dimen/edit_user_padding">
+
+                    <androidx.appcompat.widget.AppCompatTextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="match_parent"
+                        android:gravity="center"
+                        android:text="@string/always_stay_city_label"
+                        android:textColor="@color/edit_user_item_label"
+                        android:textSize="@dimen/textsize_normal" />
+
+                    <androidx.appcompat.widget.AppCompatTextView
+                        android:id="@+id/city"
+                        android:layout_width="wrap_content"
+                        android:layout_height="match_parent"
+                        android:layout_weight="1"
+                        android:gravity="center_vertical|right"
+                        android:text="@{user.cityNamesString}"
+                        android:textColor="@color/edit_user_item_value"
+                        android:textSize="@dimen/textsize_normal" />
+
+                </LinearLayout>
+
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/edit_user_item_height"
+                    android:background="@drawable/underline_gray"
+                    android:orientation="horizontal"
+                    android:paddingLeft="@dimen/edit_user_padding"
+                    android:paddingRight="@dimen/edit_user_padding">
+
+                    <androidx.appcompat.widget.AppCompatTextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="match_parent"
+                        android:gravity="center"
+                        android:text="@string/wechat_number_label"
+                        android:textColor="@color/edit_user_item_label"
+                        android:textSize="@dimen/textsize_normal" />
+
+                    <EditText
+                        android:id="@+id/wechatAccount"
+                        android:layout_width="wrap_content"
+                        android:layout_height="match_parent"
+                        android:layout_weight="1"
+                        android:background="@null"
+                        android:gravity="center_vertical|right"
+                        android:hint="@string/input_wechat_account"
+                        android:text="@{user.wechatAccount}"
+                        android:textColor="@color/edit_user_item_value"
+                        android:textSize="@dimen/textsize_normal" />
+
+                </LinearLayout>
+
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="8dp"
+                    android:background="@color/light_gray" />
+
+                <LinearLayout
+                    android:id="@+id/voicePriceButton"
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/edit_user_item_height"
+                    android:background="@drawable/underline_gray"
+                    android:orientation="horizontal"
+                    android:paddingLeft="@dimen/edit_user_padding"
+                    android:paddingRight="@dimen/edit_user_padding">
+
+                    <androidx.appcompat.widget.AppCompatTextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="match_parent"
+                        android:gravity="center"
+                        android:text="@string/voice_price_label"
+                        android:textColor="@color/edit_user_item_label"
+                        android:textSize="@dimen/textsize_normal" />
+
+                    <androidx.appcompat.widget.AppCompatTextView
+                        android:id="@+id/voicePrice"
+                        android:layout_width="wrap_content"
+                        android:layout_height="match_parent"
+                        android:layout_weight="1"
+                        android:gravity="center_vertical|right"
+                        android:text="@{ConverterUtil.toString(user.price)+@string/unit_mibi}"
+                        android:textColor="@color/edit_user_item_value"
+                        android:textSize="@dimen/textsize_normal" />
+
+                </LinearLayout>
+
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="8dp"
+                    android:background="@color/light_gray" />
+
+                <LinearLayout
+                    android:id="@+id/heightButton"
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/edit_user_item_height"
+                    android:background="@drawable/underline_gray"
+                    android:orientation="horizontal"
+                    android:paddingLeft="@dimen/edit_user_padding"
+                    android:paddingRight="@dimen/edit_user_padding">
+
+                    <androidx.appcompat.widget.AppCompatTextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="match_parent"
+                        android:gravity="center"
+                        android:text="@string/height_label"
+                        android:textColor="@color/edit_user_item_label"
+                        android:textSize="@dimen/textsize_normal" />
+
+                    <androidx.appcompat.widget.AppCompatTextView
+                        android:id="@+id/height"
+                        android:layout_width="wrap_content"
+                        android:layout_height="match_parent"
+                        android:layout_weight="1"
+                        android:gravity="center_vertical|right"
+                        android:text="@{ConverterUtil.toString(user.height)+@string/unit_cm}"
+                        android:textColor="@color/edit_user_item_value"
+                        android:textSize="@dimen/textsize_normal" />
+
+                </LinearLayout>
+
+
+                <LinearLayout
+                    android:id="@+id/ageButton"
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/edit_user_item_height"
+                    android:background="@drawable/underline_gray"
+                    android:orientation="horizontal"
+                    android:paddingLeft="@dimen/edit_user_padding"
+                    android:paddingRight="@dimen/edit_user_padding">
+
+                    <androidx.appcompat.widget.AppCompatTextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="match_parent"
+                        android:gravity="center"
+                        android:text="@string/age_label"
+                        android:textColor="@color/edit_user_item_label"
+                        android:textSize="@dimen/textsize_normal" />
+
+                    <androidx.appcompat.widget.AppCompatTextView
+                        android:id="@+id/age"
+                        android:layout_width="wrap_content"
+                        android:layout_height="match_parent"
+                        android:layout_weight="1"
+                        android:gravity="center_vertical|right"
+                        android:text="@{ConverterUtil.toString(user.age)+@string/unit_age}"
+                        android:textColor="@color/edit_user_item_value"
+                        android:textSize="@dimen/textsize_normal" />
+
+                </LinearLayout>
+
+
+                <LinearLayout
+                    android:id="@+id/weightCupButton"
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/edit_user_item_height"
+                    android:background="@drawable/underline_gray"
+                    android:orientation="horizontal"
+                    android:paddingLeft="@dimen/edit_user_padding"
+                    android:paddingRight="@dimen/edit_user_padding">
+
+                    <androidx.appcompat.widget.AppCompatTextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="match_parent"
+                        android:gravity="center"
+                        android:text="@{user.sex == Sex.MALE.value ? @string/weight_label : @string/cup_label}"
+                        android:textColor="@color/edit_user_item_label"
+                        android:textSize="@dimen/textsize_normal" />
+
+                    <androidx.appcompat.widget.AppCompatTextView
+                        android:id="@+id/weightCup"
+                        android:layout_width="wrap_content"
+                        android:layout_height="match_parent"
+                        android:layout_weight="1"
+                        android:gravity="center_vertical|right"
+                        android:text="@{user.sex == Sex.MALE.value ? ConverterUtil.toString(user.weight)+@string/unit_kg : user.cup}"
+                        android:textColor="@color/edit_user_item_value"
+                        android:textSize="@dimen/textsize_normal" />
+
+                </LinearLayout>
+
+                <androidx.appcompat.widget.AppCompatTextView
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/edit_user_item_height"
+                    android:background="@color/light_gray"
+                    android:gravity="center_vertical"
+                    android:paddingLeft="@dimen/edit_user_padding"
+                    android:paddingRight="@dimen/edit_user_padding"
+                    android:text="@string/self_introduction"
+                    android:textColor="@color/edit_user_item_divider_label" />
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:background="@drawable/underline_gray"
+                    android:orientation="horizontal">
+
+                    <EditText
+                        android:id="@+id/introduce"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:background="@color/white"
+                        android:gravity="left"
+                        android:hint="@string/self_introduction_hint"
+                        android:maxLines="6"
+                        android:minHeight="120dp"
+                        android:paddingLeft="@dimen/edit_user_padding"
+                        android:paddingTop="10dp"
+                        android:paddingRight="@dimen/edit_user_padding"
+                        android:paddingBottom="10dp"
+                        android:text="@{user.introduce}"
+                        android:textColor="@color/edit_user_item_label"
+                        android:textSize="@dimen/textsize_normal" />
+
+                </LinearLayout>
+            </LinearLayout>
+
+        </ScrollView>
     </LinearLayout>
 
 

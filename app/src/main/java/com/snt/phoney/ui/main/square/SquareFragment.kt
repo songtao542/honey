@@ -2,9 +2,6 @@ package com.snt.phoney.ui.main.square
 
 
 import android.os.Bundle
-import android.text.SpannableString
-import android.text.Spanned
-import android.text.style.RelativeSizeSpan
 import android.view.*
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentStatePagerAdapter
@@ -76,6 +73,10 @@ class SquareFragment : BaseFragment() {
 //        squareTab.getTabAt(1)?.text = tabPopularTitle
     }
 
+    override fun onResume() {
+        super.onResume()
+        setMenuVisibility(true)
+    }
 
     override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
         inflater?.inflate(R.menu.square, menu)

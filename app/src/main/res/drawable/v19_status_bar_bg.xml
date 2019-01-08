@@ -2,12 +2,13 @@
 <layer-list xmlns:android="http://schemas.android.com/apk/res/android">
     <item android:height="24dp">
         <shape android:shape="rectangle">
-            <gradient
-                android:angle="270"
-                android:centerX="0.5"
-                android:centerY="0.01"
-                android:endColor="#ffffffff"
-                android:startColor="@color/v19_status_bar_color"></gradient>
+            <!--<gradient-->
+                <!--android:angle="270"-->
+                <!--android:centerX="0.5"-->
+                <!--android:centerY="0.01"-->
+                <!--android:endColor="#ffffffff"-->
+                <!--android:startColor="@color/v19_status_bar_color"></gradient>-->
+            <solid android:color="@color/v19_status_bar_color"></solid>
         </shape>
     </item>
 

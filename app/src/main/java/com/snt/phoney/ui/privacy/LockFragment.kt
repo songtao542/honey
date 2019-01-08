@@ -3,10 +3,9 @@ package com.snt.phoney.ui.privacy
 import android.animation.AnimatorSet
 import android.animation.ObjectAnimator
 import android.content.Context
+import android.os.Build
 import android.os.Bundle
-import android.text.Editable
 import android.text.TextUtils
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -19,11 +18,11 @@ import com.snt.phoney.R
 import com.snt.phoney.base.BaseFragment
 import com.snt.phoney.base.Page
 import com.snt.phoney.domain.accessor.UserAccessor
+import com.snt.phoney.extensions.colorOf
 import com.snt.phoney.extensions.dip
 import com.snt.phoney.extensions.startActivity
 import com.snt.phoney.ui.main.MainActivity
 import com.snt.phoney.ui.news.NewsActivity
-import com.snt.phoney.utils.data.Constants
 import com.snt.phoney.utils.data.MD5
 import kotlinx.android.synthetic.main.fragment_lock.*
 import javax.inject.Inject
@@ -48,6 +47,10 @@ class LockFragment : BaseFragment() {
 
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
+
+        if (Build.VERSION.SDK_INT < Build.VERSION_CODES.N) {
+            activity?.window?.statusBarColor = colorOf(R.color.v21_status_bar_color)
+        }
 
         val user = userAccessor.getUser()
         user?.let { user ->

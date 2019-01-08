@@ -78,16 +78,16 @@ class MainActivity : BaseActivity() {
         }
 
         navigation.setOnNavigationItemSelectedListener(mOnNavigationItemSelectedListener)
-        fragmentContainer.setOnApplyWindowInsetsListener { view, insets ->
-            var consumed = false
-            if (view is ViewGroup) {
-                view.forEach { child ->
-                    val childResult = child.dispatchApplyWindowInsets(insets)
-                    consumed = childResult.isConsumed
-                }
-            }
-            if (consumed) insets.consumeSystemWindowInsets() else insets
-        }
+        //fragmentContainer.setOnApplyWindowInsetsListener { view, insets ->
+        //    var consumed = false
+        //    if (view is ViewGroup) {
+        //        view.forEach { child ->
+        //            val childResult = child.dispatchApplyWindowInsets(insets)
+        //            consumed = childResult.isConsumed
+        //        }
+        //    }
+        //    if (consumed) insets.consumeSystemWindowInsets() else insets
+        //}
 
         viewModel.updateUserLocation()
         viewModel.loginJMessage()

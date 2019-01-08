@@ -5,7 +5,6 @@
     <attr name="colorPrimaryPressed" format="reference|color" />
     <attr name="colorPrimaryTranslucent" format="reference|color" />
 
-    <attr name="statusBarBackground" format="reference|color" />
     <attr name="toolbarBackground" format="reference|color" />
     <attr name="toolbarTextColor" format="color" />
     <attr name="toolbarNavigationIcon" format="reference" />

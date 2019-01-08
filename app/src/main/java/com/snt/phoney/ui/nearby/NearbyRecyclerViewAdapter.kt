@@ -45,7 +45,10 @@ class NearbyRecyclerViewAdapter() : RecyclerView.Adapter<NearbyRecyclerViewAdapt
         private val chatWith = mView.chatWith
 
         fun setData(user: User) {
-            Glide.with(mView).load(user.avatar).apply(RequestOptions().circleCrop()).transition(DrawableTransitionOptions.withCrossFade()).into(head)
+            Glide.with(mView).load(user.avatar)
+                    .apply(RequestOptions().circleCrop().placeholder(R.drawable.ic_head_placeholder).error(R.drawable.ic_head_placeholder))
+                    .transition(DrawableTransitionOptions.withCrossFade())
+                    .into(head)
             name.text = user.nickname
             distance.text = DistanceFormat.format(context, user.distance)
             chatWith.setOnClickListener {

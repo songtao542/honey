@@ -16,7 +16,7 @@
         android:layout_marginTop="10dp"
         android:layout_marginRight="10dp"
         android:layout_marginBottom="10dp"
-        app:srcCompat="@drawable/ic_head_placeholder_black" />
+        app:srcCompat="@drawable/ic_head_placeholder" />
 
     <androidx.appcompat.widget.AppCompatTextView
         android:id="@+id/viewVisitor"

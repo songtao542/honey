@@ -7,6 +7,7 @@ import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentStatePagerAdapter
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
+import androidx.viewpager.widget.ViewPager
 import com.snt.phoney.R
 import com.snt.phoney.base.BaseFragment
 import com.snt.phoney.ui.main.home.following.FollowingFragment
@@ -44,14 +45,10 @@ class HomeFragment : BaseFragment() {
         homePager.adapter = object : FragmentStatePagerAdapter(this.childFragmentManager) {
             val friendFragment: FriendFragment = FriendFragment.newInstance()
             val followingFragment: FollowingFragment = FollowingFragment.newInstance()
-            val test: Fragment = Fragment()
-            val test1: Fragment = Fragment()
 
             override fun getItem(position: Int): Fragment {
                 return when {
                     position <= 0 -> friendFragment
-                    //position <= 1 -> test
-                    //position <= 2 -> test1
                     else -> followingFragment
                 }
             }
@@ -63,24 +60,27 @@ class HomeFragment : BaseFragment() {
             override fun getPageTitle(position: Int): CharSequence? {
                 return when {
                     position <= 0 -> getString(R.string.tab_home_friend)
-                    //position <= 1 -> getString(R.string.friend_tag_hottest)
-                    //position <= 2 -> getString(R.string.friend_tag_more_filter)
                     else -> getString(R.string.tab_home_following)
                 }
             }
 
         }
+        homePager.addOnPageChangeListener(object : ViewPager.OnPageChangeListener {
+            override fun onPageScrollStateChanged(state: Int) {
+            }
 
-//        val tabFriendTitle = getString(R.string.tab_home_friend)
-//        val tabFollowingTitle = SpannableString(getString(R.string.tab_home_following))
-//        tabFollowingTitle.setSpan(RelativeSizeSpan(1f), 0, 2, Spanned.SPAN_INCLUSIVE_EXCLUSIVE)
-//        tabFollowingTitle.setSpan(RelativeSizeSpan(0.64f), 2, 4, Spanned.SPAN_INCLUSIVE_EXCLUSIVE)
-//
-//        homeTab.getTabAt(0)?.text = tabFriendTitle
-//        homeTab.getTabAt(1)?.text = tabFollowingTitle
+            override fun onPageScrolled(position: Int, positionOffset: Float, positionOffsetPixels: Int) {
+            }
 
-//        homeTab.getTabAt(0)?.text = getString(R.string.tab_home_friend)
-//        homeTab.getTabAt(1)?.text = getString(R.string.tab_home_following)
+            override fun onPageSelected(position: Int) {
+                homeToolbar.menu.findItem(R.id.findCity)?.isVisible = position == 0
+            }
+        })
+    }
+
+    override fun onResume() {
+        super.onResume()
+        setMenuVisibility(true)
     }
 
     override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {

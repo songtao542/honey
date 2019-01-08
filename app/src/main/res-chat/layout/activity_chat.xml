@@ -20,6 +20,7 @@
             <androidx.appcompat.widget.Toolbar
                 android:id="@+id/toolbar"
                 style="@style/AppTheme.Toolbar"
+                android:background="@android:color/white"
                 app:title="聊天" />
 
             <View

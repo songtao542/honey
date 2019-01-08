@@ -9,7 +9,6 @@ import com.snt.phoney.api.LoginStateInterceptor;
 import com.snt.phoney.api.NullOrEmptyInterceptor;
 import com.snt.phoney.api.TimeoutInterceptor;
 import com.snt.phoney.utils.adapter.GsonResponseConverterFactory;
-import com.snt.phoney.utils.adapter.LiveDataCallAdapterFactory;
 import com.snt.phoney.utils.data.Constants;
 
 import javax.inject.Named;
@@ -17,9 +16,7 @@ import javax.inject.Singleton;
 
 import dagger.Module;
 import dagger.Provides;
-import okhttp3.HttpUrl;
 import okhttp3.OkHttpClient;
-import okhttp3.Request;
 import okhttp3.logging.HttpLoggingInterceptor;
 import retrofit2.Retrofit;
 import retrofit2.adapter.rxjava2.RxJava2CallAdapterFactory;
@@ -42,7 +39,7 @@ public class RestApiServiceModule {
                 .baseUrl(Constants.Api.BASE_URL)
                 .addConverterFactory(GsonResponseConverterFactory.create(gson))
                 .addCallAdapterFactory(RxJava2CallAdapterFactory.create())
-                .addCallAdapterFactory(new LiveDataCallAdapterFactory())
+                //.addCallAdapterFactory(new LiveDataCallAdapterFactory())
                 .client(getOkHttpClientBuilder(application, gson).build())
                 .build();
     }
@@ -52,14 +49,7 @@ public class RestApiServiceModule {
         okHttpBuilder
                 .addInterceptor(new NullOrEmptyInterceptor())
                 .addInterceptor(new TimeoutInterceptor())
-                .addInterceptor(new LoginStateInterceptor(application, gson))
-                .addInterceptor(chain -> {
-                    Request request = chain.request();
-                    HttpUrl url = request.url().newBuilder()
-                            //.addQueryParameter(Constants.Api.APP_ID, Constants.Api.APP_ID_VALUE)
-                            .build();
-                    return chain.proceed(request.newBuilder().url(url).build());
-                });
+                .addInterceptor(new LoginStateInterceptor(application, gson));
 
         if (BuildConfig.DEBUG) {
             HttpLoggingInterceptor httpLoggingInterceptor = new HttpLoggingInterceptor();

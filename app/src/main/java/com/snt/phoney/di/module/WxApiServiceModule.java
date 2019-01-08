@@ -3,7 +3,6 @@ package com.snt.phoney.di.module;
 import com.google.gson.Gson;
 import com.snt.phoney.BuildConfig;
 import com.snt.phoney.api.WxApi;
-import com.snt.phoney.utils.adapter.LiveDataCallAdapterFactory;
 import com.snt.phoney.utils.data.Constants;
 
 import javax.inject.Named;
@@ -30,7 +29,7 @@ public class WxApiServiceModule {
                 .baseUrl(Constants.Wechat.BASE_URL)
                 .addConverterFactory(GsonConverterFactory.create(gson))
                 .addCallAdapterFactory(RxJava2CallAdapterFactory.create())
-                .addCallAdapterFactory(new LiveDataCallAdapterFactory())
+                //.addCallAdapterFactory(new LiveDataCallAdapterFactory())
                 .client(getOkHttpClientBuilder().build())
                 .build();
     }

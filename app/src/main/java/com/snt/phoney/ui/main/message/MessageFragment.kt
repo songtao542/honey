@@ -113,6 +113,11 @@ class MessageFragment : ConversationListFragment(), Injectable {
         viewModel.listPhotoApply()
     }
 
+    override fun onResume() {
+        super.onResume()
+        setMenuVisibility(true)
+    }
+
     override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
         inflater?.inflate(R.menu.message, menu)
     }

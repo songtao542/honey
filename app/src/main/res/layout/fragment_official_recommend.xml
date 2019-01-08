@@ -18,7 +18,7 @@
             android:layout_alignParentLeft="true"
             android:layout_marginRight="10dp"
             android:scaleType="centerCrop"
-            app:srcCompat="@drawable/ic_head_placeholder_black" />
+            app:srcCompat="@drawable/ic_head_placeholder" />
 
 
         <LinearLayout
