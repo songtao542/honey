@@ -14,6 +14,7 @@ import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
 import com.bumptech.glide.Glide
 import com.bumptech.glide.load.resource.drawable.DrawableTransitionOptions
+import com.bumptech.glide.request.RequestOptions
 import com.snt.phoney.ICallStateListener
 import com.snt.phoney.IVoiceCallService
 import com.snt.phoney.R
@@ -130,7 +131,7 @@ class VoiceCallActivity : BaseNoViewModelActivity(), ServiceConnection {
         state.text = getString(R.string.wait_accept_template, mUser?.nickname
                 ?: getString(R.string.other_side))
         Glide.with(this).load(mUser?.avatar)
-                //.apply(RequestOptions().circleCrop())
+                .apply(RequestOptions().circleCrop().placeholder(R.drawable.ic_head_placeholder).error(R.drawable.ic_head_placeholder))
                 .transition(DrawableTransitionOptions.withCrossFade())
                 .into(head)
     }

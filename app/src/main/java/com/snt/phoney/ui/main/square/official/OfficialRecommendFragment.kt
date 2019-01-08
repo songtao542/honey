@@ -14,6 +14,7 @@ import com.snt.phoney.R
 import com.snt.phoney.base.BaseFragment
 import com.snt.phoney.domain.model.DatingProgram
 import com.snt.phoney.extensions.*
+import com.snt.phoney.ui.main.PagerFragment
 import com.snt.phoney.ui.main.square.SquareViewModel
 import com.snt.phoney.widget.DropdownLabelView
 import com.snt.phoney.widget.PopupList
@@ -25,7 +26,7 @@ import kotlinx.android.synthetic.main.fragment_official_recommend_list.*
  * A fragment representing a list of Items.
  * Activities containing this fragment MUST implement the
  */
-class OfficialRecommendFragment : BaseFragment() {
+class OfficialRecommendFragment : PagerFragment() {
 
     lateinit var viewModel: SquareViewModel
 

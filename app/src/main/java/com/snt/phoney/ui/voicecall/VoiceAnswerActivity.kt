@@ -31,6 +31,7 @@ import com.snt.phoney.base.BaseNoViewModelActivity
 import com.snt.phoney.domain.model.JMUser
 import com.snt.phoney.extensions.checkAndRequestPermission
 import com.snt.phoney.extensions.checkAppPermission
+import com.snt.phoney.extensions.circle
 import com.snt.phoney.extensions.setLayoutFullscreen
 import com.snt.phoney.service.VoiceCallService
 import kotlinx.android.synthetic.main.activity_voice_answer.*
@@ -148,7 +149,7 @@ class VoiceAnswerActivity : BaseNoViewModelActivity(), ServiceConnection {
                         userInfo.getAvatarBitmap(object : GetAvatarBitmapCallback() {
                             override fun gotResult(code: Int, message: String?, bitmap: Bitmap?) {
                                 bitmap?.let { bitmap ->
-                                    head.setImageBitmap(bitmap)
+                                    head.setImageBitmap(bitmap.circle())
                                 }
                             }
                         })

@@ -13,6 +13,7 @@ import com.snt.phoney.base.BaseFragment
 import com.snt.phoney.extensions.dip
 import com.snt.phoney.extensions.setLoadMoreEnable
 import com.snt.phoney.extensions.setLoadMoreListener
+import com.snt.phoney.ui.main.PagerFragment
 import com.snt.phoney.ui.main.square.SquareViewModel
 import cust.widget.loadmore.LoadMoreAdapter
 import kotlinx.android.synthetic.main.fragment_popular_recommend_list.*
@@ -21,7 +22,7 @@ import kotlinx.android.synthetic.main.fragment_popular_recommend_list.*
  * A fragment representing a list of Items.
  * Activities containing this fragment MUST implement the
  */
-class PopularRecommendFragment : BaseFragment() {
+class PopularRecommendFragment : PagerFragment() {
 
     lateinit var viewModel: SquareViewModel
 

@@ -2,6 +2,7 @@ package com.snt.phoney.ui.main.home
 
 import android.os.Bundle
 import android.text.TextUtils
+import android.util.Log
 import android.view.*
 import androidx.appcompat.widget.Toolbar
 import androidx.fragment.app.Fragment
@@ -30,6 +31,8 @@ class HomeFragment : BaseFragment(), Toolbar.OnMenuItemClickListener {
 
     private var mPickerIndex1 = 0
     private var mPickerIndex2 = 0
+
+    override fun openUmeng() = false
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         return inflater.inflate(R.layout.fragment_home, container, false)
@@ -140,4 +143,11 @@ class HomeFragment : BaseFragment(), Toolbar.OnMenuItemClickListener {
         }
     }
 
+    fun setChildFragmentUserVisibleHint(isVisibleToUser: Boolean) {
+        try {
+            (homePager.adapter as FragmentStatePagerAdapter).getItem(homePager.currentItem).userVisibleHint = isVisibleToUser
+        } catch (e: Exception) {
+            Log.d("HomeFragment", "error:${e.message},e")
+        }
+    }
 }

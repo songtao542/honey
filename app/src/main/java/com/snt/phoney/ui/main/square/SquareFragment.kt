@@ -2,6 +2,7 @@ package com.snt.phoney.ui.main.square
 
 
 import android.os.Bundle
+import android.util.Log
 import android.view.*
 import androidx.appcompat.widget.Toolbar
 import androidx.fragment.app.Fragment
@@ -15,19 +16,22 @@ import com.snt.phoney.ui.main.square.official.OfficialRecommendFragment
 import com.snt.phoney.ui.main.square.popular.PopularRecommendFragment
 import com.snt.phoney.widget.TabLayout
 import kotlinx.android.synthetic.main.fragment_square.*
+import java.lang.Exception
 
 /**
- * A simple [Fragment] subclass.
- * Use the [SquareFragment.newInstance] factory method to
- * create an instance of this fragment.
- *
  */
 class SquareFragment : BaseFragment(), Toolbar.OnMenuItemClickListener {
+
+    companion object {
+        @JvmStatic
+        fun newInstance() = SquareFragment()
+    }
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         return inflater.inflate(R.layout.fragment_square, container, false)
     }
 
+    override fun openUmeng() = false
 
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
@@ -58,17 +62,6 @@ class SquareFragment : BaseFragment(), Toolbar.OnMenuItemClickListener {
                 }
             }
         }
-
-//        val tabOfficialTitle = SpannableString(getString(R.string.tab_square_official))
-//        tabOfficialTitle.setSpan(RelativeSizeSpan(1f), 0, 2, Spanned.SPAN_INCLUSIVE_EXCLUSIVE)
-//        tabOfficialTitle.setSpan(RelativeSizeSpan(0.64f), 2, 4, Spanned.SPAN_INCLUSIVE_EXCLUSIVE)
-//
-//        val tabPopularTitle = SpannableString(getString(R.string.tab_square_popular))
-//        tabPopularTitle.setSpan(RelativeSizeSpan(1f), 0, 2, Spanned.SPAN_INCLUSIVE_EXCLUSIVE)
-//        tabPopularTitle.setSpan(RelativeSizeSpan(0.64f), 2, 4, Spanned.SPAN_INCLUSIVE_EXCLUSIVE)
-//
-//        squareTab.getTabAt(0)?.text = tabOfficialTitle
-//        squareTab.getTabAt(1)?.text = tabPopularTitle
     }
 
 //    override fun onResume() {
@@ -90,8 +83,13 @@ class SquareFragment : BaseFragment(), Toolbar.OnMenuItemClickListener {
         }
     }
 
-    companion object {
-        @JvmStatic
-        fun newInstance() = SquareFragment()
+    fun setChildFragmentUserVisibleHint(isVisibleToUser: Boolean) {
+        try {
+            (squarePager.adapter as FragmentStatePagerAdapter).getItem(squarePager.currentItem).userVisibleHint = isVisibleToUser
+        } catch (e: Exception) {
+            Log.d("SquareFragment", "error:${e.message},e")
+        }
     }
+
+
 }

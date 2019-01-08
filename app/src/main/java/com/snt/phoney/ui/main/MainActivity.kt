@@ -104,15 +104,30 @@ class MainActivity : BaseActivity() {
     }
 
     private fun showFragment(tag: String) {
-        var willShow = getFragmentByTag(tag)
+        val willShow = getFragmentByTag(tag)
         if (willShow != currentFragment) {
-            var fragmentManager = supportFragmentManager
-            var transaction = fragmentManager.beginTransaction()
+            val fragmentManager = supportFragmentManager
+            val transaction = fragmentManager.beginTransaction()
             currentFragment?.let { transaction.hide(it) }
 
             fragmentManager.findFragmentByTag(tag)?.apply {
                 transaction.show(this)
             } ?: transaction.add(R.id.fragmentContainer, willShow, tag)
+
+            val current = currentFragment
+            if (current is HomeFragment) {
+                current.setChildFragmentUserVisibleHint(false)
+            }
+            if (current is SquareFragment) {
+                current.setChildFragmentUserVisibleHint(false)
+            }
+
+            if (willShow is HomeFragment) {
+                willShow.setChildFragmentUserVisibleHint(true)
+            }
+            if (willShow is SquareFragment) {
+                willShow.setChildFragmentUserVisibleHint(true)
+            }
 
             transaction.commit()
             currentFragment = willShow
