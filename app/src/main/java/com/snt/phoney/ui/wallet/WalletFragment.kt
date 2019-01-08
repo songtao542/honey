@@ -4,6 +4,7 @@ import android.os.Bundle
 import android.text.TextUtils
 import android.view.*
 import android.widget.LinearLayout
+import androidx.appcompat.widget.Toolbar
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
 import com.bumptech.glide.Glide
@@ -20,7 +21,7 @@ import kotlinx.android.synthetic.main.app_toolbar.*
 import kotlinx.android.synthetic.main.fragment_wallet.*
 import java.text.DecimalFormat
 
-class WalletFragment : BaseFragment() {
+class WalletFragment : BaseFragment(), Toolbar.OnMenuItemClickListener {
 
     companion object {
         @JvmStatic
@@ -41,8 +42,9 @@ class WalletFragment : BaseFragment() {
 
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
-        enableOptionsMenu(toolbar, false, R.menu.wallet)
         viewModel = ViewModelProviders.of(this, viewModelFactory).get(WalletViewModel::class.java)
+        enableOptionsMenu(toolbar, false, R.menu.wallet)
+        toolbar.setOnMenuItemClickListener(this)
 
         toolbar.setNavigationOnClickListener { activity?.finish() }
         titleTextView.setText(R.string.my_wallet)
@@ -120,11 +122,11 @@ class WalletFragment : BaseFragment() {
         }
     }
 
-    override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
-        inflater.inflate(R.menu.wallet, menu)
-    }
+//    override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
+//        inflater.inflate(R.menu.wallet, menu)
+//    }
 
-    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+    override fun onMenuItemClick(item: MenuItem): Boolean {
         when (item.itemId) {
             R.id.view_records -> {
                 addFragmentSafely(Page.WALLET_DETAIL, "wallet_detail", true,

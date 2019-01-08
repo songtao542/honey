@@ -95,7 +95,7 @@ fun Fragment.enableOptionsMenu(toolbar: Toolbar, showTitle: Boolean = true, menu
         activity?.let { activity ->
             setHasOptionsMenu(true)
             if (activity is AppCompatActivity) {
-                activity.setSupportActionBar(toolbar)
+                //activity.setSupportActionBar(toolbar)
                 if (menu != 0) {
                     toolbar.inflateMenu(menu)
                 }

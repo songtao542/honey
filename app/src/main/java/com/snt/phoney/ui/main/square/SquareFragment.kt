@@ -3,6 +3,7 @@ package com.snt.phoney.ui.main.square
 
 import android.os.Bundle
 import android.view.*
+import androidx.appcompat.widget.Toolbar
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentStatePagerAdapter
 import com.snt.phoney.R
@@ -21,14 +22,9 @@ import kotlinx.android.synthetic.main.fragment_square.*
  * create an instance of this fragment.
  *
  */
-class SquareFragment : BaseFragment() {
-
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-    }
+class SquareFragment : BaseFragment(), Toolbar.OnMenuItemClickListener {
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
-        // Inflate the layout for this fragment
         return inflater.inflate(R.layout.fragment_square, container, false)
     }
 
@@ -36,6 +32,8 @@ class SquareFragment : BaseFragment() {
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
         enableOptionsMenu(squareToolbar, false, R.menu.square)
+        squareToolbar.setOnMenuItemClickListener(this)
+
         squareTab.setupWithViewPager(squarePager)
         squareTab.tabMode = TabLayout.MODE_SCROLLABLE
         squarePager.adapter = object : FragmentStatePagerAdapter(this.childFragmentManager) {
@@ -73,16 +71,16 @@ class SquareFragment : BaseFragment() {
 //        squareTab.getTabAt(1)?.text = tabPopularTitle
     }
 
-    override fun onResume() {
-        super.onResume()
-        setMenuVisibility(true)
-    }
+//    override fun onResume() {
+//        super.onResume()
+//        setMenuVisibility(true)
+//    }
+//
+//    override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
+//        inflater?.inflate(R.menu.square, menu)
+//    }
 
-    override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
-        inflater?.inflate(R.menu.square, menu)
-    }
-
-    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+    override fun onMenuItemClick(item: MenuItem): Boolean {
         return when (item?.itemId) {
             R.id.publishDating -> {
                 context?.let { it.startActivity<DatingActivity>(Page.CREATE_DATING) }

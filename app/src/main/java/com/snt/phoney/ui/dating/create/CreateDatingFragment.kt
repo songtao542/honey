@@ -6,6 +6,7 @@ import android.net.Uri
 import android.os.Bundle
 import android.util.Log
 import android.view.*
+import androidx.appcompat.widget.Toolbar
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
 import com.snt.phoney.R
@@ -31,7 +32,7 @@ import kotlinx.android.synthetic.main.app_toolbar.*
 import kotlinx.android.synthetic.main.fragment_dating_create.*
 import java.io.File
 
-class CreateDatingFragment : BaseFragment() {
+class CreateDatingFragment : BaseFragment(), Toolbar.OnMenuItemClickListener {
 
     companion object {
         @JvmStatic
@@ -60,9 +61,11 @@ class CreateDatingFragment : BaseFragment() {
 
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
-        enableOptionsMenu(toolbar, false, R.menu.create_dating)
-        setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_ADJUST_RESIZE)
         viewModel = ViewModelProviders.of(this, viewModelFactory).get(CreateDatingViewModel::class.java)
+        setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_ADJUST_RESIZE)
+        enableOptionsMenu(toolbar, false, R.menu.create_dating)
+        toolbar.setOnMenuItemClickListener(this)
+
         toolbar.setNavigationOnClickListener { activity?.onBackPressed() }
         titleTextView.setText(R.string.publish_dating_title)
 
@@ -154,11 +157,11 @@ class CreateDatingFragment : BaseFragment() {
         })
     }
 
-    override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
-        inflater.inflate(R.menu.create_dating, menu)
-    }
+//    override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
+//        inflater.inflate(R.menu.create_dating, menu)
+//    }
 
-    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+    override fun onMenuItemClick(item: MenuItem): Boolean {
         return when (item.itemId) {
             R.id.publishDatingConfirm -> {
                 if (isValid()) {

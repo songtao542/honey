@@ -65,43 +65,29 @@ class SetupWizardTwoFragment : BaseFragment() {
         super.onActivityCreated(savedInstanceState)
         viewModel = ViewModelProviders.of(this, viewModelFactory).get(SetupWizardViewModel::class.java)
         toolbar.setNavigationOnClickListener {
-             activity?.onBackPressed()
+            activity?.onBackPressed()
         }
         confirmStep2.setOnClickListener {
             if (isValid()) {
                 viewModel.setUserFeatures(user.height, user.weight.toInt(), user.age, user.safeCup)
-
                 //for test
-                activity?.addFragmentSafely(R.id.containerLayout, SetupWizardThreeFragment.newInstance(user), "step3", true)
+                //activity?.addFragmentSafely(R.id.containerLayout, SetupWizardThreeFragment.newInstance(user), "step3", true)
             }
         }
 
         heightButton.setOnClickListener {
-            Picker.showPicker(activity, getString(R.string.pick_height), 150, 230, user.height) { value, _ ->
-                height.text = getString(R.string.height_value_template, value)
-                user.height = value
-            }
+            showHeightPicker()
         }
+
+        ageButton.setOnClickListener {
+            showAgePicker()
+        }
+
         weightButton.setOnClickListener {
-            Picker.showPicker(activity, getString(R.string.pick_weight), 40, 150, user.weight.toInt()) { value, _ ->
-                weight.text = getString(R.string.weight_value_template, value)
-                user.weight = value.toDouble()
-            }
+            showWeightPicker()
         }
         cupButton.setOnClickListener {
-            Picker.showPicker(activity, getString(R.string.pick_cup), cupNumberArray, cupNumber, cupSizeArray, cupSize) { value1, value2 ->
-                val cupValue = "${cupNumberArray[value1]}${cupSizeArray[value2]}"
-                cupNumber = value1
-                cupSize = value2
-                cup.text = cupValue
-                user.cup = cupValue
-            }
-        }
-        ageButton.setOnClickListener {
-            Picker.showPicker(activity, getString(R.string.pick_age), 16, 70, user.age) { value, _ ->
-                age.text = getString(R.string.age_value_template, value)
-                user.age = value
-            }
+            showCupPicker()
         }
 
         viewModel.error.observe(this, Observer {
@@ -113,15 +99,58 @@ class SetupWizardTwoFragment : BaseFragment() {
         })
     }
 
+    private fun showHeightPicker() {
+        Picker.showPicker(activity, getString(R.string.pick_height), 150, 230, user.height) { value, _ ->
+            height.text = getString(R.string.height_value_template, value)
+            user.height = value
+        }
+    }
+
+    private fun showAgePicker() {
+        Picker.showPicker(activity, getString(R.string.pick_age), 16, 70, user.age) { value, _ ->
+            age.text = getString(R.string.age_value_template, value)
+            user.age = value
+        }
+    }
+
+    private fun showCupPicker() {
+        Picker.showPicker(activity, getString(R.string.pick_cup), cupNumberArray, cupNumber, cupSizeArray, cupSize) { value1, value2 ->
+            val cupValue = "${cupNumberArray[value1]}${cupSizeArray[value2]}"
+            cupNumber = value1
+            cupSize = value2
+            cup.text = cupValue
+            user.cup = cupValue
+        }
+    }
+
+    private fun showWeightPicker() {
+        Picker.showPicker(activity, getString(R.string.pick_weight), 40, 150, user.weight.toInt()) { value, _ ->
+            weight.text = getString(R.string.weight_value_template, value)
+            user.weight = value.toDouble()
+        }
+    }
 
     private fun isValid(): Boolean {
-        if (user.age > 0 && user.height > 0) {
-            if (user.sex == Sex.FEMALE.value && !TextUtils.isEmpty(user.cup)) {
-                return true
+        if (user.height > 0) {
+            if (user.age > 0) {
+                if (user.sex == Sex.FEMALE.value) {
+                    if (!TextUtils.isEmpty(user.cup)) {
+                        return true
+                    } else {
+                        showCupPicker()
+                    }
+                } else {
+                    if (user.weight > 0) {
+                        return true
+                    } else {
+                        showWeightPicker()
+                    }
+                }
+            } else {
+                showAgePicker()
             }
-            if (user.sex == Sex.MALE.value && user.weight > 0) {
-                return true
-            }
+        } else {
+            showHeightPicker()
         }
         return false
     }

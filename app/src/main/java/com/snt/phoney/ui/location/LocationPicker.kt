@@ -7,6 +7,7 @@ import android.os.Bundle
 import android.view.*
 import android.view.animation.CycleInterpolator
 import android.view.inputmethod.EditorInfo
+import androidx.appcompat.widget.Toolbar
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -28,7 +29,7 @@ import kotlinx.android.synthetic.main.fragment_location_picker1.*
 /**
  *
  */
-class LocationPicker : BaseFragment() {
+class LocationPicker : BaseFragment(),Toolbar.OnMenuItemClickListener {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -59,6 +60,7 @@ class LocationPicker : BaseFragment() {
         viewModel = ViewModelProviders.of(this, viewModelFactory).get(LocationViewModel::class.java)
         enableOptionsMenu(toolbar, false, R.menu.location_picker)
         toolbar.setNavigationOnClickListener { activity?.onBackPressed() }
+        toolbar.setOnMenuItemClickListener(this)
         titleTextView.setText(R.string.location_picker_title)
 
         mapProxy = MapLocationFactory.create(requireContext(), mapView = mapView)
@@ -133,12 +135,12 @@ class LocationPicker : BaseFragment() {
         }
     }
 
-    override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
-        menu.clear()
-        inflater.inflate(R.menu.location_picker, menu)
-    }
+//    override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
+//        menu.clear()
+//        inflater.inflate(R.menu.location_picker, menu)
+//    }
 
-    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+    override fun onMenuItemClick(item: MenuItem): Boolean {
         return when (item.itemId) {
             R.id.confirm -> {
                 adapter.getSelected()?.let {

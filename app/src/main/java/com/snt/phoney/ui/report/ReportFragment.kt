@@ -10,23 +10,25 @@ import android.util.TypedValue
 import android.view.*
 import android.widget.RadioGroup
 import androidx.appcompat.widget.AppCompatRadioButton
+import androidx.appcompat.widget.Toolbar
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
 import com.snt.phoney.R
 import com.snt.phoney.base.BaseFragment
+import com.snt.phoney.base.ProgressDialog
 import com.snt.phoney.domain.model.ReportReason
 import com.snt.phoney.extensions.dip
+import com.snt.phoney.extensions.setSoftInputMode
 import com.snt.phoney.extensions.snackbar
 import com.snt.phoney.utils.Picker
 import com.snt.phoney.utils.data.Constants
 import com.snt.phoney.widget.PhotoFlowAdapter
 import com.zhihu.matisse.Matisse
-import com.zhihu.matisse.internal.utils.PathUtils
 import kotlinx.android.synthetic.main.app_toolbar.*
 import kotlinx.android.synthetic.main.fragment_report.*
 import java.io.File
 
-class ReportFragment : BaseFragment() {
+class ReportFragment : BaseFragment(), Toolbar.OnMenuItemClickListener {
 
     companion object {
         @JvmStatic
@@ -41,6 +43,8 @@ class ReportFragment : BaseFragment() {
 
     private var selectedPhotoUris = ArrayList<Uri>()
     private var selectedPhotoPath = ""
+
+    private var progressDialog: ProgressDialog? = null
 
     private lateinit var targetUuid: String
     /**
@@ -64,8 +68,11 @@ class ReportFragment : BaseFragment() {
 
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
-        enableOptionsMenu(toolbar, false, R.menu.report)
+        setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_ADJUST_RESIZE)
         viewModel = ViewModelProviders.of(this, viewModelFactory).get(ReportViewModel::class.java)
+        enableOptionsMenu(toolbar, false, R.menu.report)
+        toolbar.setOnMenuItemClickListener(this)
+
         toolbar.setNavigationOnClickListener { activity?.onBackPressed() }
         titleTextView.setText(R.string.report_title)
 
@@ -76,10 +83,12 @@ class ReportFragment : BaseFragment() {
         })
 
         viewModel.error.observe(this, Observer {
+            progressDialog?.dismiss()
             snackbar(it)
         })
 
         viewModel.reportSuccess.observe(this, Observer {
+            progressDialog?.dismiss()
             snackbar(it)
             view?.postDelayed({
                 activity?.onBackPressed()
@@ -123,14 +132,17 @@ class ReportFragment : BaseFragment() {
         }
     }
 
-    override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
-        inflater.inflate(R.menu.report, menu)
-    }
+//    override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
+//        inflater.inflate(R.menu.report, menu)
+//    }
 
-    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+    override fun onMenuItemClick(item: MenuItem): Boolean {
         return when (item.itemId) {
             R.id.report -> {
                 if (valid()) {
+                    progressDialog = ProgressDialog()
+                            .cancelable(false)
+                            .also { it.show(childFragmentManager, "progress") }
                     val content = contentView.text?.toString() ?: ""
                     val file = File(selectedPhotoPath)
                     viewModel.report(checkedReason?.id.toString(), targetUuid, content, type, file)

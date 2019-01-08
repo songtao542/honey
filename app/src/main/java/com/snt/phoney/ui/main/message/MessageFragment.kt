@@ -5,6 +5,7 @@ import android.view.LayoutInflater
 import android.view.Menu
 import android.view.MenuInflater
 import android.view.MenuItem
+import androidx.appcompat.widget.Toolbar
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.ViewModelProviders
@@ -27,7 +28,7 @@ import javax.inject.Inject
  * A fragment representing a list of Items.
  * Activities containing this fragment MUST implement the
  */
-class MessageFragment : ConversationListFragment(), Injectable {
+class MessageFragment : ConversationListFragment(), Toolbar.OnMenuItemClickListener, Injectable {
 
     @Inject
     lateinit var viewModelFactory: ViewModelProvider.Factory
@@ -36,9 +37,10 @@ class MessageFragment : ConversationListFragment(), Injectable {
 
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
-        enableOptionsMenu(toolbar, false, R.menu.message)
-
         viewModel = ViewModelProviders.of(this, viewModelFactory).get(MessageViewModel::class.java)
+
+        enableOptionsMenu(toolbar, false, R.menu.message)
+        toolbar.setOnMenuItemClickListener(this)
 
         val inflater = LayoutInflater.from(requireContext())
         val officialMessageView = inflater.inflate(R.layout.fragment_message, null)
@@ -113,16 +115,16 @@ class MessageFragment : ConversationListFragment(), Injectable {
         viewModel.listPhotoApply()
     }
 
-    override fun onResume() {
-        super.onResume()
-        setMenuVisibility(true)
-    }
+//    override fun onResume() {
+//        super.onResume()
+//        setMenuVisibility(true)
+//    }
+//
+//    override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
+//        inflater?.inflate(R.menu.message, menu)
+//    }
 
-    override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
-        inflater?.inflate(R.menu.message, menu)
-    }
-
-    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+    override fun onMenuItemClick(item: MenuItem): Boolean {
         return when (item?.itemId) {
             R.id.friendRecommend -> {
                 startActivity<NearbyActivity>(Page.NEARBY)

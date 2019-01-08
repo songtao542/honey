@@ -3,6 +3,7 @@ package com.snt.phoney.ui.main.home
 import android.os.Bundle
 import android.text.TextUtils
 import android.view.*
+import androidx.appcompat.widget.Toolbar
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentStatePagerAdapter
 import androidx.lifecycle.Observer
@@ -19,7 +20,7 @@ import kotlinx.android.synthetic.main.fragment_home.*
 import java.util.*
 
 
-class HomeFragment : BaseFragment() {
+class HomeFragment : BaseFragment(), Toolbar.OnMenuItemClickListener {
 
     companion object {
         fun newInstance() = HomeFragment()
@@ -39,6 +40,7 @@ class HomeFragment : BaseFragment() {
         viewModel = ViewModelProviders.of(this, viewModelFactory).get(FriendViewModel::class.java)
 
         enableOptionsMenu(homeToolbar, false, R.menu.home)
+        homeToolbar.setOnMenuItemClickListener(this)
 
         homeTab.setupWithViewPager(homePager)
         homeTab.tabMode = TabLayout.MODE_SCROLLABLE
@@ -78,16 +80,16 @@ class HomeFragment : BaseFragment() {
         })
     }
 
-    override fun onResume() {
-        super.onResume()
-        setMenuVisibility(true)
-    }
+//    override fun onResume() {
+//        super.onResume()
+//        setMenuVisibility(true)
+//    }
+//
+//    override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
+//        inflater?.inflate(R.menu.home, menu)
+//    }
 
-    override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
-        inflater?.inflate(R.menu.home, menu)
-    }
-
-    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+    override fun onMenuItemClick(item: MenuItem): Boolean {
         return when (item.itemId) {
             R.id.findCity -> {
                 Picker.showPicker(activity, getString(R.string.select_city), mPickerIndex1, mPickerIndex2, provider = { picker ->

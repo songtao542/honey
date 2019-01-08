@@ -3,6 +3,7 @@ package com.snt.phoney.ui.wallet
 import android.os.Bundle
 import android.util.Log
 import android.view.*
+import androidx.appcompat.widget.Toolbar
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentStatePagerAdapter
 import com.snt.phoney.R
@@ -18,7 +19,7 @@ import java.util.*
 /**
  *
  */
-class WalletDetailFragment : Fragment() {
+class WalletDetailFragment : Fragment(),Toolbar.OnMenuItemClickListener {
 
     companion object {
         @JvmStatic
@@ -52,6 +53,7 @@ class WalletDetailFragment : Fragment() {
         super.onActivityCreated(savedInstanceState)
         enableOptionsMenu(toolbar, false, R.menu.wallet_detail)
         toolbar.setNavigationOnClickListener { activity?.onBackPressed() }
+        toolbar.setOnMenuItemClickListener(this)
         titleTextView.setText(R.string.view_records)
 
         tabLayout.setupWithViewPager(viewPager)
@@ -90,12 +92,12 @@ class WalletDetailFragment : Fragment() {
         }
     }
 
-    override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
-        menu.clear()
-        inflater.inflate(R.menu.wallet_detail, menu)
-    }
+//    override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
+//        menu.clear()
+//        inflater.inflate(R.menu.wallet_detail, menu)
+//    }
 
-    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+    override fun onMenuItemClick(item: MenuItem): Boolean {
         when (item.itemId) {
             R.id.query -> {
                 Picker.showPicker(activity, getString(R.string.select_daytime),

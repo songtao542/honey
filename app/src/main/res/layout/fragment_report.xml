@@ -7,112 +7,122 @@
     android:orientation="vertical"
     tools:context=".ui.report.ReportFragment">
 
-    <include layout="@layout/app_toolbar"/>
+    <include layout="@layout/app_toolbar" />
 
-    <androidx.appcompat.widget.AppCompatTextView
+    <ScrollView
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:background="@color/light_gray"
-        android:gravity="bottom"
-        android:minHeight="40dp"
-        android:paddingLeft="10dp"
-        android:paddingBottom="5dp"
-        android:text="@string/report_reason"
-        android:textColor="@color/gray"
-        android:textSize="@dimen/textsize_small" />
+        android:layout_height="wrap_content">
 
-    <RadioGroup
-        android:id="@+id/radioGroup"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginLeft="10dp"
-        android:layout_marginRight="10dp"
-        android:paddingLeft="10dp"
-        android:paddingRight="10dp">
-
-        <androidx.appcompat.widget.AppCompatRadioButton
+        <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:drawablePadding="10dp"
-            android:layoutDirection="rtl"
-            android:paddingTop="15dp"
-            android:paddingBottom="15dp"
-            android:text="@string/report_ad"
-            android:textSize="@dimen/textsize_normal" />
+            android:orientation="vertical">
 
-        <androidx.appcompat.widget.AppCompatRadioButton
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:drawablePadding="10dp"
-            android:layoutDirection="rtl"
-            android:paddingTop="15dp"
-            android:paddingBottom="15dp"
-            android:text="@string/report_fake"
-            android:textSize="@dimen/textsize_normal" />
+            <androidx.appcompat.widget.AppCompatTextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@color/light_gray"
+                android:gravity="bottom"
+                android:minHeight="40dp"
+                android:paddingLeft="10dp"
+                android:paddingBottom="5dp"
+                android:text="@string/report_reason"
+                android:textColor="@color/gray"
+                android:textSize="@dimen/textsize_small" />
 
-        <androidx.appcompat.widget.AppCompatRadioButton
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:drawablePadding="10dp"
-            android:layoutDirection="rtl"
-            android:paddingTop="15dp"
-            android:paddingBottom="15dp"
-            android:text="@string/report_bilk"
-            android:textSize="@dimen/textsize_normal" />
-    </RadioGroup>
+            <RadioGroup
+                android:id="@+id/radioGroup"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="10dp"
+                android:layout_marginRight="10dp"
+                android:paddingLeft="10dp"
+                android:paddingRight="10dp">
 
-    <androidx.appcompat.widget.AppCompatTextView
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:background="@color/light_gray"
-        android:gravity="bottom"
-        android:minHeight="40dp"
-        android:paddingLeft="10dp"
-        android:paddingBottom="5dp"
-        android:text="@string/report_attachment_tip"
-        android:textColor="@color/gray"
-        android:textSize="@dimen/textsize_small" />
+                <androidx.appcompat.widget.AppCompatRadioButton
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:drawablePadding="10dp"
+                    android:layoutDirection="rtl"
+                    android:paddingTop="15dp"
+                    android:paddingBottom="15dp"
+                    android:text="@string/report_ad"
+                    android:textSize="@dimen/textsize_normal" />
 
-    <com.snt.phoney.widget.FlowLayout
-        android:id="@+id/attachments"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:background="@color/white"
-        android:paddingLeft="10dp"
-        android:paddingTop="10dp"
-        android:paddingRight="10dp"
-        android:paddingBottom="10dp"
-        app:alignContent="flex_start"
-        app:alignItems="flex_start"
-        app:flexWrap="wrap"
-        app:justifyContent="flex_start"
-        app:square="true" />
+                <androidx.appcompat.widget.AppCompatRadioButton
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:drawablePadding="10dp"
+                    android:layoutDirection="rtl"
+                    android:paddingTop="15dp"
+                    android:paddingBottom="15dp"
+                    android:text="@string/report_fake"
+                    android:textSize="@dimen/textsize_normal" />
 
-    <androidx.appcompat.widget.AppCompatTextView
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:background="@color/light_gray"
-        android:gravity="bottom"
-        android:minHeight="40dp"
-        android:paddingLeft="10dp"
-        android:paddingBottom="5dp"
-        android:text="@string/report_des_tip"
-        android:textColor="@color/gray"
-        android:textSize="@dimen/textsize_small" />
+                <androidx.appcompat.widget.AppCompatRadioButton
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:drawablePadding="10dp"
+                    android:layoutDirection="rtl"
+                    android:paddingTop="15dp"
+                    android:paddingBottom="15dp"
+                    android:text="@string/report_bilk"
+                    android:textSize="@dimen/textsize_normal" />
+            </RadioGroup>
 
-    <EditText
-        android:id="@+id/contentView"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:background="@color/white"
-        android:gravity="left|top"
-        android:hint="@string/report_des_hint"
-        android:minHeight="120dp"
-        android:padding="10dp"
-        android:paddingLeft="10dp"
-        android:paddingTop="10dp"
-        android:paddingBottom="10dp"
-        android:textColor="@color/black"
-        android:textSize="@dimen/textsize_normal" />
+            <androidx.appcompat.widget.AppCompatTextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@color/light_gray"
+                android:gravity="bottom"
+                android:minHeight="40dp"
+                android:paddingLeft="10dp"
+                android:paddingBottom="5dp"
+                android:text="@string/report_attachment_tip"
+                android:textColor="@color/gray"
+                android:textSize="@dimen/textsize_small" />
 
+            <com.snt.phoney.widget.FlowLayout
+                android:id="@+id/attachments"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@color/white"
+                android:paddingLeft="10dp"
+                android:paddingTop="10dp"
+                android:paddingRight="10dp"
+                android:paddingBottom="10dp"
+                app:alignContent="flex_start"
+                app:alignItems="flex_start"
+                app:flexWrap="wrap"
+                app:justifyContent="flex_start"
+                app:square="true" />
+
+            <androidx.appcompat.widget.AppCompatTextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@color/light_gray"
+                android:gravity="bottom"
+                android:minHeight="40dp"
+                android:paddingLeft="10dp"
+                android:paddingBottom="5dp"
+                android:text="@string/report_des_tip"
+                android:textColor="@color/gray"
+                android:textSize="@dimen/textsize_small" />
+
+            <EditText
+                android:id="@+id/contentView"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@color/white"
+                android:gravity="left|top"
+                android:hint="@string/report_des_hint"
+                android:minHeight="120dp"
+                android:padding="10dp"
+                android:paddingLeft="10dp"
+                android:paddingTop="10dp"
+                android:paddingBottom="10dp"
+                android:textColor="@color/black"
+                android:textSize="@dimen/textsize_normal" />
+        </LinearLayout>
+    </ScrollView>
 </LinearLayout>

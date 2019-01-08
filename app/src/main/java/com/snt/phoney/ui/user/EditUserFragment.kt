@@ -3,6 +3,7 @@ package com.snt.phoney.ui.user
 import android.os.Bundle
 import android.text.TextUtils
 import android.view.*
+import androidx.appcompat.widget.Toolbar
 import androidx.databinding.DataBindingUtil
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
@@ -20,7 +21,7 @@ import com.zaaach.citypicker.model.City
 import kotlinx.android.synthetic.main.app_toolbar.*
 import kotlinx.android.synthetic.main.fragment_edit_user.*
 
-class EditUserFragment : BaseFragment() {
+class EditUserFragment : BaseFragment(),Toolbar.OnMenuItemClickListener {
 
     companion object {
         @JvmStatic
@@ -60,9 +61,11 @@ class EditUserFragment : BaseFragment() {
 
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
-        enableOptionsMenu(toolbar, false, R.menu.edit_user)
         setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_ADJUST_RESIZE)
         viewModel = ViewModelProviders.of(this, viewModelFactory).get(EditUserViewModel::class.java)
+        enableOptionsMenu(toolbar, false, R.menu.edit_user)
+        toolbar.setOnMenuItemClickListener(this)
+
         binding.user = viewModel.user
 
         toolbar.setNavigationOnClickListener { activity?.finish() }
@@ -143,11 +146,11 @@ class EditUserFragment : BaseFragment() {
         })
     }
 
-    override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
-        inflater?.inflate(R.menu.edit_user, menu)
-    }
+//    override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
+//        inflater?.inflate(R.menu.edit_user, menu)
+//    }
 
-    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+    override fun onMenuItemClick(item: MenuItem): Boolean {
         return when (item?.itemId) {
             R.id.confirm -> {
                 if (isValid()) {

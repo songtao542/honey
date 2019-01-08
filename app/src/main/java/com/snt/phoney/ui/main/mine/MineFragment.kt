@@ -218,7 +218,8 @@ class MineFragment : BaseFragment(), OnSettingItemClickListener, OnSignOutClickL
 
     private fun showProgress(tip: String) {
         progressDialog = ProgressDialog.newInstance(tip)
-        progressDialog!!.show(childFragmentManager, "progress")
+                .cancelable(false)
+                .also { it.show(childFragmentManager, "progress") }
     }
 
     private fun dismissProgress() {
