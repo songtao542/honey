@@ -2,8 +2,6 @@ package com.snt.phoney.ui.main.message
 
 import android.os.Bundle
 import android.view.LayoutInflater
-import android.view.Menu
-import android.view.MenuInflater
 import android.view.MenuItem
 import androidx.appcompat.widget.Toolbar
 import androidx.lifecycle.Observer
@@ -18,6 +16,7 @@ import com.snt.phoney.extensions.startActivity
 import com.snt.phoney.ui.album.AlbumActivity
 import com.snt.phoney.ui.browser.BrowserActivity
 import com.snt.phoney.ui.dating.DatingActivity
+import com.snt.phoney.ui.main.UMengPageName
 import com.snt.phoney.ui.nearby.NearbyActivity
 import jiguang.chat.fragment.ConversationListFragment
 import kotlinx.android.synthetic.main.fragment_conv_list.*
@@ -28,7 +27,7 @@ import javax.inject.Inject
  * A fragment representing a list of Items.
  * Activities containing this fragment MUST implement the
  */
-class MessageFragment : ConversationListFragment(), Toolbar.OnMenuItemClickListener, Injectable {
+class MessageFragment : ConversationListFragment(), Toolbar.OnMenuItemClickListener, Injectable, UMengPageName {
 
     @Inject
     lateinit var viewModelFactory: ViewModelProvider.Factory
@@ -132,6 +131,10 @@ class MessageFragment : ConversationListFragment(), Toolbar.OnMenuItemClickListe
             }
             else -> super.onOptionsItemSelected(item)
         }
+    }
+
+    override fun getPageName(): String {
+        return javaClass.simpleName
     }
 
     companion object {

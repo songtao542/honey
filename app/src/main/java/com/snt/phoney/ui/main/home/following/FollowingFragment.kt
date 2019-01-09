@@ -10,15 +10,13 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import com.snt.phoney.R
 import com.snt.phoney.base.BaseFragment
 import com.snt.phoney.extensions.*
-import com.snt.phoney.ui.main.PagerFragment
 import cust.widget.loadmore.LoadMoreAdapter
 import kotlinx.android.synthetic.main.fragment_following_list.*
 
 /**
  * A fragment representing a list of Items.
  */
-class FollowingFragment : PagerFragment() {
-
+class FollowingFragment : BaseFragment() {
 
     lateinit var viewModel: FollowingViewModel
     lateinit var adapter: FollowingRecyclerViewAdapter

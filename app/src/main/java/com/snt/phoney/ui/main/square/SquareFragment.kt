@@ -2,36 +2,42 @@ package com.snt.phoney.ui.main.square
 
 
 import android.os.Bundle
-import android.util.Log
-import android.view.*
+import android.view.LayoutInflater
+import android.view.MenuItem
+import android.view.View
+import android.view.ViewGroup
 import androidx.appcompat.widget.Toolbar
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentStatePagerAdapter
+import androidx.viewpager.widget.ViewPager
 import com.snt.phoney.R
 import com.snt.phoney.base.BaseFragment
 import com.snt.phoney.base.Page
 import com.snt.phoney.extensions.startActivity
 import com.snt.phoney.ui.dating.DatingActivity
+import com.snt.phoney.ui.main.MainActivity
+import com.snt.phoney.ui.main.UMengPageName
 import com.snt.phoney.ui.main.square.official.OfficialRecommendFragment
 import com.snt.phoney.ui.main.square.popular.PopularRecommendFragment
 import com.snt.phoney.widget.TabLayout
 import kotlinx.android.synthetic.main.fragment_square.*
-import java.lang.Exception
 
 /**
  */
-class SquareFragment : BaseFragment(), Toolbar.OnMenuItemClickListener {
+class SquareFragment : BaseFragment(), Toolbar.OnMenuItemClickListener, UMengPageName {
 
     companion object {
         @JvmStatic
         fun newInstance() = SquareFragment()
     }
 
+    private var viewPager: ViewPager? = null
+
+    override fun enableUMengAgent(): Boolean = false
+
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         return inflater.inflate(R.layout.fragment_square, container, false)
     }
-
-    override fun openUmeng() = false
 
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
@@ -62,6 +68,21 @@ class SquareFragment : BaseFragment(), Toolbar.OnMenuItemClickListener {
                 }
             }
         }
+        squarePager.addOnPageChangeListener(object : ViewPager.OnPageChangeListener {
+            override fun onPageScrollStateChanged(state: Int) {
+            }
+
+            override fun onPageScrolled(position: Int, positionOffset: Float, positionOffsetPixels: Int) {
+            }
+
+            override fun onPageSelected(position: Int) {
+                val oldPageName = if (position == 0) getPageName(1) else getPageName(0)
+                val newPageName = getPageName(position)
+                (activity as MainActivity).onPageChanged(oldPageName, newPageName)
+            }
+
+        })
+        viewPager = squarePager
     }
 
 //    override fun onResume() {
@@ -83,13 +104,13 @@ class SquareFragment : BaseFragment(), Toolbar.OnMenuItemClickListener {
         }
     }
 
-    fun setChildFragmentUserVisibleHint(isVisibleToUser: Boolean) {
-        try {
-            (squarePager.adapter as FragmentStatePagerAdapter).getItem(squarePager.currentItem).userVisibleHint = isVisibleToUser
-        } catch (e: Exception) {
-            Log.d("SquareFragment", "error:${e.message},e")
-        }
+    private fun getPageName(position: Int): String {
+        return if (position == 0) "OfficialRecommendFragment" else "PopularRecommendFragment"
     }
 
+    override fun getPageName(): String {
+        val position = viewPager?.currentItem ?: 0
+        return getPageName(position)
+    }
 
 }

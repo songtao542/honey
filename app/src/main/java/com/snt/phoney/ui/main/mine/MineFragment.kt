@@ -31,6 +31,7 @@ import com.snt.phoney.ui.about.AboutActivity
 import com.snt.phoney.ui.album.AlbumActivity
 import com.snt.phoney.ui.browser.WebBrowserActivity
 import com.snt.phoney.ui.dating.DatingActivity
+import com.snt.phoney.ui.main.UMengPageName
 import com.snt.phoney.ui.privacy.PrivacyActivity
 import com.snt.phoney.ui.setup.BindPhoneFragment
 import com.snt.phoney.ui.share.ShareFragment
@@ -57,7 +58,7 @@ const val REQUEST_PAY_SETTING_CODE = 64
  */
 class MineFragment : BaseFragment(), OnSettingItemClickListener, OnSignOutClickListener,
         OnAddPhotoClickListener,
-        OnPhotoClickListener {
+        OnPhotoClickListener, UMengPageName {
 
     lateinit var viewModel: MineViewModel
 
@@ -375,6 +376,9 @@ class MineFragment : BaseFragment(), OnSettingItemClickListener, OnSignOutClickL
         }
     }
 
+    override fun getPageName(): String {
+        return javaClass.simpleName
+    }
 
     companion object {
         @JvmStatic

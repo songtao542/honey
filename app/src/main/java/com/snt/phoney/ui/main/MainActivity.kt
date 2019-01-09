@@ -3,21 +3,23 @@ package com.snt.phoney.ui.main
 import android.content.Context
 import android.content.Intent
 import android.os.Bundle
-import android.text.TextUtils
-import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProviders
 import com.google.android.material.bottomnavigation.BottomNavigationView
 import com.snt.phoney.R
 import com.snt.phoney.base.BaseActivity
 import com.snt.phoney.base.Page
-import com.snt.phoney.extensions.*
+import com.snt.phoney.extensions.disableShiftMode
+import com.snt.phoney.extensions.hideIcon
+import com.snt.phoney.extensions.setLayoutFullscreen
+import com.snt.phoney.extensions.startActivity
 import com.snt.phoney.ui.main.home.HomeFragment
 import com.snt.phoney.ui.main.message.MessageFragment
 import com.snt.phoney.ui.main.mine.MineFragment
 import com.snt.phoney.ui.main.square.SquareFragment
 import com.snt.phoney.ui.privacy.PrivacyActivity
 import com.snt.phoney.utils.data.Constants
+import com.umeng.analytics.MobclickAgent
 import kotlinx.android.synthetic.main.activity_main.*
 
 
@@ -41,23 +43,62 @@ class MainActivity : BaseActivity() {
     private val mOnNavigationItemSelectedListener = BottomNavigationView.OnNavigationItemSelectedListener { item ->
         when (item.itemId) {
             R.id.navigation_home -> {
-                showFragment(TAG_HOME)
+                showFragmentProxy(TAG_HOME)
                 return@OnNavigationItemSelectedListener true
             }
             R.id.navigation_square -> {
-                showFragment(TAG_SQUARE)
+                showFragmentProxy(TAG_SQUARE)
                 return@OnNavigationItemSelectedListener true
             }
             R.id.navigation_message -> {
-                showFragment(TAG_MESSAGE)
+                showFragmentProxy(TAG_MESSAGE)
                 return@OnNavigationItemSelectedListener true
             }
             R.id.navigation_mine -> {
-                showFragment(TAG_MINE)
+                showFragmentProxy(TAG_MINE)
                 return@OnNavigationItemSelectedListener true
             }
         }
         return@OnNavigationItemSelectedListener false
+    }
+
+    private fun showFragmentProxy(tag: String) {
+        getUMengPageName()?.let {
+            MobclickAgent.onPageEnd(it)
+        }
+        showFragment(tag)
+        getUMengPageName()?.let {
+            MobclickAgent.onPageStart(it)
+        }
+    }
+
+    override fun onResume() {
+        super.onResume()
+        checkPrivacyLock()
+        getUMengPageName()?.let {
+            MobclickAgent.onPageStart(it)
+        }
+    }
+
+    override fun onPause() {
+        super.onPause()
+        getUMengPageName()?.let {
+            MobclickAgent.onPageEnd(it)
+        }
+    }
+
+    private fun getUMengPageName(): String? {
+        val current = currentFragment
+        return if (current is UMengPageName) {
+            current.getPageName()
+        } else {
+            null
+        }
+    }
+
+    fun onPageChanged(oldPageName: String, newPageName: String) {
+        MobclickAgent.onPageEnd(oldPageName)
+        MobclickAgent.onPageStart(newPageName)
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -98,11 +139,6 @@ class MainActivity : BaseActivity() {
         //}
     }
 
-    override fun onResume() {
-        super.onResume()
-        checkPrivacyLock()
-    }
-
     private fun showFragment(tag: String) {
         val willShow = getFragmentByTag(tag)
         if (willShow != currentFragment) {
@@ -113,21 +149,6 @@ class MainActivity : BaseActivity() {
             fragmentManager.findFragmentByTag(tag)?.apply {
                 transaction.show(this)
             } ?: transaction.add(R.id.fragmentContainer, willShow, tag)
-
-            val current = currentFragment
-            if (current is HomeFragment) {
-                current.setChildFragmentUserVisibleHint(false)
-            }
-            if (current is SquareFragment) {
-                current.setChildFragmentUserVisibleHint(false)
-            }
-
-            if (willShow is HomeFragment) {
-                willShow.setChildFragmentUserVisibleHint(true)
-            }
-            if (willShow is SquareFragment) {
-                willShow.setChildFragmentUserVisibleHint(true)
-            }
 
             transaction.commit()
             currentFragment = willShow

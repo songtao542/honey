@@ -1,7 +1,5 @@
 package com.snt.phoney.base
 
-import android.os.Bundle
-import android.util.Log
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.Toolbar
 import androidx.fragment.app.Fragment
@@ -35,23 +33,23 @@ abstract class BaseFragment : Fragment(), Injectable {
         }
     }
 
-    open fun openUmeng() = true
+    /**
+     * for subclass to override
+     */
+    open fun enableUMengAgent() = true
 
     override fun onResume() {
         super.onResume()
-        Log.d("TTTT", "Fragment:${javaClass.simpleName}  onResume")
-        if (openUmeng()) MobclickAgent.onPageStart(javaClass.simpleName)
+        if (enableUMengAgent()) {
+            MobclickAgent.onPageStart(javaClass.simpleName)
+        }
     }
 
     override fun onPause() {
         super.onPause()
-        Log.d("TTTT", "Fragment:${javaClass.simpleName}  onPause")
-        if (openUmeng()) MobclickAgent.onPageEnd(javaClass.simpleName)
-    }
-
-    companion object {
-        inline fun <reified T : Fragment> newInstance(arguments: Bundle? = null) = T::class.java.newInstance().apply {
-            this.arguments = arguments
+        if (enableUMengAgent()) {
+            MobclickAgent.onPageEnd(javaClass.simpleName)
         }
     }
+
 }

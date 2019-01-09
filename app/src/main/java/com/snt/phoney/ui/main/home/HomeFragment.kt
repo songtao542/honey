@@ -2,8 +2,10 @@ package com.snt.phoney.ui.main.home
 
 import android.os.Bundle
 import android.text.TextUtils
-import android.util.Log
-import android.view.*
+import android.view.LayoutInflater
+import android.view.MenuItem
+import android.view.View
+import android.view.ViewGroup
 import androidx.appcompat.widget.Toolbar
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentStatePagerAdapter
@@ -12,6 +14,8 @@ import androidx.lifecycle.ViewModelProviders
 import androidx.viewpager.widget.ViewPager
 import com.snt.phoney.R
 import com.snt.phoney.base.BaseFragment
+import com.snt.phoney.ui.main.MainActivity
+import com.snt.phoney.ui.main.UMengPageName
 import com.snt.phoney.ui.main.home.following.FollowingFragment
 import com.snt.phoney.ui.main.home.friend.FriendFragment
 import com.snt.phoney.ui.main.home.friend.FriendViewModel
@@ -21,7 +25,7 @@ import kotlinx.android.synthetic.main.fragment_home.*
 import java.util.*
 
 
-class HomeFragment : BaseFragment(), Toolbar.OnMenuItemClickListener {
+class HomeFragment : BaseFragment(), Toolbar.OnMenuItemClickListener, UMengPageName {
 
     companion object {
         fun newInstance() = HomeFragment()
@@ -32,7 +36,9 @@ class HomeFragment : BaseFragment(), Toolbar.OnMenuItemClickListener {
     private var mPickerIndex1 = 0
     private var mPickerIndex2 = 0
 
-    override fun openUmeng() = false
+    private var viewPager: ViewPager? = null
+
+    override fun enableUMengAgent(): Boolean = false
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         return inflater.inflate(R.layout.fragment_home, container, false)
@@ -79,8 +85,12 @@ class HomeFragment : BaseFragment(), Toolbar.OnMenuItemClickListener {
 
             override fun onPageSelected(position: Int) {
                 homeToolbar.menu.findItem(R.id.findCity)?.isVisible = position == 0
+                val oldPageName = if (position == 0) getPageName(1) else getPageName(0)
+                val newPageName = getPageName(position)
+                (activity as MainActivity).onPageChanged(oldPageName, newPageName)
             }
         })
+        viewPager = homePager
     }
 
 //    override fun onResume() {
@@ -143,11 +153,12 @@ class HomeFragment : BaseFragment(), Toolbar.OnMenuItemClickListener {
         }
     }
 
-    fun setChildFragmentUserVisibleHint(isVisibleToUser: Boolean) {
-        try {
-            (homePager.adapter as FragmentStatePagerAdapter).getItem(homePager.currentItem).userVisibleHint = isVisibleToUser
-        } catch (e: Exception) {
-            Log.d("HomeFragment", "error:${e.message},e")
-        }
+    private fun getPageName(position: Int): String {
+        return if (position == 0) "FriendFragment" else "FollowingFragment"
+    }
+
+    override fun getPageName(): String {
+        val position = viewPager?.currentItem ?: 0
+        return getPageName(position)
     }
 }

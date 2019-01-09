@@ -3,7 +3,6 @@ package com.snt.phoney.ui.main.home.friend
 import android.Manifest
 import android.os.Bundle
 import android.text.TextUtils
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -14,9 +13,7 @@ import androidx.recyclerview.widget.GridLayoutManager
 import com.snt.phoney.R
 import com.snt.phoney.base.BaseFragment
 import com.snt.phoney.extensions.*
-import com.snt.phoney.ui.main.PagerFragment
 import com.snt.phoney.widget.itemdecoration.MonospacedItemDecoration
-import com.umeng.analytics.MobclickAgent
 import cust.widget.loadmore.LoadMoreAdapter
 import kotlinx.android.synthetic.main.fragment_friend_list.*
 import kotlinx.android.synthetic.main.fragment_friend_tag.*
@@ -24,7 +21,7 @@ import kotlinx.android.synthetic.main.fragment_friend_tag.*
 /**
  * A fragment representing a list of Items.
  */
-class FriendFragment : PagerFragment() {
+class FriendFragment : BaseFragment() {
 
     private lateinit var viewModel: FriendViewModel
 
