@@ -78,9 +78,12 @@ class UserInfoFragment : BaseFragment() {
                 nestedLayout.setMinHeight(toolbar.height)
             }
         })
-        nestedLayout.setOnTopVisibleHeightChangeListener { totalHeight, visibleHeight ->
-            Log.d("TTTT", "lllllllll totalHeight=$totalHeight   visibleHeight=$visibleHeight")
-            headerLayout.alpha = 1f - (visibleHeight.toFloat() / totalHeight.toFloat())
+        nestedLayout.setOnTopVisibleHeightChangeListener { heightEnough, totalHeight, visibleHeight ->
+            if (heightEnough) {
+                headerLayout.alpha = 1f - (visibleHeight.toFloat() / totalHeight.toFloat())
+            } else {
+                headerLayout.alpha = 1f - (visibleHeight.toFloat() / totalHeight.toFloat()) + 0.2f
+            }
         }
 
         setupUserInfo(user)

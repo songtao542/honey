@@ -10,185 +10,231 @@
 
     <include layout="@layout/app_toolbar" />
 
-    <androidx.appcompat.widget.AppCompatTextView
+    <ScrollView
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="20dp"
-        android:paddingLeft="20dp"
-        android:paddingRight="20dp"
-        android:text="@string/height_label"
-        android:textColor="@color/black"
-        android:textSize="@dimen/textsize_normal" />
+        android:layout_height="wrap_content">
 
 
-    <cust.material.widget.rangebar.RangeBar
-        android:id="@+id/heightBar"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="20dp"
-        android:layout_marginEnd="20dp"
-        app:mrb_connectingLineColors="@array/connecting_colors"
-        app:mrb_connectingLineWeight="10dp"
-        app:mrb_pinColor="@android:color/transparent"
-        app:mrb_pinMaxFont="12sp"
-        app:mrb_pinMinFont="10sp"
-        app:mrb_pinRadius="14dp"
-        app:mrb_pinTextColor="@color/dark_gray"
-        app:mrb_rangeBar="true"
-        app:mrb_rangeBarPaddingBottom="16dp"
-        app:mrb_rangeBar_rounded="true"
-        app:mrb_selectorBoundaryColor="@color/light_gray"
-        app:mrb_selectorBoundarySize="1dp"
-        app:mrb_selectorColor="@color/white"
-        app:mrb_selectorSize="14dp"
-        app:mrb_temporaryPins="false"
-        app:mrb_tickColor="#03A9F4"
-        app:mrb_tickEnd="220"
-        app:mrb_tickInterval="1"
-        app:mrb_tickStart="160" />
-
-    <View
-        android:layout_width="match_parent"
-        android:layout_height="1px"
-        android:layout_marginTop="20dp"
-        android:background="@color/gray_underline" />
-
-    <androidx.appcompat.widget.AppCompatTextView
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="20dp"
-        android:paddingLeft="20dp"
-        android:paddingRight="20dp"
-        android:text="@string/age_label"
-        android:textColor="@color/black"
-        android:textSize="@dimen/textsize_normal" />
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
 
 
-    <cust.material.widget.rangebar.RangeBar
-        android:id="@+id/ageBar"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="20dp"
-        android:layout_marginEnd="20dp"
-        app:mrb_connectingLineColors="@array/connecting_colors"
-        app:mrb_connectingLineWeight="10dp"
-        app:mrb_pinColor="@android:color/transparent"
-        app:mrb_pinMaxFont="12sp"
-        app:mrb_pinMinFont="10sp"
-        app:mrb_pinRadius="14dp"
-        app:mrb_pinTextColor="@color/dark_gray"
-        app:mrb_rangeBar="true"
-        app:mrb_rangeBarPaddingBottom="16dp"
-        app:mrb_rangeBar_rounded="true"
-        app:mrb_selectorBoundaryColor="@color/light_gray"
-        app:mrb_selectorBoundarySize="1dp"
-        app:mrb_selectorColor="@color/white"
-        app:mrb_selectorSize="14dp"
-        app:mrb_temporaryPins="false"
-        app:mrb_tickColor="#03A9F4"
-        app:mrb_tickEnd="40"
-        app:mrb_tickInterval="1"
-        app:mrb_tickStart="16" />
-
-    <View
-        android:layout_width="match_parent"
-        android:layout_height="1px"
-        android:layout_marginTop="20dp"
-        android:background="@color/gray_underline" />
-
-    <androidx.appcompat.widget.AppCompatTextView
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="20dp"
-        android:paddingLeft="20dp"
-        android:paddingRight="20dp"
-        android:text="@string/cup_label"
-        android:textColor="@color/black"
-        android:textSize="@dimen/textsize_normal" />
+            <androidx.appcompat.widget.AppCompatTextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="20dp"
+                android:paddingLeft="20dp"
+                android:paddingRight="20dp"
+                android:text="@string/height_label"
+                android:textColor="@color/black"
+                android:textSize="@dimen/textsize_normal" />
 
 
-    <cust.material.widget.rangebar.RangeBar
-        android:id="@+id/cupBar"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="20dp"
-        android:layout_marginEnd="20dp"
-        app:mrb_connectingLineColors="@array/connecting_colors"
-        app:mrb_connectingLineWeight="10dp"
-        app:mrb_pinColor="@android:color/transparent"
-        app:mrb_pinMaxFont="12sp"
-        app:mrb_pinMinFont="10sp"
-        app:mrb_pinRadius="14dp"
-        app:mrb_pinTextColor="@color/dark_gray"
-        app:mrb_rangeBar="true"
-        app:mrb_rangeBarPaddingBottom="16dp"
-        app:mrb_rangeBar_rounded="true"
-        app:mrb_selectorBoundaryColor="@color/light_gray"
-        app:mrb_selectorBoundarySize="1dp"
-        app:mrb_selectorColor="@color/white"
-        app:mrb_selectorSize="14dp"
-        app:mrb_temporaryPins="false"
-        app:mrb_tickColor="#03A9F4"
-        app:mrb_tickEnd="7"
-        app:mrb_tickInterval="1"
-        app:mrb_tickStart="1" />
+            <cust.material.widget.rangebar.RangeBar
+                android:id="@+id/heightBar"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="20dp"
+                android:layout_marginEnd="20dp"
+                app:mrb_connectingLineColor="?attr/colorPrimary"
+                app:mrb_connectingLineWeight="10dp"
+                app:mrb_pinColor="@android:color/transparent"
+                app:mrb_pinMaxFont="12sp"
+                app:mrb_pinMinFont="10sp"
+                app:mrb_pinRadius="14dp"
+                app:mrb_pinTextColor="@color/dark_gray"
+                app:mrb_rangeBar="true"
+                app:mrb_rangeBarPaddingBottom="16dp"
+                app:mrb_rangeBar_rounded="true"
+                app:mrb_selectorBoundaryColor="@color/light_gray"
+                app:mrb_selectorBoundarySize="1dp"
+                app:mrb_selectorColor="@color/white"
+                app:mrb_selectorSize="14dp"
+                app:mrb_temporaryPins="false"
+                app:mrb_tickColor="?attr/colorPrimary"
+                app:mrb_tickEnd="220"
+                app:mrb_tickInterval="1"
+                app:mrb_tickStart="160" />
 
-    <View
-        android:layout_width="match_parent"
-        android:layout_height="1px"
-        android:layout_marginTop="20dp"
-        android:background="@color/gray_underline" />
+            <androidx.appcompat.widget.AppCompatTextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                android:background="@drawable/topline_gray"
+                android:paddingLeft="20dp"
+                android:paddingTop="5dp"
+                android:paddingRight="20dp"
+                android:text="@string/age_label"
+                android:textColor="@color/black"
+                android:textSize="@dimen/textsize_normal" />
 
-    <FrameLayout
-        android:id="@+id/programButton"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:background="@drawable/underline_gray"
-        android:clickable="true"
-        android:minHeight="60dp"
-        android:paddingLeft="20dp"
-        android:paddingRight="20dp">
 
-        <androidx.appcompat.widget.AppCompatTextView
-            android:layout_width="wrap_content"
-            android:layout_height="@dimen/button_get_verification_code_height"
-            android:layout_gravity="center|left"
-            android:layout_marginRight="20dp"
-            android:gravity="center"
-            android:text="@string/dating_program"
-            android:textColor="@android:color/black"
-            android:textSize="@dimen/textsize_normal" />
+            <cust.material.widget.rangebar.RangeBar
+                android:id="@+id/ageBar"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="20dp"
+                android:layout_marginEnd="20dp"
+                app:mrb_connectingLineColor="?attr/colorPrimary"
+                app:mrb_connectingLineWeight="10dp"
+                app:mrb_pinColor="@android:color/transparent"
+                app:mrb_pinMaxFont="12sp"
+                app:mrb_pinMinFont="10sp"
+                app:mrb_pinRadius="14dp"
+                app:mrb_pinTextColor="@color/dark_gray"
+                app:mrb_rangeBar="true"
+                app:mrb_rangeBarPaddingBottom="16dp"
+                app:mrb_rangeBar_rounded="true"
+                app:mrb_selectorBoundaryColor="@color/light_gray"
+                app:mrb_selectorBoundarySize="1dp"
+                app:mrb_selectorColor="@color/white"
+                app:mrb_selectorSize="14dp"
+                app:mrb_temporaryPins="false"
+                app:mrb_tickColor="?attr/colorPrimary"
+                app:mrb_tickEnd="40"
+                app:mrb_tickInterval="1"
+                app:mrb_tickStart="16" />
 
-        <androidx.appcompat.widget.AppCompatTextView
-            android:id="@+id/datingProgram"
-            android:layout_width="wrap_content"
-            android:layout_height="@dimen/edittext_height"
-            android:layout_gravity="center_vertical|right"
-            android:gravity="center"
-            android:paddingLeft="36sp"
-            android:paddingRight="20dp"
-            android:text="@string/select_dating_program"
-            android:textColor="@color/dark_gray"
-            android:textSize="@dimen/textsize_normal" />
+            <androidx.appcompat.widget.AppCompatTextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                android:background="@drawable/topline_gray"
+                android:paddingLeft="20dp"
+                android:paddingTop="5dp"
+                android:paddingRight="20dp"
+                android:text="@string/weight_label"
+                android:textColor="@color/black"
+                android:textSize="@dimen/textsize_normal" />
 
-        <androidx.appcompat.widget.AppCompatImageView
-            android:layout_width="18dp"
-            android:layout_height="18dp"
-            android:layout_gravity="center_vertical|right"
-            app:srcCompat="@drawable/ic_right_arrow" />
+            <cust.material.widget.rangebar.RangeBar
+                android:id="@+id/weightBar"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="20dp"
+                android:layout_marginEnd="20dp"
+                app:mrb_connectingLineColor="?attr/colorPrimary"
+                app:mrb_connectingLineWeight="10dp"
+                app:mrb_pinColor="@android:color/transparent"
+                app:mrb_pinMaxFont="12sp"
+                app:mrb_pinMinFont="10sp"
+                app:mrb_pinRadius="14dp"
+                app:mrb_pinTextColor="@color/dark_gray"
+                app:mrb_rangeBar="true"
+                app:mrb_rangeBarPaddingBottom="16dp"
+                app:mrb_rangeBar_rounded="true"
+                app:mrb_selectorBoundaryColor="@color/light_gray"
+                app:mrb_selectorBoundarySize="1dp"
+                app:mrb_selectorColor="@color/white"
+                app:mrb_selectorSize="14dp"
+                app:mrb_temporaryPins="false"
+                app:mrb_tickColor="?attr/colorPrimary"
+                app:mrb_tickEnd="150"
+                app:mrb_tickInterval="1"
+                app:mrb_tickStart="40" />
 
-    </FrameLayout>
+            <androidx.appcompat.widget.AppCompatTextView
+                android:id="@+id/cupLabel"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                android:background="@drawable/topline_gray"
+                android:paddingLeft="20dp"
+                android:paddingTop="5dp"
+                android:paddingRight="20dp"
+                android:text="@string/cup_label"
+                android:textColor="@color/black"
+                android:textSize="@dimen/textsize_normal"
+                android:visibility="gone" />
 
-    <Button
-        android:id="@+id/confirmButton"
-        android:layout_width="match_parent"
-        android:layout_height="@dimen/button_height"
-        android:layout_marginLeft="40dp"
-        android:layout_marginTop="20dp"
-        android:layout_marginRight="40dp"
-        android:layout_marginBottom="20dp"
-        android:background="@drawable/button_primary_circle_corner_selector"
-        android:text="@string/query_by_filter"
-        android:textColor="@color/white" />
+            <cust.material.widget.rangebar.RangeBar
+                android:id="@+id/cupBar"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="20dp"
+                android:layout_marginEnd="20dp"
+                android:visibility="gone"
+                app:mrb_connectingLineColor="?attr/colorPrimary"
+                app:mrb_connectingLineWeight="10dp"
+                app:mrb_pinColor="@android:color/transparent"
+                app:mrb_pinMaxFont="12sp"
+                app:mrb_pinMinFont="10sp"
+                app:mrb_pinRadius="14dp"
+                app:mrb_pinTextColor="@color/dark_gray"
+                app:mrb_rangeBar="true"
+                app:mrb_rangeBarPaddingBottom="16dp"
+                app:mrb_rangeBar_rounded="true"
+                app:mrb_selectorBoundaryColor="@color/light_gray"
+                app:mrb_selectorBoundarySize="1dp"
+                app:mrb_selectorColor="@color/white"
+                app:mrb_selectorSize="14dp"
+                app:mrb_temporaryPins="false"
+                app:mrb_tickColor="?attr/colorPrimary"
+                app:mrb_tickEnd="76"
+                app:mrb_tickInterval="1"
+                app:mrb_tickStart="0" />
 
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="1px"
+                android:layout_marginTop="10dp"
+                android:background="@color/gray_underline"
+                android:visibility="gone" />
+
+            <FrameLayout
+                android:id="@+id/programButton"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@drawable/underline_gray"
+                android:clickable="true"
+                android:minHeight="60dp"
+                android:paddingLeft="20dp"
+                android:paddingRight="20dp"
+                android:visibility="gone">
+
+                <androidx.appcompat.widget.AppCompatTextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="@dimen/button_get_verification_code_height"
+                    android:layout_gravity="center|left"
+                    android:layout_marginRight="20dp"
+                    android:gravity="center"
+                    android:text="@string/dating_program"
+                    android:textColor="@android:color/black"
+                    android:textSize="@dimen/textsize_normal" />
+
+                <androidx.appcompat.widget.AppCompatTextView
+                    android:id="@+id/datingProgram"
+                    android:layout_width="wrap_content"
+                    android:layout_height="@dimen/edittext_height"
+                    android:layout_gravity="center_vertical|right"
+                    android:gravity="center"
+                    android:paddingLeft="36sp"
+                    android:paddingRight="20dp"
+                    android:text="@string/select_dating_program"
+                    android:textColor="@color/dark_gray"
+                    android:textSize="@dimen/textsize_normal" />
+
+                <androidx.appcompat.widget.AppCompatImageView
+                    android:layout_width="18dp"
+                    android:layout_height="18dp"
+                    android:layout_gravity="center_vertical|right"
+                    app:srcCompat="@drawable/ic_right_arrow" />
+
+            </FrameLayout>
+
+            <Button
+                android:id="@+id/confirmButton"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/button_height"
+                android:layout_marginLeft="40dp"
+                android:layout_marginTop="20dp"
+                android:layout_marginRight="40dp"
+                android:layout_marginBottom="20dp"
+                android:background="@drawable/button_primary_circle_corner_selector"
+                android:text="@string/query_by_filter"
+                android:textColor="@color/white" />
+        </LinearLayout>
+    </ScrollView>
 </LinearLayout>

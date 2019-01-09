@@ -72,7 +72,7 @@ open class FriendViewModel @Inject constructor(private val usecase: FriendListUs
                     usecase.getLocation()
                             .flatMap {
                                 usecase.listUser(token, it.latitude.toString(), it.longitude.toString(),
-                                        type.ordinal.toString(), mPageIndex, city,
+                                        type.toString(), mPageIndex, city,
                                         heightStart, heightEnd, ageStart, ageEnd, cupStart, cupEnd)
                                         .toObservable()
                                         .subscribeOn(Schedulers.io())
@@ -80,7 +80,7 @@ open class FriendViewModel @Inject constructor(private val usecase: FriendListUs
                             }
                 } else {
                     usecase.listUser(token, latitude, longitude,
-                            type.ordinal.toString(), mPageIndex, city,
+                            type.toString(), mPageIndex, city,
                             heightStart, heightEnd, ageStart, ageEnd, cupStart, cupEnd)
                             .toObservable()
                             .subscribeOn(Schedulers.io())

@@ -3,9 +3,11 @@ package com.snt.phoney.widget;
 import android.content.Context;
 import android.util.AttributeSet;
 import android.util.Log;
+import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.LinearLayout;
+import android.widget.OverScroller;
 import android.widget.Scroller;
 
 import androidx.annotation.Nullable;
@@ -26,8 +28,9 @@ public class NestedLinearLayout extends LinearLayout {
     private boolean mAutoScroll = true;
     private boolean mCalculateMaxScrollHeight = false;
     private int mMaxScrollHeight;
+    private int mTopViewHeight;
 
-    private Scroller mScroller;
+    private OverScroller mScroller;
 
     public NestedLinearLayout(Context context) {
         super(context);
@@ -51,7 +54,7 @@ public class NestedLinearLayout extends LinearLayout {
 
     private void init(Context context) {
         setOrientation(LinearLayout.VERTICAL);
-        mScroller = new Scroller(context);
+        mScroller = new OverScroller(context);
     }
 
     public void setMinHeight(int minHeight) {
@@ -136,17 +139,13 @@ public class NestedLinearLayout extends LinearLayout {
     @Override
     public boolean onNestedFling(View target, float velocityX, float velocityY, boolean consumed) {
         //往上滑动时，velocityY>0
-        if (mAutoScroll && !consumed) {
-            if (mScroller.isFinished()) {
-                int scrollY = getScrollY();
-                mScroller.forceFinished(true);
-                if (velocityY > 0) {
-                    mScroller.startScroll(0, scrollY, 0, mMaxScrollHeight - mMinHeight - scrollY);
-                } else {
-                    mScroller.startScroll(0, scrollY, 0, -scrollY);
-                }
-                invalidate();
-            }
+        if (getScrollY() != 0) {
+            mScroller.fling(getScrollX(), getScrollY(), // start
+                    0, (int) velocityY, // velocities
+                    0, 0, // x
+                    Integer.MIN_VALUE, Integer.MAX_VALUE, // y
+                    0, 0);
+            invalidate();
             return true;
         }
         return false;
@@ -155,21 +154,31 @@ public class NestedLinearLayout extends LinearLayout {
     @Override
     public boolean onNestedPreFling(View target, float velocityX, float velocityY) {
         //不做拦截 可以传递给子View
-        if (mAutoScroll && getScrollY() != mMaxScrollHeight - mMinHeight) {
-            if (mScroller.isFinished()) {
-                int scrollY = getScrollY();
-                mScroller.forceFinished(true);
-                if (velocityY > 0) {
-                    mScroller.startScroll(0, scrollY, 0, mMaxScrollHeight - mMinHeight - scrollY);
-                } else {
-                    mScroller.startScroll(0, scrollY, 0, -scrollY);
-                }
-                invalidate();
-            }
+        if (getScrollY() != mMaxScrollHeight - mMinHeight) {
+            mScroller.fling(getScrollX(), getScrollY(), // start
+                    0, (int) velocityY, // velocities
+                    0, 0, // x
+                    Integer.MIN_VALUE, Integer.MAX_VALUE, // y
+                    0, 0);
+            invalidate();
             return true;
         }
         return false;
     }
+
+    @Override
+    public boolean onInterceptTouchEvent(MotionEvent ev) {
+        final int action = ev.getAction();
+        switch (action) {
+            case MotionEvent.ACTION_DOWN: {
+                if (!mScroller.isFinished()) {
+                    mScroller.forceFinished(true);
+                }
+            }
+        }
+        return super.onInterceptTouchEvent(ev);
+    }
+
 
     @Override
     public int getNestedScrollAxes() {
@@ -196,25 +205,27 @@ public class NestedLinearLayout extends LinearLayout {
                 topView.measure(widthMeasureSpec, MeasureSpec.makeMeasureSpec(0, MeasureSpec.UNSPECIFIED));
                 if (mCalculateMaxScrollHeight) {
                     mNestedView.measure(widthMeasureSpec, MeasureSpec.makeMeasureSpec(0, MeasureSpec.UNSPECIFIED));
-                    Log.d("TTTT", "xxxxxxx getMeasuredHeight=" + getMeasuredHeight() + "     parent height=" + ((ViewGroup) getParent()).getMeasuredHeight());
-                    Log.d("TTTT", "xxxxxxx screen height=" + getContext().getResources().getDisplayMetrics().heightPixels);
-                    Log.d("TTTT", "xxxxxxx heightMeasureSpec=" + MeasureSpec.getSize(heightMeasureSpec));
-                    Log.d("TTTT", "xxxxxxx topView.getMeasuredHeight=" + topView.getMeasuredHeight());
-                    Log.d("TTTT", "xxxxxxx mNestedView.getMeasuredHeight=" + mNestedView.getMeasuredHeight());
-                    Log.d("TTTT", "xxxxxxx topview + mNestedView =" + (topView.getMeasuredHeight() + mNestedView.getMeasuredHeight()));
-
-                    int maxScrollHeight = topView.getMeasuredHeight() + mNestedView.getMeasuredHeight() - getMeasuredHeight();
-                    Log.d("TTTT", "xxxxxxx mMaxScrollHeight=" + mMaxScrollHeight);
-
-                    mMaxScrollHeight = Math.min(topView.getMeasuredHeight(), maxScrollHeight);
-
+                    int maxScrollHeight = topView.getMeasuredHeight() + mNestedView.getMeasuredHeight() - getMeasuredHeight() + mMinHeight;
+                    int topViewHeight = topView.getMeasuredHeight();
+                    if (topView.getMeasuredHeight() > maxScrollHeight) {
+                        mMaxScrollHeight = maxScrollHeight;
+                        ViewGroup.LayoutParams params = mNestedView.getLayoutParams();
+                        params.height = mNestedView.getMeasuredHeight();
+                        mNestedView.setLayoutParams(params);
+                    } else {
+                        mMaxScrollHeight = topViewHeight;
+                        ViewGroup.LayoutParams params = mNestedView.getLayoutParams();
+                        params.height = getMeasuredHeight() - mMinHeight;
+                        mNestedView.setLayoutParams(params);
+                    }
                 } else {
                     mMaxScrollHeight = topView.getMeasuredHeight();
+                    ViewGroup.LayoutParams params = mNestedView.getLayoutParams();
+                    params.height = getMeasuredHeight() - mMinHeight;
+                    mNestedView.setLayoutParams(params);
                 }
-                ViewGroup.LayoutParams params = mNestedView.getLayoutParams();
-                params.height = getMeasuredHeight() - mMinHeight;
+                mTopViewHeight = topView.getMeasuredHeight();
             }
-            Log.d("TTTT", "xxxxxxx --------------------------------------------------");
         }
         super.onMeasure(widthMeasureSpec, heightMeasureSpec);
     }
@@ -231,21 +242,12 @@ public class NestedLinearLayout extends LinearLayout {
     }
 
     @Override
-    protected void onSizeChanged(int w, int h, int oldw, int oldh) {
-        super.onSizeChanged(w, h, oldw, oldh);
-        if (getChildCount() >= 1) {
-            mTopView = getChildAt(0);
-            mMaxScrollHeight = mTopView.getMeasuredHeight();
-        }
-    }
-
-    @Override
     public void scrollTo(int x, int y) {
         if (y < 0) {
             y = 0;
         }
-        if (y > mMaxScrollHeight) {
-            y = mMaxScrollHeight;
+        if (y > mMaxScrollHeight - mMinHeight) {
+            y = mMaxScrollHeight - mMinHeight;
         }
         if (y != getScrollY()) {
             super.scrollTo(x, y);
@@ -257,7 +259,7 @@ public class NestedLinearLayout extends LinearLayout {
                 mTopView.setAlpha(scale);
             }
             if (mTopHeightChangeListener != null) {
-                mTopHeightChangeListener.onTopVisibleHeightChange(mMaxScrollHeight - mMinHeight, y);
+                mTopHeightChangeListener.onTopVisibleHeightChange(mMaxScrollHeight >= mTopViewHeight, mMaxScrollHeight - mMinHeight, y);
             }
         }
     }
@@ -277,7 +279,7 @@ public class NestedLinearLayout extends LinearLayout {
     }
 
     public interface OnTopVisibleHeightChangeListener {
-        void onTopVisibleHeightChange(int totalHeight, int visibleHeight);
+        void onTopVisibleHeightChange(boolean heightEnough, int totalHeight, int visibleHeight);
     }
 
 }

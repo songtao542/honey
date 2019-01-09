@@ -2,6 +2,7 @@ package com.snt.phoney.widget;
 
 import android.content.Context;
 import android.util.AttributeSet;
+import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.FrameLayout;
@@ -120,6 +121,7 @@ public class NestedFrameLayout extends FrameLayout {
         int consumedY = Math.min(dy, maxCanConsumed);
         if (hiddenTop || showTop) {
             scrollBy(0, consumedY);
+            mTopView.scrollBy(0, -consumedY / 2);
             consumed[1] = consumedY;
         }
     }
@@ -167,6 +169,19 @@ public class NestedFrameLayout extends FrameLayout {
         //Log.d(TAG, "getNestedScrollAxes");
         return 0;
     }
+
+//    @Override
+//    public boolean onInterceptTouchEvent(MotionEvent ev) {
+//        final int action = ev.getAction();
+//        switch (action) {
+//            case MotionEvent.ACTION_DOWN: {
+//                if (!mScroller.isFinished()) {
+//                    mScroller.forceFinished(true);
+//                }
+//            }
+//        }
+//        return super.onInterceptTouchEvent(ev);
+//    }
 
     @Override
     public void computeScroll() {
@@ -219,8 +234,8 @@ public class NestedFrameLayout extends FrameLayout {
         if (y < 0) {
             y = 0;
         }
-        if (y > mTopViewHeight) {
-            y = mTopViewHeight;
+        if (y > mTopViewHeight - mMinHeight) {
+            y = mTopViewHeight - mMinHeight;
         }
         if (y != getScrollY()) {
             super.scrollTo(x, y);

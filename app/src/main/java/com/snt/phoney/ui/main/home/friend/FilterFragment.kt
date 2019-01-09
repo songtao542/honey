@@ -9,13 +9,18 @@ import androidx.lifecycle.ViewModelProviders
 import com.snt.phoney.R
 import com.snt.phoney.base.BaseFragment
 import com.snt.phoney.domain.model.DatingProgram
+import com.snt.phoney.domain.model.Sex
 import com.snt.phoney.utils.Picker
 import kotlinx.android.synthetic.main.app_toolbar.*
 import kotlinx.android.synthetic.main.fragment_friend_more_filter.*
 
 class FilterFragment : BaseFragment() {
 
-    private val cupArray = arrayOf("a", "b", "c", "d", "e", "f", "g")
+    private val cupCharArray = arrayOf("A", "B", "C", "D", "E", "F", "G")
+
+    private val cupArray = Array(77) {
+        "${30 + it / 7}${cupCharArray[it % 7]}"
+    }
 
     companion object {
         @JvmStatic
@@ -42,8 +47,20 @@ class FilterFragment : BaseFragment() {
         ageBar.setFormatter {
             "$it${getString(R.string.unit_age)}"
         }
-        cupBar.setFormatter {
-            cupArray[it.toInt() - 1]
+
+        weightBar.setFormatter {
+            "$it${getString(R.string.unit_kg)}"
+        }
+
+        if (viewModel.getUser()?.sex == Sex.FEMALE.value) {
+            cupLabel.visibility = View.GONE
+            cupBar.visibility = View.GONE
+        } else {
+            cupLabel.visibility = View.VISIBLE
+            cupBar.visibility = View.VISIBLE
+            cupBar.setFormatter {
+                cupArray[it.toInt()]
+            }
         }
 
         programButton.setOnClickListener {
@@ -72,9 +89,26 @@ class FilterFragment : BaseFragment() {
         confirmButton.setOnClickListener {
             val result = Result(heightBar.leftPinValue.toInt(), heightBar.rightPinValue.toInt(),
                     ageBar.leftPinValue.toInt(), ageBar.rightPinValue.toInt(),
-                    cupArray[cupBar.leftPinValue.toInt() - 1], cupArray[cupBar.rightPinValue.toInt() - 1])
+                    weightBar.leftPinValue.toInt(), weightBar.rightPinValue.toInt(),
+                    getCupStart(), getCupEnd())
             onResultListener?.invoke(result)
             activity?.onBackPressed()
+        }
+    }
+
+    private fun getCupStart(): String {
+        return if (viewModel.getUser()?.sex == Sex.FEMALE.value) {
+            ""
+        } else {
+            cupArray[cupBar.leftPinValue.toInt()]
+        }
+    }
+
+    private fun getCupEnd(): String {
+        return if (viewModel.getUser()?.sex == Sex.FEMALE.value) {
+            ""
+        } else {
+            cupArray[cupBar.rightPinValue.toInt()]
         }
     }
 
@@ -89,6 +123,8 @@ class FilterFragment : BaseFragment() {
             val endHeight: Int,
             val startAge: Int,
             val endAge: Int,
+            val startWeight: Int,
+            val endWeight: Int,
             val startCup: String,
             val endCup: String)
 

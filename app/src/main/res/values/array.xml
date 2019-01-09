@@ -28,8 +28,8 @@
     </string-array>
 
     <string-array name="connecting_colors">
-        <item>#03A9F4</item>
-        <item>#03A9F4</item>
+        <item>?attr/colorPrimary</item>
+        <item>?attr/colorPrimary</item>
     </string-array>
 
 </resources>

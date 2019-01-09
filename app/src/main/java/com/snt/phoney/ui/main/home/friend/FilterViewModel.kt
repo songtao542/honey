@@ -3,6 +3,7 @@ package com.snt.phoney.ui.main.home.friend
 import androidx.lifecycle.LiveData
 import com.snt.phoney.base.AppViewModel
 import com.snt.phoney.domain.model.DatingProgram
+import com.snt.phoney.domain.model.User
 import com.snt.phoney.domain.usecase.DatingUseCase
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.rxkotlin.subscribeBy
@@ -22,6 +23,10 @@ class FilterViewModel @Inject constructor(private val usecase: DatingUseCase) : 
                         }
             }
         }
+    }
+
+    fun getUser(): User? {
+        return usecase.getUser()
     }
 
 }

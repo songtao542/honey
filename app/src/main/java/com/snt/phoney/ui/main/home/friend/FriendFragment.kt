@@ -3,6 +3,7 @@ package com.snt.phoney.ui.main.home.friend
 import android.Manifest
 import android.os.Bundle
 import android.text.TextUtils
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -40,6 +41,8 @@ class FriendFragment : BaseFragment() {
     private var heightEnd: String = ""
     private var ageStart: String = ""
     private var ageEnd: String = ""
+    private var weightStart: String = ""
+    private var weightEnd: String = ""
     private var cupStart: String = ""
     private var cupEnd: String = ""
 
@@ -70,10 +73,13 @@ class FriendFragment : BaseFragment() {
         moreTag.setOnClickListener {
             val fragment = FilterFragment.newInstance()
             fragment.setOnResultListener { result ->
+                filterType = FilterType.MORE
                 heightStart = result.startHeight.toString()
                 heightEnd = result.endHeight.toString()
                 ageStart = result.startAge.toString()
                 ageEnd = result.endAge.toString()
+                weightStart = result.startWeight.toString()
+                weightEnd = result.endWeight.toString()
                 cupStart = result.startCup
                 cupEnd = result.endCup
                 load(true)
@@ -158,6 +164,7 @@ class FriendFragment : BaseFragment() {
 
     private fun load(refresh: Boolean, loadMore: LoadMoreAdapter.LoadMore? = null) {
         if (refresh) {
+            swipeRefresh.isRefreshing = true
             list.setLoadMoreEnable(true)
         }
         viewModel.listUser(refresh, filterType, heightStart, heightEnd,

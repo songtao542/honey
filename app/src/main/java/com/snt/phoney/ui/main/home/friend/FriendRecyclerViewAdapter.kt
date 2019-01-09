@@ -2,6 +2,7 @@ package com.snt.phoney.ui.main.home.friend
 
 
 import android.os.Bundle
+import android.text.TextUtils
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -20,7 +21,7 @@ import kotlinx.android.synthetic.main.fragment_friend_tag.view.*
 
 /**
  */
-class FriendRecyclerViewAdapter() : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
+class FriendRecyclerViewAdapter : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
 
 
     var data: List<User>? = null
@@ -86,8 +87,13 @@ class FriendRecyclerViewAdapter() : RecyclerView.Adapter<RecyclerView.ViewHolder
             this.user = user
             Glide.with(mView).load(user.avatar).into(image)
             //Glide.with(mView).load(user.avatar).apply(RequestOptions().circleCrop()).transition(DrawableTransitionOptions.withCrossFade()).into(mView.image)
-            label.text = user.tag
-            renQi.text = "${user.caredSize}"
+            if (!TextUtils.isEmpty(user.tag)) {
+                label.visibility = View.VISIBLE
+                label.text = user.tag
+            } else {
+                label.visibility = View.GONE
+            }
+            renQi.text = user.caredSize.toString()
             setUpdateTime(user.updateTime)
             setDistance(user.distance)
             name.text = user.nickname
