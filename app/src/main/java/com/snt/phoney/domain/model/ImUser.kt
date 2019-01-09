@@ -12,7 +12,7 @@ data class ImUser(
         var password: String? = null,//":"ca66dbe9584065332f917846a670aeaf",
         @SerializedName(value = "userName") var username: String? = null,//":"imu2018112816521080723aa89d706b15"},
         @SerializedName(value = "nickName") var nickname: String? = null,//":"淞",
-        var avatar: String? = null//":"淞",
+        var avatar: String? = null //":"淞",
 ) : Parcelable {
 
 //    companion object {

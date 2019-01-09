@@ -42,7 +42,7 @@
                 app:titleMargin="0dp">
 
                 <androidx.appcompat.widget.AppCompatTextView
-                    android:id="@+id/titleView"
+                    android:id="@+id/titleTextView"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:gravity="center_vertical"

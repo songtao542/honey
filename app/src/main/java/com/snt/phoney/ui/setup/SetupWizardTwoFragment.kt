@@ -2,7 +2,6 @@ package com.snt.phoney.ui.setup
 
 import android.os.Bundle
 import android.text.TextUtils
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -54,7 +53,7 @@ class SetupWizardTwoFragment : BaseFragment() {
             }
             else -> {
                 view.cupButton.visibility = View.VISIBLE
-                view.weightButton.visibility = View.GONE
+                view.weightButton.visibility = View.VISIBLE
                 view.confirmStep2.setBackgroundResource(R.drawable.button_femail_circle_corner_selector)
             }
         }
@@ -134,10 +133,14 @@ class SetupWizardTwoFragment : BaseFragment() {
         if (user.height > 0) {
             if (user.age > 0) {
                 if (user.sex == Sex.FEMALE.value) {
-                    if (!TextUtils.isEmpty(user.cup)) {
-                        return true
+                    if (user.weight > 0) {
+                        if (!TextUtils.isEmpty(user.cup)) {
+                            return true
+                        } else {
+                            showCupPicker()
+                        }
                     } else {
-                        showCupPicker()
+                        showWeightPicker()
                     }
                 } else {
                     if (user.weight > 0) {

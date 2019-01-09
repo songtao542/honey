@@ -1,6 +1,5 @@
 package com.snt.phoney.ui.user
 
-import androidx.lifecycle.MutableLiveData
 import com.snt.phoney.R
 import com.snt.phoney.domain.model.User
 import com.snt.phoney.domain.usecase.PayOrderUseCase
@@ -19,6 +18,10 @@ class UserInfoViewModel @Inject constructor(private val usecase: UserInfoUseCase
     val userInfo = SingleLiveData<User>()
 
     val followSuccess = SingleLiveData<Boolean>()
+
+    fun getUser(): User? {
+        return usecase.getUser()
+    }
 
     fun getUserInfo(uuid: String) {
         val token = usecase.getAccessToken() ?: return

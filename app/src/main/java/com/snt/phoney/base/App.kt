@@ -2,16 +2,15 @@ package com.snt.phoney.base
 
 import android.app.Activity
 import android.app.Application
-import android.app.Service
 import android.content.Context
-import android.content.Intent
 import android.text.TextUtils
 import androidx.multidex.MultiDex
 import cn.jpush.android.api.JPushInterface
 import cn.jpush.im.android.api.JMessageClient
 import com.snt.phoney.BuildConfig
 import com.snt.phoney.di.AppInjector
-import com.snt.phoney.service.VoiceCallService
+import com.snt.phoney.domain.accessor.UserAccessor
+import com.snt.phoney.service.VoiceCallEngine
 import com.snt.phoney.utils.data.Constants
 import com.tencent.bugly.crashreport.CrashReport
 import com.tencent.bugly.crashreport.CrashReport.UserStrategy
@@ -19,7 +18,6 @@ import com.umeng.analytics.MobclickAgent
 import com.umeng.commonsdk.UMConfigure
 import dagger.android.DispatchingAndroidInjector
 import dagger.android.HasActivityInjector
-import dagger.android.HasServiceInjector
 import jiguang.chat.utils.NotificationClickEventReceiver
 import timber.log.Timber
 import java.io.BufferedReader
@@ -28,13 +26,19 @@ import java.io.IOException
 import javax.inject.Inject
 
 
-class App : Application(), HasActivityInjector, HasServiceInjector {
+class App : Application(), HasActivityInjector
+/**, HasServiceInjector **/
+{
 
     @Inject
     lateinit var dispatchingActivityInjector: DispatchingAndroidInjector<Activity>
 
+    //@Inject
+    //lateinit var dispatchingServiceInjector: DispatchingAndroidInjector<Service>
+
+    @Suppress("unused")
     @Inject
-    lateinit var dispatchingServiceInjector: DispatchingAndroidInjector<Service>
+    lateinit var userAccessor: UserAccessor
 
     override fun onCreate() {
         super.onCreate()
@@ -46,13 +50,13 @@ class App : Application(), HasActivityInjector, HasServiceInjector {
         initJMessage()
         initBugly()
         initUM()
-        startVoiceCallService()
+        initJMRtc()
+        //startVoiceCallService()
     }
 
     override fun activityInjector() = dispatchingActivityInjector
 
-    override fun serviceInjector() = dispatchingServiceInjector
-
+    //override fun serviceInjector() = dispatchingServiceInjector
 
     override fun attachBaseContext(base: Context) {
         super.attachBaseContext(base)
@@ -88,9 +92,13 @@ class App : Application(), HasActivityInjector, HasServiceInjector {
         JPushInterface.init(this)
     }
 
-    private fun startVoiceCallService() {
-        startService(Intent(this, VoiceCallService::class.java))
+    private fun initJMRtc() {
+        VoiceCallEngine.init(this)
     }
+
+    //private fun startVoiceCallService() {
+    //startService(Intent(this, VoiceCallService::class.java))
+    //}
 
     private fun initBugly() {
         val context = applicationContext

@@ -2,6 +2,7 @@ package com.snt.phoney.widget;
 
 import android.content.Context;
 import android.util.AttributeSet;
+import android.util.Log;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.LinearLayout;
@@ -14,7 +15,6 @@ public class NestedLinearLayout extends LinearLayout {
 
     private static final String TAG = "NestedParentLayout";
 
-    private int mTopViewHeight;
     private View mNestedView;
     private View mTopView;
     private boolean mTopScaleable = false;
@@ -23,6 +23,9 @@ public class NestedLinearLayout extends LinearLayout {
     private int mDirection = 0;
 
     private int mMinHeight = 0;
+    private boolean mAutoScroll = true;
+    private boolean mCalculateMaxScrollHeight = false;
+    private int mMaxScrollHeight;
 
     private Scroller mScroller;
 
@@ -55,6 +58,14 @@ public class NestedLinearLayout extends LinearLayout {
         this.mMinHeight = minHeight;
     }
 
+    public void setAutoScroll(boolean autoScroll) {
+        mAutoScroll = autoScroll;
+    }
+
+    public void setCalculateMaxScrollHeight(boolean calculate) {
+        mCalculateMaxScrollHeight = calculate;
+    }
+
     @Override
     public boolean onStartNestedScroll(View child, View target, int nestedScrollAxes) {
         //Log.d(TAG, "onStartNestedScroll target=" + target);
@@ -64,9 +75,12 @@ public class NestedLinearLayout extends LinearLayout {
             if (viewGroup.getChildCount() > 0) {
                 View lastChild = viewGroup.getChildAt(viewGroup.getChildCount() - 1);
                 int[] l1 = new int[2];
+                //获取最后一个子View在屏幕的位置
                 lastChild.getLocationOnScreen(l1);
                 int[] l2 = new int[2];
+                //获取ViewGroup在屏幕的位置
                 getLocationOnScreen(l2);
+                //当未滑动之前，最后一个子View的底部坐标 比 ViewGroup 的底部坐标还要小，则不进行拦截
                 if (getScrollY() == 0 && (l1[1] + lastChild.getHeight()) < (l2[1] + getHeight())) {
                     return false;
                 }
@@ -82,16 +96,17 @@ public class NestedLinearLayout extends LinearLayout {
 
     @Override
     public void onStopNestedScroll(View target) {
-        if (mScroller.isFinished()) {
+        if (mAutoScroll && mScroller.isFinished() && getScrollY() > 0 && getScrollY() < mMaxScrollHeight - mMinHeight) {
             // mDirection>0 向下
             mScroller.forceFinished(true);
             int scrollY = getScrollY();
             if (mDirection > 0) {
                 mScroller.startScroll(0, scrollY, 0, -scrollY);
             } else {
-                mScroller.startScroll(0, scrollY, 0, mTopViewHeight - mMinHeight - scrollY);
+                mScroller.startScroll(0, scrollY, 0, mMaxScrollHeight - mMinHeight - scrollY);
             }
             invalidate();
+            mDirection = 0;
         }
     }
 
@@ -107,24 +122,26 @@ public class NestedLinearLayout extends LinearLayout {
         if (mDirection != 0) {
             mDirection = dy;
         }
-        boolean hiddenTop = dy > 0 && getScrollY() < mTopViewHeight - mMinHeight;
+        boolean hiddenTop = dy > 0 && getScrollY() < mMaxScrollHeight - mMinHeight;
         boolean showTop = dy < 0 && getScrollY() > 0 && !target.canScrollVertically(-1);
 
+        int maxCanConsumed = mMaxScrollHeight - mMinHeight - getScrollY();
+        int consumedY = Math.min(dy, maxCanConsumed);
         if (hiddenTop || showTop) {
-            scrollBy(0, dy);
-            consumed[1] = dy;
+            scrollBy(0, consumedY);
+            consumed[1] = consumedY;
         }
     }
 
     @Override
     public boolean onNestedFling(View target, float velocityX, float velocityY, boolean consumed) {
         //往上滑动时，velocityY>0
-        if (!consumed) {
+        if (mAutoScroll && !consumed) {
             if (mScroller.isFinished()) {
                 int scrollY = getScrollY();
                 mScroller.forceFinished(true);
                 if (velocityY > 0) {
-                    mScroller.startScroll(0, scrollY, 0, mTopViewHeight - mMinHeight - scrollY);
+                    mScroller.startScroll(0, scrollY, 0, mMaxScrollHeight - mMinHeight - scrollY);
                 } else {
                     mScroller.startScroll(0, scrollY, 0, -scrollY);
                 }
@@ -138,12 +155,12 @@ public class NestedLinearLayout extends LinearLayout {
     @Override
     public boolean onNestedPreFling(View target, float velocityX, float velocityY) {
         //不做拦截 可以传递给子View
-        if (getScrollY() != mTopViewHeight - mMinHeight) {
+        if (mAutoScroll && getScrollY() != mMaxScrollHeight - mMinHeight) {
             if (mScroller.isFinished()) {
                 int scrollY = getScrollY();
                 mScroller.forceFinished(true);
                 if (velocityY > 0) {
-                    mScroller.startScroll(0, scrollY, 0, mTopViewHeight - mMinHeight - scrollY);
+                    mScroller.startScroll(0, scrollY, 0, mMaxScrollHeight - mMinHeight - scrollY);
                 } else {
                     mScroller.startScroll(0, scrollY, 0, -scrollY);
                 }
@@ -162,26 +179,44 @@ public class NestedLinearLayout extends LinearLayout {
 
     @Override
     public void computeScroll() {
-        if (mScroller.computeScrollOffset()) {
-            scrollTo(0, mScroller.getCurrY());
+        if (!mScroller.isFinished() && mScroller.computeScrollOffset()) {
+            int y = mScroller.getCurrY();
+            scrollTo(0, y);
             invalidate();
         }
     }
 
     @Override
     protected void onMeasure(int widthMeasureSpec, int heightMeasureSpec) {
-        super.onMeasure(widthMeasureSpec, heightMeasureSpec);
         if (getChildCount() >= 2) {
             mTopView = getChildAt(0);
             mNestedView = getFirstNestedScrollableView();
             if (mNestedView != null) {
                 View topView = getChildAt(0);
                 topView.measure(widthMeasureSpec, MeasureSpec.makeMeasureSpec(0, MeasureSpec.UNSPECIFIED));
-                mTopViewHeight = topView.getMeasuredHeight();
+                if (mCalculateMaxScrollHeight) {
+                    mNestedView.measure(widthMeasureSpec, MeasureSpec.makeMeasureSpec(0, MeasureSpec.UNSPECIFIED));
+                    Log.d("TTTT", "xxxxxxx getMeasuredHeight=" + getMeasuredHeight() + "     parent height=" + ((ViewGroup) getParent()).getMeasuredHeight());
+                    Log.d("TTTT", "xxxxxxx screen height=" + getContext().getResources().getDisplayMetrics().heightPixels);
+                    Log.d("TTTT", "xxxxxxx heightMeasureSpec=" + MeasureSpec.getSize(heightMeasureSpec));
+                    Log.d("TTTT", "xxxxxxx topView.getMeasuredHeight=" + topView.getMeasuredHeight());
+                    Log.d("TTTT", "xxxxxxx mNestedView.getMeasuredHeight=" + mNestedView.getMeasuredHeight());
+                    Log.d("TTTT", "xxxxxxx topview + mNestedView =" + (topView.getMeasuredHeight() + mNestedView.getMeasuredHeight()));
+
+                    int maxScrollHeight = topView.getMeasuredHeight() + mNestedView.getMeasuredHeight() - getMeasuredHeight();
+                    Log.d("TTTT", "xxxxxxx mMaxScrollHeight=" + mMaxScrollHeight);
+
+                    mMaxScrollHeight = Math.min(topView.getMeasuredHeight(), maxScrollHeight);
+
+                } else {
+                    mMaxScrollHeight = topView.getMeasuredHeight();
+                }
                 ViewGroup.LayoutParams params = mNestedView.getLayoutParams();
                 params.height = getMeasuredHeight() - mMinHeight;
             }
+            Log.d("TTTT", "xxxxxxx --------------------------------------------------");
         }
+        super.onMeasure(widthMeasureSpec, heightMeasureSpec);
     }
 
     private View getFirstNestedScrollableView() {
@@ -200,7 +235,7 @@ public class NestedLinearLayout extends LinearLayout {
         super.onSizeChanged(w, h, oldw, oldh);
         if (getChildCount() >= 1) {
             mTopView = getChildAt(0);
-            mTopViewHeight = mTopView.getMeasuredHeight();
+            mMaxScrollHeight = mTopView.getMeasuredHeight();
         }
     }
 
@@ -209,20 +244,20 @@ public class NestedLinearLayout extends LinearLayout {
         if (y < 0) {
             y = 0;
         }
-        if (y > mTopViewHeight) {
-            y = mTopViewHeight;
+        if (y > mMaxScrollHeight) {
+            y = mMaxScrollHeight;
         }
         if (y != getScrollY()) {
             super.scrollTo(x, y);
             if (mTopScaleable && mTopView != null) {
-                float scale = 1 - y * 1f / mTopViewHeight;
-                mTopView.setPivotY(mTopViewHeight);
+                float scale = 1 - y * 1f / mMaxScrollHeight;
+                mTopView.setPivotY(mMaxScrollHeight);
                 mTopView.setScaleX(scale);
                 mTopView.setScaleY(scale);
                 mTopView.setAlpha(scale);
             }
             if (mTopHeightChangeListener != null) {
-                mTopHeightChangeListener.onTopVisibleHeightChange(mTopViewHeight, y);
+                mTopHeightChangeListener.onTopVisibleHeightChange(mMaxScrollHeight - mMinHeight, y);
             }
         }
     }

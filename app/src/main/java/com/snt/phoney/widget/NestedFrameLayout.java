@@ -66,9 +66,12 @@ public class NestedFrameLayout extends FrameLayout {
             if (viewGroup.getChildCount() > 0) {
                 View lastChild = viewGroup.getChildAt(viewGroup.getChildCount() - 1);
                 int[] l1 = new int[2];
+                //获取最后一个子View在屏幕的位置
                 lastChild.getLocationOnScreen(l1);
                 int[] l2 = new int[2];
+                //获取ViewGroup在屏幕的位置
                 getLocationOnScreen(l2);
+                //当未滑动之前，最后一个子View的底部坐标 比 ViewGroup 的底部坐标还要小，则不进行拦截
                 if (getScrollY() == 0 && (l1[1] + lastChild.getHeight()) < (l2[1] + getHeight())) {
                     return false;
                 }
@@ -113,10 +116,11 @@ public class NestedFrameLayout extends FrameLayout {
         boolean hiddenTop = dy > 0 && getScrollY() < mTopViewHeight - mMinHeight;
         boolean showTop = dy < 0 && getScrollY() > 0 && !target.canScrollVertically(-1);
 
+        int maxCanConsumed = mTopViewHeight - mMinHeight - getScrollY();
+        int consumedY = Math.min(dy, maxCanConsumed);
         if (hiddenTop || showTop) {
-            scrollBy(0, dy);
-            mTopView.scrollBy(0, -dy / 2);
-            consumed[1] = dy;
+            scrollBy(0, consumedY);
+            consumed[1] = consumedY;
         }
     }
 
@@ -228,7 +232,7 @@ public class NestedFrameLayout extends FrameLayout {
                 mTopView.setAlpha(scale);
             }
             if (mTopHeightChangeListener != null) {
-                mTopHeightChangeListener.onTopVisibleHeightChange(mTopViewHeight, y);
+                mTopHeightChangeListener.onTopVisibleHeightChange(mTopViewHeight - mMinHeight, y);
             }
         }
     }

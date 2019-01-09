@@ -221,7 +221,7 @@
 
 
                 <LinearLayout
-                    android:id="@+id/weightCupButton"
+                    android:id="@+id/weightButton"
                     android:layout_width="match_parent"
                     android:layout_height="@dimen/edit_user_item_height"
                     android:background="@drawable/underline_gray"
@@ -233,17 +233,46 @@
                         android:layout_width="wrap_content"
                         android:layout_height="match_parent"
                         android:gravity="center"
-                        android:text="@{user.sex == Sex.MALE.value ? @string/weight_label : @string/cup_label}"
+                        android:text="@string/weight_label"
                         android:textColor="@color/edit_user_item_label"
                         android:textSize="@dimen/textsize_normal" />
 
                     <androidx.appcompat.widget.AppCompatTextView
-                        android:id="@+id/weightCup"
+                        android:id="@+id/weight"
                         android:layout_width="wrap_content"
                         android:layout_height="match_parent"
                         android:layout_weight="1"
                         android:gravity="center_vertical|right"
-                        android:text="@{user.sex == Sex.MALE.value ? ConverterUtil.toString(user.weight)+@string/unit_kg : user.cup}"
+                        android:text="@{ConverterUtil.toString(user.weight)+@string/unit_kg}"
+                        android:textColor="@color/edit_user_item_value"
+                        android:textSize="@dimen/textsize_normal" />
+
+                </LinearLayout>
+
+                <LinearLayout
+                    android:id="@+id/cupButton"
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/edit_user_item_height"
+                    android:background="@drawable/underline_gray"
+                    android:orientation="horizontal"
+                    android:paddingLeft="@dimen/edit_user_padding"
+                    android:paddingRight="@dimen/edit_user_padding">
+
+                    <androidx.appcompat.widget.AppCompatTextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="match_parent"
+                        android:gravity="center"
+                        android:text="@string/cup_label"
+                        android:textColor="@color/edit_user_item_label"
+                        android:textSize="@dimen/textsize_normal" />
+
+                    <androidx.appcompat.widget.AppCompatTextView
+                        android:id="@+id/cup"
+                        android:layout_width="wrap_content"
+                        android:layout_height="match_parent"
+                        android:layout_weight="1"
+                        android:gravity="center_vertical|right"
+                        android:text="@{user.cup}"
                         android:textColor="@color/edit_user_item_value"
                         android:textSize="@dimen/textsize_normal" />
 

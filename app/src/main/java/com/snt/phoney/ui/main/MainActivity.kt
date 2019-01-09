@@ -3,6 +3,7 @@ package com.snt.phoney.ui.main
 import android.content.Context
 import android.content.Intent
 import android.os.Bundle
+import android.util.Log
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProviders
 import com.google.android.material.bottomnavigation.BottomNavigationView
@@ -63,11 +64,15 @@ class MainActivity : BaseActivity() {
     }
 
     private fun showFragmentProxy(tag: String) {
+        //友盟统计，先对前一个 page 调用 onPageEnd
         getUMengPageName()?.let {
+            Log.d("UMENG", "end   name:$it")
             MobclickAgent.onPageEnd(it)
         }
         showFragment(tag)
+        //再对切换后的 page 调用 onPageStart
         getUMengPageName()?.let {
+            Log.d("UMENG", "start name:$it")
             MobclickAgent.onPageStart(it)
         }
     }
@@ -76,6 +81,7 @@ class MainActivity : BaseActivity() {
         super.onResume()
         checkPrivacyLock()
         getUMengPageName()?.let {
+            Log.d("UMENG", "start name:$it")
             MobclickAgent.onPageStart(it)
         }
     }
@@ -83,6 +89,7 @@ class MainActivity : BaseActivity() {
     override fun onPause() {
         super.onPause()
         getUMengPageName()?.let {
+            Log.d("UMENG", "end   name:$it")
             MobclickAgent.onPageEnd(it)
         }
     }
@@ -97,7 +104,10 @@ class MainActivity : BaseActivity() {
     }
 
     fun onPageChanged(oldPageName: String, newPageName: String) {
+        //用于 HomeFragment SquareFragment 内部 ViewPager 切换时主动通知页面切换
+        Log.d("UMENG", "end   name:$oldPageName")
         MobclickAgent.onPageEnd(oldPageName)
+        Log.d("UMENG", "start name:$newPageName")
         MobclickAgent.onPageStart(newPageName)
     }
 

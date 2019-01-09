@@ -2,6 +2,7 @@ package com.snt.phoney.utils.data
 
 object Constants {
     object Extra {
+        const val TOKEN = "token"
         const val USER = "user"
         const val USER_ID = "user_id"
         const val PERMISSION = "permission"
@@ -20,6 +21,8 @@ object Constants {
         const val DATA = "data"
         const val TYPE = "type"
         const val THEME = "theme"
+        const val CALLER = "caller"
+        const val CALLEE = "callee"
     }
 
     object Preference {
@@ -49,7 +52,7 @@ object Constants {
         const val HELP_URL = "$BASE_URL/message/help"
     }
 
-    object Bugly{
+    object Bugly {
         const val APP_ID = "f2ff7f1586"
         const val APP_KEY = "78f0631f-81b8-4bc1-94be-983ecb43c0d6"
     }

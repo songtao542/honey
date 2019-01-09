@@ -11,24 +11,30 @@ import androidx.annotation.NonNull;
  */
 public class JMUser implements Parcelable {
     public Long id;
+    public String uuid;
     public String password;
     public String username;
     public String nickname;
     public String avatar;
+    public String token;
 
     public JMUser() {
     }
 
     public JMUser(Long id,
+                  String uuid,
                   String password,
                   String username,
                   String nickname,
-                  String avatar) {
+                  String avatar,
+                  String token) {
         this.id = id;
+        this.uuid = uuid;
         this.password = password;
         this.username = username;
         this.nickname = nickname;
         this.avatar = avatar;
+        this.token = token;
     }
 
     protected JMUser(Parcel in) {
@@ -37,23 +43,26 @@ public class JMUser implements Parcelable {
         } else {
             id = in.readLong();
         }
+        uuid = in.readString();
         password = in.readString();
         username = in.readString();
         nickname = in.readString();
         avatar = in.readString();
+        token = in.readString();
     }
 
     @NonNull
     @Override
     public String toString() {
-        StringBuilder builder = new StringBuilder();
-        builder.append("{");
-        builder.append("id:" + id);
-        builder.append(" ,password:" + password);
-        builder.append(" ,username:" + username);
-        builder.append(" ,nickname:" + nickname);
-        builder.append(" ,avatar:" + avatar);
-        builder.append("}");
+        StringBuilder builder = new StringBuilder()
+                .append("{")
+                .append("id:").append(id)
+                .append(" ,password:").append(password)
+                .append(" ,username:").append(username)
+                .append(" ,nickname:").append(nickname)
+                .append(" ,avatar:").append(avatar)
+                .append(" ,token:").append(token)
+                .append("}");
         return builder.toString();
     }
 
@@ -65,10 +74,12 @@ public class JMUser implements Parcelable {
             dest.writeByte((byte) 1);
             dest.writeLong(id);
         }
+        dest.writeString(uuid);
         dest.writeString(password);
         dest.writeString(username);
         dest.writeString(nickname);
         dest.writeString(avatar);
+        dest.writeString(token);
     }
 
     @Override
@@ -93,7 +104,7 @@ public class JMUser implements Parcelable {
         String nickname = user.getNickname();
         String username = user.getUserName();
         String avatar = user.getAvatar();
-        return new JMUser(id, null, username, nickname, avatar);
+        return new JMUser(id, null, null, username, nickname, avatar, null);
     }
 
     public static JMUser from(com.snt.phoney.domain.model.User user) {
@@ -107,7 +118,9 @@ public class JMUser implements Parcelable {
             nickname = im.getNickname();
             username = im.getUsername();
         }
-        return new JMUser(null, password, username, nickname, avatar);
+        String uuid = user.getUuid();
+        String token = user.getToken();
+        return new JMUser(null, uuid, password, username, nickname, avatar, token);
     }
 
     public static JMUser from(com.snt.phoney.domain.model.ImUser user) {
@@ -116,6 +129,6 @@ public class JMUser implements Parcelable {
         String username = user.getUsername();
         String avatar = user.getAvatar();
         String password = user.getPassword();
-        return new JMUser(id, password, username, nickname, avatar);
+        return new JMUser(id, null, password, username, nickname, avatar, null);
     }
 }

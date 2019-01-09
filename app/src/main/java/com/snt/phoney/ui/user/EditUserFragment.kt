@@ -21,7 +21,7 @@ import com.zaaach.citypicker.model.City
 import kotlinx.android.synthetic.main.app_toolbar.*
 import kotlinx.android.synthetic.main.fragment_edit_user.*
 
-class EditUserFragment : BaseFragment(),Toolbar.OnMenuItemClickListener {
+class EditUserFragment : BaseFragment(), Toolbar.OnMenuItemClickListener {
 
     companion object {
         @JvmStatic
@@ -111,27 +111,32 @@ class EditUserFragment : BaseFragment(),Toolbar.OnMenuItemClickListener {
                 user.height = value
             }
         }
-        weightCupButton.setOnClickListener {
-            if (viewModel.user?.sex == Sex.MALE.value) {
-                Picker.showPicker(activity, getString(R.string.pick_weight), 40, 150, user.weight.toInt()) { value, _ ->
-                    weightCup.text = getString(R.string.weight_value_template, value)
-                    user.weight = value.toDouble()
-                }
-            } else if (viewModel.user?.sex == Sex.FEMALE.value) {
-                Picker.showPicker(activity, getString(R.string.pick_cup), cupNumberArray, cupNumber, cupSizeArray, cupSize) { value1, value2 ->
-                    val cupValue = "${cupNumberArray[value1]}${cupSizeArray[value2]}"
-                    cupNumber = value1
-                    cupSize = value2
-                    weightCup.text = cupValue
-                    user.cup = cupValue
-                }
-            }
-        }
 
         ageButton.setOnClickListener {
             Picker.showPicker(activity, getString(R.string.pick_age), 16, 70, user.age) { value, _ ->
                 age.text = getString(R.string.age_value_template, value)
                 user.age = value
+            }
+        }
+
+        weightButton.setOnClickListener {
+            Picker.showPicker(activity, getString(R.string.pick_weight), 40, 150, user.weight.toInt()) { value, _ ->
+                weight.text = getString(R.string.weight_value_template, value)
+                user.weight = value.toDouble()
+            }
+        }
+
+        if (user.sex == Sex.MALE.value) {
+            cupButton.visibility = View.GONE
+        } else {
+            cupButton.setOnClickListener {
+                Picker.showPicker(activity, getString(R.string.pick_cup), cupNumberArray, cupNumber, cupSizeArray, cupSize) { value1, value2 ->
+                    val cupValue = "${cupNumberArray[value1]}${cupSizeArray[value2]}"
+                    cupNumber = value1
+                    cupSize = value2
+                    cup.text = cupValue
+                    user.cup = cupValue
+                }
             }
         }
 
@@ -174,11 +179,11 @@ class EditUserFragment : BaseFragment(),Toolbar.OnMenuItemClickListener {
         val nickname = nickname.text
         val age = age.text
         val height = height.text
-        val wc = weightCup.text
+        val weight = weight.text
         if (TextUtils.isEmpty(nickname) ||
                 TextUtils.isEmpty(age) ||
                 TextUtils.isEmpty(height) ||
-                TextUtils.isEmpty(wc)) {
+                TextUtils.isEmpty(weight)) {
             return false
         }
         return true
