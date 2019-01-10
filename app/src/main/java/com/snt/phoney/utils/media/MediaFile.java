@@ -3,6 +3,7 @@ package com.snt.phoney.utils.media;
 import android.annotation.SuppressLint;
 import android.mtp.MtpConstants;
 
+import java.io.File;
 import java.util.HashMap;
 
 @SuppressWarnings({"WeakerAccess", "unused"})
@@ -235,6 +236,11 @@ public class MediaFile {
     public static int getFileTypeForMimeType(String mimeType) {
         Integer value = sMimeTypeMap.get(mimeType);
         return (value == null ? 0 : value);
+    }
+
+    public static String getMimeTypeForFile(File file) {
+        MediaFileType mediaFileType = getFileType(file.getAbsolutePath());
+        return (mediaFileType == null ? null : mediaFileType.mimeType);
     }
 
     public static String getMimeTypeForFile(String path) {

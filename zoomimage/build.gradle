@@ -23,8 +23,11 @@ android {
 dependencies {
     implementation fileTree(dir: 'libs', include: ['*.jar'])
 
+    implementation deps.androidx.core
     implementation deps.androidx.appcompat
+    implementation deps.androidx.exifinterface
 
     androidTestImplementation deps.androidx.test_rules
     androidTestImplementation deps.androidx.test_runner
+
 }

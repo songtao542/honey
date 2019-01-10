@@ -28,6 +28,8 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 
+import com.davemorrissey.labs.subscaleview.ImageSource;
+import com.davemorrissey.labs.subscaleview.SubsamplingScaleImageView;
 import com.zhihu.matisse.R;
 import com.zhihu.matisse.internal.entity.Item;
 import com.zhihu.matisse.internal.entity.SelectionSpec;
@@ -78,16 +80,16 @@ public class PreviewItemFragment extends Fragment {
             videoPlayButton.setVisibility(View.GONE);
         }
 
-        ImageViewTouch image = view.findViewById(R.id.image_view);
-        image.setDisplayType(ImageViewTouchBase.DisplayType.FIT_TO_SCREEN);
-
-        Point size = PhotoMetadataUtils.getBitmapSize(item.getContentUri(), requireActivity());
         if (item.isGif()) {
-            SelectionSpec.getInstance().imageEngine.loadGifImage(getContext(), size.x, size.y, image,
-                    item.getContentUri());
+            Point size = PhotoMetadataUtils.getBitmapSize(item.getContentUri(), requireActivity());
+            ImageViewTouch image = view.findViewById(R.id.image_view);
+            image.setDisplayType(ImageViewTouchBase.DisplayType.FIT_TO_SCREEN);
+            image.setVisibility(View.VISIBLE);
+            SelectionSpec.getInstance().imageEngine.loadGifImage(getContext(), size.x, size.y, image, item.getContentUri());
         } else {
-            SelectionSpec.getInstance().imageEngine.loadImage(getContext(), size.x, size.y, image,
-                    item.getContentUri());
+            SubsamplingScaleImageView image = view.findViewById(R.id.scale_image_view);
+            image.setVisibility(View.VISIBLE);
+            image.setImage(ImageSource.uri(item.getContentUri()));
         }
     }
 

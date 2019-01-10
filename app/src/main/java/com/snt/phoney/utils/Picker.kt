@@ -1,7 +1,6 @@
 package com.snt.phoney.utils
 
 import android.app.DatePickerDialog
-import android.util.ArrayMap
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentActivity
 import com.snt.phoney.R
@@ -117,7 +116,7 @@ object Picker {
                 .showSingleMediaType(true)
                 .theme(R.style.Matisse_Dracula)
                 .countable(countable) //max == 1，则 countable = false
-                .addFilter(GifSizeFilter(320, 320, 5 * Filter.K * Filter.K))
+                .addFilter(GifSizeFilter(200, 200, 5 * Filter.K * Filter.K))
                 .maxSelectable(max)
                 .spanCount(4)
                 .originalEnable(true)

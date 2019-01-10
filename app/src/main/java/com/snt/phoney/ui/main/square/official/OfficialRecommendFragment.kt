@@ -2,6 +2,7 @@ package com.snt.phoney.ui.main.square.official
 
 import android.Manifest
 import android.os.Bundle
+import android.util.Log
 import android.view.Gravity
 import android.view.LayoutInflater
 import android.view.View
@@ -57,7 +58,7 @@ class OfficialRecommendFragment : BaseFragment() {
 
         publishTime.setOnClickListener {
             //expandFilter(publishTime, R.array.filter_publish_time)
-            popupMenu(publishTime, R.array.filter_publish_time) { position ->
+            popupMenu(publishTime, R.array.filter_publish_time) { _, position ->
                 //filterDistance = FilterDistance.NONE
                 //filterContent = FilterContent.NONE.value
                 filterTime = FilterTime.from(position)
@@ -66,7 +67,7 @@ class OfficialRecommendFragment : BaseFragment() {
         }
         distance.setOnClickListener {
             //expandFilter(distance, R.array.filter_distance)
-            popupMenu(distance, R.array.filter_distance) { position ->
+            popupMenu(distance, R.array.filter_distance) { _, position ->
                 //filterTime = FilterTime.NONE
                 //filterContent = FilterContent.NONE.value
                 filterDistance = FilterDistance.from(position)
@@ -124,10 +125,11 @@ class OfficialRecommendFragment : BaseFragment() {
         if (!isHidden) {
             val menus = ArrayList<String>(menusList.map { it.name!! })
             menus.add(0, getString(R.string.all))
-            popupMenu(datingContent, menus) { position ->
+            popupMenu(datingContent, menus) { title, position ->
                 //filterTime = FilterTime.NONE
                 //filterDistance = FilterDistance.NONE
-                filterContent = if (position == 0) "" else menusList[position].name!!
+                Log.d("TTTT", "hhhhhhhhhhhh position=$position")
+                filterContent = if (position == 0) "" else title
                 loadDating(true)
             }
         }
@@ -180,12 +182,12 @@ class OfficialRecommendFragment : BaseFragment() {
 //    }
 
 
-    private fun popupMenu(dropdownLabel: DropdownLabelView, menus: Int, handler: ((selectPosition: Int) -> Unit)) {
+    private fun popupMenu(dropdownLabel: DropdownLabelView, menus: Int, handler: ((title: String, selectPosition: Int) -> Unit)) {
         val menuList = requireContext().resources.getStringArray(menus).asList()
         popupMenu(dropdownLabel, menuList, handler)
     }
 
-    private fun popupMenu(dropdownLabel: DropdownLabelView, menuList: List<String>, handler: ((selectPosition: Int) -> Unit)) {
+    private fun popupMenu(dropdownLabel: DropdownLabelView, menuList: List<String>, handler: ((title: String, selectPosition: Int) -> Unit)) {
         val list = PopupList(context, menuList)
         list.setWidth(false, anchor.width)
         list.setPosition(0)
@@ -197,7 +199,7 @@ class OfficialRecommendFragment : BaseFragment() {
         }
         list.setOnMenuItemClickListener {
             dropdownLabel.setText(it.title)
-            handler.invoke(it.position)
+            handler.invoke(it.title, it.position)
         }
         dropdownLabel.expandIndicator()
         list.show(anchor, Gravity.BOTTOM)

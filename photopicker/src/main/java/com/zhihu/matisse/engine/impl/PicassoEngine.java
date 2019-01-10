@@ -31,22 +31,27 @@ public class PicassoEngine implements ImageEngine {
 
     @Override
     public void loadThumbnail(Context context, int resize, Drawable placeholder, ImageView imageView, Uri uri) {
-        Picasso.get().load(uri).placeholder(placeholder)
+        Picasso.get()
+                .load(uri)
+                .placeholder(placeholder)
                 .resize(resize, resize)
                 .centerCrop()
                 .into(imageView);
     }
 
     @Override
-    public void loadGifThumbnail(Context context, int resize, Drawable placeholder, ImageView imageView,
-                                 Uri uri) {
+    public void loadGifThumbnail(Context context, int resize, Drawable placeholder, ImageView imageView, Uri uri) {
         loadThumbnail(context, resize, placeholder, imageView, uri);
     }
 
     @Override
     public void loadImage(Context context, int resizeX, int resizeY, ImageView imageView, Uri uri) {
-        Picasso.get().load(uri).resize(resizeX, resizeY).priority(Picasso.Priority.HIGH)
-                .centerInside().into(imageView);
+        Picasso.get()
+                .load(uri)
+                .resize(resizeX, resizeY)
+                .priority(Picasso.Priority.HIGH)
+                .centerInside()
+                .into(imageView);
     }
 
     @Override

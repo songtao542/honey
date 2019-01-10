@@ -1,7 +1,6 @@
 package com.snt.phoney.ui.wallet
 
 
-import android.content.Context
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -52,12 +51,6 @@ class DetailListRecyclerViewAdapter(private val fragment: DetailListFragment, pr
         private val consumeAmount = mView.consumeAmount
 
         fun setData(position: Int, record: OrderRecord) {
-            if (position == 0) {
-                createTime.visibility = View.VISIBLE
-                createTime.text = record.formatCreateTime()
-            } else {
-                createTime.visibility = View.GONE
-            }
             when (record.type) {
                 -1 -> {
                     consumeIcon.setImageResource(R.drawable.ic_order_withdraw)
@@ -74,6 +67,7 @@ class DetailListRecyclerViewAdapter(private val fragment: DetailListFragment, pr
                 11 -> consumeIcon.setImageResource(R.drawable.ic_order_mibi)
                 12 -> consumeIcon.setImageResource(R.drawable.ic_order_mibi)
             }
+            createTime.text = record.formatCreateTime()
             consumeName.text = record.title
             consumeAmount.text = record.price
         }
@@ -89,12 +83,6 @@ class DetailListRecyclerViewAdapter(private val fragment: DetailListFragment, pr
         private val rechargeType = mView.rechargeType
 
         fun setData(position: Int, record: OrderRecord) {
-            if (position == 0) {
-                createTime.visibility = View.VISIBLE
-                createTime.text = record.formatCreateTime()
-            } else {
-                createTime.visibility = View.GONE
-            }
             when (record.type) {
                 -1 -> {
                     rechargeIcon.setImageResource(R.drawable.ic_order_withdraw)
@@ -119,6 +107,7 @@ class DetailListRecyclerViewAdapter(private val fragment: DetailListFragment, pr
                 11 -> rechargeIcon.setImageResource(R.drawable.ic_order_mibi)
                 12 -> rechargeIcon.setImageResource(R.drawable.ic_order_mibi)
             }
+            createTime.text = record.formatCreateTime()
             rechargeName.text = record.title
             rechargeAmount.text = record.price
             rechargeBalance.text = record.info

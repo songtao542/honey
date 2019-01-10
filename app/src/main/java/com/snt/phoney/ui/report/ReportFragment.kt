@@ -4,8 +4,6 @@ import android.app.Activity
 import android.content.Intent
 import android.net.Uri
 import android.os.Bundle
-import android.text.TextUtils
-import android.util.Log
 import android.util.TypedValue
 import android.view.*
 import android.widget.RadioGroup
@@ -163,10 +161,10 @@ class ReportFragment : BaseFragment(), Toolbar.OnMenuItemClickListener {
             snackbar(getString(R.string.please_choose_file))
             return false
         }
-        if (TextUtils.isEmpty(contentView.text?.toString())) {
-            snackbar(getString(R.string.please_input_reason))
-            return false
-        }
+        //if (TextUtils.isEmpty(contentView.text?.toString())) {
+        //    snackbar(getString(R.string.please_input_reason))
+        //    return false
+        //}
         return true
     }
 

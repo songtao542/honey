@@ -1,64 +1,68 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:background="@drawable/underline_gray"
-    android:orientation="vertical">
+    android:orientation="horizontal"
+    android:paddingLeft="10dp"
+    android:paddingTop="5dp"
+    android:paddingRight="10dp"
+    android:paddingBottom="5dp">
 
-    <androidx.appcompat.widget.AppCompatTextView
-        android:id="@+id/consumeCreateTime"
-        android:layout_width="match_parent"
-        android:layout_height="30dp"
-        android:background="@color/light_gray"
-        android:gravity="center_vertical"
-        android:paddingLeft="18dp"
-        android:paddingRight="18dp"
-        android:textColor="@color/dark_gray"
-        android:textSize="@dimen/textsize_small" />
+    <androidx.appcompat.widget.AppCompatImageView
+        android:id="@+id/consumeIcon"
+        android:layout_width="60dp"
+        android:layout_height="60dp"
+        android:layout_alignParentLeft="true"
+        android:padding="8dp" />
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:background="@drawable/underline_gray"
-        android:orientation="horizontal"
-        android:paddingLeft="10dp"
-        android:paddingTop="5dp"
-        android:paddingRight="10dp"
-        android:paddingBottom="5dp">
+        android:layout_centerVertical="true"
+        android:layout_toRightOf="@id/consumeIcon"
+        android:orientation="vertical">
 
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
 
-        <androidx.appcompat.widget.AppCompatImageView
-            android:id="@+id/consumeIcon"
-            android:layout_width="60dp"
-            android:layout_height="60dp"
-            android:padding="8dp" />
+            <androidx.appcompat.widget.AppCompatTextView
+                android:id="@+id/consumeName"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_vertical"
+                android:layout_marginLeft="10dp"
+                android:layout_weight="1"
+                android:gravity="center_vertical"
+                android:text="红包入账"
+                android:textColor="@color/black"
+                android:textSize="@dimen/textsize_normal" />
 
+            <androidx.appcompat.widget.AppCompatTextView
+                android:id="@+id/consumeAmount"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_vertical"
+                android:layout_weight="1"
+                android:gravity="right|center_vertical"
+                android:text="余额：2036"
+                android:textColor="@color/black"
+                android:textSize="@dimen/textsize_normal" />
+        </LinearLayout>
 
         <androidx.appcompat.widget.AppCompatTextView
-            android:id="@+id/consumeName"
-            android:layout_width="0dp"
+            android:id="@+id/consumeCreateTime"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_gravity="center_vertical"
             android:layout_marginLeft="10dp"
-            android:layout_weight="1"
+            android:layout_marginTop="5dp"
+            android:layout_marginRight="10dp"
             android:gravity="center_vertical"
-            android:text="红包入账"
-            android:textColor="@color/black"
-            android:textSize="@dimen/textsize_normal" />
-
-        <androidx.appcompat.widget.AppCompatTextView
-            android:id="@+id/consumeAmount"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center_vertical"
-            android:layout_weight="1"
-            android:gravity="right|center_vertical"
-            android:text="余额：2036"
-            android:textColor="@color/black"
-            android:textSize="@dimen/textsize_normal" />
-
-
+            android:textColor="@color/dark_gray"
+            android:textSize="@dimen/textsize_smaller" />
     </LinearLayout>
-</LinearLayout>
+</RelativeLayout>
 
 

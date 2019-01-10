@@ -71,7 +71,7 @@
             android:background="?selectableItemBackgroundBorderless"
             android:orientation="horizontal"
             android:padding="16dp"
-            android:visibility="visible"
+            android:visibility="gone"
             tools:showIn="@layout/activity_matisse">
 
 
