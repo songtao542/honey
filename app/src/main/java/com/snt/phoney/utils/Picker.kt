@@ -115,6 +115,7 @@ object Picker {
         //val picker = matisse.choose(MimeType.ofImage())
         val picker = matisse.choose(MimeType.of(MimeType.JPEG, MimeType.PNG))
                 .showSingleMediaType(true)
+
                 .theme(R.style.Matisse_Dracula)
                 .countable(countable) //max == 1，则 countable = false
                 .addFilter(GifSizeFilter(200, 200, 5 * Filter.K * Filter.K))

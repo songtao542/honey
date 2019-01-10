@@ -27,6 +27,7 @@ import android.provider.MediaStore;
 import androidx.annotation.RequiresApi;
 import androidx.loader.content.CursorLoader;
 
+import com.zhihu.matisse.MimeType;
 import com.zhihu.matisse.internal.entity.Album;
 import com.zhihu.matisse.internal.entity.SelectionSpec;
 
@@ -69,6 +70,19 @@ public class AlbumLoader extends CursorLoader {
                     + " AND " + MediaStore.MediaColumns.SIZE + ">0"
                     + ") GROUP BY (bucket_id";
 
+    private static String getSelection(boolean showGif) {
+        if (showGif) {
+            return MediaStore.Files.FileColumns.MEDIA_TYPE + "=?"
+                    + " AND " + MediaStore.MediaColumns.SIZE + ">0"
+                    + ") GROUP BY (bucket_id";
+        } else {
+            return MediaStore.Files.FileColumns.MEDIA_TYPE + "=?"
+                    + " AND " + MediaStore.Files.FileColumns.MIME_TYPE + "!='" + MimeType.GIF.toString() + "'"
+                    + " AND " + MediaStore.MediaColumns.SIZE + ">0"
+                    + ") GROUP BY (bucket_id";
+        }
+    }
+
     private static String[] getSelectionArgsForSingleMediaType(int mediaType) {
         return new String[]{String.valueOf(mediaType)};
     }
@@ -84,7 +98,7 @@ public class AlbumLoader extends CursorLoader {
         String selection;
         String[] selectionArgs;
         if (SelectionSpec.getInstance().onlyShowImages()) {
-            selection = SELECTION_FOR_SINGLE_MEDIA_TYPE;
+            selection = getSelection(SelectionSpec.getInstance().showGif());
             selectionArgs = getSelectionArgsForSingleMediaType(MediaStore.Files.FileColumns.MEDIA_TYPE_IMAGE);
         } else if (SelectionSpec.getInstance().onlyShowVideos()) {
             selection = SELECTION_FOR_SINGLE_MEDIA_TYPE;

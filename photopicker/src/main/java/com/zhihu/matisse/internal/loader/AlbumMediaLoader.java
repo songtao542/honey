@@ -27,6 +27,7 @@ import android.provider.MediaStore;
 import androidx.annotation.RequiresApi;
 import androidx.loader.content.CursorLoader;
 
+import com.zhihu.matisse.MimeType;
 import com.zhihu.matisse.internal.entity.Album;
 import com.zhihu.matisse.internal.entity.Item;
 import com.zhihu.matisse.internal.entity.SelectionSpec;
@@ -85,6 +86,9 @@ public class AlbumMediaLoader extends CursorLoader {
     }
     // ===============================================================
 
+    private static final String SELECTION_NO_GIF = " AND "
+            + MediaStore.Files.FileColumns.MIME_TYPE + "!='" + MimeType.GIF.toString() + "'";
+
     // === params for ordinary album && showSingleMediaType: true ===
     private static final String SELECTION_ALBUM_FOR_SINGLE_MEDIA_TYPE =
             MediaStore.Files.FileColumns.MEDIA_TYPE + "=?"
@@ -113,6 +117,9 @@ public class AlbumMediaLoader extends CursorLoader {
             if (album.isAll()) {
                 if (SelectionSpec.getInstance().onlyShowImages()) {
                     selection = SELECTION_ALL_FOR_SINGLE_MEDIA_TYPE;
+                    if (!SelectionSpec.getInstance().showGif()) {
+                        selection += SELECTION_NO_GIF;
+                    }
                     selectionArgs = getSelectionArgsForSingleMediaType(MediaStore.Files.FileColumns.MEDIA_TYPE_IMAGE);
                 } else if (SelectionSpec.getInstance().onlyShowVideos()) {
                     selection = SELECTION_ALL_FOR_SINGLE_MEDIA_TYPE;
@@ -125,6 +132,9 @@ public class AlbumMediaLoader extends CursorLoader {
             } else {
                 if (SelectionSpec.getInstance().onlyShowImages()) {
                     selection = SELECTION_ALBUM_FOR_SINGLE_MEDIA_TYPE;
+                    if (!SelectionSpec.getInstance().showGif()) {
+                        selection += SELECTION_NO_GIF;
+                    }
                     selectionArgs = getSelectionAlbumArgsForSingleMediaType(MediaStore.Files.FileColumns.MEDIA_TYPE_IMAGE,
                             album.getId());
                 } else if (SelectionSpec.getInstance().onlyShowVideos()) {

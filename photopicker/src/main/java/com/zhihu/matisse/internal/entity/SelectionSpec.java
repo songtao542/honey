@@ -106,6 +106,10 @@ public final class SelectionSpec {
         return showSingleMediaType && MimeType.ofImage().containsAll(mimeTypeSet);
     }
 
+    public boolean showGif() {
+        return showSingleMediaType && mimeTypeSet.contains(MimeType.GIF);
+    }
+
     public boolean onlyShowVideos() {
         return showSingleMediaType && MimeType.ofVideo().containsAll(mimeTypeSet);
     }

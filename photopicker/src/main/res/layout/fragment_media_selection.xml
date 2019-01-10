@@ -14,6 +14,7 @@
   limitations under the License.
   -->
 <FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="?attr/page_bg">
@@ -25,6 +26,7 @@
         android:clipChildren="false"
         android:clipToPadding="false"
         android:paddingTop="@dimen/media_grid_spacing"
-        android:paddingBottom="@dimen/media_grid_spacing" />
+        android:paddingBottom="@dimen/media_grid_spacing"
+        tools:listitem="@layout/media_grid_item" />
 
 </FrameLayout>
