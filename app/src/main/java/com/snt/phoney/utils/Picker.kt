@@ -112,7 +112,8 @@ object Picker {
         }
         val matisse = if (activity != null) Matisse.from(activity) else Matisse.from(fragment)
         val countable = max > 1
-        val picker = matisse.choose(MimeType.ofImage())
+        //val picker = matisse.choose(MimeType.ofImage())
+        val picker = matisse.choose(MimeType.of(MimeType.JPEG, MimeType.PNG))
                 .showSingleMediaType(true)
                 .theme(R.style.Matisse_Dracula)
                 .countable(countable) //max == 1，则 countable = false
