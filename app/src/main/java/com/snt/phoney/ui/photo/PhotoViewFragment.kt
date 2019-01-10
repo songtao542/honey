@@ -20,13 +20,11 @@ import com.snt.phoney.R
 import com.snt.phoney.domain.model.Photo
 import com.snt.phoney.utils.data.Constants
 import com.snt.phoney.utils.media.MediaFile
+import com.snt.phoney.utils.media.MultipartUtil
 import it.sephiroth.android.library.imagezoom.ImageViewTouch
 import it.sephiroth.android.library.imagezoom.ImageViewTouchBase
 import kotlinx.android.synthetic.main.fragment_photo_view.*
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.GlobalScope
-import kotlinx.coroutines.launch
-import kotlinx.coroutines.withContext
+import kotlinx.coroutines.*
 import java.io.File
 
 
@@ -87,28 +85,6 @@ class PhotoViewFragment : Fragment() {
         }
 
         loadFile(uri, url, photo)
-
-//        if (uri != null) {
-//            Log.d("TTTT", "vvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvv uri=$uri")
-//            Glide.with(this)
-//                    .asFile()
-//                    .load(uri)
-//                    .into(FileViewTarget(this, scaleImageView, imageView))
-//
-//        } else if (url != null) {
-//            Log.d("TTTT", "vvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvv url=$url")
-//            loadFile(url!!)
-////            Glide.with(this)
-////                    .asFile()
-////                    .load(url)
-////                    .into(FileViewTarget(this, scaleImageView, imageView))
-//        } else if (photo != null && photo!!.path != null) {
-//            Log.d("TTTT", "vvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvv photo=$photo")
-//            Glide.with(this)
-//                    .asFile()
-//                    .load(photo!!.path!!)
-//                    .into(FileViewTarget(this, scaleImageView, imageView))
-//        }
     }
 
     fun setOnPhotoSingleTapListener(listener: OnPhotoSingleTapListener?) {
@@ -120,33 +96,31 @@ class PhotoViewFragment : Fragment() {
     }
 
     private fun loadFile(uri: Uri? = null, url: String? = null, photo: Photo? = null) {
-        Log.d("TTTT", "vvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvv uri  =$uri")
-        Log.d("TTTT", "vvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvv url  =$url")
-        Log.d("TTTT", "vvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvv photo=$photo")
-        GlobalScope.launch {
+        loadImageJob?.cancel()
+        loadImageJob = GlobalScope.launch {
             withContext(Dispatchers.IO) {
                 val file = Glide.with(this@PhotoViewFragment)
                         .asFile()
                         .load(uri ?: url ?: photo?.path)
                         .submit()
                         .get()
-                GlobalScope.launch(Dispatchers.Main) {
-                    file?.let { f ->
-                        Log.d("TTTT", "vvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvv file=$f")
-                        Log.d("TTTT", "vvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvv mime=${getFileMime(f)}")
-                        if ("image/gif" == getFileMime(f)) {
-                            imageView.visibility = View.VISIBLE
-                            Glide.with(this@PhotoViewFragment)
-                                    .load(f)
-                                    .apply(RequestOptions()
-                                            .priority(Priority.HIGH)
-                                            .fitCenter())
-                                    .into(imageView)
-                        } else {
-                            scaleImageView.visibility = View.VISIBLE
-                            scaleImageView.setImage(ImageSource.uri(Uri.fromFile(f)))
+                if (isActive) {
+                    GlobalScope.launch(Dispatchers.Main) {
+                        file?.let { f ->
+                            if ("image/gif" == MultipartUtil.getFileMime(f)) {
+                                imageView.visibility = View.VISIBLE
+                                Glide.with(this@PhotoViewFragment)
+                                        .load(f)
+                                        .apply(RequestOptions()
+                                                .priority(Priority.HIGH)
+                                                .fitCenter())
+                                        .into(imageView)
+                            } else {
+                                scaleImageView.visibility = View.VISIBLE
+                                scaleImageView.setImage(ImageSource.uri(Uri.fromFile(f)))
+                            }
+                            return@let
                         }
-                        return@let
                     }
                 }
                 return@withContext
@@ -154,55 +128,11 @@ class PhotoViewFragment : Fragment() {
         }
     }
 
-    private fun getFileMime(file: File): String {
-        val options = BitmapFactory.Options()
-        options.inJustDecodeBounds = true
-        BitmapFactory.decodeFile(file.path, options)
-        return options.outMimeType
-    }
+    private var loadImageJob: Job? = null
 
-    inner class FileViewTarget(private val fragment: Fragment, view: SubsamplingScaleImageView, private val alternative: ImageViewTouch) : CustomViewTarget<SubsamplingScaleImageView, File>(view) {
-
-        override fun onStart() {
-            super.onStart()
-            Log.d("TTTT", "vvvvvvvvvvvvvv onStart vvvvvvvvvvvvvvvvvv onStart=")
-        }
-
-        override fun onStop() {
-            super.onStop()
-            Log.d("TTTT", "vvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvv onStop=")
-        }
-
-        override fun onResourceLoading(placeholder: Drawable?) {
-            super.onResourceLoading(placeholder)
-            Log.d("TTTT", "vvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvv onResourceLoading=")
-        }
-
-        override fun onLoadFailed(errorDrawable: Drawable?) {
-            Log.d("TTTT", "vvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvv onLoadFailed=")
-        }
-
-        override fun onResourceCleared(placeholder: Drawable?) {
-            Log.d("TTTT", "vvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvv onLoadFailed=")
-        }
-
-        override fun onResourceReady(resource: File, transition: Transition<in File>?) {
-            Log.d("TTTT", "vvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvv resource=$resource")
-            if ("image/gif" == MediaFile.getMimeTypeForFile(resource.absolutePath)) {
-                Log.d("TTTT", "vvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvv gif")
-                alternative.visibility = View.VISIBLE
-                Glide.with(fragment)
-                        .load(resource)
-                        .apply(RequestOptions()
-                                .priority(Priority.HIGH)
-                                .fitCenter())
-                        .into(alternative)
-            } else {
-                Log.d("TTTT", "vvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvv not gif")
-                view.visibility = View.VISIBLE
-                view.setImage(ImageSource.uri(Uri.fromFile(resource)))
-            }
-        }
+    override fun onDestroyView() {
+        loadImageJob?.cancel()
+        super.onDestroyView()
     }
 
 }

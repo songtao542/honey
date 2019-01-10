@@ -193,7 +193,7 @@ interface Api {
      */
     @Multipart
     //@Headers(value = ["Content-Type: application/x-www-form-urlencoded; charset=UTF-8"])
-    @Headers("Timeout: 30000")
+    @Headers("Timeout: 60000")
     @POST("appointment/addAppointment")
     fun publishDating(@Part("token") token: String,
                       @Part("title") title: String,
