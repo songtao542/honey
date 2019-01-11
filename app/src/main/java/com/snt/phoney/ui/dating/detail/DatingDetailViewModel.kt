@@ -44,7 +44,8 @@ class DatingDetailViewModel @Inject constructor(private val usecase: DatingUseCa
                         },
                         onError = {
                             error.value = context.getString(R.string.load_failed)
-                        }
+                        },
+                        onComplete = {}
                 )
                 .disposedBy(disposeBag)
     }

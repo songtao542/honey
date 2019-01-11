@@ -9,7 +9,6 @@ import com.snt.phoney.domain.model.PoiAddress
 import com.snt.phoney.domain.usecase.DatingUseCase
 import com.snt.phoney.extensions.disposedBy
 import io.reactivex.android.schedulers.AndroidSchedulers
-import io.reactivex.disposables.Disposable
 import io.reactivex.rxkotlin.subscribeBy
 import io.reactivex.schedulers.Schedulers
 import java.io.File

@@ -90,7 +90,6 @@ class OfficialRecommendFragment : BaseFragment() {
         }
 
         viewModel.success.observe(this, Observer {
-            swipeRefresh.isRefreshing = false
             if (!isHidden || !userVisibleHint) {
                 Toast.makeText(requireContext(), it, Toast.LENGTH_SHORT).show()
             }

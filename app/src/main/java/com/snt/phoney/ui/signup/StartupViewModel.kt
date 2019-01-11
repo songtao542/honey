@@ -31,14 +31,17 @@ class StartupViewModel @Inject constructor(private val usecase: SigninUseCase) :
         usecase.signupByThirdPlatform(openId, thirdToken, plate, nickName, headPic, deviceToken, osVersion, version, mobilePlate)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
-                .subscribeBy {
-                    if (it.code == 200) {
-                        usecase.setUser(it.data)
-                        user.value = it.data
-                    } else if (!TextUtils.isEmpty(it.message)) {
-                        error.value = it.message
-                    }
-                }.disposedBy(disposeBag)
+                .subscribeBy(
+                        onSuccess = {
+                            if (it.code == 200) {
+                                usecase.setUser(it.data)
+                                user.value = it.data
+                            } else if (!TextUtils.isEmpty(it.message)) {
+                                error.value = it.message
+                            }
+                        },
+                        onError = {}
+                ).disposedBy(disposeBag)
     }
 
     fun clearUser() {

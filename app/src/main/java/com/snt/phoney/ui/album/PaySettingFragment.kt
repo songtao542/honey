@@ -121,7 +121,6 @@ class PaySettingFragment : BaseFragment() {
                 showProgress(getString(R.string.on_going_seting))
                 viewModel.setPhotoPermission(PhotoPermission.LOCKED)
             }
-
         }
 
         if (photos == null) {
@@ -166,14 +165,14 @@ class PaySettingFragment : BaseFragment() {
     private fun setCheck(view: View) {
         if (view != checked) {
             if (view == needPay) {
-                needPay.checked = true
-                unlockAll.checked = false
+                needPay.isChecked = true
+                unlockAll.isChecked = false
                 inputPrice.visibility = View.VISIBLE
                 list.visibility = View.VISIBLE
                 checked = needPay
             } else {
-                needPay.checked = false
-                unlockAll.checked = true
+                needPay.isChecked = false
+                unlockAll.isChecked = true
                 inputPrice.visibility = View.GONE
                 list.visibility = View.GONE
                 checked = unlockAll

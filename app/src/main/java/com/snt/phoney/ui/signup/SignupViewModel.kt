@@ -25,13 +25,16 @@ class SignupViewModel @Inject constructor(private val usecase: SigninUseCase) : 
         usecase.requestVerificationCode(phone)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
-                .subscribeBy {
-                    if (it.code == 200) {
-                        verificationCode.value = it.data
-                    } else if (!TextUtils.isEmpty(it.message)) {
-                        error.value = it.message
-                    }
-                }.disposedBy(disposeBag)
+                .subscribeBy(
+                        onSuccess = {
+                            if (it.code == 200) {
+                                verificationCode.value = it.data
+                            } else if (!TextUtils.isEmpty(it.message)) {
+                                error.value = it.message
+                            }
+                        },
+                        onError = {}
+                ).disposedBy(disposeBag)
     }
 
     fun signup(phone: String, code: String) {
@@ -43,14 +46,17 @@ class SignupViewModel @Inject constructor(private val usecase: SigninUseCase) : 
         usecase.signup(phone, msgId, code, deviceToken, osVersion, appVersion, mobilePlate)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
-                .subscribeBy {
-                    if (it.code == 200) {
-                        user.value = it.data
-                        usecase.setUser(it.data)
-                    } else if (!TextUtils.isEmpty(it.message)) {
-                        error.value = it.message
-                    }
-                }.disposedBy(disposeBag)
+                .subscribeBy(
+                        onSuccess = {
+                            if (it.code == 200) {
+                                user.value = it.data
+                                usecase.setUser(it.data)
+                            } else if (!TextUtils.isEmpty(it.message)) {
+                                error.value = it.message
+                            }
+                        },
+                        onError = {}
+                ).disposedBy(disposeBag)
     }
 
 }

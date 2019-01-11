@@ -9,7 +9,7 @@
     android:orientation="vertical"
     tools:context=".ui.vip.VipFragment">
 
-    <include layout="@layout/app_toolbar"/>
+    <include layout="@layout/app_toolbar" />
 
     <ScrollView
         android:layout_width="match_parent"
@@ -96,40 +96,44 @@
                     <!--android:layout_height="wrap_content" />-->
                 </com.snt.phoney.widget.FlowLayout>
 
-                <RadioGroup
+                <com.snt.phoney.widget.CompatRadioGroup
                     android:id="@+id/radioGroup"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginLeft="10dp"
                     android:layout_marginRight="10dp"
+                    android:orientation="vertical"
                     android:paddingLeft="10dp"
                     android:paddingRight="10dp">
 
-                    <androidx.appcompat.widget.AppCompatRadioButton
-                        android:id="@+id/alipayRadio"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_marginTop="20dp"
-                        android:checked="true"
-                        android:drawableLeft="@drawable/ic_alipay"
-                        android:drawablePadding="10dp"
-                        android:layoutDirection="rtl"
-                        android:paddingTop="15dp"
-                        android:paddingBottom="15dp"
-                        android:text="@string/alipay" />
-
-                    <androidx.appcompat.widget.AppCompatRadioButton
+                    <com.snt.phoney.widget.CompatRadioButton
                         android:id="@+id/wechatPayRadio"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:layout_marginTop="10dp"
-                        android:drawableLeft="@drawable/ic_wechat_pay"
-                        android:drawablePadding="10dp"
-                        android:layoutDirection="rtl"
                         android:paddingTop="15dp"
                         android:paddingBottom="15dp"
-                        android:text="@string/wechat" />
-                </RadioGroup>
+                        app:checked="true"
+                        app:icon="@drawable/ic_wechat_pay"
+                        app:iconPadding="10dp"
+                        app:iconSize="26dp"
+                        app:radioText="@string/wechat"
+                        app:radioTextSize="@dimen/textsize_normal" />
+
+                    <com.snt.phoney.widget.CompatRadioButton
+                        android:id="@+id/alipayRadio"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="10dp"
+                        android:checked="true"
+                        android:paddingTop="15dp"
+                        android:paddingBottom="15dp"
+                        app:icon="@drawable/ic_alipay"
+                        app:iconPadding="10dp"
+                        app:iconSize="26dp"
+                        app:radioText="@string/alipay"
+                        app:radioTextSize="@dimen/textsize_normal" />
+
+                </com.snt.phoney.widget.CompatRadioGroup>
 
                 <androidx.appcompat.widget.AppCompatTextView
                     android:id="@+id/payAmount"

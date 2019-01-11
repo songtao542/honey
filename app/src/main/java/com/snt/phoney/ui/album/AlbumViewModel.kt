@@ -1,10 +1,8 @@
 package com.snt.phoney.ui.album
 
-import android.util.Log
 import androidx.lifecycle.MutableLiveData
 import com.snt.phoney.R
 import com.snt.phoney.base.AppViewModel
-import com.snt.phoney.domain.model.Applicant
 import com.snt.phoney.domain.model.Photo
 import com.snt.phoney.domain.model.PhotoApply
 import com.snt.phoney.domain.usecase.UserInfoUseCase
@@ -33,12 +31,15 @@ class AlbumViewModel @Inject constructor(private val usecase: UserInfoUseCase) :
         usecase.deletePhotos(token, photoList.map { it.id.toString() })
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
-                .subscribeBy {
-                    if (it.success) {
-                        //toast.value = context.getString(R.string.delete_photo_success)
-                        photos.value = it.data
-                    }
-                }.disposedBy(disposeBag)
+                .subscribeBy(
+                        onSuccess = {
+                            if (it.success) {
+                                //toast.value = context.getString(R.string.delete_photo_success)
+                                photos.value = it.data
+                            }
+                        },
+                        onError = {}
+                ).disposedBy(disposeBag)
     }
 
 

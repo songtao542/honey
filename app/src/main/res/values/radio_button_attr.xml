@@ -4,10 +4,19 @@
     <declare-styleable name="CompatRadioButton">
         <attr name="icon" format="reference" />
         <attr name="iconSize" format="dimension" />
+        <attr name="iconPadding" format="dimension" />
+
+        <attr name="radio" format="reference" />
+        <attr name="radioSize" format="dimension" />
         <attr name="checked" format="boolean" />
-        <attr name="icon_gravity" format="enum">
+        <attr name="radioGravity" format="enum">
             <enum name="left" value="0" />
             <enum name="right" value="1" />
         </attr>
+
+        <attr name="radioTextColor" format="color" />
+        <attr name="radioTextSize" format="dimension" />
+        <attr name="radioText" format="dimension" />
+        <attr name="groupMode" format="boolean" />
     </declare-styleable>
 </resources>

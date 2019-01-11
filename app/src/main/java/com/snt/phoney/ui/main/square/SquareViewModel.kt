@@ -131,7 +131,7 @@ class SquareViewModel @Inject constructor(private val usecase: SquareUseCase) : 
                         onError = {
                             setLoading("popular", false)
                             loadMore?.isLoadFailed = true
-                            error.value = context.getString(R.string.load_failed)
+                            popularError.value = context.getString(R.string.load_failed)
                         }
                 ).disposedBy(disposeBag)
     }

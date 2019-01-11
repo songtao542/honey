@@ -20,14 +20,8 @@ class PaySettingRecyclerViewAdapter(val fragment: Fragment) : RecyclerView.Adapt
             }
         }
 
-    val selected = ArrayList<Photo>()
-
+    //val selected = ArrayList<Photo>()
     var selectedPhoto: Photo? = null
-    private var lastSelectedView: View? = null
-
-    override fun getItemViewType(position: Int): Int {
-        return super.getItemViewType(position)
-    }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
         return ViewHolder(LayoutInflater.from(parent.context).inflate(R.layout.fragment_pay_setting_list_item, parent, false))
@@ -44,19 +38,13 @@ class PaySettingRecyclerViewAdapter(val fragment: Fragment) : RecyclerView.Adapt
         fun setData(photo: Photo) {
             this.photo = photo
             Glide.with(mView.image).load(photo.path).into(mView.image)
-            mView.checkbox.checked = photo.selected
-            mView.checkbox.setOnCheckedChangeListener { _, isChecked ->
-                if (isChecked) {
-                    //selected.add(photo)
-                    selectedPhoto?.selected = false
-                    photo.selected = true
-                    selectedPhoto = photo
-                } else {
-                    //selected.remove(photo)
-                    selectedPhoto?.selected = false
-                    photo.selected = false
-                    selectedPhoto = null
-                }
+            mView.checkbox.isChecked = photo.selected
+            mView.checkbox.isClickable = false
+            mView.setOnClickListener {
+                mView.checkbox.isChecked = true
+                selectedPhoto?.selected = false
+                photo.selected = true
+                selectedPhoto = photo
                 notifyDataSetChanged()
             }
         }

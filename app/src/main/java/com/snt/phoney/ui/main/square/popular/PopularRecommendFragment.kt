@@ -49,6 +49,7 @@ class PopularRecommendFragment : BaseFragment() {
         })
 
         viewModel.popularError.observe(this, Observer {
+            swipeRefresh.isRefreshing = false
             if (!isHidden || !userVisibleHint) {
                 Toast.makeText(requireContext(), it, Toast.LENGTH_SHORT).show()
             }
@@ -58,6 +59,7 @@ class PopularRecommendFragment : BaseFragment() {
             swipeRefresh.isRefreshing = false
             adapter.data = it
         })
+
         swipeRefresh.setProgressViewOffset(false, -dip(40), dip(8))
         swipeRefresh.setSlingshotDistance(dip(64))
         swipeRefresh.setOnRefreshListener {

@@ -17,10 +17,11 @@
 
     <com.snt.phoney.widget.CompatRadioButton
         android:id="@+id/checkbox"
-        android:layout_width="40dp"
-        android:layout_height="40dp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
         android:layout_gravity="top|right"
-        android:paddingRight="6dp"
-        app:icon="@drawable/ic_radio_circle_button" />
+        android:clickable="false"
+        android:padding="5dp"
+        app:groupMode="true" />
 
 </com.snt.phoney.widget.SquareLayout>

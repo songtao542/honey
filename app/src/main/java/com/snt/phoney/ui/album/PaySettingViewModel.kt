@@ -8,7 +8,6 @@ import com.snt.phoney.domain.model.PhotoPermission
 import com.snt.phoney.domain.usecase.AlbumSettingUseCase
 import com.snt.phoney.extensions.disposedBy
 import io.reactivex.android.schedulers.AndroidSchedulers
-import io.reactivex.disposables.Disposable
 import io.reactivex.rxkotlin.subscribeBy
 import io.reactivex.schedulers.Schedulers
 import javax.inject.Inject
@@ -41,15 +40,20 @@ class PaySettingViewModel @Inject constructor(private val usecase: AlbumSettingU
 
     }
 
-    fun getUserPhotos(): Disposable? {
-        val token = usecase.getAccessToken() ?: return null
-        return usecase.getUserPhotos(token)
+    fun getUserPhotos() {
+        val token = usecase.getAccessToken() ?: return
+        usecase.getUserPhotos(token)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
-                .subscribeBy {
-                    if (it.code == 200) {
-                        photos.value = it.data
-                    }
-                }
+                .subscribeBy(
+                        onSuccess = {
+                            if (it.code == 200) {
+                                photos.value = it.data
+                            }
+                        },
+                        onError = {
+                            error.value = context.getString(R.string.get_user_photo_failed)
+                        }
+                ).disposedBy(disposeBag)
     }
 }

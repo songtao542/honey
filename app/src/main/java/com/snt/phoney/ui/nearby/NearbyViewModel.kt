@@ -33,22 +33,26 @@ class NearbyViewModel @Inject constructor(private val usecase: GetRecommendUserU
                         }
         observable.subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
-                .subscribeBy {
-                    if (it.success) {
-                        if (it.isEmpty) {
-                            mPageIndex = 1
-                            users.value = mPageOneUsers
-                        } else {
-                            if (mPageIndex == 1) {
-                                mPageOneUsers.addList(it.data)
+                .subscribeBy(
+                        onNext = {
+                            if (it.success) {
+                                if (it.isEmpty) {
+                                    mPageIndex = 1
+                                    users.value = mPageOneUsers
+                                } else {
+                                    if (mPageIndex == 1) {
+                                        mPageOneUsers.addList(it.data)
+                                    }
+                                    users.value = it.data
+                                }
+                                mPageIndex++
+                            } else if (!TextUtils.isEmpty(it.message)) {
+                                error.value = it.message
                             }
-                            users.value = it.data
-                        }
-                        mPageIndex++
-                    } else if (!TextUtils.isEmpty(it.message)) {
-                        error.value = it.message
-                    }
-                }.disposedBy(disposeBag)
+                        },
+                        onError = {},
+                        onComplete = {}
+                ).disposedBy(disposeBag)
     }
 
 

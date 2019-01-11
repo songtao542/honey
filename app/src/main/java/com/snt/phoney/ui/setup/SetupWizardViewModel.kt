@@ -38,9 +38,12 @@ class SetupWizardViewModel @Inject constructor(private val setupWizardUseCase: S
                 setupWizardUseCase.listCareer(token)
                         .subscribeOn(Schedulers.io())
                         .observeOn(AndroidSchedulers.mainThread())
-                        .subscribeBy {
-                            value = it.data
-                        }
+                        .subscribeBy(
+                                onSuccess = {
+                                    value = it.data
+                                },
+                                onError = {}
+                        ).disposedBy(disposeBag)
             }
         }
     }
@@ -51,9 +54,12 @@ class SetupWizardViewModel @Inject constructor(private val setupWizardUseCase: S
                 setupWizardUseCase.listPurpose(token)
                         .subscribeOn(Schedulers.io())
                         .observeOn(AndroidSchedulers.mainThread())
-                        .subscribeBy {
-                            value = it.data
-                        }
+                        .subscribeBy(
+                                onSuccess = {
+                                    value = it.data
+                                },
+                                onError = {}
+                        ).disposedBy(disposeBag)
             }
         }
     }
@@ -64,18 +70,21 @@ class SetupWizardViewModel @Inject constructor(private val setupWizardUseCase: S
         setupWizardUseCase.setUserSex(token, sex)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
-                .subscribeBy {
-                    if (it.code == 200) {
-                        setupSex.value = it.data
-                        val user = setupWizardUseCase.getUser()
-                        if (user != null) {
-                            user.sex = sex
-                            setupWizardUseCase.setUser(user)
-                        }
-                    } else if (!TextUtils.isEmpty(it.message)) {
-                        error.value = it.message
-                    }
-                }.disposedBy(disposeBag)
+                .subscribeBy(
+                        onSuccess = {
+                            if (it.code == 200) {
+                                setupSex.value = it.data
+                                val user = setupWizardUseCase.getUser()
+                                if (user != null) {
+                                    user.sex = sex
+                                    setupWizardUseCase.setUser(user)
+                                }
+                            } else if (!TextUtils.isEmpty(it.message)) {
+                                error.value = it.message
+                            }
+                        },
+                        onError = {}
+                ).disposedBy(disposeBag)
     }
 
 
@@ -84,17 +93,20 @@ class SetupWizardViewModel @Inject constructor(private val setupWizardUseCase: S
         setupWizardUseCase.setUserFeatures(token, height, weight, age, cup)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
-                .subscribeBy {
-                    if (it.code == 200) {
-                        val user = setupWizardUseCase.getUser()?.copy(height = height, weight = weight.toDouble(), age = age, cup = cup)
-                        if (user != null) {
-                            setupWizardUseCase.setUser(user)
-                        }
-                        setupFeatures.value = it.data
-                    } else if (!TextUtils.isEmpty(it.message)) {
-                        error.value = it.message
-                    }
-                }.disposedBy(disposeBag)
+                .subscribeBy(
+                        onSuccess = {
+                            if (it.code == 200) {
+                                val user = setupWizardUseCase.getUser()?.copy(height = height, weight = weight.toDouble(), age = age, cup = cup)
+                                if (user != null) {
+                                    setupWizardUseCase.setUser(user)
+                                }
+                                setupFeatures.value = it.data
+                            } else if (!TextUtils.isEmpty(it.message)) {
+                                error.value = it.message
+                            }
+                        },
+                        onError = {}
+                ).disposedBy(disposeBag)
     }
 
     /**
@@ -108,17 +120,20 @@ class SetupWizardViewModel @Inject constructor(private val setupWizardUseCase: S
         setupWizardUseCase.setUserInfo(token, cityCodesString, career, program)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
-                .subscribeBy {
-                    if (it.code == 200) {
-                        val user = setupWizardUseCase.getUser()?.copy(cities = cities, career = career, program = program)
-                        if (user != null) {
-                            setupWizardUseCase.setUser(user)
-                        }
-                        setupUserInfo.value = it.data
-                    } else if (!TextUtils.isEmpty(it.message)) {
-                        error.value = it.message
-                    }
-                }.disposedBy(disposeBag)
+                .subscribeBy(
+                        onSuccess = {
+                            if (it.code == 200) {
+                                val user = setupWizardUseCase.getUser()?.copy(cities = cities, career = career, program = program)
+                                if (user != null) {
+                                    setupWizardUseCase.setUser(user)
+                                }
+                                setupUserInfo.value = it.data
+                            } else if (!TextUtils.isEmpty(it.message)) {
+                                error.value = it.message
+                            }
+                        },
+                        onError = {}
+                ).disposedBy(disposeBag)
     }
 
 
