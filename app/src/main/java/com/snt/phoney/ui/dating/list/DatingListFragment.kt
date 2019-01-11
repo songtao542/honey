@@ -10,6 +10,7 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import com.snt.phoney.R
 import com.snt.phoney.base.BaseFragment
 import com.snt.phoney.domain.model.User
+import com.snt.phoney.extensions.loadMore
 import com.snt.phoney.extensions.setLoadMoreEnable
 import com.snt.phoney.extensions.setLoadMoreListener
 import com.snt.phoney.extensions.snackbar
@@ -105,7 +106,7 @@ class DatingListFragment : BaseFragment() {
             load(false, it)
         }
 
-        load(true)
+        load(true, list.loadMore)
     }
 
     private fun load(refresh: Boolean, loadMore: LoadMoreAdapter.LoadMore? = null) {

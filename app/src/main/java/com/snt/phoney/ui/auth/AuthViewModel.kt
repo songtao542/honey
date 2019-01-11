@@ -5,6 +5,7 @@ import androidx.lifecycle.MutableLiveData
 import com.snt.phoney.R
 import com.snt.phoney.base.AppViewModel
 import com.snt.phoney.domain.usecase.AuthUseCase
+import com.snt.phoney.extensions.disposedBy
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.rxkotlin.subscribeBy
 import io.reactivex.schedulers.Schedulers
@@ -36,7 +37,7 @@ class AuthViewModel @Inject constructor(private val usecase: AuthUseCase) : AppV
                         onError = {
                             error.value = context.getString(R.string.get_random_message_failed)
                         }
-                )
+                ).disposedBy(disposeBag)
     }
 
     fun auth(type: Int, file: File) {
@@ -61,7 +62,7 @@ class AuthViewModel @Inject constructor(private val usecase: AuthUseCase) : AppV
                         onError = {
                             error.value = context.getString(R.string.auth_upload_failed)
                         }
-                )
+                ).disposedBy(disposeBag)
     }
 
 }

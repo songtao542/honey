@@ -1,12 +1,14 @@
 package com.snt.phoney.ui.main.message
 
 import androidx.lifecycle.MutableLiveData
+import com.snt.phoney.R
 import com.snt.phoney.base.AppViewModel
 import com.snt.phoney.domain.model.Applicant
 import com.snt.phoney.domain.model.OfficialMessage
 import com.snt.phoney.domain.model.PhotoApply
 import com.snt.phoney.domain.usecase.DatingUseCase
 import com.snt.phoney.domain.usecase.GetMessageUseCase
+import com.snt.phoney.extensions.disposedBy
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.rxkotlin.subscribeBy
 import io.reactivex.schedulers.Schedulers
@@ -33,9 +35,9 @@ class MessageViewModel @Inject constructor(private val usecase: GetMessageUseCas
                             }
                         },
                         onError = {
-
+                            error.value = context.getString(R.string.load_failed)
                         }
-                )
+                ).disposedBy(disposeBag)
     }
 
     fun listApplicant() {
@@ -50,9 +52,9 @@ class MessageViewModel @Inject constructor(private val usecase: GetMessageUseCas
                             }
                         },
                         onError = {
-
+                            error.value = context.getString(R.string.load_failed)
                         }
-                )
+                ).disposedBy(disposeBag)
     }
 
     fun listPhotoApply() {
@@ -67,9 +69,9 @@ class MessageViewModel @Inject constructor(private val usecase: GetMessageUseCas
                             }
                         },
                         onError = {
-
+                            error.value = context.getString(R.string.load_failed)
                         }
-                )
+                ).disposedBy(disposeBag)
     }
 
 }

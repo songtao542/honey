@@ -6,6 +6,7 @@ import com.snt.phoney.R
 import com.snt.phoney.base.AppViewModel
 import com.snt.phoney.domain.model.WxAccessToken
 import com.snt.phoney.domain.usecase.WxSigninUseCase
+import com.snt.phoney.extensions.disposedBy
 import com.snt.phoney.utils.WechatApi
 import com.tencent.mm.opensdk.modelbase.BaseReq
 import com.tencent.mm.opensdk.modelbase.BaseResp
@@ -67,7 +68,7 @@ open class WXAuthViewModel @Inject constructor(private val usecase: WxSigninUseC
                         onError = {
                             error.value = context.getString(R.string.wechat_auth_failed)
                         }
-                )
+                ).disposedBy(disposeBag)
     }
 
     private fun getUserInfo() {
@@ -85,7 +86,7 @@ open class WXAuthViewModel @Inject constructor(private val usecase: WxSigninUseC
                         onError = {
                             error.value = context.getString(R.string.wechat_auth_failed)
                         }
-                )
+                ).disposedBy(disposeBag)
     }
 
     fun handleIntent(intent: Intent, eventHandler: IWXAPIEventHandler? = null): Boolean {

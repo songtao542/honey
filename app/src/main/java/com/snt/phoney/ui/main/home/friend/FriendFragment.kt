@@ -3,11 +3,11 @@ package com.snt.phoney.ui.main.home.friend
 import android.Manifest
 import android.os.Bundle
 import android.text.TextUtils
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
+import android.widget.Toast
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
 import androidx.recyclerview.widget.GridLayoutManager
@@ -108,6 +108,13 @@ class FriendFragment : BaseFragment() {
             adapter?.data = it
         })
 
+        viewModel.error.observe(this, Observer {
+            swipeRefresh.isRefreshing = false
+            if (!isHidden || !userVisibleHint) {
+                Toast.makeText(requireContext(), it, Toast.LENGTH_SHORT).show()
+            }
+        })
+
         viewModel.cityFilter.observe(this, Observer {
             if (!TextUtils.isEmpty(it)) {
                 filter(FilterType.BYCITY)
@@ -119,14 +126,14 @@ class FriendFragment : BaseFragment() {
         swipeRefresh.setSlingshotDistance(dip(64))
         swipeRefresh.setOnRefreshListener {
             swipeRefresh.isRefreshing = true
-            load(true)
+            load(true, list.loadMore)
         }
 
         list.setLoadMoreListener {
             load(false, it)
         }
 
-        load(true)
+        load(true, list.loadMore)
     }
 
     private fun checkPermission(): Boolean {
@@ -152,7 +159,7 @@ class FriendFragment : BaseFragment() {
         } else {
             filterType = type
         }
-        load(true)
+        load(true, list.loadMore)
     }
 
     private fun clearFilterSelector() {

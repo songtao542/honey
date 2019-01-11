@@ -1,7 +1,6 @@
 package com.snt.phoney.ui.main.home.following
 
 import android.text.TextUtils
-import android.util.Log
 import androidx.lifecycle.MutableLiveData
 import com.snt.phoney.R
 import com.snt.phoney.base.AppViewModel
@@ -53,6 +52,8 @@ class FollowingViewModel @Inject constructor(private val usecase: FollowUseCase)
                         },
                         onError = {
                             setLoading("my_follow", false)
+                            loadMore?.isLoadFailed = true
+                            error.value = context.getString(R.string.load_failed)
                         }
                 ).disposedBy(disposeBag)
     }

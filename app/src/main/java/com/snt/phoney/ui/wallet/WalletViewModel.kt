@@ -48,11 +48,14 @@ class WalletViewModel @Inject constructor(private val usecase: WalletUseCase, pr
         usecase.getMibiAmount(token)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
-                .subscribeBy {
-                    if (it.success) {
-                        mibiAmount.value = it.data
-                    }
-                }.disposedBy(disposeBag)
+                .subscribeBy(
+                        onSuccess = {
+                            if (it.success) {
+                                mibiAmount.value = it.data
+                            }
+                        },
+                        onError = {}
+                ).disposedBy(disposeBag)
     }
 
 
@@ -61,11 +64,14 @@ class WalletViewModel @Inject constructor(private val usecase: WalletUseCase, pr
         usecase.getMibiWallet(token)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
-                .subscribeBy {
-                    if (it.success) {
-                        mibiWallet.value = it.data
-                    }
-                }.disposedBy(disposeBag)
+                .subscribeBy(
+                        onSuccess = {
+                            if (it.success) {
+                                mibiWallet.value = it.data
+                            }
+                        },
+                        onError = {}
+                ).disposedBy(disposeBag)
     }
 
 
@@ -74,11 +80,14 @@ class WalletViewModel @Inject constructor(private val usecase: WalletUseCase, pr
         usecase.getVipInfo(token)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
-                .subscribeBy {
-                    if (it.success) {
-                        vipInfo.value = it.data
-                    }
-                }.disposedBy(disposeBag)
+                .subscribeBy(
+                        onSuccess = {
+                            if (it.success) {
+                                vipInfo.value = it.data
+                            }
+                        },
+                        onError = {}
+                ).disposedBy(disposeBag)
     }
 
 
@@ -226,6 +235,7 @@ class WalletViewModel @Inject constructor(private val usecase: WalletUseCase, pr
                         },
                         onError = {
                             setLoading("recharge", false)
+                            loadMore?.isLoadFailed = true
                         }
                 ).disposedBy(disposeBag)
     }
@@ -261,6 +271,7 @@ class WalletViewModel @Inject constructor(private val usecase: WalletUseCase, pr
                         },
                         onError = {
                             setLoading("consume", false)
+                            loadMore?.isLoadFailed = true
                         }
                 ).disposedBy(disposeBag)
     }

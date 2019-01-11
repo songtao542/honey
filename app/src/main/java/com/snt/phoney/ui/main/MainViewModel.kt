@@ -27,6 +27,12 @@ class MainViewModel @Inject constructor(private val usecase: UpdateUserLocationU
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribeBy(
+                        onNext = {
+                        },
+                        onError = {
+                        },
+                        onComplete = {
+                        }
                 ).disposedBy(disposeBag)
 
     }

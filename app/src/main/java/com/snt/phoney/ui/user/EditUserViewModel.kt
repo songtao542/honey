@@ -6,6 +6,7 @@ import com.snt.phoney.base.AppViewModel
 import com.snt.phoney.domain.model.CityPickerConverter
 import com.snt.phoney.domain.model.User
 import com.snt.phoney.domain.usecase.EditUserUseCase
+import com.snt.phoney.extensions.disposedBy
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.disposables.Disposable
 import io.reactivex.rxkotlin.subscribeBy
@@ -29,13 +30,13 @@ class EditUserViewModel @Inject constructor(private val usecase: EditUserUseCase
         }
     }
 
-    fun setFullUserInfo(userArg: User): Disposable? {
+    fun setFullUserInfo(userArg: User) {
         if (isSetting) {
-            return null
+            return
         }
         isSetting = true
-        val token = usecase.getAccessToken() ?: return null
-        return usecase.setFullUserInfo(token, userArg.height, userArg.weight, userArg.age, userArg.safeCup,
+        val token = usecase.getAccessToken() ?: return
+        usecase.setFullUserInfo(token, userArg.height, userArg.weight, userArg.age, userArg.safeCup,
                 userArg.cityCodesString, userArg.safeIntroduce, userArg.safeCareer, "",
                 userArg.safeWechatAccount, userArg.safeNickname, userArg.price.toInt())
                 .subscribeOn(Schedulers.io())
@@ -68,7 +69,8 @@ class EditUserViewModel @Inject constructor(private val usecase: EditUserUseCase
                         onError = {
                             isSetting = false
                             error.value = context.getString(R.string.modify_failed)
-                        })
+                        }
+                ).disposedBy(disposeBag)
     }
 
 }

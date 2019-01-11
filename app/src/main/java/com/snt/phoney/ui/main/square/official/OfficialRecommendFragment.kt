@@ -2,7 +2,6 @@ package com.snt.phoney.ui.main.square.official
 
 import android.Manifest
 import android.os.Bundle
-import android.util.Log
 import android.view.Gravity
 import android.view.LayoutInflater
 import android.view.View
@@ -62,7 +61,7 @@ class OfficialRecommendFragment : BaseFragment() {
                 //filterDistance = FilterDistance.NONE
                 //filterContent = FilterContent.NONE.value
                 filterTime = FilterTime.from(position)
-                loadDating(true)
+                loadDating(true, list.loadMore)
             }
         }
         distance.setOnClickListener {
@@ -72,7 +71,7 @@ class OfficialRecommendFragment : BaseFragment() {
                 //filterContent = FilterContent.NONE.value
                 filterDistance = FilterDistance.from(position)
                 if (checkAndRequestPermission(Manifest.permission.ACCESS_FINE_LOCATION, Manifest.permission.ACCESS_COARSE_LOCATION)) {
-                    loadDating(true)
+                    loadDating(true, list.loadMore)
                 }
             }
         }
@@ -91,12 +90,18 @@ class OfficialRecommendFragment : BaseFragment() {
         }
 
         viewModel.success.observe(this, Observer {
-            Toast.makeText(requireContext(), it, Toast.LENGTH_SHORT).show()
+            swipeRefresh.isRefreshing = false
+            if (!isHidden || !userVisibleHint) {
+                Toast.makeText(requireContext(), it, Toast.LENGTH_SHORT).show()
+            }
             adapter.notifyDataSetChanged()
         })
 
         viewModel.error.observe(this, Observer {
-            Toast.makeText(requireContext(), it, Toast.LENGTH_SHORT).show()
+            swipeRefresh.isRefreshing = false
+            if (!isHidden || !userVisibleHint) {
+                Toast.makeText(requireContext(), it, Toast.LENGTH_SHORT).show()
+            }
         })
 
         viewModel.recommendDating.observe(this, Observer {
@@ -111,7 +116,7 @@ class OfficialRecommendFragment : BaseFragment() {
         swipeRefresh.setSlingshotDistance(dip(64))
         swipeRefresh.setOnRefreshListener {
             swipeRefresh.isRefreshing = true
-            loadDating(true)
+            loadDating(true, list.loadMore)
         }
 
         list.setLoadMoreListener {
@@ -128,9 +133,8 @@ class OfficialRecommendFragment : BaseFragment() {
             popupMenu(datingContent, menus) { title, position ->
                 //filterTime = FilterTime.NONE
                 //filterDistance = FilterDistance.NONE
-                Log.d("TTTT", "hhhhhhhhhhhh position=$position")
                 filterContent = if (position == 0) "" else title
-                loadDating(true)
+                loadDating(true, list.loadMore)
             }
         }
     }
@@ -144,7 +148,7 @@ class OfficialRecommendFragment : BaseFragment() {
         if (checkAppPermission(*getPermissions())) {
             openLocationLayout.visibility = View.GONE
             if (viewModel.isRecommendListEmpty()) {
-                loadDating(true)
+                loadDating(true, list.loadMore)
             }
         }
     }
@@ -152,7 +156,7 @@ class OfficialRecommendFragment : BaseFragment() {
     override fun onRequestPermissionsResult(requestCode: Int, permissions: Array<out String>, grantResults: IntArray) {
         if (checkAppPermission(*getPermissions())) {
             openLocationLayout.visibility = View.GONE
-            loadDating(true)
+            loadDating(true, list.loadMore)
         } else {
             filterDistance = FilterDistance.from(-1)
         }

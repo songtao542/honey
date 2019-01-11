@@ -53,7 +53,7 @@ class CreateLockViewModel @Inject constructor(private val usecase: PrivacyLockUs
                         onError = {
                             error.value = context.getString(R.string.set_privacy_password_failed)
                         }
-                )
+                ).disposedBy(disposeBag)
     }
 
     private fun closePrivacyPassword(password: String, privatePassword: String) {

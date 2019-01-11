@@ -5,6 +5,7 @@ import com.snt.phoney.base.AppViewModel
 import com.snt.phoney.domain.model.DatingProgram
 import com.snt.phoney.domain.model.User
 import com.snt.phoney.domain.usecase.DatingUseCase
+import com.snt.phoney.extensions.disposedBy
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.rxkotlin.subscribeBy
 import io.reactivex.schedulers.Schedulers
@@ -18,9 +19,12 @@ class FilterViewModel @Inject constructor(private val usecase: DatingUseCase) : 
                 usecase.listDatingProgram(token, usecase.getUser()!!.uuid ?: "")
                         .subscribeOn(Schedulers.io())
                         .observeOn(AndroidSchedulers.mainThread())
-                        .subscribeBy {
-                            value = it.data
-                        }
+                        .subscribeBy(
+                                onSuccess = {
+                                    value = it.data
+                                },
+                                onError = {}
+                        ).disposedBy(disposeBag)
             }
         }
     }

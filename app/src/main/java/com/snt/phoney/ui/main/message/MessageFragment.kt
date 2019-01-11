@@ -69,6 +69,10 @@ class MessageFragment : ConversationListFragment(), Toolbar.OnMenuItemClickListe
         }
         listView.addHeaderView(photoApplying)
 
+        viewModel.error.observe(this, Observer {
+            swipeRefresh.isRefreshing = false
+        })
+
         viewModel.messages.observe(this, Observer {
             swipeRefresh.isRefreshing = false
             it?.let { messages ->

@@ -13,6 +13,7 @@ import com.snt.phoney.base.CommonActivity
 import com.snt.phoney.extensions.loadMore
 import com.snt.phoney.extensions.setLoadMoreEnable
 import com.snt.phoney.extensions.setLoadMoreListener
+import com.snt.phoney.extensions.snackbar
 import cust.widget.loadmore.LoadMoreAdapter
 import kotlinx.android.synthetic.main.app_toolbar.*
 import kotlinx.android.synthetic.main.fragment_followme_list.*
@@ -42,6 +43,10 @@ class FollowMeFragment : BaseFragment() {
 
         viewModel.follower.observe(this, Observer {
             adapter.data = it
+        })
+
+        viewModel.error.observe(this, Observer {
+            snackbar(it)
         })
 
         list.setLoadMoreListener {

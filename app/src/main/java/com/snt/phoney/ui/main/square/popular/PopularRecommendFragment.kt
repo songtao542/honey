@@ -11,6 +11,7 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import com.snt.phoney.R
 import com.snt.phoney.base.BaseFragment
 import com.snt.phoney.extensions.dip
+import com.snt.phoney.extensions.loadMore
 import com.snt.phoney.extensions.setLoadMoreEnable
 import com.snt.phoney.extensions.setLoadMoreListener
 import com.snt.phoney.ui.main.square.SquareViewModel
@@ -41,12 +42,16 @@ class PopularRecommendFragment : BaseFragment() {
         list.adapter = adapter
 
         viewModel.popularSuccess.observe(this, Observer {
-            Toast.makeText(requireContext(), it, Toast.LENGTH_SHORT).show()
+            if (!isHidden || !userVisibleHint) {
+                Toast.makeText(requireContext(), it, Toast.LENGTH_SHORT).show()
+            }
             adapter.notifyDataSetChanged()
         })
 
         viewModel.popularError.observe(this, Observer {
-            Toast.makeText(requireContext(), it, Toast.LENGTH_SHORT).show()
+            if (!isHidden || !userVisibleHint) {
+                Toast.makeText(requireContext(), it, Toast.LENGTH_SHORT).show()
+            }
         })
 
         viewModel.popularDating.observe(this, Observer {
@@ -57,14 +62,14 @@ class PopularRecommendFragment : BaseFragment() {
         swipeRefresh.setSlingshotDistance(dip(64))
         swipeRefresh.setOnRefreshListener {
             swipeRefresh.isRefreshing = true
-            load(true)
+            load(true, list.loadMore)
         }
 
         list.setLoadMoreListener {
             load(false, it)
         }
 
-        load(true)
+        load(true, list.loadMore)
     }
 
     private fun load(refresh: Boolean, loadMore: LoadMoreAdapter.LoadMore? = null) {

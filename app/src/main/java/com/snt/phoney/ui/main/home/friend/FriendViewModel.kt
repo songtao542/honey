@@ -1,9 +1,9 @@
 package com.snt.phoney.ui.main.home.friend
 
 import android.text.TextUtils
-import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
+import com.snt.phoney.R
 import com.snt.phoney.base.AppViewModel
 import com.snt.phoney.domain.model.CityPickerConverter
 import com.snt.phoney.domain.model.Response
@@ -107,6 +107,8 @@ open class FriendViewModel @Inject constructor(private val usecase: FriendListUs
                         },
                         onError = {
                             setLoading("user", false)
+                            loadMore?.isLoadFailed = true
+                            error.value = context.getString(R.string.load_failed)
                         },
                         onComplete = {
                             setLoading("user", false)

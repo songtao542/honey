@@ -14,6 +14,7 @@ import com.snt.phoney.base.AppViewModel
 import com.snt.phoney.domain.model.WeiboUser
 import com.snt.phoney.domain.usecase.WeiboSigninUseCase
 import com.snt.phoney.extensions.TAG
+import com.snt.phoney.extensions.disposedBy
 import com.snt.phoney.utils.WeiboApi
 import com.snt.phoney.utils.data.Constants.Weibo
 import com.snt.phoney.utils.life.SingleLiveData
@@ -82,14 +83,14 @@ class WeiboViewModel @Inject constructor(private val usecase: WeiboSigninUseCase
                             //刷新Token失败，重新授权
                             authorize(activity)
                         }
-                )
+                ).disposedBy(disposeBag)
     }
 
-    private fun getWeiboUserInfo(): Disposable? {
+    private fun getWeiboUserInfo() {
         if (accessToken == null) {
-            return null
+            return
         }
-        return usecase.getUserInfo(accessToken!!.token, accessToken!!.uid)
+        usecase.getUserInfo(accessToken!!.token, accessToken!!.uid)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribeBy(
@@ -102,7 +103,7 @@ class WeiboViewModel @Inject constructor(private val usecase: WeiboSigninUseCase
                             Log.e(TAG, "error=$it")
                             error.postValue(context.getString(R.string.weibo_auth_failed))
                         }
-                )
+                ).disposedBy(disposeBag)
     }
 
     fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {

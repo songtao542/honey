@@ -89,6 +89,7 @@ class DatingViewModel @Inject constructor(private val usecase: DatingUseCase, pr
                         },
                         onError = {
                             setLoading("joined_dating", false)
+                            loadMore?.isLoadFailed = true
                             error.value = context.getString(R.string.load_failed)
                         }
                 ).disposedBy(disposeBag)
@@ -124,6 +125,7 @@ class DatingViewModel @Inject constructor(private val usecase: DatingUseCase, pr
                         },
                         onError = {
                             setLoading("my_dating", false)
+                            loadMore?.isLoadFailed = true
                             error.value = context.getString(R.string.load_failed)
                         }
                 ).disposedBy(disposeBag)
@@ -160,6 +162,7 @@ class DatingViewModel @Inject constructor(private val usecase: DatingUseCase, pr
                         },
                         onError = {
                             setLoading("user_dating", false)
+                            loadMore?.isLoadFailed = true
                             error.value = context.getString(R.string.load_failed)
                         }
                 ).disposedBy(disposeBag)
@@ -195,9 +198,10 @@ class DatingViewModel @Inject constructor(private val usecase: DatingUseCase, pr
                         },
                         onError = {
                             setLoading("dating_applicant", false)
+                            loadMore?.isLoadFailed = true
                             error.value = context.getString(R.string.load_failed)
                         }
-                )
+                ).disposedBy(disposeBag)
     }
 
 
@@ -231,9 +235,10 @@ class DatingViewModel @Inject constructor(private val usecase: DatingUseCase, pr
                         },
                         onError = {
                             setLoading("applicant", false)
+                            loadMore?.isLoadFailed = true
                             error.value = context.getString(R.string.load_failed)
                         }
-                )
+                ).disposedBy(disposeBag)
     }
 
     fun reviewDating(applicant: Applicant, state: Int) {
@@ -261,7 +266,7 @@ class DatingViewModel @Inject constructor(private val usecase: DatingUseCase, pr
                         onError = {
                             error.value = context.getString(R.string.review_failed)
                         }
-                )
+                ).disposedBy(disposeBag)
     }
 
 

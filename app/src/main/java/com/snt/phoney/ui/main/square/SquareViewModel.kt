@@ -41,9 +41,14 @@ class SquareViewModel @Inject constructor(private val usecase: SquareUseCase) : 
                 usecase.listDatingProgram(token, usecase.getUser()!!.uuid ?: "")
                         .subscribeOn(Schedulers.io())
                         .observeOn(AndroidSchedulers.mainThread())
-                        .subscribeBy {
-                            value = it.data
-                        }.disposedBy(disposeBag)
+                        .subscribeBy(
+                                onSuccess = {
+                                    value = it.data
+                                },
+                                onError = {
+
+                                }
+                        ).disposedBy(disposeBag)
             }
         }
     }
@@ -85,6 +90,8 @@ class SquareViewModel @Inject constructor(private val usecase: SquareUseCase) : 
                         },
                         onError = {
                             setLoading("recommend", false)
+                            loadMore?.isLoadFailed = true
+                            error.value = context.getString(R.string.load_failed)
                         },
                         onComplete = {
                             setLoading("recommend", false)
@@ -123,6 +130,8 @@ class SquareViewModel @Inject constructor(private val usecase: SquareUseCase) : 
                         },
                         onError = {
                             setLoading("popular", false)
+                            loadMore?.isLoadFailed = true
+                            error.value = context.getString(R.string.load_failed)
                         }
                 ).disposedBy(disposeBag)
     }
@@ -163,7 +172,7 @@ class SquareViewModel @Inject constructor(private val usecase: SquareUseCase) : 
                                 popularError.value = context.getString(R.string.join_dating_failed)
                             }
                         }
-                )?.disposedBy(disposeBag)
+                ).disposedBy(disposeBag)
     }
 
     fun follow(dating: Dating, official: Boolean) {

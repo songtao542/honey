@@ -51,6 +51,7 @@ class NewsViewModel @Inject constructor(private val usecase: NewsUseCase) : AppV
                         },
                         onError = {
                             setLoading(false)
+                            loadMore?.isLoadFailed = true
                             error.value = context.getString(R.string.load_failed)
                         }
                 ).disposedBy(disposeBag)

@@ -51,6 +51,7 @@ class VisitorViewModel @Inject constructor(private val usecase: GetVisitorUseCas
                         },
                         onError = {
                             setLoading(false)
+                            loadMore?.isLoadFailed = true
                         }
                 ).disposedBy(disposeBag)
     }

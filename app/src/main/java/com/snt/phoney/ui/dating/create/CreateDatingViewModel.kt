@@ -23,18 +23,21 @@ class CreateDatingViewModel @Inject constructor(private val usecase: DatingUseCa
                 usecase.listDatingProgram(token, usecase.getUser()!!.uuid ?: "")
                         .subscribeOn(Schedulers.io())
                         .observeOn(AndroidSchedulers.mainThread())
-                        .subscribeBy {
-                            value = it.data
-                        }.disposedBy(disposeBag)
+                        .subscribeBy(
+                                onSuccess = {
+                                    value = it.data
+                                },
+                                onError = {}
+                        ).disposedBy(disposeBag)
             }
         }
     }
 
-    fun publish(title: String, program: String, content: String, days: Int, location: PoiAddress, cover: List<File>): Disposable? {
-        val token = usecase.getAccessToken() ?: return null
+    fun publish(title: String, program: String, content: String, days: Int, location: PoiAddress, cover: List<File>) {
+        val token = usecase.getAccessToken() ?: return
         val address = location.address ?: location.formatAddress ?: ""
         val city = location.city ?: ""
-        return usecase.publishDating(token, title, program, content, days, city, address, location.latitude, location.longitude, cover)
+        usecase.publishDating(token, title, program, content, days, city, address, location.latitude, location.longitude, cover)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribeBy(
@@ -47,7 +50,8 @@ class CreateDatingViewModel @Inject constructor(private val usecase: DatingUseCa
                         },
                         onError = {
                             error.value = context.getString(R.string.publish_failed)
-                        })
+                        }
+                ).disposedBy(disposeBag)
 
     }
 

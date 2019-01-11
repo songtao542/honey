@@ -37,11 +37,14 @@ class MineViewModel @Inject constructor(private val usecase: UserInfoUseCase) : 
         usecase.getAllInfoOfUser(token)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
-                .subscribeBy {
-                    if (it.success) {
-                        userInfo.value = it.data
-                    }
-                }.disposedBy(disposeBag)
+                .subscribeBy(
+                        onSuccess = {
+                            if (it.success) {
+                                userInfo.value = it.data
+                            }
+                        },
+                        onError = {}
+                ).disposedBy(disposeBag)
     }
 
     fun setWalletNewsToRead() {
@@ -49,9 +52,12 @@ class MineViewModel @Inject constructor(private val usecase: UserInfoUseCase) : 
         usecase.setWalletNewsToRead(token)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
-                .subscribeBy {
-                    Log.d(TAG, "setWalletNewsToRead $it")
-                }.disposedBy(disposeBag)
+                .subscribeBy(
+                        onSuccess = {
+                            Log.d(TAG, "setWalletNewsToRead $it")
+                        },
+                        onError = {}
+                ).disposedBy(disposeBag)
     }
 
     fun setPhotoPermission(photoPermission: PhotoPermission, money: Double = 0.0, photoId: String = "") {
@@ -99,11 +105,14 @@ class MineViewModel @Inject constructor(private val usecase: UserInfoUseCase) : 
         usecase.getUserPhotos(token)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
-                .subscribeBy {
-                    if (it.success) {
-                        photos.value = it.data
-                    }
-                }.disposedBy(disposeBag)
+                .subscribeBy(
+                        onSuccess = {
+                            if (it.success) {
+                                photos.value = it.data
+                            }
+                        },
+                        onError = {}
+                ).disposedBy(disposeBag)
     }
 
     fun uploadHeadIcon(file: File) {

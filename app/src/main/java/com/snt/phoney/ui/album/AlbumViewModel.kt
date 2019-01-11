@@ -70,8 +70,9 @@ class AlbumViewModel @Inject constructor(private val usecase: UserInfoUseCase) :
                         },
                         onError = {
                             setLoading(false)
+                            loadMore?.isLoadFailed = true
                         }
-                )
+                ).disposedBy(disposeBag)
     }
 
     fun reviewPhotoApply(photoApply: PhotoApply, state: Int) {
@@ -99,7 +100,7 @@ class AlbumViewModel @Inject constructor(private val usecase: UserInfoUseCase) :
                         onError = {
                             error.value = context.getString(R.string.review_failed)
                         }
-                )
+                ).disposedBy(disposeBag)
     }
 
 }

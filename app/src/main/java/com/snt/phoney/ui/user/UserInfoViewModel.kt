@@ -44,7 +44,8 @@ class UserInfoViewModel @Inject constructor(private val usecase: UserInfoUseCase
                         },
                         onError = {
                             error.value = context.getString(R.string.load_failed)
-                        }
+                        },
+                        onComplete = {}
                 ).disposedBy(disposeBag)
     }
 
