@@ -20,6 +20,7 @@ import com.snt.phoney.ui.nearby.NearbyFragment
 import com.snt.phoney.ui.news.NewsFragment
 import com.snt.phoney.ui.photo.PhotoViewerFragment
 import com.snt.phoney.ui.privacy.CreateLockFragment
+import com.snt.phoney.ui.privacy.ForgetLockFragment
 import com.snt.phoney.ui.privacy.LockFragment
 import com.snt.phoney.ui.report.ReportFragment
 import com.snt.phoney.ui.user.EditUserFragment
@@ -75,6 +76,8 @@ enum class Page {
 
     LOCK,
 
+    FORGET_LOCK,
+
     NEWS
 }
 
@@ -124,6 +127,7 @@ class FragmentFactory {
                 Page.AUTHENTICATE.ordinal -> AuthModeFragment.newInstance(arguments)
 
                 Page.LOCK.ordinal -> LockFragment.newInstance(arguments)
+                Page.FORGET_LOCK.ordinal -> ForgetLockFragment.newInstance(arguments)
 
                 Page.NEWS.ordinal -> NewsFragment.newInstance(arguments)
 

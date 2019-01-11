@@ -13,7 +13,7 @@ import com.snt.phoney.extensions.snackbar
 import com.snt.phoney.utils.data.Constants
 import com.snt.phoney.utils.data.MD5
 import kotlinx.android.synthetic.main.app_toolbar.*
-import kotlinx.android.synthetic.main.fragment_create_lock_step1.*
+import kotlinx.android.synthetic.main.fragment_privacy_create_lock_step1.*
 
 class CreateLockStep2Fragment : BaseFragment() {
 
@@ -42,7 +42,7 @@ class CreateLockStep2Fragment : BaseFragment() {
     }
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
-        return inflater.inflate(R.layout.fragment_create_lock_step1, container, false)
+        return inflater.inflate(R.layout.fragment_privacy_create_lock_step1, container, false)
     }
 
     override fun onActivityCreated(savedInstanceState: Bundle?) {

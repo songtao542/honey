@@ -23,6 +23,8 @@ object Constants {
         const val THEME = "theme"
         const val CALLER = "caller"
         const val CALLEE = "callee"
+        const val MODE = "mode"
+
     }
 
     object Preference {

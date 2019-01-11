@@ -7,8 +7,12 @@ import android.view.ViewGroup
 import com.snt.phoney.R
 import com.snt.phoney.base.BaseFragment
 import com.snt.phoney.extensions.addFragmentSafely
+import com.snt.phoney.utils.data.Constants
 import kotlinx.android.synthetic.main.app_toolbar.*
-import kotlinx.android.synthetic.main.fragment_create_lock_step1.*
+import kotlinx.android.synthetic.main.fragment_privacy_create_lock_step1.*
+
+const val MODE_CREATE = 0
+const val MODE_RESET = 1
 
 class CreateLockStep1Fragment : BaseFragment() {
 
@@ -21,8 +25,17 @@ class CreateLockStep1Fragment : BaseFragment() {
     @Suppress("PrivatePropertyName")
     private val PASSWORD_LENGTH = 4
 
+    private var mode: Int = MODE_CREATE
+
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        arguments?.let {
+            mode = it.getInt(Constants.Extra.MODE, MODE_CREATE)
+        }
+    }
+
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
-        return inflater.inflate(R.layout.fragment_create_lock_step1, container, false)
+        return inflater.inflate(R.layout.fragment_privacy_create_lock_step1, container, false)
     }
 
     override fun onActivityCreated(savedInstanceState: Bundle?) {
@@ -30,6 +43,8 @@ class CreateLockStep1Fragment : BaseFragment() {
         //viewModel = ViewModelProviders.of(this,viewModelFactory).get(CreateLockViewModel::class.java)
         toolbar.setNavigationOnClickListener { activity?.onBackPressed() }
         titleTextView.setText(R.string.set_lock_title)
+
+        resetTip.visibility = if (mode == MODE_RESET) View.VISIBLE else View.GONE
 
         inputPassword.setOnInputOverListener {
             toNextStep()

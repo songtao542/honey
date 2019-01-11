@@ -23,8 +23,9 @@ import com.snt.phoney.extensions.dip
 import com.snt.phoney.extensions.startActivity
 import com.snt.phoney.ui.main.MainActivity
 import com.snt.phoney.ui.news.NewsActivity
+import com.snt.phoney.utils.data.Constants
 import com.snt.phoney.utils.data.MD5
-import kotlinx.android.synthetic.main.fragment_lock.*
+import kotlinx.android.synthetic.main.fragment_privacy_lock.*
 import javax.inject.Inject
 
 
@@ -42,7 +43,7 @@ class LockFragment : BaseFragment() {
     lateinit var userAccessor: UserAccessor
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
-        return inflater.inflate(R.layout.fragment_lock, container, false)
+        return inflater.inflate(R.layout.fragment_privacy_lock, container, false)
     }
 
     override fun onActivityCreated(savedInstanceState: Bundle?) {
@@ -86,6 +87,13 @@ class LockFragment : BaseFragment() {
         }
         view?.post {
             showSoftInput()
+        }
+
+        forgetPassword.setOnClickListener {
+            startActivity<PrivacyActivity>(Page.FORGET_LOCK, Bundle().apply {
+                putInt(Constants.Extra.THEME, R.style.AppTheme_Light)
+            })
+            activity?.finish()
         }
     }
 

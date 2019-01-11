@@ -77,9 +77,10 @@
     <androidx.appcompat.widget.AppCompatTextView
         android:id="@+id/forgetPassword"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="40dp"
+        android:layout_gravity="center_horizontal"
         android:layout_marginTop="5dp"
-        android:layout_marginBottom="20dp"
+        android:layout_marginBottom="5dp"
         android:gravity="center"
         android:text="@string/forget_privacy_password"
         android:textColor="@color/dark_gray"

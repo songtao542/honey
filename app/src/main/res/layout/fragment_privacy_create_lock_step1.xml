@@ -8,7 +8,7 @@
     android:orientation="vertical"
     tools:context=".ui.privacy.CreateLockStep1Fragment">
 
-    <include layout="@layout/app_toolbar"/>
+    <include layout="@layout/app_toolbar" />
 
     <LinearLayout
         android:layout_width="wrap_content"
@@ -43,5 +43,20 @@
         android:text="@string/confirm_again"
         android:textColor="@color/white"
         android:textSize="@dimen/textsize_normal" />
+
+    <Space
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:layout_weight="1" />
+
+    <androidx.appcompat.widget.AppCompatTextView
+        android:id="@+id/resetTip"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="30dp"
+        android:gravity="center"
+        android:text="@string/reset_lock_tip"
+        android:textColor="@color/dark_gray"
+        android:textSize="@dimen/textsize_smaller" />
 
 </LinearLayout>

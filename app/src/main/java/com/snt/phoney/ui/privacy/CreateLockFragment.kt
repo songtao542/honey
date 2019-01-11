@@ -11,7 +11,7 @@ import com.snt.phoney.base.BaseFragment
 import com.snt.phoney.extensions.addFragmentSafely
 import com.snt.phoney.extensions.snackbar
 import kotlinx.android.synthetic.main.app_toolbar.*
-import kotlinx.android.synthetic.main.fragment_create_lock.*
+import kotlinx.android.synthetic.main.fragment_privacy_create_lock.*
 
 class CreateLockFragment : BaseFragment() {
 
@@ -25,7 +25,7 @@ class CreateLockFragment : BaseFragment() {
     private lateinit var viewModel: CreateLockViewModel
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
-        return inflater.inflate(R.layout.fragment_create_lock, container, false)
+        return inflater.inflate(R.layout.fragment_privacy_create_lock, container, false)
     }
 
     override fun onActivityCreated(savedInstanceState: Bundle?) {

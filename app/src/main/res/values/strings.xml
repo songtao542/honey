@@ -432,4 +432,8 @@
     <string name="news_detail">资讯详情</string>
     <string name="click_to_change">点击更换</string>
     <string name="get_user_photo_failed">获取用户相册失败</string>
+    <string name="click_to_record">点击录制</string>
+    <string name="reset_privacy_password_tip">重置密码需要录制视频验证是否是本人操作</string>
+    <string name="reset_lock_tip">取消即视为放弃重置机会，再次重置需要重新审核</string>
+    <string name="reset_lock_title">重置隐私密码</string>
 </resources>
