@@ -1,0 +1,291 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/white"
+    android:orientation="vertical">
+
+    <FrameLayout
+        android:id="@+id/detailLayout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <com.snt.phoney.widget.NestedLinearLayout
+            android:id="@+id/nestedLayout"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+            <include layout="@layout/fragment_dating_detail_header" />
+
+            <androidx.core.widget.NestedScrollView
+                android:layout_width="match_parent"
+                android:layout_height="match_parent">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:background="@android:color/white"
+                    android:orientation="vertical">
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:background="@drawable/underline_gray"
+                        android:orientation="horizontal"
+                        android:paddingTop="12dp"
+                        android:paddingBottom="10dp">
+
+                        <LinearLayout
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:background="?attr/selectableItemBackground"
+                            android:gravity="center"
+                            android:orientation="vertical"
+                            android:paddingTop="8dp"
+                            android:paddingBottom="8dp">
+
+
+                            <androidx.appcompat.widget.AppCompatTextView
+                                android:id="@+id/height"
+                                android:layout_width="50dp"
+                                android:layout_height="50dp"
+                                android:background="@drawable/user_info_circle_bg"
+                                android:gravity="center"
+                                android:textColor="@color/black"
+                                android:textSize="@dimen/textsize_normal" />
+
+                            <androidx.appcompat.widget.AppCompatTextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_marginTop="3dp"
+                                android:text="@string/label_height"
+                                android:textSize="@dimen/textsize_small" />
+
+                        </LinearLayout>
+
+                        <LinearLayout
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:background="?attr/selectableItemBackground"
+                            android:gravity="center"
+                            android:orientation="vertical"
+                            android:paddingTop="8dp"
+                            android:paddingBottom="8dp">
+
+
+                            <androidx.appcompat.widget.AppCompatTextView
+                                android:id="@+id/age"
+                                android:layout_width="50dp"
+                                android:layout_height="50dp"
+                                android:background="@drawable/user_info_circle_bg"
+                                android:gravity="center"
+                                android:textColor="@color/black"
+                                android:textSize="@dimen/textsize_normal" />
+
+                            <androidx.appcompat.widget.AppCompatTextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_marginTop="3dp"
+                                android:gravity="center"
+                                android:text="@string/label_age"
+                                android:textSize="@dimen/textsize_small" />
+
+                        </LinearLayout>
+
+                        <LinearLayout
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:background="?attr/selectableItemBackground"
+                            android:gravity="center"
+                            android:orientation="vertical"
+                            android:paddingTop="8dp"
+                            android:paddingBottom="8dp">
+
+
+                            <androidx.appcompat.widget.AppCompatTextView
+                                android:id="@+id/cupWeight"
+                                android:layout_width="50dp"
+                                android:layout_height="50dp"
+                                android:background="@drawable/user_info_circle_bg"
+                                android:gravity="center"
+                                android:textColor="@color/black"
+                                android:textSize="@dimen/textsize_normal" />
+
+                            <androidx.appcompat.widget.AppCompatTextView
+                                android:id="@+id/cupWeightLabel"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_marginTop="3dp"
+                                android:text="@string/label_cup"
+                                android:textSize="@dimen/textsize_small" />
+                        </LinearLayout>
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:background="@drawable/underline_5dp_gray"
+                        android:orientation="horizontal"
+                        android:paddingTop="10dp"
+                        android:paddingBottom="15dp">
+
+                        <androidx.appcompat.widget.AppCompatTextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_gravity="center_vertical"
+                            android:drawableLeft="@drawable/ic_hourglass"
+                            android:drawablePadding="5dp"
+                            android:gravity="center_vertical"
+                            android:paddingLeft="10dp"
+                            android:paddingTop="8dp"
+                            android:paddingRight="10dp"
+                            android:paddingBottom="8dp"
+                            android:text="@string/time_limit"
+                            android:textColor="@color/black"
+                            android:textSize="@dimen/textsize_normal" />
+
+                        <androidx.appcompat.widget.AppCompatTextView
+                            android:id="@+id/remainingTime"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_gravity="center_vertical"
+                            android:drawablePadding="5dp"
+                            android:gravity="center_vertical"
+                            android:paddingLeft="10dp"
+                            android:paddingTop="8dp"
+                            android:paddingRight="10dp"
+                            android:paddingBottom="8dp"
+                            android:textColor="@android:color/holo_red_dark"
+                            android:textSize="@dimen/textsize_normal" />
+                    </LinearLayout>
+
+                    <com.snt.phoney.widget.FlowLayout
+                        android:id="@+id/photosView"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="10dp"
+                        android:layout_marginTop="10dp"
+                        android:layout_marginRight="10dp"
+                        android:layout_marginBottom="10dp"
+                        app:alignContent="flex_start"
+                        app:alignItems="flex_start"
+                        app:flexWrap="wrap"
+                        app:justifyContent="flex_start"
+                        app:square="true">
+
+                    </com.snt.phoney.widget.FlowLayout>
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:background="@drawable/topline_5dp_gray"
+                        android:orientation="horizontal"
+                        android:paddingTop="15dp"
+                        android:paddingBottom="10dp">
+
+                        <androidx.appcompat.widget.AppCompatTextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_gravity="center_vertical"
+                            android:paddingLeft="10dp"
+                            android:paddingTop="10dp"
+                            android:paddingRight="10dp"
+                            android:paddingBottom="10dp"
+                            android:text="@string/dating_address"
+                            android:textColor="@color/black"
+                            android:textSize="@dimen/textsize_normal" />
+
+                        <androidx.appcompat.widget.AppCompatTextView
+                            android:id="@+id/datingAddress"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:gravity="right"
+                            android:paddingLeft="10dp"
+                            android:paddingTop="10dp"
+                            android:paddingRight="10dp"
+                            android:paddingBottom="10dp"
+                            android:textColor="@color/dark_gray"
+                            android:textSize="@dimen/textsize_normal" />
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:background="@drawable/topline_gray"
+                        android:orientation="horizontal"
+                        android:paddingTop="10dp"
+                        android:paddingBottom="10dp">
+
+                        <androidx.appcompat.widget.AppCompatTextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_gravity="center_vertical"
+                            android:paddingLeft="10dp"
+                            android:paddingTop="10dp"
+                            android:paddingRight="10dp"
+                            android:paddingBottom="10dp"
+                            android:text="@string/dating_times"
+                            android:textColor="@color/black"
+                            android:textSize="@dimen/textsize_normal" />
+
+                        <androidx.appcompat.widget.AppCompatTextView
+                            android:id="@+id/datingTime"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:gravity="right"
+                            android:paddingLeft="10dp"
+                            android:paddingTop="10dp"
+                            android:paddingRight="10dp"
+                            android:paddingBottom="10dp"
+                            android:textColor="@color/dark_gray"
+                            android:textSize="@dimen/textsize_normal" />
+                    </LinearLayout>
+
+                    <Button
+                        android:id="@+id/joinButton"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="20dp"
+                        android:layout_marginTop="20dp"
+                        android:layout_marginRight="20dp"
+                        android:layout_marginBottom="20dp"
+                        android:background="@drawable/button_primary_circle_corner_selector"
+                        android:minHeight="40dp"
+                        android:text="@string/join_dating"
+                        android:textColor="@android:color/white" />
+
+                </LinearLayout>
+            </androidx.core.widget.NestedScrollView>
+        </com.snt.phoney.widget.NestedLinearLayout>
+
+        <com.snt.phoney.widget.Toolbar
+            android:id="@+id/toolbar"
+            style="@style/AppTheme.Toolbar"
+            android:background="@android:color/transparent">
+
+            <androidx.appcompat.widget.AppCompatTextView
+                android:id="@+id/titleTextView"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:gravity="center_vertical"
+                android:minHeight="30dp"
+                android:text="@string/app_name"
+                android:textAppearance="@style/TextAppearance.Tab" />
+        </com.snt.phoney.widget.Toolbar>
+
+    </FrameLayout>
+
+    <ViewStub
+        android:id="@+id/joinSuccessStub"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout="@layout/fragment_dating_detail_join_success" />
+
+</LinearLayout>

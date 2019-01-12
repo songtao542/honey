@@ -6,6 +6,7 @@ import android.os.Handler
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.view.ViewTreeObserver
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
 import com.bumptech.glide.Glide
@@ -24,7 +25,7 @@ import com.snt.phoney.ui.report.ReportActivity
 import com.snt.phoney.utils.DistanceFormat
 import com.snt.phoney.utils.data.Constants
 import com.snt.phoney.widget.PhotoFlowAdapter
-import kotlinx.android.synthetic.main.fragment_dating_detail.*
+import kotlinx.android.synthetic.main.fragment_dating_detail1.*
 import kotlinx.android.synthetic.main.fragment_dating_detail_header.*
 import kotlinx.android.synthetic.main.fragment_dating_detail_join_success.*
 import java.text.DecimalFormat
@@ -53,7 +54,7 @@ class DatingDetailFragment : BaseFragment() {
     }
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
-        return inflater.inflate(R.layout.fragment_dating_detail, container, false)
+        return inflater.inflate(R.layout.fragment_dating_detail1, container, false)
     }
 
     override fun onActivityCreated(savedInstanceState: Bundle?) {
@@ -61,6 +62,22 @@ class DatingDetailFragment : BaseFragment() {
         viewModel = ViewModelProviders.of(this, viewModelFactory).get(DatingDetailViewModel::class.java)
 
         toolbar.setNavigationOnClickListener { activity?.onBackPressed() }
+
+        nestedLayout.setAutoScroll(false)
+        nestedLayout.setCalculateMaxScrollHeight(true)
+        toolbar.viewTreeObserver.addOnGlobalLayoutListener(object : ViewTreeObserver.OnGlobalLayoutListener {
+            override fun onGlobalLayout() {
+                toolbar.viewTreeObserver.removeOnGlobalLayoutListener(this)
+                nestedLayout.setMinHeight(toolbar.height)
+            }
+        })
+        nestedLayout.setOnTopVisibleHeightChangeListener { heightEnough, totalHeight, visibleHeight ->
+            if (heightEnough) {
+                headerLayout.alpha = 1f - (visibleHeight.toFloat() / totalHeight.toFloat())
+            } else {
+                headerLayout.alpha = 1f - (visibleHeight.toFloat() / totalHeight.toFloat()) + 0.2f
+            }
+        }
 
         viewModel.dating.observe(this, Observer {
             setDating(it)
@@ -137,7 +154,7 @@ class DatingDetailFragment : BaseFragment() {
     }
 
     private fun setUser(user: User) {
-        toolbarTitle.text = user.nickname
+        titleTextView.text = user.nickname
 
         Glide.with(this).load(user.avatar)
                 .apply(RequestOptions().circleCrop().placeholder(R.drawable.ic_head_placeholder).error(R.drawable.ic_head_placeholder))

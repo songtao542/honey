@@ -7,193 +7,199 @@
     android:orientation="vertical"
     app:layout_autoChangeChildrenAlpha="true">
 
-    <com.google.android.flexbox.FlexboxLayout
-        android:layout_width="280dp"
-        android:layout_height="wrap_content"
-        android:layout_gravity="center_horizontal"
-        android:layout_marginTop="100dp"
-        android:minWidth="280dp"
-        android:orientation="horizontal"
-        android:padding="8dp"
-        app:alignItems="center"
-        app:justifyContent="space_around">
-
-        <com.snt.phoney.widget.SquareImageView
-            android:id="@+id/report"
-            android:layout_width="40dp"
-            android:layout_height="40dp"
-            android:layout_gravity="center_vertical"
-            android:background="@drawable/user_info_circle_border"
-            android:padding="6dp"
-            android:scaleType="centerInside"
-            app:srcCompat="@drawable/ic_alert" />
-
-        <com.snt.phoney.widget.SquareImageView
-            android:id="@+id/head"
-            android:layout_width="80dp"
-            android:layout_height="80dp"
-            android:background="@drawable/user_info_circle_border"
-            android:padding="4dp"
-            android:scaleType="centerCrop"
-            app:srcCompat="@drawable/ic_head_placeholder" />
-
-        <com.snt.phoney.widget.SquareImageView
-            android:id="@+id/follow"
-            android:layout_width="40dp"
-            android:layout_height="40dp"
-            android:layout_gravity="center_vertical"
-            android:background="@drawable/user_info_circle_border"
-            android:padding="6dp"
-            android:scaleType="centerInside"
-            app:srcCompat="@drawable/ic_heart_solid" />
-
-
-    </com.google.android.flexbox.FlexboxLayout>
-
     <LinearLayout
-        android:layout_width="wrap_content"
+        android:id="@+id/headerLayout"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_gravity="center_horizontal"
-        android:layout_marginLeft="10dp"
-        android:layout_marginTop="10dp"
-        android:layout_weight="1"
-        android:orientation="horizontal">
+        android:orientation="vertical">
 
-        <androidx.appcompat.widget.AppCompatTextView
-            android:id="@+id/address"
+        <com.google.android.flexbox.FlexboxLayout
+            android:layout_width="280dp"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_horizontal"
+            android:layout_marginTop="100dp"
+            android:minWidth="280dp"
+            android:orientation="horizontal"
+            android:padding="8dp"
+            app:alignItems="center"
+            app:justifyContent="space_around">
+
+            <com.snt.phoney.widget.SquareImageView
+                android:id="@+id/report"
+                android:layout_width="40dp"
+                android:layout_height="40dp"
+                android:layout_gravity="center_vertical"
+                android:background="@drawable/user_info_circle_border"
+                android:padding="6dp"
+                android:scaleType="centerInside"
+                app:srcCompat="@drawable/ic_alert" />
+
+            <com.snt.phoney.widget.SquareImageView
+                android:id="@+id/head"
+                android:layout_width="80dp"
+                android:layout_height="80dp"
+                android:background="@drawable/user_info_circle_border"
+                android:padding="4dp"
+                android:scaleType="centerCrop"
+                app:srcCompat="@drawable/ic_head_placeholder" />
+
+            <com.snt.phoney.widget.SquareImageView
+                android:id="@+id/follow"
+                android:layout_width="40dp"
+                android:layout_height="40dp"
+                android:layout_gravity="center_vertical"
+                android:background="@drawable/user_info_circle_border"
+                android:padding="6dp"
+                android:scaleType="centerInside"
+                app:srcCompat="@drawable/ic_heart_solid" />
+
+
+        </com.google.android.flexbox.FlexboxLayout>
+
+        <LinearLayout
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_gravity="center_vertical"
-            android:textColor="@color/white"
-            android:textSize="@dimen/textsize_normal" />
+            android:layout_gravity="center_horizontal"
+            android:layout_marginLeft="10dp"
+            android:layout_marginTop="10dp"
+            android:layout_weight="1"
+            android:orientation="horizontal">
+
+            <androidx.appcompat.widget.AppCompatTextView
+                android:id="@+id/address"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_vertical"
+                android:textColor="@color/white"
+                android:textSize="@dimen/textsize_normal" />
+
+            <androidx.appcompat.widget.AppCompatTextView
+                android:id="@+id/userAge"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_vertical"
+                android:layout_marginLeft="8dp"
+                android:layout_marginRight="8dp"
+                android:textColor="@color/white"
+                android:textSize="@dimen/textsize_normal" />
+
+            <androidx.appcompat.widget.AppCompatTextView
+                android:id="@+id/job"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_vertical"
+                android:textColor="@color/white"
+                android:textSize="@dimen/textsize_small" />
+
+            <androidx.appcompat.widget.AppCompatTextView
+                android:id="@+id/authenticate"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_vertical"
+                android:layout_marginLeft="10dp"
+                android:background="@drawable/user_authenticate_selector"
+                android:paddingLeft="8dp"
+                android:paddingTop="4dp"
+                android:paddingRight="8dp"
+                android:paddingBottom="4dp"
+                android:textColor="@color/user_authenticate_text_color_selector"
+                android:textSize="@dimen/textsize_smallest" />
+
+        </LinearLayout>
+
 
         <androidx.appcompat.widget.AppCompatTextView
-            android:id="@+id/userAge"
+            android:id="@+id/distance"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_gravity="center_vertical"
-            android:layout_marginLeft="8dp"
-            android:layout_marginRight="8dp"
-            android:textColor="@color/white"
-            android:textSize="@dimen/textsize_normal" />
-
-        <androidx.appcompat.widget.AppCompatTextView
-            android:id="@+id/job"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center_vertical"
+            android:layout_gravity="center_horizontal"
+            android:layout_marginTop="8dp"
+            android:layout_marginBottom="15dp"
+            android:drawableLeft="@drawable/ic_location_small"
+            android:drawablePadding="5dp"
+            android:gravity="center"
             android:textColor="@color/white"
             android:textSize="@dimen/textsize_small" />
 
-        <androidx.appcompat.widget.AppCompatTextView
-            android:id="@+id/authenticate"
+
+        <LinearLayout
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_gravity="center_vertical"
+            android:layout_gravity="center_horizontal"
             android:layout_marginLeft="10dp"
-            android:background="@drawable/user_authenticate_selector"
-            android:paddingLeft="8dp"
-            android:paddingTop="4dp"
-            android:paddingRight="8dp"
-            android:paddingBottom="4dp"
-            android:textColor="@color/user_authenticate_text_color_selector"
-            android:textSize="@dimen/textsize_smallest" />
+            android:layout_marginBottom="15dp"
+            android:layout_weight="1"
+            android:orientation="horizontal">
 
+            <androidx.appcompat.widget.AppCompatTextView
+                android:id="@+id/program"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/program_eating"
+                android:textColor="@color/white"
+                android:textSize="@dimen/textsize_smaller" />
+
+            <!--<androidx.appcompat.widget.AppCompatTextView-->
+            <!--android:id="@+id/eat"-->
+            <!--android:layout_width="wrap_content"-->
+            <!--android:layout_height="wrap_content"-->
+            <!--android:text="@string/program_eating"-->
+            <!--android:textColor="@color/white"-->
+            <!--android:textSize="@dimen/textsize_smaller" />-->
+
+            <!--<View-->
+            <!--android:id="@+id/divider1"-->
+            <!--android:layout_width="1px"-->
+            <!--android:layout_height="12dp"-->
+            <!--android:layout_gravity="center_vertical"-->
+            <!--android:layout_marginLeft="15dp"-->
+            <!--android:layout_marginRight="15dp"-->
+            <!--android:background="@color/white" />-->
+
+            <!--<androidx.appcompat.widget.AppCompatTextView-->
+            <!--android:id="@+id/seeFilm"-->
+            <!--android:layout_width="wrap_content"-->
+            <!--android:layout_height="wrap_content"-->
+            <!--android:gravity="center"-->
+            <!--android:text="@string/program_see_film"-->
+            <!--android:textColor="@color/white"-->
+            <!--android:textSize="@dimen/textsize_smaller" />-->
+
+            <!--<View-->
+            <!--android:id="@+id/divider2"-->
+            <!--android:layout_width="1px"-->
+            <!--android:layout_height="12dp"-->
+            <!--android:layout_gravity="center_vertical"-->
+            <!--android:layout_marginLeft="15dp"-->
+            <!--android:layout_marginRight="15dp"-->
+            <!--android:background="@color/white" />-->
+
+            <!--<androidx.appcompat.widget.AppCompatTextView-->
+            <!--android:id="@+id/shopping"-->
+            <!--android:layout_width="wrap_content"-->
+            <!--android:layout_height="wrap_content"-->
+            <!--android:text="@string/program_shopping"-->
+            <!--android:textColor="@color/white"-->
+            <!--android:textSize="@dimen/textsize_smaller" />-->
+
+            <!--<View-->
+            <!--android:id="@+id/divider3"-->
+            <!--android:layout_width="1px"-->
+            <!--android:layout_height="12dp"-->
+            <!--android:layout_gravity="center_vertical"-->
+            <!--android:layout_marginLeft="15dp"-->
+            <!--android:layout_marginRight="15dp"-->
+            <!--android:background="@color/white" />-->
+
+            <!--<androidx.appcompat.widget.AppCompatTextView-->
+            <!--android:id="@+id/other"-->
+            <!--android:layout_width="wrap_content"-->
+            <!--android:layout_height="wrap_content"-->
+            <!--android:text="@string/program_other"-->
+            <!--android:textColor="@color/white"-->
+            <!--android:textSize="@dimen/textsize_smaller" />-->
+
+        </LinearLayout>
     </LinearLayout>
-
-
-    <androidx.appcompat.widget.AppCompatTextView
-        android:id="@+id/distance"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_gravity="center_horizontal"
-        android:layout_marginTop="8dp"
-        android:layout_marginBottom="15dp"
-        android:drawableLeft="@drawable/ic_location_small"
-        android:drawablePadding="5dp"
-        android:gravity="center"
-        android:textColor="@color/white"
-        android:textSize="@dimen/textsize_small" />
-
-
-    <LinearLayout
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_gravity="center_horizontal"
-        android:layout_marginLeft="10dp"
-        android:layout_marginBottom="15dp"
-        android:layout_weight="1"
-        android:orientation="horizontal">
-
-        <androidx.appcompat.widget.AppCompatTextView
-            android:id="@+id/program"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="@string/program_eating"
-            android:textColor="@color/white"
-            android:textSize="@dimen/textsize_smaller" />
-
-        <!--<androidx.appcompat.widget.AppCompatTextView-->
-        <!--android:id="@+id/eat"-->
-        <!--android:layout_width="wrap_content"-->
-        <!--android:layout_height="wrap_content"-->
-        <!--android:text="@string/program_eating"-->
-        <!--android:textColor="@color/white"-->
-        <!--android:textSize="@dimen/textsize_smaller" />-->
-
-        <!--<View-->
-        <!--android:id="@+id/divider1"-->
-        <!--android:layout_width="1px"-->
-        <!--android:layout_height="12dp"-->
-        <!--android:layout_gravity="center_vertical"-->
-        <!--android:layout_marginLeft="15dp"-->
-        <!--android:layout_marginRight="15dp"-->
-        <!--android:background="@color/white" />-->
-
-        <!--<androidx.appcompat.widget.AppCompatTextView-->
-        <!--android:id="@+id/seeFilm"-->
-        <!--android:layout_width="wrap_content"-->
-        <!--android:layout_height="wrap_content"-->
-        <!--android:gravity="center"-->
-        <!--android:text="@string/program_see_film"-->
-        <!--android:textColor="@color/white"-->
-        <!--android:textSize="@dimen/textsize_smaller" />-->
-
-        <!--<View-->
-        <!--android:id="@+id/divider2"-->
-        <!--android:layout_width="1px"-->
-        <!--android:layout_height="12dp"-->
-        <!--android:layout_gravity="center_vertical"-->
-        <!--android:layout_marginLeft="15dp"-->
-        <!--android:layout_marginRight="15dp"-->
-        <!--android:background="@color/white" />-->
-
-        <!--<androidx.appcompat.widget.AppCompatTextView-->
-        <!--android:id="@+id/shopping"-->
-        <!--android:layout_width="wrap_content"-->
-        <!--android:layout_height="wrap_content"-->
-        <!--android:text="@string/program_shopping"-->
-        <!--android:textColor="@color/white"-->
-        <!--android:textSize="@dimen/textsize_smaller" />-->
-
-        <!--<View-->
-        <!--android:id="@+id/divider3"-->
-        <!--android:layout_width="1px"-->
-        <!--android:layout_height="12dp"-->
-        <!--android:layout_gravity="center_vertical"-->
-        <!--android:layout_marginLeft="15dp"-->
-        <!--android:layout_marginRight="15dp"-->
-        <!--android:background="@color/white" />-->
-
-        <!--<androidx.appcompat.widget.AppCompatTextView-->
-        <!--android:id="@+id/other"-->
-        <!--android:layout_width="wrap_content"-->
-        <!--android:layout_height="wrap_content"-->
-        <!--android:text="@string/program_other"-->
-        <!--android:textColor="@color/white"-->
-        <!--android:textSize="@dimen/textsize_smaller" />-->
-
-    </LinearLayout>
-
 
 </LinearLayout>
