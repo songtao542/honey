@@ -1,5 +1,6 @@
 package com.snt.phoney.domain.repository.impl
 
+import android.util.Log
 import com.snt.phoney.api.Api
 import com.snt.phoney.domain.model.*
 import com.snt.phoney.domain.repository.ToolRepository
@@ -11,6 +12,16 @@ import javax.inject.Singleton
 
 @Singleton
 class ToolRepositoryImpl @Inject constructor(val api: Api) : ToolRepository {
+    override fun testSign(token: String, page: String): Single<Response<String>> {
+        Log.d("OkHttp", "test sign---------------------------------------------------------")
+        return api.testSign(token, page)
+    }
+
+    override fun testSignPost(token: String, page: String): Single<Response<String>> {
+        Log.d("OkHttp", "test testSignPost---------------------------------------------------------")
+        return api.testSignPost(token, page)
+    }
+
     override fun listOfficialMessage(token: String): Single<Response<List<OfficialMessage>>> {
         return api.listOfficialMessage(token)
     }

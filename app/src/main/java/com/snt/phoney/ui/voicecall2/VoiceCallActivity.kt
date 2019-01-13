@@ -106,6 +106,7 @@ class VoiceCallActivity : BaseNoViewModelActivity() {
     }
 
     override fun onDestroy() {
+        countDownTimer?.cancel()
         VoiceCallEngine.getInstance().unregisterCallStateListener(mCallStateListener)
         super.onDestroy()
     }
@@ -147,8 +148,10 @@ class VoiceCallActivity : BaseNoViewModelActivity() {
         callLayout.visibility = View.GONE
     }
 
+    private var countDownTimer: CountDownTimer? = null
+
     private fun hangupCountDown() {
-        val countDownTimer = object : CountDownTimer(6000, 1000) {
+        countDownTimer = object : CountDownTimer(6000, 1000) {
             var count = 5
             override fun onFinish() {
                 finish()
@@ -160,7 +163,7 @@ class VoiceCallActivity : BaseNoViewModelActivity() {
                 }
             }
         }
-        countDownTimer.start()
+        countDownTimer?.start()
     }
 
     inner class CallStateListenerImpl : VoiceCallEngine.CallStateListener {
@@ -171,6 +174,9 @@ class VoiceCallActivity : BaseNoViewModelActivity() {
             }
         }
 
+        /**
+         * 该页面是主叫方，所以不用处理该回调
+         */
         override fun onCallInviteReceived(user: JMUser?) {
         }
 

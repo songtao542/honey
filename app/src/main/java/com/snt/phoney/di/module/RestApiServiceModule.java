@@ -7,6 +7,7 @@ import com.snt.phoney.BuildConfig;
 import com.snt.phoney.api.Api;
 import com.snt.phoney.api.LoginStateInterceptor;
 import com.snt.phoney.api.NullOrEmptyInterceptor;
+import com.snt.phoney.api.SignInterceptor;
 import com.snt.phoney.api.TimeoutInterceptor;
 import com.snt.phoney.utils.adapter.GsonResponseConverterFactory;
 import com.snt.phoney.utils.data.Constants;
@@ -49,6 +50,7 @@ public class RestApiServiceModule {
         okHttpBuilder
                 .addInterceptor(new NullOrEmptyInterceptor())
                 .addInterceptor(new TimeoutInterceptor())
+                .addInterceptor(new SignInterceptor())
                 .addInterceptor(new LoginStateInterceptor(application, gson));
 
         if (BuildConfig.DEBUG) {

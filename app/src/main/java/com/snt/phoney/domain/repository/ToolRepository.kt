@@ -2,6 +2,10 @@ package com.snt.phoney.domain.repository
 
 import com.snt.phoney.domain.model.*
 import io.reactivex.Single
+import retrofit2.http.Field
+import retrofit2.http.FormUrlEncoded
+import retrofit2.http.POST
+import retrofit2.http.Query
 import java.io.File
 
 interface ToolRepository {
@@ -26,4 +30,11 @@ interface ToolRepository {
     fun getAuthState(token: String): Single<Response<AuthState>>
 
     fun listNews(page: Int): Single<Response<List<News>>>
+
+
+    fun testSign( token: String,page: String): Single<Response<String>>
+
+
+    fun testSignPost(token: String,page: String): Single<Response<String>>
+
 }

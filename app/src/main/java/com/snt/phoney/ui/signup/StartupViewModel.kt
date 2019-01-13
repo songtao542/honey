@@ -54,4 +54,11 @@ class StartupViewModel @Inject constructor(private val usecase: SigninUseCase) :
         usecase.lock()
     }
 
+    fun testSign() {
+        usecase.testSign("232", "1")
+    }
+
+    fun testSignPost() {
+        usecase.testSignPost("232", "1")
+    }
 }

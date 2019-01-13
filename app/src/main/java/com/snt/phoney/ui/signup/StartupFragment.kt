@@ -10,6 +10,7 @@ import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
 import com.snt.phoney.R
 import com.snt.phoney.base.BaseFragment
+import com.snt.phoney.domain.repository.ToolRepository
 import com.snt.phoney.domain.usecase.PLATFORM_QQ
 import com.snt.phoney.domain.usecase.PLATFORM_WECHAT
 import com.snt.phoney.domain.usecase.PLATFORM_WEIBO
@@ -20,6 +21,7 @@ import com.snt.phoney.extensions.toast
 import com.snt.phoney.ui.main.MainActivity
 import com.snt.phoney.ui.setup.SetupWizardActivity
 import kotlinx.android.synthetic.main.fragment_startup.*
+import javax.inject.Inject
 
 
 class StartupFragment : BaseFragment() {
@@ -43,6 +45,15 @@ class StartupFragment : BaseFragment() {
         signin.setOnClickListener {
             activity?.addFragmentSafely(R.id.containerLayout, SignupFragment.newInstance(), "signin")
         }
+
+        /**test********************************************/
+        logo.setOnClickListener {
+            Log.d("OkHttp", "test sign--------------------------------------")
+            viewModel.testSign()
+            viewModel.testSignPost()
+        }
+        /**test********************************************/
+
 
         qq.setOnClickListener {
             activity?.let { activity ->

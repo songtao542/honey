@@ -74,6 +74,7 @@ open class SignInterceptor : Interceptor {
         return try {
             val request = chain.request()
             val method = request.method()
+            Log.d("TTTT","xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx")
             when (method) {
                 "GET" -> chain.proceed(interceptGet(request))
                 "POST" -> chain.proceed(interceptPost(request))
