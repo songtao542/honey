@@ -16,7 +16,8 @@ import java.util.concurrent.TimeUnit
 
 
 private val UTF8 = Charset.forName("UTF-8")
-const val APP_SECRET = ""
+const val APP_SECRET_KEY = "appSecret"
+const val APP_SECRET_VALUE = "2018-11-20 13:14:00"
 const val ACTION_LOGIN_STATE_INVALID = "login_state_invalid"
 
 @Suppress("unused")
@@ -74,7 +75,6 @@ open class SignInterceptor : Interceptor {
         return try {
             val request = chain.request()
             val method = request.method()
-            Log.d("TTTT","xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx")
             when (method) {
                 "GET" -> chain.proceed(interceptGet(request))
                 "POST" -> chain.proceed(interceptPost(request))
@@ -90,7 +90,7 @@ open class SignInterceptor : Interceptor {
         val httpUrl = request.url()
         val timestamp = System.currentTimeMillis().toString()
         val params = getQueryParameters(httpUrl).apply {
-            put("appSecret", APP_SECRET)
+            put(APP_SECRET_KEY, APP_SECRET_VALUE)
             put("timestamp", timestamp)
         }
         val newUrlBuilder = httpUrl.newBuilder()
@@ -106,11 +106,14 @@ open class SignInterceptor : Interceptor {
                 val bodyBuilder = FormBody.Builder(UTF8)
                 val timestamp = System.currentTimeMillis().toString()
                 val params = getParameters(body).apply {
-                    put("appSecret", APP_SECRET)
+                    put(APP_SECRET_KEY, APP_SECRET_VALUE)
                     put("timestamp", timestamp)
                 }
                 params["sign"] = getSignString(params)
                 for ((name, value) in params) {
+                    if (APP_SECRET_KEY == name) {
+                        continue
+                    }
                     bodyBuilder.addEncoded(name, value)
                 }
                 return request.newBuilder().post(bodyBuilder.build()).build()
@@ -120,7 +123,7 @@ open class SignInterceptor : Interceptor {
                 val parts = body.parts()
                 val timestamp = System.currentTimeMillis().toString()
                 val params = getParameters(body).apply {
-                    put("appSecret", APP_SECRET)
+                    put(APP_SECRET_KEY, APP_SECRET_VALUE)
                     put("timestamp", timestamp)
                 }
                 parts.add(MultipartBody.Part.createFormData("timestamp", timestamp))
@@ -136,14 +139,14 @@ open class SignInterceptor : Interceptor {
 
     private fun getSignString(params: TreeMap<String, String>): String {
         val paramString = StringBuilder()
-        val sorted = params.toSortedMap(Comparator { o1, o2 -> o1.toUpperCase().compareTo(o2.toUpperCase()) })
+        val sorted = params.toSortedMap(Comparator { o1, o2 -> o1.compareTo(o2) })
         for ((name, value) in sorted) {
             if (BuildConfig.DEBUG) {
                 Log.d(TAG, "to sign param:($name=$value)")
             }
             paramString.append(value)
         }
-        return md5(paramString.toString().toUpperCase()).toUpperCase()
+        return md5(paramString.toString())
     }
 }
 

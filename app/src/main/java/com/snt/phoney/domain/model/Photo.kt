@@ -11,7 +11,9 @@ data class Photo(
         var id: Int = 0,      // "id": 44
         var path: String? = null, //   "path": "http://phoney.alance.pub/phoney/phoney/512/users/photos/u201811081829582566215b5a5a3b4f/1542507758452-5-a61dd1050281015775b699c828a394bc.jpg",
         var flag: Int = 0,
-        @SerializedName(value = "money") var price: Int = 0//  "flag": 0,
+        @SerializedName(value = "money") var price: Int = 0,
+        var burn: Int = -1,//  "flag": 0,
+        var burnTime: Int = 0//  "flag": 0,
 ) : Selectable(), Parcelable {
 
     override fun equals(other: Any?): Boolean {

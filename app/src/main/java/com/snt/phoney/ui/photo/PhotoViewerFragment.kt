@@ -36,7 +36,7 @@ open class PhotoViewerFragment : Fragment(), PhotoViewFragment.OnPhotoSingleTapL
 
     private var deletedUrls: ArrayList<String>? = null
     private var deletedUris: ArrayList<Uri>? = null
-    protected var deletedPhotos: ArrayList<Photo>? = null
+    private var deletedPhotos: ArrayList<Photo>? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)

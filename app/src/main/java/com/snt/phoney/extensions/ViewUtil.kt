@@ -4,6 +4,7 @@ import android.app.Activity
 import android.content.Context
 import android.os.Build
 import android.util.TypedValue
+import android.view.View
 import androidx.fragment.app.Fragment
 
 object ViewUtil {
@@ -16,7 +17,11 @@ object ViewUtil {
     }
 
     fun dip(context: Context, dip: Int): Int {
-        return TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, dip.toFloat(), context.resources.displayMetrics).toInt()
+        return dip(context, dip.toFloat())
+    }
+
+    fun dip(context: Context, dip: Float): Int {
+        return TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, dip, context.resources.displayMetrics).toInt()
     }
 }
 
@@ -48,3 +53,11 @@ fun Fragment.dip(dip: Int): Int {
     return ViewUtil.dip(requireContext(), dip)
 }
 
+/*******************View*******************/
+fun View.dip(dip: Float): Int {
+    return ViewUtil.dip(context, dip)
+}
+
+fun View.dip(dip: Int): Int {
+    return ViewUtil.dip(context, dip)
+}

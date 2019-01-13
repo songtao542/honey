@@ -14,7 +14,7 @@
         <item>所有</item>
         <item>五公里内</item>
         <item>十公里内</item>
-        <item>其他</item>
+        <!--<item>其他</item>-->
 
     </string-array>
     <string-array name="filter_dating_content">

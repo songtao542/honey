@@ -165,7 +165,7 @@
     <string name="friend_tag_nearest">距离最近</string>
     <string name="friend_tag_hottest">身材最好</string>
     <string name="join_dating">我要参加</string>
-    <string name="joined_dating">已参加</string>
+    <string name="joined_dating">你已参加此约会</string>
     <string name="follow">+关注对方</string>
     <string name="followed">已关注</string>
     <string name="unit_cm">cm</string>
@@ -375,6 +375,7 @@
     <string name="become_vip">成为会员</string>
     <string name="normal_member">#普通会员</string>
     <string name="vip_member">#纯蜜会员</string>
+    <string name="vip_period_template">会员有效期：%1$s</string>
     <string name="edit_user_info">编辑信息</string>
     <string name="has_new_message">新消息</string>
     <string name="the_user_set_view_need_charge">对方设置了需要付费才可查看</string>
@@ -436,4 +437,9 @@
     <string name="reset_privacy_password_tip">重置密码需要录制视频验证是否是本人操作</string>
     <string name="reset_lock_tip">取消即视为放弃重置机会，再次重置需要重新审核</string>
     <string name="reset_lock_title">重置隐私密码</string>
+    <string name="on_going_login_out">正在退出</string>
+    <string name="vip_renewals">续费</string>
+    <string name="press_to_view">按住屏幕可查看</string>
+    <string name="go_to_open_vip">去开通</string>
+    <string name="open_vip_no_limit_to_view">开通会员不限制查看时间</string>
 </resources>

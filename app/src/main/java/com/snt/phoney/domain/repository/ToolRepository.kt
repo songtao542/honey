@@ -32,7 +32,7 @@ interface ToolRepository {
     fun listNews(page: Int): Single<Response<List<News>>>
 
 
-    fun testSign( token: String,page: String): Single<Response<String>>
+    fun testSignGet(token: String, page: String): Single<Response<String>>
 
 
     fun testSignPost(token: String,page: String): Single<Response<String>>

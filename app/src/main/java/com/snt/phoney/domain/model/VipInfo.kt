@@ -2,6 +2,7 @@ package com.snt.phoney.domain.model
 
 import com.google.gson.annotations.SerializedName
 import kotlinx.serialization.Serializable
+import java.text.SimpleDateFormat
 
 @Serializable
 data class VipInfo(
@@ -20,6 +21,11 @@ data class VipInfo(
 ) {
     val isVip: Boolean
         get() = vip != 0
+
+    fun formatEndTime(): String {
+        val df = SimpleDateFormat("yyyy.MM.dd")
+        return df.format(endTime)
+    }
 }
 
 

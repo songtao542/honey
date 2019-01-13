@@ -1,12 +1,15 @@
 package com.snt.phoney.domain.usecase
 
 import com.snt.phoney.domain.repository.LocationRepository
+import com.snt.phoney.domain.repository.ToolRepository
 import com.snt.phoney.domain.repository.UserRepository
 import java.io.File
 import javax.inject.Inject
 
 
-class UserInfoUseCase @Inject constructor(private val userRepository: UserRepository, private val locationRepository: LocationRepository) : AccessUserUseCase(userRepository) {
+class UserInfoUseCase @Inject constructor(private val userRepository: UserRepository,
+                                          private val locationRepository: LocationRepository,
+                                          private val toolRepository: ToolRepository) : AccessUserUseCase(userRepository) {
 
     fun getAllInfoOfUser(token: String) = userRepository.getAllInfoOfUser(token)
 
@@ -38,5 +41,8 @@ class UserInfoUseCase @Inject constructor(private val userRepository: UserReposi
     fun follow(token: String, uuid: String) = userRepository.follow(token, uuid)
 
     fun deleteUser(token: String) = userRepository.deleteUser(token)
+
+    fun testSignGet(token: String, page: String) = toolRepository.testSignGet(token, page)
+    fun testSignPost(token: String, page: String) = toolRepository.testSignPost(token, page)
 
 }

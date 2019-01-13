@@ -46,15 +46,6 @@ class StartupFragment : BaseFragment() {
             activity?.addFragmentSafely(R.id.containerLayout, SignupFragment.newInstance(), "signin")
         }
 
-        /**test********************************************/
-        logo.setOnClickListener {
-            Log.d("OkHttp", "test sign--------------------------------------")
-            viewModel.testSign()
-            viewModel.testSignPost()
-        }
-        /**test********************************************/
-
-
         qq.setOnClickListener {
             activity?.let { activity ->
                 //清除其他授权时保存的用户，以免相互影响

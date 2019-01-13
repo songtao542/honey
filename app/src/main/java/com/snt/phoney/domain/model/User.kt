@@ -72,7 +72,8 @@ data class User(
         var im: ImUser? = null,
         @SerializedName(value = "isCare") var isCared: Boolean = false,
         @SerializedName(value = "cares") var caredSize: Int = 0,
-        @SerializedName(value = "utime") var updateTime: Long = 0) : Parcelable {
+        @SerializedName(value = "utime") var updateTime: Long = 0,
+        @SerializedName(value = "burn_time") var burnTime: Int = 0) : Parcelable {
 
     @Transient
     val safeCup: String
@@ -134,6 +135,7 @@ data class User(
                 val result = ArrayList<Photo>()
                 for (photo in photos) {
                     if (!TextUtils.isEmpty(photo.path)) {
+                        photo.burnTime = burnTime
                         result.add(photo)
                     }
                 }

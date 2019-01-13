@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="utf-8"?>
+<merge xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".ui.photo.PhotoViewerFragment"
+    tools:parentTag="android.widget.FrameLayout">
+
+    <FrameLayout
+        android:id="@+id/burnLayout"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@color/black"
+        tools:context=".ui.photo.PhotoViewerFragment">
+
+        <com.snt.phoney.widget.SquareImageView
+            android:id="@+id/imagePlaceHolder"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_gravity="center"
+            app:srcCompat="@drawable/ic_burn_placeholder" />
+
+    </FrameLayout>
+
+    <LinearLayout
+        android:id="@+id/pressToViewLayout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:gravity="center"
+        android:orientation="vertical">
+
+        <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/burnStateView"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:text="@string/press_to_view"
+            android:textColor="@color/white"
+            android:textSize="@dimen/textsize_normal" />
+        <!-- open_vip_no_limit_to_view -->
+
+        <com.snt.phoney.widget.CircleProgressBar
+            android:id="@+id/progressView"
+            android:layout_width="60dp"
+            android:layout_height="60dp"
+            android:layout_marginTop="10dp"
+            app:progressBackgroundColor="@color/gray"
+            app:progressForegroundColor="?attr/colorPrimary"
+            app:showPercent="false" />
+
+        <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/buyVipButton"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="50dp"
+            android:background="@drawable/button_primary_circle_corner_selector"
+            android:clickable="true"
+            android:paddingLeft="20dp"
+            android:paddingTop="5dp"
+            android:paddingRight="20dp"
+            android:paddingBottom="5dp"
+            android:text="@string/go_to_open_vip"
+            android:textColor="@color/white"
+            android:textSize="@dimen/textsize_smaller" />
+
+    </LinearLayout>
+
+</merge>

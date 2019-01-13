@@ -12,7 +12,6 @@ import com.snt.phoney.domain.model.UserInfo
 import com.snt.phoney.domain.usecase.UserInfoUseCase
 import com.snt.phoney.extensions.TAG
 import com.snt.phoney.extensions.disposedBy
-import com.snt.phoney.utils.WechatApi
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.rxkotlin.subscribeBy
 import io.reactivex.schedulers.Schedulers
@@ -154,5 +153,29 @@ class MineViewModel @Inject constructor(private val usecase: UserInfoUseCase) : 
         //usecase.getAccessToken()?.let { usecase.deleteUser(it) }
         /***********test**************/
         usecase.setUser(null)
+    }
+
+    fun testSignGet() {
+        usecase.testSignGet("232", "1")
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribeBy(
+                        onSuccess = {
+                        },
+                        onError = {
+                        }
+                ).disposedBy(disposeBag)
+    }
+
+    fun testSignPost() {
+        usecase.testSignPost("232", "1")
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribeBy(
+                        onSuccess = {
+                        },
+                        onError = {
+                        }
+                ).disposedBy(disposeBag)
     }
 }

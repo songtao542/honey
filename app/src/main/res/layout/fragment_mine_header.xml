@@ -57,33 +57,32 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_below="@+id/username"
-                android:layout_marginTop="10dp"
+                android:layout_marginTop="5dp"
                 android:layout_marginRight="5dp"
                 android:text="@string/normal_member"
                 android:textColor="@android:color/white"
                 android:textSize="@dimen/textsize_smaller" />
 
             <androidx.appcompat.widget.AppCompatTextView
-                android:id="@+id/upgradeVip"
+                android:id="@+id/rechargeOrRenewalsVip"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_below="@+id/username"
+                android:layout_below="@+id/vipType"
                 android:layout_marginTop="5dp"
-                android:layout_toRightOf="@+id/vipType"
-                android:background="@drawable/upgrade_vip_rectangle_selector"
+                android:background="@drawable/vip_recharge_rectangle_selector"
                 android:paddingLeft="10dp"
-                android:paddingTop="5dp"
+                android:paddingTop="4dp"
                 android:paddingRight="10dp"
-                android:paddingBottom="5dp"
+                android:paddingBottom="4dp"
                 android:text="@string/become_vip"
                 android:textColor="@color/darker"
-                android:textSize="@dimen/textsize_smallest" />
+                android:textSize="9dp" />
 
             <LinearLayout
                 android:id="@+id/editInfo"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_alignBottom="@+id/upgradeVip"
+                android:layout_alignBottom="@+id/rechargeOrRenewalsVip"
                 android:layout_alignParentRight="true"
                 android:gravity="center_horizontal"
                 android:orientation="vertical">

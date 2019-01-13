@@ -128,6 +128,7 @@ class OfficialRecommendFragment : BaseFragment() {
     private fun popupContentFilter(menusList: List<DatingProgram>) {
         if (!isHidden) {
             val menus = ArrayList<String>(menusList.map { it.name!! })
+            menus.remove("其它")
             menus.add(0, getString(R.string.all))
             popupMenu(datingContent, menus) { title, position ->
                 //filterTime = FilterTime.NONE

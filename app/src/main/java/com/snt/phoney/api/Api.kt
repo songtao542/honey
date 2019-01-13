@@ -608,8 +608,7 @@ interface Api {
     fun listNews(@Query("page") page: String): Single<Response<List<News>>>
 
     @GET("users/other/checkAuth_test")
-    fun testSign(@Query("token") token: String, @Query("page") page: String): Single<Response<String>>
-
+    fun testSignGet(@Query("token") token: String, @Query("page") page: String): Single<Response<String>>
 
     @FormUrlEncoded
     @POST("users/other/checkAuth_test")

@@ -23,10 +23,7 @@ import com.snt.phoney.domain.model.Photo
 import com.snt.phoney.domain.model.PhotoPermission
 import com.snt.phoney.domain.model.User
 import com.snt.phoney.domain.model.UserInfo
-import com.snt.phoney.extensions.removeList
-import com.snt.phoney.extensions.snackbar
-import com.snt.phoney.extensions.startActivity
-import com.snt.phoney.extensions.startActivityForResult
+import com.snt.phoney.extensions.*
 import com.snt.phoney.ui.about.AboutActivity
 import com.snt.phoney.ui.album.AlbumActivity
 import com.snt.phoney.ui.browser.WebBrowserActivity
@@ -119,6 +116,13 @@ class MineFragment : BaseFragment(), OnSettingItemClickListener, OnSignOutClickL
             //用户信息变更之后重新网络加载用户信息
             viewModel.getAllInfoOfUser()
         })
+
+        /**test************************/
+        //authInfo.setOnClickListener {
+        //    viewModel.testSignGet()
+        //    viewModel.testSignPost()
+        //}
+        /**test************************/
     }
 
     override fun onSettingItemClick(setting: Setting) {
@@ -243,8 +247,11 @@ class MineFragment : BaseFragment(), OnSettingItemClickListener, OnSignOutClickL
 
     override fun onSignOutClick() {
         viewModel.signOut()
-        activity?.startActivity(SignupActivity.newIntent(requireContext()))
-        activity?.finish()
+        showProgress(getString(R.string.on_going_login_out))
+        view?.postDelayed({
+            activity?.startActivity(SignupActivity.newIntent(requireContext()))
+            activity?.finish()
+        }, 1000)
     }
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
@@ -364,12 +371,21 @@ class MineFragment : BaseFragment(), OnSettingItemClickListener, OnSignOutClickL
             }
             userInfo.vipInfo?.let { vipInfo ->
                 if (vipInfo.isVip) {
-                    vipType.setText(R.string.vip_member)
-                    upgradeVip.visibility = View.GONE
+                    vipType.text = getString(R.string.vip_period_template, vipInfo.formatEndTime())
+                    rechargeOrRenewalsVip.setText(R.string.vip_renewals)
+                    val lr = dip(15)
+                    val tb = dip(4)
+                    rechargeOrRenewalsVip.setPadding(lr, tb, lr, tb)
+                    rechargeOrRenewalsVip.setBackgroundResource(R.drawable.button_gray_circle_corner_selector)
+                    rechargeOrRenewalsVip.setOnClickListener { startActivityForResult<VipActivity>(Page.VIP, REQUEST_VIP_CODE) }
                 } else {
                     vipType.setText(R.string.normal_member)
-                    upgradeVip.setText(R.string.upgrade_vip_title)
-                    upgradeVip.setOnClickListener { startActivityForResult<VipActivity>(Page.VIP, REQUEST_VIP_CODE) }
+                    rechargeOrRenewalsVip.setText(R.string.upgrade_vip_title)
+                    val lr = dip(10)
+                    val tb = dip(4)
+                    rechargeOrRenewalsVip.setPadding(lr, tb, lr, tb)
+                    rechargeOrRenewalsVip.setBackgroundResource(R.drawable.vip_recharge_rectangle_selector)
+                    rechargeOrRenewalsVip.setOnClickListener { startActivityForResult<VipActivity>(Page.VIP, REQUEST_VIP_CODE) }
                 }
             }
             return@let

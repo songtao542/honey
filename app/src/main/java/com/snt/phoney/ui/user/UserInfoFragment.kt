@@ -128,7 +128,7 @@ class UserInfoFragment : BaseFragment() {
 
         follow.setOnClickListener {
             user?.let { u ->
-                viewModel.follow(u.safeUuid ?: "")
+                viewModel.follow(u.safeUuid)
             }
         }
 
