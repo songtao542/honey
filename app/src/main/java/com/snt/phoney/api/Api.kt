@@ -4,6 +4,7 @@ import androidx.lifecycle.LiveData
 import com.snt.phoney.domain.model.*
 import io.reactivex.Single
 import okhttp3.MultipartBody
+import retrofit2.Call
 import retrofit2.http.*
 
 interface Api {
@@ -481,6 +482,17 @@ interface Api {
     @FormUrlEncoded
     @POST("users/other/listIntroduces")
     fun listPurpose(@Field("token") token: String): Single<Response<List<Purpose>>>
+
+    /**
+     *@param token    string	是	用户token
+     *@param target    string	是	相片的所属用户uuid
+     *@param id    string	是	相片的id
+     */
+    @FormUrlEncoded
+    @POST("users/other/photoView")
+    fun burnPhoto(@Field("token") token: String,
+                  @Field("target") target: String,
+                  @Field("id") id: String): Single<Response<String>>
 
     @FormUrlEncoded
     @POST("message/listOfficesMessage")

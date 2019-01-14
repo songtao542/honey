@@ -104,4 +104,24 @@ class AlbumViewModel @Inject constructor(private val usecase: UserInfoUseCase) :
                 ).disposedBy(disposeBag)
     }
 
+    fun burnPhoto(photo: Photo) {
+        usecase.burnPhoto(photo)
+//        val token = usecase.getAccessToken() ?: return
+//        usecase.burnPhoto(token, photo.ownerId ?: "", photo.id.toString())
+//                .subscribeOn(Schedulers.io())
+//                .observeOn(AndroidSchedulers.mainThread())
+//                .subscribeBy(
+//                        onSuccess = {
+//                            if (it.code == 200) {
+//
+//                            } else {
+//
+//                            }
+//                        },
+//                        onError = {
+//
+//                        }
+//                ).disposedBy(disposeBag)
+    }
+
 }

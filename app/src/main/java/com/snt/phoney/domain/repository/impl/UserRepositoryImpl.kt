@@ -1,12 +1,19 @@
 package com.snt.phoney.domain.repository.impl
 
 
+import android.util.Log
 import com.snt.phoney.api.Api
 import com.snt.phoney.domain.accessor.UserAccessor
 import com.snt.phoney.domain.model.*
+import com.snt.phoney.domain.persistence.PhotoDao
 import com.snt.phoney.domain.repository.UserRepository
 import com.snt.phoney.utils.media.MultipartUtil
 import io.reactivex.Single
+import io.reactivex.rxkotlin.subscribeBy
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.GlobalScope
+import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
 import okhttp3.MultipartBody
 import retrofit2.http.Part
 import java.io.File
@@ -15,7 +22,8 @@ import javax.inject.Singleton
 
 @Singleton
 class UserRepositoryImpl @Inject constructor(private val userAccessor: UserAccessor,
-                                             private val api: Api) : UserRepository, UserAccessor by userAccessor {
+                                             private val api: Api,
+                                             private val photoDao: PhotoDao) : UserRepository, UserAccessor by userAccessor {
     override fun setPrivacyPassword(token: String, password: String, privatePassword: String): Single<Response<String>> {
         return api.setPrivacyPassword(token, password, privatePassword)
     }
@@ -41,7 +49,34 @@ class UserRepositoryImpl @Inject constructor(private val userAccessor: UserAcces
     }
 
     override fun getVipInfo(token: String): Single<Response<VipInfo>> {
-        return getVipInfo(token)
+        return api.getVipInfo(token)
+    }
+
+    override fun burnPhoto(token: String, target: String, id: String): Single<Response<String>> {
+        return api.burnPhoto(token, target, id)
+    }
+
+    override fun burnPhoto(photo: Photo) {
+        GlobalScope.launch {
+            withContext(Dispatchers.IO) {
+                photoDao.insertPhoto(photo)
+                val token = getAccessToken()
+                if (token != null) {
+                    burnPhoto(token, photo.ownerId ?: "", photo.id.toString())
+                            .subscribeBy(
+                                    onSuccess = {
+                                        Log.d("TTTT", "rrrrrrrrrrrrrrrrrr reponse=$it")
+                                        if (it.success) {
+                                            photoDao.delete(photo.id)
+                                        }
+                                    },
+                                    onError = {
+
+                                    }
+                            ).dispose()
+                }
+            }
+        }
     }
 
     override fun setPhotoPermission(token: String, photoPermission: Int, money: Double, photoId: String): Single<Response<String>> {

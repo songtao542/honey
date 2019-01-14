@@ -2,6 +2,7 @@ package com.snt.phoney.domain.model
 
 import android.os.Parcelable
 import android.text.TextUtils
+import android.util.Log
 import androidx.room.Entity
 import androidx.room.PrimaryKey
 import androidx.room.TypeConverter
@@ -75,6 +76,16 @@ data class User(
         @SerializedName(value = "utime") var updateTime: Long = 0,
         @SerializedName(value = "burn_time") var burnTime: Int = 0) : Parcelable {
 
+    init {
+        Log.d("TTTT", "ppppppppppppppppppppppppppppppppppp photos=$photos")
+        photos?.let { ps ->
+            for (photo in ps) {
+                photo.ownerId = uuid
+                photo.burnTime = burnTime
+            }
+        }
+    }
+
     @Transient
     val safeCup: String
         get() = cup ?: ""
@@ -135,7 +146,6 @@ data class User(
                 val result = ArrayList<Photo>()
                 for (photo in photos) {
                     if (photo.flag == 0 || (photo.flag == 1 && photo.paid)) {
-                        photo.burnTime = burnTime
                         result.add(photo)
                     }
                 }

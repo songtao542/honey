@@ -25,6 +25,10 @@ public abstract class AlbumActivityModule {
 
     @FragmentScope
     @ContributesAndroidInjector
+    public abstract AlbumPhotoFragment contributeAlbumPhotoFragment();
+
+    @FragmentScope
+    @ContributesAndroidInjector
     public abstract PhotoApplyListFragment contributePhotoApplyListFragment();
 
     @Binds

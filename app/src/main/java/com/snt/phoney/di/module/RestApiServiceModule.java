@@ -10,6 +10,7 @@ import com.snt.phoney.api.NullOrEmptyInterceptor;
 import com.snt.phoney.api.SignInterceptor;
 import com.snt.phoney.api.TimeoutInterceptor;
 import com.snt.phoney.utils.adapter.GsonResponseConverterFactory;
+import com.snt.phoney.utils.adapter.ResponseCallAdapterFactory;
 import com.snt.phoney.utils.data.Constants;
 
 import javax.inject.Named;
@@ -39,6 +40,7 @@ public class RestApiServiceModule {
         return new Retrofit.Builder()
                 .baseUrl(Constants.Api.BASE_URL)
                 .addConverterFactory(GsonResponseConverterFactory.create(gson))
+                .addCallAdapterFactory(new ResponseCallAdapterFactory())
                 .addCallAdapterFactory(RxJava2CallAdapterFactory.create())
                 //.addCallAdapterFactory(new LiveDataCallAdapterFactory())
                 .client(getOkHttpClientBuilder(application, gson).build())

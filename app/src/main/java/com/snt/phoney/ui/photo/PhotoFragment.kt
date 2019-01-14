@@ -124,7 +124,6 @@ open class PhotoFragment : Fragment() {
     }
 
     override fun onDestroyView() {
-        progressView.cancelAnimation()
         loadImageJob?.cancel()
         super.onDestroyView()
     }

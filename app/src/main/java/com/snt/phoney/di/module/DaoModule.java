@@ -4,6 +4,7 @@ import android.app.Application;
 
 import com.snt.phoney.domain.persistence.AppDatabase;
 import com.snt.phoney.domain.persistence.KeyValueDao;
+import com.snt.phoney.domain.persistence.PhotoDao;
 import com.snt.phoney.domain.persistence.ProvinceCityDao;
 import com.snt.phoney.domain.persistence.UserDao;
 
@@ -16,22 +17,27 @@ import dagger.Provides;
 public class DaoModule {
     @Singleton
     @Provides
-    public static UserDao provideUserDao(Application application) {
-        return AppDatabase.Companion.getInstance(application).userDao();
+    public static UserDao provideUserDao(AppDatabase database) {
+        return database.userDao();
     }
 
     @Singleton
     @Provides
-    public static KeyValueDao provideKeyValueDao(Application application) {
-        return AppDatabase.Companion.getInstance(application).keyValueDao();
+    public static KeyValueDao provideKeyValueDao(AppDatabase database) {
+        return database.keyValueDao();
     }
 
     @Singleton
     @Provides
-    public static ProvinceCityDao provideProvinceCityDao(Application application) {
-        return AppDatabase.Companion.getInstance(application).provinceCityDao();
+    public static ProvinceCityDao provideProvinceCityDao(AppDatabase database) {
+        return database.provinceCityDao();
     }
 
+    @Singleton
+    @Provides
+    public static PhotoDao providePhotoDao(AppDatabase database) {
+        return database.photoDao();
+    }
 
     @Singleton
     @Provides

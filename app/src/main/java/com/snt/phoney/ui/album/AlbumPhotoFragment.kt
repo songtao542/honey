@@ -6,8 +6,11 @@ import android.net.Uri
 import android.os.Bundle
 import android.util.Log
 import android.view.View
+import androidx.lifecycle.ViewModelProvider
+import androidx.lifecycle.ViewModelProviders
 import com.snt.phoney.R
 import com.snt.phoney.base.Page
+import com.snt.phoney.di.Injectable
 import com.snt.phoney.domain.model.Photo
 import com.snt.phoney.extensions.startActivityForResult
 import com.snt.phoney.ui.photo.PhotoFragment
@@ -15,12 +18,13 @@ import com.snt.phoney.ui.vip.VipActivity
 import com.snt.phoney.utils.data.Constants
 import kotlinx.android.synthetic.main.fragment_photo_burn.*
 import kotlinx.android.synthetic.main.fragment_photo_view.*
+import javax.inject.Inject
 
 const val REQUEST_VIP_CODE = 60
 
 /**
  */
-class AlbumPhotoFragment : PhotoFragment() {
+class AlbumPhotoFragment : PhotoFragment(), Injectable {
 
     companion object {
         @JvmStatic
@@ -45,9 +49,22 @@ class AlbumPhotoFragment : PhotoFragment() {
         }
     }
 
+    @Inject
+    lateinit var viewModelFactory: ViewModelProvider.Factory
+
+    private lateinit var viewModel: AlbumViewModel
+
+    override fun onActivityCreated(savedInstanceState: Bundle?) {
+        super.onActivityCreated(savedInstanceState)
+        viewModel = ViewModelProviders.of(this, viewModelFactory).get(AlbumViewModel::class.java)
+
+    }
+
     private fun startBurning(photo: Photo) {
-        burnLayout.visibility = View.GONE
-        burnStateView.visibility = View.INVISIBLE
+        //burnLayout.visibility = View.GONE
+        //burnStateView.visibility = View.INVISIBLE
+        burnLayout.animate().alpha(0f).start()
+        burnStateView.animate().alpha(0f).start()
         progressView.startAnimation(photo.burnTimeInMillis) {
             if (!isHidden) {
                 burned(photo)
@@ -77,18 +94,21 @@ class AlbumPhotoFragment : PhotoFragment() {
 
     private fun burned(photo: Photo) {
         photo.burn = 1
-        Log.d("TTTT", "========== rootLayout=$rootLayout   path=${photo.path}")
         rootLayout.setOnLongPressListener(null)
-        burnLayout.visibility = View.VISIBLE
+        //burnLayout.visibility = View.VISIBLE
+        burnLayout.animate().alpha(1f).start()
         stateLayout.visibility = View.VISIBLE
         progressView.visibility = View.GONE
         progressView.cancelAnimation()
         buyVipButton.visibility = View.VISIBLE
-        burnStateView.visibility = View.VISIBLE
+        //burnStateView.visibility = View.VISIBLE
+        burnStateView.animate().alpha(1f).start()
         burnStateView.setText(R.string.open_vip_no_limit_to_view)
         buyVipButton.setOnClickListener {
             startActivityForResult<VipActivity>(Page.VIP, REQUEST_VIP_CODE)
         }
+
+        viewModel.burnPhoto(photo)
     }
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {

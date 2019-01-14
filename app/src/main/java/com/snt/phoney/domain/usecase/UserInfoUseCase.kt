@@ -1,5 +1,6 @@
 package com.snt.phoney.domain.usecase
 
+import com.snt.phoney.domain.model.Photo
 import com.snt.phoney.domain.repository.LocationRepository
 import com.snt.phoney.domain.repository.ToolRepository
 import com.snt.phoney.domain.repository.UserRepository
@@ -40,9 +41,13 @@ class UserInfoUseCase @Inject constructor(private val userRepository: UserReposi
 
     fun follow(token: String, uuid: String) = userRepository.follow(token, uuid)
 
+    fun burnPhoto(token: String, target: String, id: String) = userRepository.burnPhoto(token, target, id)
+    fun burnPhoto(photo: Photo) = userRepository.burnPhoto(photo)
+
     fun deleteUser(token: String) = userRepository.deleteUser(token)
 
     fun testSignGet(token: String, page: String) = toolRepository.testSignGet(token, page)
     fun testSignPost(token: String, page: String) = toolRepository.testSignPost(token, page)
+
 
 }

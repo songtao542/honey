@@ -149,6 +149,10 @@ interface UserRepository : UserAccessor {
 
     fun getVipInfo(token: String): Single<Response<VipInfo>>
 
+    fun burnPhoto(token: String, target: String, id: String): Single<Response<String>>
+
+    fun burnPhoto(photo: Photo)
+
 //    fun login(username: String, password: String): LiveData<Response<User>>
 //    fun resetPassword(key: String, password: String): LiveData<Response<String>>
 //    fun logout(username: String): LiveData<Response<String>>

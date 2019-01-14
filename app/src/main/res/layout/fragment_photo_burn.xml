@@ -44,6 +44,7 @@
             app:countDownMode="true"
             app:progressBackgroundColor="@color/gray"
             app:progressForegroundColor="?attr/colorPrimary"
+            app:progressTextColor="@color/white"
             app:progressTextSize="24sp"
             app:scalingFactor="1000"
             app:showPercent="false" />
