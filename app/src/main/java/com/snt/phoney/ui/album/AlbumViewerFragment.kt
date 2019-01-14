@@ -5,6 +5,7 @@ import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.ViewModelProviders
 import com.snt.phoney.di.Injectable
 import com.snt.phoney.domain.model.Photo
+import com.snt.phoney.ui.photo.PhotoFragment
 import com.snt.phoney.ui.photo.PhotoViewerFragment
 import javax.inject.Inject
 
@@ -30,4 +31,9 @@ class AlbumViewerFragment : PhotoViewerFragment(), Injectable {
             viewModel.deletePhotos(ArrayList<Photo>().apply { add(photo) })
         }
     }
+
+    override fun newPhotoViewFragment(photo: Photo): PhotoFragment {
+        return AlbumPhotoFragment.newInstance(photo)
+    }
+
 }

@@ -15,7 +15,8 @@ import dagger.Provides;
         RepositoryModule.class,
         DaoModule.class,
         WeiboApiServiceModule.class,
-        WxApiServiceModule.class
+        WxApiServiceModule.class,
+        ServiceContributorModule.class
 })
 public abstract class AppModule {
 

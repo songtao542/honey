@@ -13,7 +13,6 @@
     <uses-permission
         android:name="android.permission.READ_LOGS"
         tools:ignore="ProtectedPermissions" />
-
     <uses-permission android:name="android.permission.RECORD_AUDIO" />
     <uses-permission android:name="android.permission.CAMERA" />
     <uses-permission android:name="android.permission.CHANGE_WIFI_STATE" />
@@ -28,39 +27,34 @@
         android:roundIcon="@mipmap/ic_launcher"
         android:supportsRtl="true"
         android:theme="@style/AppTheme.Female">
+        <service
+            android:name=".service.BurnAlbumIntentService"
+            android:exported="false"></service>
 
         <meta-data
             android:name="android.notch_support"
             android:value="true" />
-
         <meta-data
             android:name="UMENG_APPKEY"
             android:value="5be8e7eaf1f556b885000206" />
         <meta-data
             android:name="UMENG_CHANNEL"
-            android:value="${CHANNEL_NAME}" />
-        <!-- 友盟Push secret key, 这里不需要友盟推送所以不配置 -->
-        <!--<meta-data-->
-        <!--android:name="UMENG_MESSAGE_SECRET"-->
-        <!--android:value=""></meta-data>-->
-
-        <!--<activity android:name=".ui.voicecall.VoiceCallActivity"></activity>-->
-
-        <!--<activity-->
-        <!--android:name=".ui.voicecall.VoiceAnswerActivity"-->
-        <!--android:theme="@style/AppTheme.FullScreen"></activity>-->
-
-        <!--<service-->
-        <!--android:name=".service.VoiceCallService"-->
-        <!--android:enabled="true"-->
-        <!--android:exported="false" />-->
-
-        <activity android:name=".ui.voicecall2.VoiceCallActivity"></activity>
-
+            android:value="${CHANNEL_NAME}" /> <!-- 友盟Push secret key, 这里不需要友盟推送所以不配置 -->
+        <!-- <meta-data -->
+        <!-- android:name="UMENG_MESSAGE_SECRET" -->
+        <!-- android:value=""></meta-data> -->
+        <!-- <activity android:name=".ui.voicecall.VoiceCallActivity"></activity> -->
+        <!-- <activity -->
+        <!-- android:name=".ui.voicecall.VoiceAnswerActivity" -->
+        <!-- android:theme="@style/AppTheme.FullScreen"></activity> -->
+        <!-- <service -->
+        <!-- android:name=".service.VoiceCallService" -->
+        <!-- android:enabled="true" -->
+        <!-- android:exported="false" /> -->
+        <activity android:name=".ui.voicecall2.VoiceCallActivity" />
         <activity
             android:name=".ui.voicecall2.VoiceAnswerActivity"
-            android:theme="@style/AppTheme.FullScreen"></activity>
-
+            android:theme="@style/AppTheme.FullScreen" />
 
         <meta-data
             android:name="com.amap.api.v2.apikey"

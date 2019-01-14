@@ -5,7 +5,6 @@ import android.app.Activity
 import android.content.Intent
 import android.os.Bundle
 import android.text.TextUtils
-import android.util.Log
 import android.util.TypedValue
 import android.view.LayoutInflater
 import android.view.View
@@ -24,8 +23,8 @@ import com.snt.phoney.base.BaseFragment
 import com.snt.phoney.base.Page
 import com.snt.phoney.domain.model.*
 import com.snt.phoney.extensions.*
+import com.snt.phoney.ui.album.AlbumActivity
 import com.snt.phoney.ui.dating.DatingActivity
-import com.snt.phoney.ui.photo.PhotoViewerActivity
 import com.snt.phoney.ui.report.ReportActivity
 import com.snt.phoney.ui.vip.VipActivity
 import com.snt.phoney.ui.voicecall2.VoiceCallActivity
@@ -258,14 +257,14 @@ class UserInfoFragment : BaseFragment() {
                 photosView.setOnItemClickListener { view, _ ->
                     val photo = view.getTag(R.id.tag) as? Photo
                     photo?.let { photo ->
-                        if (TextUtils.isEmpty(photo.path) && photo.price > 0) {
+                        if (photo.flag == 1 && !photo.paid) {
                             buy {
                                 viewModel.buyWithMibi(OrderType.USE_RED_ENVELOPE_MIBI, photo.id.toString(), user.uuid)
                             }
                         } else {
                             user.freePhotos?.let { freePhotos ->
                                 val i = freePhotos.indexOf(photo)
-                                startActivity<PhotoViewerActivity>(Page.PHOTO_VIEWER, Bundle().apply {
+                                startActivity<AlbumActivity>(Page.ALBUM_VIEWER, Bundle().apply {
                                     putParcelableArrayList(Constants.Extra.PHOTO_LIST, ArrayList(freePhotos))
                                     putInt(Constants.Extra.INDEX, i)
                                     putBoolean(Constants.Extra.DELETABLE, false)

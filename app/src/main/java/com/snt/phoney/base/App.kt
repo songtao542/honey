@@ -2,6 +2,7 @@ package com.snt.phoney.base
 
 import android.app.Activity
 import android.app.Application
+import android.app.Service
 import android.content.Context
 import android.text.TextUtils
 import androidx.multidex.MultiDex
@@ -18,6 +19,7 @@ import com.umeng.analytics.MobclickAgent
 import com.umeng.commonsdk.UMConfigure
 import dagger.android.DispatchingAndroidInjector
 import dagger.android.HasActivityInjector
+import dagger.android.HasServiceInjector
 import jiguang.chat.utils.NotificationClickEventReceiver
 import timber.log.Timber
 import java.io.BufferedReader
@@ -26,15 +28,13 @@ import java.io.IOException
 import javax.inject.Inject
 
 
-class App : Application(), HasActivityInjector
-/**, HasServiceInjector **/
-{
+class App : Application(), HasActivityInjector, HasServiceInjector {
 
     @Inject
     lateinit var dispatchingActivityInjector: DispatchingAndroidInjector<Activity>
 
-    //@Inject
-    //lateinit var dispatchingServiceInjector: DispatchingAndroidInjector<Service>
+    @Inject
+    lateinit var dispatchingServiceInjector: DispatchingAndroidInjector<Service>
 
     @Suppress("unused")
     @Inject
@@ -56,7 +56,7 @@ class App : Application(), HasActivityInjector
 
     override fun activityInjector() = dispatchingActivityInjector
 
-    //override fun serviceInjector() = dispatchingServiceInjector
+    override fun serviceInjector() = dispatchingServiceInjector
 
     override fun attachBaseContext(base: Context) {
         super.attachBaseContext(base)

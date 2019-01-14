@@ -1,27 +1,36 @@
 package com.snt.phoney.domain.model
 
 import android.os.Parcelable
+import androidx.room.Entity
+import androidx.room.TypeConverters
 import com.google.gson.annotations.SerializedName
 import kotlinx.android.parcel.Parcelize
 import kotlinx.serialization.Serializable
+import kotlinx.serialization.Transient
 
-@Serializable
+@Entity(tableName = "Photo")
 @Parcelize
+@Serializable
+@TypeConverters(value = [Converter::class])
 data class Photo(
-        var id: Int = 0,      // "id": 44
+        var id: Long = 0,      // "id": 44
         var path: String? = null, //   "path": "http://phoney.alance.pub/phoney/phoney/512/users/photos/u201811081829582566215b5a5a3b4f/1542507758452-5-a61dd1050281015775b699c828a394bc.jpg",
-        var flag: Int = 0,
+        /**
+         * 0 正常 ， 1 是红包
+         */
+        var flag: Int = 0, //0 正常 ， 1 是红包
         @SerializedName(value = "money") var price: Int = 0,
-        var burn: Int = -1,//  "flag": 0,
-        var burnTime: Int = 0//  "flag": 0,
+        var burn: Int = -1,//  是否已焚，0 未焚，1 已焚
+        var burnTime: Int = 0,
+        var paid: Boolean = false //红包的时候，已支付1，未支付0
 ) : Selectable(), Parcelable {
 
-    override fun equals(other: Any?): Boolean {
-        if (other is Photo) {
-            return other.id == id && other.path.equals(path) && other.flag == flag && other.price == price
+    @Transient
+    val burnTimeInMillis: Long
+        get() {
+            return if (burnTime <= 0) 5000 else burnTime.toLong() * 1000
         }
-        return false
-    }
+
 }
 
 

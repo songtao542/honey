@@ -4,7 +4,7 @@ import kotlinx.serialization.Serializable
 import kotlinx.serialization.Transient
 
 @Serializable
-data class Purpose(var id: Int = 0,
+data class Purpose(var id: Long = 0,
                    var name: String? = null) {
 
     @Transient

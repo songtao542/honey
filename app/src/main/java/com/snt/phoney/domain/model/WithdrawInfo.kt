@@ -4,7 +4,7 @@ import com.google.gson.annotations.SerializedName
 import java.text.SimpleDateFormat
 
 data class WithdrawInfo(
-        var id: Int = 0,//"id": 1,
+        var id: Long = 0,//"id": 1,
         var uuid: String? = null,//"uuid": "uo2018121210525700bf9b1b6694bd8b",
         var state: Int = 0,//"state": 0,
         @SerializedName(value = "state_msg") var stateMessage: String? = null,//   "state_msg": "处理中",

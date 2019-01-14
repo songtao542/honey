@@ -8,7 +8,7 @@ import kotlinx.serialization.Transient
 @Parcelize
 @Serializable
 data class DatingProgram(
-        var id: Int = 0,
+        var id: Long = 0,
         var name: String? = null) : Parcelable {
 
     @Transient

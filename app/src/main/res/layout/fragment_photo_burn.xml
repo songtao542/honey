@@ -7,29 +7,24 @@
     tools:context=".ui.photo.PhotoViewerFragment"
     tools:parentTag="android.widget.FrameLayout">
 
-    <FrameLayout
+    <androidx.appcompat.widget.AppCompatImageView
         android:id="@+id/burnLayout"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
+        android:layout_gravity="center"
         android:background="@color/black"
-        tools:context=".ui.photo.PhotoViewerFragment">
-
-        <com.snt.phoney.widget.SquareImageView
-            android:id="@+id/imagePlaceHolder"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:layout_gravity="center"
-            app:srcCompat="@drawable/ic_burn_placeholder" />
-
-    </FrameLayout>
+        android:scaleType="fitCenter"
+        android:visibility="gone"
+        app:srcCompat="@drawable/ic_burn_placeholder" />
 
     <LinearLayout
-        android:id="@+id/pressToViewLayout"
+        android:id="@+id/stateLayout"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_gravity="center"
         android:gravity="center"
-        android:orientation="vertical">
+        android:orientation="vertical"
+        android:visibility="gone">
 
         <androidx.appcompat.widget.AppCompatTextView
             android:id="@+id/burnStateView"
@@ -46,8 +41,11 @@
             android:layout_width="60dp"
             android:layout_height="60dp"
             android:layout_marginTop="10dp"
+            app:countDownMode="true"
             app:progressBackgroundColor="@color/gray"
             app:progressForegroundColor="?attr/colorPrimary"
+            app:progressTextSize="24sp"
+            app:scalingFactor="1000"
             app:showPercent="false" />
 
         <androidx.appcompat.widget.AppCompatTextView
@@ -63,7 +61,8 @@
             android:paddingBottom="5dp"
             android:text="@string/go_to_open_vip"
             android:textColor="@color/white"
-            android:textSize="@dimen/textsize_smaller" />
+            android:textSize="@dimen/textsize_smaller"
+            android:visibility="gone" />
 
     </LinearLayout>
 

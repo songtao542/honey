@@ -17,6 +17,8 @@ import android.view.animation.LinearInterpolator;
 
 import com.snt.phoney.R;
 
+import java.text.DecimalFormat;
+
 import static android.graphics.Paint.Style.STROKE;
 import static com.snt.phoney.extensions.ViewUtilKt.dip;
 
@@ -39,11 +41,15 @@ public class CircleProgressBar extends View {
     private int starting;    //进度从哪里开始(设置了4个值,上左下右)
 
     private boolean showPercent;
+    private boolean countDownMode;
+
+    private float scalingFactor = 1;
 
     private Paint paint;
 
     private RectF progressRectF = new RectF();
     private Rect textRect = new Rect();
+    private DecimalFormat df = new DecimalFormat("0");
 
     private ValueAnimator valueAnimator;
 
@@ -116,6 +122,8 @@ public class CircleProgressBar extends View {
         maxProgress = a.getInt(R.styleable.CircleProgressBar_maxProgress, 100);
         starting = a.getInt(R.styleable.CircleProgressBar_starting, 3);
         showPercent = a.getBoolean(R.styleable.CircleProgressBar_showPercent, true);
+        countDownMode = a.getBoolean(R.styleable.CircleProgressBar_countDownMode, false);
+        scalingFactor = a.getFloat(R.styleable.CircleProgressBar_scalingFactor, 1);
 
         a.recycle();
 
@@ -160,9 +168,17 @@ public class CircleProgressBar extends View {
     //中间的进度百分比
     private String getProgressText() {
         if (showPercent) {
-            return (int) ((progress / maxProgress) * 100) + "%";
+            if (countDownMode) {
+                return df.format(((maxProgress - progress) / maxProgress) / scalingFactor * 100) + "%";
+            } else {
+                return df.format((progress / maxProgress) / scalingFactor * 100) + "%";
+            }
         } else {
-            return String.valueOf((int) (progress / maxProgress));
+            if (countDownMode) {
+                return df.format((maxProgress - progress) / scalingFactor);
+            } else {
+                return df.format(progress / scalingFactor);
+            }
         }
     }
 
@@ -230,10 +246,10 @@ public class CircleProgressBar extends View {
         if (progress > maxProgress) {
             progress = maxProgress;
         }
-        startAnim(progress);
+        startAnimation(progress);
     }
 
-    private void startAnim(float from, float to) {
+    private void startAnimation(float from, float to) {
         valueAnimator = ObjectAnimator.ofFloat(from, to);
         valueAnimator.addUpdateListener(animation -> {
             progress = (float) animation.getAnimatedValue();
@@ -244,11 +260,11 @@ public class CircleProgressBar extends View {
         valueAnimator.start();
     }
 
-    public void startAnim(long duration) {
-        startAnim(duration, null);
+    public void startAnimation(long duration) {
+        startAnimation(duration, null);
     }
 
-    public void startAnim(long duration, AnimationEndListener listener) {
+    public void startAnimation(long duration, AnimationEndListener listener) {
         valueAnimator = ObjectAnimator.ofFloat(0, maxProgress);
         valueAnimator.addUpdateListener(animation -> {
             progress = (float) animation.getAnimatedValue();

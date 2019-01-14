@@ -20,7 +20,7 @@ import kotlinx.serialization.serializer
 @Serializable
 @TypeConverters(value = [Converter::class])
 data class User(
-        @PrimaryKey var id: Int = 0,
+        @PrimaryKey var id: Long = 0,
         @SerializedName(value = "uuid", alternate = ["uid"]) var uuid: String? = null,
         @SerializedName(value = "userName") var username: String? = null,
         @SerializedName(value = "nickName") var nickname: String? = null,
@@ -134,7 +134,7 @@ data class User(
             photos?.let { photos ->
                 val result = ArrayList<Photo>()
                 for (photo in photos) {
-                    if (!TextUtils.isEmpty(photo.path)) {
+                    if (photo.flag == 0 || (photo.flag == 1 && photo.paid)) {
                         photo.burnTime = burnTime
                         result.add(photo)
                     }

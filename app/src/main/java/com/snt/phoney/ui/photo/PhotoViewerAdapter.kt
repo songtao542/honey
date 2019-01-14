@@ -2,12 +2,12 @@ package com.snt.phoney.ui.photo
 
 import android.net.Uri
 import androidx.fragment.app.Fragment
-import androidx.fragment.app.FragmentManager
 import androidx.fragment.app.FragmentStatePagerAdapter
 import androidx.viewpager.widget.PagerAdapter
 import com.snt.phoney.domain.model.Photo
 
-class PhotoViewerAdapter(fragmentManager: FragmentManager, private val deletable: Boolean) : FragmentStatePagerAdapter(fragmentManager) {
+class PhotoViewerAdapter(private val parentFragment: PhotoViewerFragment, private val deletable: Boolean)
+    : FragmentStatePagerAdapter(parentFragment.childFragmentManager) {
 
     var urls: List<String>? = null
         set(value) {
@@ -31,15 +31,16 @@ class PhotoViewerAdapter(fragmentManager: FragmentManager, private val deletable
             }
         }
 
-    var onPhotoSingleTapListener: PhotoViewFragment.OnPhotoSingleTapListener? = null
+    var onPhotoSingleTapListener: PhotoFragment.OnPhotoSingleTapListener? = null
 
+    @Suppress("CascadeIf")
     override fun getItem(position: Int): Fragment {
         return if (uris != null) {
-            PhotoViewFragment.newInstance(uris!![position]).apply { setOnPhotoSingleTapListener(onPhotoSingleTapListener) }
+            parentFragment.newPhotoViewFragment(uris!![position]).apply { setOnPhotoSingleTapListener(onPhotoSingleTapListener) }
         } else if (urls != null) {
-            PhotoViewFragment.newInstance(urls!![position]).apply { setOnPhotoSingleTapListener(onPhotoSingleTapListener) }
+            parentFragment.newPhotoViewFragment(urls!![position]).apply { setOnPhotoSingleTapListener(onPhotoSingleTapListener) }
         } else {
-            PhotoViewFragment.newInstance(photos!![position]).apply { setOnPhotoSingleTapListener(onPhotoSingleTapListener) }
+            parentFragment.newPhotoViewFragment(photos!![position]).apply { setOnPhotoSingleTapListener(onPhotoSingleTapListener) }
         }
     }
 

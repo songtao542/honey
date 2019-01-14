@@ -2,7 +2,6 @@ package com.snt.phoney.widget
 
 import android.content.Context
 import android.net.Uri
-import android.text.TextUtils
 import android.util.TypedValue
 import android.view.Gravity
 import android.view.View
@@ -108,6 +107,21 @@ class PhotoFlowAdapter(private val context: Context) : FlowLayout.ViewAdapter {
         return view
     }
 
+    @Suppress("LiftReturnOrAssignment")
+    private fun createImageView(photo: Photo): View {
+        if (photo.flag == 1) {
+            if (!photo.paid) {
+                return createImageView(photo.price)
+            } else {
+                return createImageView(photo.path ?: "")
+            }
+        } else {
+            val imageView = if (cache.size > 0) cache.pop() else ImageView(context) //ImageView(context)//
+            imageView.scaleType = ImageView.ScaleType.CENTER_CROP
+            Glide.with(context).applyDefaultRequestOptions(RequestOptions()).load(R.drawable.ic_burn_placeholder).into(imageView)
+            return imageView
+        }
+    }
 
     private fun createImageView(url: String): View {
         val imageView = if (cache.size > 0) cache.pop() else ImageView(context) //ImageView(context)//
@@ -193,12 +207,7 @@ class PhotoFlowAdapter(private val context: Context) : FlowLayout.ViewAdapter {
             createImageView(url).apply { setTag(R.id.tag, url) }
         } else {
             val photo = mPhotos!![index]
-            val path = photo.path
-            if (TextUtils.isEmpty(path)) {
-                createImageView(photo.price).apply { setTag(R.id.tag, photo) }
-            } else {
-                createImageView(photo.path!!).apply { setTag(R.id.tag, photo) }
-            }
+            createImageView(photo).apply { setTag(R.id.tag, photo) }
         }
     }
 

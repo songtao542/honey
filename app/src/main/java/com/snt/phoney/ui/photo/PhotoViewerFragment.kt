@@ -4,7 +4,6 @@ import android.app.Activity
 import android.content.Intent
 import android.net.Uri
 import android.os.Bundle
-import android.util.Log
 import android.view.KeyEvent
 import android.view.LayoutInflater
 import android.view.View
@@ -18,7 +17,7 @@ import com.snt.phoney.utils.data.Constants
 import kotlinx.android.synthetic.main.fragment_photo_viewer.*
 
 @Suppress("unused")
-open class PhotoViewerFragment : Fragment(), PhotoViewFragment.OnPhotoSingleTapListener, KeyEventListener {
+open class PhotoViewerFragment : Fragment(), PhotoFragment.OnPhotoSingleTapListener, KeyEventListener {
 
     companion object {
         @JvmStatic
@@ -53,6 +52,7 @@ open class PhotoViewerFragment : Fragment(), PhotoViewFragment.OnPhotoSingleTapL
         return inflater.inflate(R.layout.fragment_photo_viewer, container, false)
     }
 
+    @Suppress("CascadeIf")
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
         actionBar.setPadding(0, getStatusBarHeight(), 0, 0)
@@ -64,7 +64,7 @@ open class PhotoViewerFragment : Fragment(), PhotoViewFragment.OnPhotoSingleTapL
         } else {
             delete.visibility = View.GONE
         }
-        adapter = PhotoViewerAdapter(childFragmentManager, deletable)
+        adapter = PhotoViewerAdapter(this, deletable)
         adapter.onPhotoSingleTapListener = this
         if (uris != null) {
             adapter.uris = uris
@@ -76,6 +76,18 @@ open class PhotoViewerFragment : Fragment(), PhotoViewFragment.OnPhotoSingleTapL
 
         viewPager.adapter = adapter
         viewPager.currentItem = index
+    }
+
+    open fun newPhotoViewFragment(uri: Uri): PhotoFragment {
+        return PhotoFragment.newInstance(uri)
+    }
+
+    open fun newPhotoViewFragment(url: String): PhotoFragment {
+        return PhotoFragment.newInstance(url)
+    }
+
+    open fun newPhotoViewFragment(photo: Photo): PhotoFragment {
+        return PhotoFragment.newInstance(photo)
     }
 
     override fun onPhotoSingleTap() {
