@@ -229,11 +229,12 @@
                             android:layout_marginTop="10dp"
                             android:layout_marginBottom="20dp"
                             android:background="@drawable/button_primary_circle_corner_selector"
-                            android:minHeight="40dp"
+                            android:minHeight="30dp"
                             android:paddingLeft="20dp"
                             android:paddingRight="20dp"
                             android:text="@string/unlock_photo_template"
-                            android:textColor="@android:color/white" />
+                            android:textColor="@android:color/white"
+                            android:textSize="@dimen/textsize_small" />
 
                         <Space
                             android:layout_width="0dp"

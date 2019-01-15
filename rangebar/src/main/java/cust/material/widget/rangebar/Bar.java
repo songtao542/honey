@@ -100,7 +100,6 @@ public class Bar {
      *               View#onDraw()}
      */
     public void draw(Canvas canvas) {
-
         canvas.drawLine(mLeftX, mY, mRightX, mY, mBarPaint);
     }
 

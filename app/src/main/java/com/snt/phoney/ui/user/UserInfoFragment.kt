@@ -232,9 +232,9 @@ class UserInfoFragment : BaseFragment() {
             }
 
             user.photos?.let { photos ->
-
                 if (user.isPhotoNeedUnlock && viewModel.buySuccess.value != true) {
                     unlockPhotoLayout.visibility = View.VISIBLE
+                    unlockPhotoLayout.setOnClickListener { }
                     needApplyOrCharge.setText(R.string.the_user_set_view_need_charge)
                     unlockOrApplyPhoto.text = getString(R.string.unlock_photo_template, user.photoPrice.toString())
 
@@ -245,11 +245,22 @@ class UserInfoFragment : BaseFragment() {
                     }
                 } else if (user.isPhotoNeedApply) {
                     unlockPhotoLayout.visibility = View.VISIBLE
-                    needApplyOrCharge.setText(R.string.the_user_set_view_need_apply)
-                    unlockOrApplyPhoto.setText(R.string.apply_view_photo)
-
-                    unlockOrApplyPhoto.setOnClickListener {
-                        viewModel.applyToViewPhotos(user.safeUuid)
+                    unlockPhotoLayout.setOnClickListener { }
+                    if (user.photoApplyStatus == 2) {
+                        needApplyOrCharge.setText(R.string.photo_apply_be_reject)
+                        unlockOrApplyPhoto.setText(R.string.apply_view_photo_again)
+                        unlockOrApplyPhoto.visibility = View.INVISIBLE
+                    } else if (user.photoApplyStatus == 0) {
+                        needApplyOrCharge.setText(R.string.photo_applying_on_going_tip)
+                        unlockOrApplyPhoto.setText(R.string.photo_applying_on_going)
+                        unlockOrApplyPhoto.visibility = View.INVISIBLE
+                    } else {
+                        needApplyOrCharge.setText(R.string.the_user_set_view_need_apply)
+                        unlockOrApplyPhoto.visibility = View.VISIBLE
+                        unlockOrApplyPhoto.setText(R.string.apply_view_photo)
+                        unlockOrApplyPhoto.setOnClickListener {
+                            viewModel.applyToViewPhotos(user.safeUuid)
+                        }
                     }
                 } else {
                     unlockPhotoLayout.visibility = View.GONE

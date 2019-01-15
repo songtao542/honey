@@ -74,10 +74,10 @@ class PhotoApplyListRecyclerViewAdapter(private val viewModel: AlbumViewModel) :
                 agreeButton.visibility = View.VISIBLE
                 rejectButton.visibility = View.VISIBLE
                 agreeButton.setOnClickListener {
-                    viewModel.reviewPhotoApply(photoApply, 1)
+                    viewModel.reviewPhotoApply(photoApply, 0)
                 }
                 rejectButton.setOnClickListener {
-                    viewModel.reviewPhotoApply(photoApply, 2)
+                    viewModel.reviewPhotoApply(photoApply, 1)
                 }
             } else {
                 stateText.visibility = View.VISIBLE

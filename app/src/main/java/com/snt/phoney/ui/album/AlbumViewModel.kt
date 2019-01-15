@@ -87,12 +87,12 @@ class AlbumViewModel @Inject constructor(private val usecase: UserInfoUseCase) :
                         onSuccess = {
                             if (it.code == 200) {
                                 when (state) {
-                                    1 -> {
-                                        photoApply.state = 1
+                                    0 -> {
+                                        photoApply.state = 0
                                         reviewSuccess.value = context.getString(R.string.has_agree)
                                     }
-                                    2 -> {
-                                        photoApply.state = 2
+                                    1 -> {
+                                        photoApply.state = 1
                                         reviewSuccess.value = context.getString(R.string.has_reject)
                                     }
                                 }

@@ -381,8 +381,12 @@
     <string name="has_new_message">新消息</string>
     <string name="the_user_set_view_need_charge">对方设置了需要付费才可查看</string>
     <string name="the_user_set_view_need_apply">对方设置了需要申请才可查看</string>
+    <string name="photo_apply_be_reject">申请访问被拒绝</string>
     <string name="unlock_photo_template">解锁TA的相册%1$s蜜币</string>
-    <string name="apply_view_photo">    申请查看    </string>
+    <string name="apply_view_photo">申请查看</string>
+    <string name="photo_applying_on_going_tip">请等待对方审核结果</string>
+    <string name="photo_applying_on_going">审核中</string>
+    <string name="apply_view_photo_again">再次申请</string>
     <string name="user_protocol">用户协议</string>
     <string name="detail_title">详情</string>
     <string name="please_input_phone_number">请输入手机号码</string>

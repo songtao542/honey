@@ -12,8 +12,6 @@
         android:layout_width="40dp"
         android:layout_height="40dp"
         android:layout_centerVertical="true"
-        android:layout_marginTop="10dp"
-        android:layout_marginBottom="10dp"
         app:srcCompat="@drawable/ic_head_placeholder" />
 
     <LinearLayout
@@ -21,9 +19,11 @@
         android:layout_height="wrap_content"
         android:layout_centerVertical="true"
         android:layout_gravity="center_vertical"
+        android:layout_toLeftOf="@+id/optLayout"
         android:layout_toRightOf="@+id/head"
         android:layout_weight="1"
-        android:orientation="vertical">
+        android:orientation="vertical"
+        android:paddingRight="10dp">
 
         <androidx.appcompat.widget.AppCompatTextView
             android:id="@+id/name"
@@ -31,6 +31,7 @@
             android:layout_height="wrap_content"
             android:layout_marginLeft="10dp"
             android:ellipsize="end"
+            android:maxLines="1"
             android:singleLine="true"
             android:textColor="@android:color/black"
             android:textSize="@dimen/textsize_normal" />
@@ -40,8 +41,9 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginLeft="10dp"
-            android:layout_marginTop="8dp"
+            android:layout_marginTop="4dp"
             android:ellipsize="end"
+            android:maxLines="1"
             android:singleLine="true"
             android:textColor="@color/gray"
             android:textSize="@dimen/textsize_small" />
@@ -51,28 +53,13 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginLeft="10dp"
-            android:layout_marginTop="8dp"
+            android:layout_marginTop="4dp"
             android:ellipsize="end"
             android:singleLine="true"
             android:textColor="@color/gray"
             android:textSize="@dimen/textsize_smallest" />
     </LinearLayout>
 
-
-    <androidx.appcompat.widget.AppCompatTextView
-        android:id="@+id/stateText"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignParentRight="true"
-        android:layout_centerVertical="true"
-        android:background="@color/light_gray"
-        android:paddingLeft="10dp"
-        android:paddingTop="5dp"
-        android:paddingRight="10dp"
-        android:paddingBottom="5dp"
-        android:text="@string/has_agree_h_join"
-        android:textColor="@color/dark_gray"
-        android:textSize="@dimen/textsize_smaller" />
 
     <LinearLayout
         android:id="@+id/optLayout"
@@ -82,6 +69,22 @@
         android:layout_centerVertical="true"
         android:orientation="horizontal">
 
+
+        <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/stateText"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            android:layout_centerVertical="true"
+            android:background="@color/light_gray"
+            android:paddingLeft="10dp"
+            android:paddingTop="5dp"
+            android:paddingRight="10dp"
+            android:paddingBottom="5dp"
+            android:text="@string/has_agree_h_join"
+            android:textColor="@color/dark_gray"
+            android:textSize="@dimen/textsize_smaller"
+            android:visibility="gone" />
 
         <androidx.appcompat.widget.AppCompatTextView
             android:id="@+id/rejectButton"

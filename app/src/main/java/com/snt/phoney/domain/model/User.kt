@@ -49,6 +49,10 @@ data class User(
         @SerializedName(value = "photo") var photos: List<Photo>? = null,
         @SerializedName(value = "photoRight") var photoPermission: Int = 0,
         /**
+         * -1未申请, 0 审核中, 1 通过, 2 被拒绝
+         */
+        var photoApplyStatus: Int = -1,
+        /**
          * 相册价格，当相册权限为 {@link PhotoPermission#LOCKED} 时，需要解锁相册的价格
          */
         @SerializedName(value = "photoAllPrice") var photoPrice: Int = 0,
@@ -175,17 +179,7 @@ data class User(
     @Transient
     val isPhotoNeedApply: Boolean
         get() {
-            val needApply = photoPermission == PhotoPermission.NEED_APPLY.value
-            if (needApply) {
-                photos?.let { ps ->
-                    for (photo in ps) {
-                        if (TextUtils.isEmpty(photo.path)) {
-                            return true
-                        }
-                    }
-                }
-            }
-            return false
+            return photoPermission == PhotoPermission.NEED_APPLY.value && photoApplyStatus != 1
         }
 }
 

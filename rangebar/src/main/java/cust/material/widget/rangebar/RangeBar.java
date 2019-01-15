@@ -1125,6 +1125,9 @@ public class RangeBar extends View {
                     TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, DEFAULT_BAR_WEIGHT_DP,
                             mDisplayMetrices)
             );
+
+            drawTicks = ta.getBoolean(R.styleable.RangeBar_mrb_drawTick, true);
+
             mCircleSize = ta.getDimension(R.styleable.RangeBar_mrb_selectorSize,
                     TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, DEFAULT_CIRCLE_SIZE_DP,
                             mDisplayMetrices)
@@ -1175,7 +1178,7 @@ public class RangeBar extends View {
                 for (CharSequence colorHex : colors) {
                     String hexString = colorHex.toString();
 
-                    if(hexString.length() == 4)
+                    if (hexString.length() == 4)
                         hexString += "000";
 
                     mConnectingLineColors.add(Color.parseColor(hexString));

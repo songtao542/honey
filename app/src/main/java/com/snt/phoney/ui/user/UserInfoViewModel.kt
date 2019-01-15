@@ -36,8 +36,11 @@ class UserInfoViewModel @Inject constructor(private val usecase: UserInfoUseCase
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribeBy(
                         onNext = {
+                            @Suppress("CascadeIf")
                             if (it.code == 200) {
                                 userInfo.value = it.data
+                            } else if (it.hasMessage) {
+                                error.value = it.message
                             } else {
                                 error.value = context.getString(R.string.load_failed)
                             }
