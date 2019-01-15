@@ -4,7 +4,6 @@ import android.app.Activity
 import android.content.Intent
 import android.net.Uri
 import android.os.Bundle
-import android.util.Log
 import android.view.View
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.ViewModelProviders
@@ -28,23 +27,26 @@ class AlbumPhotoFragment : PhotoFragment(), Injectable {
 
     companion object {
         @JvmStatic
-        fun newInstance(url: String) = AlbumPhotoFragment().apply {
+        fun newInstance(url: String, extras: Bundle? = null) = AlbumPhotoFragment().apply {
             arguments = Bundle().apply {
                 putString(Constants.Extra.URL, url)
+                extras?.let { putAll(extras) }
             }
         }
 
         @JvmStatic
-        fun newInstance(uri: Uri) = AlbumPhotoFragment().apply {
+        fun newInstance(uri: Uri, extras: Bundle? = null) = AlbumPhotoFragment().apply {
             arguments = Bundle().apply {
                 putParcelable(Constants.Extra.URI, uri)
+                extras?.let { putAll(extras) }
             }
         }
 
         @JvmStatic
-        fun newInstance(photo: Photo) = AlbumPhotoFragment().apply {
+        fun newInstance(photo: Photo, extras: Bundle? = null) = AlbumPhotoFragment().apply {
             arguments = Bundle().apply {
                 putParcelable(Constants.Extra.PHOTO, photo)
+                extras?.let { putAll(extras) }
             }
         }
     }
@@ -54,78 +56,94 @@ class AlbumPhotoFragment : PhotoFragment(), Injectable {
 
     private lateinit var viewModel: AlbumViewModel
 
+    private var viewerIsVip = false
+
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        arguments?.let {
+            viewerIsVip = it.getBoolean(Constants.Extra.IS_VIP, false)
+        }
+    }
+
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
         viewModel = ViewModelProviders.of(this, viewModelFactory).get(AlbumViewModel::class.java)
-
     }
 
-    private fun startBurning(photo: Photo) {
-        //burnLayout.visibility = View.GONE
-        //burnStateView.visibility = View.INVISIBLE
-        burnLayout.animate().alpha(0f).start()
-        burnStateView.animate().alpha(0f).start()
-        progressView.startAnimation(photo.burnTimeInMillis) {
-            if (!isHidden) {
-                burned(photo)
-            }
-        }
-    }
-
-    private fun notBurned(photo: Photo) {
+    private fun setNotBurnedState(photo: Photo) {
         burnLayout.visibility = View.VISIBLE
-        stateLayout.visibility = View.VISIBLE
-        progressView.visibility = View.VISIBLE
-        progressView.maxProgress = photo.burnTimeInMillis.toInt()
+        burnStateView.visibility = View.VISIBLE
+
         buyVipButton.visibility = View.GONE
         burnStateView.setText(R.string.press_to_view)
-
+        if (photo.burnTime > 0) {
+            progressView.visibility = View.VISIBLE
+            progressView.maxProgress = photo.burnTimeInMillis.toInt()
+        }
         rootLayout.setOnLongPressListener { press ->
-            Log.d("TTTT", "xxxxmmmmmmmmmmmmmmmmmmmm press=$press")
             if (press) {
                 if (photo.burn == 0) {
-                    startBurning(photo)
+                    setBurningState(photo)
                 }
             } else {
-                burned(photo)
+                setBurnedState(true, photo)
+                viewModel.burnPhoto(photo)
             }
         }
     }
 
-    private fun burned(photo: Photo) {
+    private fun setBurningState(photo: Photo) {
+        burnLayout.animate().alpha(0f).start()
+        burnStateView.animate().alpha(0f).start()
+        if (photo.burnTime > 0) {
+            progressView.maxProgress = photo.burnTimeInMillis.toInt()
+            progressView.visibility = View.VISIBLE
+            progressView.startAnimation(photo.burnTimeInMillis) {
+                if (!isHidden) {
+                    setBurnedState(true, photo)
+                    viewModel.burnPhoto(photo)
+                }
+            }
+        }
+    }
+
+    private fun setBurnedState(animate: Boolean, photo: Photo) {
         photo.burn = 1
         rootLayout.setOnLongPressListener(null)
-        //burnLayout.visibility = View.VISIBLE
-        burnLayout.animate().alpha(1f).start()
-        stateLayout.visibility = View.VISIBLE
-        progressView.visibility = View.GONE
-        progressView.cancelAnimation()
-        buyVipButton.visibility = View.VISIBLE
-        //burnStateView.visibility = View.VISIBLE
-        burnStateView.animate().alpha(1f).start()
-        burnStateView.setText(R.string.open_vip_no_limit_to_view)
-        buyVipButton.setOnClickListener {
-            startActivityForResult<VipActivity>(Page.VIP, REQUEST_VIP_CODE)
-        }
 
-        viewModel.burnPhoto(photo)
+        burnLayout.visibility = View.VISIBLE
+        if (animate) burnLayout.animate().alpha(1f).start()
+
+        progressView.visibility = View.INVISIBLE
+        progressView.cancelAnimation()
+
+        burnStateView.visibility = View.VISIBLE
+        if (animate) burnStateView.animate().alpha(1f).start()
+        if (viewerIsVip) {
+            burnStateView.setText(R.string.photo_has_burned)
+            buyVipButton.visibility = View.GONE
+        } else {
+            burnStateView.setText(R.string.open_vip_no_limit_to_view)
+            buyVipButton.visibility = View.VISIBLE
+            buyVipButton.setOnClickListener {
+                startActivityForResult<VipActivity>(Page.VIP, REQUEST_VIP_CODE)
+            }
+        }
     }
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
         if (requestCode == REQUEST_VIP_CODE && resultCode == Activity.RESULT_OK) {
-            photo?.burn = -1
-            burnLayout.visibility = View.GONE
-            stateLayout.visibility = View.GONE
+
         }
     }
 
     override fun loadFile(uri: Uri?, url: String?, photo: Photo?) {
         if (photo?.flag == 0) {
             if (photo.burn == 0) {
-                notBurned(photo)
+                setNotBurnedState(photo)
             } else if (photo.burn == 1) {
-                burned(photo)
+                setBurnedState(false, photo)
             }
         }
         super.loadFile(uri, url, photo)
@@ -135,5 +153,4 @@ class AlbumPhotoFragment : PhotoFragment(), Injectable {
         progressView.cancelAnimation()
         super.onDestroyView()
     }
-
 }

@@ -31,10 +31,20 @@ public abstract class PrivacyActivityModule {
     @ContributesAndroidInjector
     public abstract LockFragment contributeLockFragment();
 
+    @FragmentScope
+    @ContributesAndroidInjector
+    public abstract ForgetLockFragment contributeForgetLockFragment();
+
     @Binds
     @IntoMap
     @ActivityScope
     @ViewModelKey(CreateLockViewModel.class)
     public abstract ViewModel bindCreateLockViewModel(CreateLockViewModel viewModel);
+
+    @Binds
+    @IntoMap
+    @ActivityScope
+    @ViewModelKey(ForgetPasswordViewModel.class)
+    public abstract ViewModel bindForgetPasswordViewModel(ForgetPasswordViewModel viewModel);
 
 }

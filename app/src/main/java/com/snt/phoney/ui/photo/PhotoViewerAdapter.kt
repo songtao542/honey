@@ -36,11 +36,11 @@ class PhotoViewerAdapter(private val parentFragment: PhotoViewerFragment, privat
     @Suppress("CascadeIf")
     override fun getItem(position: Int): Fragment {
         return if (uris != null) {
-            parentFragment.newPhotoViewFragment(uris!![position]).apply { setOnPhotoSingleTapListener(onPhotoSingleTapListener) }
+            parentFragment.newPhotoViewFragment(uris!![position]).also { it.setOnPhotoSingleTapListener(onPhotoSingleTapListener) }
         } else if (urls != null) {
-            parentFragment.newPhotoViewFragment(urls!![position]).apply { setOnPhotoSingleTapListener(onPhotoSingleTapListener) }
+            parentFragment.newPhotoViewFragment(urls!![position]).also { it.setOnPhotoSingleTapListener(onPhotoSingleTapListener) }
         } else {
-            parentFragment.newPhotoViewFragment(photos!![position]).apply { setOnPhotoSingleTapListener(onPhotoSingleTapListener) }
+            parentFragment.newPhotoViewFragment(photos!![position]).also { it.setOnPhotoSingleTapListener(onPhotoSingleTapListener) }
         }
     }
 

@@ -354,6 +354,7 @@
     <string name="select_auth_mode">选择以下一种认证方式</string>
     <string name="auth_by_image">图片认证</string>
     <string name="auth_select_mode_title">选择认证类型</string>
+    <string name="auth_state_title">认证进度</string>
     <string name="has_no_right_to_camera">没有权限使用相机</string>
     <string name="withdraw_to1">提现到</string>
     <string name="create_time">创建时间</string>
@@ -442,4 +443,23 @@
     <string name="press_to_view">按住屏幕可查看</string>
     <string name="go_to_open_vip">去开通</string>
     <string name="open_vip_no_limit_to_view">开通会员不限制查看时间</string>
+    <string name="photo_has_burned">照片已焚</string>
+    <string name="get_reset_state_failed">获取重置状态失败</string>
+    <string name="upload_reset_file_failed">上传认证文件失败</string>
+    <string name="cancel_reset_password_failed">取消重置失败</string>
+    <string name="reset_password_failed">重置失败</string>
+    <string name="reset_password_reviewing_tip">你已提交，请耐心等待工作人员处理</string>
+    <string name="reset_password_review_success_tip">已通过审核，请及时重置密码</string>
+    <string name="reset_password_title">重置开机密码</string>
+    <string name="confirm_reset">确认重置</string>
+    <string name="start_reset_password">开始重置</string>
+    <string name="wait_continue">好的，再等等</string>
+    <string name="reset_password_again">再次录制</string>
+    <string name="reset_password_review_failed_tip">咦，审核失败了！</string>
+    <string name="start_capture_video">开始录制</string>
+    <string name="reset_password_success">重置成功</string>
+    <string name="auth_again">重新认证</string>
+    <string name="auth_failed_tip">认证未通过，请重新认证！</string>
+    <string name="auth_success_tip">认证已通过</string>
+    <string name="auth_reviewing_tip">你已提交认证，请耐心等待工作人员审核！</string>
 </resources>

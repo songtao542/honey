@@ -8,6 +8,7 @@ import android.widget.Toast
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
 import com.snt.phoney.R
+import com.snt.phoney.base.AppViewModel
 import com.snt.phoney.base.BaseFragment
 import com.snt.phoney.extensions.snackbar
 import com.snt.phoney.utils.data.Constants
@@ -24,20 +25,24 @@ class CreateLockStep2Fragment : BaseFragment() {
         }
 
         @JvmStatic
-        fun newInstance(pwd: String? = null) = CreateLockStep2Fragment().apply {
+        fun newInstance(pwd: String? = null, mode: Int) = CreateLockStep2Fragment().apply {
             this.arguments = Bundle().apply {
                 putString(Constants.Extra.PASSWORD, pwd)
+                putInt(Constants.Extra.MODE, mode)
             }
         }
     }
 
     private lateinit var password: String
-    private lateinit var viewModel: CreateLockViewModel
+    private lateinit var viewModel: AppViewModel
+
+    private var mode: Int = MODE_CREATE
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         arguments?.let {
             password = it.getString(Constants.Extra.PASSWORD, "")
+            mode = it.getInt(Constants.Extra.MODE, MODE_CREATE)
         }
     }
 
@@ -47,11 +52,21 @@ class CreateLockStep2Fragment : BaseFragment() {
 
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
-        viewModel = ViewModelProviders.of(this, viewModelFactory).get(CreateLockViewModel::class.java)
         toolbar.setNavigationOnClickListener { activity?.onBackPressed() }
         titleTextView.setText(R.string.input_password_again_title)
+        if (mode == MODE_RESET) {
+            setupResetMode()
+        } else {
+            setupCreateMode()
+        }
+    }
 
-        confirmAgain.setText(R.string.confirm)
+    private fun setupCreateMode() {
+        viewModel = ViewModelProviders.of(this, viewModelFactory).get(CreateLockViewModel::class.java)
+        divider.visibility = View.GONE
+        resetTip.visibility = View.GONE
+
+        confirmButton.setText(R.string.confirm)
 
         viewModel.success.observe(this, Observer {
             context?.let { context ->
@@ -64,14 +79,43 @@ class CreateLockStep2Fragment : BaseFragment() {
             snackbar(it)
         })
 
-        confirmAgain.setOnClickListener {
+        confirmButton.setOnClickListener {
             val pwd = inputPassword.password.toString()
             if (password != pwd) {
                 inputPassword.clear()
                 snackbar(getString(R.string.password_validate_no_equal))
                 return@setOnClickListener
             }
-            viewModel.setPrivacyPassword(MD5.md5(pwd), MD5.md5(StringBuffer(pwd).reverse().toString()))
+            (viewModel as CreateLockViewModel).setPrivacyPassword(MD5.md5(pwd), MD5.md5(StringBuffer(pwd).reverse().toString()))
+        }
+    }
+
+    private fun setupResetMode() {
+        viewModel = ViewModelProviders.of(this, viewModelFactory).get(ForgetPasswordViewModel::class.java)
+        divider.visibility = View.VISIBLE
+        resetTip.visibility = View.VISIBLE
+
+        confirmButton.setText(R.string.confirm_reset)
+
+        viewModel.success.observe(this, Observer {
+            context?.let { context ->
+                Toast.makeText(context.applicationContext, R.string.create_privacy_success, Toast.LENGTH_SHORT).show()
+            }
+            activity?.finish()
+        })
+
+        viewModel.error.observe(this, Observer {
+            snackbar(it)
+        })
+
+        confirmButton.setOnClickListener {
+            val pwd = inputPassword.password.toString()
+            if (password != pwd) {
+                inputPassword.clear()
+                snackbar(getString(R.string.password_validate_no_equal))
+                return@setOnClickListener
+            }
+            (viewModel as ForgetPasswordViewModel).resetPassword(MD5.md5(pwd), MD5.md5(StringBuffer(pwd).reverse().toString()))
         }
     }
 

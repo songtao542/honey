@@ -1,7 +1,6 @@
 package com.snt.phoney.ui.main.home
 
 import android.os.Bundle
-import android.text.TextUtils
 import android.view.LayoutInflater
 import android.view.MenuItem
 import android.view.View
@@ -22,7 +21,6 @@ import com.snt.phoney.ui.main.home.friend.FriendViewModel
 import com.snt.phoney.utils.Picker
 import com.snt.phoney.widget.TabLayout
 import kotlinx.android.synthetic.main.fragment_home.*
-import java.util.*
 
 
 class HomeFragment : BaseFragment(), Toolbar.OnMenuItemClickListener, UMengPageName {
@@ -105,47 +103,66 @@ class HomeFragment : BaseFragment(), Toolbar.OnMenuItemClickListener, UMengPageN
     override fun onMenuItemClick(item: MenuItem): Boolean {
         return when (item.itemId) {
             R.id.findCity -> {
-                Picker.showPicker(activity, getString(R.string.select_city), mPickerIndex1, mPickerIndex2, provider = { picker ->
+//                Picker.showPicker(activity, getString(R.string.select_city), mPickerIndex1, mPickerIndex2, provider = { picker ->
+//                    if (viewModel.cities.value != null) {
+//                        val cities = viewModel.cities.value!!
+//                        val arrayMap = LinkedHashMap<String, ArrayList<String>>()
+//                        //不选择的情况
+//                        arrayMap[getString(R.string.none_city)] = ArrayList<String>().apply { add(" ") }
+//                        for (city in cities) {
+//                            var pList = arrayMap[city.province]
+//                            if (pList == null) {
+//                                pList = ArrayList()
+//                                arrayMap[city.province] = pList!!
+//                            }
+//                            pList?.add(city.name)
+//                        }
+//                        picker.setColumn(columns = arrayMap)
+//                    } else {
+//                        viewModel.cities.observe(this, Observer { cities ->
+//                            val arrayMap = LinkedHashMap<String, ArrayList<String>>()
+//                            //不选择的情况
+//                            arrayMap[getString(R.string.none_city)] = ArrayList<String>().apply { add(" ") }
+//                            for (city in cities) {
+//                                var pList = arrayMap[city.province]
+//                                if (pList == null) {
+//                                    pList = ArrayList()
+//                                    arrayMap[city.province] = pList!!
+//                                }
+//                                pList?.add(city.name)
+//                            }
+//                            picker.setColumn(columns = arrayMap)
+//                        })
+//                    }
+//                }, handler = { index1, index2 ->
+//                    mPickerIndex1 = index1
+//                    mPickerIndex2 = index2
+//                }) { _, value2 ->
+//                    if (TextUtils.isEmpty(value2.trim())) {
+//                        item.setTitle(R.string.find_city)
+//                    } else {
+//                        item.title = value2
+//                    }
+//                    viewModel.setFilterByCity(value2.trim())
+//                }
+                Picker.showCityPicker(activity, false, { cityPicker ->
                     if (viewModel.cities.value != null) {
-                        val cities = viewModel.cities.value!!
-                        val arrayMap = LinkedHashMap<String, ArrayList<String>>()
-                        //不选择的情况
-                        arrayMap[getString(R.string.none_city)] = ArrayList<String>().apply { add(" ") }
-                        for (city in cities) {
-                            var pList = arrayMap[city.province]
-                            if (pList == null) {
-                                pList = ArrayList()
-                                arrayMap[city.province] = pList!!
-                            }
-                            pList?.add(city.name)
-                        }
-                        picker.setColumn(columns = arrayMap)
+                        val cities = viewModel.cities.value
+                        cityPicker.setCities(cities)
                     } else {
-                        viewModel.cities.observe(this, Observer { cities ->
-                            val arrayMap = LinkedHashMap<String, ArrayList<String>>()
-                            //不选择的情况
-                            arrayMap[getString(R.string.none_city)] = ArrayList<String>().apply { add(" ") }
-                            for (city in cities) {
-                                var pList = arrayMap[city.province]
-                                if (pList == null) {
-                                    pList = ArrayList()
-                                    arrayMap[city.province] = pList!!
-                                }
-                                pList?.add(city.name)
-                            }
-                            picker.setColumn(columns = arrayMap)
+                        viewModel.cities.observe(this@HomeFragment, Observer { cities ->
+                            cityPicker.setCities(cities)
                         })
                     }
-                }, handler = { index1, index2 ->
-                    mPickerIndex1 = index1
-                    mPickerIndex2 = index2
-                }) { _, value2 ->
-                    if (TextUtils.isEmpty(value2.trim())) {
-                        item.setTitle(R.string.find_city)
+                }) { cities ->
+                    var city = ""
+                    if (cities != null && cities.isNotEmpty()) {
+                        city = cities[0].name
+                        item.title = city
                     } else {
-                        item.title = value2
+                        item.setTitle(R.string.find_city)
                     }
-                    viewModel.setFilterByCity(value2.trim())
+                    viewModel.setFilterByCity(city)
                 }
                 true
             }

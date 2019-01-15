@@ -159,7 +159,8 @@ class PaySettingFragment : BaseFragment() {
 
     private fun showProgress(tip: String) {
         progressDialog = ProgressDialog.newInstance(tip)
-        progressDialog!!.show(childFragmentManager, "progress")
+                .cancelable(false)
+                .show(childFragmentManager)
     }
 
     private fun setCheck(view: View) {

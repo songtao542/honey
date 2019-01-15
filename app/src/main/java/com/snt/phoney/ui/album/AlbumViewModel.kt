@@ -26,6 +26,8 @@ class AlbumViewModel @Inject constructor(private val usecase: UserInfoUseCase) :
     val reviewSuccess = MutableLiveData<String>()
     private var mPhotoApplyPageIndex = 1
 
+    val burnedPhoto by lazy { ArrayList<Photo>() }
+
     fun deletePhotos(photoList: List<Photo>) {
         val token = usecase.getAccessToken() ?: return
         usecase.deletePhotos(token, photoList.map { it.id.toString() })
@@ -105,23 +107,24 @@ class AlbumViewModel @Inject constructor(private val usecase: UserInfoUseCase) :
     }
 
     fun burnPhoto(photo: Photo) {
-        usecase.burnPhoto(photo)
-//        val token = usecase.getAccessToken() ?: return
-//        usecase.burnPhoto(token, photo.ownerId ?: "", photo.id.toString())
-//                .subscribeOn(Schedulers.io())
-//                .observeOn(AndroidSchedulers.mainThread())
-//                .subscribeBy(
-//                        onSuccess = {
-//                            if (it.code == 200) {
-//
-//                            } else {
-//
-//                            }
-//                        },
-//                        onError = {
-//
-//                        }
-//                ).disposedBy(disposeBag)
+        burnedPhoto.add(photo)
+        //usecase.burnPhoto(photo)
+        val token = usecase.getAccessToken() ?: return
+        usecase.burnPhoto(token, photo.ownerId ?: "", photo.id.toString())
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribeBy(
+                        onSuccess = {
+                            if (it.code == 200) {
+
+                            } else {
+
+                            }
+                        },
+                        onError = {
+
+                        }
+                ).disposedBy(disposeBag)
     }
 
 }

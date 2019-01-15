@@ -1,87 +1,95 @@
-package com.snt.phoney.ui.auth
+package com.snt.phoney.ui.privacy
 
-import android.text.TextUtils
-import androidx.lifecycle.MutableLiveData
 import com.snt.phoney.R
 import com.snt.phoney.base.AppViewModel
-import com.snt.phoney.domain.usecase.AuthUseCase
+import com.snt.phoney.domain.usecase.ResetPrivacyPasswordUseCase
 import com.snt.phoney.extensions.disposedBy
+import com.snt.phoney.utils.life.SingleLiveData
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.rxkotlin.subscribeBy
 import io.reactivex.schedulers.Schedulers
 import java.io.File
 import javax.inject.Inject
 
-class AuthViewModel @Inject constructor(private val usecase: AuthUseCase) : AppViewModel() {
+class ForgetPasswordViewModel @Inject constructor(private val usecase: ResetPrivacyPasswordUseCase) : AppViewModel() {
 
-    val randomMessage = MutableLiveData<String>()
+    val state = SingleLiveData<Int>()
 
-    /**
-     * 0、随机数 1、随机一段话
-     */
-    fun getAuthRandomMessage(type: Int) {
+    fun getResetPasswordState() {
         val token = usecase.getAccessToken() ?: return
-        usecase.getAuthRandomMessage(token, type)
+        usecase.getResetPasswordState(token)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribeBy(
                         onSuccess = {
                             if (it.success) {
-                                randomMessage.value = it.data
+                                state.value = it.data
                             } else if (it.hasMessage) {
                                 error.value = it.message
                             } else {
-                                error.value = context.getString(R.string.get_random_message_failed)
+                                error.value = context.getString(R.string.get_reset_state_failed)
                             }
                         },
                         onError = {
-                            error.value = context.getString(R.string.get_random_message_failed)
+                            error.value = context.getString(R.string.get_reset_state_failed)
                         }
                 ).disposedBy(disposeBag)
     }
 
-    fun auth(type: Int, file: File) {
+    fun uploadResetPasswordFile(file: File) {
         val token = usecase.getAccessToken() ?: return
-        usecase.auth(token, type, file)
+        usecase.uploadResetPasswordFile(token, file)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribeBy(
                         onSuccess = {
+                            @Suppress("CascadeIf")
                             if (it.success) {
-                                if (!TextUtils.isEmpty(it.data)) {
-                                    success.value = it.data
-                                } else {
-                                    success.value = context.getString(R.string.auth_wait_review)
-                                }
+                                success.value = context.getString(R.string.upload_success)
                             } else if (it.hasMessage) {
                                 error.value = it.message
                             } else {
-                                error.value = context.getString(R.string.auth_upload_failed)
+                                error.value = context.getString(R.string.upload_reset_file_failed)
                             }
                         },
                         onError = {
-                            error.value = context.getString(R.string.auth_upload_failed)
+                            error.value = context.getString(R.string.upload_reset_file_failed)
                         }
                 ).disposedBy(disposeBag)
     }
 
-    fun getAuthState() {
+    fun cancelResetPassword() {
         val token = usecase.getAccessToken() ?: return
-        usecase.getAuthState(token)
+        usecase.cancelResetPassword(token)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribeBy(
                         onSuccess = {
+                        },
+                        onError = {
+                            error.value = context.getString(R.string.cancel_reset_password_failed)
+                        }
+                ).disposedBy(disposeBag)
+    }
+
+    fun resetPassword(password: String, privatePassword: String) {
+        val token = usecase.getAccessToken() ?: return
+        usecase.resetPassword(token, password, privatePassword)
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribeBy(
+                        onSuccess = {
+                            @Suppress("CascadeIf")
                             if (it.success) {
-                               
+                                success.value = context.getString(R.string.reset_password_success)
                             } else if (it.hasMessage) {
                                 error.value = it.message
                             } else {
-                                error.value = context.getString(R.string.auth_upload_failed)
+                                error.value = context.getString(R.string.reset_password_failed)
                             }
                         },
                         onError = {
-                            error.value = context.getString(R.string.auth_upload_failed)
+                            error.value = context.getString(R.string.reset_password_failed)
                         }
                 ).disposedBy(disposeBag)
     }

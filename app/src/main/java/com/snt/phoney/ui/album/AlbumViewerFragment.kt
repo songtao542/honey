@@ -1,12 +1,16 @@
 package com.snt.phoney.ui.album
 
+import android.app.Activity
+import android.content.Intent
 import android.os.Bundle
+import android.view.KeyEvent
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.ViewModelProviders
 import com.snt.phoney.di.Injectable
 import com.snt.phoney.domain.model.Photo
 import com.snt.phoney.ui.photo.PhotoFragment
 import com.snt.phoney.ui.photo.PhotoViewerFragment
+import com.snt.phoney.utils.data.Constants
 import javax.inject.Inject
 
 class AlbumViewerFragment : PhotoViewerFragment(), Injectable {
@@ -33,7 +37,38 @@ class AlbumViewerFragment : PhotoViewerFragment(), Injectable {
     }
 
     override fun newPhotoViewFragment(photo: Photo): PhotoFragment {
-        return AlbumPhotoFragment.newInstance(photo)
+        return AlbumPhotoFragment.newInstance(photo, arguments)
+    }
+
+    override fun onKeyDown(keyCode: Int, event: KeyEvent): Boolean {
+        if (keyCode == KeyEvent.KEYCODE_BACK) {
+            return if (setResult()) {
+                false
+            } else {
+                super.onKeyDown(keyCode, event)
+            }
+        }
+        return false
+    }
+
+    override fun finish() {
+        if (setResult()) {
+            activity?.onBackPressed()
+        } else {
+            super.finish()
+        }
+    }
+
+    private fun setResult(): Boolean {
+        if (viewModel.burnedPhoto.isNotEmpty()) {
+            val result = Intent().apply {
+                putParcelableArrayListExtra(Constants.Extra.LIST, viewModel.burnedPhoto)
+            }
+            activity?.setResult(Activity.RESULT_OK, result)
+            activity?.onBackPressed()
+            return true
+        }
+        return false
     }
 
 }

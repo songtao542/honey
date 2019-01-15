@@ -4,6 +4,8 @@ package com.snt.phoney.domain.repository
 import com.snt.phoney.domain.accessor.UserAccessor
 import com.snt.phoney.domain.model.*
 import io.reactivex.Single
+import okhttp3.MultipartBody
+import retrofit2.http.*
 import java.io.File
 
 interface UserRepository : UserAccessor {
@@ -153,12 +155,21 @@ interface UserRepository : UserAccessor {
 
     fun burnPhoto(photo: Photo)
 
-//    fun login(username: String, password: String): LiveData<Response<User>>
-//    fun resetPassword(key: String, password: String): LiveData<Response<String>>
-//    fun logout(username: String): LiveData<Response<String>>
-
     fun requestVerificationCode(phone: String): Single<Response<String>>
 
     fun deleteUser(token: String): Single<Response<String>>
+
+    fun getResetPasswordState(token: String): Single<Response<Int>>
+
+    fun uploadResetPasswordFile(token: String, file: File): Single<Response<String>>
+
+    /**
+     *@param token    string	是	用户token
+     *@param password    string	是	正序密码(md5)
+     *@param privatePassword    string	是	逆序密码(md5)
+     */
+    fun resetPassword(token: String, password: String, privatePassword: String): Single<Response<String>>
+
+    fun cancelResetPassword(token: String): Single<Response<String>>
 
 }

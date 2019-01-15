@@ -8,7 +8,6 @@ import androidx.lifecycle.ViewModelProviders
 import com.snt.phoney.R
 import com.snt.phoney.base.BaseFragment
 import com.snt.phoney.extensions.addFragmentSafely
-import com.snt.phoney.extensions.replaceFragmentSafely
 import com.snt.phoney.utils.data.Constants
 import kotlinx.android.synthetic.main.app_toolbar.*
 import kotlinx.android.synthetic.main.fragment_auth_mode.*
@@ -31,9 +30,19 @@ class AuthModeFragment : BaseFragment() {
 
     private lateinit var viewModel: AuthViewModel
 
+
+    /**
+     * 0 未认证
+     * 1 认证中
+     * 2 认证通过
+     * 3 认证未通过
+     */
+    private var state: Int = 0
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         arguments?.let {
+            state = it.getInt(Constants.Extra.STATE, 0)
         }
     }
 
@@ -47,14 +56,54 @@ class AuthModeFragment : BaseFragment() {
         viewModel = ViewModelProviders.of(this, viewModelFactory).get(AuthViewModel::class.java)
 
         toolbar.setNavigationOnClickListener { activity?.onBackPressed() }
-        titleTextView.setText(R.string.auth_select_mode_title)
 
-        authByVideo.setOnClickListener {
-            startAuthMode(TYPE_VIDEO)
-        }
+        setState()
+    }
 
-        authByImage.setOnClickListener {
-            startAuthMode(TYPE_IMAGE)
+    private fun setState() {
+        when (state) {
+            0 -> {
+                titleTextView.setText(R.string.auth_select_mode_title)
+                stateLayout.visibility = View.GONE
+                authLayout.visibility = View.VISIBLE
+
+                authByVideo.setOnClickListener {
+                    startAuthMode(TYPE_VIDEO)
+                }
+
+                authByImage.setOnClickListener {
+                    startAuthMode(TYPE_IMAGE)
+                }
+            }
+            1 -> {
+                titleTextView.setText(R.string.auth_state_title)
+                stateLayout.visibility = View.VISIBLE
+                authLayout.visibility = View.GONE
+                stateIcon.setImageResource(R.drawable.ic_reset_reviewing)
+                stateText.setText(R.string.auth_reviewing_tip)
+                button.visibility = View.GONE
+            }
+            2 -> {
+                titleTextView.setText(R.string.auth_state_title)
+                stateLayout.visibility = View.VISIBLE
+                authLayout.visibility = View.GONE
+                stateIcon.setImageResource(R.drawable.ic_reset_pass_review)
+                stateText.setText(R.string.auth_success_tip)
+                button.visibility = View.GONE
+            }
+            3 -> {
+                titleTextView.setText(R.string.auth_state_title)
+                stateLayout.visibility = View.VISIBLE
+                authLayout.visibility = View.GONE
+                stateIcon.setImageResource(R.drawable.ic_reset_review_failed)
+                stateText.setText(R.string.auth_failed_tip)
+                button.setText(R.string.auth_again)
+                button.setOnClickListener {
+                    titleTextView.setText(R.string.auth_select_mode_title)
+                    stateLayout.visibility = View.GONE
+                    authLayout.visibility = View.VISIBLE
+                }
+            }
         }
     }
 

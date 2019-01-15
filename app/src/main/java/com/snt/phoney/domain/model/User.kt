@@ -78,6 +78,10 @@ data class User(
 
     init {
         Log.d("TTTT", "ppppppppppppppppppppppppppppppppppp photos=$photos")
+        fixPhoto()
+    }
+
+    private fun fixPhoto() {
         photos?.let { ps ->
             for (photo in ps) {
                 photo.ownerId = uuid
@@ -140,12 +144,20 @@ data class User(
         }
 
     @Transient
+    val verified: Boolean
+        get() = state == 2
+
+    @Transient
     val freePhotos: List<Photo>?
         get() {
+            fixPhoto()
             photos?.let { photos ->
                 val result = ArrayList<Photo>()
                 for (photo in photos) {
-                    if (photo.flag == 0 || (photo.flag == 1 && photo.paid)) {
+                    if (photo.flag == 0 //普通情况，不需要红包，也不需要解锁
+                            || (photo.flag == 1 && photo.paid) //需要红包
+                            || (photo.flag == -1 && !TextUtils.isEmpty(photo.path)) //需要解锁
+                    ) {
                         result.add(photo)
                     }
                 }
@@ -153,10 +165,6 @@ data class User(
             }
             return null
         }
-
-    @Transient
-    val verified: Boolean
-        get() = state == 2
 
     @Transient
     val isPhotoNeedUnlock: Boolean

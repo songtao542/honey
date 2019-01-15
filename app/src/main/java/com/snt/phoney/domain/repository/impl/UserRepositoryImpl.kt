@@ -1,7 +1,6 @@
 package com.snt.phoney.domain.repository.impl
 
 
-import android.util.Log
 import com.snt.phoney.api.Api
 import com.snt.phoney.domain.accessor.UserAccessor
 import com.snt.phoney.domain.model.*
@@ -14,8 +13,6 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
-import okhttp3.MultipartBody
-import retrofit2.http.Part
 import java.io.File
 import javax.inject.Inject
 import javax.inject.Singleton
@@ -65,7 +62,6 @@ class UserRepositoryImpl @Inject constructor(private val userAccessor: UserAcces
                     burnPhoto(token, photo.ownerId ?: "", photo.id.toString())
                             .subscribeBy(
                                     onSuccess = {
-                                        Log.d("TTTT", "rrrrrrrrrrrrrrrrrr reponse=$it")
                                         if (it.success) {
                                             photoDao.delete(photo.id)
                                         }
@@ -73,7 +69,7 @@ class UserRepositoryImpl @Inject constructor(private val userAccessor: UserAcces
                                     onError = {
 
                                     }
-                            ).dispose()
+                            )
                 }
             }
         }
@@ -198,20 +194,25 @@ class UserRepositoryImpl @Inject constructor(private val userAccessor: UserAcces
         return api.setUserFeatures(token, height.toString(), weight.toString(), age.toString(), cup)
     }
 
-
-//    override fun login(username: String, password: String): LiveData<Response<User>> {
-//        return api.login(username, password)
-//    }
-//    override fun resetPassword(username: String, password: String): LiveData<Response<String>> {
-//        return api.resetPassword(username, password)
-//    }
-//    override fun logout(username: String): LiveData<Response<String>> {
-//        return api.logout(username)
-//    }
-
-
     override fun deleteUser(token: String): Single<Response<String>> {
         return api.deleteUser(token)
+    }
+
+    override fun getResetPasswordState(token: String): Single<Response<Int>> {
+        return api.getResetPasswordState(token)
+    }
+
+    override fun uploadResetPasswordFile(token: String, file: File): Single<Response<String>> {
+        val part = MultipartUtil.getMultipart("pauthentication", file)
+        return api.uploadResetPasswordFile(token, part)
+    }
+
+    override fun cancelResetPassword(token: String): Single<Response<String>> {
+        return api.cancelResetPassword(token)
+    }
+
+    override fun resetPassword(token: String, password: String, privatePassword: String): Single<Response<String>> {
+        return api.resetPassword(token, password, privatePassword)
     }
 
 }

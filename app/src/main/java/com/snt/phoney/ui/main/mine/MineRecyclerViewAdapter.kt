@@ -3,7 +3,6 @@ package com.snt.phoney.ui.main.mine
 
 import android.content.Context
 import android.os.Bundle
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -16,7 +15,6 @@ import com.snt.phoney.R
 import com.snt.phoney.base.Page
 import com.snt.phoney.domain.model.Photo
 import com.snt.phoney.domain.model.UserInfo
-import com.snt.phoney.extensions.TAG
 import com.snt.phoney.extensions.startActivity
 import com.snt.phoney.extensions.startActivityForResult
 import com.snt.phoney.ui.auth.AuthActivity
@@ -155,7 +153,7 @@ class MineRecyclerViewAdapter(val fragment: Fragment) : RecyclerView.Adapter<Rec
                         1 -> { //认证中
                             authenticateState.setText(R.string.mine_under_authenticate_tip)
                             mAuthenticate.setText(R.string.mine_under_authenticate)
-                            mAuthenticate.setOnClickListener { Log.d(TAG, "认证中，请等待工作人员审核") }
+                            mAuthenticate.setOnClickListener { fragment.startActivity<AuthActivity>(Page.AUTHENTICATE, Bundle().apply { putInt(Constants.Extra.STATE, 1) }) }
                         }
                         2 -> {//认证通过
                             mAuthenticateLayout.visibility = View.GONE

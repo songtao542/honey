@@ -6,6 +6,7 @@ import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.ImageView
 import androidx.fragment.app.Fragment
 import com.bumptech.glide.Glide
 import com.bumptech.glide.Priority
@@ -15,8 +16,6 @@ import com.snt.phoney.R
 import com.snt.phoney.domain.model.Photo
 import com.snt.phoney.utils.data.Constants
 import com.snt.phoney.utils.media.MultipartUtil
-import it.sephiroth.android.library.imagezoom.ImageViewTouchBase
-import kotlinx.android.synthetic.main.fragment_photo_burn.*
 import kotlinx.android.synthetic.main.fragment_photo_view.*
 import kotlinx.coroutines.*
 
@@ -26,23 +25,26 @@ open class PhotoFragment : Fragment() {
 
     companion object {
         @JvmStatic
-        fun newInstance(url: String) = PhotoFragment().apply {
+        fun newInstance(url: String, extras: Bundle? = null) = PhotoFragment().apply {
             arguments = Bundle().apply {
                 putString(Constants.Extra.URL, url)
+                extras?.let { putAll(extras) }
             }
         }
 
         @JvmStatic
-        fun newInstance(uri: Uri) = PhotoFragment().apply {
+        fun newInstance(uri: Uri, extras: Bundle? = null) = PhotoFragment().apply {
             arguments = Bundle().apply {
                 putParcelable(Constants.Extra.URI, uri)
+                extras?.let { putAll(extras) }
             }
         }
 
         @JvmStatic
-        fun newInstance(photo: Photo) = PhotoFragment().apply {
+        fun newInstance(photo: Photo, extras: Bundle? = null) = PhotoFragment().apply {
             arguments = Bundle().apply {
                 putParcelable(Constants.Extra.PHOTO, photo)
+                extras?.let { putAll(extras) }
             }
         }
     }
@@ -70,8 +72,9 @@ open class PhotoFragment : Fragment() {
 
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
-        imageView.displayType = ImageViewTouchBase.DisplayType.FIT_TO_SCREEN
-        imageView.setSingleTapListener {
+        //imageView.displayType = ImageViewTouchBase.DisplayType.FIT_TO_SCREEN
+        //imageView.setSingleTapListener {
+        imageView.setOnClickListener {
             onPhotoSingleTapListener?.onPhotoSingleTap()
         }
 
@@ -83,6 +86,13 @@ open class PhotoFragment : Fragment() {
     }
 
     protected open fun loadFile(uri: Uri? = null, url: String? = null, photo: Photo? = null) {
+        if (photo != null && photo.path?.contains("image-placeholder") == true) {
+            scaleImageView.visibility = View.GONE
+            imageView.visibility = View.VISIBLE
+            imageView.scaleType = ImageView.ScaleType.FIT_CENTER
+            imageView.setImageResource(R.drawable.ic_burn_placeholder)
+            return
+        }
         loadImageJob?.cancel()
         loadImageJob = GlobalScope.launch {
             withContext(Dispatchers.IO) {

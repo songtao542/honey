@@ -42,15 +42,23 @@ class CreateLockStep1Fragment : BaseFragment() {
         super.onActivityCreated(savedInstanceState)
         //viewModel = ViewModelProviders.of(this,viewModelFactory).get(CreateLockViewModel::class.java)
         toolbar.setNavigationOnClickListener { activity?.onBackPressed() }
-        titleTextView.setText(R.string.set_lock_title)
 
-        resetTip.visibility = if (mode == MODE_RESET) View.VISIBLE else View.GONE
+        if (mode == MODE_RESET) {
+            titleTextView.setText(R.string.reset_lock_title)
+            resetTip.visibility = View.VISIBLE
+            divider.visibility = View.VISIBLE
+            toolbar.navigationIcon = null
+        } else {
+            titleTextView.setText(R.string.set_lock_title)
+            resetTip.visibility = View.GONE
+            divider.visibility = View.GONE
+        }
 
         inputPassword.setOnInputOverListener {
             toNextStep()
         }
 
-        confirmAgain.setOnClickListener {
+        confirmButton.setOnClickListener {
             toNextStep()
         }
     }
@@ -58,7 +66,7 @@ class CreateLockStep1Fragment : BaseFragment() {
     private fun toNextStep() {
         val pwd = inputPassword.password.toString()
         if (pwd.length >= PASSWORD_LENGTH) {
-            addFragmentSafely(CreateLockStep2Fragment.newInstance(pwd), "step2", true,
+            addFragmentSafely(CreateLockStep2Fragment.newInstance(pwd, mode), "step2", true,
                     enterAnimation = R.anim.slide_in_right, popExitAnimation = R.anim.slide_out_right)
         }
     }

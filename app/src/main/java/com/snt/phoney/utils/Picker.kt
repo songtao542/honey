@@ -86,10 +86,15 @@ object Picker {
 
     @JvmStatic
     fun showCityPicker(activity: FragmentActivity?, provider: ((picker: CityPicker) -> Unit), handler: ((cities: List<City>) -> Unit)) {
+        showCityPicker(activity, true, provider, handler)
+    }
+
+    @JvmStatic
+    fun showCityPicker(activity: FragmentActivity?, multipleMode: Boolean, provider: ((picker: CityPicker) -> Unit), handler: ((cities: List<City>) -> Unit)) {
         CityPickerFragment.Builder()
                 .fragmentManager(activity?.supportFragmentManager)
                 .animationStyle(R.style.DefaultCityPickerAnimation)
-                .multipleMode(true)
+                .multipleMode(multipleMode)
                 .enableHotCities(false)
                 .enableLocation(false)
                 .useDefaultCities(false)

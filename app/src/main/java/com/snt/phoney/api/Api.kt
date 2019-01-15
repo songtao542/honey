@@ -4,7 +4,6 @@ import androidx.lifecycle.LiveData
 import com.snt.phoney.domain.model.*
 import io.reactivex.Single
 import okhttp3.MultipartBody
-import retrofit2.Call
 import retrofit2.http.*
 
 interface Api {
@@ -115,6 +114,33 @@ interface Api {
     @POST("users/homePage/getWxInfo")
     fun getUserWechatAccount(@Field("token") token: String,
                              @Field("uid") uid: String): Single<Response<String>>
+
+    @GET("users/resetPassword/getResetPasswordState")
+    fun getResetPasswordState(@Query("token") token: String): Single<Response<Int>>
+
+    /**
+     * 参数名 pauthentication
+     */
+    @Multipart
+    @Headers("Timeout: 60000")
+    @POST("users/resetPassword/setResetPassword")
+    fun uploadResetPasswordFile(@Part("token") token: String,
+                                @Part file: MultipartBody.Part): Single<Response<String>>
+
+    /**
+     *@param token    string	是	用户token
+     *@param password    string	是	正序密码(md5)
+     *@param privatePassword    string	是	逆序密码(md5)
+     */
+    @FormUrlEncoded
+    @POST("users/resetPrivatePassword")
+    fun resetPassword(@Field("token") token: String,
+                      @Field("password") password: String,
+                      @Field("privatePassword") privatePassword: String): Single<Response<String>>
+
+    @FormUrlEncoded
+    @POST("users/resetPassword/invalideResetPasswordOperate")
+    fun cancelResetPassword(@Field("token") token: String): Single<Response<String>>
 
     @FormUrlEncoded
     @POST("users/homePage/photoApply")

@@ -4,7 +4,6 @@ import android.app.Activity
 import android.content.Intent
 import android.net.Uri
 import android.os.Bundle
-import android.util.Log
 import android.view.*
 import androidx.appcompat.widget.Toolbar
 import androidx.lifecycle.Observer
@@ -13,7 +12,6 @@ import com.snt.phoney.R
 import com.snt.phoney.base.BaseFragment
 import com.snt.phoney.base.ProgressDialog
 import com.snt.phoney.domain.model.DatingProgram
-import com.snt.phoney.domain.model.Photo
 import com.snt.phoney.domain.model.PoiAddress
 import com.snt.phoney.extensions.addFragmentSafely
 import com.snt.phoney.extensions.replaceFragmentSafely
@@ -82,9 +80,9 @@ class CreateDatingFragment : BaseFragment(), Toolbar.OnMenuItemClickListener {
             }
         }
         selectDatingTime.setOnClickListener {
-            //            Picker.showDatePicker(activity) { year, monthOfYear, dayOfMonth ->
-//                datingTime.text = getString(R.string.dating_date_template, year, monthOfYear + 1, dayOfMonth)//"${year}年${monthOfYear}月${dayOfMonth}日"
-//            }
+            //Picker.showDatePicker(activity) { year, monthOfYear, dayOfMonth ->
+            //    datingTime.text = getString(R.string.dating_date_template, year, monthOfYear + 1, dayOfMonth)//"${year}年${monthOfYear}月${dayOfMonth}日"
+            //}
             Picker.showPicker(activity, getString(R.string.select_dating_time), 1, 20, selectedDay) { value, _ ->
                 selectedDay = value
                 datingTime.text = getString(R.string.days_template, value)
@@ -192,12 +190,6 @@ class CreateDatingFragment : BaseFragment(), Toolbar.OnMenuItemClickListener {
         if (requestCode == Picker.REQUEST_CODE_CHOOSE && resultCode == Activity.RESULT_OK) {
             val paths = Matisse.obtainPathResult(data)
             val uris = Matisse.obtainResult(data)
-            for (p in paths) {
-                Log.d("Matisse", "handlePhotoPick path=$p")
-            }
-            for (u in uris) {
-                Log.d("Matisse", "handlePhotoPick path=$u")
-            }
             paths?.let {
                 selectedPhotoUris.addAll(uris)
                 photos?.notifyAdapterSizeChanged()

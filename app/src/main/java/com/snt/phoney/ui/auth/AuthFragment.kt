@@ -160,8 +160,8 @@ class AuthFragment : BaseFragment(), KeyEventListener {
 
     private fun showProgress(tip: String) {
         progressDialog = ProgressDialog.newInstance(tip)
-        progressDialog!!.isCancelable = false
-        progressDialog!!.show(childFragmentManager, "progress")
+                .cancelable(false)
+                .show(childFragmentManager)
     }
 
     private fun dismissProgress() {

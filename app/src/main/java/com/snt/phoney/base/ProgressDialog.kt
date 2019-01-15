@@ -5,6 +5,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.DialogFragment
+import androidx.fragment.app.FragmentManager
 import com.snt.phoney.R
 import com.snt.phoney.utils.data.Constants
 import kotlinx.android.synthetic.main.fragment_progress_dialog.*
@@ -43,6 +44,11 @@ class ProgressDialog : DialogFragment() {
 
     fun cancelable(cancelable: Boolean): ProgressDialog {
         isCancelable = cancelable
+        return this
+    }
+
+    fun show(fragmentManager: FragmentManager): ProgressDialog {
+        show(fragmentManager, "progress")
         return this
     }
 

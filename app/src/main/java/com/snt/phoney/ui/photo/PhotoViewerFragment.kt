@@ -79,15 +79,15 @@ open class PhotoViewerFragment : Fragment(), PhotoFragment.OnPhotoSingleTapListe
     }
 
     open fun newPhotoViewFragment(uri: Uri): PhotoFragment {
-        return PhotoFragment.newInstance(uri)
+        return PhotoFragment.newInstance(uri, arguments)
     }
 
     open fun newPhotoViewFragment(url: String): PhotoFragment {
-        return PhotoFragment.newInstance(url)
+        return PhotoFragment.newInstance(url, arguments)
     }
 
     open fun newPhotoViewFragment(photo: Photo): PhotoFragment {
-        return PhotoFragment.newInstance(photo)
+        return PhotoFragment.newInstance(photo, arguments)
     }
 
     override fun onPhotoSingleTap() {
@@ -203,7 +203,7 @@ open class PhotoViewerFragment : Fragment(), PhotoFragment.OnPhotoSingleTapListe
         return false
     }
 
-    private fun finish() {
+    protected open fun finish() {
         setActivityResult()
         activity?.onBackPressed()
     }

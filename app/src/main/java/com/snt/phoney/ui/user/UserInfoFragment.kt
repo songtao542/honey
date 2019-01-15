@@ -5,6 +5,7 @@ import android.app.Activity
 import android.content.Intent
 import android.os.Bundle
 import android.text.TextUtils
+import android.util.Log
 import android.util.TypedValue
 import android.view.LayoutInflater
 import android.view.View
@@ -37,6 +38,7 @@ import kotlinx.android.synthetic.main.fragment_user_info_header.*
 import java.text.DecimalFormat
 
 const val REQUEST_VIP_CODE = 60
+const val REQUEST_VIEW_ALBUM_CODE = 62
 
 class UserInfoFragment : BaseFragment() {
 
@@ -253,7 +255,7 @@ class UserInfoFragment : BaseFragment() {
                     unlockPhotoLayout.visibility = View.GONE
                 }
 
-                photosView.viewAdapter = PhotoFlowAdapter(requireContext()).setPhotos(photos).setMaxShow(12).setLastAsAdd(false)
+                photosView.viewAdapter = PhotoFlowAdapter(requireContext()).setViewerIsVip(user.isVip).setPhotos(photos).setMaxShow(12).setLastAsAdd(false)
                 photosView.setOnItemClickListener { view, _ ->
                     val photo = view.getTag(R.id.tag) as? Photo
                     photo?.let { photo ->
@@ -264,9 +266,10 @@ class UserInfoFragment : BaseFragment() {
                         } else {
                             user.freePhotos?.let { freePhotos ->
                                 val i = freePhotos.indexOf(photo)
-                                startActivity<AlbumActivity>(Page.ALBUM_VIEWER, Bundle().apply {
+                                startActivityForResult<AlbumActivity>(Page.ALBUM_VIEWER, REQUEST_VIEW_ALBUM_CODE, Bundle().apply {
                                     putParcelableArrayList(Constants.Extra.PHOTO_LIST, ArrayList(freePhotos))
                                     putInt(Constants.Extra.INDEX, i)
+                                    putBoolean(Constants.Extra.IS_VIP, user.isVip)
                                     putBoolean(Constants.Extra.DELETABLE, false)
                                 })
                             }
@@ -309,6 +312,23 @@ class UserInfoFragment : BaseFragment() {
         super.onActivityResult(requestCode, resultCode, data)
         if (requestCode == REQUEST_VIP_CODE && resultCode == Activity.RESULT_OK) {
             loadUser()
+        }
+        if (requestCode == REQUEST_VIEW_ALBUM_CODE && resultCode == Activity.RESULT_OK) {
+            val photos = data?.getParcelableArrayListExtra<Photo>(Constants.Extra.LIST)
+            photos?.let { updatePhoto(it) }
+        }
+    }
+
+    private fun updatePhoto(photos: List<Photo>) {
+        user?.photos?.let { ups ->
+            for (photo in photos) {
+                for (p in ups) {
+                    if (p.id == photo.id) {
+                        p.burn = photo.burn
+                    }
+                }
+            }
+            photosView.notifyAdapterSizeChanged()
         }
     }
 

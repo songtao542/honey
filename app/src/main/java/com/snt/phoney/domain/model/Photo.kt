@@ -19,7 +19,7 @@ data class Photo(
         /**
          * 0 正常 ， 1 是红包
          */
-        var flag: Int = 0, //0 正常 ， 1 是红包
+        var flag: Int = -1, //0 正常 ， 1 是红包
         @SerializedName(value = "money") var price: Int = 0,
         var burn: Int = -1,//  是否已焚，0 未焚，1 已焚
         var paid: Boolean = false,//红包的时候，已支付1，未支付0
@@ -27,7 +27,7 @@ data class Photo(
          * burnTime, ownerId 在初始化用户信息时进行填充, 服务端不下发这两个字段, 详见 User 类的 init
          */
         var burnTime: Int = 0,
-        var ownerId: String? = null //该相片所有者的 uuid,
+        var ownerId: String? = null //该相片所有者的 uuid
 ) : Selectable(), Parcelable {
 
     @Transient

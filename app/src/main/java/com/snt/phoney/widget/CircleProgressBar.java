@@ -158,11 +158,18 @@ public class CircleProgressBar extends View {
         paint.setStrokeWidth(0);
         //圆环内文字
         String progressText = getProgressText();
-        paint.getTextBounds(progressText, 0, progressText.length(), textRect);
-        Paint.FontMetricsInt fontMetrics = paint.getFontMetricsInt();
-        int baseline = (getMeasuredHeight() - fontMetrics.bottom + fontMetrics.top) / 2 - fontMetrics.top;  //获得文字的基准线
+        //paint.getTextBounds(progressText, 0, progressText.length(), textRect);
+        //Paint.FontMetricsInt fontMetrics = paint.getFontMetricsInt();
+        //int baseline = (getMeasuredHeight() - fontMetrics.bottom + fontMetrics.top) / 2 - fontMetrics.top;  //获得文字的基准线
         //>> 1 等同于除以2
-        canvas.drawText(progressText, (getMeasuredWidth() >> 1) - (textRect.width() >> 1), baseline, paint);
+        //canvas.drawText(progressText, (getMeasuredWidth() >> 1) - (textRect.width() >> 1), baseline, paint);
+
+        Paint.FontMetricsInt fontMetrics = paint.getFontMetricsInt();
+        int baseline = (getHeight() - fontMetrics.bottom - fontMetrics.top) / 2;
+        // 下面这行是实现水平居中，drawText对应改为传入centerX
+        paint.setTextAlign(Paint.Align.CENTER);
+        canvas.drawText(progressText, centerX, baseline, paint);
+
     }
 
     //中间的进度百分比
