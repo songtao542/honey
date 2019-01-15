@@ -127,11 +127,15 @@ class PhotoFlowAdapter(private val context: Context) : FlowLayout.ViewAdapter {
                 view.setText(R.string.photo_has_burned)
                 imageView.setImageResource(R.drawable.ic_burn_placeholder)
             } else {
-                view.setTextVisibility(View.INVISIBLE)
-                Glide.with(context)
-                        .applyDefaultRequestOptions(RequestOptions().placeholder(R.drawable.ic_placeholder))
-                        .load(photo.path ?: "")
-                        .into(imageView)
+                if (photo.path?.contains("image-placeholder.png") == true) {
+                    imageView.setImageResource(R.drawable.ic_burn_placeholder)
+                } else {
+                    view.setTextVisibility(View.INVISIBLE)
+                    Glide.with(context)
+                            .applyDefaultRequestOptions(RequestOptions().placeholder(R.drawable.ic_placeholder))
+                            .load(photo.path ?: "")
+                            .into(imageView)
+                }
             }
             //} else {
             //    Glide.with(context).load(R.drawable.ic_burn_placeholder).into(imageView)

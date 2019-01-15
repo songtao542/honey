@@ -3,12 +3,14 @@ package com.snt.phoney.ui.album
 import android.app.Activity
 import android.content.Intent
 import android.os.Bundle
+import android.util.Log
 import android.view.KeyEvent
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.ViewModelProviders
 import com.snt.phoney.di.Injectable
 import com.snt.phoney.domain.model.Photo
 import com.snt.phoney.ui.photo.PhotoFragment
+import com.snt.phoney.ui.photo.PhotoViewerAdapter
 import com.snt.phoney.ui.photo.PhotoViewerFragment
 import com.snt.phoney.utils.data.Constants
 import javax.inject.Inject
@@ -27,6 +29,9 @@ class AlbumViewerFragment : PhotoViewerFragment(), Injectable {
 
     private lateinit var viewModel: AlbumViewModel
 
+    private var viewerIsVip = false
+    private var vipStateChanged = false
+
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
         viewModel = ViewModelProviders.of(this, viewModelFactory).get(AlbumViewModel::class.java)
@@ -37,7 +42,7 @@ class AlbumViewerFragment : PhotoViewerFragment(), Injectable {
     }
 
     override fun newPhotoViewFragment(photo: Photo): PhotoFragment {
-        return AlbumPhotoFragment.newInstance(photo, arguments)
+        return AlbumPhotoFragment.newInstance(photo, arguments).also { it.setParentFragment(this@AlbumViewerFragment) }
     }
 
     override fun onKeyDown(keyCode: Int, event: KeyEvent): Boolean {
@@ -60,15 +65,27 @@ class AlbumViewerFragment : PhotoViewerFragment(), Injectable {
     }
 
     private fun setResult(): Boolean {
-        if (viewModel.burnedPhoto.isNotEmpty()) {
+        if (viewModel.burnedPhoto.isNotEmpty() || vipStateChanged) {
             val result = Intent().apply {
                 putParcelableArrayListExtra(Constants.Extra.LIST, viewModel.burnedPhoto)
+                putExtra(Constants.Extra.IS_VIP, viewerIsVip)
             }
             activity?.setResult(Activity.RESULT_OK, result)
             activity?.onBackPressed()
             return true
         }
         return false
+    }
+
+    fun updateToVipState() {
+        viewerIsVip = true
+        vipStateChanged = true
+        if (arguments != null) {
+            arguments!!.putBoolean(Constants.Extra.IS_VIP, viewerIsVip)
+        } else {
+            arguments = Bundle().apply { putBoolean(Constants.Extra.IS_VIP, viewerIsVip) }
+        }
+        adapter.forceNotifyDataSetChanged()
     }
 
 }

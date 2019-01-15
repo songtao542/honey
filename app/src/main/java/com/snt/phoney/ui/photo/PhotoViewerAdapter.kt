@@ -9,6 +9,8 @@ import com.snt.phoney.domain.model.Photo
 class PhotoViewerAdapter(private val parentFragment: PhotoViewerFragment, private val deletable: Boolean)
     : FragmentStatePagerAdapter(parentFragment.childFragmentManager) {
 
+    private var forceNotify = false
+
     var urls: List<String>? = null
         set(value) {
             value?.let {
@@ -47,6 +49,11 @@ class PhotoViewerAdapter(private val parentFragment: PhotoViewerFragment, privat
     override fun getCount(): Int = uris?.size ?: urls?.size ?: photos?.size ?: 0
 
     override fun getItemPosition(obj: Any): Int {
-        return if (deletable) PagerAdapter.POSITION_NONE else super.getItemPosition(obj)
+        return if (deletable || forceNotify) PagerAdapter.POSITION_NONE else super.getItemPosition(obj)
+    }
+
+    fun forceNotifyDataSetChanged() {
+        forceNotify = true
+        notifyDataSetChanged()
     }
 }

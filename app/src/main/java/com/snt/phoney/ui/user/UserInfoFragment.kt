@@ -255,7 +255,7 @@ class UserInfoFragment : BaseFragment() {
                     unlockPhotoLayout.visibility = View.GONE
                 }
 
-                photosView.viewAdapter = PhotoFlowAdapter(requireContext()).setViewerIsVip(user.isVip).setPhotos(photos).setMaxShow(12).setLastAsAdd(false)
+                photosView.viewAdapter = PhotoFlowAdapter(requireContext()).setViewerIsVip(user.isVip).setPhotos(photos).setMaxShow(20).setLastAsAdd(false)
                 photosView.setOnItemClickListener { view, _ ->
                     val photo = view.getTag(R.id.tag) as? Photo
                     photo?.let { photo ->
@@ -314,8 +314,13 @@ class UserInfoFragment : BaseFragment() {
             loadUser()
         }
         if (requestCode == REQUEST_VIEW_ALBUM_CODE && resultCode == Activity.RESULT_OK) {
-            val photos = data?.getParcelableArrayListExtra<Photo>(Constants.Extra.LIST)
-            photos?.let { updatePhoto(it) }
+            val isVip = data?.getBooleanExtra(Constants.Extra.IS_VIP, false) ?: false
+            if (isVip) {
+                loadUser()
+            } else {
+                val photos = data?.getParcelableArrayListExtra<Photo>(Constants.Extra.LIST)
+                photos?.let { updatePhoto(it) }
+            }
         }
     }
 

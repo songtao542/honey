@@ -77,7 +77,6 @@ data class User(
         @SerializedName(value = "burn_time") var burnTime: Int = 0) : Parcelable {
 
     init {
-        Log.d("TTTT", "ppppppppppppppppppppppppppppppppppp photos=$photos")
         fixPhoto()
     }
 
@@ -155,8 +154,8 @@ data class User(
                 val result = ArrayList<Photo>()
                 for (photo in photos) {
                     if (photo.flag == 0 //普通情况，不需要红包，也不需要解锁
-                            || (photo.flag == 1 && photo.paid) //需要红包
-                            || (photo.flag == -1 && !TextUtils.isEmpty(photo.path)) //需要解锁
+                            || (photo.flag == 1 && photo.paid) //需要红包，但是已经支付了
+                            || (photo.flag == -1 && !TextUtils.isEmpty(photo.path)) //服务端未返回 flag(默认值-1) 字段，但是 path 又不为空，表示需要解锁，但是已经解锁
                     ) {
                         result.add(photo)
                     }

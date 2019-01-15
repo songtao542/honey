@@ -86,7 +86,7 @@ open class PhotoFragment : Fragment() {
     }
 
     protected open fun loadFile(uri: Uri? = null, url: String? = null, photo: Photo? = null) {
-        if (photo != null && photo.path?.contains("image-placeholder") == true) {
+        if (photo != null && photo.path?.contains("image-placeholder.png") == true) {
             scaleImageView.visibility = View.GONE
             imageView.visibility = View.VISIBLE
             imageView.scaleType = ImageView.ScaleType.FIT_CENTER

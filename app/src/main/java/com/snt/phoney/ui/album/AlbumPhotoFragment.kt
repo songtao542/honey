@@ -58,6 +58,8 @@ class AlbumPhotoFragment : PhotoFragment(), Injectable {
 
     private var viewerIsVip = false
 
+    private var parent: AlbumViewerFragment? = null
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         arguments?.let {
@@ -134,12 +136,14 @@ class AlbumPhotoFragment : PhotoFragment(), Injectable {
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
         if (requestCode == REQUEST_VIP_CODE && resultCode == Activity.RESULT_OK) {
+            viewerIsVip = true
+            parent?.updateToVipState()
 
         }
     }
 
     override fun loadFile(uri: Uri?, url: String?, photo: Photo?) {
-        if (photo?.flag == 0) {
+        if (photo?.flag == 0 && !viewerIsVip) {
             if (photo.burn == 0) {
                 setNotBurnedState(photo)
             } else if (photo.burn == 1) {
@@ -152,5 +156,9 @@ class AlbumPhotoFragment : PhotoFragment(), Injectable {
     override fun onDestroyView() {
         progressView.cancelAnimation()
         super.onDestroyView()
+    }
+
+    fun setParentFragment(parent: AlbumViewerFragment) {
+        this.parent = parent
     }
 }

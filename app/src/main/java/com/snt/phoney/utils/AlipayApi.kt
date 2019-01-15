@@ -20,7 +20,6 @@ object AlipayApi {
                 delay(2000)
                 val alipay = PayTask(activity)
                 val result = alipay.payV2(orderInfo, true)
-                Log.d("TTTT", "rrrrrrrrrrr result=$result")
                 val payResult = PayResult(result)
                 /**
                  * 对于支付结果，请商户依赖服务端的异步通知结果。同步通知结果，仅作为支付结束的通知。

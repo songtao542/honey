@@ -26,10 +26,10 @@ open class PhotoViewerFragment : Fragment(), PhotoFragment.OnPhotoSingleTapListe
         }
     }
 
-    private lateinit var adapter: PhotoViewerAdapter
+    protected lateinit var adapter: PhotoViewerAdapter
     private var urls: ArrayList<String>? = null
     private var uris: ArrayList<Uri>? = null
-    private var photos: ArrayList<Photo>? = null
+    protected var photos: ArrayList<Photo>? = null
     private var index: Int = 0
     private var deletable = false
 

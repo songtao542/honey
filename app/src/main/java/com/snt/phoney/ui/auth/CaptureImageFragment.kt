@@ -70,7 +70,6 @@ class CaptureImageFragment : Fragment(), ActivityCompat.OnRequestPermissionsResu
         }
 
         override fun onPictureTaken(cameraView: CameraView, data: ByteArray) {
-            Log.d(TAG, "onPictureTaken " + data.size)
             backgroundHandler.post {
                 imageSavePath = getImageFilePath(requireContext())
                 val file = File(imageSavePath)
