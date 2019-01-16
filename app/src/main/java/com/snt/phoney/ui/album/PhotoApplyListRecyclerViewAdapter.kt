@@ -12,7 +12,6 @@ import com.bumptech.glide.request.RequestOptions
 import com.snt.phoney.R
 import com.snt.phoney.domain.model.PhotoApply
 import com.snt.phoney.domain.model.Sex
-import jiguang.chat.utils.TimeFormat
 import kotlinx.android.synthetic.main.fragment_album_photo_apply_list_item.view.*
 import java.text.DecimalFormat
 
@@ -85,7 +84,7 @@ class PhotoApplyListRecyclerViewAdapter(private val viewModel: AlbumViewModel) :
                 rejectButton.visibility = View.GONE
                 when (photoApply.state) {
                     1 -> stateText.text = context.getString(R.string.has_agree_h_view)
-                    2 -> stateText.text = context.getString(R.string.has_rejected)
+                    2 -> stateText.text = context.getString(R.string.has_reject_h_view)
                     10 -> stateText.text = context.getString(R.string.has_invalid)
                 }
             }

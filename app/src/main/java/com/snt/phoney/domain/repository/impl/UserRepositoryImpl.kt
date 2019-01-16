@@ -8,7 +8,6 @@ import com.snt.phoney.domain.persistence.PhotoDao
 import com.snt.phoney.domain.repository.UserRepository
 import com.snt.phoney.utils.media.MultipartUtil
 import io.reactivex.Single
-import io.reactivex.rxkotlin.subscribeBy
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.launch
@@ -47,32 +46,6 @@ class UserRepositoryImpl @Inject constructor(private val userAccessor: UserAcces
 
     override fun getVipInfo(token: String): Single<Response<VipInfo>> {
         return api.getVipInfo(token)
-    }
-
-    override fun burnPhoto(token: String, target: String, id: String): Single<Response<String>> {
-        return api.burnPhoto(token, target, id)
-    }
-
-    override fun burnPhoto(photo: Photo) {
-        GlobalScope.launch {
-            withContext(Dispatchers.IO) {
-                photoDao.insertPhoto(photo)
-                val token = getAccessToken()
-                if (token != null) {
-                    burnPhoto(token, photo.ownerId ?: "", photo.id.toString())
-                            .subscribeBy(
-                                    onSuccess = {
-                                        if (it.success) {
-                                            photoDao.delete(photo.id)
-                                        }
-                                    },
-                                    onError = {
-
-                                    }
-                            )
-                }
-            }
-        }
     }
 
     override fun setPhotoPermission(token: String, photoPermission: Int, money: Double, photoId: String): Single<Response<String>> {
@@ -139,6 +112,33 @@ class UserRepositoryImpl @Inject constructor(private val userAccessor: UserAcces
 
     override fun getUserInfo(token: String, uid: String, latitude: Double, longitude: Double): Single<Response<User>> {
         return api.getUserInfo(token, uid, latitude.toString(), longitude.toString())
+    }
+
+    override fun burnPhoto(token: String, target: String, id: String): Single<Response<String>> {
+        return api.burnPhoto(token, target, id)
+    }
+
+    /**
+     * 失败之后保存在本地
+     */
+    override fun burnPhotoFailed(photo: Photo) {
+        //viewerId 为空的不用保存
+        photo.viewerId?.let {
+            GlobalScope.launch {
+                withContext(Dispatchers.IO) {
+                    photo.burn = 1
+                    photoDao.insertPhoto(photo)
+                }
+            }
+        }
+    }
+
+    override fun getBurnedPhotoFromLocal(uuid: String): List<Photo> {
+        return photoDao.getPhotosByViewer(uuid) ?: emptyList()
+    }
+
+    override fun getBurnedPhotoFromLocalAsync(uuid: String): Single<List<Photo>> {
+        return photoDao.getPhotosByViewerAsync(uuid)
     }
 
     override fun setWalletNewsToRead(token: String): Single<Response<String>> {

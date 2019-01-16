@@ -32,6 +32,7 @@ class ApplicantListFragment : BaseFragment() {
     }
 
     private var dating: Dating? = null
+    private var uuid: String? = null
 
     private lateinit var viewModel: DatingViewModel
     private lateinit var adapter: ApplicantListRecyclerViewAdapter
@@ -39,6 +40,7 @@ class ApplicantListFragment : BaseFragment() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         arguments?.let {
+            uuid = it.getString(Constants.Extra.UUID)
             dating = it.getParcelable(Constants.Extra.DATA)
         }
     }
@@ -89,8 +91,9 @@ class ApplicantListFragment : BaseFragment() {
         if (refresh) {
             list.setLoadMoreEnable(true)
         }
-        if (dating != null) {
-            viewModel.listDatingApplicant(refresh, dating!!.safeUuid, loadMore)
+        val id = uuid ?: dating?.uuid
+        if (id != null) {
+            viewModel.listDatingApplicant(refresh, id, loadMore)
         } else {
             viewModel.listApplicant(refresh, loadMore)
         }

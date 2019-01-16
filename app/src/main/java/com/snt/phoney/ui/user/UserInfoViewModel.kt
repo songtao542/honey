@@ -1,5 +1,6 @@
 package com.snt.phoney.ui.user
 
+import android.util.Log
 import com.snt.phoney.R
 import com.snt.phoney.domain.model.User
 import com.snt.phoney.domain.usecase.PayOrderUseCase
@@ -25,6 +26,7 @@ class UserInfoViewModel @Inject constructor(private val usecase: UserInfoUseCase
 
     fun getUserInfo(uuid: String) {
         val token = usecase.getAccessToken() ?: return
+        val viewerId = usecase.getUser()?.uuid ?: ""
         usecase.getLocation()
                 .flatMap {
                     usecase.getUserInfo(token, uuid, it.latitude, it.longitude)
@@ -33,11 +35,27 @@ class UserInfoViewModel @Inject constructor(private val usecase: UserInfoUseCase
                             .observeOn(AndroidSchedulers.mainThread())
                 }
                 .subscribeOn(Schedulers.io())
+                .observeOn(Schedulers.io())
+                .map {
+                    it.data?.let { data ->
+                        data.fixPhotos()
+                        val burnedPhotos = usecase.getBurnedPhotoFromLocal(viewerId)
+                        data.photos?.forEach { p ->
+                            burnedPhotos.forEach { pb ->
+                                if (p.id == pb.id) {
+                                    p.burn = pb.burn
+                                }
+                            }
+                        }
+                        return@let
+                    }
+                    return@map it
+                }
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribeBy(
                         onNext = {
                             @Suppress("CascadeIf")
-                            if (it.code == 200) {
+                            if (it.success) {
                                 userInfo.value = it.data
                             } else if (it.hasMessage) {
                                 error.value = it.message
@@ -59,6 +77,7 @@ class UserInfoViewModel @Inject constructor(private val usecase: UserInfoUseCase
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribeBy(
                         onSuccess = {
+                            @Suppress("CascadeIf")
                             if (it.success) {
                                 val user = userInfo.value
                                 user?.wechatAccount = it.data
@@ -82,7 +101,8 @@ class UserInfoViewModel @Inject constructor(private val usecase: UserInfoUseCase
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribeBy(
                         onSuccess = {
-                            if (it.code == 200) {
+                            @Suppress("CascadeIf")
+                            if (it.success) {
                                 success.value = context.getString(R.string.has_applyed_to_view_photo)
                             } else if (it.isNotEmpty) {
                                 error.value = it.data
@@ -104,8 +124,11 @@ class UserInfoViewModel @Inject constructor(private val usecase: UserInfoUseCase
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribeBy(
                         onSuccess = {
-                            if (it.code == 200) {
+                            @Suppress("CascadeIf")
+                            if (it.success) {
                                 followSuccess.value = it.data
+                            } else if (it.hasMessage) {
+                                error.value = it.message
                             } else {
                                 error.value = context.getString(R.string.follow_failed)
                             }

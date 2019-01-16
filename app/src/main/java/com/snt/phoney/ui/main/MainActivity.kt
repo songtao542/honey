@@ -129,24 +129,8 @@ class MainActivity : BaseActivity() {
         }
 
         navigation.setOnNavigationItemSelectedListener(mOnNavigationItemSelectedListener)
-        //fragmentContainer.setOnApplyWindowInsetsListener { view, insets ->
-        //    var consumed = false
-        //    if (view is ViewGroup) {
-        //        view.forEach { child ->
-        //            val childResult = child.dispatchApplyWindowInsets(insets)
-        //            consumed = childResult.isConsumed
-        //        }
-        //    }
-        //    if (consumed) insets.consumeSystemWindowInsets() else insets
-        //}
 
-        viewModel.updateUserLocation()
-        viewModel.loginJMessage()
-
-
-        //if (BuildConfig.DEBUG) {
-        //    SqlScoutServer.create(this, packageName)
-        //}
+        viewModel.init()
     }
 
     private fun showFragment(tag: String) {
@@ -166,8 +150,8 @@ class MainActivity : BaseActivity() {
     }
 
     private fun restoreFragment(tag: String) {
-        var fragmentManager = supportFragmentManager
-        var transaction = fragmentManager.beginTransaction()
+        val fragmentManager = supportFragmentManager
+        val transaction = fragmentManager.beginTransaction()
         when (tag) {
             TAG_HOME -> {
                 currentFragment = fragmentManager.findFragmentByTag(TAG_HOME)?.apply { transaction.show(this) }
@@ -202,7 +186,7 @@ class MainActivity : BaseActivity() {
 
     @Suppress("IfThenToElvis")
     private fun getFragmentByTag(tag: String): Fragment {
-        var fragment = supportFragmentManager.findFragmentByTag(tag)
+        val fragment = supportFragmentManager.findFragmentByTag(tag)
         return if (fragment != null) fragment else {
             when (tag) {
                 TAG_HOME -> HomeFragment.newInstance()

@@ -27,7 +27,8 @@ data class Photo(
          * burnTime, ownerId 在初始化用户信息时进行填充, 服务端不下发这两个字段, 详见 User 类的 init
          */
         var burnTime: Int = 0,
-        var ownerId: String? = null //该相片所有者的 uuid
+        var ownerId: String? = null, //该相片所有者的 uuid
+        var viewerId: String? = null //查看该相片的人的 uuid
 ) : Selectable(), Parcelable {
 
     @Transient

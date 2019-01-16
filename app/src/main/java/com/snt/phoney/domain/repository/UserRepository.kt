@@ -153,7 +153,10 @@ interface UserRepository : UserAccessor {
 
     fun burnPhoto(token: String, target: String, id: String): Single<Response<String>>
 
-    fun burnPhoto(photo: Photo)
+    fun burnPhotoFailed(photo: Photo)
+
+    fun getBurnedPhotoFromLocal(uuid: String): List<Photo>
+    fun getBurnedPhotoFromLocalAsync(uuid: String): Single<List<Photo>>
 
     fun requestVerificationCode(phone: String): Single<Response<String>>
 

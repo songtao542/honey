@@ -2,13 +2,11 @@ package com.snt.phoney.widget;
 
 import android.content.Context;
 import android.util.AttributeSet;
-import android.util.Log;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.LinearLayout;
 import android.widget.OverScroller;
-import android.widget.Scroller;
 
 import androidx.annotation.Nullable;
 
@@ -243,12 +241,13 @@ public class NestedLinearLayout extends LinearLayout {
 
     @Override
     public void scrollTo(int x, int y) {
-        if (y < 0) {
-            y = 0;
-        }
         if (y > mMaxScrollHeight - mMinHeight) {
             y = mMaxScrollHeight - mMinHeight;
         }
+        if (y < 0) {
+            y = 0;
+        }
+
         if (y != getScrollY()) {
             super.scrollTo(x, y);
             if (mTopScaleable && mTopView != null) {

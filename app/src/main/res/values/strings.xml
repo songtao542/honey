@@ -265,7 +265,8 @@
     <string name="upload_photo_failed">上传相片失败</string>
     <string name="price_must_input">请填写金额</string>
     <string name="has_agree_h_join">已同意对方加入</string>
-    <string name="has_agree_h_view">已同意对方查看</string>
+    <string name="has_agree_h_view">已同意查看</string>
+    <string name="has_reject_h_view">已拒绝查看</string>
     <string name="has_canceled">已取消</string>
     <string name="has_rejected">已拒绝</string>
     <string name="has_agree">已通过</string>

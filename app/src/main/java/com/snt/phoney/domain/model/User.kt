@@ -2,7 +2,6 @@ package com.snt.phoney.domain.model
 
 import android.os.Parcelable
 import android.text.TextUtils
-import android.util.Log
 import androidx.room.Entity
 import androidx.room.PrimaryKey
 import androidx.room.TypeConverter
@@ -23,6 +22,10 @@ import kotlinx.serialization.serializer
 data class User(
         @PrimaryKey var id: Long = 0,
         @SerializedName(value = "uuid", alternate = ["uid"]) var uuid: String? = null,
+        /**
+         * 用于JPush alias
+         */
+        var deviceToken: String? = null,
         @SerializedName(value = "userName") var username: String? = null,
         @SerializedName(value = "nickName") var nickname: String? = null,
         var email: String? = null,
@@ -80,11 +83,7 @@ data class User(
         @SerializedName(value = "utime") var updateTime: Long = 0,
         @SerializedName(value = "burn_time") var burnTime: Int = 0) : Parcelable {
 
-    init {
-        fixPhoto()
-    }
-
-    private fun fixPhoto() {
+    fun fixPhotos() {
         photos?.let { ps ->
             for (photo in ps) {
                 photo.ownerId = uuid
@@ -153,7 +152,7 @@ data class User(
     @Transient
     val freePhotos: List<Photo>?
         get() {
-            fixPhoto()
+            fixPhotos()
             photos?.let { photos ->
                 val result = ArrayList<Photo>()
                 for (photo in photos) {

@@ -28,7 +28,7 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme.Female">
         <service
-            android:name=".service.BurnAlbumIntentService"
+            android:name=".service.TaskIntentService"
             android:exported="false"></service>
 
         <meta-data
@@ -172,6 +172,23 @@
                 android:name="android.support.FILE_PROVIDER_PATHS"
                 android:resource="@xml/file_paths_public" />
         </provider>
+
+        <receiver
+            android:name=".push.PushMessageReceiver"
+            android:enabled="true"
+            android:exported="false">
+            <intent-filter>
+                <action android:name="cn.jpush.android.intent.REGISTRATION" />
+                <action android:name="cn.jpush.android.intent.MESSAGE_RECEIVED" />
+                <action android:name="cn.jpush.android.intent.NOTIFICATION_RECEIVED" />
+                <action android:name="cn.jpush.android.intent.NOTIFICATION_OPENED" />
+                <action android:name="cn.jpush.android.intent.NOTIFICATION_CLICK_ACTION" />
+                <action android:name="cn.jpush.android.intent.CONNECTION" />
+
+                <category android:name="com.snt.phoney" />
+            </intent-filter>
+        </receiver>
+
     </application>
 
 </manifest>

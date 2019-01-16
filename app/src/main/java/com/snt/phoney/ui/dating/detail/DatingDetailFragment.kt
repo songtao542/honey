@@ -186,6 +186,8 @@ class DatingDetailFragment : BaseFragment() {
 
         if (user.uuid == viewModel.getCurrentUserId()) {
             joinButton.visibility = View.GONE
+        } else {
+            joinButton.visibility = View.VISIBLE
         }
 
     }

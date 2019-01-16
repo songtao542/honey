@@ -78,6 +78,10 @@ class AlbumViewModel @Inject constructor(private val usecase: UserInfoUseCase) :
                 ).disposedBy(disposeBag)
     }
 
+    /**
+     * @param photoApply
+     * @param state 0 同意查看， 1 拒绝查看
+     */
     fun reviewPhotoApply(photoApply: PhotoApply, state: Int) {
         val token = usecase.getAccessToken() ?: return
         usecase.reviewPhotoApply(token, photoApply.safeUuid, state)
@@ -88,11 +92,11 @@ class AlbumViewModel @Inject constructor(private val usecase: UserInfoUseCase) :
                             if (it.code == 200) {
                                 when (state) {
                                     0 -> {
-                                        photoApply.state = 0
+                                        photoApply.state = 1
                                         reviewSuccess.value = context.getString(R.string.has_agree)
                                     }
                                     1 -> {
-                                        photoApply.state = 1
+                                        photoApply.state = 2
                                         reviewSuccess.value = context.getString(R.string.has_reject)
                                     }
                                 }
@@ -115,16 +119,20 @@ class AlbumViewModel @Inject constructor(private val usecase: UserInfoUseCase) :
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribeBy(
                         onSuccess = {
-                            if (it.code == 200) {
-
-                            } else {
-
+                            if (!it.success) {
+                                burnPhotoFailed(photo)
                             }
                         },
                         onError = {
-
+                            burnPhotoFailed(photo)
                         }
                 ).disposedBy(disposeBag)
+    }
+
+    private fun burnPhotoFailed(photo: Photo) {
+        val viewerId = usecase.getUser()?.uuid
+        photo.viewerId = viewerId
+        usecase.burnPhotoFailed(photo)
     }
 
 }

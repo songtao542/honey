@@ -1,9 +1,9 @@
 package com.snt.phoney.ui.main
 
 import android.util.Log
+import cn.jpush.android.api.JPushInterface
 import com.amap.api.location.AMapLocation
 import com.snt.phoney.base.AppViewModel
-import com.snt.phoney.domain.usecase.FriendListUseCase
 import com.snt.phoney.domain.usecase.LoginJMessageUseCase
 import com.snt.phoney.domain.usecase.UpdateUserLocationUseCase
 import com.snt.phoney.extensions.disposedBy
@@ -14,7 +14,7 @@ import javax.inject.Inject
 
 class MainViewModel @Inject constructor(private val usecase: UpdateUserLocationUseCase, private val loginUseCase: LoginJMessageUseCase) : AppViewModel() {
 
-    fun updateUserLocation() {
+    private fun updateUserLocation() {
         val token = usecase.getAccessToken() ?: return
         usecase.getLocation()
                 .flatMap {
@@ -37,17 +37,28 @@ class MainViewModel @Inject constructor(private val usecase: UpdateUserLocationU
 
     }
 
-    fun loginJMessage() {
+    private fun loginJMessage() {
         val im = loginUseCase.getUser()?.im
         im?.let {
             val username = it.username
             val password = it.password
             if (username != null && password != null) {
                 loginUseCase.login(username, password) { code, res ->
-                    Log.d("TTTT", "极光IM登录结果: $code ,  $res")
+                    Log.d("JMessage", "极光IM登录结果: $code ,  $res")
                 }
             }
         }
+    }
+
+    private fun updateJPushAlias() {
+        val deviceToken = usecase.getUser()?.deviceToken
+        deviceToken?.let { JPushInterface.setAlias(application, 1, it) }
+    }
+
+    fun init() {
+        updateUserLocation()
+        updateJPushAlias()
+        loginJMessage()
     }
 
 }

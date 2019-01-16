@@ -5,7 +5,6 @@ import android.app.Activity
 import android.content.Intent
 import android.os.Bundle
 import android.text.TextUtils
-import android.util.Log
 import android.util.TypedValue
 import android.view.LayoutInflater
 import android.view.View
@@ -53,9 +52,12 @@ class UserInfoFragment : BaseFragment() {
 
     private var user: User? = null
 
+    private var uuid: String? = null
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         arguments?.let {
+            uuid = it.getString(Constants.Extra.UUID)
             user = it.getParcelable(Constants.Extra.USER)
         }
     }
@@ -185,7 +187,8 @@ class UserInfoFragment : BaseFragment() {
     }
 
     private fun loadUser() {
-        user?.uuid?.let {
+        val uid = uuid ?: user?.uuid
+        uid?.let {
             viewModel.getUserInfo(it)
         }
     }

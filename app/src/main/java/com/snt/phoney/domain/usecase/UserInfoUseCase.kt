@@ -15,6 +15,9 @@ class UserInfoUseCase @Inject constructor(private val userRepository: UserReposi
     fun getAllInfoOfUser(token: String) = userRepository.getAllInfoOfUser(token)
 
     fun getUserInfo(token: String, uid: String, latitude: Double, longitude: Double) = userRepository.getUserInfo(token, uid, latitude, longitude)
+    fun burnPhoto(token: String, target: String, id: String) = userRepository.burnPhoto(token, target, id)
+    fun burnPhotoFailed(photo: Photo) = userRepository.burnPhotoFailed(photo)
+    fun getBurnedPhotoFromLocal(uuid: String) = userRepository.getBurnedPhotoFromLocal(uuid)
 
     fun setWalletNewsToRead(token: String) = userRepository.setWalletNewsToRead(token)
 
@@ -40,9 +43,6 @@ class UserInfoUseCase @Inject constructor(private val userRepository: UserReposi
     fun deletePhotos(token: String, photoIds: List<String>) = userRepository.deletePhotos(token, photoIds)
 
     fun follow(token: String, uuid: String) = userRepository.follow(token, uuid)
-
-    fun burnPhoto(token: String, target: String, id: String) = userRepository.burnPhoto(token, target, id)
-    fun burnPhoto(photo: Photo) = userRepository.burnPhoto(photo)
 
     fun deleteUser(token: String) = userRepository.deleteUser(token)
 
