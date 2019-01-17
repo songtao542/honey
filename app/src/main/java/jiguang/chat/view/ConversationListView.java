@@ -3,6 +3,7 @@ package jiguang.chat.view;
 import android.content.Context;
 import android.graphics.drawable.AnimationDrawable;
 import android.os.Handler;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.AdapterView;
@@ -57,6 +58,12 @@ public class ConversationListView {
         mConvListView.addHeaderView(mLoadingHeader);
         mConvListView.addHeaderView(mSearchHead);
         mConvListView.addHeaderView(mHeader);
+
+        mHeader.setOnClickListener(v -> Log.d("ConversationListView", "no network clicked,but we do nothing"));
+        mHeader.setOnLongClickListener(v -> {
+            Log.d("ConversationListView", "no network long clicked,but we do nothing");
+            return true;
+        });
     }
 
     public void setConvListAdapter(ListAdapter adapter) {

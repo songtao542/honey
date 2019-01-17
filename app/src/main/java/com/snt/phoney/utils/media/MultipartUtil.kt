@@ -1,6 +1,7 @@
 package com.snt.phoney.utils.media
 
 import android.graphics.BitmapFactory
+import android.text.TextUtils
 import okhttp3.MediaType
 import okhttp3.MultipartBody
 import okhttp3.RequestBody
@@ -18,7 +19,10 @@ object MultipartUtil {
                 file.path.contains(".jpg", true) -> "image/jpeg"
                 file.path.contains(".png", true) -> "image/png"
                 file.path.contains(".gif", true) -> "image/gif"
-                else -> getFileMime(file)
+                else -> {
+                    val mime = getFileMime(file)
+                    if (!TextUtils.isEmpty(mime)) mime else "image/jpeg"
+                }
             }
             val requestBody = RequestBody.create(MediaType.parse(mimeType), file)
             val part = MultipartBody.Part.createFormData(name, file.name, requestBody)

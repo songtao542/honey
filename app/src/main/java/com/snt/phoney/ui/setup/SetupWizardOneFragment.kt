@@ -11,6 +11,7 @@ import com.snt.phoney.base.BaseFragment
 import com.snt.phoney.domain.model.Sex
 import com.snt.phoney.domain.model.User
 import com.snt.phoney.extensions.addFragmentSafely
+import com.snt.phoney.extensions.replaceFragmentSafely
 import com.snt.phoney.extensions.snackbar
 import kotlinx.android.synthetic.main.fragment_signup_1.*
 
@@ -41,7 +42,7 @@ class SetupWizardOneFragment : BaseFragment() {
         male.setOnClickListener { setSex(Sex.MALE) }
 
         viewModel.setupSex.observe(this, Observer {
-            activity?.addFragmentSafely(R.id.containerLayout, SetupWizardTwoFragment.newInstance(user), "step2", false)
+            activity?.replaceFragmentSafely(R.id.containerLayout, SetupWizardTwoFragment.newInstance(user), "step2", false)
         })
 
         viewModel.error.observe(this, Observer {

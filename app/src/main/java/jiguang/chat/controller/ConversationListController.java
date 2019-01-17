@@ -105,11 +105,15 @@ public class ConversationListController implements View.OnClickListener,
     @Override
     public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
         //点击会话条目
+        if (mDatas == null && mDatas.size() == 0) {
+            return;
+        }
         Intent intent = new Intent();
-        if (position > 0) {
+        int headerCount = mConvListView.getConvListView().getHeaderViewsCount();
+        int pos = position - headerCount;
+        if (pos >= 0) {
             //这里-3是减掉添加的三个headView
-            int headerCount = mConvListView.getConvListView().getHeaderViewsCount();
-            Conversation conv = mDatas.get(position - headerCount);
+            Conversation conv = mDatas.get(pos);
             intent.putExtra(Constants.CONV_TITLE, conv.getTitle());
             //群聊
             if (conv.getType() == ConversationType.group) {

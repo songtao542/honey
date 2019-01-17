@@ -95,13 +95,13 @@ open class PhotoViewerFragment : Fragment(), PhotoFragment.OnPhotoSingleTapListe
     }
 
     private fun toggleActionBar() {
-        val showing = (actionBar.tag as? Boolean) ?: true
+        val showing = (actionBar?.tag as? Boolean) ?: true
         if (showing) {
-            actionBar.tag = false
-            actionBar.animate().translationY(-actionBar.height.toFloat())
+            actionBar?.tag = false
+            actionBar?.animate()?.translationY(-actionBar.height.toFloat())
         } else {
-            actionBar.tag = true
-            actionBar.animate().translationY(0f)
+            actionBar?.tag = true
+            actionBar?.animate()?.translationY(0f)
         }
     }
 

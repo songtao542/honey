@@ -2,7 +2,6 @@ package com.snt.phoney.widget
 
 import android.content.Context
 import android.util.AttributeSet
-import android.util.Log
 import android.util.TypedValue
 import android.view.WindowInsets
 import androidx.annotation.NonNull
@@ -50,11 +49,17 @@ class Toolbar : androidx.appcompat.widget.Toolbar {
 
     override fun dispatchApplyWindowInsets(insets: WindowInsets?): WindowInsets {
         statusBarHeight = insets?.systemWindowInsetTop ?: statusBarHeight
+        setPadding(paddingLeft, statusBarHeight, paddingRight, paddingBottom)
         return super.dispatchApplyWindowInsets(insets)
     }
 
-    override fun onApplyWindowInsets(insets: WindowInsets?): WindowInsets {
-        return super.onApplyWindowInsets(insets)
+    //override fun onApplyWindowInsets(insets: WindowInsets?): WindowInsets {
+    //    return super.onApplyWindowInsets(insets)
+    //}
+
+    override fun onAttachedToWindow() {
+        super.onAttachedToWindow()
+        requestApplyInsets()
     }
 
     override fun onLayout(changed: Boolean, l: Int, t: Int, r: Int, b: Int) {

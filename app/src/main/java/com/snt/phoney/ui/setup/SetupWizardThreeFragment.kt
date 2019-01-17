@@ -64,7 +64,7 @@ class SetupWizardThreeFragment : BaseFragment() {
             showCityPicker()
         }
         purposeButton.setOnClickListener {
-            showJobPicker()
+            showPurposePicker()
         }
         jobButton.setOnClickListener {
             showJobPicker()
