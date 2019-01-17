@@ -2,7 +2,6 @@ package com.snt.phoney.ui.dating.list
 
 
 import android.content.Context
-import android.graphics.drawable.Drawable
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -70,7 +69,7 @@ class ApplicantListRecyclerViewAdapter(private val viewModel: DatingViewModel) :
                 rejectButton.visibility = View.GONE
                 when (applicant.state) {
                     1 -> stateText.text = context.getString(R.string.has_agree_h_join)
-                    2 -> stateText.text = context.getString(R.string.has_rejected)
+                    2 -> stateText.text = context.getString(R.string.has_reject_h_join)
                     3 -> stateText.text = context.getString(R.string.has_canceled)
                 }
             }

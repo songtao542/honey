@@ -1,8 +1,10 @@
 package jiguang.chat.view;
 
 import android.content.Context;
+import android.content.Intent;
 import android.graphics.drawable.AnimationDrawable;
 import android.os.Handler;
+import android.provider.Settings;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -59,7 +61,12 @@ public class ConversationListView {
         mConvListView.addHeaderView(mSearchHead);
         mConvListView.addHeaderView(mHeader);
 
-        mHeader.setOnClickListener(v -> Log.d("ConversationListView", "no network clicked,but we do nothing"));
+        mHeader.setOnClickListener(v -> {
+            Log.d("ConversationListView", "no network clicked,but we do nothing");
+            if (mContext != null) {
+                mContext.startActivity(new Intent(Settings.ACTION_WIFI_SETTINGS));
+            }
+        });
         mHeader.setOnLongClickListener(v -> {
             Log.d("ConversationListView", "no network long clicked,but we do nothing");
             return true;

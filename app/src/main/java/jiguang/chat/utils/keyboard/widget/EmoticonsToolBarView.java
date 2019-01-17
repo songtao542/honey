@@ -39,8 +39,8 @@ public class EmoticonsToolBarView extends RelativeLayout {
         mInflater.inflate(R.layout.view_emoticonstoolbar, this);
         this.mContext = context;
         mBtnWidth = (int) context.getResources().getDimension(R.dimen.bar_tool_btn_width);
-        hsv_toolbar = (HorizontalScrollView) findViewById(R.id.hsv_toolbar);
-        ly_tool = (LinearLayout) findViewById(R.id.ly_tool);
+        hsv_toolbar = findViewById(R.id.hsv_toolbar);
+        ly_tool = findViewById(R.id.ly_tool);
     }
 
     @Override
@@ -54,9 +54,7 @@ public class EmoticonsToolBarView extends RelativeLayout {
     public void addFixedToolItemView(View view, boolean isRight) {
         LayoutParams params = new LayoutParams(LayoutParams.WRAP_CONTENT, LayoutParams.MATCH_PARENT);
         LayoutParams hsvParams = (LayoutParams) hsv_toolbar.getLayoutParams();
-        if (view.getId() <= 0) {
-            view.setId(isRight ? R.id.id_toolbar_right : R.id.id_toolbar_left);
-        }
+        view.setId(isRight ? R.id.id_toolbar_right : R.id.id_toolbar_left);
         if (isRight) {
             params.addRule(ALIGN_PARENT_RIGHT);
             hsvParams.addRule(LEFT_OF, view.getId());
@@ -72,8 +70,8 @@ public class EmoticonsToolBarView extends RelativeLayout {
         return mInflater == null ? null : mInflater.inflate(R.layout.item_toolbtn, null);
     }
 
-    protected void initItemToolBtn(View toolBtnView, int rec, final PageSetEntity pageSetEntity, OnClickListener onClickListener){
-        ImageView iv_icon = (ImageView) toolBtnView.findViewById(R.id.iv_icon);
+    protected void initItemToolBtn(View toolBtnView, int rec, final PageSetEntity pageSetEntity, OnClickListener onClickListener) {
+        ImageView iv_icon = toolBtnView.findViewById(R.id.iv_icon);
         if (rec > 0) {
             iv_icon.setImageResource(rec);
         }
@@ -98,16 +96,14 @@ public class EmoticonsToolBarView extends RelativeLayout {
     }
 
     protected View getToolBgBtn(View parentView) {
-        return  parentView.findViewById(R.id.iv_icon);
+        return parentView.findViewById(R.id.iv_icon);
     }
 
     public void addFixedToolItemView(boolean isRight, int rec, final PageSetEntity pageSetEntity, OnClickListener onClickListener) {
         View toolBtnView = getCommonItemToolBtn();
         LayoutParams params = new LayoutParams(LayoutParams.WRAP_CONTENT, LayoutParams.MATCH_PARENT);
         LayoutParams hsvParams = (LayoutParams) hsv_toolbar.getLayoutParams();
-        if (toolBtnView.getId() <= 0) {
-            toolBtnView.setId(isRight ? R.id.id_toolbar_right : R.id.id_toolbar_left);
-        }
+        toolBtnView.setId(isRight ? R.id.id_toolbar_right : R.id.id_toolbar_left);
         if (isRight) {
             params.addRule(ALIGN_PARENT_RIGHT);
             hsvParams.addRule(LEFT_OF, toolBtnView.getId());
