@@ -8,6 +8,7 @@ android {
         versionCode 5
         versionName "2.0.2"
         multiDexEnabled true
+
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
     }
     buildTypes {
@@ -30,10 +31,9 @@ dependencies {
     implementation deps.androidx.appcompat
     implementation deps.androidx.material
 
-    testImplementation deps.junit
-
+    androidTestImplementation deps.androidx.test_core
     androidTestImplementation deps.androidx.test_rules
     androidTestImplementation deps.androidx.test_runner
-    androidTestImplementation deps.androidx.espresso_core
-    androidTestImplementation deps.androidx.espresso_contrib
+    androidTestImplementation deps.androidx.test_junit
+    androidTestImplementation deps.androidx.test_espresso_core
 }

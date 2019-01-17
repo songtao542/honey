@@ -27,7 +27,10 @@ dependencies {
     implementation deps.androidx.appcompat
     implementation deps.androidx.exifinterface
 
+    androidTestImplementation deps.androidx.test_core
     androidTestImplementation deps.androidx.test_rules
     androidTestImplementation deps.androidx.test_runner
+    androidTestImplementation deps.androidx.test_junit
+    androidTestImplementation deps.androidx.test_espresso_core
 
 }

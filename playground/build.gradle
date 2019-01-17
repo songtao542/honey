@@ -10,7 +10,7 @@ android {
         versionCode 1
         versionName "1.0"
 
-        testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
+        testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
 
     }
     compileOptions {
@@ -65,8 +65,9 @@ dependencies {
     implementation deps.okhttp3
     implementation deps.picasso
 
+    androidTestImplementation deps.androidx.test_core
     androidTestImplementation deps.androidx.test_rules
     androidTestImplementation deps.androidx.test_runner
-    androidTestImplementation deps.androidx.espresso_core
-    androidTestImplementation deps.androidx.espresso_contrib
+    androidTestImplementation deps.androidx.test_junit
+    androidTestImplementation deps.androidx.test_espresso_core
 }

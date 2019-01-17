@@ -8,6 +8,7 @@ android {
         versionCode 1
         versionName "1.0"
         multiDexEnabled true
+
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
 
         vectorDrawables.useSupportLibrary = true
@@ -55,10 +56,11 @@ dependencies {
 
     testImplementation deps.junit
 
+    androidTestImplementation deps.androidx.test_core
     androidTestImplementation deps.androidx.test_rules
     androidTestImplementation deps.androidx.test_runner
-    androidTestImplementation deps.androidx.espresso_core
-    androidTestImplementation deps.androidx.espresso_contrib
+    androidTestImplementation deps.androidx.test_junit
+    androidTestImplementation deps.androidx.test_espresso_core
 }
 
 task checkstyle(type: Checkstyle) {

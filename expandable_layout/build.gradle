@@ -9,6 +9,7 @@ android {
         versionCode 1
         versionName "1.0"
         multiDexEnabled true
+
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
 
     }
@@ -26,12 +27,12 @@ dependencies {
     implementation fileTree(dir: 'libs', include: ['*.jar'])
     implementation deps.androidx.constraintlayout
     implementation deps.androidx.appcompat
-    testImplementation deps.junit
+    implementation deps.androidx.annotation
 
+    androidTestImplementation deps.androidx.test_core
     androidTestImplementation deps.androidx.test_rules
     androidTestImplementation deps.androidx.test_runner
-    //androidTestImplementation deps.androidx.espresso_core
-    //androidTestImplementation deps.androidx.espresso_contrib
+    androidTestImplementation deps.androidx.test_junit
+    androidTestImplementation deps.androidx.test_espresso_core
 
-    implementation deps.androidx.annotation
 }

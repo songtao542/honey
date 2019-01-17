@@ -34,7 +34,9 @@ android {
         targetSdkVersion build_versions.target_sdk
         versionCode 1
         versionName "1.0"
+
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
+
         vectorDrawables.useSupportLibrary = true
         multiDexEnabled true
         //javaCompileOptions { annotationProcessorOptions { includeCompileClasspath = true } }
@@ -248,9 +250,9 @@ dependencies {
     implementation deps.cache.layer_cache_serializer
     implementation deps.cache.layercache_ehcache
 
-    //    implementation deps.cache.layercache_retrofit
-    //    implementation deps.cache.layercache_android_encryption
-    //    implementation deps.cache.layercache_android_livedata
+    //implementation deps.cache.layercache_retrofit
+    //implementation deps.cache.layercache_android_encryption
+    //implementation deps.cache.layercache_android_livedata
 
     implementation deps.dagger.runtime
     implementation deps.dagger.android
@@ -282,16 +284,15 @@ dependencies {
     implementation 'com.umeng.sdk:common:latest.integration'
     implementation 'com.umeng.sdk:analytics:latest.integration'
 
-    testImplementation deps.junit
-    androidTestImplementation deps.dexmaker
-    testImplementation deps.mock_web_server
-    testImplementation deps.mockito.core
-    androidTestImplementation deps.mockito.core, {
-        exclude group: 'net.bytebuddy'
-    }
-    androidTestImplementation deps.mockito.android
+    androidTestImplementation deps.androidx.test_core
+    androidTestImplementation deps.androidx.test_rules
+    androidTestImplementation deps.androidx.test_runner
+    androidTestImplementation deps.androidx.test_junit
+    androidTestImplementation deps.androidx.test_uiautomator
+    androidTestImplementation deps.androidx.test_espresso_core
 
     //implementation 'com.idescout.sql:sqlscout-server:4.1'
+    //操作 sqlite 的测试库
     debugImplementation 'com.amitshekhar.android:debug-db:1.0.4'
 }
 

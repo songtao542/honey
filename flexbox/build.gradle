@@ -26,6 +26,7 @@ android {
         versionCode 100
         versionName "1.0.0"
         multiDexEnabled true
+
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
 
         consumerProguardFiles 'proguard-rules.txt'
@@ -38,24 +39,13 @@ android {
 }
 
 dependencies {
-    //compileOnly "androidx.core:core:${rootProject.androidxCoreVersion}"
-    //compileOnly "androidx.recyclerview:recyclerview:${rootProject.androidxCoreVersion}"
-
     compileOnly deps.androidx.core
     compileOnly deps.androidx.appcompat
     compileOnly deps.androidx.recyclerview
 
-
-    testImplementation deps.junit
-
-//    androidTestImplementation "androidx.core:core:${rootProject.androidxCoreVersion}"
-//    androidTestImplementation "androidx.recyclerview:recyclerview:${rootProject.androidxCoreVersion}"
-//    androidTestImplementation "androidx.annotation:annotation:${rootProject.androidxCoreVersion}"
-//    androidTestImplementation "androidx.test:runner:${rootProject.androidxTestVersion}"
-//    androidTestImplementation "androidx.test:rules:${rootProject.androidxTestVersion}"
-//    androidTestImplementation "androidx.test.espresso:espresso-core:${rootProject.androidxEspressoVersion}"
-//    androidTestImplementation "org.jetbrains.kotlin:kotlin-stdlib:${rootProject.kotlinVersion}"
-    androidTestImplementation deps.kotlin.stdlib
+    androidTestImplementation deps.androidx.test_core
     androidTestImplementation deps.androidx.test_rules
     androidTestImplementation deps.androidx.test_runner
+    androidTestImplementation deps.androidx.test_junit
+    androidTestImplementation deps.androidx.test_espresso_core
 }
