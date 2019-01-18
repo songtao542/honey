@@ -572,28 +572,23 @@ public class ChattingListAdapter extends BaseAdapter {
             }
 
             // 点击头像跳转到个人信息界面
-            holder.headIcon.setOnClickListener(new View.OnClickListener() {
-
-                @Override
-                public void onClick(View arg0) {
-                    Intent intent = new Intent();
-                    if (msg.getDirect() == MessageDirect.send) {
+            holder.headIcon.setOnClickListener(arg0 -> {
+                Intent intent = new Intent();
+                if (msg.getDirect() == MessageDirect.send) {
 //                        intent.putExtra(JGApplication.TARGET_ID, JMessageClient.getMyInfo().getUserName());
 //                        intent.setClass(mContext, PersonalActivity.class);
 //                        mContext.startActivity(intent);
+                } else {
+                    String targetID = userInfo.getUserName();
+                    intent.putExtra(Constants.TARGET_ID, targetID);
+                    intent.putExtra(Constants.TARGET_APP_KEY, userInfo.getAppKey());
+                    intent.putExtra(Constants.GROUP_ID, mGroupId);
+                    if (userInfo.isFriend()) {
+                        //intent.setClass(mContext, FriendInfoActivity.class);
                     } else {
-                        String targetID = userInfo.getUserName();
-                        intent.putExtra(Constants.TARGET_ID, targetID);
-                        intent.putExtra(Constants.TARGET_APP_KEY, userInfo.getAppKey());
-                        intent.putExtra(Constants.GROUP_ID, mGroupId);
-                        if (userInfo.isFriend()) {
-                            //intent.setClass(mContext, FriendInfoActivity.class);
-                        } else {
-                            //intent.setClass(mContext, GroupNotFriendActivity.class);
-                        }
-                        ((Activity) mContext).startActivityForResult(intent,
-                                Constants.REQUEST_CODE_FRIEND_INFO);
+                        //intent.setClass(mContext, GroupNotFriendActivity.class);
                     }
+                    //((Activity) mContext).startActivityForResult(intent, Constants.REQUEST_CODE_FRIEND_INFO);
                 }
             });
 
