@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8"?>
+<selector xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <item android:state_selected="true">
+        <layer-list>
+            <item>
+                <shape android:shape="oval">
+                    <solid android:color="#fff2f3f7"></solid>
+                </shape>
+            </item>
+            <item android:bottom="20dp" android:drawable="@drawable/ic_voice_call_mute_on" android:left="20dp" android:right="20dp" android:top="20dp"></item>
+        </layer-list>
+    </item>
+    <item>
+        <layer-list>
+            <item>
+                <shape android:shape="oval">
+                    <stroke android:width="1dp" android:color="#fff2f3f7"></stroke>
+                </shape>
+            </item>
+            <item android:bottom="20dp" android:drawable="@drawable/ic_voice_call_mute_off" android:left="20dp" android:right="20dp" android:top="20dp" />
+        </layer-list>
+    </item>
+
+</selector>

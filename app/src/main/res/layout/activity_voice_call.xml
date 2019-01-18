@@ -66,90 +66,55 @@
             android:layout_marginTop="100dp"
             android:orientation="horizontal">
 
-            <LinearLayout
-                android:id="@+id/cancelAndHangupLayout"
+            <com.snt.phoney.widget.ActionButton
+                android:id="@+id/muteButton"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:orientation="vertical">
+                android:layout_marginRight="40dp"
+                android:visibility="gone"
+                app:actionImage="@drawable/ic_voice_call_mute_selector"
+                app:actionImageScaleType="fitXY"
+                app:actionImageSize="@dimen/voice_call_button_size"
+                app:actionText="@string/mute"
+                app:actionTextColor="@color/white"
+                app:actionTextSize="14sp" />
 
-                <androidx.appcompat.widget.AppCompatImageView
-                    android:id="@+id/cancelAndHangup"
-                    android:layout_width="@dimen/voice_call_button_size"
-                    android:layout_height="@dimen/voice_call_button_size"
-                    android:layout_gravity="center"
-                    android:background="@drawable/voice_call_hangup_selector"
-                    android:foreground="@drawable/voice_call_foreground"
-                    android:scaleType="centerInside"
-                    app:srcCompat="@drawable/ic_voice_call_hangup" />
-
-                <androidx.appcompat.widget.AppCompatTextView
-                    android:id="@+id/cancelAndHangupLabel"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_gravity="center_horizontal"
-                    android:layout_marginTop="10dp"
-                    android:text="@string/cancel"
-                    android:textColor="@color/white"
-                    android:textSize="@dimen/textsize_large" />
-            </LinearLayout>
-
-            <LinearLayout
-                android:id="@+id/speakerLayout"
+            <com.snt.phoney.widget.ActionButton
+                android:id="@+id/cancelOrHangupButton"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginLeft="100dp"
-                android:orientation="vertical"
-                android:visibility="gone">
+                app:actionImage="@drawable/ic_voice_call_hangup_selector"
+                app:actionImageScaleType="fitXY"
+                app:actionImageSize="@dimen/voice_call_button_size"
+                app:actionText="@string/cancel"
+                app:actionTextColor="@color/white"
+                app:actionTextSize="14sp" />
 
-                <androidx.appcompat.widget.AppCompatImageView
-                    android:id="@+id/speakerButton"
-                    android:layout_width="@dimen/voice_call_button_size"
-                    android:layout_height="@dimen/voice_call_button_size"
-                    android:layout_gravity="center"
-                    android:background="@drawable/voice_call_speaker_selector"
-                    android:foreground="@drawable/voice_call_foreground"
-                    android:scaleType="centerInside"
-                    app:srcCompat="@drawable/ic_voice_call_speaker_off" />
-
-                <androidx.appcompat.widget.AppCompatTextView
-                    android:id="@+id/speakerLabel"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_gravity="center_horizontal"
-                    android:layout_marginTop="10dp"
-                    android:text="@string/speaker"
-                    android:textColor="@color/white"
-                    android:textSize="@dimen/textsize_large" />
-            </LinearLayout>
-
-            <LinearLayout
-                android:id="@+id/callLayout"
+            <com.snt.phoney.widget.ActionButton
+                android:id="@+id/callButton"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:orientation="vertical"
-                android:visibility="gone">
+                android:visibility="gone"
+                app:actionImage="@drawable/ic_voice_call_accept_selector"
+                app:actionImageScaleType="fitXY"
+                app:actionImageSize="@dimen/voice_call_button_size"
+                app:actionText="@string/voice_call"
+                app:actionTextColor="@color/white"
+                app:actionTextSize="14sp" />
 
-                <androidx.appcompat.widget.AppCompatImageView
-                    android:id="@+id/call"
-                    android:layout_width="@dimen/voice_call_button_size"
-                    android:layout_height="@dimen/voice_call_button_size"
-                    android:layout_gravity="center"
-                    android:background="@drawable/voice_call_out_selector"
-                    android:foreground="@drawable/voice_call_foreground"
-                    android:scaleType="centerInside"
-                    app:srcCompat="@drawable/ic_voice_call_accept" />
+            <com.snt.phoney.widget.ActionButton
+                android:id="@+id/speakerButton"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="40dp"
+                android:visibility="gone"
+                app:actionImage="@drawable/ic_voice_call_speaker_selector"
+                app:actionImageScaleType="fitXY"
+                app:actionImageSize="@dimen/voice_call_button_size"
+                app:actionText="@string/speaker"
+                app:actionTextColor="@color/white"
+                app:actionTextSize="14sp" />
 
-                <androidx.appcompat.widget.AppCompatTextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_gravity="center_horizontal"
-                    android:layout_marginTop="10dp"
-                    android:text="@string/voice_call"
-                    android:textColor="@color/white"
-                    android:textSize="@dimen/textsize_large" />
-            </LinearLayout>
         </LinearLayout>
-
-
     </LinearLayout>
 </FrameLayout>

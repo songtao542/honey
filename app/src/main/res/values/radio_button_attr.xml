@@ -16,7 +16,7 @@
 
         <attr name="radioTextColor" format="color" />
         <attr name="radioTextSize" format="dimension" />
-        <attr name="radioText" format="dimension" />
+        <attr name="radioText" format="reference|string" />
         <attr name="groupMode" format="boolean" />
     </declare-styleable>
 </resources>

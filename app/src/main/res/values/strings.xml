@@ -481,5 +481,6 @@
     <string name="agree_dating_apply_tip">确认要同意对方参加你的约会吗？</string>
     <string name="chat_warning">只有会员才可以使用该功能，确认要升级为会员吗？</string>
     <string name="speaker">扬声器</string>
+    <string name="mute">静音</string>
 
 </resources>

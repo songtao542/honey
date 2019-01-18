@@ -107,6 +107,7 @@ class VoiceCallEngine(private val application: Application) {
     private var isConnected = false
     private var isConnecting = false
     private var isSpeakerEnabled = false
+    private var isMute = false
 
     init {
         Log.d("TTTT", "initEngine initEngine initEngine initEngine initEngine initEngine ")
@@ -311,6 +312,12 @@ class VoiceCallEngine(private val application: Application) {
         isSpeakerEnabled = !isSpeakerEnabled
         JMRtcClient.getInstance().enableSpeakerphone(isSpeakerEnabled)
         return isSpeakerEnabled
+    }
+
+    fun switchMute(): Boolean {
+        isMute = !isMute
+        JMRtcClient.getInstance().enableAudio(!isMute)
+        return isMute
     }
 
     fun isConnected(): Boolean {

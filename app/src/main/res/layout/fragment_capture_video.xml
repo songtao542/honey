@@ -45,7 +45,7 @@
             android:layout_width="@dimen/design_fab_size_normal"
             android:layout_height="@dimen/design_fab_size_normal"
             android:layout_gravity="center"
-            android:background="@drawable/voice_call_hangup_selector"
+            android:background="@drawable/ic_voice_call_hangup_selector"
             android:clickable="false"
             android:gravity="center"
             android:textColor="@color/white"

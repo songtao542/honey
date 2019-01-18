@@ -64,13 +64,12 @@ class VoiceCallActivity : BaseNoViewModelActivity() {
             VoiceCallEngine.getInstance().call(mCaller!!, mCallee!!)
         }
 
-
-        cancelAndHangup.setOnClickListener {
+        cancelOrHangupButton.setOnClickListener {
             VoiceCallEngine.getInstance().hangup()
             finish()
         }
 
-        call.setOnClickListener {
+        callButton.setOnClickListener {
             state.text = getString(R.string.wait_accept_template, mCallee?.nickname
                     ?: getString(R.string.other_side))
             setupCancelUI()
@@ -79,7 +78,12 @@ class VoiceCallActivity : BaseNoViewModelActivity() {
 
         speakerButton.setOnClickListener {
             val enable = VoiceCallEngine.getInstance().switchSpeaker()
-            speakerButton.setImageResource(if (enable) R.drawable.ic_voice_call_speaker_on else R.drawable.ic_voice_call_speaker_off)
+            speakerButton.isSelected = enable
+        }
+
+        muteButton.setOnClickListener {
+            val enable = VoiceCallEngine.getInstance().switchMute()
+            muteButton.isSelected = enable
         }
     }
 
@@ -142,12 +146,20 @@ class VoiceCallActivity : BaseNoViewModelActivity() {
     private fun setupCallOutUI(reason: Int, hangupByMyself: Boolean = false) {
         if (reason == REASON_REFUSE) {
             state.setText(R.string.has_refuse_phone)
+            mHandler.postDelayed({
+                finish()
+            }, 500)
+            return
         } else if (reason == REASON_OFFLINE || reason == REASON_HANGUP) {
             if (hangupByMyself) {
                 state.setText(R.string.has_hangup_phone)
             } else {
                 state.setText(R.string.has_hangup_phone_by_other)
             }
+            mHandler.postDelayed({
+                finish()
+            }, 500)
+            return
         } else if (reason == REASON_CANCEL) {
             state.setText(R.string.has_no_answer)
         } else if (reason == REASON_BUSY) {
@@ -157,29 +169,32 @@ class VoiceCallActivity : BaseNoViewModelActivity() {
         } else if (reason == ERROR_TIMEOUT) {
             state.setText(R.string.has_timeout)
         }
-        cancelAndHangupLayout.visibility = View.GONE
-        callLayout.visibility = View.VISIBLE
-        speakerLayout.visibility = View.GONE
+        cancelOrHangupButton.visibility = View.GONE
+        callButton.visibility = View.VISIBLE
+        speakerButton.visibility = View.GONE
+        muteButton.visibility = View.GONE
     }
 
     /**
      *  正在呼叫中 显示 cancel 状态
      */
     private fun setupCancelUI() {
-        cancelAndHangupLabel.setText(R.string.cancel)
-        cancelAndHangupLayout.visibility = View.VISIBLE
-        callLayout.visibility = View.GONE
-        speakerLayout.visibility = View.GONE
+        cancelOrHangupButton.setText(R.string.cancel)
+        cancelOrHangupButton.visibility = View.VISIBLE
+        callButton.visibility = View.GONE
+        speakerButton.visibility = View.GONE
+        muteButton.visibility = View.GONE
     }
 
     /**
      * 已接通后
      */
     private fun setupConnectedUI() {
-        cancelAndHangupLabel.setText(R.string.hangup_phone)
-        cancelAndHangupLayout.visibility = View.VISIBLE
-        callLayout.visibility = View.GONE
-        speakerLayout.visibility = View.VISIBLE
+        cancelOrHangupButton.setText(R.string.hangup_phone)
+        cancelOrHangupButton.visibility = View.VISIBLE
+        callButton.visibility = View.GONE
+        speakerButton.visibility = View.VISIBLE
+        muteButton.visibility = View.VISIBLE
     }
 
     private var countDownTimer: CountDownTimer? = null

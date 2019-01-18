@@ -69,14 +69,19 @@ class VoiceAnswerActivity : BaseNoViewModelActivity() {
 
         setupCallInUI()
 
-        accept.setOnClickListener {
+        acceptButton.setOnClickListener {
             VoiceCallEngine.getInstance().accept()
-            acceptLayout.visibility = View.GONE
+            acceptButton.visibility = View.GONE
         }
 
         speakerButton.setOnClickListener {
             val enable = VoiceCallEngine.getInstance().switchSpeaker()
-            speakerButton.setImageResource(if (enable) R.drawable.ic_voice_call_speaker_on else R.drawable.ic_voice_call_speaker_off)
+            speakerButton.isSelected = enable
+        }
+
+        muteButton.setOnClickListener {
+            val enable = VoiceCallEngine.getInstance().switchMute()
+            muteButton.isSelected = enable
         }
     }
 
@@ -147,11 +152,12 @@ class VoiceAnswerActivity : BaseNoViewModelActivity() {
     private fun setupCallInUI() {
         state.setText(R.string.being_invited)
         //显示接听按钮
-        acceptLayout.visibility = View.VISIBLE
+        acceptButton.visibility = View.VISIBLE
         //隐藏扬声器按钮
-        speakerLayout.visibility = View.GONE
+        speakerButton.visibility = View.GONE
+        muteButton.visibility = View.GONE
         //此时 refuseAndHangup 按钮执行 refuse 功能
-        refuseAndHangup.setOnClickListener {
+        refuseOrHangupButton.setOnClickListener {
             VoiceCallEngine.getInstance().refuse()
             finish()
         }
@@ -163,11 +169,12 @@ class VoiceAnswerActivity : BaseNoViewModelActivity() {
     private fun setupConnectedUI() {
         state.setText(R.string.has_accept_phone)
         //隐藏接听按钮
-        acceptLayout.visibility = View.GONE
+        acceptButton.visibility = View.GONE
         //显示扬声器按钮
-        speakerLayout.visibility = View.VISIBLE
+        speakerButton.visibility = View.VISIBLE
+        muteButton.visibility = View.VISIBLE
         //此时 refuseAndHangup 按钮执行 hangup 功能
-        refuseAndHangup.setOnClickListener {
+        refuseOrHangupButton.setOnClickListener {
             VoiceCallEngine.getInstance().hangup()
             finish()
         }
