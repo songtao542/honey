@@ -6,7 +6,7 @@ import com.snt.phoney.utils.data.Constants
 
 class DatingActivity : CommonActivity() {
 
-    override fun onConfigureTheme(): Int? {
-        return intent?.getIntExtra(Constants.Extra.THEME, 0) ?: 0
+    override fun onApplyTheme(themeId: Int): Int {
+        return intent?.getIntExtra(Constants.Extra.THEME, themeId) ?: themeId
     }
 }

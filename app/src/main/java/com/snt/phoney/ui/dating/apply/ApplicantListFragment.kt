@@ -1,4 +1,4 @@
-package com.snt.phoney.ui.dating.list
+package com.snt.phoney.ui.dating.apply
 
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -34,7 +34,7 @@ class ApplicantListFragment : BaseFragment() {
     private var dating: Dating? = null
     private var uuid: String? = null
 
-    private lateinit var viewModel: DatingViewModel
+    private lateinit var viewModel: DatingApplyViewModel
     private lateinit var adapter: ApplicantListRecyclerViewAdapter
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -52,7 +52,7 @@ class ApplicantListFragment : BaseFragment() {
 
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
-        viewModel = ViewModelProviders.of(this, viewModelFactory).get(DatingViewModel::class.java)
+        viewModel = ViewModelProviders.of(this, viewModelFactory).get(DatingApplyViewModel::class.java)
 
         toolbar.setNavigationOnClickListener { activity?.onBackPressed() }
         titleTextView.setText(R.string.dating_applying_title)

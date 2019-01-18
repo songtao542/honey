@@ -62,12 +62,9 @@
     <color name="recharge_btn_pressed_bg">#eeeeee</color>
     <color name="recharge_btn_border">#9013fe</color>
     <color name="bind_phone_edittext_border">#d7d7d7</color>
-    <color name="bind_phone_edittext_focus_border">#f8e71c</color>
     <color name="bind_phone_edittext_bg">#f2f3f7</color>
     <color name="bind_phone_get_vcode">#4a4a4a</color>
     <color name="bind_phone_get_vcode_pressed">#393939</color>
-    <color name="bind_phone_confirm">#f8e71c</color>
-    <color name="bind_phone_confirm_pressed">#dccd16</color>
     <color name="edit_user_item_label">#000000</color>
     <color name="edit_user_item_divider_label">#444444</color>
     <color name="edit_user_item_value">#4a4a4a</color>
@@ -79,8 +76,6 @@
     <color name="dating_cancel_btn_pressed">#aaaaaa</color>
     <color name="dating_cancel_btn_normal">#bbbbbb</color>
 
-    <color name="share_button_pressed">#e3d41c</color>
-    <color name="share_button_normal">#f8e71c</color>
     <color name="share_cancel_button_pressed">#eeeeee</color>
     <color name="share_cancel_button_normal">#ffffff</color>
     <color name="user_info_authenticate">#FFEB3B</color>
@@ -95,5 +90,4 @@
     <color name="location_picker_my_location">#eeffffff</color>
     <color name="location_picker_my_location_pressed">#eedddddd</color>
 
-    <color name="camera_video_action_background">#4285f4</color>
 </resources>

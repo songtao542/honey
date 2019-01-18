@@ -8,8 +8,8 @@ import android.webkit.*
 import android.widget.SeekBar
 import com.snt.phoney.R
 import com.snt.phoney.base.BaseNoViewModelActivity
-import com.snt.phoney.extensions.EXTRA_ARGUMENT
 import com.snt.phoney.extensions.setLayoutFullscreen
+import com.snt.phoney.utils.data.Constants
 import com.snt.phoney.widget.PopupList
 import kotlinx.android.synthetic.main.activity_web_browser.*
 import kotlinx.android.synthetic.main.app_toolbar.*
@@ -41,7 +41,7 @@ class WebBrowserActivity : BaseNoViewModelActivity(), View.OnClickListener {
         }
     }
 
-    override fun onConfigureTheme(): Int? = null
+    override fun onApplyTheme(themeId: Int): Int = 0
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -72,7 +72,7 @@ class WebBrowserActivity : BaseNoViewModelActivity(), View.OnClickListener {
 
         var url = intent.extras?.getString("url")
         var title = intent.extras?.getString("title")
-        var extras = intent?.getBundleExtra(EXTRA_ARGUMENT)
+        var extras = intent?.getBundleExtra(Constants.Extra.ARGUMENT)
         if (TextUtils.isEmpty(url) && extras != null) {
             url = extras.getString("url")
         }

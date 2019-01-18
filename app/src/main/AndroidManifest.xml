@@ -26,10 +26,10 @@
         android:label="@string/app_name"
         android:roundIcon="@mipmap/ic_launcher"
         android:supportsRtl="true"
-        android:theme="@style/AppTheme.Female">
+        android:theme="@style/AppTheme">
         <service
             android:name=".service.TaskIntentService"
-            android:exported="false"></service>
+            android:exported="false"/>
 
         <meta-data
             android:name="android.notch_support"
@@ -51,9 +51,12 @@
         <!-- android:name=".service.VoiceCallService" -->
         <!-- android:enabled="true" -->
         <!-- android:exported="false" /> -->
-        <activity android:name=".ui.voicecall2.VoiceCallActivity" />
+        <activity
+            android:name=".ui.voicecall2.VoiceCallActivity"
+            android:screenOrientation="portrait" />
         <activity
             android:name=".ui.voicecall2.VoiceAnswerActivity"
+            android:screenOrientation="portrait"
             android:theme="@style/AppTheme.FullScreen" />
 
         <meta-data
@@ -64,7 +67,8 @@
         <activity
             android:name="com.tencent.tauth.AuthActivity"
             android:launchMode="singleTask"
-            android:noHistory="true">
+            android:noHistory="true"
+            android:screenOrientation="portrait">
             <intent-filter>
                 <action android:name="android.intent.action.VIEW" />
 
@@ -90,18 +94,22 @@
         <activity
             android:name=".wxapi.WXEntryActivity"
             android:exported="true"
+            android:screenOrientation="portrait"
             android:theme="@style/AppTheme.NoDisplay"
             tools:node="replace" />
         <activity
             android:name=".wxapi.WXPayEntryActivity"
             android:exported="true"
+            android:screenOrientation="portrait"
             android:theme="@style/AppTheme.NoDisplay"
             tools:node="replace" />
         <activity
             android:name="jiguang.chat.activity.ChatActivity"
+            android:screenOrientation="portrait"
             android:theme="@style/AppTheme.Light" />
         <activity
             android:name="jiguang.chat.activity.BrowserViewPagerActivity"
+            android:screenOrientation="portrait"
             android:theme="@style/AppTheme.Light" />
 
         <provider
@@ -113,15 +121,7 @@
 
         <activity
             android:name=".ui.main.MainActivity"
-            android:screenOrientation="portrait">
-
-            <!-- <intent-filter> -->
-            <!-- <action android:name="android.intent.action.MAIN" /> -->
-
-
-            <!-- <category android:name="android.intent.category.LAUNCHER" /> -->
-            <!-- </intent-filter> -->
-        </activity>
+            android:screenOrientation="portrait" />
         <activity
             android:name=".ui.signup.SignupActivity"
             android:screenOrientation="portrait"
@@ -138,30 +138,53 @@
             android:theme="@style/AppTheme.Signup" />
         <activity
             android:name=".ui.dating.DatingActivity"
+            android:screenOrientation="portrait"
             android:windowSoftInputMode="adjustResize" />
-        <activity android:name=".ui.vip.VipActivity" />
-        <activity android:name=".ui.photo.PhotoViewerActivity" />
-        <activity android:name=".ui.nearby.NearbyActivity" />
-        <activity android:name=".ui.user.UserActivity" />
-        <activity android:name=".ui.report.ReportActivity" />
-        <activity android:name=".ui.privacy.PrivacyActivity" />
+        <activity
+            android:name=".ui.vip.VipActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".ui.nearby.NearbyActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".ui.user.UserActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".ui.report.ReportActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".ui.privacy.PrivacyActivity"
+            android:screenOrientation="portrait" />
         <activity
             android:name=".ui.news.NewsActivity"
+            android:screenOrientation="portrait"
             android:theme="@style/AppTheme.Light" />
-        <activity android:name=".ui.auth.AuthActivity" />
+        <activity
+            android:name=".ui.auth.AuthActivity"
+            android:screenOrientation="portrait" />
         <activity
             android:name=".ui.wallet.WalletActivity"
+            android:screenOrientation="portrait"
             android:theme="@style/AppTheme.Light" />
         <activity
             android:name=".ui.about.AboutActivity"
+            android:screenOrientation="portrait"
             android:theme="@style/AppTheme.Light" />
         <activity
             android:name=".ui.browser.BrowserActivity"
+            android:screenOrientation="portrait"
             android:theme="@style/AppTheme.Light" />
         <activity
             android:name=".ui.browser.WebBrowserActivity"
+            android:screenOrientation="portrait"
             android:theme="@style/AppTheme.Light" />
-        <activity android:name=".ui.album.AlbumActivity" />
+
+        <activity
+            android:name=".ui.photo.PhotoViewerActivity"
+            android:theme="@style/Theme.SwipeBack" />
+        <activity
+            android:name=".ui.album.AlbumActivity"
+            android:theme="@style/Theme.SwipeBack" />
 
         <provider
             android:name="androidx.core.content.FileProvider"

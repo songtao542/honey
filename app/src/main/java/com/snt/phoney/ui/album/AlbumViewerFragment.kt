@@ -3,16 +3,16 @@ package com.snt.phoney.ui.album
 import android.app.Activity
 import android.content.Intent
 import android.os.Bundle
-import android.util.Log
 import android.view.KeyEvent
+import android.view.View
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.ViewModelProviders
 import com.snt.phoney.di.Injectable
 import com.snt.phoney.domain.model.Photo
 import com.snt.phoney.ui.photo.PhotoFragment
-import com.snt.phoney.ui.photo.PhotoViewerAdapter
 import com.snt.phoney.ui.photo.PhotoViewerFragment
 import com.snt.phoney.utils.data.Constants
+import cust.app.swipeback.SwipeBackLayout
 import javax.inject.Inject
 
 class AlbumViewerFragment : PhotoViewerFragment(), Injectable {

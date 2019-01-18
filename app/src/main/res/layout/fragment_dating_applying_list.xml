@@ -5,7 +5,7 @@
     android:layout_height="match_parent"
     android:background="#FAFAFA"
     android:orientation="vertical"
-    tools:context=".ui.dating.applying.ApplyingListFragment">
+    tools:context=".ui.dating.apply.ApplyingListFragment">
 
     <include layout="@layout/app_toolbar" />
 

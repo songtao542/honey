@@ -1,21 +1,27 @@
-package com.snt.phoney.ui.dating.list
+package com.snt.phoney.ui.dating.apply
 
 
 import android.content.Context
+import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.appcompat.app.AlertDialog
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.bumptech.glide.load.resource.drawable.DrawableTransitionOptions
 import com.bumptech.glide.request.RequestOptions
 import com.snt.phoney.R
+import com.snt.phoney.base.Page
 import com.snt.phoney.domain.model.Applicant
+import com.snt.phoney.extensions.startActivity
+import com.snt.phoney.ui.user.UserActivity
+import com.snt.phoney.utils.data.Constants
 import kotlinx.android.synthetic.main.fragment_dating_applicant_item.view.*
 
 /**
  */
-class ApplicantListRecyclerViewAdapter(private val viewModel: DatingViewModel) : RecyclerView.Adapter<ApplicantListRecyclerViewAdapter.ViewHolder>() {
+class ApplicantListRecyclerViewAdapter(private val viewModel: DatingApplyViewModel) : RecyclerView.Adapter<ApplicantListRecyclerViewAdapter.ViewHolder>() {
 
     var data: List<Applicant>? = null
         set(value) {
@@ -48,8 +54,15 @@ class ApplicantListRecyclerViewAdapter(private val viewModel: DatingViewModel) :
         private val rejectButton = mView.rejectButton
 
         fun setData(applicant: Applicant) {
-            applicant.user?.avatar?.let { portrait ->
-                Glide.with(mView).load(portrait).apply(RequestOptions().circleCrop()).transition(DrawableTransitionOptions.withCrossFade()).into(head)
+            applicant.user?.let { user ->
+                user.avatar?.let { avatar ->
+                    Glide.with(mView).load(avatar).apply(RequestOptions().circleCrop()).transition(DrawableTransitionOptions.withCrossFade()).into(head)
+                }
+                head.setOnClickListener {
+                    context.startActivity<UserActivity>(Page.USER_INFO, Bundle().apply {
+                        putParcelable(Constants.Extra.USER, user)
+                    })
+                }
             }
             name.text = applicant.user?.nickname
             content.text = applicant.user?.introduce
@@ -58,10 +71,14 @@ class ApplicantListRecyclerViewAdapter(private val viewModel: DatingViewModel) :
                 agreeButton.visibility = View.VISIBLE
                 rejectButton.visibility = View.VISIBLE
                 agreeButton.setOnClickListener {
-                    viewModel.reviewDating(applicant, 1)
+                    reviewApply(R.string.agree_dating_apply_tip) {
+                        viewModel.reviewDating(applicant, 1)
+                    }
                 }
                 rejectButton.setOnClickListener {
-                    viewModel.reviewDating(applicant, 2)
+                    reviewApply(R.string.reject_dating_apply_tip) {
+                        viewModel.reviewDating(applicant, 2)
+                    }
                 }
             } else {
                 stateText.visibility = View.VISIBLE
@@ -73,6 +90,19 @@ class ApplicantListRecyclerViewAdapter(private val viewModel: DatingViewModel) :
                     3 -> stateText.text = context.getString(R.string.has_canceled)
                 }
             }
+        }
+
+        private fun reviewApply(message: Int, handler: (() -> Unit)) {
+            AlertDialog.Builder(context)
+                    .setTitle(R.string.confirm_notice)
+                    .setMessage(message)
+                    .setCancelable(false)
+                    .setNegativeButton(R.string.cancel) { dialog, _ ->
+                        dialog.dismiss()
+                    }.setPositiveButton(R.string.confirm) { dialog, _ ->
+                        dialog.dismiss()
+                        handler.invoke()
+                    }.show()
         }
     }
 }

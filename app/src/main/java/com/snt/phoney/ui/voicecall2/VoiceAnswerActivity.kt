@@ -67,11 +67,16 @@ class VoiceAnswerActivity : BaseNoViewModelActivity() {
         mCaller = intent.getParcelableExtra(Constants.Extra.CALLER)
         setupUser()
 
-        setupRefuseUI()
+        setupCallInUI()
 
         accept.setOnClickListener {
             VoiceCallEngine.getInstance().accept()
             acceptLayout.visibility = View.GONE
+        }
+
+        speakerButton.setOnClickListener {
+            val enable = VoiceCallEngine.getInstance().switchSpeaker()
+            speakerButton.setImageResource(if (enable) R.drawable.ic_voice_call_speaker_on else R.drawable.ic_voice_call_speaker_off)
         }
     }
 
@@ -136,14 +141,32 @@ class VoiceAnswerActivity : BaseNoViewModelActivity() {
         }
     }
 
-    private fun setupRefuseUI() {
+    /**
+     * 被呼叫状态
+     */
+    private fun setupCallInUI() {
+        state.setText(R.string.being_invited)
+        //显示接听按钮
+        acceptLayout.visibility = View.VISIBLE
+        //隐藏扬声器按钮
+        speakerLayout.visibility = View.GONE
+        //此时 refuseAndHangup 按钮执行 refuse 功能
         refuseAndHangup.setOnClickListener {
             VoiceCallEngine.getInstance().refuse()
             finish()
         }
     }
 
-    private fun setupHangupUI() {
+    /**
+     * 已连接状态
+     */
+    private fun setupConnectedUI() {
+        state.setText(R.string.has_accept_phone)
+        //隐藏接听按钮
+        acceptLayout.visibility = View.GONE
+        //显示扬声器按钮
+        speakerLayout.visibility = View.VISIBLE
+        //此时 refuseAndHangup 按钮执行 hangup 功能
         refuseAndHangup.setOnClickListener {
             VoiceCallEngine.getInstance().hangup()
             finish()
@@ -158,8 +181,7 @@ class VoiceAnswerActivity : BaseNoViewModelActivity() {
             mCaller = user
             mHandler.post {
                 setupUser()
-                setupRefuseUI()
-                state.setText(R.string.being_invited)
+                setupCallInUI()
             }
         }
 
@@ -168,9 +190,7 @@ class VoiceAnswerActivity : BaseNoViewModelActivity() {
 
         override fun onCallConnected() {
             mHandler.post {
-                acceptLayout.visibility = View.GONE
-                state.setText(R.string.has_accept_phone)
-                setupHangupUI()
+                setupConnectedUI()
             }
         }
 

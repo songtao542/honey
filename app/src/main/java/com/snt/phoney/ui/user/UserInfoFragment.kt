@@ -147,11 +147,7 @@ class UserInfoFragment : BaseFragment() {
         }
 
         chatButton.setOnClickListener {
-            context?.let { ctx ->
-                user?.im?.let { im ->
-                    Chat.start(ctx, im)
-                }
-            }
+            tryChat()
         }
 
         viewDating.setOnClickListener {
@@ -164,7 +160,7 @@ class UserInfoFragment : BaseFragment() {
             }
         }
 
-        chatWith.setOnClickListener {
+        voiceCallButton.setOnClickListener {
             context?.let { ctx ->
                 user?.im?.let {
                     viewModel.getUser()?.let { me ->
@@ -190,6 +186,30 @@ class UserInfoFragment : BaseFragment() {
         val uid = uuid ?: user?.uuid
         uid?.let {
             viewModel.getUserInfo(it)
+        }
+    }
+
+    private fun tryChat() {
+        context?.let { ctx ->
+            user?.let { u ->
+                if (u.isVip) {
+                    u.im?.let { im ->
+                        Chat.start(ctx, im)
+                    }
+                } else {
+                    AlertDialog.Builder(ctx)
+                            .setTitle(R.string.notice)
+                            .setMessage(R.string.chat_warning)
+                            .setCancelable(false)
+                            .setNegativeButton(R.string.cancel) { dialog, _ ->
+                                dialog.dismiss()
+                            }.setPositiveButton(R.string.confirm) { dialog, _ ->
+                                dialog.dismiss()
+                                startActivityForResult<VipActivity>(Page.VIP, REQUEST_VIP_CODE)
+                            }.show()
+                }
+                return@let
+            }
         }
     }
 
@@ -228,7 +248,7 @@ class UserInfoFragment : BaseFragment() {
             }
 
             if (user.price <= 0) {
-                chatWith.setOnClickListener { snackbar(R.string.voice_not_available) }
+                voiceCallButton.setOnClickListener { snackbar(R.string.voice_not_available) }
                 chatLimit.setText(R.string.voice_not_available)
             } else {
                 chatLimit.text = getString(R.string.chat_price_template, df.format(user.price))

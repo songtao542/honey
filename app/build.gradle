@@ -164,6 +164,7 @@ android {
 dependencies {
     implementation fileTree(include: ['*.jar'], dir: 'libs')
     implementation project(path: ':flexbox')
+    implementation project(path: ':swipeback')
     //implementation project(path: ':expandable_layout')
     implementation project(path: ':citypicker')
     implementation project(path: ':zoomimage')

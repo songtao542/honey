@@ -106,6 +106,7 @@ class VoiceCallEngine(private val application: Application) {
 
     private var isConnected = false
     private var isConnecting = false
+    private var isSpeakerEnabled = false
 
     init {
         Log.d("TTTT", "initEngine initEngine initEngine initEngine initEngine initEngine ")
@@ -272,12 +273,22 @@ class VoiceCallEngine(private val application: Application) {
                         JMRtcClient.getInstance().call(listOf(u), JMSignalingMessage.MediaType.AUDIO, object : BasicCallback() {
                             override fun gotResult(code: Int, message: String?) {
                                 Log.d(TAG, "call============> code=$code  message=$message")
+                                if (code == 872001) {
+                                    retryInitEngineAndCall()
+                                }
                             }
                         })
                     }
                 }
             })
         }
+    }
+
+    private fun retryInitEngineAndCall() {
+        JMRtcClient.getInstance().initEngine(mJMRtcListenerImpl)
+        mHandler.postDelayed({
+            startJMCall()
+        }, 1000)
     }
 
     fun accept() {
@@ -296,8 +307,10 @@ class VoiceCallEngine(private val application: Application) {
         })
     }
 
-    fun enableSpeaker(enable: Boolean) {
-        JMRtcClient.getInstance().enableSpeakerphone(enable)
+    fun switchSpeaker(): Boolean {
+        isSpeakerEnabled = !isSpeakerEnabled
+        JMRtcClient.getInstance().enableSpeakerphone(isSpeakerEnabled)
+        return isSpeakerEnabled
     }
 
     fun isConnected(): Boolean {

@@ -33,8 +33,8 @@ public abstract class BaseActivity extends BaseNoViewModelActivity {
 
     @Nullable
     @Override
-    public Integer onConfigureTheme() {
-        return null;
+    public int onApplyTheme(int themeId) {
+        return 0;
     }
 
     @Override

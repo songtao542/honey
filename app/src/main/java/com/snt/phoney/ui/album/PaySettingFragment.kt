@@ -20,6 +20,7 @@ import com.snt.phoney.extensions.dip
 import com.snt.phoney.extensions.setSoftInputMode
 import com.snt.phoney.extensions.snackbar
 import com.snt.phoney.ui.main.mine.AlbumPermissionSettingFragment
+import com.snt.phoney.utils.Picker
 import com.snt.phoney.utils.data.Constants
 import com.snt.phoney.widget.CompatRadioButton
 import com.snt.phoney.widget.itemdecoration.MonospacedItemDecoration
@@ -57,6 +58,8 @@ class PaySettingFragment : BaseFragment() {
     private lateinit var adapter: PaySettingRecyclerViewAdapter
 
     private lateinit var checked: CompatRadioButton
+
+    private var amount = 0
 
     private var progressDialog: ProgressDialog? = null
 
@@ -97,6 +100,10 @@ class PaySettingFragment : BaseFragment() {
 
         checked = needPay
 
+        inputPrice.setOnClickListener {
+            showMibiPicker()
+        }
+
         needPay.setOnClickListener { view ->
             setCheck(view)
         }
@@ -107,15 +114,17 @@ class PaySettingFragment : BaseFragment() {
 
         confirm.setOnClickListener {
             if (checked == needPay) {
-                val amount = getAmount()
-                if (amount > 0.0) {
+                //val amount = getAmount()
+                if (amount > 0) {
                     if (adapter.selectedPhoto != null) {
                         val photoId = adapter.selectedPhoto?.id?.toString() ?: ""
                         showProgress(getString(R.string.on_going_seting))
-                        viewModel.setPhotoPermission(PhotoPermission.NEED_CHARGE, amount, photoId)
+                        viewModel.setPhotoPermission(PhotoPermission.NEED_CHARGE, amount.toDouble(), photoId)
                     } else {
                         snackbar(getString(R.string.must_select_photo))
                     }
+                } else {
+                    snackbar(getString(R.string.please_select_mibi_amount))
                 }
             } else {
                 showProgress(getString(R.string.on_going_seting))
@@ -154,6 +163,13 @@ class PaySettingFragment : BaseFragment() {
             -1.0
         } else {
             amount
+        }
+    }
+
+    private fun showMibiPicker() {
+        Picker.showPicker(activity, getString(R.string.mibi_picker_hint), 1, 80, if (amount == 0) 10 else amount) { value, _ ->
+            price.text = getString(R.string.amout_mibi_template, value.toString())
+            amount = value
         }
     }
 

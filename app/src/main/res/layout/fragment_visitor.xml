@@ -22,6 +22,7 @@
         android:layout_toLeftOf="@+id/optLayout"
         android:layout_toRightOf="@+id/head"
         android:orientation="vertical"
+        android:paddingLeft="10dp"
         android:paddingRight="10dp">
 
 

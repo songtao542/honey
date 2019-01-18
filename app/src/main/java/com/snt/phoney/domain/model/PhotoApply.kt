@@ -10,6 +10,10 @@ import java.text.SimpleDateFormat
 @Parcelize
 @Serializable
 data class PhotoApply(
+        /**
+         * 用户 uuid
+         */
+        var uid: String? = null,//"uuid": "u20181204173309703e6c143d35a6a7",
         var uuid: String? = null,//"uuid": "u20181204173309703e6c143d35a6a7",
         @SerializedName(value = "nickName") var nickname: String? = null,//  "nickName": "淞",
         var sex: Int = 0,//"sex": 1,

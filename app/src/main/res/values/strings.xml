@@ -197,6 +197,10 @@
     <string name="publish_success">发布成功</string>
     <string name="price_label">填写红包</string>
     <string name="price_hint">输入金额</string>
+    <string name="mibi_price_label">收取蜜币</string>
+    <string name="mibi_picker_hint">选择蜜币数量</string>
+    <string name="please_select_mibi_amount">请选择蜜币数量</string>
+    <string name="amout_mibi_template">%1$s蜜币</string>
     <string name="unlock_all">全部解锁</string>
     <string name="pay_money">红包付费</string>
     <string name="album_permission_setting">设置相册权限</string>
@@ -398,7 +402,8 @@
     <string name="accept_phone">接听</string>
     <string name="has_accept_phone">已接通</string>
     <string name="has_refuse_phone">对方已拒绝接听</string>
-    <string name="has_hangup_phone">对方已挂断</string>
+    <string name="has_hangup_phone_by_other">对方已挂断</string>
+    <string name="has_hangup_phone">已挂断</string>
     <string name="has_offline_phone">对方掉线了</string>
     <string name="has_timeout">已超时</string>
     <string name="wechat_account">微信号</string>
@@ -468,4 +473,13 @@
     <string name="auth_failed_tip">认证未通过，请重新认证！</string>
     <string name="auth_success_tip">认证已通过</string>
     <string name="auth_reviewing_tip">你已提交认证，请耐心等待工作人员审核！</string>
+    <string name="confirm_notice">确认提示</string>
+    <string name="notice">提示</string>
+    <string name="agree_photo_apply_tip">确认要同意对方查看你的相册吗？</string>
+    <string name="reject_photo_apply_tip">确认要拒绝对方查看你的相册？</string>
+    <string name="reject_dating_apply_tip">确认要拒绝对方参加你的约会吗？</string>
+    <string name="agree_dating_apply_tip">确认要同意对方参加你的约会吗？</string>
+    <string name="chat_warning">只有会员才可以使用该功能，确认要升级为会员吗？</string>
+    <string name="speaker">扬声器</string>
+
 </resources>

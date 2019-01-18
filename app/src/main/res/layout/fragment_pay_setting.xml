@@ -57,20 +57,22 @@
                         android:gravity="center_vertical"
                         android:paddingLeft="@dimen/content_padding"
                         android:paddingRight="@dimen/content_padding"
-                        android:text="@string/price_label"
+                        android:text="@string/mibi_price_label"
+                        android:textColor="@color/black"
                         android:textSize="@dimen/textsize_normal" />
 
-                    <EditText
+                    <androidx.appcompat.widget.AppCompatTextView
                         android:id="@+id/price"
                         android:layout_width="match_parent"
                         android:layout_height="50dp"
-                        android:background="@android:color/transparent"
+                        android:clickable="false"
                         android:gravity="center_vertical|right"
-                        android:hint="@string/price_hint"
-                        android:inputType="numberSigned"
                         android:paddingLeft="@dimen/content_padding"
                         android:paddingRight="@dimen/content_padding"
+                        android:text="@string/mibi_picker_hint"
+                        android:textColor="@color/dark_gray"
                         android:textSize="@dimen/textsize_normal" />
+                    <!--android:inputType="numberSigned"-->
                 </LinearLayout>
 
                 <com.snt.phoney.widget.CompatRadioButton

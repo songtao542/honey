@@ -10,7 +10,7 @@ import com.snt.phoney.ui.auth.AuthModeFragment
 import com.snt.phoney.ui.browser.OfficialMessageFragment
 import com.snt.phoney.ui.dating.create.CreateDatingFragment
 import com.snt.phoney.ui.dating.detail.DatingDetailFragment
-import com.snt.phoney.ui.dating.list.ApplicantListFragment
+import com.snt.phoney.ui.dating.apply.ApplicantListFragment
 import com.snt.phoney.ui.dating.list.DatingListFragment
 import com.snt.phoney.ui.dating.list.MyDatingFragment
 import com.snt.phoney.ui.dating.list.OthersDatingFragment

@@ -1,10 +1,8 @@
 package com.snt.phoney.ui.dating.list
 
-import android.util.Log
 import androidx.lifecycle.MutableLiveData
 import com.snt.phoney.R
 import com.snt.phoney.base.AppViewModel
-import com.snt.phoney.domain.model.Applicant
 import com.snt.phoney.domain.model.ApplyState
 import com.snt.phoney.domain.model.Dating
 import com.snt.phoney.domain.usecase.DatingUseCase
@@ -24,20 +22,16 @@ class DatingViewModel @Inject constructor(private val usecase: DatingUseCase, pr
     private val mOtherDatings by lazy { ArrayList<Dating>() }
     private val mPublishDatings by lazy { ArrayList<Dating>() }
     private val mJoinedDatings by lazy { ArrayList<Dating>() }
-    private val mApplicants by lazy { ArrayList<Applicant>() }
 
     val otherDatings = MutableLiveData<List<Dating>>()
     val publishDatings = MutableLiveData<List<Dating>>()
     val joinedDatings = MutableLiveData<List<Dating>>()
-    val applicants = MutableLiveData<List<Applicant>>()
 
-    val reviewSuccess = MutableLiveData<String>()
     val quitSuccess = MutableLiveData<String>()
     val followSuccess = MutableLiveData<Boolean>()
 
     private var mDatingPageIndex: Int = 1
     private var mJoinDatingPageIndex: Int = 1
-    private var mApplicantPageIndex: Int = 1
 
     fun quitDating(dating: Dating) {
         val token = usecase.getAccessToken() ?: return
@@ -167,108 +161,6 @@ class DatingViewModel @Inject constructor(private val usecase: DatingUseCase, pr
                         }
                 ).disposedBy(disposeBag)
     }
-
-    fun listDatingApplicant(refresh: Boolean, uuid: String, loadMore: LoadMoreAdapter.LoadMore? = null) {
-        if (isLoading("dating_applicant")) {
-            return
-        }
-        if (refresh) {
-            mApplicantPageIndex = 1
-        }
-        val token = usecase.getAccessToken() ?: return
-        usecase.listDatingApplicant(token, uuid, mApplicantPageIndex)
-                .subscribeOn(Schedulers.io())
-                .observeOn(AndroidSchedulers.mainThread())
-                .subscribeBy(
-                        onSuccess = {
-                            setLoading("dating_applicant", false)
-                            if (it.success) {
-                                if (refresh) {
-                                    applicants.value = mApplicants.empty()
-                                }
-                                if (it.isNotEmpty) {
-                                    applicants.value = mApplicants.addList(it.data)
-                                    mApplicantPageIndex++
-                                } else {
-                                    loadMore?.isEnable = false
-                                }
-                            } else {
-                                error.value = context.getString(R.string.load_failed)
-                            }
-                        },
-                        onError = {
-                            setLoading("dating_applicant", false)
-                            loadMore?.isLoadFailed = true
-                            error.value = context.getString(R.string.load_failed)
-                        }
-                ).disposedBy(disposeBag)
-    }
-
-
-    fun listApplicant(refresh: Boolean, loadMore: LoadMoreAdapter.LoadMore? = null) {
-        if (isLoading("applicant")) {
-            return
-        }
-        if (refresh) {
-            mApplicantPageIndex = 1
-        }
-        val token = usecase.getAccessToken() ?: return
-        usecase.listApplicant(token, mApplicantPageIndex)
-                .subscribeOn(Schedulers.io())
-                .observeOn(AndroidSchedulers.mainThread())
-                .subscribeBy(
-                        onSuccess = {
-                            setLoading("applicant", false)
-                            if (it.code == 200) {
-                                if (refresh) {
-                                    applicants.value = mApplicants.empty()
-                                }
-                                if (it.isNotEmpty) {
-                                    applicants.value = mApplicants.addList(it.data)
-                                    mApplicantPageIndex++
-                                } else {
-                                    loadMore?.isEnable = false
-                                }
-                            } else {
-                                error.value = context.getString(R.string.load_failed)
-                            }
-                        },
-                        onError = {
-                            setLoading("applicant", false)
-                            loadMore?.isLoadFailed = true
-                            error.value = context.getString(R.string.load_failed)
-                        }
-                ).disposedBy(disposeBag)
-    }
-
-    fun reviewDating(applicant: Applicant, state: Int) {
-        val token = usecase.getAccessToken() ?: return
-        usecase.reviewDating(token, applicant.safeUuid, state.toString())
-                .subscribeOn(Schedulers.io())
-                .observeOn(AndroidSchedulers.mainThread())
-                .subscribeBy(
-                        onSuccess = {
-                            if (it.code == 200) {
-                                when (state) {
-                                    1 -> {
-                                        applicant.state = 1
-                                        reviewSuccess.value = context.getString(R.string.has_agree)
-                                    }
-                                    2 -> {
-                                        applicant.state = 2
-                                        reviewSuccess.value = context.getString(R.string.has_reject)
-                                    }
-                                }
-                            } else {
-                                error.value = context.getString(R.string.review_failed)
-                            }
-                        },
-                        onError = {
-                            error.value = context.getString(R.string.review_failed)
-                        }
-                ).disposedBy(disposeBag)
-    }
-
 
     fun follow(dating: Dating) {
         val token = usecase.getAccessToken() ?: return

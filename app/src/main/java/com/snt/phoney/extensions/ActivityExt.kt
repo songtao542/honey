@@ -1,7 +1,11 @@
 package com.snt.phoney.extensions
 
 import android.app.Activity
+import android.content.pm.ActivityInfo
+import android.content.res.TypedArray
 import android.graphics.Rect
+import android.os.Build
+import android.util.Log
 import android.view.View
 import android.widget.FrameLayout
 import androidx.appcompat.app.AppCompatActivity
@@ -65,6 +69,37 @@ fun Activity.isActionBarShowing(): Boolean {
     } else {
         actionBar.isShowing
     }
+}
+
+/**
+ * 修复 Android 系统bug
+ */
+fun Activity.fixOrientation(): Boolean {
+    if (Build.VERSION.SDK_INT == Build.VERSION_CODES.O) {
+        try {
+            val styleableRes = Class.forName("com.android.internal.R\$styleable").getField("Window").get(null) as IntArray
+            val ta = obtainStyledAttributes(styleableRes)
+            val m = ActivityInfo::class.java.getMethod("isTranslucentOrFloating", TypedArray::class.java)
+            m.isAccessible = true
+            val isTranslucentOrFloating = m.invoke(null, ta) as Boolean
+            m.isAccessible = false
+
+            Log.d("TTTT", "xxxxxxxxxxxxxxxx isTranslucentOrFloating=$isTranslucentOrFloating")
+
+            if (isTranslucentOrFloating) {
+                val field = Activity::class.java.getDeclaredField("mActivityInfo")
+                field.isAccessible = true
+                val o = field.get(this) as ActivityInfo
+                o.screenOrientation = -1
+                field.isAccessible = false
+                return true
+            }
+        } catch (e: Exception) {
+            Log.e("fixOrientation", "fixOrientation:", e)
+            e.printStackTrace()
+        }
+    }
+    return false
 }
 
 

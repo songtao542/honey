@@ -76,6 +76,11 @@ class VoiceCallActivity : BaseNoViewModelActivity() {
             setupCancelUI()
             VoiceCallEngine.getInstance().call(mCaller!!, mCallee!!)
         }
+
+        speakerButton.setOnClickListener {
+            val enable = VoiceCallEngine.getInstance().switchSpeaker()
+            speakerButton.setImageResource(if (enable) R.drawable.ic_voice_call_speaker_on else R.drawable.ic_voice_call_speaker_off)
+        }
     }
 
     override fun onRequestPermissionsResult(requestCode: Int, permissions: Array<out String>, grantResults: IntArray) {
@@ -131,21 +136,50 @@ class VoiceCallActivity : BaseNoViewModelActivity() {
                 .into(head)
     }
 
-    private fun setupCallUI() {
+    /**
+     * 对方拒绝或者挂断后，显示 可以呼叫 状态
+     */
+    private fun setupCallOutUI(reason: Int, hangupByMyself: Boolean = false) {
+        if (reason == REASON_REFUSE) {
+            state.setText(R.string.has_refuse_phone)
+        } else if (reason == REASON_OFFLINE || reason == REASON_HANGUP) {
+            if (hangupByMyself) {
+                state.setText(R.string.has_hangup_phone)
+            } else {
+                state.setText(R.string.has_hangup_phone_by_other)
+            }
+        } else if (reason == REASON_CANCEL) {
+            state.setText(R.string.has_no_answer)
+        } else if (reason == REASON_BUSY) {
+            state.setText(R.string.the_user_is_busy)
+        } else if (reason == REASON_REFUSE) {
+            state.setText(R.string.has_refuse_phone)
+        } else if (reason == ERROR_TIMEOUT) {
+            state.setText(R.string.has_timeout)
+        }
         cancelAndHangupLayout.visibility = View.GONE
         callLayout.visibility = View.VISIBLE
+        speakerLayout.visibility = View.GONE
     }
 
+    /**
+     *  正在呼叫中 显示 cancel 状态
+     */
     private fun setupCancelUI() {
         cancelAndHangupLabel.setText(R.string.cancel)
         cancelAndHangupLayout.visibility = View.VISIBLE
         callLayout.visibility = View.GONE
+        speakerLayout.visibility = View.GONE
     }
 
-    private fun setupHangupUI() {
+    /**
+     * 已接通后
+     */
+    private fun setupConnectedUI() {
         cancelAndHangupLabel.setText(R.string.hangup_phone)
         cancelAndHangupLayout.visibility = View.VISIBLE
         callLayout.visibility = View.GONE
+        speakerLayout.visibility = View.VISIBLE
     }
 
     private var countDownTimer: CountDownTimer? = null
@@ -186,7 +220,7 @@ class VoiceCallActivity : BaseNoViewModelActivity() {
         override fun onCallConnected() {
             mHandler.post {
                 state.setText(R.string.has_accept_phone)
-                setupHangupUI()
+                setupConnectedUI()
             }
         }
 
@@ -196,32 +230,15 @@ class VoiceCallActivity : BaseNoViewModelActivity() {
         override fun onCallMemberOffline(user: JMUser?, reason: Int) {
             mHandler.post {
                 if (user?.username == mCallee?.username) {
-                    if (reason == REASON_REFUSE) {
-                        state.setText(R.string.has_refuse_phone)
-                    } else if (reason == REASON_OFFLINE || reason == REASON_HANGUP) {
-                        state.setText(R.string.has_hangup_phone)
-                    } else if (reason == REASON_CANCEL) {
-                        state.setText(R.string.has_no_answer)
-                    } else if (reason == REASON_BUSY) {
-                        state.setText(R.string.the_user_is_busy)
-                    }
                     VoiceCallEngine.getInstance().hangup()
-                    setupCallUI()
+                    setupCallOutUI(reason)
                 }
             }
         }
 
         override fun onCallDisconnected(reason: Int) {
             mHandler.post {
-                @Suppress("CascadeIf")
-                if (reason == REASON_REFUSE) {
-                    state.setText(R.string.has_refuse_phone)
-                    setupCallUI()
-                } else if (reason == REASON_HANGUP) {
-                    setupCallUI()
-                } else {
-
-                }
+                setupCallOutUI(reason)
             }
         }
 
@@ -229,8 +246,7 @@ class VoiceCallActivity : BaseNoViewModelActivity() {
             mHandler.post {
                 @Suppress("CascadeIf")
                 if (errorCode == ERROR_TIMEOUT) {
-                    state.setText(R.string.has_timeout)
-                    setupCallUI()
+                    setupCallOutUI(errorCode)
                 } else if (errorCode == ERROR_NO_BALANCE) {
                     hangupCountDown()
                 } else {

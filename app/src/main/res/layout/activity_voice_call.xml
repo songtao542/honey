@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".ui.voicecall.VoiceCallActivity">
+    tools:context=".ui.voicecall2.VoiceCallActivity">
 
     <androidx.appcompat.widget.AppCompatImageView
         android:layout_width="match_parent"
@@ -89,6 +89,35 @@
                     android:layout_gravity="center_horizontal"
                     android:layout_marginTop="10dp"
                     android:text="@string/cancel"
+                    android:textColor="@color/white"
+                    android:textSize="@dimen/textsize_large" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/speakerLayout"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="100dp"
+                android:orientation="vertical"
+                android:visibility="gone">
+
+                <androidx.appcompat.widget.AppCompatImageView
+                    android:id="@+id/speakerButton"
+                    android:layout_width="@dimen/voice_call_button_size"
+                    android:layout_height="@dimen/voice_call_button_size"
+                    android:layout_gravity="center"
+                    android:background="@drawable/voice_call_speaker_selector"
+                    android:foreground="@drawable/voice_call_foreground"
+                    android:scaleType="centerInside"
+                    app:srcCompat="@drawable/ic_voice_call_speaker_off" />
+
+                <androidx.appcompat.widget.AppCompatTextView
+                    android:id="@+id/speakerLabel"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_horizontal"
+                    android:layout_marginTop="10dp"
+                    android:text="@string/speaker"
                     android:textColor="@color/white"
                     android:textSize="@dimen/textsize_large" />
             </LinearLayout>

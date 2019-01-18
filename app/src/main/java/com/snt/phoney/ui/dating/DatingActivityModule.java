@@ -6,11 +6,12 @@ import com.snt.phoney.di.ActivityScope;
 import com.snt.phoney.di.FragmentScope;
 import com.snt.phoney.di.ViewModelKey;
 import com.snt.phoney.di.module.ViewModelFactoryModule;
+import com.snt.phoney.ui.dating.apply.ApplicantListFragment;
+import com.snt.phoney.ui.dating.apply.DatingApplyViewModel;
 import com.snt.phoney.ui.dating.create.CreateDatingFragment;
 import com.snt.phoney.ui.dating.create.CreateDatingViewModel;
 import com.snt.phoney.ui.dating.detail.DatingDetailFragment;
 import com.snt.phoney.ui.dating.detail.DatingDetailViewModel;
-import com.snt.phoney.ui.dating.list.ApplicantListFragment;
 import com.snt.phoney.ui.dating.list.DatingListFragment;
 import com.snt.phoney.ui.dating.list.DatingViewModel;
 import com.snt.phoney.ui.dating.list.OthersDatingFragment;
@@ -58,6 +59,12 @@ public abstract class DatingActivityModule {
     @ActivityScope
     @ViewModelKey(DatingViewModel.class)
     public abstract ViewModel bindDatingViewModel(DatingViewModel viewModel);
+
+    @Binds
+    @IntoMap
+    @ActivityScope
+    @ViewModelKey(DatingApplyViewModel.class)
+    public abstract ViewModel bindDatingApplyViewModel(DatingApplyViewModel viewModel);
 
     @Binds
     @IntoMap

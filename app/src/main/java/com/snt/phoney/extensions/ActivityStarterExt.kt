@@ -10,17 +10,17 @@ import com.snt.phoney.R
 import com.snt.phoney.base.CommonNoViewModelActivity
 import com.snt.phoney.base.FragmentFactory
 import com.snt.phoney.base.Page
-
-const val EXTRA_ARGUMENT = "argument"
-const val EXTRA_PAGE = "page"
-const val EXTRA_THEME = "theme"
+import com.snt.phoney.utils.data.Constants
 
 inline fun <reified T : Activity> Context.newIntent(page: Page, argument: Bundle? = null): Intent {
     val intent = Intent(this, T::class.java)
-    intent.putExtra(EXTRA_PAGE, page.ordinal)
+    intent.putExtra(Constants.Extra.PAGE, page.ordinal)
     argument?.let {
-        intent.putExtra(EXTRA_THEME, it.getInt(EXTRA_THEME, 0))
-        intent.putExtra(EXTRA_ARGUMENT, it)
+        val theme = it.getInt(Constants.Extra.THEME, 0)
+        if (theme != 0) {
+            intent.putExtra(Constants.Extra.THEME, theme)
+        }
+        intent.putExtra(Constants.Extra.ARGUMENT, it)
         return@let
     }
     return intent
@@ -29,8 +29,11 @@ inline fun <reified T : Activity> Context.newIntent(page: Page, argument: Bundle
 inline fun <reified T : Activity> Context.newIntent(argument: Bundle? = null): Intent {
     val intent = Intent(this, T::class.java)
     argument?.let {
-        intent.putExtra(EXTRA_THEME, it.getInt(EXTRA_THEME, 0))
-        intent.putExtra(EXTRA_ARGUMENT, it)
+        val theme = it.getInt(Constants.Extra.THEME, 0)
+        if (theme != 0) {
+            intent.putExtra(Constants.Extra.THEME, theme)
+        }
+        intent.putExtra(Constants.Extra.ARGUMENT, it)
         return@let
     }
     return intent

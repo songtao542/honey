@@ -19,7 +19,7 @@ class ShareFragment : BottomDialogFragment() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setStyle(BottomSheetDialogFragment.STYLE_NORMAL, R.style.AppTheme_ShareBottomSheetDialog);
+        setStyle(BottomSheetDialogFragment.STYLE_NORMAL, R.style.AppTheme_ShareBottomSheetDialog)
     }
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
@@ -29,6 +29,10 @@ class ShareFragment : BottomDialogFragment() {
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
         viewModel = ViewModelProviders.of(this, viewModelFactory).get(ShareViewModel::class.java)
+
+        shareByWechat.background = resources.getDrawable(R.drawable.share_button_selector, activity?.theme)
+        shareByQQ.background = resources.getDrawable(R.drawable.share_button_selector, activity?.theme)
+        shareByWeibo.background = resources.getDrawable(R.drawable.share_button_selector, activity?.theme)
 
         cancel.setOnClickListener {
             dismiss()

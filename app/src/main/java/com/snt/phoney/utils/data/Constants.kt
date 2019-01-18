@@ -20,12 +20,18 @@ object Constants {
         const val UUID = "uuid"
         const val DATA = "data"
         const val TYPE = "type"
-        const val THEME = "theme"
+
         const val CALLER = "caller"
         const val CALLEE = "callee"
         const val MODE = "mode"
         const val IS_VIP = "is_vip"
         const val STATE = "state"
+
+        const val THEME = "theme"
+        const val ARGUMENT = "argument"
+        const val PAGE = "page"
+
+        const val THEME_OPEN_SWIPEBACK = "open_swipeback"
     }
 
     object Preference {

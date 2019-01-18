@@ -11,13 +11,13 @@ import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import com.snt.phoney.R
 import com.snt.phoney.domain.model.Photo
-import com.snt.phoney.extensions.getStatusBarHeight
 import com.snt.phoney.utils.KeyEventListener
 import com.snt.phoney.utils.data.Constants
+import cust.app.swipeback.SwipeBackLayout
 import kotlinx.android.synthetic.main.fragment_photo_viewer.*
 
 @Suppress("unused")
-open class PhotoViewerFragment : Fragment(), PhotoFragment.OnPhotoSingleTapListener, KeyEventListener {
+open class PhotoViewerFragment : Fragment(), PhotoFragment.OnPhotoSingleTapListener, KeyEventListener, SwipeBackLayout.OnSwipeBackListener {
 
     companion object {
         @JvmStatic
@@ -55,8 +55,8 @@ open class PhotoViewerFragment : Fragment(), PhotoFragment.OnPhotoSingleTapListe
     @Suppress("CascadeIf")
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
-        actionBar.setPadding(0, getStatusBarHeight(), 0, 0)
-        back.setOnClickListener { finish() }
+        //actionBar.setPadding(0, getStatusBarHeight(), 0, 0)
+        //back.setOnClickListener { finish() }
         if (deletable) {
             delete.setOnClickListener {
                 delete()
@@ -91,19 +91,20 @@ open class PhotoViewerFragment : Fragment(), PhotoFragment.OnPhotoSingleTapListe
     }
 
     override fun onPhotoSingleTap() {
-        toggleActionBar()
+        //toggleActionBar()
+        finish()
     }
 
-    private fun toggleActionBar() {
-        val showing = (actionBar?.tag as? Boolean) ?: true
-        if (showing) {
-            actionBar?.tag = false
-            actionBar?.animate()?.translationY(-actionBar.height.toFloat())
-        } else {
-            actionBar?.tag = true
-            actionBar?.animate()?.translationY(0f)
-        }
-    }
+    //private fun toggleActionBar() {
+    //    val showing = (actionBar?.tag as? Boolean) ?: true
+    //    if (showing) {
+    //        actionBar?.tag = false
+    //        actionBar?.animate()?.translationY(-actionBar.height.toFloat())
+    //    } else {
+    //       actionBar?.tag = true
+    //       actionBar?.animate()?.translationY(0f)
+    //    }
+    //}
 
     private fun delete() {
         when {
@@ -201,6 +202,15 @@ open class PhotoViewerFragment : Fragment(), PhotoFragment.OnPhotoSingleTapListe
 
     override fun onKeyUp(keyCode: Int, event: KeyEvent): Boolean {
         return false
+    }
+
+    override fun onViewPositionChanged(view: View?, swipeBackFraction: Float, swipeBackFactor: Float) {
+    }
+
+    override fun onViewSwipeFinished(view: View?, isEnd: Boolean) {
+        if (isEnd) {
+            finish()
+        }
     }
 
     protected open fun finish() {

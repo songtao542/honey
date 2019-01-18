@@ -2,7 +2,6 @@ package com.snt.phoney.wxapi
 
 import android.content.Intent
 import android.text.TextUtils
-import android.util.Log
 import androidx.lifecycle.MutableLiveData
 import com.snt.phoney.R
 import com.snt.phoney.base.AppViewModel
@@ -67,7 +66,6 @@ open class WXPayViewModel @Inject constructor(private val usecase: PayOrderUseCa
         wechatApi.pay(prePayInfo)
     }
 
-
     override fun onReq(req: BaseReq) {
         req?.let { req ->
             eventHandler?.onReq(req)
@@ -77,7 +75,7 @@ open class WXPayViewModel @Inject constructor(private val usecase: PayOrderUseCa
     override fun onResp(resp: BaseResp) {
         resp?.let { resp ->
             eventHandler?.onResp(resp)
-            if (resp.type === ConstantsAPI.COMMAND_PAY_BY_WX) {
+            if (resp.type == ConstantsAPI.COMMAND_PAY_BY_WX && resp.errCode == 0) {
                 buySuccess.value = true
                 context.sendBroadcast("buy_success")
             }

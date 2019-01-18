@@ -13,7 +13,7 @@ class SignupActivity : BaseActivity() {
         fun newIntent(context: Context): Intent = Intent(context, SignupActivity::class.java)
     }
 
-    override fun onConfigureTheme(): Int? = null
+    override fun onApplyTheme(themeId: Int): Int = 0
 
     override fun shouldObserveLoginState(): Boolean = false
 

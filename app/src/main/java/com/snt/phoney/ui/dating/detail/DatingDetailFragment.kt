@@ -22,6 +22,7 @@ import com.snt.phoney.extensions.snackbar
 import com.snt.phoney.extensions.startActivity
 import com.snt.phoney.ui.photo.PhotoViewerActivity
 import com.snt.phoney.ui.report.ReportActivity
+import com.snt.phoney.ui.user.UserActivity
 import com.snt.phoney.utils.DistanceFormat
 import com.snt.phoney.utils.data.Constants
 import com.snt.phoney.widget.PhotoFlowAdapter
@@ -160,6 +161,13 @@ class DatingDetailFragment : BaseFragment() {
                 .apply(RequestOptions().circleCrop().placeholder(R.drawable.ic_head_placeholder).error(R.drawable.ic_head_placeholder))
                 .transition(DrawableTransitionOptions.withCrossFade())
                 .into(head)
+
+        head.setOnClickListener {
+            startActivity<UserActivity>(Page.USER_INFO, Bundle().apply {
+                putParcelable(Constants.Extra.USER, user)
+            })
+        }
+
         val df = DecimalFormat.getInstance()
         //address.text = user.city
         userAge.text = getString(R.string.age_value_template, user.age)

@@ -15,7 +15,7 @@ const val EXTRA_USER = "user"
 
 class SetupWizardActivity : BaseActivity() {
 
-    override fun onConfigureTheme(): Int? = null
+    override fun onApplyTheme(themeId: Int): Int = 0
 
     override fun shouldObserveLoginState(): Boolean = false
 

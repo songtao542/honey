@@ -13,7 +13,7 @@ class WXEntryActivity : BaseActivity(), IWXAPIEventHandler {
 
     private lateinit var viewModel: WXAuthViewModel
 
-    override fun onConfigureTheme(): Int? = null
+    override fun onApplyTheme(themeId: Int): Int = 0
 
     public override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)

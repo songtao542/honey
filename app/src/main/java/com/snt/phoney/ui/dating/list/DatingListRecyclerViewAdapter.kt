@@ -17,7 +17,7 @@ import com.snt.phoney.extensions.colorOf
 import com.snt.phoney.extensions.dip
 import com.snt.phoney.extensions.startActivity
 import com.snt.phoney.ui.dating.DatingActivity
-import com.snt.phoney.ui.dating.detail.DatingDetailFragment
+import com.snt.phoney.ui.dating.apply.ApplicantListFragment
 import com.snt.phoney.utils.data.Constants
 import kotlinx.android.synthetic.main.fragment_dating_item.view.*
 
