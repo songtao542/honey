@@ -84,8 +84,6 @@ fun Activity.fixOrientation(): Boolean {
             val isTranslucentOrFloating = m.invoke(null, ta) as Boolean
             m.isAccessible = false
 
-            Log.d("TTTT", "xxxxxxxxxxxxxxxx isTranslucentOrFloating=$isTranslucentOrFloating")
-
             if (isTranslucentOrFloating) {
                 val field = Activity::class.java.getDeclaredField("mActivityInfo")
                 field.isAccessible = true

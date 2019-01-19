@@ -64,6 +64,7 @@ const val RESPONSE_ASK_CALL_MSG = "f8e449c2aa83536f21e19dd173e17230"
 const val RESPONSE_START_CALL_MSG = "c66c549817ea26a4f0202a023841c490"
 const val RESPONSE_CHECK_CALL_OK_MSG = "92804ed1595e04be8cdd2c5706477e12"
 const val RESPONSE_NO_BALANCE_MSG = "c57a3f655901e8212c625e6c90bda8c6"
+const val RESPONSE_NO_BALANCE_MSG1 = "蜜币不足，挂机"
 const val RESPONSE_ENDING_CALL_MSG = "eb7a35d3d44d08afbb9d9feaac75e755"
 const val RESPONSE_ABORT_CALL_MSG = "22d71560e3f72f92ffc7b87a8bd639f2"
 const val RESPONSE_HEART_MSG = "79f595671ecfe67462bea6e312811b07"
@@ -238,6 +239,7 @@ class VoiceCallEngine(private val application: Application) {
     }
 
     fun hangup() {
+        mHandler.removeCallbacksAndMessages(null)
         JMRtcClient.getInstance().hangup(object : BasicCallback() {
             override fun gotResult(code: Int, message: String?) {
                 Log.d(TAG, "hangup==========> code=$code  message=$message")
@@ -333,6 +335,7 @@ class VoiceCallEngine(private val application: Application) {
     }
 
     fun unregisterCallStateListener(listener: CallStateListener) {
+        mHandler.removeCallbacksAndMessages(null)
         mCallStateListeners.remove(listener)
     }
 
@@ -378,7 +381,11 @@ class VoiceCallEngine(private val application: Application) {
                         return
                     }
                 }
-                notifyListener(Method_onCallError, errorCode = ERROR_REQUEST_FAIL)
+                if (RESPONSE_NO_BALANCE_MSG == response || RESPONSE_NO_BALANCE_MSG1 == response) {
+                    notifyListener(Method_onCallError, errorCode = ERROR_NO_BALANCE)
+                } else {
+                    notifyListener(Method_onCallError, errorCode = ERROR_REQUEST_FAIL)
+                }
             }
             STATE_START_CALL -> {
                 Log.d("VOICE_CALL", "check state-[start call]--: $response")
@@ -387,7 +394,7 @@ class VoiceCallEngine(private val application: Application) {
                     //正常开始通话
                     checkCall()
                     return
-                } else if (RESPONSE_NO_BALANCE_MSG == response) {
+                } else if (RESPONSE_NO_BALANCE_MSG == response || RESPONSE_NO_BALANCE_MSG1 == response) {
                     //余额不足
                     notifyListener(Method_onCallError, errorCode = ERROR_NO_BALANCE)
                 }
@@ -400,7 +407,7 @@ class VoiceCallEngine(private val application: Application) {
                         checkCall()
                     }, 30000)
                     return
-                } else if (RESPONSE_NO_BALANCE_MSG == response) {
+                } else if (RESPONSE_NO_BALANCE_MSG == response || RESPONSE_NO_BALANCE_MSG1 == response) {
                     //余额不足
                     mHandler.postDelayed({
                         //余额不足时5秒后断开通话
@@ -517,6 +524,7 @@ class VoiceCallEngine(private val application: Application) {
                 text.contains(RESPONSE_START_CALL_MSG) -> eq = "RESPONSE_START_CALL_MSG"
                 text.contains(RESPONSE_CHECK_CALL_OK_MSG) -> eq = "RESPONSE_CHECK_CALL_OK_MSG"
                 text.contains(RESPONSE_NO_BALANCE_MSG) -> eq = "RESPONSE_NO_BALANCE_MSG"
+                text.contains(RESPONSE_NO_BALANCE_MSG1) -> eq = "RESPONSE_NO_BALANCE_MSG1"
                 text.contains(RESPONSE_ENDING_CALL_MSG) -> eq = "RESPONSE_ENDING_CALL_MSG"
                 text.contains(RESPONSE_ABORT_CALL_MSG) -> eq = "RESPONSE_ABORT_CALL_MSG"
                 text.contains(RESPONSE_HEART_MSG) -> eq = "RESPONSE_HEART_MSG"

@@ -420,7 +420,7 @@
     <string name="none_city">所有</string>
     <string name="will_end_of_no_balance">余额不足，即将断开通话</string>
     <string name="no_balance">余额不足</string>
-    <string name="no_balance_template">余额不足，%1$s秒后断开通话</string>
+    <string name="no_balance_template">余额不足，%1$s秒后关闭</string>
     <string name="has_no_answer">对方未接听</string>
     <string name="the_user_is_busy">对方正忙</string>
     <string name="chunmi_voice_call">纯蜜语音来电</string>

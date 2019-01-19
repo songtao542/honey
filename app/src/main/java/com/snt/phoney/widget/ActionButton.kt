@@ -49,6 +49,7 @@ class ActionButton : LinearLayout {
         labelView.gravity = Gravity.CENTER
         val labelLayoutParams = LayoutParams(LayoutParams.WRAP_CONTENT, LayoutParams.WRAP_CONTENT)
         labelLayoutParams.gravity = Gravity.CENTER
+        labelLayoutParams.topMargin = dip(5)
         labelView.layoutParams = labelLayoutParams
 
         addView(imageView)
@@ -73,9 +74,6 @@ class ActionButton : LinearLayout {
                 imageView.setImageResource(imageResId)
             }
 
-            Log.d("TTTT", "xxxxxxxxxxx imageResId=$imageResId")
-            Log.d("TTTT", "xxxxxxxxxxx imageForegroundResId=$imageForegroundResId")
-            Log.d("TTTT", "xxxxxxxxxxx imageSize=$imageSize")
             if (imageForegroundResId != 0) {
                 if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
                     imageView.foreground = context.getDrawable(imageForegroundResId)
