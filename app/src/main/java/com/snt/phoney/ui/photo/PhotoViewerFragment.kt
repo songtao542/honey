@@ -2,8 +2,12 @@ package com.snt.phoney.ui.photo
 
 import android.app.Activity
 import android.content.Intent
+import android.graphics.Color
+import android.graphics.drawable.ColorDrawable
+import android.graphics.drawable.Drawable
 import android.net.Uri
 import android.os.Bundle
+import android.util.Log
 import android.view.KeyEvent
 import android.view.LayoutInflater
 import android.view.View
@@ -37,6 +41,8 @@ open class PhotoViewerFragment : Fragment(), PhotoFragment.OnPhotoSingleTapListe
     private var deletedUris: ArrayList<Uri>? = null
     private var deletedPhotos: ArrayList<Photo>? = null
 
+    private var pagerBackgroundDrawable: Drawable? = null
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         arguments?.let {
@@ -57,6 +63,10 @@ open class PhotoViewerFragment : Fragment(), PhotoFragment.OnPhotoSingleTapListe
         super.onActivityCreated(savedInstanceState)
         //actionBar.setPadding(0, getStatusBarHeight(), 0, 0)
         //back.setOnClickListener { finish() }
+
+        pagerBackgroundDrawable = ColorDrawable(Color.BLACK)
+        viewPager.background = pagerBackgroundDrawable
+
         if (deletable) {
             delete.setOnClickListener {
                 delete()
@@ -205,6 +215,7 @@ open class PhotoViewerFragment : Fragment(), PhotoFragment.OnPhotoSingleTapListe
     }
 
     override fun onViewPositionChanged(view: View?, swipeBackFraction: Float, swipeBackFactor: Float) {
+        pagerBackgroundDrawable?.alpha = (255f * (1f - swipeBackFraction)).toInt()
     }
 
     override fun onViewSwipeFinished(view: View?, isEnd: Boolean) {

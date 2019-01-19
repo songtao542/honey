@@ -9,20 +9,19 @@ import com.snt.phoney.extensions.addList
 import com.snt.phoney.extensions.disposedBy
 import com.snt.phoney.extensions.empty
 import com.snt.phoney.ui.model.PayViewModel
+import com.snt.phoney.utils.life.SingleLiveData
 import cust.widget.loadmore.LoadMoreAdapter
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.rxkotlin.subscribeBy
 import io.reactivex.schedulers.Schedulers
 import javax.inject.Inject
 
-class WalletViewModel @Inject constructor(private val usecase: WalletUseCase, private val payUsecase: PayOrderUseCase) : PayViewModel(payUsecase) {
+class WalletViewModel @Inject constructor(private val usecase: WalletUseCase, payUsecase: PayOrderUseCase) : PayViewModel(payUsecase) {
 
-    val memberInfo = MutableLiveData<MemberInfo>()
-    val mibiAmount = MutableLiveData<Int>()
     val mibiWallet = MutableLiveData<MibiWallet>()
-    val preWithdraw = MutableLiveData<PreWithdraw>()
+    val preWithdraw = SingleLiveData<PreWithdraw>()
 
-    val alipaySign = MutableLiveData<String>()
+    val alipaySign = SingleLiveData<String>()
 
     val consumeOrders by lazy { MutableLiveData<List<OrderRecord>>() }
     private val mConsumeOrders by lazy { ArrayList<OrderRecord>() }
@@ -43,22 +42,6 @@ class WalletViewModel @Inject constructor(private val usecase: WalletUseCase, pr
         return usecase.getUser()?.avatar ?: ""
     }
 
-    fun getMibiAmount() {
-        val token = usecase.getAccessToken() ?: return
-        usecase.getMibiAmount(token)
-                .subscribeOn(Schedulers.io())
-                .observeOn(AndroidSchedulers.mainThread())
-                .subscribeBy(
-                        onSuccess = {
-                            if (it.success) {
-                                mibiAmount.value = it.data
-                            }
-                        },
-                        onError = {}
-                ).disposedBy(disposeBag)
-    }
-
-
     fun getMibiWallet() {
         val token = usecase.getAccessToken() ?: return
         usecase.getMibiWallet(token)
@@ -73,22 +56,6 @@ class WalletViewModel @Inject constructor(private val usecase: WalletUseCase, pr
                         onError = {}
                 ).disposedBy(disposeBag)
     }
-
-    fun getMemberInfo() {
-        val token = usecase.getAccessToken() ?: return
-        usecase.getMemberInfo(token)
-                .subscribeOn(Schedulers.io())
-                .observeOn(AndroidSchedulers.mainThread())
-                .subscribeBy(
-                        onSuccess = {
-                            if (it.success) {
-                                memberInfo.value = it.data
-                            }
-                        },
-                        onError = {}
-                ).disposedBy(disposeBag)
-    }
-
 
     fun buyMibiWithWechat(target: String, uid: String? = null) {
         buyWithWechat(OrderType.BUY_MIBI, target, uid)
@@ -105,6 +72,7 @@ class WalletViewModel @Inject constructor(private val usecase: WalletUseCase, pr
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribeBy(
                         onSuccess = {
+                            @Suppress("CascadeIf")
                             if (it.success) {
                                 withdrawInfo.value = it.data
                             } else if (it.hasMessage) {
@@ -126,6 +94,7 @@ class WalletViewModel @Inject constructor(private val usecase: WalletUseCase, pr
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribeBy(
                         onSuccess = {
+                            @Suppress("CascadeIf")
                             if (it.success) {
                                 success.value = context.getString(R.string.withdraw_success)
                             } else if (it.hasMessage) {
@@ -147,6 +116,7 @@ class WalletViewModel @Inject constructor(private val usecase: WalletUseCase, pr
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribeBy(
                         onSuccess = {
+                            @Suppress("CascadeIf")
                             if (it.success) {
                                 preWithdraw.value = it.data
                             } else if (it.hasMessage) {
@@ -168,9 +138,9 @@ class WalletViewModel @Inject constructor(private val usecase: WalletUseCase, pr
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribeBy(
                         onSuccess = {
+                            @Suppress("CascadeIf")
                             if (it.success) {
                                 alipaySign.value = it.data
-
                             } else if (it.hasMessage) {
                                 error.value = it.message
                             } else {

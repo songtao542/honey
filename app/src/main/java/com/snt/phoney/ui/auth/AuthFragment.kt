@@ -12,7 +12,6 @@ import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
 import com.snt.phoney.R
 import com.snt.phoney.base.BaseFragment
-import com.snt.phoney.base.ProgressDialog
 import com.snt.phoney.extensions.addFragmentSafely
 import com.snt.phoney.extensions.checkAndRequestPermission
 import com.snt.phoney.extensions.checkAppPermission
@@ -37,8 +36,6 @@ class AuthFragment : BaseFragment(), KeyEventListener {
     private var type = TYPE_VIDEO
 
     private lateinit var viewModel: AuthViewModel
-
-    private var progressDialog: ProgressDialog? = null
 
     private var authSuccess: Boolean = false
 
@@ -156,17 +153,6 @@ class AuthFragment : BaseFragment(), KeyEventListener {
     private fun startAuth(file: File) {
         showProgress(getString(R.string.on_going_upload))
         viewModel.auth(type, file)
-    }
-
-    private fun showProgress(tip: String) {
-        progressDialog = ProgressDialog.newInstance(tip)
-                .cancelable(false)
-                .show(childFragmentManager)
-    }
-
-    private fun dismissProgress() {
-        progressDialog?.dismiss()
-        progressDialog = null
     }
 
 }

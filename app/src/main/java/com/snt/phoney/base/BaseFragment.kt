@@ -13,10 +13,7 @@ abstract class BaseFragment : Fragment(), Injectable {
     @Inject
     lateinit var viewModelFactory: ViewModelProvider.Factory
 
-    //override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-    //    super.onViewCreated(view, savedInstanceState)
-    //    ViewCompat.requestApplyInsets(view)
-    //}
+    private var progressDialog: ProgressDialog? = null
 
     fun enableOptionsMenu(toolbar: Toolbar, showTitle: Boolean = true, menu: Int = 0) {
         toolbar?.let { toolbar ->
@@ -50,6 +47,18 @@ abstract class BaseFragment : Fragment(), Injectable {
         if (enableUMengAgent()) {
             MobclickAgent.onPageEnd(javaClass.simpleName)
         }
+    }
+
+    fun showProgress(tip: String? = null, cancelable: Boolean = false) {
+        progressDialog?.dismiss()
+        progressDialog = ProgressDialog.newInstance(tip)
+                .cancelable(cancelable)
+                .show(childFragmentManager)
+    }
+
+    fun dismissProgress() {
+        progressDialog?.dismiss()
+        progressDialog = null
     }
 
 }

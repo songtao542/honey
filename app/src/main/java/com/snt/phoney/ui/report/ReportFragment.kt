@@ -13,7 +13,6 @@ import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
 import com.snt.phoney.R
 import com.snt.phoney.base.BaseFragment
-import com.snt.phoney.base.ProgressDialog
 import com.snt.phoney.domain.model.ReportReason
 import com.snt.phoney.extensions.dip
 import com.snt.phoney.extensions.setSoftInputMode
@@ -41,8 +40,6 @@ class ReportFragment : BaseFragment(), Toolbar.OnMenuItemClickListener {
 
     private var selectedPhotoUris = ArrayList<Uri>()
     private var selectedPhotoPath = ""
-
-    private var progressDialog: ProgressDialog? = null
 
     private lateinit var targetUuid: String
     /**
@@ -81,12 +78,12 @@ class ReportFragment : BaseFragment(), Toolbar.OnMenuItemClickListener {
         })
 
         viewModel.error.observe(this, Observer {
-            progressDialog?.dismiss()
+            dismissProgress()
             snackbar(it)
         })
 
         viewModel.reportSuccess.observe(this, Observer {
-            progressDialog?.dismiss()
+            dismissProgress()
             snackbar(it)
             view?.postDelayed({
                 activity?.onBackPressed()
@@ -138,9 +135,7 @@ class ReportFragment : BaseFragment(), Toolbar.OnMenuItemClickListener {
         return when (item.itemId) {
             R.id.report -> {
                 if (valid()) {
-                    progressDialog = ProgressDialog()
-                            .cancelable(false)
-                            .also { it.show(childFragmentManager, "progress") }
+                    showProgress()
                     val content = contentView.text?.toString() ?: ""
                     val file = File(selectedPhotoPath)
                     viewModel.report(checkedReason?.id.toString(), targetUuid, content, type, file)

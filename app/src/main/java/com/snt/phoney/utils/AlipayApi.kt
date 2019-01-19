@@ -9,8 +9,6 @@ import kotlinx.coroutines.*
 
 
 object AlipayApi {
-//    val appid = "2016092400585139"
-//    val privateKey = "MIIEvQIBADANBgkqhkiG9w0BAQEFAASCBKcwggSjAgEAAoIBAQCjPHjDh2x5SJzQHZEX7hf0372eXo2YNqXDOAfxsxhD/12mluccXFuxJcVRepaQ++toclaceJTohHAW7DMwVJuB34Bd4+ahq2+esP+nM0K60bIUfgxZrnqYONwdY8oSsLybvVGWM2qeNh/YA164iYdiOX++EyLlWBMDzoQpetOHe/NiGZ5kWrq+U6pIZR5cnpxp4gRdzyZ8uybjNl49Y8xrx17D4uvmHrHRmmmgg5Sa++jcxPh5X11ztEB5HxPrvhZA+HMq59qajvltXZQb8PY8pt2/dhEumNI00NN2f2DV/wDLzJ1qhe9NOR05cxPYjlIfim0XzkIOHvX3MfoHGrXtAgMBAAECggEAVDy0pVKRa9VI9y0K3yqDOl7r33oz38TzrdaQYu5lK1Hw5jMheMVAnB49wVpdsNwQE4pNn9mqHoOZxHqHv/0pcs//0nP1ZKCvrVjx1TriyL3GBEU34l/j7AILtS717Mc/za7ZF4XZE2Qi8rpqexidwNajUVdWvrvAtEoycaVs25EKASlniUXEN8LdGv8iIBCCRNL6nM6Diguf88Bl5BIRTgDD/0P29bKtUxaiS7a+zUAqZWdoDD+b6fpqxsqry2Y769NxLk0bHVwcbQ7NJmpGN2CjFbF+FgUV/ILx0dC/Wl1vWv8gVusGbKPvlm71kdFL/tSTDLtn15GkwFfx3qnhgQKBgQDuX2Q8U3qdcMIWBc+V5IjFfZKhPOG+MPK9EFkAfuPrdjNyRdzUJ3EXyc3MDu+lNBNg0pLjQ30+C5Phn5sYyIBrazJLHk96+4ABZWBZcK2mUsOp9XXtUDpLvAd/Lz492WcqkNwgRyP/9ruyQHYObWWKaPxcRshpBwtHEmTc8x8UaQKBgQCvTq4r8GCaTx6q9FgXNJNqL1YFuQkErWfARZ2O4baM4H0b/4XZTJQVs9a/hdJ4aOJbfTU4hGWHGMAUuFmpw+Fa4rziPs8a9mqLzxpPP7CUmg2iInAjz8/TRl3a6yjnzM79f1lJKnEvUVMl68SVQ2H2INOCUZB8cgmg4+r7LWNU5QKBgBn+xySZCfcfc9sI+TFkgdHfttzkkc228tHRdZNLQznLYyLkIYf1YSzx8gJ94n6GplJZxHEKTB83DgJ98GEMhIyyXQK6JHrJ8JS2ZIJ8ekN4JSRkw16E8EaQE9U35rbB/bEzqP3QJEnms2NmCjnajkdA2byKb5KclQtEI0HBNbN5AoGAIwn74AZkmJMV0x+Rd9nnWQLrE6u/NLMgGJsRedx9azz3ZKA29Y7Lzmaqlo892RlFnPmyqIA19sGoqruKGFdxdIP7MtFQ/degxh736D0XoywDa5OsjEveAyF+YuI7w9D40kwg4XHdO5LqppqwKRFVxCcdf1+kHGuCpyjG77tLrk0CgYEAlXXC9pOqpQq8FU544wdebRnfaQujX9+1zU28ktTzzjhGG9SHyAQebgjlUqiGGoKX2ijbRLsyGvxiaGH+ejiFNBSuToV3yKbazCF1y2C6o0BAo5dRvzwPKpABlALhyf/SfgWtYfY69BOW60jlL79i1l7FVW2mzXOtDHH93f/xBtc="
 
     @JvmStatic
     fun pay(activity: Activity, orderInfo: String, callback: ((status: Int) -> Unit)) {
@@ -40,7 +38,6 @@ object AlipayApi {
 
     @JvmStatic
     fun auth(activity: Activity, sign: String, callback: ((status: Int, authCode: String?) -> Unit)) {
-
         GlobalScope.launch(Dispatchers.Main) {
             var status = 0
             var authCode: String? = null

@@ -276,14 +276,15 @@ class UserInfoFragment : BaseFragment() {
                 } else if (user.isPhotoNeedApply) {
                     unlockPhotoLayout.visibility = View.VISIBLE
                     unlockPhotoLayout.setOnClickListener { }
+                    @Suppress("CascadeIf")
                     if (user.photoApplyStatus == 2) {
                         needApplyOrCharge.setText(R.string.photo_apply_be_reject)
                         unlockOrApplyPhoto.setText(R.string.apply_view_photo_again)
-                        unlockOrApplyPhoto.visibility = View.INVISIBLE
+                        unlockOrApplyPhoto.visibility = View.GONE
                     } else if (user.photoApplyStatus == 0) {
                         needApplyOrCharge.setText(R.string.photo_applying_on_going_tip)
                         unlockOrApplyPhoto.setText(R.string.photo_applying_on_going)
-                        unlockOrApplyPhoto.visibility = View.INVISIBLE
+                        unlockOrApplyPhoto.visibility = View.GONE
                     } else {
                         needApplyOrCharge.setText(R.string.the_user_set_view_need_apply)
                         unlockOrApplyPhoto.visibility = View.VISIBLE

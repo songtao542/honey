@@ -29,7 +29,7 @@
         android:theme="@style/AppTheme">
         <service
             android:name=".service.TaskIntentService"
-            android:exported="false"/>
+            android:exported="false" />
 
         <meta-data
             android:name="android.notch_support"
@@ -94,13 +94,11 @@
         <activity
             android:name=".wxapi.WXEntryActivity"
             android:exported="true"
-            android:screenOrientation="portrait"
             android:theme="@style/AppTheme.NoDisplay"
             tools:node="replace" />
         <activity
             android:name=".wxapi.WXPayEntryActivity"
             android:exported="true"
-            android:screenOrientation="portrait"
             android:theme="@style/AppTheme.NoDisplay"
             tools:node="replace" />
         <activity

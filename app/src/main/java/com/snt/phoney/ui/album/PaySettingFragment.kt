@@ -13,7 +13,6 @@ import androidx.lifecycle.ViewModelProviders
 import androidx.recyclerview.widget.GridLayoutManager
 import com.snt.phoney.R
 import com.snt.phoney.base.BaseFragment
-import com.snt.phoney.base.ProgressDialog
 import com.snt.phoney.domain.model.Photo
 import com.snt.phoney.domain.model.PhotoPermission
 import com.snt.phoney.extensions.dip
@@ -61,8 +60,6 @@ class PaySettingFragment : BaseFragment() {
 
     private var amount = 0
 
-    private var progressDialog: ProgressDialog? = null
-
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         return inflater.inflate(R.layout.fragment_pay_setting, container, false)
     }
@@ -84,8 +81,7 @@ class PaySettingFragment : BaseFragment() {
         })
 
         viewModel.success.observe(this, Observer {
-            progressDialog?.dismiss()
-            progressDialog = null
+            dismissProgress()
             snackbar(it)
             view?.postDelayed({
                 finish()
@@ -93,8 +89,7 @@ class PaySettingFragment : BaseFragment() {
         })
 
         viewModel.error.observe(this, Observer {
-            progressDialog?.dismiss()
-            progressDialog = null
+            dismissProgress()
             snackbar(it)
         })
 
@@ -171,12 +166,6 @@ class PaySettingFragment : BaseFragment() {
             price.text = getString(R.string.amout_mibi_template, value.toString())
             amount = value
         }
-    }
-
-    private fun showProgress(tip: String) {
-        progressDialog = ProgressDialog.newInstance(tip)
-                .cancelable(false)
-                .show(childFragmentManager)
     }
 
     private fun setCheck(view: View) {

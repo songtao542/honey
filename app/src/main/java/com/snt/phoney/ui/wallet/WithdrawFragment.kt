@@ -1,6 +1,5 @@
 package com.snt.phoney.ui.wallet
 
-import android.content.Intent
 import android.os.Bundle
 import android.text.Editable
 import android.util.Log
@@ -14,9 +13,7 @@ import com.snt.phoney.base.BaseFragment
 import com.snt.phoney.domain.model.PreWithdraw
 import com.snt.phoney.extensions.TAG
 import com.snt.phoney.extensions.snackbar
-import com.snt.phoney.ui.browser.WebBrowserActivity
 import com.snt.phoney.utils.AlipayApi
-import com.snt.phoney.utils.data.Constants
 import kotlinx.android.synthetic.main.app_toolbar.*
 import kotlinx.android.synthetic.main.fragment_wallet_withdraw.*
 import java.text.DecimalFormat
@@ -26,7 +23,6 @@ import java.text.DecimalFormat
  *
  */
 class WithdrawFragment : BaseFragment() {
-
 
     private lateinit var viewModel: WalletViewModel
 
@@ -48,6 +44,7 @@ class WithdrawFragment : BaseFragment() {
         titleTextView.setText(R.string.wallet_withdraw_title)
 
         viewModel.preWithdraw.observe(this, Observer {
+            dismissProgress()
             setWithdrawInfo(it)
         })
 
@@ -106,20 +103,10 @@ class WithdrawFragment : BaseFragment() {
         }
         if (!preWithdraw.isAlipayBind) {
             bindToAlipay.setOnClickListener {
-                context?.let { context ->
-                    //                    val uri = Uri.parse("${Constants.Api.BIND_ALIPAY_URL}${viewModel.getAccessToken()}")
-//                    val intent = Intent(Intent.ACTION_VIEW, uri)
-//                    startActivity(intent)
-
-//                    context.startActivity(Intent(context, WebBrowserActivity::class.java).apply {
-//                        putExtra(Constants.Extra.TITLE, getString(R.string.bind_alipay))
-//                        putExtra(Constants.Extra.URL, "${Constants.Api.BIND_ALIPAY_URL}${viewModel.getAccessToken()}")
-//                    })
-
-                    viewModel.bindAlipay()
-
-                }
+                viewModel.bindAlipay()
             }
+        } else {
+            bindToAlipay.setOnClickListener(null)
         }
     }
 
@@ -128,6 +115,10 @@ class WithdrawFragment : BaseFragment() {
             authCode?.let {
                 viewModel.uploadAuthCode(authCode)
             }
+            showProgress()
+            view?.postDelayed({
+                viewModel.preWithdraw()
+            }, 2000)
         }
     }
 

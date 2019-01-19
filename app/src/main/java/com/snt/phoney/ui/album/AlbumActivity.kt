@@ -44,11 +44,21 @@ class AlbumActivity : CommonActivity(), SwipeBackLayout.OnSwipeBackListener {
         }
     }
 
-    override fun onViewPositionChanged(mView: View?, swipeBackFraction: Float, swipeBackFactor: Float) {
+    override fun onViewPositionChanged(view: View?, swipeBackFraction: Float, swipeBackFactor: Float) {
+        dispatchViewPositionChanged(view, swipeBackFraction, swipeBackFactor)
     }
 
     override fun onViewSwipeFinished(view: View?, isEnd: Boolean) {
         dispatchSwipeFinished(view, isEnd)
+    }
+
+    private fun dispatchViewPositionChanged(view: View?, swipeBackFraction: Float, swipeBackFactor: Float) {
+        val fragmentList = supportFragmentManager.fragments
+        for (fragment in fragmentList) {
+            if (fragment.isVisible && fragment is SwipeBackLayout.OnSwipeBackListener) {
+                (fragment as SwipeBackLayout.OnSwipeBackListener).onViewPositionChanged(view, swipeBackFraction, swipeBackFactor)
+            }
+        }
     }
 
     private fun dispatchSwipeFinished(view: View?, isEnd: Boolean) {

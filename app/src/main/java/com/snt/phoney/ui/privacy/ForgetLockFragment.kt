@@ -9,7 +9,6 @@ import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
 import com.snt.phoney.R
 import com.snt.phoney.base.BaseFragment
-import com.snt.phoney.base.ProgressDialog
 import com.snt.phoney.extensions.*
 import com.snt.phoney.ui.auth.CaptureVideoFragment
 import com.snt.phoney.utils.data.Constants
@@ -29,8 +28,6 @@ class ForgetLockFragment : BaseFragment() {
     }
 
     private lateinit var viewModel: ForgetPasswordViewModel
-
-    private var progressDialog: ProgressDialog? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -143,17 +140,6 @@ class ForgetLockFragment : BaseFragment() {
     private fun uploadFile(path: String) {
         showProgress(getString(R.string.on_going_upload))
         viewModel.uploadResetPasswordFile(File(path))
-    }
-
-    private fun showProgress(tip: String) {
-        progressDialog = ProgressDialog.newInstance(tip)
-                .cancelable(false)
-                .show(childFragmentManager)
-    }
-
-    private fun dismissProgress() {
-        progressDialog?.dismiss()
-        progressDialog = null
     }
 
     override fun onRequestPermissionsResult(requestCode: Int, permissions: Array<out String>, grantResults: IntArray) {

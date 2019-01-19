@@ -18,7 +18,6 @@ import com.snt.phoney.R
 import com.snt.phoney.base.AlertDialogFragment
 import com.snt.phoney.base.BaseFragment
 import com.snt.phoney.base.Page
-import com.snt.phoney.base.ProgressDialog
 import com.snt.phoney.domain.model.Photo
 import com.snt.phoney.domain.model.PhotoPermission
 import com.snt.phoney.domain.model.User
@@ -29,12 +28,12 @@ import com.snt.phoney.ui.album.AlbumActivity
 import com.snt.phoney.ui.browser.WebBrowserActivity
 import com.snt.phoney.ui.dating.DatingActivity
 import com.snt.phoney.ui.main.UMengPageName
+import com.snt.phoney.ui.member.MemberActivity
 import com.snt.phoney.ui.privacy.PrivacyActivity
 import com.snt.phoney.ui.setup.BindPhoneFragment
 import com.snt.phoney.ui.share.ShareFragment
 import com.snt.phoney.ui.signup.SignupActivity
 import com.snt.phoney.ui.user.UserActivity
-import com.snt.phoney.ui.member.MemberActivity
 import com.snt.phoney.ui.wallet.WalletActivity
 import com.snt.phoney.utils.Picker
 import com.snt.phoney.utils.data.Constants
@@ -60,8 +59,6 @@ class MineFragment : BaseFragment(), OnSettingItemClickListener, OnSignOutClickL
     lateinit var viewModel: MineViewModel
 
     lateinit var adapter: MineRecyclerViewAdapter
-
-    private var progressDialog: ProgressDialog? = null
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         return inflater.inflate(R.layout.fragment_mine_list, container, false)
@@ -219,17 +216,6 @@ class MineFragment : BaseFragment(), OnSettingItemClickListener, OnSignOutClickL
                 activity?.startActivity<AboutActivity>(Page.ABOUT)
             }
         }
-    }
-
-    private fun showProgress(tip: String) {
-        progressDialog = ProgressDialog.newInstance(tip)
-                .cancelable(false)
-                .show(childFragmentManager)
-    }
-
-    private fun dismissProgress() {
-        progressDialog?.dismiss()
-        progressDialog = null
     }
 
     override fun onAddPhotoClick() {

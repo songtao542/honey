@@ -10,7 +10,6 @@ import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
 import com.snt.phoney.R
 import com.snt.phoney.base.BaseFragment
-import com.snt.phoney.base.ProgressDialog
 import com.snt.phoney.domain.model.DatingProgram
 import com.snt.phoney.domain.model.PoiAddress
 import com.snt.phoney.extensions.addFragmentSafely
@@ -48,10 +47,8 @@ class CreateDatingFragment : BaseFragment(), Toolbar.OnMenuItemClickListener {
     private var selectedProgram: DatingProgram? = null
     private var selectedProgramIndex: Int = -1
     private var selectedDay: Int = 0
-    private var progressDialog: ProgressDialog? = null
 
     private lateinit var photoView: FlowLayout
-
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View {
         return inflater.inflate(R.layout.fragment_dating_create, container, false)
@@ -143,12 +140,12 @@ class CreateDatingFragment : BaseFragment(), Toolbar.OnMenuItemClickListener {
         }
 
         viewModel.error.observe(this, Observer {
-            progressDialog?.dismiss()
+            dismissProgress()
             snackbar(it)
         })
         viewModel.success.observe(this, Observer {
             toolbar.menu.clear()
-            progressDialog?.dismiss()
+            dismissProgress()
             publishLayout.visibility = View.GONE
             successLayout.visibility = View.VISIBLE
             snackbar(getString(R.string.publish_success))
@@ -163,7 +160,7 @@ class CreateDatingFragment : BaseFragment(), Toolbar.OnMenuItemClickListener {
         return when (item.itemId) {
             R.id.publishDatingConfirm -> {
                 if (isValid()) {
-                    progressDialog = ProgressDialog().cancelable(false).also { it.show(childFragmentManager, "progress") }
+                    showProgress()
                     val content = datingContent.text?.toString() ?: ""
                     val cover = selectedPhotoUris.map { File(PathUtils.getPath(requireContext(), it)) }
                     viewModel.publish("", selectedProgram!!.safeName, content, selectedDay, selectedAddress!!, cover)
