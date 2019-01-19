@@ -41,6 +41,7 @@ class CreateLockViewModel @Inject constructor(private val usecase: PrivacyLockUs
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribeBy(
                         onSuccess = {
+                            @Suppress("CascadeIf")
                             if (it.success) {
                                 success.value = context.getString(R.string.set_privacy_password_success)
                                 updateUserPrivacyPassword(password, privatePassword)
@@ -63,6 +64,7 @@ class CreateLockViewModel @Inject constructor(private val usecase: PrivacyLockUs
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribeBy(
                         onSuccess = {
+                            @Suppress("CascadeIf")
                             if (it.code == 200) {
                                 Log.d(TAG, "close privacy password success")
                                 updateUserPrivacyPassword(null, null)
@@ -87,6 +89,7 @@ class CreateLockViewModel @Inject constructor(private val usecase: PrivacyLockUs
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribeBy(
                         onSuccess = {
+                            @Suppress("CascadeIf")
                             if (it.code == 200) {
                                 closeSuccess.value = context.getString(R.string.close_privacy_password_success)
                                 Log.d(TAG, "close privacy password success")

@@ -47,7 +47,7 @@ class CreateLockStep1Fragment : BaseFragment() {
             titleTextView.setText(R.string.reset_lock_title)
             resetTip.visibility = View.VISIBLE
             divider.visibility = View.VISIBLE
-            toolbar.navigationIcon = null
+            //toolbar.navigationIcon = null
         } else {
             titleTextView.setText(R.string.set_lock_title)
             resetTip.visibility = View.GONE

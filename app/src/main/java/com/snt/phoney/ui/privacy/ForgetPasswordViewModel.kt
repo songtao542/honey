@@ -15,6 +15,15 @@ class ForgetPasswordViewModel @Inject constructor(private val usecase: ResetPriv
 
     val state = SingleLiveData<Int>()
 
+    private fun updateUserPrivacyPassword(password: String?, privatePassword: String?) {
+        val user = usecase.getUser()
+        user?.let { user ->
+            user.password = password
+            user.privacyPassword = privatePassword
+            usecase.setUser(user)
+        }
+    }
+
     fun getResetPasswordState() {
         val token = usecase.getAccessToken() ?: return
         usecase.getResetPasswordState(token)
@@ -22,6 +31,7 @@ class ForgetPasswordViewModel @Inject constructor(private val usecase: ResetPriv
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribeBy(
                         onSuccess = {
+                            @Suppress("CascadeIf")
                             if (it.success) {
                                 state.value = it.data
                             } else if (it.hasMessage) {
@@ -82,6 +92,7 @@ class ForgetPasswordViewModel @Inject constructor(private val usecase: ResetPriv
                             @Suppress("CascadeIf")
                             if (it.success) {
                                 success.value = context.getString(R.string.reset_password_success)
+                                updateUserPrivacyPassword(password, privatePassword)
                             } else if (it.hasMessage) {
                                 error.value = it.message
                             } else {

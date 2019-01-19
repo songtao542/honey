@@ -71,8 +71,8 @@ class SetupWizardThreeFragment : BaseFragment() {
         }
 
         viewModel.setupUserInfo.observe(this, Observer {
-            context?.let {
-                startActivity(MainActivity.newIntent(it))
+            context?.let { ctx ->
+                startActivity(MainActivity.newIntent(ctx))
                 activity?.finish()
                 return@let
             }

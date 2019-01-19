@@ -13,7 +13,7 @@
         android:layout_gravity="center"
         android:layout_marginTop="10dp"
         android:layout_marginBottom="10dp"
-        android:background="@drawable/pay_picker_bg"
+        android:background="@drawable/alert_dialog_bg"
         android:orientation="vertical">
 
         <androidx.appcompat.widget.AppCompatTextView

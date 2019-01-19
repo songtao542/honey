@@ -3,6 +3,7 @@ package com.snt.phoney.ui.user
 import android.Manifest
 import android.app.Activity
 import android.content.Intent
+import android.graphics.Color
 import android.os.Bundle
 import android.text.TextUtils
 import android.util.TypedValue
@@ -12,13 +13,13 @@ import android.view.ViewGroup
 import android.view.ViewTreeObserver
 import android.widget.LinearLayout
 import android.widget.TextView
-import androidx.appcompat.app.AlertDialog
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
 import com.bumptech.glide.Glide
 import com.bumptech.glide.load.resource.drawable.DrawableTransitionOptions
 import com.bumptech.glide.request.RequestOptions
 import com.snt.phoney.R
+import com.snt.phoney.base.AlertDialogFragment
 import com.snt.phoney.base.BaseFragment
 import com.snt.phoney.base.Page
 import com.snt.phoney.domain.model.*
@@ -35,6 +36,10 @@ import com.snt.phoney.widget.PhotoFlowAdapter
 import kotlinx.android.synthetic.main.fragment_user_info1.*
 import kotlinx.android.synthetic.main.fragment_user_info_header.*
 import java.text.DecimalFormat
+import android.text.Spanned
+import android.graphics.Color.parseColor
+import android.text.style.ForegroundColorSpan
+import android.text.SpannableString
 
 const val REQUEST_VIP_CODE = 60
 const val REQUEST_VIEW_ALBUM_CODE = 62
@@ -191,25 +196,28 @@ class UserInfoFragment : BaseFragment() {
 
     private fun tryChat() {
         context?.let { ctx ->
-            user?.let { u ->
-                if (u.isVip) {
-                    u.im?.let { im ->
-                        Chat.start(ctx, im)
+            val isVip = viewModel.getUser()?.isValidVip ?: false
+            if (isVip) {
+                user?.let { u ->
+                    if (u.isVip) {
+                        u.im?.let { im ->
+                            Chat.start(ctx, im)
+                        }
                     }
-                } else {
-                    AlertDialog.Builder(ctx)
-                            .setTitle(R.string.notice)
-                            .setMessage(R.string.chat_warning)
-                            .setCancelable(false)
-                            .setNegativeButton(R.string.cancel) { dialog, _ ->
-                                dialog.dismiss()
-                            }.setPositiveButton(R.string.confirm) { dialog, _ ->
-                                dialog.dismiss()
-                                startActivityForResult<VipActivity>(Page.VIP, REQUEST_VIP_CODE)
-                            }.show()
                 }
-                return@let
+            } else {
+                AlertDialogFragment.Builder(ctx)
+                        .setTitle(R.string.notice)
+                        .setMessage(R.string.chat_warning)
+                        .setCancelable(false)
+                        .setNegativeButton(R.string.cancel) { dialog ->
+                            dialog.dismiss()
+                        }.setPositiveButton(R.string.confirm) { dialog ->
+                            dialog.dismiss()
+                            startActivityForResult<VipActivity>(Page.VIP, REQUEST_VIP_CODE)
+                        }.show(childFragmentManager)
             }
+            return@let
         }
     }
 
@@ -262,7 +270,7 @@ class UserInfoFragment : BaseFragment() {
                     unlockOrApplyPhoto.text = getString(R.string.unlock_photo_template, user.photoPrice.toString())
 
                     unlockOrApplyPhoto.setOnClickListener {
-                        buy {
+                        buy(user.photoPrice) {
                             viewModel.buyWithMibi(OrderType.USE_UNLOCK_ALBUM_MIBI, user.photoId.toString(), user.uuid)
                         }
                     }
@@ -292,14 +300,14 @@ class UserInfoFragment : BaseFragment() {
                 photosView.viewAdapter = PhotoFlowAdapter(requireContext()).setViewerIsVip(user.isVip).setPhotos(photos).setMaxShow(20).setLastAsAdd(false)
                 photosView.setOnItemClickListener { view, _ ->
                     val photo = view.getTag(R.id.tag) as? Photo
-                    photo?.let { photo ->
-                        if (photo.flag == 1 && !photo.paid) {
-                            buy {
-                                viewModel.buyWithMibi(OrderType.USE_RED_ENVELOPE_MIBI, photo.id.toString(), user.uuid)
+                    photo?.let { thePhoto ->
+                        if (thePhoto.flag == 1 && !thePhoto.paid) {
+                            buy(thePhoto.price) {
+                                viewModel.buyWithMibi(OrderType.USE_RED_ENVELOPE_MIBI, thePhoto.id.toString(), user.uuid)
                             }
                         } else {
                             user.freePhotos?.let { freePhotos ->
-                                val i = freePhotos.indexOf(photo)
+                                val i = freePhotos.indexOf(thePhoto)
                                 startActivityForResult<AlbumActivity>(Page.ALBUM_VIEWER, REQUEST_VIEW_ALBUM_CODE, Bundle().apply {
                                     putParcelableArrayList(Constants.Extra.PHOTO_LIST, ArrayList(freePhotos))
                                     putInt(Constants.Extra.INDEX, i)
@@ -371,18 +379,23 @@ class UserInfoFragment : BaseFragment() {
         }
     }
 
-    private fun buy(handler: (() -> Unit)) {
-        context?.let { context ->
-            AlertDialog.Builder(context)
+    private fun buy(price: Int, handler: (() -> Unit)) {
+        context?.let { ctx ->
+            val message = getString(R.string.buy_warning_template, price.toString())
+            val spannableString = SpannableString(message)
+            val colorSpan = ForegroundColorSpan(Color.RED)
+            spannableString.setSpan(colorSpan, message.indexOf(price.toString()), spannableString.length, Spanned.SPAN_INCLUSIVE_EXCLUSIVE)
+            AlertDialogFragment.Builder(ctx)
                     .setTitle(R.string.buy_tip)
-                    .setMessage(R.string.buy_warning)
+                    .setMessage(spannableString)
                     .setCancelable(false)
-                    .setNegativeButton(R.string.cancel) { dialog, _ ->
+                    .setNegativeButton(R.string.cancel) { dialog ->
                         dialog.dismiss()
-                    }.setPositiveButton(R.string.confirm) { dialog, _ ->
+                    }.setPositiveButton(R.string.confirm) { dialog ->
                         dialog.dismiss()
                         handler.invoke()
-                    }.show()
+                    }.show(childFragmentManager)
+            return@let
         }
     }
 

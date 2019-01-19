@@ -42,7 +42,7 @@ class PhotoApplyListFragment : BaseFragment() {
         titleTextView.setText(R.string.photo_applying_title)
 
         list.layoutManager = LinearLayoutManager(requireContext())
-        adapter = PhotoApplyListRecyclerViewAdapter(viewModel)
+        adapter = PhotoApplyListRecyclerViewAdapter(this, viewModel)
         list.adapter = adapter
 
         viewModel.photoApplyList.observe(this, Observer {

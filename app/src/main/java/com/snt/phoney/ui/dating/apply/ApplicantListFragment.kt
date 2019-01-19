@@ -58,7 +58,7 @@ class ApplicantListFragment : BaseFragment() {
         titleTextView.setText(R.string.dating_applying_title)
 
         list.layoutManager = LinearLayoutManager(requireContext())
-        adapter = ApplicantListRecyclerViewAdapter(viewModel)
+        adapter = ApplicantListRecyclerViewAdapter(this, viewModel)
         list.adapter = adapter
 
         viewModel.applicants.observe(this, Observer {

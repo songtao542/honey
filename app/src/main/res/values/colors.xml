@@ -28,6 +28,9 @@
     <color name="buttonBorderPressedColor">#cccccc</color>
     <color name="buttonBorderColor">#ffffff</color>
 
+    <color name="alert_dialog_negative_color">#9b9b9b</color>
+    <color name="alert_dialog_negative_pressed_color">#868686</color>
+
     <color name="ccc">#ffcccccc</color>
 
     <color name="buttonGetVerificationCodeBgColor">#8d8d8d</color>

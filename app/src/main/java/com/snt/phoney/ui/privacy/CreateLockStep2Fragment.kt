@@ -11,6 +11,7 @@ import com.snt.phoney.R
 import com.snt.phoney.base.AppViewModel
 import com.snt.phoney.base.BaseFragment
 import com.snt.phoney.extensions.snackbar
+import com.snt.phoney.ui.main.MainActivity
 import com.snt.phoney.utils.data.Constants
 import com.snt.phoney.utils.data.MD5
 import kotlinx.android.synthetic.main.app_toolbar.*
@@ -98,8 +99,9 @@ class CreateLockStep2Fragment : BaseFragment() {
         confirmButton.setText(R.string.confirm_reset)
 
         viewModel.success.observe(this, Observer {
-            context?.let { context ->
-                Toast.makeText(context.applicationContext, R.string.create_privacy_success, Toast.LENGTH_SHORT).show()
+            context?.let { ctx ->
+                Toast.makeText(ctx.applicationContext, R.string.create_privacy_success, Toast.LENGTH_SHORT).show()
+                startActivity(MainActivity.newIntent(ctx))
             }
             activity?.finish()
         })

@@ -1,7 +1,6 @@
 package com.snt.phoney.ui.main.mine
 
 import android.app.Activity
-import android.app.AlertDialog
 import android.content.Intent
 import android.os.Bundle
 import android.text.TextUtils
@@ -16,6 +15,7 @@ import com.bumptech.glide.Glide
 import com.bumptech.glide.load.resource.drawable.DrawableTransitionOptions
 import com.bumptech.glide.request.RequestOptions
 import com.snt.phoney.R
+import com.snt.phoney.base.AlertDialogFragment
 import com.snt.phoney.base.BaseFragment
 import com.snt.phoney.base.Page
 import com.snt.phoney.base.ProgressDialog
@@ -184,16 +184,16 @@ class MineFragment : BaseFragment(), OnSettingItemClickListener, OnSignOutClickL
             R.drawable.ic_setting_privacy_setting -> {
                 if (!TextUtils.isEmpty(viewModel.user.value?.privacyPassword)) {
                     context?.let { context ->
-                        AlertDialog.Builder(context)
+                        AlertDialogFragment.Builder(context)
                                 .setTitle(R.string.modify_privacy_lock)
                                 .setMessage(R.string.modify_privacy_lock_message)
-                                .setNegativeButton(R.string.cancel) { dialog, _ ->
+                                .setNegativeButton(R.string.cancel) { dialog ->
                                     dialog.dismiss()
                                 }
-                                .setPositiveButton(R.string.confirm) { dialog, _ ->
+                                .setPositiveButton(R.string.confirm) { dialog ->
                                     dialog.dismiss()
                                     activity?.startActivity<PrivacyActivity>(Page.CREATE_PRIVACY_LOCK)
-                                }.show()
+                                }.show(childFragmentManager)
 
                     }
                 } else {

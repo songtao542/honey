@@ -7,14 +7,15 @@ import android.graphics.Bitmap
 import android.os.Build
 import android.os.Bundle
 import android.os.Handler
+import android.os.Message
 import android.view.View
 import android.view.WindowManager
-import androidx.appcompat.app.AlertDialog
 import cn.jpush.im.android.api.JMessageClient
 import cn.jpush.im.android.api.callback.GetAvatarBitmapCallback
 import cn.jpush.im.android.api.callback.GetUserInfoCallback
 import cn.jpush.im.android.api.model.UserInfo
 import com.snt.phoney.R
+import com.snt.phoney.base.AlertDialogFragment
 import com.snt.phoney.base.BaseNoViewModelActivity
 import com.snt.phoney.domain.model.JMUser
 import com.snt.phoney.extensions.checkAndRequestPermission
@@ -26,14 +27,42 @@ import com.snt.phoney.utils.data.Constants
 import com.umeng.analytics.MobclickAgent
 import kotlinx.android.synthetic.main.activity_voice_answer.*
 
+const val MESSAGE_TIMER = 1
 
-class VoiceAnswerActivity : BaseNoViewModelActivity() {
+class VoiceAnswerActivity : BaseNoViewModelActivity(), Handler.Callback {
 
     private var mCallStateListener: CallStateListenerImpl = CallStateListenerImpl()
 
-    private val mHandler = Handler()
+    private val mHandler = Handler(this)
 
     private var mCaller: JMUser? = null
+    private var mTimeInSecond = 0
+
+
+    override fun handleMessage(msg: Message?): Boolean {
+        when (msg?.what) {
+            MESSAGE_TIMER -> {
+                mTimeInSecond++
+                timeView.text = formatTime()
+                mHandler.sendEmptyMessageDelayed(MESSAGE_TIMER, 1000)
+                return true
+            }
+        }
+        return false
+    }
+
+    private fun formatTime(): String {
+        var second = mTimeInSecond
+        val hour = second / 3600
+        second %= 3600
+        val minute = second / 60
+        second %= 60
+        return if (hour > 0) {
+            String.format("%02d:%02d:%02d", hour, minute, second)
+        } else {
+            String.format("%02d:%02d", minute, second)
+        }
+    }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -100,29 +129,30 @@ class VoiceAnswerActivity : BaseNoViewModelActivity() {
     override fun onBackPressed() {
         @Suppress("CascadeIf")
         if (VoiceCallEngine.getInstance().isConnected()) {
-            AlertDialog.Builder(this)
+            AlertDialogFragment.Builder(this)
                     .setTitle(R.string.cancel_voice_call_tip)
                     .setMessage(R.string.cancel_voice_call_warn)
-                    .setPositiveButton(R.string.disconnect) { dialog, _ ->
+                    .setPositiveButton(R.string.disconnect) { dialog ->
                         dialog.dismiss()
                         VoiceCallEngine.getInstance().hangup()
                         finish()
-                    }.show()
+                    }.show(supportFragmentManager)
         } else if (VoiceCallEngine.getInstance().isConnecting()) {
-            AlertDialog.Builder(this)
+            AlertDialogFragment.Builder(this)
                     .setTitle(R.string.reject_voice_call_tip)
                     .setMessage(R.string.reject_voice_call_warn)
-                    .setPositiveButton(R.string.disconnect) { dialog, _ ->
+                    .setPositiveButton(R.string.disconnect) { dialog ->
                         dialog.dismiss()
                         VoiceCallEngine.getInstance().refuse()
                         finish()
-                    }.show()
+                    }.show(supportFragmentManager)
         } else {
             super.onBackPressed()
         }
     }
 
     override fun onDestroy() {
+        mHandler.removeCallbacksAndMessages(null)
         VoiceCallEngine.getInstance().unregisterCallStateListener(mCallStateListener)
         super.onDestroy()
     }
@@ -178,6 +208,9 @@ class VoiceAnswerActivity : BaseNoViewModelActivity() {
             VoiceCallEngine.getInstance().hangup()
             finish()
         }
+        timeView.visibility = View.VISIBLE
+        timeView.text = formatTime()
+        mHandler.sendEmptyMessageDelayed(MESSAGE_TIMER, 1000)
     }
 
     inner class CallStateListenerImpl : VoiceCallEngine.CallStateListener {

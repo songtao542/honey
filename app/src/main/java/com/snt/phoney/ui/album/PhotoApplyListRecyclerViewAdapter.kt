@@ -6,12 +6,12 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.appcompat.app.AlertDialog
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.bumptech.glide.load.resource.drawable.DrawableTransitionOptions
 import com.bumptech.glide.request.RequestOptions
 import com.snt.phoney.R
+import com.snt.phoney.base.AlertDialogFragment
 import com.snt.phoney.base.Page
 import com.snt.phoney.domain.model.PhotoApply
 import com.snt.phoney.domain.model.Sex
@@ -23,7 +23,7 @@ import java.text.DecimalFormat
 
 /**
  */
-class PhotoApplyListRecyclerViewAdapter(private val viewModel: AlbumViewModel) : RecyclerView.Adapter<PhotoApplyListRecyclerViewAdapter.ViewHolder>() {
+class PhotoApplyListRecyclerViewAdapter(private val fragment: PhotoApplyListFragment, private val viewModel: AlbumViewModel) : RecyclerView.Adapter<PhotoApplyListRecyclerViewAdapter.ViewHolder>() {
 
     var data: List<PhotoApply>? = null
         set(value) {
@@ -109,16 +109,16 @@ class PhotoApplyListRecyclerViewAdapter(private val viewModel: AlbumViewModel) :
         }
 
         private fun reviewApply(message: Int, handler: (() -> Unit)) {
-            AlertDialog.Builder(context)
+            AlertDialogFragment.Builder(context)
                     .setTitle(R.string.confirm_notice)
                     .setMessage(message)
                     .setCancelable(false)
-                    .setNegativeButton(R.string.cancel) { dialog, _ ->
+                    .setNegativeButton(R.string.cancel) { dialog ->
                         dialog.dismiss()
-                    }.setPositiveButton(R.string.confirm) { dialog, _ ->
+                    }.setPositiveButton(R.string.confirm) { dialog ->
                         dialog.dismiss()
                         handler.invoke()
-                    }.show()
+                    }.show(fragment.childFragmentManager)
         }
     }
 }

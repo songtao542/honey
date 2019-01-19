@@ -10,7 +10,7 @@ import android.os.CountDownTimer
 import android.os.Handler
 import android.os.IBinder
 import android.view.View
-import androidx.appcompat.app.AlertDialog
+import com.snt.phoney.base.AlertDialogFragment
 import com.bumptech.glide.Glide
 import com.bumptech.glide.load.resource.drawable.DrawableTransitionOptions
 import com.bumptech.glide.request.RequestOptions

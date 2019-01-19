@@ -119,7 +119,7 @@ public class CompatRadioButton extends LinearLayout implements View.OnClickListe
 
             if (imageView == null) {
                 imageView = new ImageView(getContext());
-                LayoutParams iconLayoutParam = new LayoutParams(LayoutParams.WRAP_CONTENT, LayoutParams.WRAP_CONTENT);
+                LayoutParams iconLayoutParam = new LayoutParams(width, height);
                 iconLayoutParam.gravity = Gravity.CENTER_VERTICAL;
                 imageView.setLayoutParams(iconLayoutParam);
                 imageView.setImageDrawable(drawable);

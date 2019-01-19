@@ -5,10 +5,7 @@ import android.util.Log
 import androidx.lifecycle.MutableLiveData
 import com.snt.phoney.R
 import com.snt.phoney.base.AppViewModel
-import com.snt.phoney.domain.model.Photo
-import com.snt.phoney.domain.model.PhotoPermission
-import com.snt.phoney.domain.model.User
-import com.snt.phoney.domain.model.UserInfo
+import com.snt.phoney.domain.model.*
 import com.snt.phoney.domain.usecase.UserInfoUseCase
 import com.snt.phoney.extensions.TAG
 import com.snt.phoney.extensions.disposedBy
@@ -31,6 +28,17 @@ class MineViewModel @Inject constructor(private val usecase: UserInfoUseCase) : 
 
     val userInfo = MutableLiveData<UserInfo>()
 
+    private fun updateUserVipInfo(vipInfo: VipInfo?) {
+        if (vipInfo != null) {
+            val user = usecase.getUser()
+            user?.let { theUser ->
+                theUser.isVip = vipInfo.isVip
+                theUser.vipEndTime = vipInfo.endTime
+                usecase.setUser(theUser)
+            }
+        }
+    }
+
     fun getAllInfoOfUser() {
         val token = usecase.getAccessToken() ?: return
         usecase.getAllInfoOfUser(token)
@@ -40,6 +48,7 @@ class MineViewModel @Inject constructor(private val usecase: UserInfoUseCase) : 
                         onSuccess = {
                             if (it.success) {
                                 userInfo.value = it.data
+                                updateUserVipInfo(it.data?.vipInfo)
                             }
                         },
                         onError = {}

@@ -48,7 +48,7 @@ class ForgetLockFragment : BaseFragment() {
         toolbar.setNavigationOnClickListener { activity?.onBackPressed() }
         titleTextView.setText(R.string.reset_lock_title)
 
-        toolbar.navigationIcon = null
+        //toolbar.navigationIcon = null
 
         viewModel.state.observe(this, Observer {
             loading.visibility = View.GONE

@@ -17,7 +17,7 @@ import android.os.Handler
 import android.os.IBinder
 import android.view.View
 import android.view.WindowManager
-import androidx.appcompat.app.AlertDialog
+import com.snt.phoney.base.AlertDialogFragment
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.app.NotificationCompat
 import cn.jpush.im.android.api.JMessageClient
@@ -101,23 +101,23 @@ class VoiceAnswerActivity : BaseNoViewModelActivity(), ServiceConnection {
 
     override fun onBackPressed() {
         if (mVoiceCallService?.isConnected == true) {
-            AlertDialog.Builder(this)
+            AlertDialogFragment.Builder(this)
                     .setTitle(R.string.cancel_voice_call_tip)
                     .setMessage(R.string.cancel_voice_call_warn)
                     .setPositiveButton(R.string.disconnect) { dialog, _ ->
                         dialog.dismiss()
                         mVoiceCallService?.hangup()
                         finish()
-                    }.show()
+                    }.show(supportFragmentManager)
         } else if (mVoiceCallService?.isConnecting == true) {
-            AlertDialog.Builder(this)
+            AlertDialogFragment.Builder(this)
                     .setTitle(R.string.reject_voice_call_tip)
                     .setMessage(R.string.reject_voice_call_warn)
                     .setPositiveButton(R.string.disconnect) { dialog, _ ->
                         dialog.dismiss()
                         mVoiceCallService?.refuse()
                         finish()
-                    }.show()
+                    }.show(supportFragmentManager)
         } else {
             super.onBackPressed()
         }

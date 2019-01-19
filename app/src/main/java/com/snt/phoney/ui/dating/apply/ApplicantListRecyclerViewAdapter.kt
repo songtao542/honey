@@ -6,12 +6,12 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.appcompat.app.AlertDialog
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.bumptech.glide.load.resource.drawable.DrawableTransitionOptions
 import com.bumptech.glide.request.RequestOptions
 import com.snt.phoney.R
+import com.snt.phoney.base.AlertDialogFragment
 import com.snt.phoney.base.Page
 import com.snt.phoney.domain.model.Applicant
 import com.snt.phoney.extensions.startActivity
@@ -21,7 +21,7 @@ import kotlinx.android.synthetic.main.fragment_dating_applicant_item.view.*
 
 /**
  */
-class ApplicantListRecyclerViewAdapter(private val viewModel: DatingApplyViewModel) : RecyclerView.Adapter<ApplicantListRecyclerViewAdapter.ViewHolder>() {
+class ApplicantListRecyclerViewAdapter(private val fragment: ApplicantListFragment, private val viewModel: DatingApplyViewModel) : RecyclerView.Adapter<ApplicantListRecyclerViewAdapter.ViewHolder>() {
 
     var data: List<Applicant>? = null
         set(value) {
@@ -93,16 +93,16 @@ class ApplicantListRecyclerViewAdapter(private val viewModel: DatingApplyViewMod
         }
 
         private fun reviewApply(message: Int, handler: (() -> Unit)) {
-            AlertDialog.Builder(context)
+            AlertDialogFragment.Builder(context)
                     .setTitle(R.string.confirm_notice)
                     .setMessage(message)
                     .setCancelable(false)
-                    .setNegativeButton(R.string.cancel) { dialog, _ ->
+                    .setNegativeButton(R.string.cancel) { dialog ->
                         dialog.dismiss()
-                    }.setPositiveButton(R.string.confirm) { dialog, _ ->
+                    }.setPositiveButton(R.string.confirm) { dialog ->
                         dialog.dismiss()
                         handler.invoke()
-                    }.show()
+                    }.show(fragment.childFragmentManager)
         }
     }
 }

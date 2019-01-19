@@ -10,14 +10,17 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_gravity="center_horizontal"
+        android:scaleType="fitXY"
         app:srcCompat="@drawable/voice_call_gradient_bg" />
 
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="match_parent"
         android:layout_gravity="center"
         android:gravity="center"
-        android:orientation="vertical">
+        android:orientation="vertical"
+        android:paddingTop="150dp"
+        android:paddingBottom="50dp">
 
         <androidx.appcompat.widget.AppCompatImageView
             android:id="@+id/head"
@@ -46,8 +49,14 @@
             android:textColor="@color/white"
             android:textSize="@dimen/textsize_large" />
 
+
+        <Space
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:layout_weight="1" />
+
         <androidx.appcompat.widget.AppCompatTextView
-            android:id="@+id/time"
+            android:id="@+id/timeView"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="10dp"
@@ -62,7 +71,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center_horizontal"
-            android:layout_marginTop="100dp"
+            android:layout_marginTop="10dp"
             android:orientation="horizontal">
 
             <com.snt.phoney.widget.ActionButton

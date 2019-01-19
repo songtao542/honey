@@ -67,6 +67,7 @@ data class User(
         @SerializedName(value = "hasWX") var hasWechatAccount: Boolean = false,
         @SerializedName(value = "account_wx") var wechatAccount: String? = null,
         @SerializedName(value = "isMember") var isVip: Boolean = false,
+        @SerializedName(value = "endTime") var vipEndTime: Long = 0,
         var token: String? = null,
         @SerializedName(value = "isOpen") var open: Int = 0,
         var price: Double = 0.0,
@@ -179,6 +180,12 @@ data class User(
     val isPhotoNeedApply: Boolean
         get() {
             return photoPermission == PhotoPermission.NEED_APPLY.value && photoApplyStatus != 1
+        }
+
+    @Transient
+    val isValidVip: Boolean
+        get() {
+            return isVip && vipEndTime > System.currentTimeMillis()
         }
 }
 
