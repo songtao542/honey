@@ -17,7 +17,7 @@ data class MemberInfo(
         /**
          *  1 是会员， 0 普通会员
          */
-        @SerializedName(value = "member") var member: Int = 0//  "member": 0,
+        @SerializedName(value = "isMember") var member: Int = 0//  "member": 0,
 ) {
     val isMember: Boolean
         get() = member != 0

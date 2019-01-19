@@ -58,6 +58,7 @@ class MemberFragment : BaseFragment() {
         })
 
         viewModel.success.observe(this, Observer {
+            buySuccess = true
             finish()
         })
 

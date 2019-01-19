@@ -10,8 +10,6 @@ class WalletUseCase @Inject constructor(private val repository: UserRepository, 
 
     fun getMibiWallet(token: String) = repository.getMibiWallet(token)
 
-    fun getMemberInfo(token: String) = repository.getMemberInfo(token)
-
     fun listOrder(token: String, type: String, page: String, startTime: String, endTime: String) = orderRepository.listOrder(token, type, page, startTime, endTime)
 
     fun preWithdraw(token: String) = orderRepository.preWithdraw(token)

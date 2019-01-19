@@ -12,7 +12,7 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_gravity="center"
-        android:background="@android:color/transparent"
+        android:background="@android:color/black"
         android:scaleType="fitCenter"
         android:visibility="invisible"
         app:srcCompat="@drawable/ic_burn_placeholder" />
@@ -61,6 +61,5 @@
         android:textColor="@color/white"
         android:textSize="@dimen/textsize_smaller"
         android:visibility="gone" />
-
 
 </merge>

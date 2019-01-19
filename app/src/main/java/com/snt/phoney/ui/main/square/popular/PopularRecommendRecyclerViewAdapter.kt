@@ -14,6 +14,7 @@ import com.bumptech.glide.request.RequestOptions
 import com.snt.phoney.R
 import com.snt.phoney.base.Page
 import com.snt.phoney.domain.model.Dating
+import com.snt.phoney.extensions.colorOf
 import com.snt.phoney.extensions.dip
 import com.snt.phoney.extensions.startActivity
 import com.snt.phoney.ui.dating.DatingActivity
@@ -102,14 +103,18 @@ class PopularRecommendRecyclerViewAdapter(val fragment: Fragment, val viewModel:
                 photoFlowAdapter.setUrls(data.photoUrls())
                 flowImagesView.setOnItemClickListener(onPhotoItemClickListener)
                 flowImagesView.viewAdapter = photoFlowAdapter
-
                 if (!data.isAttend) {
                     attendView.setText(R.string.join_dating)
+                    attendView.setTextColor(context.colorOf(R.color.white))
+                    attendView.setBackgroundResource(R.drawable.button_primary_circle_corner_selector)
                     attendView.setOnClickListener {
-                        viewModel.joinDating(data, false)
+                        viewModel.joinDating(data, official = false)
                     }
                 } else {
                     attendView.setText(R.string.joined_dating)
+                    attendView.setTextColor(context.colorOf(R.color.black))
+                    attendView.setBackgroundResource(R.drawable.button_gray_circle_corner_selector)
+                    attendView.setOnClickListener(null)
                 }
                 setCareState(data.isCared)
                 followView.setOnClickListener {

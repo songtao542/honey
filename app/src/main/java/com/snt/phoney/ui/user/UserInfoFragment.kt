@@ -96,9 +96,9 @@ class UserInfoFragment : BaseFragment() {
         setupUserInfo(user)
 
         viewModel.userInfo.observe(this, Observer {
-            it?.let { u ->
-                user = u
-                setupUserInfo(u)
+            it?.let { theUser ->
+                user = theUser
+                setupUserInfo(theUser)
             }
         })
 
@@ -197,9 +197,9 @@ class UserInfoFragment : BaseFragment() {
         context?.let { ctx ->
             val isMember = viewModel.getUser()?.isValidMember ?: false
             if (isMember) {
-                user?.let { u ->
-                    if (u.isMember) {
-                        u.im?.let { im ->
+                user?.let { theUser ->
+                    if (theUser.isMember) {
+                        theUser.im?.let { im ->
                             Chat.start(ctx, im)
                         }
                     }
@@ -353,11 +353,13 @@ class UserInfoFragment : BaseFragment() {
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
         if (requestCode == REQUEST_MEMBER_CODE && resultCode == Activity.RESULT_OK) {
+            viewModel.getMemberInfo()
             loadUser()
         }
         if (requestCode == REQUEST_VIEW_ALBUM_CODE && resultCode == Activity.RESULT_OK) {
             val isMember = data?.getBooleanExtra(Constants.Extra.IS_MEMBER, false) ?: false
             if (isMember) {
+                viewModel.getMemberInfo()
                 loadUser()
             } else {
                 val photos = data?.getParcelableArrayListExtra<Photo>(Constants.Extra.LIST)

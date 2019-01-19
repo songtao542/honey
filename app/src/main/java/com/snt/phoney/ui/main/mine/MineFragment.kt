@@ -100,7 +100,7 @@ class MineFragment : BaseFragment(), OnSettingItemClickListener, OnSignOutClickL
             adapter.notifyDataSetChanged()
         })
 
-        editInfo.setOnClickListener { context?.let { context -> context.startActivity<UserActivity>(Page.EDIT_USER) } }
+        editInfo.setOnClickListener { context?.let { ctx -> ctx.startActivity<UserActivity>(Page.EDIT_USER) } }
 
         head.setOnClickListener {
             Picker.showPhotoPicker(fragment = this, max = 1, crop = true, requestCode = REQUEST_HEAD_ICON_CODE)
@@ -122,6 +122,19 @@ class MineFragment : BaseFragment(), OnSettingItemClickListener, OnSignOutClickL
         /**test************************/
     }
 
+    override fun onResume() {
+        super.onResume()
+        val userInfo = viewModel.userInfo.value
+        val isMember = viewModel.user.value?.isMember
+        if (userInfo == null || isMember != userInfo?.isMember) {
+            viewModel.getAllInfoOfUser()
+        }
+        val photos = viewModel.photos.value
+        if (photos == null) {
+            viewModel.getUserPhotos()
+        }
+    }
+
     override fun onSettingItemClick(setting: Setting) {
         when (setting.icon) {
             R.drawable.ic_setting_photo_permission -> {
@@ -133,8 +146,8 @@ class MineFragment : BaseFragment(), OnSettingItemClickListener, OnSignOutClickL
                                     PhotoPermission.NEED_CHARGE -> {
                                         this@MineFragment.startActivityForResult<AlbumActivity>(Page.PAY_SETTING, REQUEST_PAY_SETTING_CODE, Bundle().apply {
                                             putInt(Constants.Extra.PERMISSION, PhotoPermission.NEED_CHARGE.value)
-                                            if (viewModel.photos.value != null) {
-                                                putParcelableArrayList(Constants.Extra.PHOTO_LIST, ArrayList<Photo>(viewModel.photos.value))
+                                            viewModel.photos.value?.let { ps ->
+                                                putParcelableArrayList(Constants.Extra.PHOTO_LIST, ArrayList<Photo>(ps))
                                             }
                                         })
                                     }
@@ -224,11 +237,13 @@ class MineFragment : BaseFragment(), OnSettingItemClickListener, OnSignOutClickL
     }
 
     override fun onPhotoClick(index: Int, photo: Photo) {
-        startActivityForResult<AlbumActivity>(Page.ALBUM_VIEWER, REQUEST_ALBUM_CODE, Bundle().apply {
-            putParcelableArrayList(Constants.Extra.PHOTO_LIST, ArrayList<Photo>(viewModel.photos.value))
-            putInt(Constants.Extra.INDEX, index)
-            putBoolean(Constants.Extra.DELETABLE, true)
-        })
+        viewModel.photos.value?.let { ps ->
+            startActivityForResult<AlbumActivity>(Page.ALBUM_VIEWER, REQUEST_ALBUM_CODE, Bundle().apply {
+                putParcelableArrayList(Constants.Extra.PHOTO_LIST, ArrayList<Photo>(ps))
+                putInt(Constants.Extra.INDEX, index)
+                putBoolean(Constants.Extra.DELETABLE, true)
+            })
+        }
     }
 
     override fun onSignOutClick() {
@@ -255,8 +270,8 @@ class MineFragment : BaseFragment(), OnSettingItemClickListener, OnSignOutClickL
      */
     private fun handlePhotoPick(requestCode: Int, resultCode: Int, data: Intent?) {
         if (requestCode == Picker.REQUEST_CODE_CHOOSE && resultCode == Activity.RESULT_OK) {
-            data?.let { data ->
-                val paths = Matisse.obtainPathResult(data)
+            data?.let { theData ->
+                val paths = Matisse.obtainPathResult(theData)
                 showProgress(getString(R.string.on_going_upload))
                 viewModel.uploadPhotos(paths.map { File(it) })
             }
@@ -268,12 +283,12 @@ class MineFragment : BaseFragment(), OnSettingItemClickListener, OnSignOutClickL
      */
     private fun handleAlbumPhotoDelete(requestCode: Int, resultCode: Int, data: Intent?) {
         if (requestCode == REQUEST_ALBUM_CODE && resultCode == Activity.RESULT_OK) {
-            data?.let { data ->
-                val delete = data.getParcelableArrayListExtra<Photo>(Constants.Extra.LIST)
+            data?.let { theData ->
+                val delete = theData.getParcelableArrayListExtra<Photo>(Constants.Extra.LIST)
                 val photos = viewModel.photos.value
-                photos?.let { photos ->
+                photos?.let { ps ->
                     if (delete != null && delete.isNotEmpty()) {
-                        viewModel.photos.value = ArrayList<Photo>(photos).removeList(delete)
+                        viewModel.photos.value = ArrayList<Photo>(ps).removeList(delete)
                     }
                 }
                 return@let
@@ -286,8 +301,8 @@ class MineFragment : BaseFragment(), OnSettingItemClickListener, OnSignOutClickL
      */
     private fun handleHeadIconResult(requestCode: Int, resultCode: Int, data: Intent?) {
         if (requestCode == REQUEST_HEAD_ICON_CODE && resultCode == Activity.RESULT_OK) {
-            data?.let {
-                val paths = Matisse.obtainPathResult(data)
+            data?.let { theData ->
+                val paths = Matisse.obtainPathResult(theData)
                 if (paths.isNotEmpty()) {
                     showProgress(getString(R.string.on_going_upload))
                     viewModel.uploadHeadIcon(File(paths[0]))
@@ -301,8 +316,8 @@ class MineFragment : BaseFragment(), OnSettingItemClickListener, OnSignOutClickL
      */
     private fun handleAuthResult(requestCode: Int, resultCode: Int, data: Intent?) {
         if (requestCode == REQUEST_AUTH_CODE && resultCode == Activity.RESULT_OK) {
-            data?.let {
-                val success = data.getBooleanExtra(Constants.Extra.DATA, false)
+            data?.let { theData ->
+                val success = theData.getBooleanExtra(Constants.Extra.DATA, false)
                 if (success) {
                     viewModel.getAllInfoOfUser()
                 }
@@ -315,8 +330,8 @@ class MineFragment : BaseFragment(), OnSettingItemClickListener, OnSignOutClickL
      */
     private fun handleMemberResult(requestCode: Int, resultCode: Int, data: Intent?) {
         if (requestCode == REQUEST_MEMBER_CODE && resultCode == Activity.RESULT_OK) {
-            data?.let {
-                val success = data.getBooleanExtra(Constants.Extra.DATA, false)
+            data?.let { theData ->
+                val success = theData.getBooleanExtra(Constants.Extra.DATA, false)
                 if (success) {
                     viewModel.getAllInfoOfUser()
                 }
@@ -329,8 +344,8 @@ class MineFragment : BaseFragment(), OnSettingItemClickListener, OnSignOutClickL
      */
     private fun handlePermissionResult(requestCode: Int, resultCode: Int, data: Intent?) {
         if (requestCode == REQUEST_PAY_SETTING_CODE && resultCode == Activity.RESULT_OK) {
-            data?.let {
-                val permission = data.getIntExtra(Constants.Extra.DATA, -1)
+            data?.let { theData ->
+                val permission = theData.getIntExtra(Constants.Extra.DATA, -1)
                 if (permission != -1) {
                     viewModel.updateUserPhotoPermission(PhotoPermission.from(permission))
                 }
@@ -348,14 +363,14 @@ class MineFragment : BaseFragment(), OnSettingItemClickListener, OnSignOutClickL
     }
 
     private fun setUserInfo(userInfo: UserInfo?) {
-        userInfo?.let { userInfo ->
-            userInfo.authState?.let { authState ->
+        userInfo?.let { user ->
+            user.authState?.let { authState ->
                 when (authState.state) {
                     2 -> authInfo.text = authState.score
                     else -> authInfo.text = authState.message
                 }
             }
-            userInfo.memberInfo?.let { memberInfo ->
+            user.memberInfo?.let { memberInfo ->
                 if (memberInfo.isMember) {
                     memberType.text = getString(R.string.member_period_template, memberInfo.formatEndTime())
                     rechargeOrRenewalsMember.setText(R.string.member_renewals)

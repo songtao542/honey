@@ -109,7 +109,7 @@ class OfficialRecommendRecyclerViewAdapter(val fragment: OfficialRecommendFragme
                     attendView.setTextColor(context.colorOf(R.color.white))
                     attendView.setBackgroundResource(R.drawable.button_primary_circle_corner_selector)
                     attendView.setOnClickListener {
-                        viewModel.joinDating(data, true)
+                        viewModel.joinDating(data, official = true)
                     }
                 } else {
                     attendView.setText(R.string.joined_dating)

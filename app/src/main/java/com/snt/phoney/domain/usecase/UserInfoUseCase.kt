@@ -49,5 +49,5 @@ class UserInfoUseCase @Inject constructor(private val userRepository: UserReposi
     fun testSignGet(token: String, page: String) = toolRepository.testSignGet(token, page)
     fun testSignPost(token: String, page: String) = toolRepository.testSignPost(token, page)
 
-
+    fun getMemberInfo(token: String) = userRepository.getMemberInfo(token)
 }

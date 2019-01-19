@@ -309,7 +309,7 @@
     <string name="has_canceld_follow">已取消关注</string>
     <string name="it_published_title">TA的发布</string>
     <string name="buy_tip">购买提醒</string>
-    <string name="buy_warning_template">当前相片付费需要支付%1$s蜜币</string>
+    <string name="buy_warning_template">查看该相片需支付%1$s蜜币</string>
     <string name="pay_mibi_template">支付%1$s蜜币</string>
     <string name="connecting">正在等待对方接通...</string>
     <string name="wait_accept_template">正在等待 %1$s 接通...</string>

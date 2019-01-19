@@ -193,6 +193,14 @@ data class User(
         get() {
             return member == 1 && memberEndTime > System.currentTimeMillis()
         }
+
+    fun updateMemberInfo(memberInfo: MemberInfo?): User {
+        memberInfo?.let {
+            member = if (it.isMember) 1 else 0
+            memberEndTime = it.endTime
+        }
+        return this
+    }
 }
 
 enum class Sex(val value: Int) {

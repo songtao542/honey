@@ -29,13 +29,8 @@ class MineViewModel @Inject constructor(private val usecase: UserInfoUseCase) : 
     val userInfo = MutableLiveData<UserInfo>()
 
     private fun updateUserMemberInfo(memberInfo: MemberInfo?) {
-        if (memberInfo != null) {
-            val user = usecase.getUser()
-            user?.let { theUser ->
-                theUser.member = if (memberInfo.isMember) 1 else 0
-                theUser.memberEndTime = memberInfo.endTime
-                usecase.setUser(theUser)
-            }
+        usecase.getUser()?.updateMemberInfo(memberInfo)?.let {
+            usecase.setUser(it)
         }
     }
 

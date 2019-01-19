@@ -139,4 +139,21 @@ class UserInfoViewModel @Inject constructor(private val usecase: UserInfoUseCase
                 ).disposedBy(disposeBag)
     }
 
+
+    fun getMemberInfo() {
+        val token = usecase.getAccessToken() ?: return
+        usecase.getMemberInfo(token)
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribeBy(
+                        onSuccess = {
+                            if (it.success) {
+                                usecase.getUser()?.updateMemberInfo(it.data)?.let { user ->
+                                    usecase.setUser(user)
+                                }
+                            }
+                        },
+                        onError = {}
+                ).disposedBy(disposeBag)
+    }
 }
