@@ -27,7 +27,7 @@ import com.snt.phoney.ui.user.EditUserFragment
 import com.snt.phoney.ui.user.FollowMeFragment
 import com.snt.phoney.ui.user.UserInfoFragment
 import com.snt.phoney.ui.user.VisitorFragment
-import com.snt.phoney.ui.vip.VipFragment
+import com.snt.phoney.ui.member.MemberFragment
 import com.snt.phoney.ui.wallet.WalletDetailFragment
 import com.snt.phoney.ui.wallet.WalletFragment
 import com.snt.phoney.ui.wallet.WithdrawFragment
@@ -47,7 +47,7 @@ enum class Page {
 
     REPORT,
 
-    VIP,
+    MEMBER,
 
     WALLET,
     ABOUT,
@@ -99,7 +99,7 @@ class FragmentFactory {
 
                 Page.REPORT.ordinal -> ReportFragment.newInstance(arguments)
 
-                Page.VIP.ordinal -> VipFragment.newInstance(arguments)
+                Page.MEMBER.ordinal -> MemberFragment.newInstance(arguments)
 
                 Page.WALLET.ordinal -> WalletFragment.newInstance(arguments)
                 Page.WALLET_DETAIL.ordinal -> WalletDetailFragment.newInstance(arguments)

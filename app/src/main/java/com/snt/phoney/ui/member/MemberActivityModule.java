@@ -1,4 +1,4 @@
-package com.snt.phoney.ui.vip;
+package com.snt.phoney.ui.member;
 
 import androidx.lifecycle.ViewModel;
 
@@ -13,15 +13,15 @@ import dagger.android.ContributesAndroidInjector;
 import dagger.multibindings.IntoMap;
 
 @Module(includes = ViewModelFactoryModule.class)
-public abstract class VipActivityModule {
+public abstract class MemberActivityModule {
 
     @FragmentScope
     @ContributesAndroidInjector
-    public abstract VipFragment contributeVipFragment();
+    public abstract MemberFragment contributeMemberFragment();
 
     @Binds
     @IntoMap
     @ActivityScope
-    @ViewModelKey(VipViewModel.class)
-    public abstract ViewModel bindVipViewModel(VipViewModel viewModel);
+    @ViewModelKey(MemberViewModel.class)
+    public abstract ViewModel bindMemberViewModel(MemberViewModel viewModel);
 }

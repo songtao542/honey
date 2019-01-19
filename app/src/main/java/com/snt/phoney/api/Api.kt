@@ -373,7 +373,7 @@ interface Api {
 
     @FormUrlEncoded
     @POST("member/listMemberCombos")
-    fun listVipCombo(@Field("token") token: String): Single<Response<List<VipCombo>>>
+    fun listMemberCombo(@Field("token") token: String): Single<Response<List<MemberCombo>>>
 
     @FormUrlEncoded
     @POST("member/getIntimateGold")
@@ -385,7 +385,7 @@ interface Api {
 
     @FormUrlEncoded
     @POST("member/getMemberInfo")
-    fun getVipInfo(@Field("token") token: String): Single<Response<VipInfo>>
+    fun getMemberInfo(@Field("token") token: String): Single<Response<MemberInfo>>
 
 
     /**

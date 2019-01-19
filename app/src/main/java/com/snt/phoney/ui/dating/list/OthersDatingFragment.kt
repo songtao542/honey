@@ -18,7 +18,7 @@ import com.snt.phoney.utils.data.Constants
 import cust.widget.loadmore.LoadMoreAdapter
 import kotlinx.android.synthetic.main.app_toolbar.*
 import kotlinx.android.synthetic.main.fragment_othersdating_list.*
-import kotlinx.android.synthetic.main.vip_card_view.*
+import kotlinx.android.synthetic.main.member_card_view.*
 
 /**
  * A fragment representing a list of Items.

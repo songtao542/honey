@@ -93,7 +93,7 @@ class LockFragment : BaseFragment() {
             startActivity<PrivacyActivity>(Page.FORGET_LOCK, Bundle().apply {
                 putInt(Constants.Extra.THEME, R.style.AppTheme_Light)
             })
-            activity?.finish()
+            //activity?.finish()
         }
     }
 

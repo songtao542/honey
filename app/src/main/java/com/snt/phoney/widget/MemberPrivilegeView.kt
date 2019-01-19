@@ -5,9 +5,9 @@ import android.util.AttributeSet
 import android.view.LayoutInflater
 import android.widget.RelativeLayout
 import com.snt.phoney.R
-import kotlinx.android.synthetic.main.vip_privilege_view.view.*
+import kotlinx.android.synthetic.main.member_privilege_view.view.*
 
-class VipPrivilegeView : RelativeLayout {
+class MemberPrivilegeView : RelativeLayout {
     constructor(context: Context) : this(context, null)
 
     constructor(context: Context, attrs: AttributeSet?) : this(context, attrs, 0)
@@ -15,7 +15,7 @@ class VipPrivilegeView : RelativeLayout {
     constructor(context: Context, attrs: AttributeSet?, defStyleAttr: Int) : this(context, attrs, defStyleAttr, 0)
 
     constructor(context: Context, attrs: AttributeSet?, defStyleAttr: Int = 0, defStyleRes: Int = 0) : super(context, attrs, defStyleAttr, defStyleRes) {
-        LayoutInflater.from(context).inflate(R.layout.vip_privilege_view, this, true)
+        LayoutInflater.from(context).inflate(R.layout.member_privilege_view, this, true)
     }
 
     public fun setIcon(icon: Int) {

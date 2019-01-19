@@ -66,8 +66,8 @@ data class User(
         @SerializedName(value = "isPhotoFree") var isPhotoFree: Boolean = true,
         @SerializedName(value = "hasWX") var hasWechatAccount: Boolean = false,
         @SerializedName(value = "account_wx") var wechatAccount: String? = null,
-        @SerializedName(value = "isMember") var isVip: Boolean = false,
-        @SerializedName(value = "endTime") var vipEndTime: Long = 0,
+        @SerializedName(value = "isMember") var member: Int = 0,
+        @SerializedName(value = "endTime") var memberEndTime: Long = 0,
         var token: String? = null,
         @SerializedName(value = "isOpen") var open: Int = 0,
         var price: Double = 0.0,
@@ -183,9 +183,15 @@ data class User(
         }
 
     @Transient
-    val isValidVip: Boolean
+    val isMember: Boolean
         get() {
-            return isVip && vipEndTime > System.currentTimeMillis()
+            return member == 1
+        }
+
+    @Transient
+    val isValidMember: Boolean
+        get() {
+            return member == 1 && memberEndTime > System.currentTimeMillis()
         }
 }
 

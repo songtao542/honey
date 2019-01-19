@@ -9,7 +9,7 @@ data class UserInfo(
         @SerializedName(value = "auth")  var authState: AuthState?=null,//"auth": {
         @SerializedName(value = "message_appointment") var hasNewsOfDating:Boolean = false,//  "message_appointment": false,
         @SerializedName(value = "message_wallet") var hasNewsOfWallet:Boolean = false,//"message_wallet": false,
-        @SerializedName(value = "member") var vipInfo: VipInfo?=null//"member": {
+        @SerializedName(value = "member") var memberInfo: MemberInfo?=null//"member": {
 )
 
 

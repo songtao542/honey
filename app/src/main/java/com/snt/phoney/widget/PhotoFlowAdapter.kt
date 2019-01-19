@@ -7,7 +7,6 @@ import android.util.TypedValue
 import android.view.Gravity
 import android.view.View
 import android.widget.*
-import android.widget.LinearLayout.LayoutParams
 import androidx.appcompat.widget.AppCompatImageView
 import androidx.appcompat.widget.AppCompatTextView
 import com.bumptech.glide.Glide
@@ -34,7 +33,7 @@ class PhotoFlowAdapter(private val context: Context) : FlowLayout.ViewAdapter {
     private var mShowAddWhenFull = true
     private var addStyle: AddButtonStyle = AddButtonStyle.SOLID
 
-    private var viewerIsVip = false
+    private var viewerIsMember = false
 
     private var mOnAddClickListener: ((size: Int) -> Unit)? = null
 
@@ -48,8 +47,8 @@ class PhotoFlowAdapter(private val context: Context) : FlowLayout.ViewAdapter {
         return this
     }
 
-    fun setViewerIsVip(isVip: Boolean): PhotoFlowAdapter {
-        this.viewerIsVip = isVip
+    fun setViewerIsMember(isMember: Boolean): PhotoFlowAdapter {
+        this.viewerIsMember = isMember
         return this
     }
 
@@ -120,7 +119,7 @@ class PhotoFlowAdapter(private val context: Context) : FlowLayout.ViewAdapter {
             }
             val imageView = view.imageView
             imageView.scaleType = ImageView.ScaleType.CENTER_CROP
-            //if (viewerIsVip) {
+            //if (viewerIsMember) {
             if (photo.burn == 1) {
                 view.setTextVisibility(View.VISIBLE)
                 view.setTextPrimaryStyle(false)

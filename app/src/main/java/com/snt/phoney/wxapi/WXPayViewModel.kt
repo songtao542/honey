@@ -57,7 +57,7 @@ open class WXPayViewModel @Inject constructor(private val usecase: PayOrderUseCa
                             }
                         },
                         onError = {
-                            error.value = context.getString(R.string.buy_vip_failed)
+                            error.value = context.getString(R.string.buy_member_failed)
                         }
                 ).disposedBy(disposeBag)
     }

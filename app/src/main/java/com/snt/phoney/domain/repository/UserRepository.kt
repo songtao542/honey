@@ -4,8 +4,6 @@ package com.snt.phoney.domain.repository
 import com.snt.phoney.domain.accessor.UserAccessor
 import com.snt.phoney.domain.model.*
 import io.reactivex.Single
-import okhttp3.MultipartBody
-import retrofit2.http.*
 import java.io.File
 
 interface UserRepository : UserAccessor {
@@ -143,13 +141,13 @@ interface UserRepository : UserAccessor {
 
     fun closePrivacyPassword(token: String): Single<Response<String>>
 
-    fun listVipCombo(token: String): Single<Response<List<VipCombo>>>
+    fun listMemberCombo(token: String): Single<Response<List<MemberCombo>>>
 
     fun getMibiAmount(token: String): Single<Response<Int>>
 
     fun getMibiWallet(token: String): Single<Response<MibiWallet>>
 
-    fun getVipInfo(token: String): Single<Response<VipInfo>>
+    fun getMemberInfo(token: String): Single<Response<MemberInfo>>
 
     fun burnPhoto(token: String, target: String, id: String): Single<Response<String>>
 

@@ -62,7 +62,7 @@ class DetailListRecyclerViewAdapter(private val fragment: DetailListFragment, pr
                     }
                 }
                 0 -> consumeIcon.setImageResource(R.drawable.ic_order_cost)
-                1 -> consumeIcon.setImageResource(R.drawable.ic_order_vip)
+                1 -> consumeIcon.setImageResource(R.drawable.ic_order_member)
                 10 -> consumeIcon.setImageResource(R.drawable.ic_order_mibi)
                 11 -> consumeIcon.setImageResource(R.drawable.ic_order_mibi)
                 12 -> consumeIcon.setImageResource(R.drawable.ic_order_mibi)
@@ -102,7 +102,7 @@ class DetailListRecyclerViewAdapter(private val fragment: DetailListFragment, pr
 //                                enterAnimation = R.anim.slide_in_up, popExitAnimation = R.anim.slide_out_down)
 //                    }
                 }
-                1 -> rechargeIcon.setImageResource(R.drawable.ic_order_vip)
+                1 -> rechargeIcon.setImageResource(R.drawable.ic_order_member)
                 10 -> rechargeIcon.setImageResource(R.drawable.ic_order_mibi)
                 11 -> rechargeIcon.setImageResource(R.drawable.ic_order_mibi)
                 12 -> rechargeIcon.setImageResource(R.drawable.ic_order_mibi)

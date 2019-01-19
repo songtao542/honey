@@ -1,9 +1,9 @@
-package com.snt.phoney.ui.vip
+package com.snt.phoney.ui.member
 
 import androidx.lifecycle.MutableLiveData
 import com.snt.phoney.domain.model.OrderType
-import com.snt.phoney.domain.model.VipCombo
-import com.snt.phoney.domain.usecase.GetVipInfoUseCase
+import com.snt.phoney.domain.model.MemberCombo
+import com.snt.phoney.domain.usecase.GetMemberInfoUseCase
 import com.snt.phoney.domain.usecase.PayOrderUseCase
 import com.snt.phoney.extensions.disposedBy
 import com.snt.phoney.ui.model.PayViewModel
@@ -12,21 +12,21 @@ import io.reactivex.rxkotlin.subscribeBy
 import io.reactivex.schedulers.Schedulers
 import javax.inject.Inject
 
-class VipViewModel @Inject constructor(private val vipUsecase: GetVipInfoUseCase, private val usecase: PayOrderUseCase) : PayViewModel(usecase) {
+class MemberViewModel @Inject constructor(private val memberUsecase: GetMemberInfoUseCase, private val usecase: PayOrderUseCase) : PayViewModel(usecase) {
 
-    val vipCombos = MutableLiveData<List<VipCombo>>()
+    val memberCombos = MutableLiveData<List<MemberCombo>>()
 
-    fun listVipCombo() {
+    fun listMemberCombo() {
         if (isLoading()) return
         val token = usecase.getAccessToken() ?: return
-        vipUsecase.listVipCombo(token)
+        memberUsecase.listMemberCombo(token)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribeBy(
                         onSuccess = {
                             setLoading(false)
                             if (it.success) {
-                                vipCombos.value = it.data
+                                memberCombos.value = it.data
                             }
                         },
                         onError = {
@@ -35,12 +35,12 @@ class VipViewModel @Inject constructor(private val vipUsecase: GetVipInfoUseCase
                 ).disposedBy(disposeBag)
     }
 
-    fun buyVipWithWechat(target: String, uid: String? = null) {
-        buyWithWechat(OrderType.BUY_VIP, target, uid)
+    fun buyMemberWithWechat(target: String, uid: String? = null) {
+        buyWithWechat(OrderType.BUY_MEMBER, target, uid)
     }
 
-    fun buyVipWithAlipay(target: String, uid: String? = null) {
-        buyWithAlipay(OrderType.BUY_VIP, target, uid)
+    fun buyMemberWithAlipay(target: String, uid: String? = null) {
+        buyWithAlipay(OrderType.BUY_MEMBER, target, uid)
     }
 
 }

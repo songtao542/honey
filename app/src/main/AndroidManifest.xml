@@ -141,7 +141,7 @@
             android:screenOrientation="portrait"
             android:windowSoftInputMode="adjustResize" />
         <activity
-            android:name=".ui.vip.VipActivity"
+            android:name=".ui.member.MemberActivity"
             android:screenOrientation="portrait" />
         <activity
             android:name=".ui.nearby.NearbyActivity"

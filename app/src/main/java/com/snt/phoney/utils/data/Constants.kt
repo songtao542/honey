@@ -24,7 +24,7 @@ object Constants {
         const val CALLER = "caller"
         const val CALLEE = "callee"
         const val MODE = "mode"
-        const val IS_VIP = "is_vip"
+        const val IS_MEMBER = "is_member"
         const val STATE = "state"
 
         const val THEME = "theme"

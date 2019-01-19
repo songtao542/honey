@@ -53,7 +53,7 @@
                 android:textSize="@dimen/textsize_large" />
 
             <androidx.appcompat.widget.AppCompatTextView
-                android:id="@+id/vipType"
+                android:id="@+id/memberType"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_below="@+id/username"
@@ -64,12 +64,12 @@
                 android:textSize="@dimen/textsize_smaller" />
 
             <androidx.appcompat.widget.AppCompatTextView
-                android:id="@+id/rechargeOrRenewalsVip"
+                android:id="@+id/rechargeOrRenewalsMember"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_below="@+id/vipType"
+                android:layout_below="@+id/memberType"
                 android:layout_marginTop="5dp"
-                android:background="@drawable/vip_recharge_rectangle_selector"
+                android:background="@drawable/member_recharge_rectangle_selector"
                 android:paddingLeft="10dp"
                 android:paddingTop="4dp"
                 android:paddingRight="10dp"
@@ -82,7 +82,7 @@
                 android:id="@+id/editInfo"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_alignBottom="@+id/rechargeOrRenewalsVip"
+                android:layout_alignBottom="@+id/rechargeOrRenewalsMember"
                 android:layout_alignParentRight="true"
                 android:gravity="center_horizontal"
                 android:orientation="vertical">

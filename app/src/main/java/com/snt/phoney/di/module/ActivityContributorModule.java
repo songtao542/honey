@@ -13,6 +13,7 @@ import com.snt.phoney.ui.dating.DatingActivity;
 import com.snt.phoney.ui.dating.DatingActivityModule;
 import com.snt.phoney.ui.main.MainActivity;
 import com.snt.phoney.ui.main.MainActivityModule;
+import com.snt.phoney.ui.member.MemberActivityModule;
 import com.snt.phoney.ui.nearby.NearbyActivity;
 import com.snt.phoney.ui.nearby.NearbyActivityModule;
 import com.snt.phoney.ui.news.NewsActivity;
@@ -29,8 +30,7 @@ import com.snt.phoney.ui.signup.SignupActivity;
 import com.snt.phoney.ui.signup.SignupActivityModule;
 import com.snt.phoney.ui.user.UserActivity;
 import com.snt.phoney.ui.user.UserActivityModule;
-import com.snt.phoney.ui.vip.VipActivity;
-import com.snt.phoney.ui.vip.VipActivityModule;
+import com.snt.phoney.ui.member.MemberActivity;
 import com.snt.phoney.ui.voicecall2.VoiceAnswerActivity;
 import com.snt.phoney.ui.voicecall2.VoiceCallActivity;
 import com.snt.phoney.ui.wallet.WalletActivity;
@@ -87,9 +87,9 @@ public abstract class ActivityContributorModule {
 
     @ActivityScope
     @ContributesAndroidInjector(modules = {
-            VipActivityModule.class
+            MemberActivityModule.class
     })
-    public abstract VipActivity contributeVipActivity();
+    public abstract MemberActivity contributeMemberActivity();
 
     @ActivityScope
     @ContributesAndroidInjector(modules = {

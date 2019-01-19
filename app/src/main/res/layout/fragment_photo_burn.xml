@@ -46,7 +46,7 @@
     <!-- open_vip_no_limit_to_view -->
 
     <androidx.appcompat.widget.AppCompatTextView
-        android:id="@+id/buyVipButton"
+        android:id="@+id/buyMemberButton"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_below="@id/progressView"

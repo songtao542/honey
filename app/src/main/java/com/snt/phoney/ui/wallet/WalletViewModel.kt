@@ -17,7 +17,7 @@ import javax.inject.Inject
 
 class WalletViewModel @Inject constructor(private val usecase: WalletUseCase, private val payUsecase: PayOrderUseCase) : PayViewModel(payUsecase) {
 
-    val vipInfo = MutableLiveData<VipInfo>()
+    val memberInfo = MutableLiveData<MemberInfo>()
     val mibiAmount = MutableLiveData<Int>()
     val mibiWallet = MutableLiveData<MibiWallet>()
     val preWithdraw = MutableLiveData<PreWithdraw>()
@@ -74,16 +74,15 @@ class WalletViewModel @Inject constructor(private val usecase: WalletUseCase, pr
                 ).disposedBy(disposeBag)
     }
 
-
-    fun getVipInfo() {
+    fun getMemberInfo() {
         val token = usecase.getAccessToken() ?: return
-        usecase.getVipInfo(token)
+        usecase.getMemberInfo(token)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribeBy(
                         onSuccess = {
                             if (it.success) {
-                                vipInfo.value = it.data
+                                memberInfo.value = it.data
                             }
                         },
                         onError = {}

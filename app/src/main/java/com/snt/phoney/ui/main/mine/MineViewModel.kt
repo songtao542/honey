@@ -28,12 +28,12 @@ class MineViewModel @Inject constructor(private val usecase: UserInfoUseCase) : 
 
     val userInfo = MutableLiveData<UserInfo>()
 
-    private fun updateUserVipInfo(vipInfo: VipInfo?) {
-        if (vipInfo != null) {
+    private fun updateUserMemberInfo(memberInfo: MemberInfo?) {
+        if (memberInfo != null) {
             val user = usecase.getUser()
             user?.let { theUser ->
-                theUser.isVip = vipInfo.isVip
-                theUser.vipEndTime = vipInfo.endTime
+                theUser.member = if (memberInfo.isMember) 1 else 0
+                theUser.memberEndTime = memberInfo.endTime
                 usecase.setUser(theUser)
             }
         }
@@ -48,7 +48,7 @@ class MineViewModel @Inject constructor(private val usecase: UserInfoUseCase) : 
                         onSuccess = {
                             if (it.success) {
                                 userInfo.value = it.data
-                                updateUserVipInfo(it.data?.vipInfo)
+                                updateUserMemberInfo(it.data?.memberInfo)
                             }
                         },
                         onError = {}

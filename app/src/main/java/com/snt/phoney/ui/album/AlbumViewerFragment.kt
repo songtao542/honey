@@ -4,7 +4,6 @@ import android.app.Activity
 import android.content.Intent
 import android.os.Bundle
 import android.view.KeyEvent
-import android.view.View
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.ViewModelProviders
 import com.snt.phoney.di.Injectable
@@ -12,7 +11,6 @@ import com.snt.phoney.domain.model.Photo
 import com.snt.phoney.ui.photo.PhotoFragment
 import com.snt.phoney.ui.photo.PhotoViewerFragment
 import com.snt.phoney.utils.data.Constants
-import cust.app.swipeback.SwipeBackLayout
 import javax.inject.Inject
 
 class AlbumViewerFragment : PhotoViewerFragment(), Injectable {
@@ -29,8 +27,8 @@ class AlbumViewerFragment : PhotoViewerFragment(), Injectable {
 
     private lateinit var viewModel: AlbumViewModel
 
-    private var viewerIsVip = false
-    private var vipStateChanged = false
+    private var viewerIsMember = false
+    private var memberStateChanged = false
 
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
@@ -65,10 +63,10 @@ class AlbumViewerFragment : PhotoViewerFragment(), Injectable {
     }
 
     private fun setResult(): Boolean {
-        if (viewModel.burnedPhoto.isNotEmpty() || vipStateChanged) {
+        if (viewModel.burnedPhoto.isNotEmpty() || memberStateChanged) {
             val result = Intent().apply {
                 putParcelableArrayListExtra(Constants.Extra.LIST, viewModel.burnedPhoto)
-                putExtra(Constants.Extra.IS_VIP, viewerIsVip)
+                putExtra(Constants.Extra.IS_MEMBER, viewerIsMember)
             }
             activity?.setResult(Activity.RESULT_OK, result)
             activity?.onBackPressed()
@@ -77,13 +75,13 @@ class AlbumViewerFragment : PhotoViewerFragment(), Injectable {
         return false
     }
 
-    fun updateToVipState() {
-        viewerIsVip = true
-        vipStateChanged = true
+    fun updateToMemberState() {
+        viewerIsMember = true
+        memberStateChanged = true
         if (arguments != null) {
-            arguments!!.putBoolean(Constants.Extra.IS_VIP, viewerIsVip)
+            arguments!!.putBoolean(Constants.Extra.IS_MEMBER, viewerIsMember)
         } else {
-            arguments = Bundle().apply { putBoolean(Constants.Extra.IS_VIP, viewerIsVip) }
+            arguments = Bundle().apply { putBoolean(Constants.Extra.IS_MEMBER, viewerIsMember) }
         }
         adapter.forceNotifyDataSetChanged()
     }

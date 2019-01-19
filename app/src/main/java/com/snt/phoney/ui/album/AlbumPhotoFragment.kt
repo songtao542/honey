@@ -13,13 +13,13 @@ import com.snt.phoney.di.Injectable
 import com.snt.phoney.domain.model.Photo
 import com.snt.phoney.extensions.startActivityForResult
 import com.snt.phoney.ui.photo.PhotoFragment
-import com.snt.phoney.ui.vip.VipActivity
+import com.snt.phoney.ui.member.MemberActivity
 import com.snt.phoney.utils.data.Constants
 import kotlinx.android.synthetic.main.fragment_photo_burn.*
 import kotlinx.android.synthetic.main.fragment_photo_view.*
 import javax.inject.Inject
 
-const val REQUEST_VIP_CODE = 60
+const val REQUEST_MEMBER_CODE = 60
 
 /**
  */
@@ -56,14 +56,14 @@ class AlbumPhotoFragment : PhotoFragment(), Injectable {
 
     private lateinit var viewModel: AlbumViewModel
 
-    private var viewerIsVip = false
+    private var viewerIsMember = false
 
     private var parent: AlbumViewerFragment? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         arguments?.let {
-            viewerIsVip = it.getBoolean(Constants.Extra.IS_VIP, false)
+            viewerIsMember = it.getBoolean(Constants.Extra.IS_MEMBER, false)
         }
     }
 
@@ -76,7 +76,7 @@ class AlbumPhotoFragment : PhotoFragment(), Injectable {
         burnLayout.visibility = View.VISIBLE
         burnStateView.visibility = View.VISIBLE
 
-        buyVipButton.visibility = View.GONE
+        buyMemberButton.visibility = View.GONE
         burnStateView.setText(R.string.press_to_view)
         if (photo.burnTime > 0) {
             progressView.visibility = View.VISIBLE
@@ -121,29 +121,29 @@ class AlbumPhotoFragment : PhotoFragment(), Injectable {
 
         burnStateView.visibility = View.VISIBLE
         if (animate) burnStateView.animate().alpha(1f).start()
-        if (viewerIsVip) {
+        if (viewerIsMember) {
             burnStateView.setText(R.string.photo_has_burned)
-            buyVipButton.visibility = View.GONE
+            buyMemberButton.visibility = View.GONE
         } else {
-            burnStateView.setText(R.string.open_vip_no_limit_to_view)
-            buyVipButton.visibility = View.VISIBLE
-            buyVipButton.setOnClickListener {
-                startActivityForResult<VipActivity>(Page.VIP, REQUEST_VIP_CODE)
+            burnStateView.setText(R.string.open_member_no_limit_to_view)
+            buyMemberButton.visibility = View.VISIBLE
+            buyMemberButton.setOnClickListener {
+                startActivityForResult<MemberActivity>(Page.MEMBER, REQUEST_MEMBER_CODE)
             }
         }
     }
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
-        if (requestCode == REQUEST_VIP_CODE && resultCode == Activity.RESULT_OK) {
-            viewerIsVip = true
-            parent?.updateToVipState()
+        if (requestCode == REQUEST_MEMBER_CODE && resultCode == Activity.RESULT_OK) {
+            viewerIsMember = true
+            parent?.updateToMemberState()
 
         }
     }
 
     override fun loadFile(uri: Uri?, url: String?, photo: Photo?) {
-        if (photo?.flag == 0 && !viewerIsVip) {
+        if (photo?.flag == 0 && !viewerIsMember) {
             if (photo.burn == 0) {
                 setNotBurnedState(photo)
             } else if (photo.burn == 1) {

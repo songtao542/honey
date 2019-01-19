@@ -5,7 +5,7 @@ import kotlinx.serialization.Serializable
 import java.text.SimpleDateFormat
 
 @Serializable
-data class VipInfo(
+data class MemberInfo(
         /**
          * 会员开始时间
          */
@@ -17,10 +17,10 @@ data class VipInfo(
         /**
          *  1 是会员， 0 普通会员
          */
-        @SerializedName(value = "isMember") var vip: Int = 0//  "isMember": 0,
+        @SerializedName(value = "member") var member: Int = 0//  "member": 0,
 ) {
-    val isVip: Boolean
-        get() = vip != 0
+    val isMember: Boolean
+        get() = member != 0
 
     fun formatEndTime(): String {
         val df = SimpleDateFormat("yyyy.MM.dd")

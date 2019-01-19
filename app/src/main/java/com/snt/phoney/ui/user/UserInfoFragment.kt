@@ -27,7 +27,7 @@ import com.snt.phoney.extensions.*
 import com.snt.phoney.ui.album.AlbumActivity
 import com.snt.phoney.ui.dating.DatingActivity
 import com.snt.phoney.ui.report.ReportActivity
-import com.snt.phoney.ui.vip.VipActivity
+import com.snt.phoney.ui.member.MemberActivity
 import com.snt.phoney.ui.voicecall2.VoiceCallActivity
 import com.snt.phoney.utils.Chat
 import com.snt.phoney.utils.DistanceFormat
@@ -37,11 +37,10 @@ import kotlinx.android.synthetic.main.fragment_user_info1.*
 import kotlinx.android.synthetic.main.fragment_user_info_header.*
 import java.text.DecimalFormat
 import android.text.Spanned
-import android.graphics.Color.parseColor
 import android.text.style.ForegroundColorSpan
 import android.text.SpannableString
 
-const val REQUEST_VIP_CODE = 60
+const val REQUEST_MEMBER_CODE = 60
 const val REQUEST_VIEW_ALBUM_CODE = 62
 
 class UserInfoFragment : BaseFragment() {
@@ -196,10 +195,10 @@ class UserInfoFragment : BaseFragment() {
 
     private fun tryChat() {
         context?.let { ctx ->
-            val isVip = viewModel.getUser()?.isValidVip ?: false
-            if (isVip) {
+            val isMember = viewModel.getUser()?.isValidMember ?: false
+            if (isMember) {
                 user?.let { u ->
-                    if (u.isVip) {
+                    if (u.isMember) {
                         u.im?.let { im ->
                             Chat.start(ctx, im)
                         }
@@ -214,7 +213,7 @@ class UserInfoFragment : BaseFragment() {
                             dialog.dismiss()
                         }.setPositiveButton(R.string.confirm) { dialog ->
                             dialog.dismiss()
-                            startActivityForResult<VipActivity>(Page.VIP, REQUEST_VIP_CODE)
+                            startActivityForResult<MemberActivity>(Page.MEMBER, REQUEST_MEMBER_CODE)
                         }.show(childFragmentManager)
             }
             return@let
@@ -297,7 +296,7 @@ class UserInfoFragment : BaseFragment() {
                     unlockPhotoLayout.visibility = View.GONE
                 }
 
-                photosView.viewAdapter = PhotoFlowAdapter(requireContext()).setViewerIsVip(user.isVip).setPhotos(photos).setMaxShow(20).setLastAsAdd(false)
+                photosView.viewAdapter = PhotoFlowAdapter(requireContext()).setViewerIsMember(user.isMember).setPhotos(photos).setMaxShow(20).setLastAsAdd(false)
                 photosView.setOnItemClickListener { view, _ ->
                     val photo = view.getTag(R.id.tag) as? Photo
                     photo?.let { thePhoto ->
@@ -311,7 +310,7 @@ class UserInfoFragment : BaseFragment() {
                                 startActivityForResult<AlbumActivity>(Page.ALBUM_VIEWER, REQUEST_VIEW_ALBUM_CODE, Bundle().apply {
                                     putParcelableArrayList(Constants.Extra.PHOTO_LIST, ArrayList(freePhotos))
                                     putInt(Constants.Extra.INDEX, i)
-                                    putBoolean(Constants.Extra.IS_VIP, user.isVip)
+                                    putBoolean(Constants.Extra.IS_MEMBER, user.isMember)
                                     putBoolean(Constants.Extra.DELETABLE, false)
                                 })
                             }
@@ -336,10 +335,10 @@ class UserInfoFragment : BaseFragment() {
             if (user.hasWechatAccount && TextUtils.isEmpty(user.wechatAccount)) {
                 wechatAccount.isSelected = true
                 wechatAccount.setText(R.string.click_to_view_wechat_account)
-                if (user.isVip) {
+                if (user.isMember) {
                     wechatAccount.setOnClickListener { viewModel.getUserWechatAccount(user.safeUuid) }
                 } else {
-                    wechatAccount.setOnClickListener { startActivityForResult<VipActivity>(Page.VIP, REQUEST_VIP_CODE) }
+                    wechatAccount.setOnClickListener { startActivityForResult<MemberActivity>(Page.MEMBER, REQUEST_MEMBER_CODE) }
                 }
             } else if (!TextUtils.isEmpty(user.wechatAccount)) {
                 wechatAccount.text = user.wechatAccount
@@ -352,12 +351,12 @@ class UserInfoFragment : BaseFragment() {
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
-        if (requestCode == REQUEST_VIP_CODE && resultCode == Activity.RESULT_OK) {
+        if (requestCode == REQUEST_MEMBER_CODE && resultCode == Activity.RESULT_OK) {
             loadUser()
         }
         if (requestCode == REQUEST_VIEW_ALBUM_CODE && resultCode == Activity.RESULT_OK) {
-            val isVip = data?.getBooleanExtra(Constants.Extra.IS_VIP, false) ?: false
-            if (isVip) {
+            val isMember = data?.getBooleanExtra(Constants.Extra.IS_MEMBER, false) ?: false
+            if (isMember) {
                 loadUser()
             } else {
                 val photos = data?.getParcelableArrayListExtra<Photo>(Constants.Extra.LIST)

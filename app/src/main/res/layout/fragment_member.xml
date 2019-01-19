@@ -7,7 +7,7 @@
     android:layout_height="match_parent"
     android:background="@color/light_gray"
     android:orientation="vertical"
-    tools:context=".ui.vip.VipFragment">
+    tools:context=".ui.member.MemberFragment">
 
     <include layout="@layout/app_toolbar" />
 
@@ -46,12 +46,12 @@
                     android:orientation="vertical"
                     android:paddingBottom="18dp">
 
-                    <com.snt.phoney.widget.VipPrivilegeView
+                    <com.snt.phoney.widget.MemberPrivilegeView
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:visibility="gone" />
 
-                    <com.snt.phoney.widget.VipPrivilegeView
+                    <com.snt.phoney.widget.MemberPrivilegeView
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:visibility="gone" />
@@ -69,7 +69,7 @@
                 </LinearLayout>
 
                 <com.snt.phoney.widget.FlowLayout
-                    android:id="@+id/vipCardContainer"
+                    android:id="@+id/memberCardContainer"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginLeft="16dp"
@@ -79,19 +79,19 @@
                     app:column="2"
                     app:space="10dp">
 
-                    <!--<com.snt.phoney.widget.VipCardView-->
+                    <!--<com.snt.phoney.widget.MemberCardViewiew-->
                     <!--android:layout_width="match_parent"-->
                     <!--android:layout_height="wrap_content" />-->
 
-                    <!--<com.snt.phoney.widget.VipCardView-->
+                    <!--<com.snt.phoney.widget.MemberCardViewiew-->
                     <!--android:layout_width="match_parent"-->
                     <!--android:layout_height="wrap_content" />-->
 
-                    <!--<com.snt.phoney.widget.VipCardView-->
+                    <!--<com.snt.phoney.widget.MemberCardViewiew-->
                     <!--android:layout_width="match_parent"-->
                     <!--android:layout_height="wrap_content" />-->
 
-                    <!--<com.snt.phoney.widget.VipCardView-->
+                    <!--<com.snt.phoney.widget.MemberCardViewiew-->
                     <!--android:layout_width="match_parent"-->
                     <!--android:layout_height="wrap_content" />-->
                 </com.snt.phoney.widget.FlowLayout>

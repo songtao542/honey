@@ -34,7 +34,7 @@ import com.snt.phoney.ui.setup.BindPhoneFragment
 import com.snt.phoney.ui.share.ShareFragment
 import com.snt.phoney.ui.signup.SignupActivity
 import com.snt.phoney.ui.user.UserActivity
-import com.snt.phoney.ui.vip.VipActivity
+import com.snt.phoney.ui.member.MemberActivity
 import com.snt.phoney.ui.wallet.WalletActivity
 import com.snt.phoney.utils.Picker
 import com.snt.phoney.utils.data.Constants
@@ -47,7 +47,7 @@ import java.io.File
 const val REQUEST_AUTH_CODE = 56
 const val REQUEST_ALBUM_CODE = 58
 const val REQUEST_HEAD_ICON_CODE = 59
-const val REQUEST_VIP_CODE = 60
+const val REQUEST_MEMBER_CODE = 60
 const val REQUEST_PAY_SETTING_CODE = 64
 
 /**
@@ -260,7 +260,7 @@ class MineFragment : BaseFragment(), OnSettingItemClickListener, OnSignOutClickL
         handleAlbumPhotoDelete(requestCode, resultCode, data)
         handleAuthResult(requestCode, resultCode, data)
         handleHeadIconResult(requestCode, resultCode, data)
-        handleVipResult(requestCode, resultCode, data)
+        handleMemberResult(requestCode, resultCode, data)
         handlePermissionResult(requestCode, resultCode, data)
     }
 
@@ -325,10 +325,10 @@ class MineFragment : BaseFragment(), OnSettingItemClickListener, OnSignOutClickL
     }
 
     /**
-     * 购买VIP结果
+     * 购买会员结果
      */
-    private fun handleVipResult(requestCode: Int, resultCode: Int, data: Intent?) {
-        if (requestCode == REQUEST_VIP_CODE && resultCode == Activity.RESULT_OK) {
+    private fun handleMemberResult(requestCode: Int, resultCode: Int, data: Intent?) {
+        if (requestCode == REQUEST_MEMBER_CODE && resultCode == Activity.RESULT_OK) {
             data?.let {
                 val success = data.getBooleanExtra(Constants.Extra.DATA, false)
                 if (success) {
@@ -369,23 +369,23 @@ class MineFragment : BaseFragment(), OnSettingItemClickListener, OnSignOutClickL
                     else -> authInfo.text = authState.message
                 }
             }
-            userInfo.vipInfo?.let { vipInfo ->
-                if (vipInfo.isVip) {
-                    vipType.text = getString(R.string.vip_period_template, vipInfo.formatEndTime())
-                    rechargeOrRenewalsVip.setText(R.string.vip_renewals)
+            userInfo.memberInfo?.let { memberInfo ->
+                if (memberInfo.isMember) {
+                    memberType.text = getString(R.string.member_period_template, memberInfo.formatEndTime())
+                    rechargeOrRenewalsMember.setText(R.string.member_renewals)
                     val lr = dip(15)
                     val tb = dip(4)
-                    rechargeOrRenewalsVip.setPadding(lr, tb, lr, tb)
-                    rechargeOrRenewalsVip.setBackgroundResource(R.drawable.button_gray_circle_corner_selector)
-                    rechargeOrRenewalsVip.setOnClickListener { startActivityForResult<VipActivity>(Page.VIP, REQUEST_VIP_CODE) }
+                    rechargeOrRenewalsMember.setPadding(lr, tb, lr, tb)
+                    rechargeOrRenewalsMember.setBackgroundResource(R.drawable.button_gray_circle_corner_selector)
+                    rechargeOrRenewalsMember.setOnClickListener { startActivityForResult<MemberActivity>(Page.MEMBER, REQUEST_MEMBER_CODE) }
                 } else {
-                    vipType.setText(R.string.normal_member)
-                    rechargeOrRenewalsVip.setText(R.string.upgrade_vip_title)
+                    memberType.setText(R.string.normal_member)
+                    rechargeOrRenewalsMember.setText(R.string.upgrade_member_title)
                     val lr = dip(10)
                     val tb = dip(4)
-                    rechargeOrRenewalsVip.setPadding(lr, tb, lr, tb)
-                    rechargeOrRenewalsVip.setBackgroundResource(R.drawable.vip_recharge_rectangle_selector)
-                    rechargeOrRenewalsVip.setOnClickListener { startActivityForResult<VipActivity>(Page.VIP, REQUEST_VIP_CODE) }
+                    rechargeOrRenewalsMember.setPadding(lr, tb, lr, tb)
+                    rechargeOrRenewalsMember.setBackgroundResource(R.drawable.member_recharge_rectangle_selector)
+                    rechargeOrRenewalsMember.setOnClickListener { startActivityForResult<MemberActivity>(Page.MEMBER, REQUEST_MEMBER_CODE) }
                 }
             }
             return@let

@@ -32,8 +32,8 @@ class UserRepositoryImpl @Inject constructor(private val userAccessor: UserAcces
         return api.closePrivacyPassword(token)
     }
 
-    override fun listVipCombo(token: String): Single<Response<List<VipCombo>>> {
-        return api.listVipCombo(token)
+    override fun listMemberCombo(token: String): Single<Response<List<MemberCombo>>> {
+        return api.listMemberCombo(token)
     }
 
     override fun getMibiAmount(token: String): Single<Response<Int>> {
@@ -44,8 +44,8 @@ class UserRepositoryImpl @Inject constructor(private val userAccessor: UserAcces
         return api.getMibiWallet(token)
     }
 
-    override fun getVipInfo(token: String): Single<Response<VipInfo>> {
-        return api.getVipInfo(token)
+    override fun getMemberInfo(token: String): Single<Response<MemberInfo>> {
+        return api.getMemberInfo(token)
     }
 
     override fun setPhotoPermission(token: String, photoPermission: Int, money: Double, photoId: String): Single<Response<String>> {

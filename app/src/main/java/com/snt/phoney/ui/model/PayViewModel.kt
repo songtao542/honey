@@ -43,9 +43,10 @@ open class PayViewModel constructor(private val usecase: PayOrderUseCase) : WXPa
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribeBy(
                         onSuccess = {
+                            @Suppress("CascadeIf")
                             if (it.success) {
                                 buySuccess.value = true
-                                success.value = context.getString(R.string.buy_vip_success)
+                                success.value = context.getString(R.string.buy_member_success)
                             } else if (it.hasMessage) {
                                 error.value = it.message
                             } else {
@@ -89,7 +90,7 @@ open class PayViewModel constructor(private val usecase: PayOrderUseCase) : WXPa
                             }
                         },
                         onError = {
-                            error.value = context.getString(R.string.buy_vip_failed)
+                            error.value = context.getString(R.string.buy_member_failed)
                         }
                 ).disposedBy(disposeBag)
     }
@@ -101,7 +102,7 @@ open class PayViewModel constructor(private val usecase: PayOrderUseCase) : WXPa
                     buySuccess.value = true
                     success.value = context.getString(R.string.buy_success)
                 } else {
-                    error.value = context.getString(R.string.buy_vip_failed)
+                    error.value = context.getString(R.string.buy_member_failed)
                 }
             }
         }
