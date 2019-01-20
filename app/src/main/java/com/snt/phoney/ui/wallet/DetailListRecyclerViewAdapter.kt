@@ -61,11 +61,26 @@ class DetailListRecyclerViewAdapter(private val fragment: DetailListFragment, pr
                                 enterAnimation = R.anim.slide_in_up, popExitAnimation = R.anim.slide_out_down)
                     }
                 }
-                0 -> consumeIcon.setImageResource(R.drawable.ic_order_cost)
-                1 -> consumeIcon.setImageResource(R.drawable.ic_order_member)
-                10 -> consumeIcon.setImageResource(R.drawable.ic_order_mibi)
-                11 -> consumeIcon.setImageResource(R.drawable.ic_order_mibi)
-                12 -> consumeIcon.setImageResource(R.drawable.ic_order_mibi)
+                0 -> {
+                    consumeIcon.setImageResource(R.drawable.ic_order_cost)
+                    mView.setOnClickListener(null)
+                }
+                1 -> {
+                    consumeIcon.setImageResource(R.drawable.ic_order_member)
+                    mView.setOnClickListener(null)
+                }
+                10 -> {
+                    consumeIcon.setImageResource(R.drawable.ic_order_mibi)
+                    mView.setOnClickListener(null)
+                }
+                11 -> {
+                    consumeIcon.setImageResource(R.drawable.ic_order_mibi)
+                    mView.setOnClickListener(null)
+                }
+                12 -> {
+                    consumeIcon.setImageResource(R.drawable.ic_order_mibi)
+                    mView.setOnClickListener(null)
+                }
             }
             createTime.text = record.formatCreateTime()
             consumeName.text = record.title

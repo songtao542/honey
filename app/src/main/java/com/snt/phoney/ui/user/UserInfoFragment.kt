@@ -431,9 +431,7 @@ class UserInfoFragment : BaseFragment() {
 
     override fun onRequestPermissionsResult(requestCode: Int, permissions: Array<out String>, grantResults: IntArray) {
         if (checkPermission()) {
-            user?.uuid?.let {
-                viewModel.getUserInfo(it)
-            }
+            loadUser()
         }
     }
 

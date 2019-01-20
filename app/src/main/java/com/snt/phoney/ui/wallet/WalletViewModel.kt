@@ -1,6 +1,5 @@
 package com.snt.phoney.ui.wallet
 
-import androidx.lifecycle.MutableLiveData
 import com.snt.phoney.R
 import com.snt.phoney.domain.model.*
 import com.snt.phoney.domain.usecase.PayOrderUseCase
@@ -18,18 +17,18 @@ import javax.inject.Inject
 
 class WalletViewModel @Inject constructor(private val usecase: WalletUseCase, payUsecase: PayOrderUseCase) : PayViewModel(payUsecase) {
 
-    val mibiWallet = MutableLiveData<MibiWallet>()
+    val mibiWallet = SingleLiveData<MibiWallet>()
     val preWithdraw = SingleLiveData<PreWithdraw>()
 
     val alipaySign = SingleLiveData<String>()
 
-    val consumeOrders by lazy { MutableLiveData<List<OrderRecord>>() }
+    val consumeOrders by lazy { SingleLiveData<List<OrderRecord>>() }
     private val mConsumeOrders by lazy { ArrayList<OrderRecord>() }
 
-    val rechargeOrders by lazy { MutableLiveData<List<OrderRecord>>() }
+    val rechargeOrders by lazy { SingleLiveData<List<OrderRecord>>() }
     private val mRechargeOrders by lazy { ArrayList<OrderRecord>() }
 
-    val withdrawInfo by lazy { MutableLiveData<WithdrawInfo>() }
+    val withdrawInfo by lazy { SingleLiveData<WithdrawInfo>() }
 
     private var mRechargePageIndex = 1
     private var mConsumePageIndex = 1
