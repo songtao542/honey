@@ -239,12 +239,18 @@ class VoiceCallEngine(private val application: Application) {
     }
 
     fun hangup() {
-        mHandler.removeCallbacksAndMessages(null)
+        reset()
         JMRtcClient.getInstance().hangup(object : BasicCallback() {
             override fun gotResult(code: Int, message: String?) {
                 Log.d(TAG, "hangup==========> code=$code  message=$message")
             }
         })
+    }
+
+    private fun reset(){
+        isMute = false
+        isSpeakerEnabled = false
+        mHandler.removeCallbacksAndMessages(null)
         //mCallee 不等于 null 说明是主叫方
         if (mCallee != null) {
             if (isConnected) {
