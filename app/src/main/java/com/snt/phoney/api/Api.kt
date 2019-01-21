@@ -42,12 +42,6 @@ interface Api {
     fun setUserSex(@Field("token") token: String,
                    @Field("sex") sex: Int): Single<Response<String>>
 
-    @Multipart
-    @Headers("Timeout: 20000")
-    @POST("users/setPortrait")
-    fun uploadHeadIcon(@Part("token") token: String,
-                       @Part portrait: MultipartBody.Part): Single<Response<String>>
-
     /**
      *@param token  string
      *@param lat    string		纬度
@@ -124,7 +118,7 @@ interface Api {
     @Multipart
     @Headers("Timeout: 60000")
     @POST("users/resetPassword/setResetPassword")
-    fun uploadResetPasswordFile(@Part("token") token: String,
+    fun uploadResetPasswordFile(@Part token: MultipartBody.Part,
                                 @Part file: MultipartBody.Part): Single<Response<String>>
 
     /**
@@ -222,15 +216,15 @@ interface Api {
     //@Headers(value = ["Content-Type: application/x-www-form-urlencoded; charset=UTF-8"])
     @Headers("Timeout: 60000")
     @POST("appointment/addAppointment")
-    fun publishDating(@Part("token") token: String,
-                      @Part("title") title: String,
-                      @Part("grogram") program: String,
-                      @Part("content") content: String,
-                      @Part("days") days: Int,
-                      @Part("city") city: String,
-                      @Part("location") location: String,
-                      @Part("longitude") latitude: String,
-                      @Part("latitude") longitude: String,
+    fun publishDating(@Part token: MultipartBody.Part,
+                      @Part title: MultipartBody.Part,
+                      @Part program: MultipartBody.Part,
+                      @Part content: MultipartBody.Part,
+                      @Part days: MultipartBody.Part,
+                      @Part city: MultipartBody.Part,
+                      @Part location: MultipartBody.Part,
+                      @Part latitude: MultipartBody.Part,
+                      @Part longitude: MultipartBody.Part,
                       @Part cover: List<MultipartBody.Part>): Single<Response<String>>
 
     /**
@@ -493,8 +487,14 @@ interface Api {
     @Multipart
     @Headers("Timeout: 30000")
     @POST("users/setPhotos")
-    fun uploadPhotos(@Part("token") token: String,
+    fun uploadPhotos(@Part token: MultipartBody.Part,
                      @Part photos: List<MultipartBody.Part>): Single<Response<List<Photo>>>
+
+    @Multipart
+    @Headers("Timeout: 20000")
+    @POST("users/setPortrait")
+    fun uploadHeadIcon(@Part token: MultipartBody.Part,
+                       @Part portrait: MultipartBody.Part): Single<Response<String>>
 
     @FormUrlEncoded
     @POST("users/setPhotos")
@@ -546,8 +546,8 @@ interface Api {
     @Multipart
     @Headers("Timeout: 60000")
     @POST("users/authentication/addAuthentication")
-    fun auth(@Part("token") token: String,
-             @Part("type") type: String,
+    fun auth(@Part token: MultipartBody.Part,
+             @Part type: MultipartBody.Part,
              @Part pauthentication: MultipartBody.Part): Single<Response<String>>
 
     /**
@@ -561,11 +561,11 @@ interface Api {
     @Multipart
     @Headers("Timeout: 20000")
     @POST("report/report")
-    fun report(@Part("token") token: String,
-               @Part("type") type: String,
-               @Part("targetUid") targetUid: String,
-               @Part("content") content: String,
-               @Part("rtype") rtype: String,
+    fun report(@Part token: MultipartBody.Part,
+               @Part type: MultipartBody.Part,
+               @Part targetUid: MultipartBody.Part,
+               @Part content: MultipartBody.Part,
+               @Part rtype: MultipartBody.Part,
                @Part cover: MultipartBody.Part
     ): Single<Response<String>>
 

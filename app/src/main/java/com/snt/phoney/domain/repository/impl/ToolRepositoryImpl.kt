@@ -41,8 +41,13 @@ class ToolRepositoryImpl @Inject constructor(val api: Api) : ToolRepository {
                         content: String,
                         type: String,
                         file: File): Single<Response<String>> {
+        val tokenPart = MultipartUtil.getMultipart("token", token)
+        val reasonTypePart = MultipartUtil.getMultipart("type", reasonType)
+        val targetUidPart = MultipartUtil.getMultipart("targetUid", targetUid)
+        val contentPart = MultipartUtil.getMultipart("content", content)
+        val typePart = MultipartUtil.getMultipart("rtype", type)
         val cover = MultipartUtil.getMultipart("cover", file)
-        return api.report(token, reasonType, targetUid, content, type, cover)
+        return api.report(tokenPart, reasonTypePart, targetUidPart, contentPart, typePart, cover)
     }
 
     override fun getAuthRandomMessage(token: String, type: Int): Single<Response<String>> {
@@ -50,8 +55,10 @@ class ToolRepositoryImpl @Inject constructor(val api: Api) : ToolRepository {
     }
 
     override fun auth(token: String, type: Int, file: File): Single<Response<String>> {
+        val tokenPart = MultipartUtil.getMultipart("token", token)
+        val typePart = MultipartUtil.getMultipart("type", type.toString())
         val pauthentication = MultipartUtil.getMultipart("pauthentication", file)
-        return api.auth(token, type.toString(), pauthentication)
+        return api.auth(tokenPart, typePart, pauthentication)
     }
 
     override fun getAuthState(token: String): Single<Response<AuthState>> {

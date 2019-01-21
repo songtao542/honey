@@ -8,11 +8,13 @@ import com.snt.phoney.BuildConfig
 import com.snt.phoney.extensions.TAG
 import com.snt.phoney.extensions.sendBroadcast
 import com.snt.phoney.utils.data.MD5.md5
+import com.snt.phoney.utils.media.StringRequestBody
 import okhttp3.*
-import java.net.URLEncoder
+import java.net.URLDecoder
 import java.nio.charset.Charset
 import java.util.*
 import java.util.concurrent.TimeUnit
+import kotlin.collections.ArrayList
 
 
 private val UTF8 = Charset.forName("UTF-8")
@@ -61,7 +63,10 @@ fun Interceptor.getParameters(requestBody: RequestBody?): TreeMap<String, String
             val parts = requestBody.parts()
             val params = TreeMap<String, String>()
             for (part in parts) {
-                params.putAll(getParameters(part.body()))
+                val body = part.body()
+                if (body is StringRequestBody) {
+                    params[body.name] = body.value
+                }
             }
             return params
         }
@@ -120,9 +125,10 @@ open class SignInterceptor : Interceptor {
             }
             is MultipartBody -> {
                 val bodyBuilder = MultipartBody.Builder().setType(MultipartBody.FORM)
-                val parts = body.parts()
+                val parts = ArrayList<MultipartBody.Part>(body.parts())
                 val timestamp = System.currentTimeMillis().toString()
-                val params = getParameters(body).apply {
+                val params = getParameters(body)
+                params.apply {
                     put(APP_SECRET_KEY, APP_SECRET_VALUE)
                     put("timestamp", timestamp)
                 }
@@ -142,9 +148,9 @@ open class SignInterceptor : Interceptor {
         val sorted = params.toSortedMap(Comparator { o1, o2 -> o1.compareTo(o2) })
         for ((name, value) in sorted) {
             if (BuildConfig.DEBUG) {
-                Log.d(TAG, "to sign param:($name=$value)")
+                Log.d(TAG, "to sign param:($name=${URLDecoder.decode(value, UTF8.name())})")
             }
-            paramString.append(value)
+            paramString.append(URLDecoder.decode(value, UTF8.name()))
         }
         return md5(paramString.toString())
     }
@@ -198,16 +204,11 @@ class NullOrEmptyInterceptor : Interceptor {
                 //移除掉 FormBody，保留其他类型 Body，比如文件类型
                 while (iterator.hasNext()) {
                     val part = iterator.next()
-                    if (part.body() !is FormBody) {
-                        bodyBuilder.addPart(part)
+                    val body = part.body()
+                    if (body is StringRequestBody && isEmpty(body.value)) {
+                        continue
                     }
-                }
-                //取出 FormBody 中的参数，过滤掉空值，然后重新加入
-                val params = getParameters(body)
-                for ((name, value) in params) {
-                    if (isNotEmpty(value)) {
-                        bodyBuilder.addPart(MultipartBody.Part.createFormData(URLEncoder.encode(name, UTF8.name()), URLEncoder.encode(value, UTF8.name())))
-                    }
+                    bodyBuilder.addPart(part)
                 }
                 return request.newBuilder().post(bodyBuilder.build()).build()
             }

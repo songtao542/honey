@@ -7,6 +7,7 @@ import com.snt.phoney.domain.model.*
 import com.snt.phoney.domain.persistence.PhotoDao
 import com.snt.phoney.domain.repository.UserRepository
 import com.snt.phoney.utils.media.MultipartUtil
+import com.snt.phoney.utils.media.StringRequestBody
 import io.reactivex.Single
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.GlobalScope
@@ -54,8 +55,15 @@ class UserRepositoryImpl @Inject constructor(private val userAccessor: UserAcces
     }
 
     override fun uploadPhotos(token: String, photos: List<File>): Single<Response<List<Photo>>> {
+        val tokenPart = MultipartUtil.getMultipart("token", token)
         val photoParts = MultipartUtil.getMultipartList("photos", photos)
-        return api.uploadPhotos(token, photoParts)
+        return api.uploadPhotos(tokenPart, photoParts)
+    }
+
+    override fun uploadHeadIcon(token: String, file: File): Single<Response<String>> {
+        val tokenPart = MultipartUtil.getMultipart("token", token)
+        val portrait = MultipartUtil.getMultipart("portrait", file)
+        return api.uploadHeadIcon(tokenPart, portrait)
     }
 
     override fun deletePhotos(token: String, photoIds: List<String>): Single<Response<List<Photo>>> {
@@ -181,11 +189,6 @@ class UserRepositoryImpl @Inject constructor(private val userAccessor: UserAcces
         return api.setUserSex(token, sex)
     }
 
-    override fun uploadHeadIcon(token: String, file: File): Single<Response<String>> {
-        val portrait = MultipartUtil.getMultipart("portrait", file)
-        return api.uploadHeadIcon(token, portrait)
-    }
-
     override fun setUserFeatures(token: String,
                                  height: Int,
                                  weight: Int,
@@ -203,8 +206,9 @@ class UserRepositoryImpl @Inject constructor(private val userAccessor: UserAcces
     }
 
     override fun uploadResetPasswordFile(token: String, file: File): Single<Response<String>> {
+        val tokenPart = MultipartUtil.getMultipart("token", token)
         val part = MultipartUtil.getMultipart("pauthentication", file)
-        return api.uploadResetPasswordFile(token, part)
+        return api.uploadResetPasswordFile(tokenPart, part)
     }
 
     override fun cancelResetPassword(token: String): Single<Response<String>> {

@@ -2,7 +2,6 @@ package com.snt.phoney.ui.signup
 
 import android.content.Intent
 import android.os.Bundle
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -10,18 +9,15 @@ import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
 import com.snt.phoney.R
 import com.snt.phoney.base.BaseFragment
-import com.snt.phoney.domain.repository.ToolRepository
 import com.snt.phoney.domain.usecase.PLATFORM_QQ
 import com.snt.phoney.domain.usecase.PLATFORM_WECHAT
 import com.snt.phoney.domain.usecase.PLATFORM_WEIBO
 import com.snt.phoney.extensions.addFragmentSafely
-import com.snt.phoney.extensions.disposedBy
 import com.snt.phoney.extensions.snackbar
 import com.snt.phoney.extensions.toast
 import com.snt.phoney.ui.main.MainActivity
 import com.snt.phoney.ui.setup.SetupWizardActivity
 import kotlinx.android.synthetic.main.fragment_startup.*
-import javax.inject.Inject
 
 
 class StartupFragment : BaseFragment() {

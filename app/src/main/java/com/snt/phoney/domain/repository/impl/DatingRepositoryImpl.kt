@@ -17,8 +17,17 @@ class DatingRepositoryImpl @Inject constructor(private val api: Api) : DatingRep
     }
 
     override fun publishDating(token: String, title: String, program: String, content: String, days: Int, city: String, location: String, latitude: Double, longitude: Double, cover: List<File>): Single<Response<String>> {
+        val tokenPart = MultipartUtil.getMultipart("token", token)
+        val titlePart = MultipartUtil.getMultipart("title", title)
+        val programPart = MultipartUtil.getMultipart("grogram", program)
+        val contentPart = MultipartUtil.getMultipart("content", content)
+        val daysPart = MultipartUtil.getMultipart("days", days.toString())
+        val cityPart = MultipartUtil.getMultipart("city", city)
+        val locationPart = MultipartUtil.getMultipart("location", location)
+        val latitudePart = MultipartUtil.getMultipart("longitude", latitude.toString())
+        val longitudePart = MultipartUtil.getMultipart("latitude", longitude.toString())
         val coverParts = MultipartUtil.getMultipartList("cover", cover)
-        return api.publishDating(token, title, program, content, days, city, location, latitude.toString(), longitude.toString(), coverParts)
+        return api.publishDating(tokenPart, titlePart, programPart, contentPart, daysPart, cityPart, locationPart, latitudePart, longitudePart, coverParts)
     }
 
     override fun cancelDating(token: String, uuid: String): Single<Response<String>> {

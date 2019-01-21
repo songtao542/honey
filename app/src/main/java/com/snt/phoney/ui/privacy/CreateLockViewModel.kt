@@ -4,7 +4,6 @@ import android.text.TextUtils
 import android.util.Log
 import androidx.lifecycle.MutableLiveData
 import com.snt.phoney.R
-import com.snt.phoney.base.AppViewModel
 import com.snt.phoney.domain.usecase.PrivacyLockUseCase
 import com.snt.phoney.extensions.TAG
 import com.snt.phoney.extensions.disposedBy
@@ -13,18 +12,9 @@ import io.reactivex.rxkotlin.subscribeBy
 import io.reactivex.schedulers.Schedulers
 import javax.inject.Inject
 
-class CreateLockViewModel @Inject constructor(private val usecase: PrivacyLockUseCase) : AppViewModel() {
+class CreateLockViewModel @Inject constructor(private val usecase: PrivacyLockUseCase) : LockViewModel(usecase) {
 
     val closeSuccess = MutableLiveData<String>()
-
-    private fun updateUserPrivacyPassword(password: String?, privatePassword: String?) {
-        val user = usecase.getUser()
-        user?.let { user ->
-            user.password = password
-            user.privacyPassword = privatePassword
-            usecase.setUser(user)
-        }
-    }
 
     /**
      * @param password  MD5后的数字密码（32位）

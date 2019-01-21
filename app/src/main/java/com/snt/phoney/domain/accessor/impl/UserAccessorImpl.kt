@@ -1,7 +1,6 @@
 package com.snt.phoney.domain.accessor.impl
 
 import android.text.TextUtils
-import android.util.Log
 import com.snt.phoney.domain.accessor.UserAccessor
 import com.snt.phoney.domain.model.User
 import com.snt.phoney.domain.repository.CacheRepository
@@ -25,7 +24,8 @@ class UserAccessorImpl @Inject constructor(private val cache: CacheRepository) :
         if (mUser == null) {
             runBlocking {
                 mUser = cache.get(Constants.Cache.USER)
-                mLocked = !TextUtils.isEmpty(mUser?.privacyPassword)
+                //mLocked = !TextUtils.isEmpty(mUser?.privacyPassword)
+                mLocked = mUser?.isPrivacyPasswordOpen == true
             }
         }
         return mUser
@@ -37,7 +37,8 @@ class UserAccessorImpl @Inject constructor(private val cache: CacheRepository) :
                 mAccessToken = token
             }
             //当原来没有密码，新的user 有密码之后，设置锁定状态
-            if (!TextUtils.isEmpty(user.privacyPassword) && !TextUtils.equals(mUser?.privacyPassword, user.privacyPassword)) {
+            //if (!TextUtils.isEmpty(user.privacyPassword) && !TextUtils.equals(mUser?.privacyPassword, user.privacyPassword)) {
+            if (user.isPrivacyPasswordOpen) {
                 mLocked = true
             }
             mUser = user
@@ -61,7 +62,8 @@ class UserAccessorImpl @Inject constructor(private val cache: CacheRepository) :
     }
 
     override fun lock() {
-        mLocked = !TextUtils.isEmpty(getUser()?.privacyPassword)
+        //mLocked = !TextUtils.isEmpty(getUser()?.privacyPassword)
+        mLocked = mUser?.isPrivacyPasswordOpen == true
     }
 
     override fun isLocked(): Boolean {

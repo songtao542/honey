@@ -50,18 +50,11 @@ object CityPickerConverter {
         return results
     }
 
-    /**
-     * Note: 阻塞当前线程
-     */
     fun reverseConvert(cities: List<com.zaaach.citypicker.model.City>): List<City> {
         val results = ArrayList<City>()
-        runBlocking {
-            withContext(Dispatchers.Default) {
-                for (city in cities) {
-                    val pc = City(city.code.toInt(), city.provinceCode.toInt(), city.province, city.name)
-                    results.add(pc)
-                }
-            }
+        for (city in cities) {
+            val pc = City(city.code.toInt(), city.provinceCode.toInt(), city.province, city.name)
+            results.add(pc)
         }
         return results
     }

@@ -2,7 +2,7 @@ package com.snt.phoney.ui.privacy
 
 import com.snt.phoney.R
 import com.snt.phoney.base.AppViewModel
-import com.snt.phoney.domain.usecase.ResetPrivacyPasswordUseCase
+import com.snt.phoney.domain.usecase.ResetPrivacyLockUseCase
 import com.snt.phoney.extensions.disposedBy
 import com.snt.phoney.utils.life.SingleLiveData
 import io.reactivex.android.schedulers.AndroidSchedulers
@@ -11,18 +11,9 @@ import io.reactivex.schedulers.Schedulers
 import java.io.File
 import javax.inject.Inject
 
-class ForgetPasswordViewModel @Inject constructor(private val usecase: ResetPrivacyPasswordUseCase) : AppViewModel() {
+class ForgetPasswordViewModel @Inject constructor(private val usecase: ResetPrivacyLockUseCase) : LockViewModel(usecase)  {
 
     val state = SingleLiveData<Int>()
-
-    private fun updateUserPrivacyPassword(password: String?, privatePassword: String?) {
-        val user = usecase.getUser()
-        user?.let { user ->
-            user.password = password
-            user.privacyPassword = privatePassword
-            usecase.setUser(user)
-        }
-    }
 
     fun getResetPasswordState() {
         val token = usecase.getAccessToken() ?: return

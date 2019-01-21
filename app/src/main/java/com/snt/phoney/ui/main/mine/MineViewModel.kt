@@ -5,7 +5,10 @@ import android.util.Log
 import androidx.lifecycle.MutableLiveData
 import com.snt.phoney.R
 import com.snt.phoney.base.AppViewModel
-import com.snt.phoney.domain.model.*
+import com.snt.phoney.domain.model.Photo
+import com.snt.phoney.domain.model.PhotoPermission
+import com.snt.phoney.domain.model.User
+import com.snt.phoney.domain.model.UserInfo
 import com.snt.phoney.domain.usecase.JMessageUseCase
 import com.snt.phoney.domain.usecase.UserInfoUseCase
 import com.snt.phoney.extensions.TAG
@@ -29,12 +32,6 @@ class MineViewModel @Inject constructor(private val usecase: UserInfoUseCase, pr
 
     val userInfo = MutableLiveData<UserInfo>()
 
-    private fun updateUserMemberInfo(memberInfo: MemberInfo?) {
-        usecase.getUser()?.updateMemberInfo(memberInfo)?.let {
-            usecase.setUser(it)
-        }
-    }
-
     fun getAllInfoOfUser() {
         val token = usecase.getAccessToken() ?: return
         usecase.getAllInfoOfUser(token)
@@ -44,7 +41,9 @@ class MineViewModel @Inject constructor(private val usecase: UserInfoUseCase, pr
                         onSuccess = {
                             if (it.success) {
                                 userInfo.value = it.data
-                                updateUserMemberInfo(it.data?.memberInfo)
+                                usecase.getUser()?.updateMemberInfo(it.data?.memberInfo)?.let { user ->
+                                    usecase.setUser(user)
+                                }
                             }
                         },
                         onError = {}
@@ -71,10 +70,13 @@ class MineViewModel @Inject constructor(private val usecase: UserInfoUseCase, pr
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribeBy(
                         onSuccess = {
+                            @Suppress("CascadeIf")
                             if (it.success) {
                                 success.value = context.getString(R.string.set_photo_permission_success)
                                 updateUserPhotoPermission(photoPermission)
-                            } else if (!TextUtils.isEmpty(it.message)) {
+                            } else if (it.hasMessage) {
+                                error.value = it.message
+                            } else {
                                 error.value = context.getString(R.string.set_photo_permission_failed)
                             }
                         },
@@ -91,10 +93,13 @@ class MineViewModel @Inject constructor(private val usecase: UserInfoUseCase, pr
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribeBy(
                         onSuccess = {
+                            @Suppress("CascadeIf")
                             if (it.success) {
                                 photos.value = it.data
                                 success.value = context.getString(R.string.upload_photo_success)
-                            } else if (!TextUtils.isEmpty(it.message)) {
+                            } else if (it.hasMessage) {
+                                error.value = it.message
+                            } else {
                                 error.value = context.getString(R.string.upload_photo_failed)
                             }
                         },
@@ -162,15 +167,17 @@ class MineViewModel @Inject constructor(private val usecase: UserInfoUseCase, pr
     }
 
     fun testSignGet() {
-        usecase.testSignGet("232", "1")
-                .subscribeOn(Schedulers.io())
-                .observeOn(AndroidSchedulers.mainThread())
-                .subscribeBy(
-                        onSuccess = {
-                        },
-                        onError = {
-                        }
-                ).disposedBy(disposeBag)
+//        usecase.testSignGet("232", "1")
+//                .subscribeOn(Schedulers.io())
+//                .observeOn(AndroidSchedulers.mainThread())
+//                .subscribeBy(
+//                        onSuccess = {
+//                        },
+//                        onError = {
+//                        }
+//                ).disposedBy(disposeBag)
+
+        uploadHeadIcon(File("/storage/emulated/0/DCIM/Temp/9d14d9e6efcf3b4363aa4647084a4496.jpg"))
     }
 
     fun testSignPost() {

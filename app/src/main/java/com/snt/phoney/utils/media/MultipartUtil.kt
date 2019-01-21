@@ -46,6 +46,12 @@ object MultipartUtil {
         return MultipartBody.Part.createFormData(name, file.name, requestBody)
     }
 
+    fun getMultipart(name: String, value: String): MultipartBody.Part {
+        val requestBody = StringRequestBody(name, value)
+        return MultipartBody.Part.createFormData(name, null, requestBody)
+    }
+
+
     fun getFileMime(file: File): String {
         val options = BitmapFactory.Options()
         options.inJustDecodeBounds = true

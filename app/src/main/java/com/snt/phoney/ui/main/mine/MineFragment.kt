@@ -115,10 +115,10 @@ class MineFragment : BaseFragment(), OnSettingItemClickListener, OnSignOutClickL
         })
 
         /**test************************/
-        //authInfo.setOnClickListener {
-        //    viewModel.testSignGet()
-        //    viewModel.testSignPost()
-        //}
+//        authInfo.setOnClickListener {
+//            viewModel.testSignGet()
+//            viewModel.testSignPost()
+//        }
         /**test************************/
     }
 

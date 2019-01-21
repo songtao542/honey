@@ -10,6 +10,7 @@ import androidx.lifecycle.ViewModelProviders
 import com.snt.phoney.R
 import com.snt.phoney.base.BaseFragment
 import com.snt.phoney.domain.model.*
+import com.snt.phoney.extensions.snackbar
 import com.snt.phoney.ui.main.MainActivity
 import com.snt.phoney.utils.Picker
 import com.zaaach.citypicker.model.City
@@ -69,6 +70,10 @@ class SetupWizardThreeFragment : BaseFragment() {
         jobButton.setOnClickListener {
             showJobPicker()
         }
+
+        viewModel.error.observe(this, Observer {
+            snackbar(it)
+        })
 
         viewModel.setupUserInfo.observe(this, Observer {
             context?.let { ctx ->

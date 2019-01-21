@@ -4,7 +4,7 @@ import com.snt.phoney.domain.repository.UserRepository
 import java.io.File
 import javax.inject.Inject
 
-class ResetPrivacyPasswordUseCase @Inject constructor(private val userRepository: UserRepository) : AccessUserUseCase(userRepository) {
+class ResetPrivacyLockUseCase @Inject constructor(private val userRepository: UserRepository) : AccessUserUseCase(userRepository) {
     fun getResetPasswordState(token: String) = userRepository.getResetPasswordState(token)
 
     fun uploadResetPasswordFile(token: String, file: File) = userRepository.uploadResetPasswordFile(token, file)

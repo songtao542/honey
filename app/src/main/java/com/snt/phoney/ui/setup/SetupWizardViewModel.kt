@@ -1,6 +1,5 @@
 package com.snt.phoney.ui.setup
 
-import android.text.TextUtils
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import com.snt.phoney.base.AppViewModel
@@ -72,14 +71,14 @@ class SetupWizardViewModel @Inject constructor(private val setupWizardUseCase: S
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribeBy(
                         onSuccess = {
-                            if (it.code == 200) {
+                            if (it.success) {
                                 setupSex.value = it.data
                                 val user = setupWizardUseCase.getUser()
                                 if (user != null) {
                                     user.sex = sex
                                     setupWizardUseCase.setUser(user)
                                 }
-                            } else if (!TextUtils.isEmpty(it.message)) {
+                            } else if (it.hasMessage) {
                                 error.value = it.message
                             }
                         },
@@ -95,13 +94,13 @@ class SetupWizardViewModel @Inject constructor(private val setupWizardUseCase: S
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribeBy(
                         onSuccess = {
-                            if (it.code == 200) {
+                            if (it.success) {
                                 val user = setupWizardUseCase.getUser()?.copy(height = height, weight = weight.toDouble(), age = age, cup = cup)
                                 if (user != null) {
                                     setupWizardUseCase.setUser(user)
                                 }
                                 setupFeatures.value = it.data
-                            } else if (!TextUtils.isEmpty(it.message)) {
+                            } else if (it.hasMessage) {
                                 error.value = it.message
                             }
                         },
@@ -122,13 +121,13 @@ class SetupWizardViewModel @Inject constructor(private val setupWizardUseCase: S
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribeBy(
                         onSuccess = {
-                            if (it.code == 200) {
+                            if (it.success) {
                                 val user = setupWizardUseCase.getUser()?.copy(cities = cities, career = career, program = program)
                                 if (user != null) {
                                     setupWizardUseCase.setUser(user)
                                 }
                                 setupUserInfo.value = it.data
-                            } else if (!TextUtils.isEmpty(it.message)) {
+                            } else if (it.hasMessage) {
                                 error.value = it.message
                             }
                         },

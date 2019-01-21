@@ -183,6 +183,19 @@ data class User(
         }
 
     @Transient
+    val isPrivacyPasswordOpen: Boolean
+        get() {
+            return open == 1 && !TextUtils.isEmpty(password) && !TextUtils.isEmpty(privacyPassword)
+        }
+
+    fun updatePrivacyPassword(password: String?, privacyPassword: String?): User {
+        this.open = if (!TextUtils.isEmpty(password) && !TextUtils.isEmpty(privacyPassword)) 1 else 0
+        this.password = password
+        this.privacyPassword = privacyPassword
+        return this
+    }
+
+    @Transient
     val isMember: Boolean
         get() {
             return member == 1

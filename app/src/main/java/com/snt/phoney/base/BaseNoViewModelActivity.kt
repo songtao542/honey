@@ -39,7 +39,6 @@ abstract class BaseNoViewModelActivity : AppCompatActivity(), HasSupportFragment
         val sex = Sex.from(userAccessor.getUser()?.sex ?: Sex.UNKNOWN.value)
         val themeId = if (sex == Sex.MALE) R.style.AppTheme_Male else R.style.AppTheme_Female
         val newThemeId = onApplyTheme(themeId) // onApplyTheme() 默认返回 themeId
-        Log.d("TTTT", "newThemeId===================$newThemeId")
         //子类返回的 newThemeId 如果不等于 0, 表示子类需要配置 theme
         //子类返回的 newThemeId 如果等于 0, 表示子类不希望覆盖 AndroidManifest.xml 中配置的theme, 所以等于0时, 不调用 setTheme() 方法
         if (newThemeId != 0) {

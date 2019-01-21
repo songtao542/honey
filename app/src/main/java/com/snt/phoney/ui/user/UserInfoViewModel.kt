@@ -1,6 +1,5 @@
 package com.snt.phoney.ui.user
 
-import android.util.Log
 import com.snt.phoney.R
 import com.snt.phoney.domain.model.User
 import com.snt.phoney.domain.usecase.PayOrderUseCase
@@ -14,7 +13,7 @@ import io.reactivex.schedulers.Schedulers
 import javax.inject.Inject
 
 class UserInfoViewModel @Inject constructor(private val usecase: UserInfoUseCase,
-                                            private val payOrderUseCase: PayOrderUseCase) : PayViewModel(payOrderUseCase) {
+                                            payOrderUseCase: PayOrderUseCase) : PayViewModel(payOrderUseCase) {
 
     val userInfo = SingleLiveData<User>()
 
