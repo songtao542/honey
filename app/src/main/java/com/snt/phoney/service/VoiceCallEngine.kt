@@ -84,6 +84,8 @@ class VoiceCallEngine(private val application: Application) {
         fun init(application: Application) {
             if (INSTANCE == null) {
                 INSTANCE = VoiceCallEngine(application)
+            } else {
+                INSTANCE?.initEngine()
             }
         }
 
@@ -93,6 +95,13 @@ class VoiceCallEngine(private val application: Application) {
                 throw RuntimeException("The VoiceCallEngine has not init!")
             }
             return INSTANCE!!
+        }
+
+        fun release() {
+            if (INSTANCE != null) {
+                JMRtcClient.getInstance().releaseEngine()
+                INSTANCE?.reset()
+            }
         }
     }
 
@@ -111,7 +120,10 @@ class VoiceCallEngine(private val application: Application) {
     private var isMute = false
 
     init {
-        Log.d("TTTT", "initEngine initEngine initEngine initEngine initEngine initEngine ")
+        initEngine()
+    }
+
+    private fun initEngine() {
         JMRtcClient.getInstance().initEngine(mJMRtcListenerImpl)
     }
 
@@ -247,7 +259,7 @@ class VoiceCallEngine(private val application: Application) {
         })
     }
 
-    private fun reset(){
+    private fun reset() {
         isMute = false
         isSpeakerEnabled = false
         mHandler.removeCallbacksAndMessages(null)
