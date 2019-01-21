@@ -6,6 +6,7 @@ import androidx.lifecycle.MutableLiveData
 import com.snt.phoney.R
 import com.snt.phoney.base.AppViewModel
 import com.snt.phoney.domain.model.*
+import com.snt.phoney.domain.usecase.JMessageUseCase
 import com.snt.phoney.domain.usecase.UserInfoUseCase
 import com.snt.phoney.extensions.TAG
 import com.snt.phoney.extensions.disposedBy
@@ -15,7 +16,7 @@ import io.reactivex.schedulers.Schedulers
 import java.io.File
 import javax.inject.Inject
 
-class MineViewModel @Inject constructor(private val usecase: UserInfoUseCase) : AppViewModel() {
+class MineViewModel @Inject constructor(private val usecase: UserInfoUseCase, private val jMessageUseCase: JMessageUseCase) : AppViewModel() {
 
     val user = object : MutableLiveData<User>() {
         override fun onActive() {
@@ -156,6 +157,7 @@ class MineViewModel @Inject constructor(private val usecase: UserInfoUseCase) : 
         /***********test**************/
         //usecase.getAccessToken()?.let { usecase.deleteUser(it) }
         /***********test**************/
+        jMessageUseCase.logout()
         usecase.setUser(null)
     }
 

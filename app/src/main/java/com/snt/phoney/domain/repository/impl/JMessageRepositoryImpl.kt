@@ -15,4 +15,8 @@ class JMessageRepositoryImpl @Inject constructor() : JMessageRepository {
                     }
                 })
     }
+
+    override fun logout() {
+        JMessageClient.logout()
+    }
 }
