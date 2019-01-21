@@ -310,6 +310,7 @@
     <string name="it_published_title">TA的发布</string>
     <string name="buy_tip">购买提醒</string>
     <string name="buy_warning_template">查看该相片需支付%1$s蜜币</string>
+    <string name="set_photo_permission_locked_tip_template">解锁相册，用户付费可得%1$s蜜币</string>
     <string name="pay_mibi_template">支付%1$s蜜币</string>
     <string name="connecting">正在等待对方接通...</string>
     <string name="wait_accept_template">正在等待 %1$s 接通...</string>
@@ -482,5 +483,6 @@
     <string name="chat_warning">私聊对方为会员功能，是否开通会员？</string>
     <string name="speaker">扬声器</string>
     <string name="mute">静音</string>
+    <string name="setting_failed">设置失败</string>
 
 </resources>

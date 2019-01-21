@@ -152,7 +152,7 @@ class MineViewModel @Inject constructor(private val usecase: UserInfoUseCase, pr
     }
 
     fun updateUserPhotoPermission(permission: PhotoPermission) {
-        user.value?.let { user ->
+        usecase.getUser()?.let { user ->
             user.photoPermission = permission.value
             usecase.setUser(user)
         }

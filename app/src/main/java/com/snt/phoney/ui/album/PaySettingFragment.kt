@@ -12,6 +12,7 @@ import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
 import androidx.recyclerview.widget.GridLayoutManager
 import com.snt.phoney.R
+import com.snt.phoney.base.AlertDialogFragment
 import com.snt.phoney.base.BaseFragment
 import com.snt.phoney.domain.model.Photo
 import com.snt.phoney.domain.model.PhotoPermission
@@ -122,10 +123,28 @@ class PaySettingFragment : BaseFragment() {
                     snackbar(getString(R.string.please_select_mibi_amount))
                 }
             } else {
-                showProgress(getString(R.string.on_going_seting))
-                viewModel.setPhotoPermission(PhotoPermission.LOCKED)
+                showProgress()
+                viewModel.getPhotosPrice()
             }
         }
+
+        viewModel.photoPrice.observe(this, Observer { message ->
+            dismissProgress()
+            context?.let { ctx ->
+                AlertDialogFragment.Builder(ctx)
+                        .setTitle(R.string.notice)
+                        .setMessage(message)
+                        .setCancelable(false)
+                        .setNegativeButton(R.string.cancel) { dialog ->
+                            dialog.dismiss()
+                        }.setPositiveButton(R.string.confirm) { dialog ->
+                            dialog.dismiss()
+                            showProgress(getString(R.string.on_going_seting))
+                            viewModel.setPhotoPermission(PhotoPermission.LOCKED)
+                        }.show(childFragmentManager)
+                return@let
+            }
+        })
 
         if (photos == null) {
             viewModel.getUserPhotos()

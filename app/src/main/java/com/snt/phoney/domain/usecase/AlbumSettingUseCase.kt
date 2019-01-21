@@ -10,5 +10,6 @@ class AlbumSettingUseCase @Inject constructor(val repository: UserRepository) : 
                            photoId: String) = repository.setPhotoPermission(token, photoPermission, money, photoId)
 
     fun getUserPhotos(token: String) = repository.getUserPhotos(token)
+    fun getPhotosPrice(token: String) = repository.getPhotosPrice(token)
 
 }

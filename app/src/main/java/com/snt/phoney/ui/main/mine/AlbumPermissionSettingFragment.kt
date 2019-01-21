@@ -77,6 +77,7 @@ class AlbumPermissionSettingFragment : BottomDialogFragment() {
         when (permission) {
             PhotoPermission.PUBLIC -> publicAlbum.isSelected = true
             PhotoPermission.NEED_CHARGE -> needCharge.isSelected = true
+            PhotoPermission.LOCKED -> needCharge.isSelected = true
             PhotoPermission.NEED_APPLY -> needApply.isSelected = true
             PhotoPermission.PRIVATE -> privateAlbum.isSelected = true
         }

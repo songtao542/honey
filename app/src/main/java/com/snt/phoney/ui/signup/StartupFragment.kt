@@ -89,12 +89,14 @@ class StartupFragment : BaseFragment() {
 
         qqViewModel.user.observe(this, Observer { user ->
             user?.let {
+                showProgress()
                 viewModel.signupByThirdPlatform(it.openId, it.thirdToken, PLATFORM_QQ, it.nickName, it.headPic)
             }
         })
 
         weiboViewModel.user.observe(this, Observer { user ->
             user?.let {
+                showProgress()
                 viewModel.signupByThirdPlatform(it.uid ?: "",
                         it.token ?: "",
                         PLATFORM_WEIBO,
@@ -109,6 +111,7 @@ class StartupFragment : BaseFragment() {
 
         wxViewModel.user.observe(this, Observer { user ->
             user?.let {
+                showProgress()
                 viewModel.signupByThirdPlatform(it.openid ?: "",
                         it.accessToken ?: "",
                         PLATFORM_WECHAT,
@@ -122,6 +125,7 @@ class StartupFragment : BaseFragment() {
         })
 
         viewModel.user.observe(this, Observer { it ->
+            dismissProgress()
             it?.let { user ->
                 toast("登录成功")
                 clearThirdPlatformUser()

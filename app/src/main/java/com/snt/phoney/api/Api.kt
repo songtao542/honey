@@ -105,6 +105,10 @@ interface Api {
     fun getUserPhotos(@Field("token") token: String): Single<Response<List<Photo>>>
 
     @FormUrlEncoded
+    @POST("users/getPhotoAllPrice")
+    fun getPhotosPrice(@Field("token") token: String): Single<Response<String>>
+
+    @FormUrlEncoded
     @POST("users/homePage/getWxInfo")
     fun getUserWechatAccount(@Field("token") token: String,
                              @Field("uid") uid: String): Single<Response<String>>

@@ -78,6 +78,10 @@ class UserRepositoryImpl @Inject constructor(private val userAccessor: UserAcces
         return api.getUserPhotos(token)
     }
 
+    override fun getPhotosPrice(token: String): Single<Response<String>> {
+        return api.getPhotosPrice(token)
+    }
+
     override fun getUserWechatAccount(token: String, uid: String): Single<Response<String>> {
         return api.getUserWechatAccount(token, uid)
     }

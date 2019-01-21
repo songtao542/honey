@@ -115,6 +115,8 @@ interface UserRepository : UserAccessor {
 
     fun getUserPhotos(token: String): Single<Response<List<Photo>>>
 
+    fun getPhotosPrice(token: String): Single<Response<String>>
+
     fun getUserWechatAccount(token: String, uid: String): Single<Response<String>>
 
     fun applyToViewPhotos(token: String, target: String): Single<Response<String>>

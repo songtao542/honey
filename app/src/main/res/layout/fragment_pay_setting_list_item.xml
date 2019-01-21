@@ -23,6 +23,6 @@
         android:clickable="false"
         app:groupMode="true"
         app:radio="@drawable/ic_checkbox_button_solid"
-        app:radioSize="30dp" />
+        app:radioSize="24dp" />
 
 </com.snt.phoney.widget.SquareLayout>
