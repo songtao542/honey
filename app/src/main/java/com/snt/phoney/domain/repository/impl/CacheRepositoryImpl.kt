@@ -32,20 +32,21 @@ class CacheRepositoryImpl @Inject constructor(application: Application) : CacheR
         return cache.get(key).await()?.value as? T
     }
 
-    override fun <T : Any> set(key: String, value: T?) {
-        if (value != null) {
-            GlobalScope.launch(Dispatchers.Main) {
+    override fun <T : Any> set(key: String, value: T?, callback: ((old: T?) -> Unit)?) {
+        GlobalScope.launch(Dispatchers.IO) {
+            val old = cache.get(key).await()?.value as? T
+            if (value != null) {
                 cache.set(key, Value(value)).await()
-            }
-        } else {
-            GlobalScope.launch(Dispatchers.Main) {
+                callback?.invoke(old)
+            } else {
                 cache.evict(key).await()
             }
+            callback?.invoke(old)
         }
     }
 
     override fun clear(key: String) {
-        GlobalScope.launch(Dispatchers.Main) {
+        GlobalScope.launch(Dispatchers.IO) {
             cache.evict(key).await()
         }
     }

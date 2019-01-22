@@ -2,14 +2,13 @@ package com.snt.phoney.ui.signup
 
 import android.app.Activity
 import android.content.Intent
-import android.util.Log
+import com.snt.phoney.R
 import com.snt.phoney.base.AppViewModel
 import com.snt.phoney.domain.model.QQUser
 import com.snt.phoney.utils.QQApi
 import com.snt.phoney.utils.life.SingleLiveData
 import com.tencent.connect.UserInfo
 import com.tencent.tauth.IUiListener
-import com.tencent.tauth.Tencent
 import com.tencent.tauth.UiError
 import org.json.JSONObject
 import javax.inject.Inject
@@ -39,6 +38,7 @@ class QQViewModel @Inject constructor() : AppViewModel(), IUiListener {
                 getUserInfo()
             }
         } catch (e: Exception) {
+            error.postValue(context.getString(R.string.auth_failed))
         }
     }
 
@@ -72,9 +72,11 @@ class QQViewModel @Inject constructor() : AppViewModel(), IUiListener {
             }
 
             override fun onCancel() {
+                error.value = context.getString(R.string.cancel_auth)
             }
 
-            override fun onError(error: UiError?) {
+            override fun onError(e: UiError?) {
+                error.postValue(context.getString(R.string.auth_failed))
             }
         })
     }

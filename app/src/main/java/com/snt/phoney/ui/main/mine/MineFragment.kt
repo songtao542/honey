@@ -247,12 +247,12 @@ class MineFragment : BaseFragment(), OnSettingItemClickListener, OnSignOutClickL
     }
 
     override fun onSignOutClick() {
-        viewModel.signOut()
         showProgress(getString(R.string.on_going_login_out))
-        view?.postDelayed({
+        viewModel.signOut().observe(this, Observer {
+            dismissProgress()
             activity?.startActivity(SignupActivity.newIntent(requireContext()))
             activity?.finish()
-        }, 1000)
+        })
     }
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {

@@ -3,12 +3,9 @@ package com.snt.phoney.ui.signup
 import android.app.Activity
 import android.content.Intent
 import android.util.Log
-import com.sina.weibo.sdk.WbSdk
-import com.sina.weibo.sdk.auth.AuthInfo
 import com.sina.weibo.sdk.auth.Oauth2AccessToken
 import com.sina.weibo.sdk.auth.WbAuthListener
 import com.sina.weibo.sdk.auth.WbConnectErrorMessage
-import com.sina.weibo.sdk.auth.sso.SsoHandler
 import com.snt.phoney.R
 import com.snt.phoney.base.AppViewModel
 import com.snt.phoney.domain.model.WeiboUser
@@ -16,10 +13,8 @@ import com.snt.phoney.domain.usecase.WeiboSigninUseCase
 import com.snt.phoney.extensions.TAG
 import com.snt.phoney.extensions.disposedBy
 import com.snt.phoney.utils.WeiboApi
-import com.snt.phoney.utils.data.Constants.Weibo
 import com.snt.phoney.utils.life.SingleLiveData
 import io.reactivex.android.schedulers.AndroidSchedulers
-import io.reactivex.disposables.Disposable
 import io.reactivex.rxkotlin.subscribeBy
 import io.reactivex.schedulers.Schedulers
 import javax.inject.Inject
@@ -61,7 +56,7 @@ class WeiboViewModel @Inject constructor(private val usecase: WeiboSigninUseCase
 
             override fun onFailure(errorMessage: WbConnectErrorMessage?) {
                 Log.d(TAG, "授权失败: ${errorMessage?.errorCode}  ${errorMessage?.errorMessage}")
-                error.postValue(context.getString(R.string.weibo_auth_failed))
+                error.postValue(context.getString(R.string.auth_failed))
             }
 
             override fun cancel() {
@@ -101,7 +96,7 @@ class WeiboViewModel @Inject constructor(private val usecase: WeiboSigninUseCase
                         },
                         onError = {
                             Log.e(TAG, "error=$it")
-                            error.postValue(context.getString(R.string.weibo_auth_failed))
+                            error.postValue(context.getString(R.string.auth_failed))
                         }
                 ).disposedBy(disposeBag)
     }

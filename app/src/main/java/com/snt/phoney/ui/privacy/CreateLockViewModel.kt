@@ -4,6 +4,7 @@ import android.text.TextUtils
 import android.util.Log
 import androidx.lifecycle.MutableLiveData
 import com.snt.phoney.R
+import com.snt.phoney.base.AppViewModel
 import com.snt.phoney.domain.usecase.PrivacyLockUseCase
 import com.snt.phoney.extensions.TAG
 import com.snt.phoney.extensions.disposedBy
@@ -12,7 +13,7 @@ import io.reactivex.rxkotlin.subscribeBy
 import io.reactivex.schedulers.Schedulers
 import javax.inject.Inject
 
-class CreateLockViewModel @Inject constructor(private val usecase: PrivacyLockUseCase) : LockViewModel(usecase) {
+class CreateLockViewModel @Inject constructor(private val usecase: PrivacyLockUseCase) : AppViewModel() {
 
     val closeSuccess = MutableLiveData<String>()
 
@@ -34,7 +35,7 @@ class CreateLockViewModel @Inject constructor(private val usecase: PrivacyLockUs
                             @Suppress("CascadeIf")
                             if (it.success) {
                                 success.value = context.getString(R.string.set_privacy_password_success)
-                                updateUserPrivacyPassword(password, privatePassword)
+                                usecase.updatePrivacyPassword(password, privatePassword)
                             } else if (it.hasMessage) {
                                 error.value = it.message
                             } else {
@@ -57,7 +58,7 @@ class CreateLockViewModel @Inject constructor(private val usecase: PrivacyLockUs
                             @Suppress("CascadeIf")
                             if (it.code == 200) {
                                 Log.d(TAG, "close privacy password success")
-                                updateUserPrivacyPassword(null, null)
+                                usecase.updatePrivacyPassword(null, null)
                             } else if (it.hasMessage) {
                                 Log.d(TAG, "close privacy password failed:${it.message}")
                             } else {
@@ -83,7 +84,7 @@ class CreateLockViewModel @Inject constructor(private val usecase: PrivacyLockUs
                             if (it.code == 200) {
                                 closeSuccess.value = context.getString(R.string.close_privacy_password_success)
                                 Log.d(TAG, "close privacy password success")
-                                updateUserPrivacyPassword(null, null)
+                                usecase.updatePrivacyPassword(null, null)
                             } else if (it.hasMessage) {
                                 error.value = it.message
                                 Log.d(TAG, "close privacy password failed:${it.message}")

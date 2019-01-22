@@ -2,6 +2,7 @@ package com.snt.phoney.ui.main.mine
 
 import android.text.TextUtils
 import android.util.Log
+import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import com.snt.phoney.R
 import com.snt.phoney.base.AppViewModel
@@ -13,6 +14,7 @@ import com.snt.phoney.domain.usecase.JMessageUseCase
 import com.snt.phoney.domain.usecase.UserInfoUseCase
 import com.snt.phoney.extensions.TAG
 import com.snt.phoney.extensions.disposedBy
+import com.snt.phoney.utils.life.SingleLiveData
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.rxkotlin.subscribeBy
 import io.reactivex.schedulers.Schedulers
@@ -33,20 +35,24 @@ class MineViewModel @Inject constructor(private val usecase: UserInfoUseCase, pr
     val userInfo = MutableLiveData<UserInfo>()
 
     fun getAllInfoOfUser() {
+        if (isLoading("userinfo")) {
+            return
+        }
         val token = usecase.getAccessToken() ?: return
         usecase.getAllInfoOfUser(token)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribeBy(
                         onSuccess = {
+                            setLoading("userinfo", false)
                             if (it.success) {
                                 userInfo.value = it.data
-                                usecase.getUser()?.updateMemberInfo(it.data?.memberInfo)?.let { user ->
-                                    usecase.setUser(user)
-                                }
+                                usecase.updateMemberInfo(it.data?.memberInfo)
                             }
                         },
-                        onError = {}
+                        onError = {
+                            setLoading("userinfo", false)
+                        }
                 ).disposedBy(disposeBag)
     }
 
@@ -110,17 +116,23 @@ class MineViewModel @Inject constructor(private val usecase: UserInfoUseCase, pr
     }
 
     fun getUserPhotos() {
+        if (isLoading("photos")) {
+            return
+        }
         val token = usecase.getAccessToken() ?: return
         usecase.getUserPhotos(token)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribeBy(
                         onSuccess = {
+                            setLoading("photos", false)
                             if (it.success) {
                                 photos.value = it.data
                             }
                         },
-                        onError = {}
+                        onError = {
+                            setLoading("photos", false)
+                        }
                 ).disposedBy(disposeBag)
     }
 
@@ -158,26 +170,28 @@ class MineViewModel @Inject constructor(private val usecase: UserInfoUseCase, pr
         }
     }
 
-    fun signOut() {
+    fun signOut(): LiveData<User> {
         /***********test**************/
         //usecase.getAccessToken()?.let { usecase.deleteUser(it) }
         /***********test**************/
+        val liveData = SingleLiveData<User>()
         jMessageUseCase.logout()
-        usecase.setUser(null)
+        usecase.setUser(null) {
+            liveData.postValue(it)
+        }
+        return liveData
     }
 
     fun testSignGet() {
-//        usecase.testSignGet("232", "1")
-//                .subscribeOn(Schedulers.io())
-//                .observeOn(AndroidSchedulers.mainThread())
-//                .subscribeBy(
-//                        onSuccess = {
-//                        },
-//                        onError = {
-//                        }
-//                ).disposedBy(disposeBag)
-
-        uploadHeadIcon(File("/storage/emulated/0/DCIM/Temp/9d14d9e6efcf3b4363aa4647084a4496.jpg"))
+        usecase.testSignGet("232", "1")
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribeBy(
+                        onSuccess = {
+                        },
+                        onError = {
+                        }
+                ).disposedBy(disposeBag)
     }
 
     fun testSignPost() {

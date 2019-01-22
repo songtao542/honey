@@ -44,6 +44,7 @@ class StartupFragment : BaseFragment() {
 
         qq.setOnClickListener {
             activity?.let { activity ->
+                showProgress()
                 //清除其他授权时保存的用户，以免相互影响
                 weiboViewModel.clearWeiboUser()
                 wxViewModel.clearWxUser()
@@ -53,6 +54,7 @@ class StartupFragment : BaseFragment() {
 
         weibo.setOnClickListener {
             activity?.let { activity ->
+                showProgress()
                 //清除其他授权时保存的用户，以免相互影响
                 wxViewModel.clearWxUser()
                 weiboViewModel.login(activity)
@@ -61,6 +63,7 @@ class StartupFragment : BaseFragment() {
 
         wechat.setOnClickListener {
             activity?.let {
+                showProgress()
                 //清除其他授权时保存的用户，以免相互影响
                 weiboViewModel.clearWeiboUser()
                 wxViewModel.login()
@@ -89,14 +92,16 @@ class StartupFragment : BaseFragment() {
 
         qqViewModel.user.observe(this, Observer { user ->
             user?.let {
-                showProgress()
                 viewModel.signupByThirdPlatform(it.openId, it.thirdToken, PLATFORM_QQ, it.nickName, it.headPic)
             }
         })
 
+        qqViewModel.error.observe(this, Observer {
+            dismissProgress()
+        })
+
         weiboViewModel.user.observe(this, Observer { user ->
             user?.let {
-                showProgress()
                 viewModel.signupByThirdPlatform(it.uid ?: "",
                         it.token ?: "",
                         PLATFORM_WEIBO,
@@ -106,12 +111,12 @@ class StartupFragment : BaseFragment() {
         })
 
         weiboViewModel.error.observe(this, Observer {
+            dismissProgress()
             snackbar(it)
         })
 
         wxViewModel.user.observe(this, Observer { user ->
             user?.let {
-                showProgress()
                 viewModel.signupByThirdPlatform(it.openid ?: "",
                         it.accessToken ?: "",
                         PLATFORM_WECHAT,
@@ -120,7 +125,12 @@ class StartupFragment : BaseFragment() {
             }
         })
 
+        wxViewModel.error.observe(this, Observer {
+            dismissProgress()
+        })
+
         viewModel.error.observe(this, Observer {
+            dismissProgress()
             snackbar(it)
         })
 

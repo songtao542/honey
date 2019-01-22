@@ -2,9 +2,13 @@ package com.snt.phoney.domain.accessor.impl
 
 import android.text.TextUtils
 import com.snt.phoney.domain.accessor.UserAccessor
+import com.snt.phoney.domain.model.MemberInfo
 import com.snt.phoney.domain.model.User
 import com.snt.phoney.domain.repository.CacheRepository
 import com.snt.phoney.utils.data.Constants
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.GlobalScope
+import kotlinx.coroutines.launch
 import kotlinx.coroutines.runBlocking
 import javax.inject.Inject
 
@@ -31,21 +35,26 @@ class UserAccessorImpl @Inject constructor(private val cache: CacheRepository) :
         return mUser
     }
 
-    override fun setUser(user: User?) {
+    override fun setUser(user: User?, callback: ((old: User?) -> Unit)?) {
+        val old = mUser
         if (user != null) {
             user.token?.let { token ->
                 mAccessToken = token
             }
             //当原来没有密码，新的user 有密码之后，设置锁定状态
             //if (!TextUtils.isEmpty(user.privacyPassword) && !TextUtils.equals(mUser?.privacyPassword, user.privacyPassword)) {
-            if (user.isPrivacyPasswordOpen != mUser?.isPrivacyPasswordOpen) {
-                mLocked = true
+            if (mUser == null || (mUser != null && mUser != user)) {
+                mLocked = user.isPrivacyPasswordOpen
             }
             mUser = user
         } else {
             mUser = null
         }
-        cache.set(Constants.Cache.USER, user)
+        cache.set(Constants.Cache.USER, user) {
+            GlobalScope.launch(Dispatchers.Main) {
+                callback?.invoke(old)
+            }
+        }
     }
 
     override fun tryUnlock(password: String): Boolean {
@@ -68,6 +77,19 @@ class UserAccessorImpl @Inject constructor(private val cache: CacheRepository) :
 
     override fun isLocked(): Boolean {
         return mLocked
+    }
+
+    override fun updatePrivacyPassword(password: String?, privacyPassword: String?) {
+        mUser?.updatePrivacyPassword(password, privacyPassword)?.let {
+            mLocked = it.isPrivacyPasswordOpen
+            setUser(it)
+        }
+    }
+
+    override fun updateMemberInfo(memberInfo: MemberInfo?) {
+        mUser?.updateMemberInfo(memberInfo)?.let {
+            setUser(it)
+        }
     }
 
 }

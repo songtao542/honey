@@ -11,7 +11,7 @@ import io.reactivex.schedulers.Schedulers
 import java.io.File
 import javax.inject.Inject
 
-class ForgetPasswordViewModel @Inject constructor(private val usecase: ResetPrivacyLockUseCase) : LockViewModel(usecase)  {
+class ForgetPasswordViewModel @Inject constructor(private val usecase: ResetPrivacyLockUseCase) : AppViewModel() {
 
     val state = SingleLiveData<Int>()
 
@@ -83,7 +83,7 @@ class ForgetPasswordViewModel @Inject constructor(private val usecase: ResetPriv
                             @Suppress("CascadeIf")
                             if (it.success) {
                                 success.value = context.getString(R.string.reset_password_success)
-                                updateUserPrivacyPassword(password, privatePassword)
+                                usecase.updatePrivacyPassword(password, privatePassword)
                             } else if (it.hasMessage) {
                                 error.value = it.message
                             } else {

@@ -27,10 +27,10 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.view.ViewParent;
 
-import java.lang.ref.WeakReference;
-
 import androidx.annotation.IdRes;
 import androidx.annotation.LayoutRes;
+
+import java.lang.ref.WeakReference;
 
 /**
  * A ViewStub is an invisible, zero-sized View that can be used to lazily inflate
@@ -109,7 +109,6 @@ public final class ViewSlot extends View {
 
     public ViewSlot(Context context, AttributeSet attrs, int defStyleAttr, int defStyleRes) {
         super(context);
-        Log.d("TTTT","ccccccccccccccccccccccc");
 //        final TypedArray a = context.obtainStyledAttributes(attrs,
 //                R.styleable.ViewStub, defStyleAttr, defStyleRes);
 //        mInflatedId = a.getResourceId(R.styleable.ViewStub_inflatedId, NO_ID);

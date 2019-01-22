@@ -147,9 +147,7 @@ class UserInfoViewModel @Inject constructor(private val usecase: UserInfoUseCase
                 .subscribeBy(
                         onSuccess = {
                             if (it.success) {
-                                usecase.getUser()?.updateMemberInfo(it.data)?.let { user ->
-                                    usecase.setUser(user)
-                                }
+                                usecase.updateMemberInfo(it.data)
                             }
                         },
                         onError = {}

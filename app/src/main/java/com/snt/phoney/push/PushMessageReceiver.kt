@@ -15,6 +15,7 @@ import androidx.core.app.NotificationCompat
 import cn.jpush.android.api.JPushInterface
 import com.google.gson.Gson
 import com.google.gson.JsonObject
+import com.snt.phoney.BuildConfig
 import com.snt.phoney.R
 import com.snt.phoney.base.Page
 import com.snt.phoney.extensions.newIntent
@@ -42,8 +43,9 @@ class PushMessageReceiver : BroadcastReceiver() {
         try {
             val bundle = intent?.extras ?: Bundle()
             val action = intent?.action ?: ""
-            Log.d(TAG, "[PushMessageReceiver] onReceive - " + action + ", extras: " + printBundle(bundle))
-
+            if (BuildConfig.DEBUG) {
+                Log.d(TAG, "[PushMessageReceiver] onReceive - " + action + ", extras: " + printBundle(bundle))
+            }
             @Suppress("CascadeIf")
             if (JPushInterface.ACTION_REGISTRATION_ID == action) {
                 val regId = bundle.getString(JPushInterface.EXTRA_REGISTRATION_ID)
@@ -59,7 +61,7 @@ class PushMessageReceiver : BroadcastReceiver() {
             } else if (JPushInterface.ACTION_NOTIFICATION_OPENED == action) {
                 Log.d(TAG, "用户点击打开了通知")
                 //打开自定义的Activity
-                context?.let { processNotificatinoOpenMessage(it, bundle) }
+                context?.let { processNotificationOpenMessage(it, bundle) }
             } else if (JPushInterface.ACTION_RICHPUSH_CALLBACK == action) {
                 Log.d(TAG, "用户收到到RICH PUSH CALLBACK: " + bundle.getString(JPushInterface.EXTRA_EXTRA))
                 //在这里根据 JPushInterface.EXTRA_EXTRA 的内容处理代码，比如打开新的Activity， 打开一个网页等..
@@ -76,15 +78,11 @@ class PushMessageReceiver : BroadcastReceiver() {
 
     }
 
-    private fun processNotificatinoOpenMessage(context: Context, bundle: Bundle) {
+    private fun processNotificationOpenMessage(context: Context, bundle: Bundle) {
         val extras = bundle.getString(JPushInterface.EXTRA_EXTRA)
-        Log.d(TAG, "bundle==$bundle")
-        Log.d(TAG, "extras==$extras")
         val message = Message.fromJson(extras)
         val type = message.type
         val target = message.target
-        Log.d(TAG, "type====$type")
-        Log.d(TAG, "target==$target")
         if (type == ACTION_PHOTO_APPLY && target != null) {
             openPhotoApplyPage(context)
         } else if ((type == ACTION_PHOTO_APPLY_AGREED || type == ACTION_PHOTO_APPLY_REFUSED) && target != null) {
