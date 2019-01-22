@@ -40,7 +40,10 @@ object MultipartUtil {
             file.path.contains(".jpg", true) -> "image/jpeg"
             file.path.contains(".png", true) -> "image/png"
             file.path.contains(".gif", true) -> "image/gif"
-            else -> getFileMime(file)
+            else -> {
+                val mime = getFileMime(file)
+                if (!TextUtils.isEmpty(mime)) mime else "image/jpeg"
+            }
         }
         val requestBody = RequestBody.create(MediaType.parse(mimeType), file)
         return MultipartBody.Part.createFormData(name, file.name, requestBody)
