@@ -57,7 +57,7 @@ class PaySettingFragment : BaseFragment() {
     private lateinit var viewModel: PaySettingViewModel
     private lateinit var adapter: PaySettingRecyclerViewAdapter
 
-    private lateinit var checked: CompatRadioButton
+    private var checked: CompatRadioButton? = null
 
     private var amount = 0
 
@@ -94,8 +94,6 @@ class PaySettingFragment : BaseFragment() {
             snackbar(it)
         })
 
-        checked = needPay
-
         inputPrice.setOnClickListener {
             showMibiPicker()
         }
@@ -106,6 +104,12 @@ class PaySettingFragment : BaseFragment() {
 
         unlockAll.setOnClickListener { view ->
             setCheck(view)
+        }
+
+        if (photoPermission == PhotoPermission.LOCKED) {
+            setCheck(unlockAll)
+        } else {
+            setCheck(needPay)
         }
 
         confirm.setOnClickListener {

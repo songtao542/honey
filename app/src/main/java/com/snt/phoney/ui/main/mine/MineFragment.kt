@@ -143,9 +143,9 @@ class MineFragment : BaseFragment(), OnSettingItemClickListener, OnSignOutClickL
                         AlbumPermissionSettingFragment.newInstance(initPermission).apply {
                             setOnSelectListener { permission ->
                                 when (permission) {
-                                    PhotoPermission.NEED_CHARGE -> {
+                                    PhotoPermission.LOCKED, PhotoPermission.NEED_CHARGE -> {
                                         this@MineFragment.startActivityForResult<AlbumActivity>(Page.PAY_SETTING, REQUEST_PAY_SETTING_CODE, Bundle().apply {
-                                            putInt(Constants.Extra.PERMISSION, PhotoPermission.NEED_CHARGE.value)
+                                            putInt(Constants.Extra.PERMISSION, permission.value)
                                             viewModel.photos.value?.let { ps ->
                                                 putParcelableArrayList(Constants.Extra.PHOTO_LIST, ArrayList<Photo>(ps))
                                             }
@@ -154,10 +154,6 @@ class MineFragment : BaseFragment(), OnSettingItemClickListener, OnSignOutClickL
                                     PhotoPermission.PUBLIC -> {
                                         showProgress(getString(R.string.on_going_seting))
                                         viewModel.setPhotoPermission(PhotoPermission.PUBLIC)
-                                    }
-                                    PhotoPermission.LOCKED -> {
-                                        showProgress(getString(R.string.on_going_seting))
-                                        viewModel.setPhotoPermission(PhotoPermission.LOCKED)
                                     }
                                     PhotoPermission.NEED_APPLY -> {
                                         showProgress(getString(R.string.on_going_seting))
