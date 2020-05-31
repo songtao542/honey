@@ -16,10 +16,10 @@ abstract class FullscreenDialogFragment : BaseDialogFragment() {
     override fun onResume() {
         super.onResume()
         dialog?.let {
-            var params: WindowManager.LayoutParams = it.window.attributes
-            params.width = WindowManager.LayoutParams.MATCH_PARENT
-            params.height = WindowManager.LayoutParams.MATCH_PARENT
-            it.window.attributes = params
+            val params = it.window?.attributes
+            params?.width = WindowManager.LayoutParams.MATCH_PARENT
+            params?.height = WindowManager.LayoutParams.MATCH_PARENT
+            it.window?.attributes = params
         }
     }
 

@@ -6,7 +6,6 @@ import android.text.Spannable;
 import android.text.SpannableStringBuilder;
 import android.text.TextUtils;
 import android.view.KeyEvent;
-import android.view.View;
 import android.view.ViewGroup;
 import android.widget.EditText;
 import android.widget.TextView;
@@ -24,6 +23,9 @@ import java.util.Collections;
 import jiguang.chat.adapter.BigEmoticonsAdapter;
 import jiguang.chat.adapter.BigEmoticonsAndTitleAdapter;
 import jiguang.chat.adapter.TextEmoticonsAdapter;
+import jiguang.chat.utils.keyboard.EmoticonsKeyboardUtils;
+import jiguang.chat.utils.keyboard.ImageBase;
+import jiguang.chat.utils.keyboard.ImageLoader;
 import jiguang.chat.utils.keyboard.adpater.EmoticonsAdapter;
 import jiguang.chat.utils.keyboard.adpater.PageSetAdapter;
 import jiguang.chat.utils.keyboard.data.DefXhsEmoticons;
@@ -37,9 +39,6 @@ import jiguang.chat.utils.keyboard.filter.XhsFilter;
 import jiguang.chat.utils.keyboard.interfaces.EmoticonClickListener;
 import jiguang.chat.utils.keyboard.interfaces.EmoticonDisplayListener;
 import jiguang.chat.utils.keyboard.interfaces.PageViewInstantiateListener;
-import jiguang.chat.utils.keyboard.EmoticonsKeyboardUtils;
-import jiguang.chat.utils.keyboard.ImageBase;
-import jiguang.chat.utils.keyboard.ImageLoader;
 import jiguang.chat.utils.keyboard.widget.EmoticonPageView;
 import jiguang.chat.utils.keyboard.widget.EmoticonsEditText;
 import jiguang.chat.view.SimpleAppsGridView;
@@ -104,7 +103,7 @@ public class SimpleCommonUtils {
      */
     public static void addEmojiPageSetEntity(PageSetAdapter pageSetAdapter, Context context, final EmoticonClickListener emoticonClickListener) {
         ArrayList<EmojiBean> emojiArray = new ArrayList<>();
-        Collections.addAll(emojiArray, DefEmoticons.sEmojiArray);
+        Collections.addAll(emojiArray, DefEmoticons.getDefEmojiArray());
         EmoticonPageSetEntity emojiPageSetEntity
                 = new EmoticonPageSetEntity.Builder()
                 .setLine(3)
