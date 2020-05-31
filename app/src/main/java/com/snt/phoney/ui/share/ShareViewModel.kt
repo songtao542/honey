@@ -6,6 +6,7 @@ import com.snt.phoney.utils.QQApi
 import com.snt.phoney.utils.SHARE_TO_TIMELINE
 import com.snt.phoney.utils.WechatApi
 import com.snt.phoney.utils.WeiboApi
+import com.snt.phoney.utils.data.Constants
 import com.tencent.tauth.IUiListener
 import javax.inject.Inject
 
@@ -16,19 +17,19 @@ class ShareViewModel @Inject constructor() : AppViewModel() {
     private val mWeiboApi by lazy { WeiboApi(application) }
 
     fun shareByWechat() {
-        mWechatApi.shareUrl("纯蜜", "纯蜜生活更精彩", "http://www.baidu.com", SHARE_TO_TIMELINE)
+        mWechatApi.shareUrl("纯蜜", "纯蜜生活更精彩", Constants.Api.DOWNLOAD_URL, SHARE_TO_TIMELINE)
     }
 
     fun shareByQQ(activity: Activity, listener: IUiListener? = null) {
-        mQQtApi.shareUrl(activity, "纯蜜", "纯蜜生活更精彩", "http://www.baidu.com", listener)
+        mQQtApi.shareUrl(activity, "纯蜜", "纯蜜生活更精彩", Constants.Api.DOWNLOAD_URL, listener)
     }
 
     fun shareByQzone(activity: Activity, listener: IUiListener? = null) {
-        mQQtApi.shareQzoneUrl(activity, "纯蜜", "纯蜜生活更精彩", "http://www.baidu.com", listener)
+        mQQtApi.shareQzoneUrl(activity, "纯蜜", "纯蜜生活更精彩", Constants.Api.DOWNLOAD_URL, listener)
     }
 
     fun shareByWeibo(activity: Activity, listener: IUiListener? = null) {
-        mWeiboApi.share(activity, "纯蜜", "纯蜜生活更精彩", "http://www.baidu.com", "纯蜜生活更精彩")
+        mWeiboApi.share(activity, "纯蜜", "纯蜜生活更精彩", Constants.Api.DOWNLOAD_URL, "纯蜜生活更精彩")
     }
 
 }

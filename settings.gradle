@@ -1,1 +1,2 @@
 include ':app', ':flexbox', ':playground', ':expandable_layout', ':citypicker', ':photopicker', ':zoomimage', ':rangebar', ':loadmore', ':cameraview', ':swipeback'
+include ':androidemoji'
