@@ -1,4 +1,4 @@
-package com.snt.phoney.widget;
+package com.gree.common;
 
 import android.app.Dialog;
 import android.content.Context;
@@ -6,9 +6,11 @@ import android.graphics.drawable.ColorDrawable;
 import android.graphics.drawable.Drawable;
 import android.util.TypedValue;
 import android.view.Gravity;
+import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.ViewGroup.LayoutParams;
+import android.view.ViewTreeObserver;
 import android.view.Window;
 import android.widget.BaseAdapter;
 import android.widget.ImageView;
@@ -18,17 +20,26 @@ import android.widget.ListView;
 import android.widget.TextView;
 
 import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
 
 public class PopupMenu extends Dialog {
 
-    protected PopupMenu(Context context, boolean cancelable, OnCancelListener cancelListener) {
+    public PopupMenu(Context context, boolean cancelable, OnCancelListener cancelListener) {
         super(context, cancelable, cancelListener);
         init();
     }
 
-    private PopupMenu(Context context, int theme) {
+    public PopupMenu(Context context, int theme, int arrayResId) {
         super(context, theme);
         init();
+        if (arrayResId != 0) {
+            initItems(Arrays.asList(context.getResources().getStringArray(arrayResId)));
+        }
+    }
+
+    public PopupMenu(Context context, int theme) {
+        this(context, theme, 0);
     }
 
     public PopupMenu(Context context) {
@@ -43,10 +54,23 @@ public class PopupMenu extends Dialog {
     private ListView list;
     private int itemHeight = LinearLayout.LayoutParams.WRAP_CONTENT;
     private int textColor = 0xff000000;
+    private int textGravity = Gravity.CENTER_VERTICAL | Gravity.LEFT;
     private ArrayList<MenuItem> items = new ArrayList<>();
     private OnMenuItemClickListener onMenuItemClickListener;
 
     private int position = 0;
+
+    public void setList(List<String> strings) {
+        initItems(strings);
+    }
+
+    private void initItems(List<String> items) {
+        if (items != null) {
+            for (int i = 0; i < items.size(); i++) {
+                add(items.get(i));
+            }
+        }
+    }
 
     private void init() {
         adapter = new DropMenuAdapter();
@@ -59,20 +83,20 @@ public class PopupMenu extends Dialog {
         list.setBackgroundColor(0xffffffff);
         list.setFooterDividersEnabled(false);
         list.setHeaderDividersEnabled(false);
-        list.setDivider(new ColorDrawable(0xff9f9f9f));
+        list.setDivider(new ColorDrawable(0xffdddddd));
         list.setDividerHeight(1);
 
         list.setAdapter(adapter);
 
         list.setOnItemClickListener((parent, view, position, id) -> {
             dismiss();
-            PopupMenu.this.position = position;
+            this.position = position;
             if (onMenuItemClickListener != null) {
-                onMenuItemClickListener.onOptionsItemSelected(((MenuItemView) view).getMenuItem());
+                onMenuItemClickListener.onOptionsItemSelected(((MenuItemLayout) view).getMenuItem());
             }
         });
 
-        this.getWindow().setBackgroundDrawable(new ColorDrawable(0xffffffff));
+        //this.getWindow().setBackgroundDrawable(new ColorDrawable(0xffffffff));
         this.getWindow().requestFeature(Window.FEATURE_NO_TITLE);
         this.setContentView(list);
     }
@@ -178,6 +202,21 @@ public class PopupMenu extends Dialog {
     public void setTextColor(int color) {
         this.textColor = color;
         list.invalidate();
+    }
+
+    /**
+     * @param gravity Gravity.CENTER,Gravity.CENTER_HORIZONTAL,Gravity.LEFT,Gravity.RIGHT
+     */
+    public void setTextGravity(int gravity) {
+        if (gravity == Gravity.CENTER) {
+            textGravity = Gravity.CENTER;
+        } else if (gravity == Gravity.CENTER_HORIZONTAL) {
+            textGravity = Gravity.CENTER;
+        } else if (gravity == Gravity.LEFT) {
+            textGravity = Gravity.CENTER_HORIZONTAL | Gravity.LEFT;
+        } else if (gravity == Gravity.RIGHT) {
+            textGravity = Gravity.CENTER_VERTICAL | Gravity.RIGHT;
+        }
     }
 
     /**
@@ -299,12 +338,33 @@ public class PopupMenu extends Dialog {
 
     }
 
+    private class MenuItemLayout extends LinearLayout {
+
+        private final MenuItemView mMenuItemView;
+
+        public MenuItemLayout(Context context, MenuItem menuItem, int height) {
+            super(context);
+            setOrientation(VERTICAL);
+            setGravity(Gravity.CENTER);
+            mMenuItemView = new MenuItemView(getContext(), menuItem, height);
+            addView(mMenuItemView);
+        }
+
+        public MenuItem getMenuItem() {
+            return mMenuItemView.getMenuItem();
+        }
+
+        public void setMenuItem(MenuItem menuItem) {
+            mMenuItemView.setMenuItem(menuItem);
+        }
+    }
+
     private class MenuItemView extends LinearLayout {
 
-        MenuItem menuItem;
-        ImageView iconView;
-        TextView titleView;
-        int height = LayoutParams.WRAP_CONTENT;
+        private MenuItem menuItem;
+        private ImageView iconView;
+        private TextView titleView;
+        private int height;
 
         public MenuItemView(Context context, MenuItem menuItem, int height) {
             super(context);
@@ -342,14 +402,14 @@ public class PopupMenu extends Dialog {
         private TextView createTitleView(int height) {
             titleView = new TextView(getContext());
             titleView.setTextColor(textColor);
-            titleView.setGravity(Gravity.CENTER_VERTICAL);
+            titleView.setGravity(textGravity);
             LayoutParams p1 = new LayoutParams(LayoutParams.MATCH_PARENT, height);
             p1.weight = 1;
             p1.gravity = Gravity.CENTER_VERTICAL;
             titleView.setLayoutParams(p1);
             if (height == LayoutParams.WRAP_CONTENT) {
                 // p1.setMargins(dp2px(15), dp2px(5), dp2px(15), dp2px(5));
-                titleView.setPadding(dp2px(15), dp2px(10), dp2px(15), dp2px(10));
+                titleView.setPadding(dp2px(15), dp2px(12), dp2px(15), dp2px(12));
             } else {
                 // p1.setMargins(dp2px(15), 0, dp2px(15), 0);
                 titleView.setPadding(dp2px(15), 0, dp2px(15), 0);
@@ -466,11 +526,36 @@ public class PopupMenu extends Dialog {
         @Override
         public View getView(final int position, View convertView, ViewGroup parent) {
             if (convertView == null) {
-                convertView = new MenuItemView(getContext(), items.get(position), itemHeight);
+                convertView = new MenuItemLayout(getContext(), items.get(position), itemHeight);
+                if (parent.getWidth() > 0) {
+                    convertView.setLayoutParams(new ListView.LayoutParams(parent.getWidth(), itemHeight));
+                } else {
+                    parent.getViewTreeObserver().addOnGlobalLayoutListener(new ListViewLayoutListener(parent, convertView, itemHeight));
+                }
             } else {
-                ((MenuItemView) convertView).setMenuItem(items.get(position));
+                ((MenuItemLayout) convertView).setMenuItem(items.get(position));
             }
             return convertView;
         }
+
+        class ListViewLayoutListener implements ViewTreeObserver.OnGlobalLayoutListener {
+
+            private final View mView;
+            private final View mParent;
+            private final int mHeight;
+
+            public ListViewLayoutListener(View parent, View view, int height) {
+                mParent = parent;
+                mView = view;
+                mHeight = height;
+            }
+
+            @Override
+            public void onGlobalLayout() {
+                mView.setLayoutParams(new ListView.LayoutParams(mParent.getWidth(), mHeight));
+                mParent.getViewTreeObserver().removeOnGlobalLayoutListener(this);
+            }
+        }
     }
+
 }
