@@ -7,7 +7,7 @@ import androidx.fragment.app.Fragment
 
 abstract class NoInjectBaseFragment : Fragment() {
 
-    fun enableOptionsMenu(toolbar: Toolbar, showTitle: Boolean = true) {
+    fun enableOptionsMenu(toolbar: Toolbar?, showTitle: Boolean = true) {
         toolbar?.let { toolbar ->
             activity?.let { activity ->
                 setHasOptionsMenu(true)
