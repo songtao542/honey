@@ -1,8 +1,10 @@
 package com.snt.phoney.utils.life
 
 
+import android.os.Handler
 import androidx.annotation.MainThread
 import androidx.lifecycle.LifecycleOwner
+import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.Observer
 import java.util.concurrent.atomic.AtomicBoolean
@@ -45,5 +47,18 @@ open class SingleLiveData<T> : MutableLiveData<T>() {
     @MainThread
     fun clear() {
         value = null
+    }
+
+    companion object {
+
+        private val sHandler = Handler()
+
+        fun <T> of(value: T): SingleLiveData<T> {
+            val liveData = SingleLiveData<T>()
+            sHandler.postDelayed({
+                liveData.value = value
+            }, 1000)
+            return liveData
+        }
     }
 }

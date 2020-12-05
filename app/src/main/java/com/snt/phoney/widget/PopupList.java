@@ -1,4 +1,4 @@
-package com.gree.common;
+package com.snt.phoney.widget;
 
 import android.annotation.SuppressLint;
 import android.content.Context;
@@ -22,11 +22,11 @@ import android.widget.ListView;
 import android.widget.PopupWindow;
 import android.widget.TextView;
 
+import androidx.appcompat.content.res.AppCompatResources;
+
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
-
-import androidx.appcompat.content.res.AppCompatResources;
 
 @SuppressWarnings("unused")
 public class PopupList {

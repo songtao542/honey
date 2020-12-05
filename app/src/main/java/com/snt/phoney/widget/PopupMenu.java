@@ -1,4 +1,4 @@
-package com.gree.common;
+package com.snt.phoney.widget;
 
 import android.app.Dialog;
 import android.content.Context;

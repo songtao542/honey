@@ -6,6 +6,7 @@ import com.google.gson.Gson;
 import com.snt.phoney.BuildConfig;
 import com.snt.phoney.api.Api;
 import com.snt.phoney.api.LoginStateInterceptor;
+import com.snt.phoney.api.MockApi;
 import com.snt.phoney.api.NullOrEmptyInterceptor;
 import com.snt.phoney.api.SignInterceptor;
 import com.snt.phoney.api.TimeoutInterceptor;
@@ -65,7 +66,8 @@ public class RestApiServiceModule {
     @Singleton
     @Provides
     public static Api provideApi(@Named("api") Retrofit retrofit) {
-        return retrofit.create(Api.class);
+        //return retrofit.create(Api.class);
+        return new MockApi();
     }
 }
 

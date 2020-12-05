@@ -6,10 +6,7 @@ import androidx.lifecycle.MutableLiveData
 import com.snt.phoney.base.AppViewModel
 import com.snt.phoney.domain.model.User
 import com.snt.phoney.domain.usecase.SigninUseCase
-import com.snt.phoney.extensions.disposedBy
-import com.snt.phoney.extensions.getAndroidVersion
-import com.snt.phoney.extensions.getInstanceId
-import com.snt.phoney.extensions.getVersionName
+import com.snt.phoney.extensions.*
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.rxkotlin.subscribeBy
 import io.reactivex.schedulers.Schedulers
@@ -55,7 +52,9 @@ class SignupViewModel @Inject constructor(private val usecase: SigninUseCase) : 
                                 error.value = it.message
                             }
                         },
-                        onError = {}
+                        onError = {
+                            Log.d(TAG, "signup error: ", it)
+                        }
                 ).disposedBy(disposeBag)
     }
 

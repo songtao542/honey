@@ -194,7 +194,6 @@ class OfficialRecommendFragment : BaseFragment() {
     private fun popupMenu(dropdownLabel: DropdownLabelView, menuList: List<String>, handler: ((title: String, selectPosition: Int) -> Unit)) {
         val list = PopupList(context, menuList)
         list.setWidth(false, anchor.width)
-        list.setPosition(0)
         list.setItemHeight(50, menuList.size)
         list.setTextGravity(Gravity.CENTER)
 
