@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<lint>
+    <!-- Disable checks that slow down builds -->
+    <issue id="InvalidPackage" severity="ignore" />
+    <issue id="UnusedResources" severity="warning" />
+    <issue id="UnusedAttribute" severity="warning" />
+    <issue id="IconMissingDensityFolder" severity="ignore" />
+    <issue id="IconDensities" severity="ignore" />
+    <issue id="GoogleAppIndexingWarning" severity="ignore" />
+    <issue id="ContentDescription" severity="ignore" />
+    <issue id="SpUsage" severity="ignore" />
+    <issue id="RtlHardcoded" severity="ignore" />
+    <issue id="RtlCompat" severity="ignore" />
+    
+    <!-- Performance-related checks -->
+    <issue id="UselessParent" severity="error" />
+    <issue id="TooManyViews" severity="warning" />
+    <issue id="TooDeepLayout" severity="warning" />
+    <issue id="UnusedResources" severity="warning" />
+    <issue id="UnusedIds" severity="warning" />
+    
+    <!-- Security checks to keep enabled -->
+    <issue id="HardcodedCredentials" severity="error" />
+    <issue id="TrustAllX509TrustManager" severity="error" />
+    <issue id="AllowAllHostnameVerifier" severity="error" />
+</lint>

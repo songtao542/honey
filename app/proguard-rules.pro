@@ -5,284 +5,176 @@
 # For more details, see
 #   http://developer.android.com/guide/developing/tools/proguard.html
 
-# If your project uses WebView with JS, uncomment the following
-# and specify the fully qualified class name to the JavaScript interface
-# class:
-#-keepclassmembers class fqcn.of.javascript.interface.for.webview {
-#   public *;
-#}
+# Optimization settings
+-optimizationpasses 5
+-allowaccessmodification
+-dontpreverify
 
-# Uncomment this to preserve the line number information for
-# debugging stack traces.
-#-keepattributes SourceFile,LineNumberTable
+# Keep line numbers for debugging
+-keepattributes SourceFile,LineNumberTable
+-renamesourcefileattribute SourceFile
 
-# If you keep the line number information, uncomment this to
-# hide the original source file name.
-#-renamesourcefileattribute SourceFile
+# Keep annotations
+-keepattributes *Annotation*
+-keepattributes Signature
+-keepattributes InnerClasses
+-keepattributes EnclosingMethod
 
-#-keep class javax.annotation.** { *; }
-
-#-ignorewarnings
+# General Android optimizations
 -dontwarn javax.annotation.**
 -dontwarn com.google.errorprone.**
 -dontwarn kotlin.reflect.jvm.**
 -dontwarn org.codehaus.mojo.**
 -dontwarn android.graphics.Bitmap
 
+# Remove logging in release builds
+-assumenosideeffects class android.util.Log {
+    public static boolean isLoggable(java.lang.String, int);
+    public static int v(...);
+    public static int i(...);
+    public static int w(...);
+    public static int d(...);
+    public static int e(...);
+}
+
+# Remove Timber logging in release builds
+-assumenosideeffects class timber.log.Timber {
+    public static *** v(...);
+    public static *** d(...);
+    public static *** i(...);
+    public static *** w(...);
+    public static *** e(...);
+}
 
 #app
 -keep public class com.snt.phoney.domain.**
-
-# keep the class and specified members from being removed or renamed
 -keep class com.snt.phoney.base.App { *; }
-
-# keep the specified class members from being removed or renamed
-# only if the class is preserved
 -keepclassmembers class com.snt.phoney.base.App { *; }
-
-# keep the class and specified members from being renamed only
 -keepnames class com.snt.phoney.base.App { *; }
-
-# keep the specified class members from being renamed only
 -keepclassmembernames class com.snt.phoney.base.App { *; }
 
-#-keep public class com.snt.phoney.repository.**
+# Retrofit
+-dontwarn retrofit2.**
+-keep class retrofit2.** { *; }
+-keepattributes Signature
+-keepattributes Exceptions
+-keepclasseswithmembers class * {
+    @retrofit2.http.* <methods>;
+}
 
-#-keep public class * extends android.arch.lifecycle.AppViewModel
--keep public class kotlin.reflect.**
--keep public class com.appmattus.**
+# OkHttp
+-dontwarn okhttp3.**
+-dontwarn okio.**
+-dontwarn javax.annotation.**
+-keepnames class okhttp3.internal.publicsuffix.PublicSuffixDatabase
 
-
-##---------------Begin: proguard configuration for glide  ----------
--dontwarn com.bumptech.glide.load.resource.bitmap.VideoDecoder
+# Glide
 -keep public class * implements com.bumptech.glide.module.GlideModule
 -keep public class * extends com.bumptech.glide.module.AppGlideModule
 -keep public enum com.bumptech.glide.load.ImageHeaderParser$** {
   **[] $VALUES;
   public *;
 }
-# for DexGuard only
-#-keepresourcexmlelements manifest/application/meta-data@value=GlideModule
-##---------------End: proguard configuration for glide  ----------
 
+# RxJava
+-dontwarn sun.misc.**
+-keepclassmembers class rx.internal.util.unsafe.*ArrayQueue*Field* {
+   long producerIndex;
+   long consumerIndex;
+}
+-keepclassmembers class rx.internal.util.unsafe.BaseLinkedQueueProducerNodeRef {
+    rx.internal.util.atomic.LinkedQueueNode producerNode;
+}
+-keepclassmembers class rx.internal.util.unsafe.BaseLinkedQueueConsumerNodeRef {
+    rx.internal.util.atomic.LinkedQueueNode consumerNode;
+}
 
-##---------------Begin: proguard configuration for kotlinx.serialization  ----------
--keepattributes InnerClasses
+# Dagger
+-dontwarn com.google.errorprone.annotations.**
+
+# Kotlin
+-keep class kotlin.** { *; }
+-keep class kotlin.Metadata { *; }
+-dontwarn kotlin.**
+-keepclassmembers class **$WhenMappings {
+    <fields>;
+}
+-keepclassmembers class kotlin.Metadata {
+    public <methods>;
+}
+
+# Kotlinx Serialization
+-keepattributes *Annotation*, InnerClasses
 -dontnote kotlinx.serialization.SerializationKt
--keep,includedescriptorclasses class com.snt.phoney.**$$serializer { *; } # <-- change package name to your app's
--keepclassmembers class com.snt.phoney.** { # <-- change package name to your app's
+-keep,includedescriptorclasses class com.snt.phoney.**$$serializer { *; }
+-keepclassmembers class com.snt.phoney.** {
     *** Companion;
 }
--keepclasseswithmembers class com.snt.phoney.** { # <-- change package name to your app's
+-keepclasseswithmembers class com.snt.phoney.** {
     kotlinx.serialization.KSerializer serializer(...);
 }
-##---------------End: proguard configuration for kotlinx.serialization  ----------
 
+# Room
+-keep class * extends androidx.room.RoomDatabase
+-dontwarn androidx.room.paging.**
 
-##---------------Begin: proguard configuration for Retrofit  ----------
-# Retrofit does reflection on generic parameters. InnerClasses is required to use Signature and
-# EnclosingMethod is required to use InnerClasses.
--keepattributes Signature, InnerClasses, EnclosingMethod
+# WeChat SDK
+-keep class com.tencent.mm.opensdk.** {*;}
+-keep class com.tencent.wxop.** {*;}
+-keep class com.tencent.mm.sdk.** {*;}
 
-# Retain service method parameters when optimizing.
--keepclassmembers,allowshrinking,allowobfuscation interface * {
-    @retrofit2.http.* <methods>;
-}
+# Weibo SDK
+-keep class com.sina.weibo.sdk.** { *; }
 
-# Ignore annotation used for build tooling.
--dontwarn org.codehaus.mojo.animal_sniffer.IgnoreJRERequirement
+# JPush
+-dontoptimize
+-dontpreverify
+-dontwarn cn.jpush.**
+-keep class cn.jpush.** { *; }
+-keep class * extends cn.jpush.android.helpers.JPushMessageReceiver { *; }
 
-# Ignore JSR 305 annotations for embedding nullability information.
--dontwarn javax.annotation.**
+# AMap
+-keep class com.amap.api.location.**{*;}
+-keep class com.amap.api.fence.**{*;}
+-keep class com.autonavi.aps.amapapi.model.**{*;}
 
-# Guarded by a NoClassDefFoundError try/catch and only used when on the classpath.
--dontwarn kotlin.Unit
-
-# Top-level functions that can only be used by Kotlin.
--dontwarn retrofit2.-KotlinExtensions
-##---------------End: proguard configuration for retrofit2  ----------
-
-
-##---------------Begin: proguard configuration for Gson  ----------
-# Gson uses generic type information stored in a class file when working with fields. Proguard
-# removes such information by default, so configure it to keep all of it.
--keepattributes Signature
-
-# For using GSON @Expose annotation
--keepattributes *Annotation*
-
-# Gson specific classes
--dontwarn sun.misc.**
-#-keep class com.google.gson.stream.** { *; }
-
-# Application classes that will be serialized/deserialized over Gson
--keep class com.snt.phoney.domain.model.** { *; }
-
-# Prevent proguard from stripping interface information from TypeAdapterFactory,
-# JsonSerializer, JsonDeserializer instances (so they can be used in @JsonAdapter)
--keep class * implements com.google.gson.TypeAdapterFactory
--keep class * implements com.google.gson.JsonSerializer
--keep class * implements com.google.gson.JsonDeserializer
-##---------------End: proguard configuration for Gson  ----------
-
-
-##---------------Begin: proguard configuration for okhttp3  ----------
--keepattributes Signature
--keep class okhttp3.** { *; }
--keep interface okhttp3.** { *; }
--dontwarn okhttp3.**
--dontnote okhttp3.**
-
-# Okio
--keep class sun.misc.Unsafe { *; }
--dontwarn java.nio.file.*
--dontwarn org.codehaus.mojo.animal_sniffer.IgnoreJRERequirement
-##---------------End: proguard configuration for okhttp3  ----------
-
-
--keep interface org.parceler.Parcel
--keep @org.parceler.Parcel class * { *; }
--keep class **$$Parcelable { *; }
--dontwarn java.lang.invoke.*
--keep class com.snt.phoney.BuildConfig { *; }
-
--keep class android.support.v4.** { *; }
--keep interface android.support.v4.** { *; }
--keep public class androidx.appcompat.** { *; }
--keep public class * extends android.support.v4.view.ActionProvider {
-    public <init>(android.content.Context);
-}
--keep class androidx.fragment.** { *; }
--keep interface androidx.fragment.** { *; }
--keep public class androidx.core.** { *; }
-
--keep public class * extends android.app.Activity
--keep public class * extends android.app.Application
--keep public class * extends android.app.Service
--keep public class * extends android.content.BroadcastReceiver
--keep public class * extends android.content.ContentProvider
--keep public class * extends android.app.backup.BackupAgentHelper
--keep public class * extends android.preference.Preference
--keep public class com.android.vending.licensing.ILicensingService
--keepclasseswithmembernames class * {
-    native <methods>;
-}
--keepclasseswithmembers class * {
-    public <init>(android.content.Context, android.util.AttributeSet);
-}
--keepclasseswithmembers class * {
-    public <init>(android.content.Context, android.util.AttributeSet, int);
-}
--keepclassmembers class * extends android.app.Activity {
-    public void *(android.view.View);
+# UMeng
+-keep class com.umeng.** {*;}
+-keepclassmembers class * {
+   public <init> (org.json.JSONObject);
 }
 -keepclassmembers enum * {
     public static **[] values();
     public static ** valueOf(java.lang.String);
 }
--keep class * implements android.os.Parcelable {
-    public static final android.os.Parcelable$Creator *;
-}
 
--keepnames class kotlinx.** { *; }
--keep class kotlin.Metadata { *; }
--dontwarn kotlin.**
--keep class kotlin.** {*;}
--keepclassmembers class **$WhenMappings {
+# Alipay
+-keep class com.alipay.android.app.IAlixPay{*;}
+-keep class com.alipay.android.app.IAlixPay$Stub{*;}
+-keep class com.alipay.android.app.IRemoteServiceCallback{*;}
+-keep class com.alipay.android.app.IRemoteServiceCallback$Stub{*;}
+-keep class com.alipay.sdk.app.PayTask{ public *;}
+-keep class com.alipay.sdk.app.AuthTask{ public *;}
+-keep class com.alipay.sdk.app.H5PayCallback {
     <fields>;
     <methods>;
 }
+-keep class com.alipay.android.phone.mrpc.core.** { *; }
+-keep class com.alipay.apmobilesecuritysdk.** { *; }
+-keep class com.alipay.mobile.framework.service.annotation.** { *; }
+-keep class com.alipay.mobilesecuritysdk.face.** { *; }
+-keep class com.alipay.tscenter.biz.rpc.** { *; }
+-keep class org.json.alipay.** { *; }
+-keep class com.alipay.tscenter.** { *; }
+-keep class com.ta.utdid2.** { *;}
+-keep class com.ut.device.** { *;}
 
--keepclassmembers class kotlin.Metadata {
-    public <methods>;
-}
--assumenosideeffects class kotlin.jvm.internal.Intrinsics {
-    static void checkParameterIsNotNull(java.lang.Object, java.lang.String);
-}
-
--keep class androidx.cardview.widget.RoundRectDrawable { *; }
--keepclassmembers class **.R$* {
-    public static <fields>;
-}
--keepclasseswithmembernames,includedescriptorclasses class * {
-    native <methods>;
-}
-
--keepclassmembers,allowoptimization enum * {
-    public static **[] values();
-    public static ** valueOf(java.lang.String);
-}
--keepnames class * implements java.io.Serializable
-
--keepclassmembers class * implements java.io.Serializable {
-    static final long serialVersionUID;
-    private static final java.io.ObjectStreamField[] serialPersistentFields;
-    !static !transient <fields>;
-    private void writeObject(java.io.ObjectOutputStream);
-    private void readObject(java.io.ObjectInputStream);
-    java.lang.Object writeReplace();
-    java.lang.Object readResolve();
-}
-
--keep class com.sina.weibo.sdk.** { *; }
-
--keep class com.tencent.open.TDialog$*
--keep class com.tencent.open.TDialog$* {*;}
--keep class com.tencent.open.PKDialog
--keep class com.tencent.open.PKDialog {*;}
--keep class com.tencent.open.PKDialog$*
--keep class com.tencent.open.PKDialog$* {*;}
-
+# Bugly
 -dontwarn com.tencent.bugly.**
 -keep public class com.tencent.bugly.**{*;}
 
--keep class com.tencent.mm.opensdk.** {*;}
--keep class com.tencent.wxop.** {*;}
--keep class com.tencent.mm.sdk.** {*;}
-
--keep class com.snt.phoney.ui.signin.QQViewModel
--keep class com.snt.phoney.ui.signin.WeiboViewModel
-
--dontoptimize
--dontpreverify
--keepattributes  EnclosingMethod,Signature
--dontwarn cn.jpush.**
--keep class cn.jpush.** { *; }
-
--dontwarn cn.jiguang.**
--keep class cn.jiguang.** { *; }
-
- -keepclassmembers class ** {
-     public void onEvent*(**);
- }
-
-#========================gson================================
--dontwarn com.google.**
--keep class com.google.gson.** {*;}
-
-#========================protobuf================================
--keep class com.google.protobuf.** {*;}
-
-#========================support=================================
--dontwarn cn.jmessage.support.**
--keep class cn.jmessage.support.**{*;}
-
--keepattributes *Annotation*
--keepclassmembers class * {
-    @org.greenrobot.eventbus.Subscribe <methods>;
+# Remove debug and verbose logging calls
+-assumenosideeffects class * {
+    void debug(...);
+    void verbose(...);
 }
--keep enum org.greenrobot.eventbus.ThreadMode { *; }
-
-# Only required if you use AsyncExecutor
--keepclassmembers class * extends org.greenrobot.eventbus.util.ThrowableFailureEvent {
-    <init>(java.lang.Throwable);
-}
-
-#========================JMRTC================================
--dontwarn cn.jiguang.jmrtc.**
--keep class cn.jiguang.jmrtc.api.** {*;}
-
-#========================Agora================================
--dontwarn io.agora.rtc.**
--keep class io.agora.rtc.** {*;}
--keep class com.umeng.** {*;}

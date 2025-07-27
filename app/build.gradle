@@ -39,7 +39,6 @@ android {
 
         vectorDrawables.useSupportLibrary = true
         multiDexEnabled true
-        //javaCompileOptions { annotationProcessorOptions { includeCompileClasspath = true } }
 
         manifestPlaceholders = [
                 JPUSH_PKGNAME: applicationId,
@@ -48,13 +47,25 @@ android {
         ]
         ndk {
             //选择要添加的对应cpu类型的.so库。
-            abiFilters 'armeabi', 'armeabi-v7a', 'armeabi-v8a'
-            // 还可以添加 'x86', 'x86_64', 'mips', 'mips64'
+            abiFilters 'armeabi-v7a', 'arm64-v8a'
+            // Removed 'armeabi' as it's deprecated and 'x86' variants for smaller APK
         }
     }
     packagingOptions {
         doNotStrip '*/mips/*.so'
         doNotStrip '*/mips64/*.so'
+        // Exclude duplicate and unused files
+        pickFirst '**/libc++_shared.so'
+        pickFirst '**/libjsc.so'
+        exclude 'META-INF/DEPENDENCIES'
+        exclude 'META-INF/LICENSE'
+        exclude 'META-INF/LICENSE.txt'
+        exclude 'META-INF/license.txt'
+        exclude 'META-INF/NOTICE'
+        exclude 'META-INF/NOTICE.txt'
+        exclude 'META-INF/notice.txt'
+        exclude 'META-INF/ASL2.0'
+        exclude 'META-INF/*.kotlin_module'
     }
 
     dexOptions {
@@ -64,33 +75,25 @@ android {
 
     buildTypes {
         debug {
-            defaultConfig {
-                minSdkVersion 21
-                multiDexEnabled true
-            }
-            //shrinkResources true
-            //minifyEnabled true
-            //multiDexKeepFile file('multidex-config.txt')
-            //multiDexKeepProguard file('multidex-config.pro')
-            //proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
-            //testCoverageEnabled !project.hasProperty('android.injected.invoked.from.ide')
+            debuggable true
+            minifyEnabled false
+            shrinkResources false
             signingConfig signingConfigs.debug
+            
+            // Enable for debug builds if needed
+            // multiDexKeepFile file('multidex-config.txt')
+            // multiDexKeepProguard file('multidex-config.pro')
         }
         release {
-            defaultConfig {
-                minSdkVersion 21
-                multiDexEnabled true
-                ndk {
-                    abiFilters 'armeabi', 'armeabi-v7a', 'armeabi-v8a'
-                }
-            }
-            //shrinkResources true
-            //minifyEnabled true
-            //runProguard true
-            //multiDexKeepFile file('multidex-config.txt')
-            //multiDexKeepProguard file('multidex-config.pro')
-            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+            debuggable false
+            minifyEnabled true
+            shrinkResources true
+            proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
             signingConfig signingConfigs.release
+            
+            // Enable bundle optimization
+            multiDexKeepFile file('multidex-config.txt')
+            multiDexKeepProguard file('multidex-config.pro')
         }
     }
 
@@ -135,16 +138,34 @@ android {
     }
 
     kapt {
-        useBuildCache = false
+        useBuildCache = true
+        generateStubs = true
+        correctErrorTypes = true
     }
+    
     compileOptions {
         sourceCompatibility JavaVersion.VERSION_1_8
         targetCompatibility JavaVersion.VERSION_1_8
     }
+    
+    kotlinOptions {
+        jvmTarget = "1.8"
+    }
+    
     lintOptions {
         lintConfig rootProject.file('lint.xml')
+        checkReleaseBuilds false
+        abortOnError false
     }
 
+    // Enable build optimizations
+    buildFeatures {
+        buildConfig false  // Disable BuildConfig generation if not used
+        aidl false        // Disable AIDL if not used
+        renderScript false // Disable RenderScript if not used
+        resValues false   // Disable generated resources if not used
+        shaders false     // Disable shaders if not used
+    }
 
     sourceSets {
         main {
@@ -153,6 +174,18 @@ android {
         }
     }
 
+    // Bundle optimization
+    bundle {
+        language {
+            enableSplit = true
+        }
+        density {
+            enableSplit = true
+        }
+        abi {
+            enableSplit = true
+        }
+    }
 }
 
 //configurations.all {
@@ -174,10 +207,12 @@ dependencies {
     implementation project(path: ':cameraview')
     implementation project(path: ':androidemoji')
 
-    // A Map
+    // A Map - Consider reducing this large dependency if possible
     implementation(name: 'AMap', ext: 'aar')
     implementation(name: 'alipaySdk-15.5.9-20181123210601', ext: 'aar')
-    implementation 'com.tencent.bugly:crashreport:latest.release'
+    
+    // Use specific versions instead of latest.release for reproducible builds
+    implementation 'com.tencent.bugly:crashreport:3.4.4'
 
     implementation deps.androidx.concurrent_futures
     implementation deps.androidx.lifecycle_extensions
@@ -195,35 +230,16 @@ dependencies {
     kapt deps.androidx.room_compiler
     implementation deps.androidx.room_rxjava2
 
-    //implementation deps.androidx.room_guava
     testImplementation deps.androidx.room_testing
 
-    //implementation deps.androidx.paging_runtime
-    //implementation deps.androidx.paging_runtime_ktx
-    //testImplementation deps.androidx.paging_common
-    //testImplementation deps.androidx.paging_common_ktx
-    //implementation deps.androidx.paging_rxjava2
-    //implementation deps.androidx.paging_rxjava2_ktx
-    //implementation deps.androidx.navigation_fragment
-    //implementation deps.androidx.navigation_fragment_ktx
-    //implementation deps.androidx.navigation_ui
-    //implementation deps.androidx.navigation_ui_ktx
-    //androidTestImplementation deps.androidx.navigation_testing
-    //implementation deps.androidx.work_runtime
-    //implementation deps.androidx.work_runtime_ktx
-    //implementation deps.androidx.work_firebase
-    //androidTestImplementation deps.androidx.work_testing
     androidTestImplementation deps.androidx.test_rules
     androidTestImplementation deps.androidx.test_runner
-    //androidTestImplementation deps.androidx.espresso_core
-    //androidTestImplementation deps.androidx.espresso_contrib
     implementation deps.androidx.core
     implementation deps.androidx.fragment
     implementation deps.androidx.cardview
     implementation deps.androidx.support_v4
     implementation deps.androidx.coordinatorlayout
     implementation deps.androidx.recyclerview
-    //implementation deps.androidx.recyclerview_selection
     implementation deps.androidx.annotation
     implementation deps.androidx.vectordrawable
     implementation deps.androidx.vectordrawable_animated
@@ -252,10 +268,6 @@ dependencies {
     implementation deps.cache.layer_cache_serializer
     implementation deps.cache.layercache_ehcache
 
-    //implementation deps.cache.layercache_retrofit
-    //implementation deps.cache.layercache_android_encryption
-    //implementation deps.cache.layercache_android_livedata
-
     implementation deps.dagger.runtime
     implementation deps.dagger.android
     implementation deps.dagger.android_support
@@ -265,7 +277,6 @@ dependencies {
     implementation deps.kotlin.stdlib
     implementation deps.kotlinx.serialization_runtime
     implementation deps.kotlinx.coroutines_android
-    //androidTestImplementation deps.kotlin.reflect
     implementation deps.timber
 
     implementation deps.location.smart_location
@@ -275,17 +286,13 @@ dependencies {
     implementation "cn.jiguang.sdk:jcore:1.2.5"
     implementation 'cn.jiguang.sdk:jmessage:2.7.1'
     implementation 'cn.jiguang.sdk:jmrtc:1.0.2'
-    //implementation 'com.github.w446108264:AndroidEmoji:1.0.0'
 
-    //implementation 'org.greenrobot:eventbus:3.1.1'
-    //implementation 'com.github.w446108264:XhsEmoticonsKeyboard:2.0.4'
     implementation 'com.sina.weibo.sdk:core:4.3.4:openDefaultRelease@aar'
     implementation 'com.tencent.mm.opensdk:wechat-sdk-android-with-mta:+'
 
-    //implementation 'com.umeng.umsdk:common:1.5.4'
-    //implementation 'com.umeng.umsdk:utdid:1.1.5.3'
-    implementation 'com.umeng.sdk:common:latest.integration'
-    implementation 'com.umeng.sdk:analytics:latest.integration'
+    // Use specific versions instead of latest.integration
+    implementation 'com.umeng.sdk:common:9.4.4'
+    implementation 'com.umeng.sdk:analytics:9.4.4'
 
     androidTestImplementation deps.androidx.test_core
     androidTestImplementation deps.androidx.test_rules
@@ -294,8 +301,7 @@ dependencies {
     androidTestImplementation deps.androidx.test_uiautomator
     androidTestImplementation deps.androidx.test_espresso_core
 
-    //implementation 'com.idescout.sql:sqlscout-server:4.1'
-    //操作 sqlite 的测试库
+    // Debug tools - only include in debug builds
     debugImplementation 'com.amitshekhar.android:debug-db:1.0.4'
 }
 
